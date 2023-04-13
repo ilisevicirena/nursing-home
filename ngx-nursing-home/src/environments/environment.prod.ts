@@ -12,4 +12,5 @@ export enum SidebarStates {
 export const environment = {
   production: true,
   sidebarConfig: SidebarStates.COMPACT,
+  configFile: 'assets/config/config.json',
 };
