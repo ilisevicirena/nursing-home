@@ -23,18 +23,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
     {
       value: 'dark',
       name: 'Dark',
-    },
-    {
-      value: 'cosmic',
-      name: 'Cosmic',
-    },
-    {
-      value: 'corporate',
-      name: 'Corporate',
-    },
+    }
   ];
 
-  currentTheme = 'dark';
+  currentTheme = 'light';
 
   userMenu = [{ title: 'Profile' }, { title: 'Log out' }];
 
@@ -46,8 +38,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.changeTheme('dark');
-
     const { xl } = this.breakpointService.getBreakpointsMap();
     this.themeService.onMediaQueryChange()
       .pipe(
