@@ -1,0 +1,18 @@
+<nb-card size="giant">
+    <nb-card-header>
+        Smart table popup
+    </nb-card-header>
+    <nb-card-body>
+        <div style="height: 550px;">
+            <ngx-smart-table #table [columns]="columns" [data]="data" [selectionEnabled]="selectionEnabled"
+                [tableMode]="tableMode" [defaultPerPageOption]="defaultPageOption"
+                (selectionChanged)="onSelectionChanged($event)" [selctionModeMultiple]="selectionModeMultiple"
+                (sourceFiltersReseted)="onFiltersReseted($event)" [rowMenuEnabled]="rowMenuEnabled"
+                (editConfirm)="onRowEditConfirm($event)" (createConfirm)="onRowCreateConfirm($event)"
+                [rowMenuSettings]="menuSettings" (deleteConfirm)="onRowDeleteConfirm($event)"
+                (menuItemClicked)="onMenuItemClicked($event)" (buttonItemClicked)="onButtonItemClicked($event)"
+                (fileMenuItemClicked)="fileMenuItemClicked($event)">
+            </ngx-smart-table>
+        </div>
+    </nb-card-body>
+</nb-card>

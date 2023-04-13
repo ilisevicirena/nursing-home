@@ -1,0 +1,129 @@
+<nb-card size="giant">
+    <nb-card-header>Filepicker</nb-card-header>
+    <nb-card-body>
+        <nb-tabset>
+            <nb-tab tabTitle="Primjeri">
+                <p>Primjeri filepickera</p>
+                <ngx-filepicker showAcceptedFormats accept=".doc, .png, .pdf" maxFiles="3" showMaxFilesNumber multiple
+                    (valueChanged)="filepickerOnValueChanged($event)">
+                </ngx-filepicker>
+                <div class="row mt-3">
+                    <div class="col">
+                        <ngx-filepicker disabled accept=".doc" showAcceptedFormats></ngx-filepicker>
+                    </div>
+                    <div class="col">
+                        <ngx-filepicker accept=".doc" showAcceptedFormats displayFileSize></ngx-filepicker>
+                    </div>
+                    <div class="col">
+                        <ngx-filepicker accept=".doc" displayFileSize emptyPlaceholder="Drag here"
+                            buttonPlaceholder="or choose file" multiple>
+                        </ngx-filepicker>
+                    </div>
+                </div>
+            </nb-tab>
+            <nb-tab tabTitle="Inputi">
+                <p>Mogućnosti - inputi</p>
+                <div class="mt-3">
+                    <nb-list>
+                        <nb-list-item>
+                            <strong>showAcceptedFormats</strong>
+                            <nb-icon pack="eva" icon="arrow-forward-outline" class="ms-3 me-3"></nb-icon>
+                            prikazuje uputu o
+                            dopuštenim vrstama datoteka unutar pickera
+                        </nb-list-item>
+                        <nb-list-item>
+                            <strong>accept</strong>
+                            <nb-icon pack="eva" icon="arrow-forward-outline" class="ms-3 me-3"></nb-icon> popis
+                            ekstenzija koje će prihvaćati picker
+                        </nb-list-item>
+                        <nb-list-item>
+                            <strong>disabled</strong>
+                            <nb-icon pack="eva" icon="arrow-forward-outline" class="ms-3 me-3"></nb-icon> onemogućavanje
+                            pickera
+                        </nb-list-item>
+                        <nb-list-item>
+                            <strong>multiple</strong>
+                            <nb-icon pack="eva" icon="arrow-forward-outline" class="ms-3 me-3"></nb-icon> omogućavanje
+                            odabira
+                            više datoteka odjednom
+                            <nb-icon pack="eva" icon="alert-triangle-outline" status="danger" class="ms-3 me-3">
+                            </nb-icon>
+                            <span class="text-danger">uključiti ukoliko se koristi opcija maxFiles</span>
+                        </nb-list-item>
+                        <nb-list-item>
+                            <strong>displayFileSize</strong>
+                            <nb-icon pack="eva" icon="arrow-forward-outline" class="ms-3 me-3"></nb-icon> prikaz
+                            veličine
+                            datoteke unutar tag-a s nazivom datoteke (ukoliko nije uključeno veličina datoteke prikazuje
+                            se u
+                            tooltipu nad tagom s nazivom)
+                        </nb-list-item>
+                        <nb-list-item>
+                            <strong>maxFiles</strong>
+                            <nb-icon pack="eva" icon="arrow-forward-outline" class="ms-3 me-3"></nb-icon> maksimalan
+                            broj
+                            datoteka koje je moguće odabrati
+                        </nb-list-item>
+                        <nb-list-item>
+                            <strong>showMaxFilesNumber</strong>
+                            <nb-icon pack="eva" icon="arrow-forward-outline" class="ms-3 me-3"></nb-icon> prikazuje
+                            uputu o
+                            maksimalnom broju datoteka unutar pickera
+                        </nb-list-item>
+                        <nb-list-item>
+                            <strong>emptyPlaceholder</strong>
+                            <nb-icon pack="eva" icon="arrow-forward-outline" class="ms-3 me-3"></nb-icon> tekst unutar
+                            područja
+                            za drag and drop (default: Dovuci ovdje)
+                        </nb-list-item>
+                        <nb-list-item>
+                            <strong>buttonPlaceholder</strong>
+                            <nb-icon pack="eva" icon="arrow-forward-outline" class="ms-3 me-3"></nb-icon> tekst unutar
+                            gumba (default: ili odaberi datoteku)
+                        </nb-list-item>
+                        <nb-list-item>
+                            <strong>maxFilesPlaceholder</strong>
+                            <nb-icon pack="eva" icon="arrow-forward-outline" class="ms-3 me-3"></nb-icon> tekst za
+                            maksimalan broj datoteka (default: Maksimalan broj datoteka:)
+                        </nb-list-item>
+                        <nb-list-item>
+                            <strong>allowedFilesPlaceholder</strong>
+                            <nb-icon pack="eva" icon="arrow-forward-outline" class="ms-3 me-3"></nb-icon> tekst za
+                            dopuštene vrste datoteka (default: Dopuštene vrste datoteka:)
+                        </nb-list-item>
+                        <nb-list-item>
+                            <strong>maxFilesWarningMessage</strong>
+                            <nb-icon pack="eva" icon="arrow-forward-outline" class="ms-3 me-3"></nb-icon> poruka
+                            upozorenja pri dosezanju maksimalnog broja datoteka (default: Dosegli ste maksimalan broj
+                            datoteka)
+                        </nb-list-item>
+                    </nb-list>
+                </div>
+            </nb-tab>
+            <nb-tab tabTitle="Outputi">
+                <div class="mt-3">
+                    <p>Mogućnosti - outputi</p>
+                    <nb-list>
+                        <nb-list-item>
+                            <strong>valueChanged</strong>
+                            <nb-icon pack="eva" icon="arrow-forward-outline" class="ms-3 me-3"></nb-icon>
+                            event na promjenu odabranih datoteka, vraća array s popisom odabranih datoteka
+                        </nb-list-item>
+                    </nb-list>
+                </div>
+            </nb-tab>
+            <nb-tab tabTitle="Metode">
+                <div class="mt-3">
+                    <p>Mogućnosti - metode</p>
+                    <nb-list>
+                        <nb-list-item>
+                            <strong>clear</strong>
+                            <nb-icon pack="eva" icon="arrow-forward-outline" class="ms-3 me-3"></nb-icon>
+                            briše sve datoteke iz pickera, resetira picker
+                        </nb-list-item>
+                    </nb-list>
+                </div>
+            </nb-tab>
+        </nb-tabset>
+    </nb-card-body>
+</nb-card>

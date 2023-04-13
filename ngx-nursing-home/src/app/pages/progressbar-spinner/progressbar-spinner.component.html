@@ -1,0 +1,55 @@
+<nb-card size="giant">
+    <nb-card-header>
+        Progressbar-spinner
+    </nb-card-header>
+    <nb-card-body>
+        <nb-tabset>
+            <nb-tab tabTitle="Primjeri">
+                <div class="row mb-2">
+                    <div class="col-md-6">
+                        <button nbButton hero status="primary" (click)="firstLoading()"
+                            [disabled]="firstSpinnerLoading">Ponovi
+                            prvi spinner</button>
+                    </div>
+                    <div class="col-md-3">
+                        <button nbButton hero status="danger" (click)="secondLoading()"
+                            [disabled]="secondSpinnerLoading">Ponovi
+                            drugi spinner</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <nb-card size="small">
+                            <nb-card-body>
+                                <ngx-progressbar-spinner [(value)]="firstSpinnerValue" [size]="'giant'"
+                                    [displayValue]="true" [progressbarSize]="'col-6'" [loading]="firstSpinnerLoading"
+                                    [message]="''">
+                                </ngx-progressbar-spinner>
+                                Ovo je neki sadržaj
+                            </nb-card-body>
+                        </nb-card>
+                    </div>
+                    <div class="col-md-3">
+                        <nb-card size="small">
+                            <nb-card-body>
+                                <ngx-progressbar-spinner [(value)]="secondSpinnerValue" [status]="'danger'"
+                                    [loading]="secondSpinnerLoading" [displayValue]="true">
+                                </ngx-progressbar-spinner>
+                                Ovo je neki drugi sadržaj
+                            </nb-card-body>
+                        </nb-card>
+                    </div>
+                </div>
+            </nb-tab>
+            <nb-tab tabTitle="Inputi">
+                <sample-inputs [items]="inputItems"></sample-inputs>
+            </nb-tab>
+            <nb-tab tabTitle="Outputi">
+                <sample-inputs [items]="outputItems"></sample-inputs>
+            </nb-tab>
+            <nb-tab tabTitle="Metode">
+                <sample-inputs [items]="methodsItems"></sample-inputs>
+            </nb-tab>
+        </nb-tabset>
+    </nb-card-body>
+</nb-card>

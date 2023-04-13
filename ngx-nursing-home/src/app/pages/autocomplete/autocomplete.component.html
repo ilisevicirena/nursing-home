@@ -1,0 +1,39 @@
+<nb-card size="giant">
+    <nb-card-header>
+        Autocomplete
+    </nb-card-header>
+    <nb-card-body>
+        <div class="row m-0">
+            <div class="col-md-6">
+                <div class="label mb-2">Podijeli s osobama:</div>
+                <ngx-tags-autocomplete [emptyPlaceholder]="placeholder" [keyAttribute]="keyAttribute"
+                    [displayArrow]="true" [attributesToFilter]="attributesToFilter"
+                    [attributesToShow]="attributesToShow" [expanded]="true" [attributesToShowInTag]="attributesToShow"
+                    [source]="source" [(selectedItems)]="selectedItems" [(selectedKeys)]="selectedItemsByKey"
+                    (onSelectionChanged)="onSelectionChanged($event)">
+                </ngx-tags-autocomplete>
+            </div>
+            <div class="col-md-6">
+                <div class="label mb-2">Odaberi osobe:</div>
+                <ngx-tags-autocomplete [emptyPlaceholder]="placeholder" [keyAttribute]="keyAttribute"
+                    [displayNumSelected]="true" [attributesToFilter]="attributesToFilter" [(selectedKeys)]="keys1"
+                    [attributesToShow]="attributesToShow" [attributesToShowInTag]="attributesToShow" [source]="source"
+                    [clearEnabled]="false" [inputWidthClass]="'col-md-6'"></ngx-tags-autocomplete>
+            </div>
+            <div class="col-md-6 mt-3">
+                <div class="label mb-2">Odaberi osobe:</div>
+                <ngx-tags-autocomplete [emptyPlaceholder]="placeholder" [keyAttribute]="keyAttribute"
+                    [(selectedKeys)]="keys2" [displayDots]="true" [attributesToFilter]="attributesToFilter"
+                    [attributesToShow]="attributesToShow" [attributesToShowInTag]="attributesToShow" [source]="source"
+                    [clearEnabled]="false" [inputWidthClass]="'col-md-6'"></ngx-tags-autocomplete>
+            </div>
+            <div class="col-md-6 mt-3">
+                <div class="label mb-2">Odaberi osobe:</div>
+                <ngx-tags-autocomplete [emptyPlaceholder]="placeholder" [keyAttribute]="keyAttribute"
+                    [attributesToFilter]="attributesToFilter" [attributesToShow]="attributesToShow"
+                    [attributesToShowInTag]="attributesToShow" [source]="source" [clearEnabled]="false"
+                    [inputWidthClass]="'col-md-6'"></ngx-tags-autocomplete>
+            </div>
+        </div>
+    </nb-card-body>
+</nb-card>

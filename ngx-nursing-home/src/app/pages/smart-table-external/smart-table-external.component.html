@@ -1,0 +1,15 @@
+<nb-card size="giant">
+    <nb-card-header>
+        Smart table external
+    </nb-card-header>
+    <nb-card-body>
+        <div style="height: 550px;">
+            <ngx-smart-table [columns]="columns" [selectionEnabled]="true" tableMode="external" sourceType="server"
+                (selectionChanged)="onSelectionChanged($event)" [serverDataSourceConf]="config"
+                [selctionModeMultiple]="true" (sourceFiltersReseted)="onFiltersReseted($event)"
+                [defaultPerPageOption]="10" (createStarted)="onCreateStarted()" (editStarted)="onEditStarted($event)"
+                (deleteStarted)="onDeleteStarted($event)">
+            </ngx-smart-table>
+        </div>
+    </nb-card-body>
+</nb-card>

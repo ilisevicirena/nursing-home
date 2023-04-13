@@ -1,0 +1,15 @@
+<nb-card size="giant">
+    <nb-card-header>
+        Smart table inline
+    </nb-card-header>
+    <nb-card-body>
+        <div style="height: 550px;">
+            <ngx-smart-table #table [columns]="columnSettings" [data]="data" [selectionEnabled]="selectionEnabled"
+                [defaultPerPageOption]="defaultPageOption" (selectionChanged)="onSelectionChanged($event)"
+                [selctionModeMultiple]="selectionModeMultiple" (sourceFiltersReseted)="onFiltersReseted($event)"
+                (editConfirm)="onRowEditConfirm($event)" (createConfirm)="onRowCreateConfirm($event)"
+                (deleteConfirm)="onRowDeleteConfirm($event)">
+            </ngx-smart-table>
+        </div>
+    </nb-card-body>
+</nb-card>
