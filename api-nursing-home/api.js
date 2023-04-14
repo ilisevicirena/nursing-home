@@ -11,9 +11,11 @@ app.use('/api', router);
 
 // require route handlers.
 const floors = require('./routes/floors');
+const rooms = require('./routes/rooms');
 
 // register routes
 router.use('/floors', floors);
+router.use('/rooms', rooms);
 
 
 // No need to connect the pool
