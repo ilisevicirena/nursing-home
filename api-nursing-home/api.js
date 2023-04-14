@@ -10,10 +10,10 @@ app.use(bodyParser.json());
 app.use('/api', router);
 
 // require route handlers.
-const orders = require('./routes/orders');
+const floors = require('./routes/floors');
 
 // register routes
-router.use('/orders', orders);
+router.use('/floors', floors);
 
 
 // No need to connect the pool
