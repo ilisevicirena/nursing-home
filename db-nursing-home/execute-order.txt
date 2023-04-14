@@ -5,3 +5,8 @@ proc-getFloors.sql
 proc-insertFloor.sql
 proc-deleteFloor.sql
 proc-updateFloor.sql
+create-tb-room.sql
+proc-getRooms.sql
+proc-insertRoom.sql
+proc-deleteRoom.sql
+proc-updateRoom.sql
