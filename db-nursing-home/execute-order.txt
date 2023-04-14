@@ -4,3 +4,4 @@ create-tb-floor.sql
 proc-getFloors.sql
 proc-insertFloor.sql
 proc-deleteFloor.sql
+proc-updateFloor.sql
