@@ -31,4 +31,35 @@ router.post('/add', async (request, response) => {
     }
 });
 
+router.delete('/delete', async (request, response) => {
+    try {
+        var objectToSave = Object.assign(new Floor, request.body);
+        const pool = await db;
+        const result = await pool.request()
+            .input('id', objectToSave.Id)
+            .query("EXEC [dbo].[deleteFloor] @Id=@id");
+        if (result != null) response.json(result.recordset);
+        else response.send(getError(1002));
+    } catch (err) {
+        response.status(500);
+        response.send(err.message);
+    }
+});
+
+router.post('/update', async (request, response) => {
+    try {
+        var objectToSave = Object.assign(new Floor, request.body);
+        const pool = await db;
+        const result = await pool.request()
+            .input('id', objectToSave.Id)
+            .input('name', objectToSave.Name)
+            .query("EXEC [dbo].[updateFloor] @Id=@id, @Name=@name");
+        if (result != null) response.json(result.recordset);
+        else response.send(getError(1003));
+    } catch (err) {
+        response.status(500);
+        response.send(err.message);
+    }
+});
+
 module.exports = router;
