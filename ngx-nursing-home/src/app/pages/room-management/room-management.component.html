@@ -1,0 +1,36 @@
+<div class="row h-100">
+    <div class="col-md-6 ps-0 h-100">
+        <nb-card class="h-100">
+            <nb-card-body>
+                <nb-tabset (changeTab)="onTabChange($event)">
+                    <nb-tab [tabTitle]="floorsTitle" class="ps-0 pe-0 pb-0">
+                        <div style="height: 729px">
+                            <ngx-smart-table #floorsTable [tableMode]="tableMode" [columns]="floorsColumns"
+                                [(data)]="floorsData" [pagerEnabled]="false" [loadingEnabled]="false"
+                                [(load)]="floorsLoading" [entriesPerPageEnabled]="false"
+                                (createConfirm)="onCreateFloorConfirm($event)"
+                                (deleteConfirm)="onDeleteFloorConfirm($event)"
+                                (editConfirm)="onEditFloorConfirm($event)"></ngx-smart-table>
+                        </div>
+                    </nb-tab>
+                    <nb-tab [tabTitle]="roomsTitle" class="ps-0 pe-0 pb-0">
+                        <div style="height: 729px">
+                            <ngx-smart-table #roomsTable [tableMode]="tableMode" [columns]="roomsColumns"
+                                [(data)]="roomsData" [pagerEnabled]="false" [loadingEnabled]="false"
+                                [(load)]="roomsLoading" [entriesPerPageEnabled]="false"
+                                (createConfirm)="onCreateRoomConfirm($event)" (editConfirm)="onEditRoomConfirm($event)"
+                                (deleteConfirm)="onDeleteRoomConfirm($event)"></ngx-smart-table>
+                        </div>
+                    </nb-tab>
+                </nb-tabset>
+            </nb-card-body>
+        </nb-card>
+    </div>
+    <div class="col-md-6 h-100 p-0">
+        <nb-card class="h-100">
+            <nb-card-body>
+
+            </nb-card-body>
+        </nb-card>
+    </div>
+</div>

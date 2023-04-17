@@ -11,7 +11,6 @@ export class InterceptorService implements HttpInterceptor {
 
   constructor(configService: ConfigService) {
     this.apiBaseUrl = configService.GetAppConfig().ApiServiceUrl;
-    console.log(this.apiBaseUrl)
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {

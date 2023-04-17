@@ -9,6 +9,15 @@ export function getString(key: string): string {
 
 const strings: KeyValue[] = [
     { key: "dashboard", value: "Početna" },
+    { key: "roomManagement", value: "Upravljanje sobama" },
+    { key: "floors", value: "Katevi" },
+    { key: "rooms", value: "Sobe" },
+    { key: "id", value: "Šifra" },
+    { key: "name", value: "Naziv" },
+    { key: "capacity", value: "Kapacitet" },
+    { key: "floor", value: "Kat" },
+    { key: "saveSuccess", value: "Uspješno spremljeno!" },
+    { key: "saveError", value: "Pogreška prilikom spremanja!" },
 ];
 
 const map = new Map(strings.map(obj => [obj.key, obj.value]));

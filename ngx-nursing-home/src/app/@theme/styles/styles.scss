@@ -30,4 +30,10 @@
   @include ngx-pace-theme();
 
   @include nb-overrides();
-};
+}
+
+;
+
+.row {
+  margin: 0;
+}
