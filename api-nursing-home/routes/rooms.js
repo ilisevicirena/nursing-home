@@ -35,7 +35,7 @@ router.post('/add', async (request, response) => {
 
 router.delete('/delete', async (request, response) => {
     try {
-        var objectToSave = Object.assign(new Floor, request.body);
+        var objectToSave = Object.assign(new Room, request.body);
         const pool = await db;
         const result = await pool.request()
             .input('id', objectToSave.Id)

@@ -7,4 +7,9 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'home-outline',
     link: '/pages/dashboard',
   },
+  {
+    title: getString("roomManagement"),
+    icon: 'pantone-outline',
+    link: '/pages/room-management',
+  },
 ];

@@ -26,6 +26,7 @@ import { DashboardModule } from './dashboard/dashboard.module';
 import { PagesRoutingModule } from './pages-routing.module';
 import { SharedComponentsModule } from 'shared-components';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RoomManagementComponent } from './room-management/room-management.component';
 
 @NgModule({
   imports: [
@@ -56,6 +57,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   ],
   declarations: [
     PagesComponent,
+    RoomManagementComponent,
   ],
 })
 export class PagesModule {

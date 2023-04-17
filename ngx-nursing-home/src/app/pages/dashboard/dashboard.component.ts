@@ -1,5 +1,4 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { TestService } from '../../services/test.service';
 
 @Component({
   selector: 'ngx-dashboard',
@@ -9,15 +8,13 @@ import { TestService } from '../../services/test.service';
 
 export class DashboardComponent implements OnDestroy, OnInit {
 
-  constructor(private testService: TestService) { }
+  constructor() { }
 
   ngOnDestroy() {
 
   }
 
   ngOnInit(): void {
-    this.testService.getData().subscribe((data) => {
-      console.log(data);
-    })
+
   }
 }
