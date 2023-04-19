@@ -29,7 +29,29 @@
     <div class="col-md-6 h-100 p-0">
         <nb-card class="h-100">
             <nb-card-body>
-
+                <div class="row">
+                    <nb-tag-list class="p-0">
+                        <nb-tag *ngFor="let floor of floorsData" [text]="floor.Name" status="primary" class="floor-tag"
+                            (click)="onTagClick(floor)" [appearance]="floor.selected ? 'filled' : 'outline'"></nb-tag>
+                    </nb-tag-list>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-md-4 room" *ngFor="let room of selectedFloorRooms">
+                        <div>
+                            <div class="room-name">{{room.Name}}</div>
+                            <div class="room-capacity">
+                                <nb-icon pack="eva" icon="people-outline"></nb-icon>
+                                0/{{room.Capacity}}
+                            </div>
+                        </div>
+                    </div>
+                    <nb-alert *ngIf="selectedFloorRooms.length==0" accent="basic">
+                        <div class="d-flex justify-content-center align-items-center">
+                            <nb-icon pack="eva" icon="alert-triangle-outline" status="primary" class="me-2"></nb-icon>
+                            {{noRoomsTitle}}
+                        </div>
+                    </nb-alert>
+                </div>
             </nb-card-body>
         </nb-card>
     </div>

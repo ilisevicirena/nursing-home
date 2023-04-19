@@ -18,6 +18,7 @@ const strings: KeyValue[] = [
     { key: "floor", value: "Kat" },
     { key: "saveSuccess", value: "Uspješno spremljeno!" },
     { key: "saveError", value: "Pogreška prilikom spremanja!" },
+    { key: "noRoomsForSelectedFloor", value: "Nema spremljenih soba za odabrani kat!" },
 ];
 
 const map = new Map(strings.map(obj => [obj.key, obj.value]));

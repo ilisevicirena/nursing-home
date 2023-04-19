@@ -32,8 +32,78 @@
   @include nb-overrides();
 }
 
-;
-
 .row {
   margin: 0;
+}
+
+nb-tag.appearance-filled.status-basic.selected {
+  background-color: nb-theme(tag-filled-basic-background-color);
+  border-color: nb-theme(tag-filled-basic-border-color);
+  color: nb-theme(tag-filled-basic-text-color);
+}
+
+nb-tag.appearance-filled.status-primary.selected {
+  background-color: nb-theme(tag-filled-primary-background-color);
+  border-color: nb-theme(tag-filled-primary-border-color);
+  color: nb-theme(tag-filled-primary-text-color);
+}
+
+nb-tag.appearance-filled.status-danger.selected {
+  background-color: nb-theme(tag-filled-danger-background-color);
+  border-color: nb-theme(tag-filled-danger-border-color);
+  color: nb-theme(tag-filled-danger-text-color);
+}
+
+nb-tag.appearance-filled.status-info.selected {
+  background-color: nb-theme(tag-filled-info-background-color);
+  border-color: nb-theme(tag-filled-info-border-color);
+  color: nb-theme(tag-filled-info-text-color);
+}
+
+nb-tag.appearance-filled.status-success.selected {
+  background-color: nb-theme(tag-filled-success-background-color);
+  border-color: nb-theme(tag-filled-success-border-color);
+  color: nb-theme(tag-filled-success-text-color);
+}
+
+nb-tag.appearance-filled.status-warning.selected {
+  background-color: nb-theme(tag-filled-warning-background-color);
+  border-color: nb-theme(tag-filled-warning-border-color);
+  color: nb-theme(tag-filled-warning-text-color);
+}
+
+nb-tag.appearance-outline.status-basic.selected {
+  background-color: nb-theme(tag-outline-basic-background-color);
+  border-color: nb-theme(tag-outline-basic-border-color);
+  color: nb-theme(tag-outline-basic-text-color);
+}
+
+nb-tag.appearance-outline.status-primary.selected {
+  background-color: nb-theme(tag-outline-primary-background-color);
+  border-color: nb-theme(tag-outline-primary-border-color);
+  color: nb-theme(tag-outline-primary-text-color);
+}
+
+nb-tag.appearance-outline.status-danger.selected {
+  background-color: nb-theme(tag-outline-danger-background-color);
+  border-color: nb-theme(tag-outline-danger-border-color);
+  color: nb-theme(tag-outline-danger-text-color);
+}
+
+nb-tag.appearance-outline.status-info.selected {
+  background-color: nb-theme(tag-outline-info-background-color);
+  border-color: nb-theme(tag-outline-info-border-color);
+  color: nb-theme(tag-outline-info-text-color);
+}
+
+nb-tag.appearance-outline.status-success.selected {
+  background-color: nb-theme(tag-outline-success-background-color);
+  border-color: nb-theme(tag-outline-success-border-color);
+  color: nb-theme(tag-outline-success-text-color);
+}
+
+nb-tag.appearance-outline.status-warning.selected {
+  background-color: nb-theme(tag-outline-warning-background-color);
+  border-color: nb-theme(tag-outline-warning-border-color);
+  color: nb-theme(tag-outline-warning-text-color);
 }
