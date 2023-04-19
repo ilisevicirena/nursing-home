@@ -10,3 +10,4 @@ proc-getRooms.sql
 proc-insertRoom.sql
 proc-deleteRoom.sql
 proc-updateRoom.sql
+proc-getRoomsForFloor.sql

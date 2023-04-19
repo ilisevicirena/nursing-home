@@ -66,4 +66,17 @@ router.post('/update', async (request, response) => {
     }
 });
 
+router.get('/getRoomsForFloor', async (request, response) => {
+    try {
+        const pool = await db;
+        const result = await pool.request()
+            .input('id', request.query.FloorId)
+            .query("EXEC [dbo].[getRoomsForFloor] @FloorId=@id");
+        response.json(result.recordset);
+    } catch (err) {
+        response.status(500);
+        response.send(err.message);
+    }
+});
+
 module.exports = router;

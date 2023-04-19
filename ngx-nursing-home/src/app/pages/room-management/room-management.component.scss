@@ -1,3 +1,37 @@
+@import "../../@theme/styles/themes.scss";
+
 ::ng-deep sample-room-management {
     height: 100%;
+}
+
+.floor-tag:hover {
+    cursor: pointer;
+}
+
+@include nb-install-component() {
+    .room {
+        border: 1px solid nb-theme(input-basic-border-color);
+        height: 10rem;
+        padding: 1rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+
+        .room-name {
+            color: nb-theme(color-primary-600);
+            opacity: 0.6;
+            font-weight: 600;
+            font-size: 18px;
+        }
+
+        .room-capacity {
+            color: nb-theme(color-primary-600);
+            font-size: 16px;
+            font-weight: 600;
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+        }
+    }
 }

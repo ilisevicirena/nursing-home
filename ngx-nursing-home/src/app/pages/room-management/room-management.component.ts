@@ -15,24 +15,26 @@ export class RoomManagementComponent implements OnInit, OnDestroy {
 
   public floorsTitle: string = getString("floors");
   public roomsTitle: string = getString("rooms");
+  public noRoomsTitle: string = getString("noRoomsForSelectedFloor");
   public floorsData: any[] = [];
   public roomsData: any[] = [];
   public tableMode: TABLE_MODE = TABLE_MODE.POPUP;
   public floorsColumns: SmartTableColumn[] = [
     new SmartTableColumn(getString("id")).Property("Id").Addable(false).Editable(false),
-    new SmartTableColumn(getString("name")).Property("Name")
+    new SmartTableColumn(getString("name")).Property("Name").SpecialEditor(new TextboxEditor().Required(true))
   ];
   public roomsColumns: SmartTableColumn[] = [
     new SmartTableColumn(getString("id")).Property("Id").Addable(false).Editable(false).SpecialEditor(new TextboxEditor().WidthClass("col-md-2")),
-    new SmartTableColumn(getString("name")).Property("Name").SpecialEditor(new TextboxEditor().WidthClass("col-md-10")),
-    new SmartTableColumn(getString("capacity")).Property("Capacity").SpecialEditor(new TextboxEditor().Min(0).Max(10).TextboxType("number").WidthClass("col-md-4")),
+    new SmartTableColumn(getString("name")).Property("Name").SpecialEditor(new TextboxEditor().WidthClass("col-md-10").Required(true)),
+    new SmartTableColumn(getString("capacity")).Property("Capacity").SpecialEditor(new TextboxEditor().Min(0).Max(10).TextboxType("number").WidthClass("col-md-4").Required(true)),
     new SmartTableColumn(getString("floor")).Property("FloorId").SpecialType(new LookupType().NameAttribute("FloorName"))
-      .SpecialEditor(new SelectEditor("Name", "Id").ReturnObjectAsValue(false).ServerSource(true).ServerEndpoint(this.floorsService.apiRoute).WidthClass("col-md-8"))
+      .SpecialEditor(new SelectEditor("Name", "Id").ReturnObjectAsValue(false).ServerSource(true).ServerEndpoint(this.floorsService.apiRoute).WidthClass("col-md-8").Required(true))
       .SpecialFilter(new SelectFilter("Id", "Name").ServerSource(true).ServerEndpoint(this.floorsService.apiRoute))
   ];
 
   public floorsLoading: boolean = false;
   public roomsLoading: boolean = false;
+  public selectedFloorRooms: any[] = [];
 
   private subscriptions: Subscription[] = [];
 
@@ -158,6 +160,14 @@ export class RoomManagementComponent implements OnInit, OnDestroy {
     ));
   }
 
+  public onTagClick(floor: any, firstLoad: boolean = false) {
+    if (!firstLoad) this.floorsData.forEach(x => x.selected = false);
+    floor.selected = true;
+    this.subscriptions.push(this.roomsService.gerRoomsForFloor(floor.Id).subscribe(data => {
+      this.selectedFloorRooms = data;
+    }));
+  }
+
   private refreshTabData(tab: string): void {
     switch (tab) {
       case this.floorsTitle:
@@ -176,6 +186,7 @@ export class RoomManagementComponent implements OnInit, OnDestroy {
     this.floorsLoading = true;
     this.subscriptions.push(this.floorsService.getData().subscribe(data => {
       this.floorsData = data;
+      if (this.floorsData.length > 0) this.onTagClick(this.floorsData[0], true);
       this.floorsLoading = false;
     }, err => {
       console.error(err);

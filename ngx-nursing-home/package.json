@@ -9,7 +9,7 @@
   "scripts": {
     "ng": "ng",
     "conventional-changelog": "conventional-changelog",
-    "start": "node --max_old_space_size=8192 ./node_modules/@angular/cli/bin/ng serve -c development",
+    "start": "node --max_old_space_size=8192 ./node_modules/@angular/cli/bin/ng serve",
     "build": "ng build",
     "build:prod": "npm run build -- --configuration production --aot",
     "test": "ng test",
