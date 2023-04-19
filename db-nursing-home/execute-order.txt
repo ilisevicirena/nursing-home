@@ -16,3 +16,4 @@ proc-getPersons.sql
 proc-insertPerson.sql
 proc-deletePerson.sql
 proc-updatePerson.sql
+proc-changeStatusPerson.sql
