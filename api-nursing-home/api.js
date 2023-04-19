@@ -12,11 +12,12 @@ app.use('/api', router);
 // require route handlers.
 const floors = require('./routes/floors');
 const rooms = require('./routes/rooms');
+const persons = require('./routes/persons');
 
 // register routes
 router.use('/floors', floors);
 router.use('/rooms', rooms);
-
+router.use('/persons', persons);
 
 // No need to connect the pool
 // Just start the web server
