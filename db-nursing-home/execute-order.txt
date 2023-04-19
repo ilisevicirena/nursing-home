@@ -11,3 +11,8 @@ proc-insertRoom.sql
 proc-deleteRoom.sql
 proc-updateRoom.sql
 proc-getRoomsForFloor.sql
+create-tb-person.sql
+proc-getPersons.sql
+proc-insertPerson.sql
+proc-deletePerson.sql
+proc-updatePerson.sql
