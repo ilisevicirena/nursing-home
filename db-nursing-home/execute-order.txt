@@ -17,3 +17,6 @@ proc-insertPerson.sql
 proc-deletePerson.sql
 proc-updatePerson.sql
 proc-changeStatusPerson.sql
+create-tb-personRoomRelation.sql
+proc-changeRoomPerson.sql
+proc-getRoomsHistoryForPerson.sql
