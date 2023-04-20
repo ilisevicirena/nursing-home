@@ -30,6 +30,36 @@
   @include ngx-pace-theme();
 
   @include nb-overrides();
+
+  .title-container-person {
+
+    .window-title-person {
+      font-size: 14px;
+      color: nb-theme(input-basic-placeholder-text-color);
+      margin-left: 0.5rem;
+      margin-right: 0.5rem;
+    }
+
+    .title-id {
+      font-size: 14px;
+      color: nb-theme(input-basic-placeholder-text-color);
+    }
+  }
+
+  .title-container-person-details {
+    margin-top: 0.5rem;
+
+    .window-title-person {
+      font-size: 24px;
+      font-weight: 600;
+      margin-right: 0.5rem;
+    }
+
+    .title-id {
+      font-size: 24px;
+      color: nb-theme(input-basic-placeholder-text-color);
+    }
+  }
 }
 
 .row {
@@ -106,4 +136,12 @@ nb-tag.appearance-outline.status-warning.selected {
   background-color: nb-theme(tag-outline-warning-background-color);
   border-color: nb-theme(tag-outline-warning-border-color);
   color: nb-theme(tag-outline-warning-text-color);
+}
+
+.card-value {
+  font-weight: 600;
+}
+
+.form-group .label {
+  margin-bottom: 0.5rem;
 }

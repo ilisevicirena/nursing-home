@@ -14,6 +14,7 @@ import {
   NbMenuModule,
   NbSidebarModule,
   NbToastrModule,
+  NbToggleModule,
   NbWindowModule,
 } from '@nebular/theme';
 

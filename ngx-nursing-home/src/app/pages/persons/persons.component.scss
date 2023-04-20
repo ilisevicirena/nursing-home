@@ -1,0 +1,11 @@
+.person-card-header:hover {
+    cursor: pointer;
+}
+
+::ng-deep sample-persons {
+    height: 100%;
+}
+
+.content-container {
+    height: calc(100% - 2.1rem);
+}

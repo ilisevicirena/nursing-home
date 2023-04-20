@@ -1,0 +1,82 @@
+@use '../../@theme/styles/themes.scss' as *;
+@import "../../@theme/styles/themes.scss";
+
+
+::ng-deep nb-window.person-popup-window {
+    height: calc(100% - 3.5rem);
+    margin: 0 !important;
+    width: 100%;
+
+    nb-card:first-of-type {
+        height: 100%;
+        width: 100%;
+        border-top-left-radius: 0.5rem;
+        border-bottom-left-radius: 0.5rem !important;
+        position: relative;
+        animation-name: example;
+        animation-duration: 0.2s;
+        animation-timing-function: linear;
+        // transition-timing-function: cubic-bezier(0.1, 0.7, 1.0, 0.1);
+        animation-fill-mode: forwards;
+
+        nb-card-body {
+            padding: 0;
+        }
+    }
+}
+
+.w-80 {
+    width: 80% !important;
+}
+
+
+@keyframes example {
+    from {
+        clip-path: inset(0 0 0 100%);
+    }
+
+    to {
+        clip-path: inset(0 0 0 0);
+    }
+}
+
+@include nb-install-component {
+    .person-details-body {
+        .left-content {
+            border-right: nb-theme(card-divider-width) nb-theme(card-divider-style) nb-theme(card-divider-color);
+            position: relative;
+        }
+
+        .left-content-footer {
+            position: absolute;
+            width: 100%;
+            bottom: 0;
+            padding: 1rem;
+            background-color: nb-theme(background-basic-color-2);
+            border-bottom-left-radius: 0.5rem;
+            border-top: nb-theme(card-divider-width) nb-theme(card-divider-style) nb-theme(card-divider-color);
+        }
+    }
+
+    .group-title {
+        padding: 1rem;
+        font-size: 16px;
+        font-weight: 600;
+
+        .line {
+            height: 0.2rem;
+            width: 2.2rem;
+            background-color: nb-theme(color-primary-500);
+        }
+    }
+}
+
+.form-row {
+    padding: 0.5rem;
+    padding-top: 0;
+}
+
+.external-details {
+    position: absolute;
+    bottom: 65px;
+}
