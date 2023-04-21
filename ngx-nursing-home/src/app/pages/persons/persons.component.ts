@@ -78,12 +78,16 @@ export class PersonsComponent implements OnInit, OnDestroy {
       PersonPopupWindowComponent,
       {
         context: { person: person, personId: person.Id },
-        buttons: { maximize: false, minimize: false, fullScreen: false },
+        buttons: { maximize: false, minimize: false, fullScreen: false, close: false },
         initialState: NbWindowState.MAXIMIZED,
         hasBackdrop: true,
         windowClass: "person-popup-window",
+        closeOnBackdropClick: false,
+        closeOnEsc: false
       },
-    );
+    ).onClose.subscribe((result: boolean) => {
+      if (result) this.getData();
+    });
   }
 
   public gridSelectionChanged(event: any) {

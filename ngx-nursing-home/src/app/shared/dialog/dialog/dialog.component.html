@@ -1,0 +1,23 @@
+<nb-card accent="primary">
+    <nb-card-body>
+        <div class="row">
+            <div class="col-md-3 d-flex justify-content-center">
+                <nb-icon pack="eva" icon="question-mark-circle-outline" status="primary" class="info-icon"></nb-icon>
+            </div>
+            <div class="col-md-9">
+                <p><strong>{{dialogTitle}}</strong></p>
+                {{ dialogBody }}
+            </div>
+        </div>
+    </nb-card-body>
+    <nb-card-footer>
+        <button status="success" outline size="small" (click)="close(true);" nbButton shape="round">
+            {{getString("yes")}}
+            <nb-icon pack="eva" icon="checkmark-outline"></nb-icon>
+        </button>
+        <button status="danger" outline size="small" (click)="close(false);" nbButton shape="round" class="btnDa">
+            {{getString("no")}}
+            <nb-icon pack="eva" icon="close-outline"></nb-icon>
+        </button>
+    </nb-card-footer>
+</nb-card>

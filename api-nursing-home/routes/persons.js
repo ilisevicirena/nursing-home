@@ -94,7 +94,7 @@ router.post('/changeStatusPerson', async (request, response) => {
             .input('id', objectToSave.Id)
             .input('status', objectToSave.Active)
             .input('endDate', objectToSave.EndDate)
-            .query("EXEC [dbo].[changeStatusPerson] @Id=@id, @Status=@status @Date=@endDate");
+            .query("EXEC [dbo].[changeStatusPerson] @Id=@id, @Status=@status, @Date=@endDate");
         if (result != null) response.json(result.recordset);
         else response.send(getError(3004));
     } catch (err) {
@@ -113,6 +113,19 @@ router.post('/changeRoomPerson', async (request, response) => {
             .query("EXEC [dbo].[changeRoomPerson] @PersonId=@personId, @RoomId=@roomId");
         if (result != null) response.json(result.recordset);
         else response.send(getError(3005));
+    } catch (err) {
+        response.status(500);
+        response.send(err.message);
+    }
+});
+
+router.get('/personDetails', async (request, response) => {
+    try {
+        const pool = await db;
+        const result = await pool.request()
+            .input('id', request.query.id)
+            .query("EXEC [dbo].[getPerson] @Id=@id");
+        response.json(result.recordset);
     } catch (err) {
         response.status(500);
         response.send(err.message);

@@ -60,6 +60,12 @@
       color: nb-theme(input-basic-placeholder-text-color);
     }
   }
+
+  .line-divider {
+    border-bottom: nb-theme(card-divider-width) nb-theme(card-divider-style) nb-theme(card-divider-color);
+    width: 100%;
+    height: max-content;
+  }
 }
 
 .row {

@@ -77,6 +77,26 @@
 }
 
 .external-details {
+    height: 6rem;
+    display: flex;
+    align-items: end;
+
+    button {
+        width: max-content;
+    }
+}
+
+.info-icon-status {
+    font-size: 35px;
+}
+
+.close-button {
     position: absolute;
-    bottom: 65px;
+    right: 1rem;
+    top: 1rem;
+}
+
+.left-content-form {
+    max-height: calc(100% - 90px);
+    overflow: auto;
 }
