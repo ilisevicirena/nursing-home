@@ -151,3 +151,7 @@ nb-tag.appearance-outline.status-warning.selected {
 .form-group .label {
   margin-bottom: 0.5rem;
 }
+
+nb-select.appearance-outline.status-basic .select-button.placeholder {
+  opacity: unset;
+}

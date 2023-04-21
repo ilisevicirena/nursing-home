@@ -5,6 +5,7 @@ import { IPerson, PersonsService, getIPersonFromJSON } from '../../services/rest
 import { getString } from '../../resources/strings';
 import { DialogService } from '../../shared/dialog/dialog.service';
 import { ToastrService } from '../../services/toastr.service';
+import { RoomsService } from '../../services/rest/rooms.service';
 @Component({
   selector: 'sample-person-popup-window',
   templateUrl: './person-popup-window.component.html',
@@ -16,7 +17,8 @@ export class PersonPopupWindowComponent implements OnInit, AfterViewInit, OnDest
     private ref: NbWindowRef,
     private personsService: PersonsService,
     private dialogService: DialogService,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private roomsService: RoomsService
   ) { }
 
   public getString = getString;
@@ -32,7 +34,8 @@ export class PersonPopupWindowComponent implements OnInit, AfterViewInit, OnDest
     StartDate: undefined,
     EndDate: undefined,
     BirthDate: undefined
-  }
+  };
+  public rooms: any[] = [];
 
   private subscriptions: Subscription[] = [];
   private madeChanges: boolean = false;
@@ -41,6 +44,7 @@ export class PersonPopupWindowComponent implements OnInit, AfterViewInit, OnDest
 
   ngOnInit(): void {
     this.getPersonData();
+    this.getRoomsData();
   }
 
   ngAfterViewInit(): void {
@@ -95,6 +99,19 @@ export class PersonPopupWindowComponent implements OnInit, AfterViewInit, OnDest
     );
   }
 
+  private getRoomsData(): void {
+    this.subscriptions.push(
+      this.roomsService.getData(true).subscribe(data => {
+        if (data.length > 0) {
+          this.rooms = data;
+        }
+      },
+        err => {
+          console.error(err);
+        })
+    );
+  }
+
   public cancelSave(): void {
     this.newPersonData = getIPersonFromJSON(JSON.parse(JSON.stringify(this.person)));
   }
@@ -114,5 +131,17 @@ export class PersonPopupWindowComponent implements OnInit, AfterViewInit, OnDest
         console.error(err);
       }));
     }
+  }
+
+  public onRoomSelectedChange(event: any): void {
+    var obj = this.rooms.find(x => x.Id == event);
+    if (obj) {
+      this.newPersonData.FloorId = obj.FloorId;
+      this.newPersonData.FloorName = obj.FloorName;
+    }
+  }
+
+  public saveChanges(): void {
+
   }
 }

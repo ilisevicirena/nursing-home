@@ -36,6 +36,10 @@ export interface IPerson {
   EndDate?: Date;
   Active: boolean;
   CreationDate: Date;
+  RoomId?: number;
+  RoomName?: string;
+  FloorId?: number;
+  FloorName?: string;
 }
 
 export function getIPersonFromJSON(json: any): IPerson {
@@ -48,6 +52,10 @@ export function getIPersonFromJSON(json: any): IPerson {
     CreationDate: json.CreationDate ? new Date(json.CreationDate) : undefined,
     StartDate: json.StartDate ? new Date(json.StartDate) : undefined,
     EndDate: json.EndDate ? new Date(json.EndDate) : undefined,
-    BirthDate: json.BirthDate ? new Date(json.BirthDate) : undefined
+    BirthDate: json.BirthDate ? new Date(json.BirthDate) : undefined,
+    RoomId: json.RoomId,
+    RoomName: json.RoomName,
+    FloorId: json.FloorId,
+    FloorName: json.FloorName
   };
 }

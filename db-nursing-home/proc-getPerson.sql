@@ -30,16 +30,25 @@ BEGIN
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
-	SELECT 
-		[Id] = Id,
-		[FirstName]=FirstName,
-		[LastName]=LastName,
-		[JMBG]=JMBG,
-		[BirthDate]=BirthDate,
-		[Active]=Active,
-		[StartDate]=StartDate,
-		[EndDate]=EndDate,
-		[CreationDate]=CreationDate
-	FROM [dbo].[Person] WHERE Id=@Id
+SELECT 
+		[Id] = person.Id,
+		[FirstName]=person.FirstName,
+		[LastName]=person.LastName,
+		[JMBG]=person.JMBG,
+		[BirthDate]=person.BirthDate,
+		[Active]=person.Active,
+		[StartDate]=person.StartDate,
+		[EndDate]=person.EndDate,
+		[CreationDate]=person.CreationDate,
+		[RoomId]=relation.RoomId,
+		[RoomName]=room.Name,
+		[FloorId]=floor.Id,
+		[FloorName]=floor.Name
+	FROM [dbo].[Person] as person, [dbo].Room as room, [dbo].PersonRoomRelation relation, [dbo].Floor as floor 
+	WHERE person.Id=@Id 
+	AND relation.PersonId=@Id 
+	AND relation.Active=1 
+	AND relation.RoomId=room.Id
+	AND floor.Id=room.FloorId
 END
 GO

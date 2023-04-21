@@ -128,13 +128,19 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <div class="label">{{getString("currentFloor")}}</div>
-                        <div class="value"><input nbInput [placeholder]="getString('floor')" fullWidth></div>
+                        <div class="value"><input nbInput [placeholder]="getString('floor')" fullWidth
+                                [(ngModel)]="newPersonData.FloorName" disabled></div>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         <div class="label">{{getString("room")}}</div>
-                        <div class="value"><input nbInput [placeholder]="getString('room')" fullWidth></div>
+                        <div class="value">
+                            <nb-select [placeholder]="getString('room')" fullWidth [(selected)]="newPersonData.RoomId"
+                                (selectedChange)="onRoomSelectedChange($event)">
+                                <nb-option *ngFor="let room of rooms" [value]="room.Id">{{room.Name}}</nb-option>
+                            </nb-select>
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-1">
@@ -157,7 +163,8 @@
         <div class="left-content-footer d-flex justify-content-end">
             <button nbButton status="basic" size="small" ghost shape="round" (click)="cancelSave()"
                 class="me-2">{{getString("cancel")}}</button>
-            <button nbButton status="primary" size="small" shape="round">{{getString("save")}}</button>
+            <button nbButton status="primary" size="small" shape="round"
+                (click)="saveChanges()">{{getString("save")}}</button>
         </div>
     </div>
     <div class="col-md-4 ">
