@@ -7,6 +7,7 @@ import { ThemeModule } from './@theme/theme.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import {
+  NbAlertModule,
   NbButtonModule,
   NbCardModule,
   NbChatModule,
@@ -52,7 +53,8 @@ registerLocaleData(hr);
     NbCardModule,
     NbDialogModule,
     NbIconModule,
-    NbButtonModule
+    NbButtonModule,
+    NbAlertModule
   ],
   bootstrap: [AppComponent],
   providers: [

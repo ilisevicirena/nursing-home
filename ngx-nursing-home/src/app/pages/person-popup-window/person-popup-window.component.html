@@ -175,7 +175,53 @@
         </div>
     </div>
     <div class="col-md-4 ">
-
+        <div class="group-title">
+            {{getString('contacts')}}
+            <div class="line"></div>
+        </div>
+        <sample-no-data *ngIf="contacts.length==0" [title]="getString('noContacts')"></sample-no-data>
+        <div class="grey-card" *ngFor="let contact of contacts">
+            <div class="row row ms-0 me-0 mt-0 mb-1">
+                <div class="col-md-6">
+                    <div class="label">{{getString('firstName')}}</div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card-value">{{contact.FirstName}}</div>
+                </div>
+            </div>
+            <div class="row row ms-0 me-0 mt-0 mb-1">
+                <div class="col-md-6">
+                    <div class="label">{{getString('lastName')}}</div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card-value">{{contact.LastName}}</div>
+                </div>
+            </div>
+            <div class="row row ms-0 me-0 mt-0 mb-1">
+                <div class="col-md-6">
+                    <div class="label">{{getString('email')}}</div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card-value">{{contact.Email ?? '-'}}</div>
+                </div>
+            </div>
+            <div class="row row ms-0 me-0 mt-0 mb-1">
+                <div class="col-md-6">
+                    <div class="label">{{getString('telephone')}}</div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card-value">{{contact.Telepone ?? '-'}}</div>
+                </div>
+            </div>
+            <div class="row row ms-0 me-0 mt-0 mb-1">
+                <div class="col-md-6">
+                    <div class="label">{{getString('mobile')}}</div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card-value">{{contact.Mobile ?? '-'}}</div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 

@@ -53,6 +53,11 @@ const strings: IKeyValue[] = [
     { key: "yes", value: "Da" },
     { key: "no", value: "Ne" },
     { key: "search", value: "Pretraživanje" },
+    { key: "contacts", value: "Kontakti" },
+    { key: "email", value: "E-mail" },
+    { key: "telephone", value: "Telefon" },
+    { key: "mobile", value: "Mobitel" },
+    { key: "noContacts", value: "Nema spremljenih kontakata!" },
 ];
 
 const map = new Map(strings.map(obj => [obj.key, obj.value]));

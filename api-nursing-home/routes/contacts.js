@@ -9,7 +9,7 @@ router.get('/', async (request, response) => {
         const pool = await db;
         const result = await pool.request()
             .input("personId", request.query.PersonId)
-            .query("EXEC [dbo].[getContacts @PersonId=@personId]");
+            .query("EXEC [dbo].[getContacts] @PersonId=@personId");
         response.json(result.recordset);
     } catch (err) {
         response.status(500);

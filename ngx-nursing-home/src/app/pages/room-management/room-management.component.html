@@ -45,12 +45,7 @@
                             </div>
                         </div>
                     </div>
-                    <nb-alert *ngIf="selectedFloorRooms.length==0" accent="basic">
-                        <div class="d-flex justify-content-center align-items-center">
-                            <nb-icon pack="eva" icon="alert-triangle-outline" status="primary" class="me-2"></nb-icon>
-                            {{noRoomsTitle}}
-                        </div>
-                    </nb-alert>
+                    <sample-no-data [title]="noRoomsTitle" *ngIf="selectedFloorRooms.length==0"></sample-no-data>
                 </div>
             </nb-card-body>
         </nb-card>

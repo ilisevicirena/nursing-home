@@ -19,7 +19,7 @@ const contacts = require('./routes/contacts');
 router.use('/floors', floors);
 router.use('/rooms', rooms);
 router.use('/persons', persons);
-router.use('/persons', contacts);
+router.use('/contacts', contacts);
 
 // No need to connect the pool
 // Just start the web server

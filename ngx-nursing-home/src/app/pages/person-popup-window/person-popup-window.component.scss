@@ -83,6 +83,15 @@
             background-color: nb-theme(color-primary-500);
         }
     }
+
+    .grey-card {
+        border-radius: 0.5rem;
+        padding: 1rem;
+        background-color: nb-theme(color-basic-300);
+        margin-left: 1rem;
+        margin-right: 1rem;
+        margin-bottom: 0.5rem;
+    }
 }
 
 .form-row {
