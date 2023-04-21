@@ -13,11 +13,13 @@ app.use('/api', router);
 const floors = require('./routes/floors');
 const rooms = require('./routes/rooms');
 const persons = require('./routes/persons');
+const contacts = require('./routes/contacts');
 
 // register routes
 router.use('/floors', floors);
 router.use('/rooms', rooms);
 router.use('/persons', persons);
+router.use('/persons', contacts);
 
 // No need to connect the pool
 // Just start the web server
