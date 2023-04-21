@@ -12,4 +12,9 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'pantone-outline',
     link: '/pages/room-management',
   },
+  {
+    title: getString("persons"),
+    icon: 'people-outline',
+    link: '/pages/persons',
+  },
 ];

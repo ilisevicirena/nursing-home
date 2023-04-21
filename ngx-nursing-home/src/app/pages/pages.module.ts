@@ -18,8 +18,14 @@ import {
   NbToastrModule,
   NbTooltipModule,
   NbWindowModule,
+  NbToggleModule,
+  NbButtonGroupModule,
+  NbFormFieldModule,
+  NbPopoverModule,
+
 }
   from '@nebular/theme';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { ThemeModule } from '../@theme/theme.module';
 import { PagesComponent } from './pages.component';
 import { DashboardModule } from './dashboard/dashboard.module';
@@ -27,6 +33,8 @@ import { PagesRoutingModule } from './pages-routing.module';
 import { SharedComponentsModule } from 'shared-components';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RoomManagementComponent } from './room-management/room-management.component';
+import { PersonsComponent } from './persons/persons.component';
+import { PersonPopupWindowComponent } from './person-popup-window/person-popup-window.component';
 
 @NgModule({
   imports: [
@@ -54,10 +62,17 @@ import { RoomManagementComponent } from './room-management/room-management.compo
     NbLayoutModule,
     NbOverlayModule,
     NbWindowModule.forChild(),
+    NbToggleModule,
+    NbButtonGroupModule,
+    NbFormFieldModule,
+    NbPopoverModule,
+    Ng2SearchPipeModule,
   ],
   declarations: [
     PagesComponent,
     RoomManagementComponent,
+    PersonsComponent,
+    PersonPopupWindowComponent,
   ],
 })
 export class PagesModule {

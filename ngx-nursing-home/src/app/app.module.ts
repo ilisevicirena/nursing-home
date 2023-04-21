@@ -7,13 +7,17 @@ import { ThemeModule } from './@theme/theme.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import {
+  NbButtonModule,
+  NbCardModule,
   NbChatModule,
   NbDatepickerModule,
   NbDialogModule,
+  NbIconModule,
   NbLayoutModule,
   NbMenuModule,
   NbSidebarModule,
   NbToastrModule,
+  NbToggleModule,
   NbWindowModule,
 } from '@nebular/theme';
 
@@ -23,10 +27,11 @@ import { SharedComponentsModule } from 'shared-components';
 import hr from '@angular/common/locales/hr';
 import { InterceptorService } from './services/interceptor.service';
 import { ConfigLoader, ConfigService } from './services/config.service';
+import { DialogComponent } from './shared/dialog/dialog/dialog.component';
 registerLocaleData(hr);
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, DialogComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -44,6 +49,10 @@ registerLocaleData(hr);
     CommonModule,
     NbLayoutModule,
     Ng2SmartTableModule,
+    NbCardModule,
+    NbDialogModule,
+    NbIconModule,
+    NbButtonModule
   ],
   bootstrap: [AppComponent],
   providers: [

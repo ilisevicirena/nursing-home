@@ -8,7 +8,8 @@ router.get('/', async (request, response) => {
     try {
         const pool = await db;
         const result = await pool.request()
-            .query("EXEC [dbo].[getRooms]");
+            .input('capacity', request.query.UseCapacity)
+            .query("EXEC [dbo].[getRooms] @UseCapacity=@capacity");
         response.json(result.recordset);
     } catch (err) {
         response.status(500);

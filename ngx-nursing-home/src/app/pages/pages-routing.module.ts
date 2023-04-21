@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { PagesComponent } from './pages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { RoomManagementComponent } from './room-management/room-management.component';
+import { PersonsComponent } from './persons/persons.component';
 
 const routes: Routes = [{
   path: '',
@@ -20,6 +21,10 @@ const routes: Routes = [{
     {
       path: 'room-management',
       component: RoomManagementComponent
+    },
+    {
+      path: 'persons',
+      component: PersonsComponent
     },
   ],
 }];

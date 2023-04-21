@@ -28,6 +28,22 @@ BEGIN
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
+	IF @Active=0
+	BEGIN 
+	SELECT 
+		[Id] = Id,
+		[FirstName]=FirstName,
+		[LastName]=LastName,
+		[JMBG]=JMBG,
+		[BirthDate]=BirthDate,
+		[Active]=Active,
+		[StartDate]=StartDate,
+		[EndDate]=EndDate,
+		[CreationDate]=CreationDate
+	FROM [dbo].[Person] 
+	END
+	ELSE
+	BEGIN
 	SELECT 
 		[Id] = Id,
 		[FirstName]=FirstName,
@@ -39,5 +55,6 @@ BEGIN
 		[EndDate]=EndDate,
 		[CreationDate]=CreationDate
 	FROM [dbo].[Person] WHERE Active=@Active
+	END
 END
 GO
