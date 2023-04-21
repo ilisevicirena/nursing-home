@@ -32,13 +32,17 @@
             </div>
             <div class="col-md-3 p-0">
                 <nb-form-field>
-                    <input nbInput shape="round" fullWidth>
+                    <input nbInput shape="round" fullWidth [placeholder]="getString('search')" [(ngModel)]="searchTerm">
                     <nb-icon pack="eva" icon="search-outline" nbPrefix></nb-icon>
+                    <button nbButton nbSuffix ghost shape="round" status="basic" *ngIf="searchTerm.length>0"
+                        (click)="searchTerm='';">
+                        <nb-icon pack="eva" icon="close-outline"></nb-icon>
+                    </button>
                 </nb-form-field>
             </div>
         </div>
         <div class="row m-0">
-            <div class="col-md-3 p-1" *ngFor="let person of personsData">
+            <div class="col-md-3 p-1" *ngFor="let person of personsData | filter:searchTerm">
                 <nb-card>
                     <nb-card-header class="d-flex align-items-center person-card-header"
                         (click)="openPersonDetails(person)">

@@ -36,7 +36,7 @@ const strings: IKeyValue[] = [
     { key: "unactiveTooltip", value: "Osoba je bila smještena u ustanovi, ali je njen boravak završio." },
     { key: "deactivatePerson", value: "Deaktiviraj osobu" },
     { key: "dormatoryData", value: "Podaci o smještaju" },
-    { key: "currentFloor", value: "Kat na kojemu je osoba trenutno smještena" },
+    { key: "currentFloor", value: "Kat na kojemu je osoba smještena" },
     { key: "room", value: "Soba" },
     { key: "goToExternalRoomManagement", value: "Idi na vanjsko upravljanje smještajem" },
     { key: "goToAdvancedEdit", value: "Idi na napredno uređivanje" },
@@ -52,6 +52,7 @@ const strings: IKeyValue[] = [
     { key: "questionDeactivatePerson", value: "Želite li deaktivirati osobu s datumom: " },
     { key: "yes", value: "Da" },
     { key: "no", value: "Ne" },
+    { key: "search", value: "Pretraživanje" },
 ];
 
 const map = new Map(strings.map(obj => [obj.key, obj.value]));

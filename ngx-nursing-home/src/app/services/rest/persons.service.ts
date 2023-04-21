@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BaseRestApiService } from '../base-rest-api.service';
+import { BaseRestApiService, IBaseSaveModel } from '../base-rest-api.service';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -24,10 +24,18 @@ export class PersonsService extends BaseRestApiService {
   public deactivatePerson(id, date: Date = null): Observable<any> {
     return this.http.post(this.apiRoute + "/changeStatusPerson", { Id: id, Active: false, EndDate: date ? date.toISOString() : null });
   }
+
+  public update(model: IPerson): Observable<any> {
+    var obj = JSON.parse(JSON.stringify(model))
+    return this.http.post(this.apiRoute + '/update', obj);
+  }
+
+  public changeRoom(personId: number, roomId: number): Observable<any> {
+    return this.http.post(this.apiRoute + "/changeRoomPerson", { PersonId: personId, RoomId: roomId });
+  }
 }
 
-export interface IPerson {
-  Id: number;
+export interface IPerson extends IBaseSaveModel {
   FirstName: string;
   LastName: string;
   JMBG: string;
@@ -35,7 +43,7 @@ export interface IPerson {
   StartDate?: Date;
   EndDate?: Date;
   Active: boolean;
-  CreationDate: Date;
+  CreationDate: Date | string;
   RoomId?: number;
   RoomName?: string;
   FloorId?: number;

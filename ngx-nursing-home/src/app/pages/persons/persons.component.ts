@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/c
 import { getString } from '../../resources/strings';
 import { PersonsService } from '../../services/rest/persons.service';
 import { Subscription } from 'rxjs';
-import { DateType, SmartTableColumn, SpecialType, TABLE_SPECIAL_TYPES, CheckboxType, DatepickerFilter, SPECIAL_FILTER_TYPES, SelectFilter } from 'shared-components';
+import { DateType, SmartTableColumn, CheckboxType, DatepickerFilter, SelectFilter } from 'shared-components';
 import { NbWindowService, NbWindowState } from '@nebular/theme';
 import { PersonPopupWindowComponent } from '../person-popup-window/person-popup-window.component';
 
@@ -13,31 +13,33 @@ import { PersonPopupWindowComponent } from '../person-popup-window/person-popup-
 })
 export class PersonsComponent implements OnInit, OnDestroy {
 
+  public getString = getString;
   public currentView: string = "card";
   public unactivePersonsString: string = getString("unactivePersons");
   public personsData: any[] = [];
   public showDeactivated: boolean = false;
   public cardData: any[] = [
-    { label: "JMBG", field: "JMBG", type: "" },
-    { label: "Datum rođenja", field: "BirthDate", type: "date" },
-    { label: "Datum dolaska", field: "StartDate", type: "date" },
-    { label: "Aktivan", field: "Active", type: "checkbox" },
+    { label: getString('jmbg'), field: "JMBG", type: "" },
+    { label: getString('birthDate'), field: "BirthDate", type: "date" },
+    { label: getString('startDate'), field: "StartDate", type: "date" },
+    { label: getString('active'), field: "Active", type: "checkbox" },
   ];
+  public searchTerm: string = "";
 
   private activeFilter = [
-    { value: true, label: "Aktivan" },
-    { value: false, label: "Neaktivan" }
+    { value: true, label: getString('active') },
+    { value: false, label: getString('unactive') }
   ];
 
   public gridColumns: SmartTableColumn[] = [
-    new SmartTableColumn("Id").Property("Id"),
-    new SmartTableColumn("Ime").Property("FirstName"),
-    new SmartTableColumn("Prezime").Property("LastName"),
-    new SmartTableColumn("JMBG").Property("JMBG"),
-    new SmartTableColumn("Datum rođenja").Property("BirthDate").SpecialType(new DateType()).SpecialFilter(new DatepickerFilter()),
-    new SmartTableColumn("Datum dolaska").Property("StartDate").SpecialType(new DateType()).SpecialFilter(new DatepickerFilter()),
-    new SmartTableColumn("Datum odlaska").Property("EndDate").SpecialType(new DateType()).SpecialFilter(new DatepickerFilter()),
-    new SmartTableColumn("Aktivan").Property("Active").SpecialType(new CheckboxType())
+    new SmartTableColumn(getString('id')).Property("Id"),
+    new SmartTableColumn(getString('firstName')).Property("FirstName"),
+    new SmartTableColumn(getString('lastName')).Property("LastName"),
+    new SmartTableColumn(getString('jmbg')).Property("JMBG"),
+    new SmartTableColumn(getString('birthDate')).Property("BirthDate").SpecialType(new DateType()).SpecialFilter(new DatepickerFilter()),
+    new SmartTableColumn(getString('startDate')).Property("StartDate").SpecialType(new DateType()).SpecialFilter(new DatepickerFilter()),
+    new SmartTableColumn(getString('endDate')).Property("EndDate").SpecialType(new DateType()).SpecialFilter(new DatepickerFilter()),
+    new SmartTableColumn(getString('active')).Property("Active").SpecialType(new CheckboxType())
       .SpecialFilter(new SelectFilter("value", "label").Source(this.activeFilter))
   ];
 

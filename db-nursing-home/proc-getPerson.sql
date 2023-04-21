@@ -1,18 +1,13 @@
--- ================================================
--- Template generated from Template Explorer using:
--- Create Procedure (New Menu).SQL
---
--- Use the Specify Values for Template Parameters 
--- command (Ctrl-Shift-M) to fill in the parameter 
--- values below.
---
--- This block of comments will not be included in
--- the definition of the procedure.
--- ================================================
+USE [ENV01_NURSING_HOME]
+GO
+
+/****** Object:  StoredProcedure [dbo].[getPerson]    Script Date: 21.4.2023. 14:32:21 ******/
 SET ANSI_NULLS ON
 GO
+
 SET QUOTED_IDENTIFIER ON
 GO
+
 -- =============================================
 -- Author:		Irena Ilisevic
 -- Create date: 21.4.2023.
@@ -30,7 +25,19 @@ BEGIN
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
-SELECT 
+	declare @RoomRow table(Id int, Name varchar(50), FloorId int);
+	declare @FloorRow table(Id int, Name varchar(50));
+
+	insert into @RoomRow
+	select room.Id, room.Name,room.FloorId from dbo.Room as room, dbo.PersonRoomRelation relation where relation.PersonId=@Id 
+	and relation.RoomId=room.Id and relation.Active=1;
+
+	insert into @FloorRow
+	select floor.Id, floor.Name from dbo.Floor as floor, @RoomRow as row where row.FloorId=floor.Id;
+
+	IF(EXISTS(SELECT 1 FROM @RoomRow))
+	begin
+	SELECT 
 		[Id] = person.Id,
 		[FirstName]=person.FirstName,
 		[LastName]=person.LastName,
@@ -40,15 +47,34 @@ SELECT
 		[StartDate]=person.StartDate,
 		[EndDate]=person.EndDate,
 		[CreationDate]=person.CreationDate,
-		[RoomId]=relation.RoomId,
+		[RoomId]=room.Id,
 		[RoomName]=room.Name,
 		[FloorId]=floor.Id,
 		[FloorName]=floor.Name
-	FROM [dbo].[Person] as person, [dbo].Room as room, [dbo].PersonRoomRelation relation, [dbo].Floor as floor 
+	FROM [dbo].[Person] as person, @RoomRow as room, @FloorRow as floor 
 	WHERE person.Id=@Id 
-	AND relation.PersonId=@Id 
-	AND relation.Active=1 
-	AND relation.RoomId=room.Id
-	AND floor.Id=room.FloorId
+	end
+	else
+	begin
+	SELECT 
+		[Id] = person.Id,
+		[FirstName]=person.FirstName,
+		[LastName]=person.LastName,
+		[JMBG]=person.JMBG,
+		[BirthDate]=person.BirthDate,
+		[Active]=person.Active,
+		[StartDate]=person.StartDate,
+		[EndDate]=person.EndDate,
+		[CreationDate]=person.CreationDate,
+		[RoomId]=NULL,
+		[RoomName]=NULL,
+		[FloorId]=NULL,
+		[FloorName]=NULL
+	FROM [dbo].[Person] as person
+	WHERE person.Id=@Id 
+	end
+	
 END
 GO
+
+

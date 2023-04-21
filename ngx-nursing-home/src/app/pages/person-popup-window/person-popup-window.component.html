@@ -1,170 +1,177 @@
 <div class="person-details-body d-flex h-100 w-100">
     <div class="col-md-8 left-content">
         <div class="left-content-form">
-            <div class="group-title">
-                {{getString("basicData")}}
-                <div class="line"></div>
-            </div>
-            <div class="row form-row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <div class="label">{{getString("firstName")}}</div>
-                        <div class="value"><input [placeholder]="getString('firstName')" nbInput fullWidth name="Name"
-                                [(ngModel)]="newPersonData.FirstName"></div>
-                    </div>
+            <form class="form" #formKorisnik="ngForm">
+                <div class="group-title">
+                    {{getString("basicData")}}
+                    <div class="line"></div>
                 </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <div class="label">{{getString("lastName")}}</div>
-                        <div class="value"><input nbInput fullWidth [placeholder]="getString('lastName')" name="Surname"
-                                [(ngModel)]="newPersonData.LastName">
+                <div class="row form-row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="label">{{getString("firstName")}}</div>
+                            <div class="value">
+                                <input [placeholder]="getString('firstName')" nbInput fullWidth name="firstName"
+                                    [(ngModel)]="newPersonData.FirstName" required #firstName1="ngModel"
+                                    [status]="firstName1.dirty ? (firstName1.invalid ? 'danger' : 'success'): 'basic'">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="label">{{getString("lastName")}}</div>
+                            <div class="value"><input nbInput fullWidth [placeholder]="getString('lastName')"
+                                    name="surname" [(ngModel)]="newPersonData.LastName" required #lastName1="ngModel"
+                                    [status]="lastName1.dirty ? (lastName1.invalid ? 'danger' : 'success'): 'basic'">
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row form-row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <div class="label">{{getString("jmbg")}}</div>
-                        <div class="value"><input nbInput [placeholder]="getString('jmbg')" fullWidth name="jmbg"
-                                [(ngModel)]="newPersonData.JMBG"></div>
+                <div class="row form-row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="label">{{getString("jmbg")}}</div>
+                            <div class="value">
+                                <input nbInput [placeholder]="getString('jmbg')" fullWidth name="jmbg" required
+                                    #jmbg1="ngModel"
+                                    [status]="jmbg1.dirty ? (jmbg1.invalid ? 'danger' : 'success'): 'basic'"
+                                    [(ngModel)]="newPersonData.JMBG">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <div class="label">{{getString("birthDate")}}</div>
+                            <div class="value">
+                                <nb-form-field>
+                                    <input nbInput #birthDateInput [placeholder]="getString('birthDate')" fullWidth
+                                        name="birthData" [(ngModel)]="newPersonData.BirthDate"
+                                        [nbDatepicker]="birthDateDatepicker">
+                                    <nb-datepicker #birthDateDatepicker></nb-datepicker>
+                                    <button nbButton nbSuffix ghost (click)="birthDateInput.focus()">
+                                        <nb-icon pack="eva" icon="calendar-outline"></nb-icon>
+                                    </button>
+                                </nb-form-field>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <div class="label">{{getString("birthDate")}}</div>
+                <div class="group-title mt-3">
+                    {{getString("stayData")}}
+                    <div class="line"></div>
+                </div>
+                <div class="row form-row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <div class="label">{{getString("startDate")}}</div>
+                            <div class="value">
+                                <nb-form-field>
+                                    <input nbInput [placeholder]="getString('startDate')" fullWidth #startDateInput
+                                        name="startDate" [(ngModel)]="newPersonData.StartDate"
+                                        [nbDatepicker]="startDateDatepicker">
+                                    <nb-datepicker #startDateDatepicker></nb-datepicker>
+                                    <button nbButton nbSuffix ghost (click)="startDateInput.focus();">
+                                        <nb-icon pack="eva" icon="calendar-outline"></nb-icon>
+                                    </button>
+                                </nb-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <div class="label">{{getString("endDate")}}</div>
+                            <div class="value">
+                                <nb-form-field>
+                                    <input nbInput fullWidth [placeholder]="getString('endDate')" #endDateInput
+                                        name="endDate" [(ngModel)]="newPersonData.EndDate"
+                                        [nbDatepicker]="endDateDatepicker">
+                                    <nb-datepicker #endDateDatepicker></nb-datepicker>
+                                    <button nbButton nbSuffix ghost (click)="endDateInput.focus();">
+                                        <nb-icon pack="eva" icon="calendar-outline"></nb-icon>
+                                    </button>
+                                </nb-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <div class="label">{{getString("creationDate")}}</div>
+                            <div class="value">
+                                <nb-form-field>
+                                    <input nbInput [placeholder]="getString('creationDate')" fullWidth
+                                        #creationDateInput name="creationDate" [(ngModel)]="newPersonData.CreationDate"
+                                        disabled [nbDatepicker]="creationDateDatepicker">
+                                    <nb-datepicker #creationDateDatepicker></nb-datepicker>
+                                    <button nbButton nbSuffix ghost>
+                                        <nb-icon pack="eva" icon="calendar-outline"></nb-icon>
+                                    </button>
+                                </nb-form-field>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row form-row">
+                    <div class="col-md-12">
+                        <div class="label">{{getString("currentStatus")}}
+                            <button nbButton ghost status="info" class="mb-2" size="small" shape="round"
+                                [nbPopover]="statusInformationPopover" nbPopoverTrigger="click"
+                                nbPopoverPlacement="right">
+                                <nb-icon pack="eva" icon="info-outline"></nb-icon>
+                            </button>
+                        </div>
                         <div class="value">
-                            <nb-form-field>
-                                <input nbInput #birthDateInput [placeholder]="getString('birthDate')" fullWidth
-                                    name="birthData" [(ngModel)]="newPersonData.BirthDate"
-                                    [nbDatepicker]="birthDateDatepicker">
-                                <nb-datepicker #birthDateDatepicker></nb-datepicker>
-                                <button nbButton nbSuffix ghost (click)="birthDateInput.focus()">
-                                    <nb-icon pack="eva" icon="calendar-outline"></nb-icon>
-                                </button>
-                            </nb-form-field>
+                            <nb-tag appearance="outline" [status]="newPersonData.Active ? 'success' : 'danger'"
+                                [text]="newPersonData.Active ? getString('active') : getString('unactive')" size="small"
+                                [nbTooltip]="newPersonData.Active ? getString('activeTooltip') : getString('unactiveTooltip')"></nb-tag>
+                            <button *ngIf="newPersonData.Active" nbButton status="danger" shape="round" size="small"
+                                class="ms-3" ghost [nbTooltip]="getString('deactivatePerson')"
+                                (click)="deactivatePerson()">
+                                <nb-icon pack="eva" icon="lock-outline"></nb-icon>
+                            </button>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="group-title mt-3">
-                {{getString("stayData")}}
-                <div class="line"></div>
-            </div>
-            <div class="row form-row">
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <div class="label">{{getString("startDate")}}</div>
+                <div class="group-title mt-3">
+                    {{getString('dormatoryData')}}
+                    <div class="line"></div>
+                </div>
+                <div class="row form-row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <div class="label">{{getString("currentFloor")}}</div>
+                            <div class="value"><input nbInput [placeholder]="getString('floor')" fullWidth
+                                    name="floorName" [(ngModel)]="newPersonData.FloorName" disabled></div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <div class="label">{{getString("room")}}</div>
+                            <div class="value">
+                                <nb-select [placeholder]="getString('room')" fullWidth neme="room"
+                                    [(selected)]="newPersonData.RoomId" (selectedChange)="onRoomSelectedChange($event)">
+                                    <nb-option *ngFor="let room of rooms" [value]="room.Id">{{room.Name}}</nb-option>
+                                </nb-select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <div class="label">&nbsp;</div>
                         <div class="value">
-                            <nb-form-field>
-                                <input nbInput [placeholder]="getString('startDate')" fullWidth #startDateInput
-                                    name="startDate" [(ngModel)]="newPersonData.StartDate"
-                                    [nbDatepicker]="startDateDatepicker">
-                                <nb-datepicker #startDateDatepicker></nb-datepicker>
-                                <button nbButton nbSuffix ghost (click)="startDateInput.focus();">
-                                    <nb-icon pack="eva" icon="calendar-outline"></nb-icon>
-                                </button>
-                            </nb-form-field>
+                            <button nbButton ghost status="primary" shape="round" class="mt-2"
+                                [nbTooltip]="getString('goToExternalRoomManagement')">
+                                <nb-icon pack="eva" icon="external-link-outline"></nb-icon>
+                            </button>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <div class="label">{{getString("endDate")}}</div>
-                        <div class="value">
-                            <nb-form-field>
-                                <input nbInput fullWidth [placeholder]="getString('endDate')" #endDateInput
-                                    name="endDate" [(ngModel)]="newPersonData.EndDate"
-                                    [nbDatepicker]="endDateDatepicker">
-                                <nb-datepicker #endDateDatepicker></nb-datepicker>
-                                <button nbButton nbSuffix ghost (click)="endDateInput.focus();">
-                                    <nb-icon pack="eva" icon="calendar-outline"></nb-icon>
-                                </button>
-                            </nb-form-field>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <div class="label">{{getString("creationDate")}}</div>
-                        <div class="value">
-                            <nb-form-field>
-                                <input nbInput [placeholder]="getString('creationDate')" fullWidth #creationDateInput
-                                    name="creationDate" [(ngModel)]="newPersonData.CreationDate" disabled
-                                    [nbDatepicker]="creationDateDatepicker">
-                                <nb-datepicker #creationDateDatepicker></nb-datepicker>
-                                <button nbButton nbSuffix ghost>
-                                    <nb-icon pack="eva" icon="calendar-outline"></nb-icon>
-                                </button>
-                            </nb-form-field>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row form-row">
-                <div class="col-md-12">
-                    <div class="label">{{getString("currentStatus")}}
-                        <button nbButton ghost status="info" class="mb-2" size="small" shape="round"
-                            [nbPopover]="statusInformationPopover" nbPopoverTrigger="click" nbPopoverPlacement="right">
-                            <nb-icon pack="eva" icon="info-outline"></nb-icon>
-                        </button>
-                    </div>
-                    <div class="value">
-                        <nb-tag appearance="outline" [status]="newPersonData.Active ? 'success' : 'danger'"
-                            [text]="newPersonData.Active ? getString('active') : getString('unactive')" size="small"
-                            [nbTooltip]="newPersonData.Active ? getString('activeTooltip') : getString('unactiveTooltip')"></nb-tag>
-                        <button *ngIf="newPersonData.Active" nbButton status="danger" shape="round" size="small"
-                            class="ms-3" ghost [nbTooltip]="getString('deactivatePerson')" (click)="deactivatePerson()">
-                            <nb-icon pack="eva" icon="lock-outline"></nb-icon>
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="group-title mt-3">
-                {{getString('dormatoryData')}}
-                <div class="line"></div>
-            </div>
-            <div class="row form-row">
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <div class="label">{{getString("currentFloor")}}</div>
-                        <div class="value"><input nbInput [placeholder]="getString('floor')" fullWidth
-                                [(ngModel)]="newPersonData.FloorName" disabled></div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <div class="label">{{getString("room")}}</div>
-                        <div class="value">
-                            <nb-select [placeholder]="getString('room')" fullWidth [(selected)]="newPersonData.RoomId"
-                                (selectedChange)="onRoomSelectedChange($event)">
-                                <nb-option *ngFor="let room of rooms" [value]="room.Id">{{room.Name}}</nb-option>
-                            </nb-select>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-1">
-                    <div class="label">&nbsp;</div>
-                    <div class="value">
-                        <button nbButton ghost status="primary" shape="round" class="mt-2"
-                            [nbTooltip]="getString('goToExternalRoomManagement')">
-                            <nb-icon pack="eva" icon="external-link-outline"></nb-icon>
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="row form-row external-details">
-                <button nbButton ghost status="primary" shape="round">
-                    {{getString("goToAdvancedEdit")}}
-                    <nb-icon pack="eva" icon="external-link-outline" nbSuffix></nb-icon>
-                </button>
-            </div>
+            </form>
         </div>
+
         <div class="left-content-footer d-flex justify-content-end">
             <button nbButton status="basic" size="small" ghost shape="round" (click)="cancelSave()"
                 class="me-2">{{getString("cancel")}}</button>
-            <button nbButton status="primary" size="small" shape="round"
-                (click)="saveChanges()">{{getString("save")}}</button>
+            <button nbButton status="primary" size="small" shape="round" [disabled]="formKorisnik.form.invalid"
+                (click)="saveChanges(formKorisnik)">{{getString("save")}}</button>
         </div>
     </div>
     <div class="col-md-4 ">
@@ -190,6 +197,12 @@
         <div class="close-button">
             <button nbButton ghost shape="round" status="basic" (click)="close()">
                 <nb-icon pack="eva" icon="close-outline"></nb-icon>
+            </button>
+        </div>
+        <div class="row form-row external-details">
+            <button nbButton ghost status="primary" shape="round" [nbTooltip]="getString('goToAdvancedEdit')"
+                nbTooltipPlacement="bottom">
+                <nb-icon pack="eva" icon="external-link-outline" nbSuffix></nb-icon>
             </button>
         </div>
     </div>

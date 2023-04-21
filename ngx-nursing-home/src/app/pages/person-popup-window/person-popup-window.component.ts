@@ -6,6 +6,8 @@ import { getString } from '../../resources/strings';
 import { DialogService } from '../../shared/dialog/dialog.service';
 import { ToastrService } from '../../services/toastr.service';
 import { RoomsService } from '../../services/rest/rooms.service';
+import { error } from 'console';
+import { NgForm } from '@angular/forms';
 @Component({
   selector: 'sample-person-popup-window',
   templateUrl: './person-popup-window.component.html',
@@ -91,9 +93,11 @@ export class PersonPopupWindowComponent implements OnInit, AfterViewInit, OnDest
   private getPersonData(): void {
     this.subscriptions.push(
       this.personsService.getPersonDetails(this.personId).subscribe(data => {
+        console.log(data)
         if (data.length > 0) {
           this.newPersonData = getIPersonFromJSON(data[0]);
           this.person = getIPersonFromJSON(data[0]);
+          console.log(this.newPersonData);
         }
       })
     );
@@ -141,7 +145,27 @@ export class PersonPopupWindowComponent implements OnInit, AfterViewInit, OnDest
     }
   }
 
-  public saveChanges(): void {
-
+  public saveChanges(form: NgForm): void {
+    this.subscriptions.push(this.personsService.update(this.newPersonData).subscribe(() => {
+      this.madeChanges = true;
+      form.form.markAsPristine();
+      if (this.newPersonData.RoomId != this.person.RoomId) {
+        this.subscriptions.push(this.personsService.changeRoom(this.personId, this.newPersonData.RoomId).subscribe(() => {
+          this.getPersonData();
+          this.toastrService.showToast("success", getString('saveSuccess'), "");
+        }, err => {
+          console.error(err);
+          this.toastrService.showToast("danger", getString('saveError'), "");
+        }));
+      } else {
+        this.getPersonData();
+        this.toastrService.showToast("success", getString('saveSuccess'), "");
+      }
+    },
+      err => {
+        console.error(err);
+        this.toastrService.showToast("danger", getString('saveError'), "");
+      }
+    ));
   }
 }

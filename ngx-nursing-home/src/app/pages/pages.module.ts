@@ -21,9 +21,11 @@ import {
   NbToggleModule,
   NbButtonGroupModule,
   NbFormFieldModule,
-  NbPopoverModule
+  NbPopoverModule,
+
 }
   from '@nebular/theme';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { ThemeModule } from '../@theme/theme.module';
 import { PagesComponent } from './pages.component';
 import { DashboardModule } from './dashboard/dashboard.module';
@@ -63,7 +65,8 @@ import { PersonPopupWindowComponent } from './person-popup-window/person-popup-w
     NbToggleModule,
     NbButtonGroupModule,
     NbFormFieldModule,
-    NbPopoverModule
+    NbPopoverModule,
+    Ng2SearchPipeModule,
   ],
   declarations: [
     PagesComponent,

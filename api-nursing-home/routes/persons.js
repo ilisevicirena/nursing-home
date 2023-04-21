@@ -64,7 +64,7 @@ router.post('/update', async (request, response) => {
             .input('birthDate', objectToSave.BirthDate)
             .input('startDate', objectToSave.StartDate)
             .input('endDate', objectToSave.EndDate)
-            .query("EXEC [dbo].[updatePerson] @Id=@id, @FirstName=@firstName, @LastName=@lastName, @Id=@id, @JMBG=@jmbg, @BirthDate=@birthDate, @StartDate=@startDate, @EndDate=@endDate");
+            .query("EXEC [dbo].[updatePerson] @Id=@id, @FirstName=@firstName, @LastName=@lastName, @JMBG=@jmbg, @BirthDate=@birthDate, @StartDate=@startDate, @EndDate=@endDate");
         if (result != null) response.json(result.recordset);
         else response.send(getError(2003));
     } catch (err) {

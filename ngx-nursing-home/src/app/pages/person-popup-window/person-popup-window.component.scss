@@ -56,6 +56,20 @@
             border-bottom-left-radius: 0.5rem;
             border-top: nb-theme(card-divider-width) nb-theme(card-divider-style) nb-theme(card-divider-color);
         }
+
+        ::-webkit-scrollbar {
+            width: nb-theme(scrollbar-width);
+            height: nb-theme(scrollbar-width);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: nb-theme(scrollbar-color);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: nb-theme(color-basic-500);
+        }
     }
 
     .group-title {
@@ -77,13 +91,9 @@
 }
 
 .external-details {
-    height: 6rem;
-    display: flex;
-    align-items: end;
-
-    button {
-        width: max-content;
-    }
+    position: absolute;
+    top: 1rem;
+    right: 3rem;
 }
 
 .info-icon-status {
