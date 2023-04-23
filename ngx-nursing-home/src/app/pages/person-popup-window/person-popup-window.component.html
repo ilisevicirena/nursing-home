@@ -55,6 +55,30 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <div class="label">{{getString('gender')}}</div>
+                            <div class="value">
+                                <nb-select name="gender" required #gender1="ngModel"
+                                    [status]="gender1.dirty ? (gender1.invalid ? 'danger' : 'success'): 'basic'"
+                                    [(ngModel)]="newPersonData.GenderId">
+                                    <nb-option *ngFor="let gender of genders"
+                                        [value]="gender.Id">{{gender.Name}}</nb-option>
+                                </nb-select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row form-row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="label">{{getString('address')}}</div>
+                            <div class="value">
+                                <input nbInput fullWidth [placeholder]="getString('address')" name="address"
+                                    [(ngModel)]="newPersonData.Address">
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="group-title mt-3">
                     {{getString("stayData")}}
@@ -174,7 +198,7 @@
                 (click)="saveChanges(formKorisnik)">{{getString("save")}}</button>
         </div>
     </div>
-    <div class="col-md-4 ">
+    <div class="col-md-4 contacts-container">
         <div class="group-title">
             {{getString('contacts')}}
             <div class="line"></div>

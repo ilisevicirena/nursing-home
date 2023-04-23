@@ -163,7 +163,7 @@ export class RoomManagementComponent implements OnInit, OnDestroy {
   public onTagClick(floor: any, firstLoad: boolean = false) {
     if (!firstLoad) this.floorsData.forEach(x => x.selected = false);
     floor.selected = true;
-    this.subscriptions.push(this.roomsService.gerRoomsForFloor(floor.Id).subscribe(data => {
+    this.subscriptions.push(this.roomsService.getRoomsForFloor(floor.Id).subscribe(data => {
       this.selectedFloorRooms = data;
     }));
   }

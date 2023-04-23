@@ -17,4 +17,9 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'people-outline',
     link: '/pages/persons',
   },
+  {
+    title: getString("addPerson"),
+    icon: 'person-add-outline',
+    link: '/pages/new-person',
+  },
 ];

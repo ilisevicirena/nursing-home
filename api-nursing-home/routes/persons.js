@@ -28,7 +28,9 @@ router.post('/add', async (request, response) => {
             .input('jmbg', objectToSave.JMBG)
             .input('birthDate', objectToSave.BirthDate)
             .input('startDate', objectToSave.StartDate)
-            .query("EXEC [dbo].[insertPerson] @FirstName=@firstName, @LastName=@lastName, @JMBG=@jmbg, @BirthDate=@birthDate, @StartDate=@startDate");
+            .input('address', objectToSave.Address)
+            .input('genderId', objectToSave.GenderId)
+            .query("EXEC [dbo].[insertPerson] @FirstName=@firstName, @LastName=@lastName, @JMBG=@jmbg, @BirthDate=@birthDate, @StartDate=@startDate, @Address=@address, @GenderId=@genderId");
         if (result != null) response.json(result.recordset[0]);
         else response.send(getError(3001));
     } catch (err) {
@@ -64,7 +66,9 @@ router.post('/update', async (request, response) => {
             .input('birthDate', objectToSave.BirthDate)
             .input('startDate', objectToSave.StartDate)
             .input('endDate', objectToSave.EndDate)
-            .query("EXEC [dbo].[updatePerson] @Id=@id, @FirstName=@firstName, @LastName=@lastName, @JMBG=@jmbg, @BirthDate=@birthDate, @StartDate=@startDate, @EndDate=@endDate");
+            .input('address', objectToSave.Address)
+            .input('genderId', objectToSave.GenderId)
+            .query("EXEC [dbo].[updatePerson] @Id=@id, @FirstName=@firstName, @LastName=@lastName, @JMBG=@jmbg, @BirthDate=@birthDate, @StartDate=@startDate, @EndDate=@endDate, @Address=@address, @GenderId=@genderId");
         if (result != null) response.json(result.recordset);
         else response.send(getError(2003));
     } catch (err) {

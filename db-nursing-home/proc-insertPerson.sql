@@ -1,18 +1,13 @@
--- ================================================
--- Template generated from Template Explorer using:
--- Create Procedure (New Menu).SQL
---
--- Use the Specify Values for Template Parameters 
--- command (Ctrl-Shift-M) to fill in the parameter 
--- values below.
---
--- This block of comments will not be included in
--- the definition of the procedure.
--- ================================================
+USE [ENV01_NURSING_HOME]
+GO
+
+/****** Object:  StoredProcedure [dbo].[insertPerson]    Script Date: 23.4.2023. 14:07:29 ******/
 SET ANSI_NULLS ON
 GO
+
 SET QUOTED_IDENTIFIER ON
 GO
+
 -- =============================================
 -- Author:		Irena Ilisevic
 -- Create date: 19.4.2023.
@@ -25,7 +20,10 @@ CREATE PROCEDURE [dbo].[insertPerson]
 		@LastName varchar(50),
 		@JMBG varchar(50) = NULL,
 		@BirthDate datetime = NULL,	
-		@StartDate datetime = NULL		
+		@StartDate datetime = NULL,
+		@RoomId int = NULL,
+		@Address varchar(200)=NULL,
+		@GenderId int=NULL
 	)
 AS
 BEGIN
@@ -34,13 +32,15 @@ BEGIN
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
-	DECLARE @Active bit = 1;
+		DECLARE @Active bit = 1;
 	DECLARE @CreationDate datetime = GETDATE();
 	DECLARE @EndDate datetime = NULL;
 
-	INSERT INTO dbo.Person (FirstName, LastName, JMBG, BirthDate, StartDate, Active, CreationDate, EndDate)
-	VALUES (@FirstName, @LastName, @JMBG, @BirthDate, @StartDate, @Active, @CreationDate, @EndDate);
+	INSERT INTO dbo.Person (FirstName, LastName, JMBG, BirthDate, StartDate, Active, CreationDate, EndDate, Address, GenderId)
+	VALUES (@FirstName, @LastName, @JMBG, @BirthDate, @StartDate, @Active, @CreationDate, @EndDate, @Address, @GenderId);
 
 	SELECT SCOPE_IDENTITY() AS PersonId;
 END
 GO
+
+

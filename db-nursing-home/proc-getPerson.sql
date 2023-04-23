@@ -1,7 +1,7 @@
 USE [ENV01_NURSING_HOME]
 GO
 
-/****** Object:  StoredProcedure [dbo].[getPerson]    Script Date: 21.4.2023. 14:32:21 ******/
+/****** Object:  StoredProcedure [dbo].[getPerson]    Script Date: 23.4.2023. 14:51:25 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -25,54 +25,31 @@ BEGIN
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
-	declare @RoomRow table(Id int, Name varchar(50), FloorId int);
-	declare @FloorRow table(Id int, Name varchar(50));
 
-	insert into @RoomRow
-	select room.Id, room.Name,room.FloorId from dbo.Room as room, dbo.PersonRoomRelation relation where relation.PersonId=@Id 
-	and relation.RoomId=room.Id and relation.Active=1;
-
-	insert into @FloorRow
-	select floor.Id, floor.Name from dbo.Floor as floor, @RoomRow as row where row.FloorId=floor.Id;
-
-	IF(EXISTS(SELECT 1 FROM @RoomRow))
-	begin
-	SELECT 
-		[Id] = person.Id,
-		[FirstName]=person.FirstName,
-		[LastName]=person.LastName,
-		[JMBG]=person.JMBG,
-		[BirthDate]=person.BirthDate,
-		[Active]=person.Active,
-		[StartDate]=person.StartDate,
-		[EndDate]=person.EndDate,
-		[CreationDate]=person.CreationDate,
-		[RoomId]=room.Id,
-		[RoomName]=room.Name,
-		[FloorId]=floor.Id,
-		[FloorName]=floor.Name
-	FROM [dbo].[Person] as person, @RoomRow as room, @FloorRow as floor 
-	WHERE person.Id=@Id 
-	end
-	else
-	begin
-	SELECT 
-		[Id] = person.Id,
-		[FirstName]=person.FirstName,
-		[LastName]=person.LastName,
-		[JMBG]=person.JMBG,
-		[BirthDate]=person.BirthDate,
-		[Active]=person.Active,
-		[StartDate]=person.StartDate,
-		[EndDate]=person.EndDate,
-		[CreationDate]=person.CreationDate,
-		[RoomId]=NULL,
-		[RoomName]=NULL,
-		[FloorId]=NULL,
-		[FloorName]=NULL
-	FROM [dbo].[Person] as person
-	WHERE person.Id=@Id 
-	end
+		
+	select [Id] = p.Id,
+		[FirstName]=p.FirstName,
+		[LastName]=p.LastName,
+		[JMBG]=p.JMBG,
+		[BirthDate]=p.BirthDate,
+		[Active]=p.Active,
+		[StartDate]=p.StartDate,
+		[EndDate]=p.EndDate,
+		[CreationDate]=p.CreationDate,
+		[RoomId]=r.Id,
+		[RoomName]=r.[Name],
+		[FloorId]=f.Id,
+		[FloorName]=f.[Name],
+		[Address]=p.[Address],
+		[GenderId]=GenderId,
+		[GenderName]=g.[Name],
+		[GenderTag]=g.Tag
+		from dbo.Person as p
+left join dbo.PersonRoomRelation as prr on prr.PersonId=p.Id and prr.Active=1
+left join dbo.Room as r on prr.RoomId=r.Id 
+left join dbo.[Floor] as f on r.FloorId=f.Id
+left join dbo.Gender as g on p.GenderId=g.Id
+where p.Id=@Id
 	
 END
 GO

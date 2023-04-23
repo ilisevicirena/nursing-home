@@ -1,7 +1,7 @@
 USE [ENV01_NURSING_HOME]
 GO
 
-/****** Object:  Table [dbo].[Person]    Script Date: 19.4.2023. 11:11:06 ******/
+/****** Object:  Table [dbo].[Person]    Script Date: 23.4.2023. 13:46:10 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -18,11 +18,20 @@ CREATE TABLE [dbo].[Person](
 	[StartDate] [datetime] NULL,
 	[EndDate] [datetime] NULL,
 	[CreationDate] [datetime] NOT NULL,
+	[GenderId] [int] NULL,
+	[Address] [varchar](200) NULL,
  CONSTRAINT [PK_Person] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[Person]  WITH CHECK ADD  CONSTRAINT [FK_Person_Gender] FOREIGN KEY([GenderId])
+REFERENCES [dbo].[Gender] ([Id])
+GO
+
+ALTER TABLE [dbo].[Person] CHECK CONSTRAINT [FK_Person_Gender]
 GO
 
 

@@ -30,6 +30,11 @@ export class PersonsService extends BaseRestApiService {
     return this.http.post(this.apiRoute + '/update', obj);
   }
 
+  public add(model: IPerson): Observable<any> {
+    var obj = JSON.parse(JSON.stringify(model))
+    return this.http.post(this.apiRoute + '/add', obj);
+  }
+
   public changeRoom(personId: number, roomId: number): Observable<any> {
     return this.http.post(this.apiRoute + "/changeRoomPerson", { PersonId: personId, RoomId: roomId });
   }
@@ -48,6 +53,10 @@ export interface IPerson extends IBaseSaveModel {
   RoomName?: string;
   FloorId?: number;
   FloorName?: string;
+  Address?: string;
+  GenderId?: number;
+  GenderName?: string;
+  GenderTag?: string;
 }
 
 export function getIPersonFromJSON(json: any): IPerson {
@@ -64,6 +73,10 @@ export function getIPersonFromJSON(json: any): IPerson {
     RoomId: json.RoomId,
     RoomName: json.RoomName,
     FloorId: json.FloorId,
-    FloorName: json.FloorName
+    FloorName: json.FloorName,
+    Address: json.Address,
+    GenderId: json.GenderId,
+    GenderName: json.GenderName,
+    GenderTag: json.GenderTag,
   };
 }

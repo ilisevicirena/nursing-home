@@ -9,6 +9,7 @@ import { RoomsService } from '../../services/rest/rooms.service';
 import { error } from 'console';
 import { NgForm } from '@angular/forms';
 import { ContactsService } from '../../services/rest/contacts.service';
+import { GendersService } from '../../services/rest/genders.service';
 @Component({
   selector: 'sample-person-popup-window',
   templateUrl: './person-popup-window.component.html',
@@ -22,7 +23,8 @@ export class PersonPopupWindowComponent implements OnInit, AfterViewInit, OnDest
     private dialogService: DialogService,
     private toastrService: ToastrService,
     private roomsService: RoomsService,
-    private contactsService: ContactsService
+    private contactsService: ContactsService,
+    private gendersService: GendersService
   ) { }
 
   public getString = getString;
@@ -41,6 +43,7 @@ export class PersonPopupWindowComponent implements OnInit, AfterViewInit, OnDest
   };
   public rooms: any[] = [];
   public contacts: any[] = [];
+  public genders: any[] = [];
 
   private subscriptions: Subscription[] = [];
   private madeChanges: boolean = false;
@@ -51,6 +54,7 @@ export class PersonPopupWindowComponent implements OnInit, AfterViewInit, OnDest
     this.getPersonData();
     this.getRoomsData();
     this.getContactsForPerson();
+    this.getGenders();
   }
 
   ngAfterViewInit(): void {
@@ -180,5 +184,13 @@ export class PersonPopupWindowComponent implements OnInit, AfterViewInit, OnDest
       err => {
         console.error(err);
       }));
+  }
+
+  private getGenders(): void {
+    this.subscriptions.push(this.gendersService.getData().subscribe(data => {
+      this.genders = data;
+    }, err => {
+      console.error(err);
+    }));
   }
 }
