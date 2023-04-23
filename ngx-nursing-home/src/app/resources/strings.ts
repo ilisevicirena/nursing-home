@@ -75,7 +75,20 @@ const strings: IKeyValue[] = [
     { key: "accomodationPersonStepText", value: "Ovdje popunite podatke o smještaju nove osobe. Osobu možete smjestiti samo u sobu u kojoj ima slobodnog mjesta. U jednoj sobi mogu biti smještene samo osobe istoga spola (obratite pažnju ukoliko već imate osobu u odabranoj sobi!). Podatke možete uređivati i sa portala za upravljanje smještajem." },
     { key: "address", value: "Adresa" },
     { key: "gender", value: "Spol" },
-    { key: "savePersonFirst", value: "Za unos prvo spremite osnovne podatke o osobi!" },
+    { key: "freeSpace", value: "Slobodno" },
+    { key: "roomSelectionInvalid", value: "Ne možete u istoj sobi imati dodjeljene osobe različitih spolova. U tablici pod stupcem 'Spol' naveden je spol osoba koje su trenutno smještene u sobu." },
+    { key: "placePerson", value: "Smjesti osobu" },
+    { key: "freeSpace", value: "Slobodno" },
+    { key: "freeSpace", value: "Slobodno" },
+    { key: "freeSpace", value: "Slobodno" },
+    { key: "freeSpace", value: "Slobodno" },
+    { key: "freeSpace", value: "Slobodno" },
+    { key: "freeSpace", value: "Slobodno" },
+    { key: "freeSpace", value: "Slobodno" },
+    { key: "freeSpace", value: "Slobodno" },
+    { key: "freeSpace", value: "Slobodno" },
+    { key: "freeSpace", value: "Slobodno" },
+
 ];
 
 const map = new Map(strings.map(obj => [obj.key, obj.value]));

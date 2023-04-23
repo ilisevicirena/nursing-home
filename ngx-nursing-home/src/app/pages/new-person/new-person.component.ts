@@ -78,7 +78,7 @@ export class NewPersonComponent implements OnInit, OnDestroy {
     }
   ];
 
-  public selectedRoom: any = { FloorName: '' };
+  public selectedRoom: any = { FloorName: '', IsValid: true };
 
   private subscriptions: Subscription[] = [];
 
@@ -159,7 +159,18 @@ export class NewPersonComponent implements OnInit, OnDestroy {
   }
 
   public onRoomSelectionChanged(event: any) {
-    if (event.selectedItems.length == 1) this.selectedRoom = event.selectedItems[0];
-    else this.selectedRoom = { FloorName: '' };
+    if (event.selectedItems.length == 1) {
+      this.selectedRoom = event.selectedItems[0];
+      if (event.selectedItems[0].GenderId > 0 && event.selectedItems[0].GenderId != this.newPersonData.GenderId) {
+        this.selectedRoom.IsValid = false;
+      } else this.selectedRoom.IsValid = true;
+    }
+    else this.selectedRoom = { FloorName: '', IsValid: true };
+  }
+
+  public savePersonRoom(): void {
+    this.subscriptions.push(this.personsService.changeRoom(this.newPersonData.Id, this.selectedRoom.Id).subscribe(() => {
+      this.toastrService.showToast('success', getString('saveSuccess'), '');
+    }));
   }
 }

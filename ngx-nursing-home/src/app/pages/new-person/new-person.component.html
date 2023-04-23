@@ -183,7 +183,7 @@
                         <p>
                             {{getString('accomodationPersonStepText')}}
                         </p>
-                        <div class="mt-5">
+                        <div class="mt-5" *ngIf="newPersonData.Id>0">
                             <div class="row form-row">
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -196,7 +196,10 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <div class="label">{{getString('room')}}</div>
+                                        <div class="label">{{getString('room')}} <nb-icon *ngIf="!selectedRoom.IsValid"
+                                                pack="eva" icon="alert-triangle-outline" status="danger"
+                                                class="required-mark ms-2"
+                                                [nbTooltip]="getString('roomSelectionInvalid')"></nb-icon></div>
                                         <div class="value">
                                             <ngx-select-grid [columns]="roomsColumns" [(source)]="rooms"
                                                 (onSelectionChanged)="onRoomSelectionChanged($event)" [valueAttr]="'Id'"
@@ -205,10 +208,19 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="row form-row w-100 justify-content-end mt-3">
+                                <button nbButton status="primary" shape="round" style="width: max-content;"
+                                    [disabled]="!selectedRoom.Id || !selectedRoom.IsValid" (click)="savePersonRoom()"
+                                    size="small">{{getString('placePerson')}}
+                                    <nb-icon pack="eva" icon="home-outline" nbSuffix></nb-icon>
+                                </button>
+                            </div>
                         </div>
+                        <sample-no-data class="mt-4" *ngIf="newPersonData.Id==0"
+                            [title]="getString('savePersonFirst')"></sample-no-data>
                     </div>
                     <div class="stepper-footer w-100 d-flex justify-content-end">
-                        <button nbButton disabled shape="round" size="small" class="me-2" nbStepperPrevious>
+                        <button nbButton shape="round" size="small" class="me-2" nbStepperPrevious>
                             <nb-icon pack="eva" icon="chevron-left-outline"></nb-icon>
                             {{getString('back')}}</button>
                         <button nbButton shape="round" size="small" nbStepperNext>{{getString('next')}}
