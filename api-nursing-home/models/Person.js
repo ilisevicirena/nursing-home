@@ -1,5 +1,5 @@
 class Person {
-    constructor(id, firstName, lastName, jmbg, birthDate, startDate, endDate, active, creationDate) {
+    constructor(id, firstName, lastName, jmbg, birthDate, startDate, endDate, active, creationDate, address, genderId) {
         this.Id = id;
         this.FirstName = firstName;
         this.LastName = lastName;
@@ -9,6 +9,8 @@ class Person {
         this.EndDate = endDate;
         this.Active = active == 1;
         this.CreationDate = creationDate;
+        this.Address = address;
+        this.GenderId = genderId;
     }
 }
 

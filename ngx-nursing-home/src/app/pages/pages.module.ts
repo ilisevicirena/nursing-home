@@ -22,6 +22,7 @@ import {
   NbButtonGroupModule,
   NbFormFieldModule,
   NbPopoverModule,
+  NbStepperModule,
 
 }
   from '@nebular/theme';
@@ -35,6 +36,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RoomManagementComponent } from './room-management/room-management.component';
 import { PersonsComponent } from './persons/persons.component';
 import { PersonPopupWindowComponent } from './person-popup-window/person-popup-window.component';
+import { NoDataComponent } from '../shared/no-data/no-data.component';
+import { NewPersonComponent } from './new-person/new-person.component';
 
 @NgModule({
   imports: [
@@ -67,12 +70,15 @@ import { PersonPopupWindowComponent } from './person-popup-window/person-popup-w
     NbFormFieldModule,
     NbPopoverModule,
     Ng2SearchPipeModule,
+    NbStepperModule
   ],
   declarations: [
     PagesComponent,
     RoomManagementComponent,
     PersonsComponent,
     PersonPopupWindowComponent,
+    NoDataComponent,
+    NewPersonComponent
   ],
 })
 export class PagesModule {

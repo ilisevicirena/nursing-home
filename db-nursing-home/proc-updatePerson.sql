@@ -1,18 +1,13 @@
--- ================================================
--- Template generated from Template Explorer using:
--- Create Procedure (New Menu).SQL
---
--- Use the Specify Values for Template Parameters 
--- command (Ctrl-Shift-M) to fill in the parameter 
--- values below.
---
--- This block of comments will not be included in
--- the definition of the procedure.
--- ================================================
+USE [ENV01_NURSING_HOME]
+GO
+
+/****** Object:  StoredProcedure [dbo].[updatePerson]    Script Date: 23.4.2023. 14:09:23 ******/
 SET ANSI_NULLS ON
 GO
+
 SET QUOTED_IDENTIFIER ON
 GO
+
 -- =============================================
 -- Author:		Irena Ilisevic
 -- Create date: 19.4.2023.
@@ -27,7 +22,9 @@ CREATE PROCEDURE [dbo].[updatePerson]
 		@JMBG varchar(50) = NULL,
 		@BirthDate datetime = NULL,	
 		@StartDate datetime = NULL,
-		@EndDate datetime=NULL
+		@EndDate datetime=NULL,
+		@Address varchar(200)=NULL,
+		@GenderId int = NULL
 	)
 AS
 BEGIN
@@ -43,7 +40,11 @@ BEGIN
 		JMBG=@JMBG,
 		BirthDate=@BirthDate,
 		StartDate=@StartDate,
-		EndDate=@EndDate
+		EndDate=@EndDate,
+		Address=@Address,
+		GenderId=@GenderId
 	WHERE Id = @Id
 END
 GO
+
+

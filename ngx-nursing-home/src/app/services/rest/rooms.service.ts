@@ -16,8 +16,12 @@ export class RoomsService extends BaseRestApiService {
     return this.http.get(this.apiRoute + "?UseCapacity=" + capacity);
   }
 
-  public gerRoomsForFloor(id: number): Observable<any> {
+  public getRoomsForFloor(id: number): Observable<any> {
     return this.http.get(this.apiRoute + "/getRoomsForFloor?FloorId=" + id);
+  }
+
+  public getAvaliableRooms(): Observable<any> {
+    return this.http.get(this.apiRoute + "/getAvaliableRooms");
   }
 }
 

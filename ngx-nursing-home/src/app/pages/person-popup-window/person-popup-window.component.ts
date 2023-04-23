@@ -8,6 +8,8 @@ import { ToastrService } from '../../services/toastr.service';
 import { RoomsService } from '../../services/rest/rooms.service';
 import { error } from 'console';
 import { NgForm } from '@angular/forms';
+import { ContactsService } from '../../services/rest/contacts.service';
+import { GendersService } from '../../services/rest/genders.service';
 @Component({
   selector: 'sample-person-popup-window',
   templateUrl: './person-popup-window.component.html',
@@ -20,7 +22,9 @@ export class PersonPopupWindowComponent implements OnInit, AfterViewInit, OnDest
     private personsService: PersonsService,
     private dialogService: DialogService,
     private toastrService: ToastrService,
-    private roomsService: RoomsService
+    private roomsService: RoomsService,
+    private contactsService: ContactsService,
+    private gendersService: GendersService
   ) { }
 
   public getString = getString;
@@ -38,6 +42,8 @@ export class PersonPopupWindowComponent implements OnInit, AfterViewInit, OnDest
     BirthDate: undefined
   };
   public rooms: any[] = [];
+  public contacts: any[] = [];
+  public genders: any[] = [];
 
   private subscriptions: Subscription[] = [];
   private madeChanges: boolean = false;
@@ -47,6 +53,8 @@ export class PersonPopupWindowComponent implements OnInit, AfterViewInit, OnDest
   ngOnInit(): void {
     this.getPersonData();
     this.getRoomsData();
+    this.getContactsForPerson();
+    this.getGenders();
   }
 
   ngAfterViewInit(): void {
@@ -167,5 +175,22 @@ export class PersonPopupWindowComponent implements OnInit, AfterViewInit, OnDest
         this.toastrService.showToast("danger", getString('saveError'), "");
       }
     ));
+  }
+
+  private getContactsForPerson(): void {
+    this.subscriptions.push(this.contactsService.getDataForPerson(this.personId).subscribe(data => {
+      if (data.length > 0) this.contacts = data;
+    },
+      err => {
+        console.error(err);
+      }));
+  }
+
+  private getGenders(): void {
+    this.subscriptions.push(this.gendersService.getData().subscribe(data => {
+      this.genders = data;
+    }, err => {
+      console.error(err);
+    }));
   }
 }

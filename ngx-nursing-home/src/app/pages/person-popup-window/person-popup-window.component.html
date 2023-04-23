@@ -55,6 +55,30 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <div class="label">{{getString('gender')}}</div>
+                            <div class="value">
+                                <nb-select name="gender" required #gender1="ngModel"
+                                    [status]="gender1.dirty ? (gender1.invalid ? 'danger' : 'success'): 'basic'"
+                                    [(ngModel)]="newPersonData.GenderId">
+                                    <nb-option *ngFor="let gender of genders"
+                                        [value]="gender.Id">{{gender.Name}}</nb-option>
+                                </nb-select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row form-row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="label">{{getString('address')}}</div>
+                            <div class="value">
+                                <input nbInput fullWidth [placeholder]="getString('address')" name="address"
+                                    [(ngModel)]="newPersonData.Address">
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="group-title mt-3">
                     {{getString("stayData")}}
@@ -174,8 +198,54 @@
                 (click)="saveChanges(formKorisnik)">{{getString("save")}}</button>
         </div>
     </div>
-    <div class="col-md-4 ">
-
+    <div class="col-md-4 contacts-container">
+        <div class="group-title">
+            {{getString('contacts')}}
+            <div class="line"></div>
+        </div>
+        <sample-no-data *ngIf="contacts.length==0" [title]="getString('noContacts')"></sample-no-data>
+        <div class="grey-card" *ngFor="let contact of contacts">
+            <div class="row row ms-0 me-0 mt-0 mb-1">
+                <div class="col-md-6">
+                    <div class="label">{{getString('firstName')}}</div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card-value">{{contact.FirstName}}</div>
+                </div>
+            </div>
+            <div class="row row ms-0 me-0 mt-0 mb-1">
+                <div class="col-md-6">
+                    <div class="label">{{getString('lastName')}}</div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card-value">{{contact.LastName}}</div>
+                </div>
+            </div>
+            <div class="row row ms-0 me-0 mt-0 mb-1">
+                <div class="col-md-6">
+                    <div class="label">{{getString('email')}}</div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card-value">{{contact.Email ?? '-'}}</div>
+                </div>
+            </div>
+            <div class="row row ms-0 me-0 mt-0 mb-1">
+                <div class="col-md-6">
+                    <div class="label">{{getString('telephone')}}</div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card-value">{{contact.Telepone ?? '-'}}</div>
+                </div>
+            </div>
+            <div class="row row ms-0 me-0 mt-0 mb-1">
+                <div class="col-md-6">
+                    <div class="label">{{getString('mobile')}}</div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card-value">{{contact.Mobile ?? '-'}}</div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 

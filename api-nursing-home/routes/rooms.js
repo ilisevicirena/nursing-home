@@ -80,4 +80,16 @@ router.get('/getRoomsForFloor', async (request, response) => {
     }
 });
 
+router.get('/getAvaliableRooms', async (request, response) => {
+    try {
+        const pool = await db;
+        const result = await pool.request()
+            .query("EXEC [dbo].[getAvaliableRooms]");
+        response.json(result.recordset);
+    } catch (err) {
+        response.status(500);
+        response.send(err.message);
+    }
+});
+
 module.exports = router;

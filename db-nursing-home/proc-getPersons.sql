@@ -1,18 +1,13 @@
--- ================================================
--- Template generated from Template Explorer using:
--- Create Procedure (New Menu).SQL
---
--- Use the Specify Values for Template Parameters 
--- command (Ctrl-Shift-M) to fill in the parameter 
--- values below.
---
--- This block of comments will not be included in
--- the definition of the procedure.
--- ================================================
+USE [ENV01_NURSING_HOME]
+GO
+
+/****** Object:  StoredProcedure [dbo].[getPersons]    Script Date: 23.4.2023. 13:54:43 ******/
 SET ANSI_NULLS ON
 GO
+
 SET QUOTED_IDENTIFIER ON
 GO
+
 -- =============================================
 -- Author:		Irena Ilisevic
 -- Create date: 19.4.2023.
@@ -31,7 +26,7 @@ BEGIN
 	IF @Active=0
 	BEGIN 
 	SELECT 
-		[Id] = Id,
+		[Id] = p.Id,
 		[FirstName]=FirstName,
 		[LastName]=LastName,
 		[JMBG]=JMBG,
@@ -39,13 +34,16 @@ BEGIN
 		[Active]=Active,
 		[StartDate]=StartDate,
 		[EndDate]=EndDate,
-		[CreationDate]=CreationDate
-	FROM [dbo].[Person] 
+		[CreationDate]=CreationDate,
+		[GenderId]=GenderId,
+		[GenderName]=g.Name,
+		[GenderTag]=g.Tag
+	FROM [dbo].[Person] as p left join dbo.Gender as g on p.GenderId=g.Id;
 	END
 	ELSE
 	BEGIN
-	SELECT 
-		[Id] = Id,
+	select
+	[Id] = p.Id,
 		[FirstName]=FirstName,
 		[LastName]=LastName,
 		[JMBG]=JMBG,
@@ -53,8 +51,13 @@ BEGIN
 		[Active]=Active,
 		[StartDate]=StartDate,
 		[EndDate]=EndDate,
-		[CreationDate]=CreationDate
-	FROM [dbo].[Person] WHERE Active=@Active
+		[CreationDate]=CreationDate,
+		[GenderId]=GenderId,
+		[GenderName]=g.Name,
+		[GenderTag]=g.Tag
+	FROM [dbo].[Person] as p left join dbo.Gender as g on p.GenderId=g.Id WHERE Active=@Active
 	END
 END
 GO
+
+

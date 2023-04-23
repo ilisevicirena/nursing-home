@@ -9,7 +9,7 @@ router.get('/', async (request, response) => {
         const pool = await db;
         const result = await pool.request()
             .input("personId", request.query.PersonId)
-            .query("EXEC [dbo].[getContacts @PersonId=@personId]");
+            .query("EXEC [dbo].[getContacts] @PersonId=@personId");
         response.json(result.recordset);
     } catch (err) {
         response.status(500);
@@ -63,8 +63,7 @@ router.post('/update', async (request, response) => {
             .input('email', objectToSave.Email)
             .input('telephone', objectToSave.Telephone)
             .input('mobile', objectToSave.Mobile)
-            .input('personId', objectToSave.PersonId)
-            .query("EXEC [dbo].[updateContact] @Id=@id, @FirstName=@firstName, @LastName=@lastName, @Email=@email, @Telephone=@telephone, @Mobile=@mobile, @PersonId=@personId");
+            .query("EXEC [dbo].[updateContact] @Id=@id, @FirstName=@firstName, @LastName=@lastName, @Email=@email, @Telephone=@telephone, @Mobile=@mobile");
         if (result != null) response.json(result.recordset);
         else response.send(getError(4003));
     } catch (err) {

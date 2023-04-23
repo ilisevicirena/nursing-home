@@ -1,0 +1,19 @@
+::ng-deep sample-new-person {
+    height: 100%;
+}
+
+::ng-deep nb-stepper .step-content {
+    padding-left: 5rem !important;
+    position: relative;
+}
+
+.stepper-footer {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+.stepper-body {
+    height: calc(100% - 75px);
+    overflow: auto;
+}

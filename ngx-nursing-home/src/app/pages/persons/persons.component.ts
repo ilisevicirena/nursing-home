@@ -2,9 +2,10 @@ import { Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/c
 import { getString } from '../../resources/strings';
 import { PersonsService } from '../../services/rest/persons.service';
 import { Subscription } from 'rxjs';
-import { DateType, SmartTableColumn, CheckboxType, DatepickerFilter, SelectFilter } from 'shared-components';
+import { DateType, SmartTableColumn, CheckboxType, DatepickerFilter, SelectFilter, LookupType, SpecialFilter } from 'shared-components';
 import { NbWindowService, NbWindowState } from '@nebular/theme';
 import { PersonPopupWindowComponent } from '../person-popup-window/person-popup-window.component';
+import { GendersService } from '../../services/rest/genders.service';
 
 @Component({
   selector: 'sample-persons',
@@ -40,13 +41,15 @@ export class PersonsComponent implements OnInit, OnDestroy {
     new SmartTableColumn(getString('startDate')).Property("StartDate").SpecialType(new DateType()).SpecialFilter(new DatepickerFilter()),
     new SmartTableColumn(getString('endDate')).Property("EndDate").SpecialType(new DateType()).SpecialFilter(new DatepickerFilter()),
     new SmartTableColumn(getString('active')).Property("Active").SpecialType(new CheckboxType())
-      .SpecialFilter(new SelectFilter("value", "label").Source(this.activeFilter))
+      .SpecialFilter(new SelectFilter("value", "label").Source(this.activeFilter)),
+    new SmartTableColumn(getString('gender')).Property("GenderId").SpecialType(new LookupType().NameAttribute("GenderTag"))
+      .SpecialFilter(new SelectFilter("Id", "Tag").ServerSource(true).ServerEndpoint(this.gendersService.apiRoute))
   ];
 
   private subscriptions: Subscription[] = [];
   @ViewChild('contentTemplate') contentTemplate: TemplateRef<any>;
 
-  constructor(private personsService: PersonsService, private windowService: NbWindowService) { }
+  constructor(private personsService: PersonsService, private windowService: NbWindowService, private gendersService: GendersService) { }
 
   ngOnInit(): void {
     this.getData();
