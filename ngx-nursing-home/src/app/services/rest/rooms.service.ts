@@ -23,6 +23,10 @@ export class RoomsService extends BaseRestApiService {
   public getAvaliableRooms(): Observable<any> {
     return this.http.get(this.apiRoute + "/getAvaliableRooms");
   }
+
+  public getAccomodationManagement(): Observable<any> {
+    return this.http.get(this.apiRoute + "/getAccomodationManagementRooms");
+  }
 }
 
 export interface IRoom extends IBaseSaveModel {

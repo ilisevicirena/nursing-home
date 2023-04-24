@@ -92,4 +92,17 @@ router.get('/getAvaliableRooms', async (request, response) => {
     }
 });
 
+router.get('/getAccomodationManagementRooms', async (request, response) => {
+    try {
+        const pool = await db;
+        const result = await pool.request()
+            .query("EXEC [dbo].[getAccomodationManagementRooms]");
+        if (result.recordsets.length == 2) response.json({ Rooms: result.recordsets[0], Persons: result.recordsets[1] });
+        else response.send(getError(2003));
+    } catch (err) {
+        response.status(500);
+        response.send(err.message);
+    }
+});
+
 module.exports = router;

@@ -38,6 +38,7 @@ import { PersonsComponent } from './persons/persons.component';
 import { PersonPopupWindowComponent } from './person-popup-window/person-popup-window.component';
 import { NoDataComponent } from '../shared/no-data/no-data.component';
 import { NewPersonComponent } from './new-person/new-person.component';
+import { AccomodationManagementComponent } from './accomodation-management/accomodation-management.component';
 
 @NgModule({
   imports: [
@@ -78,7 +79,8 @@ import { NewPersonComponent } from './new-person/new-person.component';
     PersonsComponent,
     PersonPopupWindowComponent,
     NoDataComponent,
-    NewPersonComponent
+    NewPersonComponent,
+    AccomodationManagementComponent
   ],
 })
 export class PagesModule {
