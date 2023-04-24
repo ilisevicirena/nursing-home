@@ -59,6 +59,11 @@ export class AccomodationManagementComponent implements OnInit, OnDestroy {
         this.subscriptions.push(this.personsService.changeRoom(personId, roomId).subscribe(() => {
           this.getAccomodationManagement();
         }));
+      } else if (personId) {
+        // just save and reload
+        this.subscriptions.push(this.personsService.deactivateRoom(personId).subscribe(() => {
+          this.getAccomodationManagement();
+        }));
       }
 
     }

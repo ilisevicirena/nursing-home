@@ -38,6 +38,10 @@ export class PersonsService extends BaseRestApiService {
   public changeRoom(personId: number, roomId: number): Observable<any> {
     return this.http.post(this.apiRoute + "/changeRoomPerson", { PersonId: personId, RoomId: roomId });
   }
+
+  public deactivateRoom(personId: number): Observable<any> {
+    return this.http.post(this.apiRoute + "/deactivateRoomPerson", { PersonId: personId });
+  }
 }
 
 export interface IPerson extends IBaseSaveModel {
