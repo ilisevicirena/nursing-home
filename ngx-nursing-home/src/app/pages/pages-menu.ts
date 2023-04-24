@@ -13,6 +13,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
     link: '/pages/room-management',
   },
   {
+    title: getString("accomodationManagement"),
+    icon: 'pantone-outline',
+    link: '/pages/accomodation-management',
+  },
+  {
     title: getString("persons"),
     icon: 'people-outline',
     link: '/pages/persons',

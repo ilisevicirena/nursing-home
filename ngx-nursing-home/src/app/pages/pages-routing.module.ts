@@ -5,6 +5,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { RoomManagementComponent } from './room-management/room-management.component';
 import { PersonsComponent } from './persons/persons.component';
 import { NewPersonComponent } from './new-person/new-person.component';
+import { AccomodationManagementComponent } from './accomodation-management/accomodation-management.component';
 
 const routes: Routes = [{
   path: '',
@@ -30,6 +31,10 @@ const routes: Routes = [{
     {
       path: 'new-person',
       component: NewPersonComponent
+    },
+    {
+      path: 'accomodation-management',
+      component: AccomodationManagementComponent
     },
   ],
 }];

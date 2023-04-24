@@ -78,7 +78,7 @@ const strings: IKeyValue[] = [
     { key: "freeSpace", value: "Slobodno" },
     { key: "roomSelectionInvalid", value: "Ne možete u istoj sobi imati dodjeljene osobe različitih spolova. U tablici pod stupcem 'Spol' naveden je spol osoba koje su trenutno smještene u sobu." },
     { key: "placePerson", value: "Smjesti osobu" },
-    { key: "freeSpace", value: "Slobodno" },
+    { key: "accomodationManagement", value: "Upravljanje smještajem" },
     { key: "freeSpace", value: "Slobodno" },
     { key: "freeSpace", value: "Slobodno" },
     { key: "freeSpace", value: "Slobodno" },
