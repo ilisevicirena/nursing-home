@@ -10,6 +10,7 @@ import { error } from 'console';
 import { NgForm } from '@angular/forms';
 import { ContactsService } from '../../services/rest/contacts.service';
 import { GendersService } from '../../services/rest/genders.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'sample-person-popup-window',
   templateUrl: './person-popup-window.component.html',
@@ -24,7 +25,8 @@ export class PersonPopupWindowComponent implements OnInit, AfterViewInit, OnDest
     private toastrService: ToastrService,
     private roomsService: RoomsService,
     private contactsService: ContactsService,
-    private gendersService: GendersService
+    private gendersService: GendersService,
+    private router: Router,
   ) { }
 
   public getString = getString;
@@ -192,5 +194,10 @@ export class PersonPopupWindowComponent implements OnInit, AfterViewInit, OnDest
     }, err => {
       console.error(err);
     }));
+  }
+
+  public goToExternalRoomManagement(): void {
+    this.ref.close(false);
+    this.router.navigateByUrl('/pages/accomodation-management');
   }
 }

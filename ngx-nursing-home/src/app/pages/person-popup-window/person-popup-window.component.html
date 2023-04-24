@@ -173,9 +173,8 @@
                         <div class="form-group">
                             <div class="label">{{getString("room")}}</div>
                             <div class="value">
-                                <nb-select [placeholder]="getString('room')" fullWidth neme="room"
-                                    [disabled]="!person.Active" [(selected)]="newPersonData.RoomId"
-                                    (selectedChange)="onRoomSelectedChange($event)">
+                                <nb-select [placeholder]="getString('room')" fullWidth neme="room" disabled
+                                    [(selected)]="newPersonData.RoomId" (selectedChange)="onRoomSelectedChange($event)">
                                     <nb-option *ngFor="let room of rooms" [value]="room.Id">{{room.Name}}</nb-option>
                                 </nb-select>
                             </div>
@@ -185,7 +184,8 @@
                         <div class="label">&nbsp;</div>
                         <div class="value">
                             <button nbButton ghost status="primary" shape="round" class="mt-2"
-                                [nbTooltip]="getString('goToExternalRoomManagement')">
+                                [nbTooltip]="getString('goToExternalRoomManagement')"
+                                (click)="goToExternalRoomManagement()">
                                 <nb-icon pack="eva" icon="external-link-outline"></nb-icon>
                             </button>
                         </div>
