@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NbIconLibraries } from '@nebular/theme';
 
 @Component({
   selector: 'ngx-app',
@@ -6,7 +7,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppComponent implements OnInit {
 
-  constructor() {
+  constructor(private iconLibraries: NbIconLibraries) {
+    this.iconLibraries.registerFontPack('fas', { packClass: 'fas', iconClassPrefix: 'fa' });
+    this.iconLibraries.registerFontPack('far', { packClass: 'far', iconClassPrefix: 'fa' });
+    this.iconLibraries.registerFontPack('fab', { packClass: 'fab', iconClassPrefix: 'fa' });
+    this.iconLibraries.setDefaultPack('far');
   }
 
   ngOnInit(): void {

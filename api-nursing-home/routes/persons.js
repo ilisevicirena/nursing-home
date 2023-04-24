@@ -123,6 +123,21 @@ router.post('/changeRoomPerson', async (request, response) => {
     }
 });
 
+router.post('/deactivateRoomPerson', async (request, response) => {
+    try {
+        var objectToSave = request.body;
+        const pool = await db;
+        const result = await pool.request()
+            .input('personId', objectToSave.PersonId)
+            .query("EXEC [dbo].[deactivateRoomPerson] @PersonId=@personId");
+        if (result != null) response.json(result.recordset);
+        else response.send(getError(3005));
+    } catch (err) {
+        response.status(500);
+        response.send(err.message);
+    }
+});
+
 router.get('/personDetails', async (request, response) => {
     try {
         const pool = await db;
