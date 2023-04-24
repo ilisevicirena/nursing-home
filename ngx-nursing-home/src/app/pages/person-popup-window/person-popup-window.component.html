@@ -13,7 +13,8 @@
                             <div class="value">
                                 <input [placeholder]="getString('firstName')" nbInput fullWidth name="firstName"
                                     [(ngModel)]="newPersonData.FirstName" required #firstName1="ngModel"
-                                    [status]="firstName1.dirty ? (firstName1.invalid ? 'danger' : 'success'): 'basic'">
+                                    [status]="firstName1.dirty ? (firstName1.invalid ? 'danger' : 'success'): 'basic'"
+                                    [disabled]="!person.Active">
                             </div>
                         </div>
                     </div>
@@ -22,7 +23,8 @@
                             <div class="label">{{getString("lastName")}}</div>
                             <div class="value"><input nbInput fullWidth [placeholder]="getString('lastName')"
                                     name="surname" [(ngModel)]="newPersonData.LastName" required #lastName1="ngModel"
-                                    [status]="lastName1.dirty ? (lastName1.invalid ? 'danger' : 'success'): 'basic'">
+                                    [status]="lastName1.dirty ? (lastName1.invalid ? 'danger' : 'success'): 'basic'"
+                                    [disabled]="!person.Active">
                             </div>
                         </div>
                     </div>
@@ -35,7 +37,7 @@
                                 <input nbInput [placeholder]="getString('jmbg')" fullWidth name="jmbg" required
                                     #jmbg1="ngModel"
                                     [status]="jmbg1.dirty ? (jmbg1.invalid ? 'danger' : 'success'): 'basic'"
-                                    [(ngModel)]="newPersonData.JMBG">
+                                    [(ngModel)]="newPersonData.JMBG" [disabled]="!person.Active">
                             </div>
                         </div>
                     </div>
@@ -46,7 +48,7 @@
                                 <nb-form-field>
                                     <input nbInput #birthDateInput [placeholder]="getString('birthDate')" fullWidth
                                         name="birthData" [(ngModel)]="newPersonData.BirthDate"
-                                        [nbDatepicker]="birthDateDatepicker">
+                                        [disabled]="!person.Active" [nbDatepicker]="birthDateDatepicker">
                                     <nb-datepicker #birthDateDatepicker></nb-datepicker>
                                     <button nbButton nbSuffix ghost (click)="birthDateInput.focus()">
                                         <nb-icon pack="eva" icon="calendar-outline"></nb-icon>
@@ -59,7 +61,7 @@
                         <div class="form-group">
                             <div class="label">{{getString('gender')}}</div>
                             <div class="value">
-                                <nb-select name="gender" required #gender1="ngModel"
+                                <nb-select name="gender" required #gender1="ngModel" [disabled]="!person.Active"
                                     [status]="gender1.dirty ? (gender1.invalid ? 'danger' : 'success'): 'basic'"
                                     [(ngModel)]="newPersonData.GenderId">
                                     <nb-option *ngFor="let gender of genders"
@@ -75,7 +77,7 @@
                             <div class="label">{{getString('address')}}</div>
                             <div class="value">
                                 <input nbInput fullWidth [placeholder]="getString('address')" name="address"
-                                    [(ngModel)]="newPersonData.Address">
+                                    [(ngModel)]="newPersonData.Address" [disabled]="!person.Active">
                             </div>
                         </div>
                     </div>
@@ -92,7 +94,7 @@
                                 <nb-form-field>
                                     <input nbInput [placeholder]="getString('startDate')" fullWidth #startDateInput
                                         name="startDate" [(ngModel)]="newPersonData.StartDate"
-                                        [nbDatepicker]="startDateDatepicker">
+                                        [disabled]="!person.Active" [nbDatepicker]="startDateDatepicker">
                                     <nb-datepicker #startDateDatepicker></nb-datepicker>
                                     <button nbButton nbSuffix ghost (click)="startDateInput.focus();">
                                         <nb-icon pack="eva" icon="calendar-outline"></nb-icon>
@@ -172,7 +174,8 @@
                             <div class="label">{{getString("room")}}</div>
                             <div class="value">
                                 <nb-select [placeholder]="getString('room')" fullWidth neme="room"
-                                    [(selected)]="newPersonData.RoomId" (selectedChange)="onRoomSelectedChange($event)">
+                                    [disabled]="!person.Active" [(selected)]="newPersonData.RoomId"
+                                    (selectedChange)="onRoomSelectedChange($event)">
                                     <nb-option *ngFor="let room of rooms" [value]="room.Id">{{room.Name}}</nb-option>
                                 </nb-select>
                             </div>
