@@ -25,6 +25,7 @@
                                                 <input [placeholder]="getString('firstName')" nbInput fullWidth
                                                     name="firstName" [(ngModel)]="newPersonData.FirstName" required
                                                     #firstName1="ngModel" [disabled]="newPersonData.Id>0"
+                                                    autocomplete="off"
                                                     [status]="firstName1.dirty ? (firstName1.invalid ? 'danger' : 'success'): 'basic'">
                                             </div>
                                         </div>
@@ -36,7 +37,7 @@
                                                     size="small" class="ms-1 required-mark"
                                                     [nbTooltip]="getString('required')"></nb-icon>
                                             </div>
-                                            <div class="value"><input nbInput fullWidth
+                                            <div class="value"><input nbInput fullWidth autocomplete="off"
                                                     [placeholder]="getString('lastName')" name="surname"
                                                     [disabled]="newPersonData.Id>0" [(ngModel)]="newPersonData.LastName"
                                                     required #lastName1="ngModel"
@@ -56,6 +57,8 @@
                                             <div class="value">
                                                 <input nbInput [placeholder]="getString('jmbg')" fullWidth name="jmbg"
                                                     required #jmbg1="ngModel" [disabled]="newPersonData.Id>0"
+                                                    type="text" pattern="[0-9]{13}$" autocomplete="off"
+                                                    (keypress)="($event.charCode == 8 || $event.charCode == 0) ? null : $event.charCode >= 48 && $event.charCode <= 57;"
                                                     [status]="jmbg1.dirty ? (jmbg1.invalid ? 'danger' : 'success'): 'basic'"
                                                     [(ngModel)]="newPersonData.JMBG">
                                             </div>
@@ -69,7 +72,8 @@
                                                 <nb-form-field>
                                                     <input nbInput #birthDateInput [disabled]="newPersonData.Id>0"
                                                         [placeholder]="getString('birthDate')" fullWidth
-                                                        name="birthData" [(ngModel)]="newPersonData.BirthDate"
+                                                        autocomplete="off" name="birthData"
+                                                        [(ngModel)]="newPersonData.BirthDate"
                                                         [nbDatepicker]="birthDateDatepicker">
                                                     <nb-datepicker #birthDateDatepicker></nb-datepicker>
                                                     <button nbButton nbSuffix ghost (click)="birthDateInput.focus()">
@@ -89,7 +93,7 @@
                                             <div class="value">
                                                 <nb-form-field>
                                                     <input nbInput required [placeholder]="getString('startDate')"
-                                                        fullWidth #startDateInput name="startDate"
+                                                        fullWidth #startDateInput name="startDate" autocomplete="off"
                                                         [(ngModel)]="newPersonData.StartDate"
                                                         [nbDatepicker]="startDateDatepicker" #startDate1="ngModel"
                                                         [disabled]="newPersonData.Id>0"
@@ -110,7 +114,7 @@
                                             </div>
                                             <div class="value">
                                                 <input nbInput [placeholder]="getString('address')" fullWidth
-                                                    name="address" [disabled]="newPersonData.Id>0"
+                                                    autocomplete="off" name="address" [disabled]="newPersonData.Id>0"
                                                     [(ngModel)]="newPersonData.Address">
                                             </div>
                                         </div>
@@ -190,7 +194,8 @@
                                         <div class="label">{{getString('floor')}}</div>
                                         <div class="value">
                                             <input nbInput fullWidth disabled [placeholder]="getString('floor')"
-                                                name="floorName" [(ngModel)]="selectedRoom.FloorName">
+                                                autocomplete="off" name="floorName"
+                                                [(ngModel)]="selectedRoom.FloorName">
                                         </div>
                                     </div>
                                 </div>

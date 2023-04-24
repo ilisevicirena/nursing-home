@@ -35,7 +35,8 @@
                             <div class="label">{{getString("jmbg")}}</div>
                             <div class="value">
                                 <input nbInput [placeholder]="getString('jmbg')" fullWidth name="jmbg" required
-                                    #jmbg1="ngModel"
+                                    #jmbg1="ngModel" pattern="[0-9]{13}$"
+                                    (keypress)="($event.charCode == 8 || $event.charCode == 0) ? null : $event.charCode >= 48 && $event.charCode <= 57;"
                                     [status]="jmbg1.dirty ? (jmbg1.invalid ? 'danger' : 'success'): 'basic'"
                                     [(ngModel)]="newPersonData.JMBG" [disabled]="!person.Active">
                             </div>
