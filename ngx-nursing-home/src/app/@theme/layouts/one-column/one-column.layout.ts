@@ -15,7 +15,9 @@ import { environment, SidebarStates } from '../../../../environments/environment
         <ng-content select="nb-menu"></ng-content>
       </nb-sidebar>
 
-      <nb-layout-column>
+      <nb-layout-column style="height: calc(100vh - 3.5rem);
+    overflow: hidden;
+    padding: 1.5rem;">
         <ng-content select="router-outlet"></ng-content>
       </nb-layout-column>   
     </nb-layout>

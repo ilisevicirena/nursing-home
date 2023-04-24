@@ -16,7 +16,7 @@
                 (checkedChange)="showDeactivatedChange()"></nb-toggle>
         </nb-card-header>
         <nb-card-body>
-            <div style="height: 692px;">
+            <div style="height: 510px;">
                 <ngx-smart-table [(data)]="personsData" [columns]="gridColumns" [addEnabled]="false"
                     [editEnabled]="false" [deleteEnabled]="false" [selectionEnabled]="true" [selectRowByClick]="true"
                     (selectionChanged)="gridSelectionChanged($event)"></ngx-smart-table>
@@ -41,9 +41,10 @@
                 </nb-form-field>
             </div>
         </div>
-        <div class="row m-0">
+        <div class="row m-0" style="height: calc(100% - 1rem);
+    overflow: auto;">
             <div class="col-md-3 p-1" *ngFor="let person of personsData | filter:searchTerm">
-                <nb-card>
+                <nb-card class="m-0">
                     <nb-card-header class="d-flex align-items-center person-card-header"
                         (click)="openPersonDetails(person)">
                         <nb-icon pack="eva" icon="person-outline" status="primary" class="me-3">

@@ -4,7 +4,7 @@
             <nb-card-body>
                 <nb-tabset (changeTab)="onTabChange($event)">
                     <nb-tab [tabTitle]="floorsTitle" class="ps-0 pe-0 pb-0">
-                        <div style="height: 729px">
+                        <div style="height: 543px">
                             <ngx-smart-table #floorsTable [tableMode]="tableMode" [columns]="floorsColumns"
                                 [(data)]="floorsData" [pagerEnabled]="false" [loadingEnabled]="false"
                                 [(load)]="floorsLoading" [entriesPerPageEnabled]="false"
@@ -14,7 +14,7 @@
                         </div>
                     </nb-tab>
                     <nb-tab [tabTitle]="roomsTitle" class="ps-0 pe-0 pb-0">
-                        <div style="height: 729px">
+                        <div style="height: 543px">
                             <ngx-smart-table #roomsTable [tableMode]="tableMode" [columns]="roomsColumns"
                                 [(data)]="roomsData" [pagerEnabled]="false" [loadingEnabled]="false"
                                 [(load)]="roomsLoading" [entriesPerPageEnabled]="false"

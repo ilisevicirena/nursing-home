@@ -31,6 +31,20 @@
 
   @include nb-overrides();
 
+  ::-webkit-scrollbar {
+    width: nb-theme(scrollbar-width);
+    height: nb-theme(scrollbar-width);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: nb-theme(scrollbar-color);
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: nb-theme(color-basic-500);
+  }
+
   .title-container-person {
 
     .window-title-person {

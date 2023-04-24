@@ -1,7 +1,7 @@
 USE [ENV01_NURSING_HOME]
 GO
 
-/****** Object:  StoredProcedure [dbo].[changeStatusPerson]    Script Date: 19.4.2023. 12:12:08 ******/
+/****** Object:  StoredProcedure [dbo].[changeStatusPerson]    Script Date: 24.4.2023. 17:17:01 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -32,6 +32,7 @@ BEGIN
 
 	IF (@Status=0)
 		BEGIN
+			exec dbo.deactivateRoomPerson @PersonId=@Id;
 			IF NULLIF(@Date, '') IS NULL
 				SET @EndDate=GETDATE();				
 			ELSE				
@@ -48,5 +49,4 @@ BEGIN
 		
 END
 GO
-
 
