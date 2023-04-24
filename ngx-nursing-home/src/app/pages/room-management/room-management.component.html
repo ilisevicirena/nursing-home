@@ -40,8 +40,9 @@
                         <div>
                             <div class="room-name">{{room.Name}}</div>
                             <div class="room-capacity">
-                                <nb-icon pack="eva" icon="people-outline"></nb-icon>
-                                0/{{room.Capacity}}
+                                <nb-icon pack="eva" icon="people-outline"
+                                    [status]="room.Capacity==0 ? 'primary' : room.Capacity==room.People ? 'danger':'success'"></nb-icon>
+                                {{room.People}}/{{room.Capacity}}
                             </div>
                         </div>
                     </div>
