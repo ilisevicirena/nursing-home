@@ -1,0 +1,82 @@
+@import "../../@theme/styles/themes.scss";
+
+::ng-deep sample-accomodation-management {
+    height: 89vh;
+}
+
+.floors {
+    .row {
+        margin-bottom: 0.5rem !important;
+        margin-left: 0;
+        margin-right: 0;
+        margin-bottom: 0;
+    }
+
+    .row:last-child {
+        margin-bottom: 0;
+        margin-left: 0;
+        margin-right: 0;
+        margin-bottom: 0;
+    }
+}
+
+@include nb-install-component() {
+    .room {
+        border: 1px solid nb-theme(input-basic-border-color);
+        height: 10rem;
+        padding: 0rem;
+        display: flex;
+        position: relative;
+
+        .room-name {
+            color: nb-theme(color-primary-600);
+            opacity: 0.6;
+            font-weight: 600;
+            font-size: 18px;
+            top: 0.5rem;
+            left: 0.5rem;
+            position: absolute;
+        }
+
+        .room-persons {
+            position: absolute;
+            top: 2rem;
+            padding: 0.5rem;
+            height: calc(100% - 2rem - 2rem);
+            overflow: auto;
+
+            nb-tag {
+                margin-bottom: 0.5rem;
+            }
+
+            nb-tag:last-child {
+                margin-bottom: 0;
+            }
+        }
+
+        .room-capacity {
+            color: nb-theme(color-primary-600);
+            font-size: 16px;
+            font-weight: 600;
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+        }
+
+
+    }
+
+    ::-webkit-scrollbar {
+        width: nb-theme(scrollbar-width);
+        height: nb-theme(scrollbar-width);
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: nb-theme(scrollbar-color);
+        border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: nb-theme(color-basic-500);
+    }
+}

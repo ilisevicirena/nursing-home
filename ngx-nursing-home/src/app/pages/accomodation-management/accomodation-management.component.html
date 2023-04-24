@@ -1,1 +1,42 @@
-<p>accomodation-management works!</p>
+<div class="row h-100">
+    <div class="col-md-3 p-0 h-100">
+        <nb-card class="h-100">
+            <nb-card-header>
+                Osobe bez sobe
+            </nb-card-header>
+            <nb-card-body>
+                <div class="row m-0" *ngFor="let person of noRoomPersons">
+                    <nb-tag class="mb-2" style="width: max-content;"
+                        [text]="person.FirstName+' '+person.LastName"></nb-tag>
+                </div>
+            </nb-card-body>
+        </nb-card>
+    </div>
+    <div class="col-md-9 pe-0 pb-0 h-100 floors" style="overflow: auto;">
+        <div class="row w-100" *ngFor="let floor of mainSource">
+            <nb-card class="m-0">
+                <nb-card-header>
+                    {{floor?.Name}}
+                </nb-card-header>
+                <nb-card-body class="p-2">
+                    <div class="row m-0">
+                        <div class="col-md-4 room" *ngFor="let room of floor?.Rooms">
+                            <div>
+                                <div class="room-name">{{room.Name}}</div>
+                                <div class="room-persons">
+                                    <nb-tag *ngFor="let person of room.People"
+                                        [text]="person.FirstName+' '+person.LastName"></nb-tag>
+                                </div>
+                                <div class="room-capacity">
+                                    <nb-icon pack="eva" icon="people-outline"
+                                        [status]="room.Capacity==0 ? 'primary' : room.Capacity==room.TakenSpace ? 'danger':'success'"></nb-icon>
+                                    {{room.TakenSpace}}/{{room.Capacity}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </nb-card-body>
+            </nb-card>
+        </div>
+    </div>
+</div>

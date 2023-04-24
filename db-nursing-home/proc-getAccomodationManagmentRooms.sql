@@ -1,7 +1,7 @@
 USE [ENV01_NURSING_HOME]
 GO
 
-/****** Object:  StoredProcedure [dbo].[getAccomodationManagementRooms]    Script Date: 24.4.2023. 9:44:43 ******/
+/****** Object:  StoredProcedure [dbo].[getAccomodationManagementRooms]    Script Date: 24.4.2023. 11:15:59 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -23,6 +23,18 @@ BEGIN
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
+	select * 
+from(
+select 
+[Id]=f.Id,
+[Name]=f.[Name],
+[RoomCount]=isnull(t2.Number,0)
+	from dbo.[Floor] as f
+	left join (select  count(r.FloorId) as Number, r.FloorId
+	from dbo.Room as r
+		join dbo.[Floor] f on r.FloorId=f.Id group by FloorId
+		) as t2 on t2.FloorId=f.Id) as t1 where t1.RoomCount > 0;
+
 	SELECT
 	[Id]=r.Id,
 	[Name]=r.[Name],
