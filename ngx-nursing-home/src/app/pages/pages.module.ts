@@ -39,6 +39,7 @@ import { PersonPopupWindowComponent } from './person-popup-window/person-popup-w
 import { NoDataComponent } from '../shared/no-data/no-data.component';
 import { NewPersonComponent } from './new-person/new-person.component';
 import { AccomodationManagementComponent } from './accomodation-management/accomodation-management.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   imports: [
@@ -71,7 +72,8 @@ import { AccomodationManagementComponent } from './accomodation-management/accom
     NbFormFieldModule,
     NbPopoverModule,
     Ng2SearchPipeModule,
-    NbStepperModule
+    NbStepperModule,
+    DragDropModule
   ],
   declarations: [
     PagesComponent,
