@@ -14,7 +14,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   },
   {
     title: getString("accomodationManagement"),
-    icon: 'pantone-outline',
+    icon: 'swap-outline',
     link: '/pages/accomodation-management',
   },
   {

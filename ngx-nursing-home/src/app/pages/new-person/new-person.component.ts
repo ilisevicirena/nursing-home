@@ -27,7 +27,7 @@ export class NewPersonComponent implements OnInit, OnDestroy {
 
   public getString = getString;
   public newPersonData: IPerson = {
-    Id: 0,
+    Id: 4,
     FirstName: '',
     LastName: '',
     JMBG: '',
@@ -40,11 +40,12 @@ export class NewPersonComponent implements OnInit, OnDestroy {
 
   public loading: boolean = false;
   public contactsColumns: SmartTableColumn[] = [
-    new SmartTableColumn(getString('firstName')).Property("FirstName").SpecialEditor(new TextboxEditor()).Filter(false),
-    new SmartTableColumn(getString('lastName')).Property("LastName").SpecialEditor(new TextboxEditor()).Filter(false),
-    new SmartTableColumn(getString('email')).Property("Email").SpecialEditor(new TextboxEditor()).Filter(false),
-    new SmartTableColumn(getString('telephone')).Property("Telephone").SpecialEditor(new TextboxEditor()).Filter(false),
-    new SmartTableColumn(getString('mobile')).Property("Mobile").SpecialEditor(new TextboxEditor()).Filter(false),
+    new SmartTableColumn(getString('firstName')).Property("FirstName").SpecialEditor(new TextboxEditor().Required(true).Validation(true)).Filter(false),
+    new SmartTableColumn(getString('lastName')).Property("LastName").SpecialEditor(new TextboxEditor().Required(true).Validation(true)).Filter(false),
+    new SmartTableColumn(getString('email')).Property("Email").SpecialEditor(new TextboxEditor()
+      .Pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$").Validation(true)).Filter(false),
+    new SmartTableColumn(getString('telephone')).Property("Telephone").SpecialEditor(new TextboxEditor().OnlyNumbers(true)).Filter(false),
+    new SmartTableColumn(getString('mobile')).Property("Mobile").SpecialEditor(new TextboxEditor().OnlyNumbers(true)).Filter(false),
   ];
 
   public contactsData: any[] = [];
@@ -119,20 +120,64 @@ export class NewPersonComponent implements OnInit, OnDestroy {
   }
 
   public contactsCreate(event: any) {
-    event.newData.PersonId = this.newPersonData.Id;
-    this.subscriptions.push(this.contactsService.add(event.newData).subscribe(data => {
-      if (data.ContactId) {
-        event.confirm.resolve();
-        this.getContacts();
-      }
-    }));
+    var allValid: boolean = true;
+
+    Object.keys(event.newData).forEach(key => {
+      if (key == "FirstName" || key == "LastName") {
+        if (!event.newData[key] || !event.newData[key]?.value) allValid = false; return;
+      } else
+        if (event.newData[key].isValid != undefined) {
+          if (event.newData[key].isValid == false) {
+            allValid = false;
+            return;
+          }
+        }
+    });
+
+    if ((!event.newData.Email && !event.newData.Telephone && !event.newData.Mobile)) allValid = false;
+
+    if (allValid) {
+      event.newData.PersonId = this.newPersonData.Id;
+      event.newData.FirstName = event.newData.FirstName.value ?? event.newData.FirstName;
+      event.newData.LastName = event.newData.LastName.value ?? event.newData.LastName;
+      event.newData.Email = event.newData.Email.value ?? event.newData.Email;
+
+      this.subscriptions.push(this.contactsService.add(event.newData).subscribe(data => {
+        if (data.ContactId) {
+          event.confirm.resolve();
+          this.getContacts();
+        }
+      }));
+    }
   }
 
   public contactsEdit(event: any) {
-    this.subscriptions.push(this.contactsService.update(event.newData).subscribe(() => {
-      event.confirm.resolve();
-      this.getContacts();
-    }));
+    var allValid: boolean = true;
+
+    Object.keys(event.newData).forEach(key => {
+      if (key == "FirstName" || key == "LastName") {
+        if (!event.newData[key] || !event.newData[key]?.value) allValid = false; return;
+      } else
+        if (event.newData[key].isValid != undefined) {
+          if (event.newData[key].isValid == false) {
+            allValid = false;
+            return;
+          }
+        }
+    });
+
+    if ((!event.newData.Email && !event.newData.Telephone && !event.newData.Mobile)) allValid = false;
+
+    if (allValid) {
+      event.newData.FirstName = event.newData.FirstName.value ?? event.newData.FirstName;
+      event.newData.LastName = event.newData.LastName.value ?? event.newData.LastName;
+      event.newData.Email = event.newData.Email.value ?? event.newData.Email;
+
+      this.subscriptions.push(this.contactsService.update(event.newData).subscribe(data => {
+        event.confirm.resolve();
+        this.getContacts();
+      }));
+    }
   }
 
   public contactsDelete(event: any) {
