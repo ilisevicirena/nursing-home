@@ -1,0 +1,57 @@
+<nb-card class="h-100 w-100">
+    <nb-card-body>
+        <div class="form-group" class="start-position" #searchFormField style="width:50%">
+            <div class="label mb-2">{{getString("typeSearchTerm")}}</div>
+            <nb-form-field>
+                <input nbInput [placeholder]="getString('search')" shape="round" fullWidth [(ngModel)]="searchTerm"
+                    (keypress)="onSerachKeyPress($event)">
+                <nb-icon nbPrefix pack="eva" icon="search-outline" status="primary"></nb-icon>
+                <button nbButton nbSuffix ghost shape="round" status="basic" *ngIf="searchTerm.length>0"
+                    (click)="resetSearch()">
+                    <nb-icon pack="eva" icon="close-outline"></nb-icon>
+                </button>
+            </nb-form-field>
+        </div>
+        <div class="search-results" *ngIf="searchPerformed">
+            <div class="row m-0">
+                <div class="col-md-3 p-1" *ngFor="let person of personsData">
+                    <nb-card class="m-0">
+                        <nb-card-header class="d-flex align-items-center person-card-header"
+                            (click)="openPersonDetails(person)">
+                            <nb-icon pack="eva" icon="person-outline" status="primary" class="me-3">
+                            </nb-icon>
+                            {{person.FirstName}} {{person.LastName}}
+                        </nb-card-header>
+                        <nb-card-body>
+                            <div class="row ms-0 me-0 mt-0 mb-1" *ngFor="let data of cardData">
+                                <div class="col-md-6">
+                                    <div class="label">{{data.label}}</div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div *ngIf="person[data.field]!=null; else noValue">
+                                        <ng-container [ngSwitch]="data.type">
+                                            <div class="card-value" *ngSwitchCase="'date'">{{person[data.field] |
+                                                date:"dd.MM.yyyy."}}
+                                            </div>
+                                            <div class="card-value" *ngSwitchCase="'checkbox'"><nb-checkbox
+                                                    status="primary" disabled
+                                                    [checked]="person[data.field]"></nb-checkbox>
+                                            </div>
+                                            <div class="card-value" *ngSwitchDefault="">{{person[data.field]}}</div>
+                                        </ng-container>
+                                    </div>
+                                    <ng-template #noValue>
+                                        <div class="card-value">-</div>
+                                    </ng-template>
+                                </div>
+                            </div>
+                        </nb-card-body>
+                    </nb-card>
+                </div>
+            </div>
+            <div class="row m-0" *ngIf="personsData.length==0">
+                <sample-no-data [title]="getString('searchNoResult')"></sample-no-data>
+            </div>
+        </div>
+    </nb-card-body>
+</nb-card>

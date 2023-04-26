@@ -151,4 +151,17 @@ router.get('/personDetails', async (request, response) => {
     }
 });
 
+router.get('/searchPersons', async (request, response) => {
+    try {
+        const pool = await db;
+        const result = await pool.request()
+            .input('searchTerm', request.query.searchTerm)
+            .query("EXEC [dbo].[searchPersons] @searchTerm=@searchTerm");
+        response.json(result.recordset);
+    } catch (err) {
+        response.status(500);
+        response.send(err.message);
+    }
+});
+
 module.exports = router;

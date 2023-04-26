@@ -6,6 +6,7 @@ import { RoomManagementComponent } from './room-management/room-management.compo
 import { PersonsComponent } from './persons/persons.component';
 import { NewPersonComponent } from './new-person/new-person.component';
 import { AccomodationManagementComponent } from './accomodation-management/accomodation-management.component';
+import { AdvancedSearchComponent } from './advanced-search/advanced-search.component';
 
 const routes: Routes = [{
   path: '',
@@ -35,6 +36,10 @@ const routes: Routes = [{
     {
       path: 'accomodation-management',
       component: AccomodationManagementComponent
+    },
+    {
+      path: 'advanced-search',
+      component: AdvancedSearchComponent
     },
   ],
 }];

@@ -40,6 +40,8 @@ import { NoDataComponent } from '../shared/no-data/no-data.component';
 import { NewPersonComponent } from './new-person/new-person.component';
 import { AccomodationManagementComponent } from './accomodation-management/accomodation-management.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { AdvancedSearchComponent } from './advanced-search/advanced-search.component';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   imports: [
@@ -82,7 +84,9 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     PersonPopupWindowComponent,
     NoDataComponent,
     NewPersonComponent,
-    AccomodationManagementComponent
+    AccomodationManagementComponent,
+    AdvancedSearchComponent,
+    ProfileComponent
   ],
 })
 export class PagesModule {

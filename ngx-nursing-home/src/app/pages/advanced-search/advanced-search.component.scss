@@ -1,0 +1,49 @@
+::ng-deep sample-advanced-search {
+    height: 100%;
+}
+
+.start-position {
+    position: absolute;
+    top: 45%;
+    left: 25%;
+}
+
+.end-position {
+    position: relative;
+    animation-name: example;
+    animation-duration: 1s;
+}
+
+.search-results {
+    height: calc(100% - 4rem);
+    overflow: auto;
+    padding-top: 1rem;
+    animation: fadeIn 2s;
+}
+
+.person-card-header:hover {
+    cursor: pointer;
+}
+
+@keyframes example {
+    0% {
+        left: 25%;
+        ;
+        top: 45%;
+    }
+
+    100% {
+        left: 0;
+        top: 0;
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
