@@ -27,7 +27,7 @@ export class NewPersonComponent implements OnInit, OnDestroy {
 
   public getString = getString;
   public newPersonData: IPerson = {
-    Id: 4,
+    Id: 0,
     FirstName: '',
     LastName: '',
     JMBG: '',
