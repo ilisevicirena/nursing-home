@@ -23,6 +23,7 @@ import {
   NbFormFieldModule,
   NbPopoverModule,
   NbStepperModule,
+  NbBadgeModule,
 
 }
   from '@nebular/theme';
@@ -75,7 +76,8 @@ import { ProfileComponent } from './profile/profile.component';
     NbPopoverModule,
     Ng2SearchPipeModule,
     NbStepperModule,
-    DragDropModule
+    DragDropModule,
+    NbBadgeModule
   ],
   declarations: [
     PagesComponent,

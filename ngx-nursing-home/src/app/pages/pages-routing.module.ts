@@ -7,6 +7,7 @@ import { PersonsComponent } from './persons/persons.component';
 import { NewPersonComponent } from './new-person/new-person.component';
 import { AccomodationManagementComponent } from './accomodation-management/accomodation-management.component';
 import { AdvancedSearchComponent } from './advanced-search/advanced-search.component';
+import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [{
   path: '',
@@ -40,6 +41,10 @@ const routes: Routes = [{
     {
       path: 'advanced-search',
       component: AdvancedSearchComponent
+    },
+    {
+      path: 'profile/:id',
+      component: ProfileComponent
     },
   ],
 }];

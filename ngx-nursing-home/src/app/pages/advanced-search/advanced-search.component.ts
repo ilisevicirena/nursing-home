@@ -2,6 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { getString } from '../../resources/strings';
 import { NbFormFieldComponent } from '@nebular/theme';
 import { PersonsService } from '../../services/rest/persons.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'sample-advanced-search',
@@ -23,13 +24,13 @@ export class AdvancedSearchComponent implements OnInit {
 
   @ViewChild('searchFormField') searchFormField: ElementRef<any>;
 
-  constructor(private personsService: PersonsService) { }
+  constructor(private personsService: PersonsService, private router: Router) { }
 
   ngOnInit(): void {
   }
 
   public onSerachKeyPress(event: KeyboardEvent): void {
-    if (event.keyCode == 13) {// enter key
+    if (event.charCode == 13) {// enter key
       if (this.searchTerm.length > 0) {
         this.searchFormField.nativeElement.classList.add("end-position");
         this.searchFormField.nativeElement.classList.remove("start-position");
@@ -52,7 +53,7 @@ export class AdvancedSearchComponent implements OnInit {
   }
 
   public openPersonDetails(person: any): void {
-    console.log(person)
+    this.router.navigate(['pages/profile', person.Id]);
   }
 
 }

@@ -200,4 +200,9 @@ export class PersonPopupWindowComponent implements OnInit, AfterViewInit, OnDest
     this.ref.close(false);
     this.router.navigateByUrl('/pages/accomodation-management');
   }
+
+  public goToAdvancedEdit(): void {
+    this.ref.close(false);
+    this.router.navigate(['pages/profile', this.personId]);
+  }
 }

@@ -31,6 +31,12 @@
 
   @include nb-overrides();
 
+  .grey-card {
+    border-radius: 0.5rem;
+    padding: 1rem;
+    background-color: nb-theme(color-basic-200);
+  }
+
   ::-webkit-scrollbar {
     width: nb-theme(scrollbar-width);
     height: nb-theme(scrollbar-width);

@@ -82,7 +82,7 @@ const strings: IKeyValue[] = [
     { key: "searchPersons", value: "Detaljno pregledavanje osoba" },
     { key: "typeSearchTerm", value: "Za pretraživanje po unesenom pojmu pritisnite ENTER" },
     { key: "searchNoResult", value: "Pretraživanje nije dalo rezultata!" },
-    { key: "freeSpace", value: "Slobodno" },
+    { key: "editData", value: "Uređivanje podataka" },
     { key: "freeSpace", value: "Slobodno" },
     { key: "freeSpace", value: "Slobodno" },
     { key: "freeSpace", value: "Slobodno" },

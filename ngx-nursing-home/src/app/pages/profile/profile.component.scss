@@ -1,0 +1,53 @@
+@import "../../@theme/styles/themes.scss";
+
+::ng-deep sample-profile {
+    height: 100%;
+}
+
+.person-icon nb-icon {
+    height: 5rem;
+    font-size: 4rem;
+}
+
+.person-name {
+    font-weight: 600;
+    font-size: 20px;
+}
+
+.filter-toggle {
+    position: absolute;
+    top: 45%;
+    left: -1.2rem;
+    z-index: 600;
+}
+
+.sidepanel {
+    display: flex;
+    flex-flow: column;
+}
+
+@include nb-install-component {
+    .person-jmbg {
+        font-weight: 600;
+        font-size: 16px;
+        color: nb-theme(color-basic-600);
+        margin-top: 0.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .dotted-line {
+        border-bottom: 0.15rem dashed nb-theme(color-basic-500);
+        position: absolute;
+        top: 48%;
+        width: 97%;
+    }
+
+    .dotted-arrow {
+        color: nb-theme(color-basic-300);
+        position: absolute;
+        top: 44.5%;
+        right: -19px;
+        z-index: 1000;
+        font-size: 48px;
+    }
+}
