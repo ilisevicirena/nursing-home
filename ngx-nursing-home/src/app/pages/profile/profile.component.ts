@@ -124,7 +124,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   }
 
   public cancelEditBasicData(form: NgForm) {
-    this.newPersonData = this.person;
+    this.newPersonData = getIPersonFromJSON(JSON.parse(JSON.stringify(this.person)));
     form.form.markAsPristine();
   }
 
@@ -195,7 +195,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
       event.newData.LastName = event.newData.LastName.value ?? event.newData.LastName;
       event.newData.Email = event.newData.Email.value ?? event.newData.Email;
 
-      this.subscriptions.push(this.contactsService.update(event.newData).subscribe(data => {
+      this.subscriptions.push(this.contactsService.update(event.newData).subscribe(() => {
         event.confirm.resolve();
         this.getContacts();
         this.toastrService.showToast("success", getString('saveSuccess'), "");
@@ -208,6 +208,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
       event.confirm.resolve();
       this.getContacts();
       this.toastrService.showToast("success", getString('saveSuccess'), "");
-    }))
+    }));
   }
 }
