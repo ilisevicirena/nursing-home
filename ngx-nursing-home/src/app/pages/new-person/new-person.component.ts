@@ -121,20 +121,12 @@ export class NewPersonComponent implements OnInit, OnDestroy {
 
   public contactsCreate(event: any) {
     var allValid: boolean = true;
-
-    Object.keys(event.newData).forEach(key => {
-      if (key == "FirstName" || key == "LastName") {
-        if (!event.newData[key] || !event.newData[key]?.value) allValid = false; return;
-      } else
-        if (event.newData[key].isValid != undefined) {
-          if (event.newData[key].isValid == false) {
-            allValid = false;
-            return;
-          }
-        }
-    });
-
-    if ((!event.newData.Email && !event.newData.Telephone && !event.newData.Mobile)) allValid = false;
+    if (!event.newData.FirstName || !event.newData.LastName) allValid = false;
+    else if (event.newData.Email) {
+      //check valid email
+      var re = new RegExp("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$");
+      if (!re.test(event.newData.Email)) allValid = false;
+    } else if (!event.newData.Telephone && !event.newData.Mobile) allValid = false;
 
     if (allValid) {
       event.newData.PersonId = this.newPersonData.Id;
@@ -153,20 +145,12 @@ export class NewPersonComponent implements OnInit, OnDestroy {
 
   public contactsEdit(event: any) {
     var allValid: boolean = true;
-
-    Object.keys(event.newData).forEach(key => {
-      if (key == "FirstName" || key == "LastName") {
-        if (!event.newData[key] || !event.newData[key]?.value) allValid = false; return;
-      } else
-        if (event.newData[key].isValid != undefined) {
-          if (event.newData[key].isValid == false) {
-            allValid = false;
-            return;
-          }
-        }
-    });
-
-    if ((!event.newData.Email && !event.newData.Telephone && !event.newData.Mobile)) allValid = false;
+    if (!event.newData.FirstName || !event.newData.LastName) allValid = false;
+    else if (event.newData.Email) {
+      //check valid email
+      var re = new RegExp("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$");
+      if (!re.test(event.newData.Email)) allValid = false;
+    } else if (!event.newData.Telephone && !event.newData.Mobile) allValid = false;
 
     if (allValid) {
       event.newData.FirstName = event.newData.FirstName.value ?? event.newData.FirstName;
