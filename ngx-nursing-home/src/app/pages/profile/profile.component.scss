@@ -50,4 +50,23 @@
         z-index: 1000;
         font-size: 48px;
     }
+
+    table thead th {
+        color: nb-theme(color-basic-600);
+        font-size: 14px;
+    }
+
+    table tbody tr td {
+        font-weight: 600;
+        font-size: 16px;
+    }
+
+    nb-alert nb-icon:first-child {
+        font-size: 45px;
+    }
+
+    ::ng-deep nb-alert button.close {
+        right: 1rem !important;
+        top: 1rem !important;
+    }
 }

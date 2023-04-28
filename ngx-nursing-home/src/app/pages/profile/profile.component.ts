@@ -8,6 +8,7 @@ import { ToastrService } from '../../services/toastr.service';
 import { GendersService } from '../../services/rest/genders.service';
 import { SmartTableColumn, TextboxEditor } from 'shared-components';
 import { ContactsService } from '../../services/rest/contacts.service';
+import { DialogService } from '../../shared/dialog/dialog.service';
 
 @Component({
   selector: 'sample-profile',
@@ -21,18 +22,24 @@ export class ProfileComponent implements OnInit, OnDestroy {
     private personsService: PersonsService,
     private toastrService: ToastrService,
     private gendersService: GendersService,
-    private contactsService: ContactsService
+    private contactsService: ContactsService,
+    private dialogService: DialogService,
   ) { }
 
   private personId: number = 0;
   private subscriptions: Subscription[] = [];
 
+  public getString = getString;
   public activeView: string = "basicData";
   public person: any = {};
   public newPersonData: any = {};
   public loading: boolean = false;
-  public getString = getString;
   public showSidepanel: boolean = true;
+  public contactsData: any[] = [];
+  public genders: any[] = [];
+  public alertIsOpen: boolean = true;
+  public passedTime: any = {};
+
   public contactsColumns: SmartTableColumn[] = [
     new SmartTableColumn(getString('firstName')).Property("FirstName").SpecialEditor(new TextboxEditor()),
     new SmartTableColumn(getString('lastName')).Property("LastName").SpecialEditor(new TextboxEditor()),
@@ -42,44 +49,14 @@ export class ProfileComponent implements OnInit, OnDestroy {
     new SmartTableColumn(getString('mobile')).Property("Mobile").SpecialEditor(new TextboxEditor().OnlyNumbers(true)),
   ];
 
-  public contactsData: any[] = [];
-  public genders: any[] = [];
   public options: any[] = [
-    {
-      option: 'basicData',
-      string: 'basicData',
-      active: true,
-    },
-    {
-      option: 'contacts',
-      string: 'contacts',
-      active: false,
-    },
-    {
-      option: 'stayData',
-      string: 'stayData',
-      active: false,
-    },
-    {
-      option: 'dormatoryData',
-      string: 'dormatoryData',
-      active: false,
-    },
-    {
-      option: 'services',
-      string: 'services',
-      active: false,
-    },
-    {
-      option: 'documents',
-      string: 'documents',
-      active: false,
-    },
-    {
-      option: 'notes',
-      string: 'notes',
-      active: false,
-    }
+    { option: 'basicData', string: 'basicData', active: true },
+    { option: 'contacts', string: 'contacts', active: false },
+    { option: 'stayData', string: 'stayData', active: false },
+    { option: 'dormatoryData', string: 'dormatoryData', active: false },
+    { option: 'services', string: 'services', active: false },
+    { option: 'documents', string: 'documents', active: false },
+    { option: 'notes', string: 'notes', active: false }
   ];
 
   ngOnInit(): void {
@@ -97,19 +74,30 @@ export class ProfileComponent implements OnInit, OnDestroy {
     });
   }
 
-  private getPersonDetails(personId): void {
-    this.subscriptions.push(this.personsService.getPersonDetails(personId).subscribe(data => {
-      if (data.length > 0) {
-        this.person = getIPersonFromJSON(data[0]);
-        this.newPersonData = getIPersonFromJSON(data[0]);
-      }
-
-      this.loading = false;
-    }));
-  }
-
   public toggleSidepanel(): void {
     this.showSidepanel = !this.showSidepanel;
+  }
+
+  public toggleView(view: any): void {
+    this.options.find(x => x.option == this.activeView)!.active = false;
+    view.active = true;
+    this.activeView = view.option;
+
+    switch (this.activeView) {
+      case 'contacts':
+        this.getContacts();
+        break;
+    }
+  }
+
+  // ------------------------------------------------- BASIC DATA ---------------------------------------------------------------------
+
+  public getGenders(): void {
+    this.subscriptions.push(this.gendersService.getData().subscribe(data => {
+      this.genders = data;
+    }, err => {
+      console.error(err);
+    }));
   }
 
   public saveBasicData(form: NgForm): void {
@@ -128,13 +116,19 @@ export class ProfileComponent implements OnInit, OnDestroy {
     form.form.markAsPristine();
   }
 
-  public getGenders(): void {
-    this.subscriptions.push(this.gendersService.getData().subscribe(data => {
-      this.genders = data;
-    }, err => {
-      console.error(err);
+  private getPersonDetails(personId): void {
+    this.subscriptions.push(this.personsService.getPersonDetails(personId).subscribe(data => {
+      if (data.length > 0) {
+        this.person = getIPersonFromJSON(data[0]);
+        this.newPersonData = getIPersonFromJSON(data[0]);
+        this.passedTime = this.calculatePassedTime();
+      }
+
+      this.loading = false;
     }));
   }
+
+  //--------------------------------------------------- CONTACTS -----------------------------------------------------------------------
 
   public getContacts(): void {
     this.subscriptions.push(this.contactsService.getDataForPerson(this.personId).subscribe(data => {
@@ -142,18 +136,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
     }, err => {
       console.error(err);
     }));
-  }
-
-  public toggleView(view: any): void {
-    this.options.find(x => x.option == this.activeView)!.active = false;
-    view.active = true;
-    this.activeView = view.option;
-
-    switch (this.activeView) {
-      case 'contacts':
-        this.getContacts();
-        break;
-    }
   }
 
   public contactsCreate(event: any) {
@@ -210,4 +192,54 @@ export class ProfileComponent implements OnInit, OnDestroy {
       this.toastrService.showToast("success", getString('saveSuccess'), "");
     }));
   }
+
+  //--------------------------------------------------- STAY DATA --------------------------------------------------
+
+  public async deactivatePerson(): Promise<void> {
+    var endDate: string = new Date().toLocaleDateString();
+    if (this.person.EndDate != undefined) endDate = this.person.EndDate.toLocaleDateString();
+    const rezDialog = await this.dialogService.openYesNoDialog(getString("areYouSure"), getString("questionDeactivatePerson") + endDate);
+
+    if (rezDialog) {
+      this.subscriptions.push(this.personsService.deactivatePerson(this.personId, this.person.EndDate ?? null).subscribe(() => {
+        this.toastrService.showToast("success", getString("saveSuccess"), "");
+        this.getPersonDetails(this.personId);
+      }, err => {
+        this.toastrService.showToast("danger", getString("saveError"), "");
+        console.error(err);
+      }));
+    }
+  }
+
+  public calculatePassedTime() {
+    var today: Date = this.person.Active ? new Date() : this.person.EndDate;
+    var date: Date = this.person.StartDate;
+
+    var today = new Date();
+    var year = today.getFullYear();
+    var month = today.getMonth() + 1;
+    var day = today.getDate();
+    var yy = date.getFullYear();
+    var mm = date.getMonth() + 1;
+    var dd = date.getDate();
+    var years, months, days;
+    // months
+    months = month - mm;
+    if (day < dd) {
+      months = months - 1;
+    }
+    // years
+    years = year - yy;
+    if (month * 100 + day < mm * 100 + dd) {
+      years = years - 1;
+      months = months + 12;
+    }
+    // days
+    days = Math.floor((today.getTime() - (new Date(yy + years, mm + months - 1, dd)).getTime()) / (24 * 60 * 60 * 1000));
+    //
+    return { years: years, months: months, days: days };
+
+
+  }
+
 }

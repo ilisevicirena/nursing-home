@@ -181,6 +181,8 @@
                             <h6>Povijest promjena</h6>
                         </div>
                     </div>
+
+
                     <div *ngSwitchCase="'contacts'" class="h-100">
                         <div class="mt-2" style="height: 710px;" *ngIf="newPersonData.Id>0">
                             <ngx-smart-table [data]="contactsData" [columns]="contactsColumns"
@@ -188,6 +190,125 @@
                                 (deleteConfirm)="contactsDelete($event)" [exportExcelEnabled]="true"
                                 [defaultPerPageOption]="10" [exportPdfEnabled]="true" [pagerEnabled]="true"
                                 [entriesPerPageEnabled]="true" [refreshEnabled]="true"></ngx-smart-table>
+                        </div>
+                    </div>
+
+
+                    <div *ngSwitchCase="'stayData'" class="h-100">
+                        <nb-alert accent="info" closable (close)="alertIsOpen=false;" *ngIf="alertIsOpen">
+                            <div class="row m-0">
+                                <div class="col-md-1 d-flex justify-content-center pt-3">
+                                    <nb-icon pack="eva" icon="info-outline" status="info"></nb-icon>
+                                </div>
+                                <div class="col-md-10">
+                                    <nb-list>
+                                        <nb-list-item>{{getString('activePersonDetails')}}</nb-list-item>
+                                        <nb-list-item>{{getString('unactivePersonDetails')}}</nb-list-item>
+                                        <nb-list-item class="d-block">
+                                            <p> {{getString('changeStatusPersonText1')}} <button nbButton
+                                                    status="danger" shape="round" size="small" class="ms-3">
+                                                    {{getString('deactivatePerson')}}
+                                                    <nb-icon pack="eva" icon="lock-outline"></nb-icon>
+                                                </button></p>
+                                            <p>{{getString('changeStatusPersonText2')}} </p>
+                                        </nb-list-item>
+                                    </nb-list>
+                                </div>
+                            </div>
+                        </nb-alert>
+                        <div class="row m-0 mt-2">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <div class="label">{{getString("creationDate")}}</div>
+                                    <div class="value">
+                                        <nb-form-field>
+                                            <input nbInput [placeholder]="getString('creationDate')" fullWidth
+                                                #creationDateInput22 name="creationDate"
+                                                [(ngModel)]="person.CreationDate" disabled
+                                                [nbDatepicker]="creationDateDatepicker22">
+                                            <nb-datepicker #creationDateDatepicker22></nb-datepicker>
+                                            <button nbButton nbSuffix ghost>
+                                                <nb-icon pack="eva" icon="calendar-outline"></nb-icon>
+                                            </button>
+                                        </nb-form-field>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <div class="label">{{getString("startDate")}}</div>
+                                    <div class="value">
+                                        <nb-form-field>
+                                            <input nbInput [placeholder]="getString('startDate')" fullWidth
+                                                #startDateInput22 name="startDate" [(ngModel)]="person.StartDate"
+                                                disabled [nbDatepicker]="startDateDatepicker22">
+                                            <nb-datepicker #startDateDatepicker22></nb-datepicker>
+                                            <button nbButton nbSuffix ghost (click)="startDateInput22.focus();">
+                                                <nb-icon pack="eva" icon="calendar-outline"></nb-icon>
+                                            </button>
+                                        </nb-form-field>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <div class="label">{{getString("endDate")}}</div>
+                                    <div class="value">
+                                        <nb-form-field>
+                                            <input nbInput fullWidth [placeholder]="getString('endDate')"
+                                                #endDateInput22 name="endDate" [(ngModel)]="person.EndDate"
+                                                [disabled]="!person.Active" [nbDatepicker]="endDateDatepicker22">
+                                            <nb-datepicker #endDateDatepicker22></nb-datepicker>
+                                            <button nbButton nbSuffix ghost (click)="endDateInput22.focus();">
+                                                <nb-icon pack="eva" icon="calendar-outline"></nb-icon>
+                                            </button>
+                                        </nb-form-field>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row m-0 mt-4">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <div class="label">
+                                        {{getString('passedTime')}}
+                                    </div>
+                                    <div class="value">
+                                        <table class="w-100">
+                                            <thead>
+                                                <th>{{getString('years')}}</th>
+                                                <th>{{getString('months')}}</th>
+                                                <th>{{getString('days')}}</th>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>{{passedTime.years}}</td>
+                                                    <td>{{passedTime.months}}</td>
+                                                    <td>{{passedTime.days}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row m-0 mt-4">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <div class="label">{{getString("currentStatus")}}
+                                    </div>
+                                    <div class="value">
+                                        <nb-tag appearance="outline" [status]="person.Active ? 'success' : 'danger'"
+                                            [text]="person.Active ? getString('active') : getString('unactive')"
+                                            [nbTooltip]="person.Active ? getString('activeTooltip') : getString('unactiveTooltip')"></nb-tag>
+                                        <button *ngIf="person.Active" nbButton status="danger" shape="round"
+                                            size="small" class="ms-3" (click)="deactivatePerson()">
+                                            {{getString('deactivatePerson')}}
+                                            <nb-icon pack="eva" icon="lock-outline"></nb-icon>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
