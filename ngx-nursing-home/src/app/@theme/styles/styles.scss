@@ -51,6 +51,18 @@
     background: nb-theme(color-basic-500);
   }
 
+  .group-title {
+    padding: 1rem;
+    font-size: 16px;
+    font-weight: 600;
+
+    .line {
+      height: 0.2rem;
+      width: 2rem;
+      background-color: nb-theme(color-primary-500);
+    }
+  }
+
   .title-container-person {
 
     .window-title-person {

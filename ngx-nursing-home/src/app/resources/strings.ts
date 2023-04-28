@@ -83,10 +83,13 @@ const strings: IKeyValue[] = [
     { key: "typeSearchTerm", value: "Za pretraživanje po unesenom pojmu pritisnite ENTER" },
     { key: "searchNoResult", value: "Pretraživanje nije dalo rezultata!" },
     { key: "editData", value: "Uređivanje podataka" },
-    { key: "passedTime", value: "Vrijeme provedeno u domu:" },
+    { key: "passedTime", value: "Vrijeme provedeno u domu" },
     { key: "years", value: "Godine" },
     { key: "months", value: "Mjeseci" },
     { key: "days", value: "Dani" },
+    { key: "currentAccomodation", value: "Podaci o trenutnom smještaju" },
+    { key: "history", value: "Povijest promjena" },
+    { key: "currentAccomodation", value: "Podaci o trenutnom smještaju" },
     { key: "currentAccomodation", value: "Podaci o trenutnom smještaju" },
 
 ];

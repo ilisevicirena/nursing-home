@@ -179,13 +179,20 @@
                             </div>
                         </div>
                         <div class="h-50">
-                            <h6>Povijest promjena</h6>
+                            <div class="group-title">
+                                {{getString('history')}}
+                                <div class="line"></div>
+                            </div>
                         </div>
                     </div>
 
 
                     <div *ngSwitchCase="'contacts'" class="h-100">
-                        <div class="mt-2" style="height: 710px;" *ngIf="newPersonData.Id>0">
+                        <div class="group-title">
+                            {{getString('contacts')}}
+                            <div class="line"></div>
+                        </div>
+                        <div style="height: 710px;" *ngIf="newPersonData.Id>0">
                             <ngx-smart-table [data]="contactsData" [columns]="contactsColumns"
                                 (createConfirm)="contactsCreate($event)" (editConfirm)="contactsEdit($event)"
                                 (deleteConfirm)="contactsDelete($event)" [exportExcelEnabled]="true"
@@ -196,10 +203,11 @@
 
 
                     <div *ngSwitchCase="'stayData'" class="h-100">
-                        <nb-alert accent="info" closable (close)="alertIsOpen=false;" *ngIf="alertIsOpen">
+                        <nb-alert accent="primary" closable (close)="alertIsOpen=false;" *ngIf="alertIsOpen"
+                            class="mt-2">
                             <div class="row m-0">
                                 <div class="col-md-1 d-flex justify-content-center pt-3">
-                                    <nb-icon pack="eva" icon="info-outline" status="info"></nb-icon>
+                                    <nb-icon pack="eva" icon="info-outline" status="primary"></nb-icon>
                                 </div>
                                 <div class="col-md-10">
                                     <nb-list>
@@ -217,7 +225,11 @@
                                 </div>
                             </div>
                         </nb-alert>
-                        <div class="row m-0 mt-2">
+                        <div class="group-title">
+                            {{getString('stayData')}}
+                            <div class="line"></div>
+                        </div>
+                        <div class="row m-0">
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <div class="label">{{getString("creationDate")}}</div>
@@ -268,12 +280,13 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row m-0 mt-4">
+                        <div class="group-title mt-3">
+                            {{getString('passedTime')}}
+                            <div class="line"></div>
+                        </div>
+                        <div class="row m-0">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <div class="label">
-                                        {{getString('passedTime')}}
-                                    </div>
                                     <div class="value">
                                         <table class="w-100">
                                             <thead>
@@ -293,11 +306,13 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row m-0 mt-4">
+                        <div class="group-title mt-3">
+                            {{getString('currentStatus')}}
+                            <div class="line"></div>
+                        </div>
+                        <div class="row m-0">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <div class="label">{{getString("currentStatus")}}
-                                    </div>
                                     <div class="value">
                                         <nb-tag appearance="outline" [status]="person.Active ? 'success' : 'danger'"
                                             [text]="person.Active ? getString('active') : getString('unactive')"
@@ -316,14 +331,9 @@
 
                     <div *ngSwitchCase="'dormatoryData'" class="h-100">
                         <div class="h-50">
-                            <div class="row m-0 mt-2">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <h6>
-                                            {{getString("currentAccomodation")}}
-                                        </h6>
-                                    </div>
-                                </div>
+                            <div class="group-title">
+                                {{getString('currentAccomodation')}}
+                                <div class="line"></div>
                             </div>
                             <div class="row form-row">
                                 <div class="col-md-4">
@@ -346,11 +356,12 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row m-0 mt-4">
-                                <h6>{{getString('editData')}}</h6>
+                            <div class="group-title mt-2">
+                                {{getString('editData')}}
+                                <div class="line"></div>
                             </div>
-                            <div class="row m-0 mt-2">
-                                <div class="col-md-6">
+                            <div class="row m-0">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <div class="label">{{getString('floor')}}</div>
                                         <div class="value">
@@ -368,14 +379,15 @@
                                                 [nbTooltip]="getString('roomSelectionInvalid')"></nb-icon></div>
                                         <div class="value">
                                             <ngx-select-grid [columns]="roomsColumns" [(source)]="rooms"
+                                                [disabled]="!person.Active"
                                                 (onSelectionChanged)="onRoomSelectionChanged($event)" [valueAttr]="'Id'"
                                                 [multiple]="false" [attributesForLabel]="['Name']"></ngx-select-grid>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row form-row w-100 justify-content-end mt-3">
+                                <div class="col-md-2">
                                     <button nbButton status="primary" shape="round" style="width: max-content;"
-                                        [disabled]="!selectedRoom.Id || !selectedRoom.IsValid"
+                                        [disabled]="!selectedRoom.Id || !selectedRoom.IsValid" class="mt-4"
                                         (click)="savePersonRoom()" size="small">{{getString('save')}}
                                         <nb-icon pack="eva" icon="home-outline" nbSuffix></nb-icon>
                                     </button>
@@ -390,8 +402,9 @@
                             </div>
                         </div>
                         <div class="h-50">
-                            <div class="row m-0">
-                                <h6>Povijest soba</h6>
+                            <div class="group-title mt-2">
+                                {{getString('history')}}
+                                <div class="line"></div>
                             </div>
                         </div>
                     </div>

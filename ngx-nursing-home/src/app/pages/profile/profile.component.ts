@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { PersonsService, getIPersonFromJSON } from '../../services/rest/persons.service';
 import { getString } from '../../resources/strings';
@@ -26,7 +26,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
     private gendersService: GendersService,
     private contactsService: ContactsService,
     private dialogService: DialogService,
-    private roomsService: RoomsService
+    private roomsService: RoomsService,
+    private router: Router,
   ) { }
 
   private personId: number = 0;
@@ -307,5 +308,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
     }));
   }
 
+  public goToExternalRoomManagement(): void {
+    this.router.navigateByUrl('/pages/accomodation-management');
+  }
 
 }
