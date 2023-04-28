@@ -9,6 +9,8 @@ import { GendersService } from '../../services/rest/genders.service';
 import { SmartTableColumn, TextboxEditor } from 'shared-components';
 import { ContactsService } from '../../services/rest/contacts.service';
 import { DialogService } from '../../shared/dialog/dialog.service';
+import { RoomsService } from '../../services/rest/rooms.service';
+import { SelectGridColumn } from 'shared-components/lib/models/select-grid.model';
 
 @Component({
   selector: 'sample-profile',
@@ -24,6 +26,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     private gendersService: GendersService,
     private contactsService: ContactsService,
     private dialogService: DialogService,
+    private roomsService: RoomsService
   ) { }
 
   private personId: number = 0;
@@ -39,6 +42,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
   public genders: any[] = [];
   public alertIsOpen: boolean = true;
   public passedTime: any = {};
+  public selectedRoom: any = { FloorName: '', IsValid: true };
+  public rooms: any[] = [];
+  public allRooms: any[] = [];
 
   public contactsColumns: SmartTableColumn[] = [
     new SmartTableColumn(getString('firstName')).Property("FirstName").SpecialEditor(new TextboxEditor()),
@@ -57,6 +63,34 @@ export class ProfileComponent implements OnInit, OnDestroy {
     { option: 'services', string: 'services', active: false },
     { option: 'documents', string: 'documents', active: false },
     { option: 'notes', string: 'notes', active: false }
+  ];
+
+  public roomsColumns: SelectGridColumn[] = [
+    {
+      name: "name",
+      title: getString('room'),
+      attributeName: "Name",
+    },
+    {
+      name: "floor",
+      title: getString('floor'),
+      attributeName: "FloorName",
+    },
+    {
+      name: "capacity",
+      title: getString('capacity'),
+      attributeName: "Capacity",
+    },
+    {
+      name: "freeSpace",
+      title: getString('freeSpace'),
+      attributeName: "FreeSpace",
+    },
+    {
+      name: "gender",
+      title: getString('gender'),
+      attributeName: "GenderName",
+    }
   ];
 
   ngOnInit(): void {
@@ -86,6 +120,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
     switch (this.activeView) {
       case 'contacts':
         this.getContacts();
+        break;
+      case 'dormatoryData':
+        this.getAvaliableRooms();
+        this.getAllRooms();
         break;
     }
   }
@@ -237,5 +275,37 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
     return { years: years, months: months, days: days };
   }
+
+
+  //------------------------------------------ DORMATORY DATA ------------------------------------------------------------
+
+  private getAvaliableRooms(): void {
+    this.subscriptions.push(this.roomsService.getAvaliableRooms().subscribe(data => {
+      this.rooms = data;
+    }));
+  }
+
+  private getAllRooms(): void {
+    this.subscriptions.push(this.roomsService.getData().subscribe(data => {
+      this.allRooms = data;
+    }));
+  }
+
+  public onRoomSelectionChanged(event: any) {
+    if (event.selectedItems.length == 1) {
+      this.selectedRoom = event.selectedItems[0];
+      if (event.selectedItems[0].GenderId > 0 && event.selectedItems[0].GenderId != this.newPersonData.GenderId) {
+        this.selectedRoom.IsValid = false;
+      } else this.selectedRoom.IsValid = true;
+    }
+    else this.selectedRoom = { FloorName: '', IsValid: true };
+  }
+
+  public savePersonRoom(): void {
+    this.subscriptions.push(this.personsService.changeRoom(this.newPersonData.Id, this.selectedRoom.Id).subscribe(() => {
+      this.toastrService.showToast('success', getString('saveSuccess'), '');
+    }));
+  }
+
 
 }

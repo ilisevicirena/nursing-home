@@ -87,7 +87,7 @@ const strings: IKeyValue[] = [
     { key: "years", value: "Godine" },
     { key: "months", value: "Mjeseci" },
     { key: "days", value: "Dani" },
-    { key: "freeSpace", value: "Slobodno" },
+    { key: "currentAccomodation", value: "Podaci o trenutnom smještaju" },
 
 ];
 

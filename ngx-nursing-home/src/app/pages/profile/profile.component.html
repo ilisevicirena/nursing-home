@@ -33,8 +33,9 @@
             <nb-icon pack="eva" [icon]="showSidepanel ? 'chevron-left-outline' : 'chevron-right-outline'"
                 status="primary"></nb-icon>
         </button>
-        <nb-icon pack="eva" icon="arrow-left" class="dotted-arrow" *ngIf="activeView=='basicData'"></nb-icon>
-        <div class="dotted-line" *ngIf="activeView=='basicData'"></div>
+        <nb-icon pack="eva" icon="arrow-left" class="dotted-arrow"
+            *ngIf="activeView=='basicData' || activeView=='dormatoryData'"></nb-icon>
+        <div class="dotted-line" *ngIf="activeView=='basicData' || activeView=='dormatoryData'"></div>
         <nb-card class="h-100">
             <nb-card-body>
                 <div [ngSwitch]="activeView" style="height: calc(100% - 2rem);">
@@ -311,6 +312,90 @@
                             </div>
                         </div>
                     </div>
+
+
+                    <div *ngSwitchCase="'dormatoryData'" class="h-100">
+                        <div class="h-50">
+                            <div class="row m-0 mt-2">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <h6>
+                                            {{getString("currentAccomodation")}}
+                                        </h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row form-row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <div class="label">{{getString("currentFloor")}}</div>
+                                        <div class="value"><input nbInput [placeholder]="getString('floor')" fullWidth
+                                                name="floorName" [(ngModel)]="person.FloorName" disabled></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <div class="label">{{getString("room")}}</div>
+                                        <div class="value">
+                                            <nb-select [placeholder]="getString('room')" fullWidth neme="room" disabled
+                                                [(selected)]="person.RoomId">
+                                                <nb-option *ngFor="let room of allRooms"
+                                                    [value]="room.Id">{{room.Name}}</nb-option>
+                                            </nb-select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row m-0 mt-4">
+                                <h6>{{getString('editData')}}</h6>
+                            </div>
+                            <div class="row m-0 mt-2">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <div class="label">{{getString('floor')}}</div>
+                                        <div class="value">
+                                            <input nbInput fullWidth disabled [placeholder]="getString('floor')"
+                                                autocomplete="off" name="floorName"
+                                                [(ngModel)]="selectedRoom.FloorName">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <div class="label">{{getString('room')}} <nb-icon *ngIf="!selectedRoom.IsValid"
+                                                pack="eva" icon="alert-triangle-outline" status="danger"
+                                                class="required-mark ms-2"
+                                                [nbTooltip]="getString('roomSelectionInvalid')"></nb-icon></div>
+                                        <div class="value">
+                                            <ngx-select-grid [columns]="roomsColumns" [(source)]="rooms"
+                                                (onSelectionChanged)="onRoomSelectionChanged($event)" [valueAttr]="'Id'"
+                                                [multiple]="false" [attributesForLabel]="['Name']"></ngx-select-grid>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-row w-100 justify-content-end mt-3">
+                                    <button nbButton status="primary" shape="round" style="width: max-content;"
+                                        [disabled]="!selectedRoom.Id || !selectedRoom.IsValid"
+                                        (click)="savePersonRoom()" size="small">{{getString('save')}}
+                                        <nb-icon pack="eva" icon="home-outline" nbSuffix></nb-icon>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="row m-0 mt-4">
+                                <button nbButton ghost status="primary" shape="round" style="width: max-content;"
+                                    (click)="goToExternalRoomManagement()">
+                                    {{getString('goToExternalRoomManagement')}}
+                                    <nb-icon pack="eva" icon="external-link-outline"></nb-icon>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="h-50">
+                            <div class="row m-0">
+                                <h6>Povijest soba</h6>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </nb-card-body>
         </nb-card>
