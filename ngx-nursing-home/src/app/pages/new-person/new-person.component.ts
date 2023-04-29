@@ -4,8 +4,6 @@ import { IPerson, PersonsService } from '../../services/rest/persons.service';
 import { NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { ToastrService } from '../../services/toastr.service';
-import { SmartTableColumn, TextboxEditor } from 'shared-components';
-import { ContactsService } from '../../services/rest/contacts.service';
 import { GendersService } from '../../services/rest/genders.service';
 import { RoomsService } from '../../services/rest/rooms.service';
 import { SelectGridColumn } from 'shared-components/lib/models/select-grid.model';
@@ -20,7 +18,6 @@ export class NewPersonComponent implements OnInit, OnDestroy {
   constructor(
     private personsService: PersonsService,
     private toastrService: ToastrService,
-    private contactsService: ContactsService,
     private gendersService: GendersService,
     private roomsService: RoomsService,
   ) { }
@@ -39,16 +36,6 @@ export class NewPersonComponent implements OnInit, OnDestroy {
   };
 
   public loading: boolean = false;
-  public contactsColumns: SmartTableColumn[] = [
-    new SmartTableColumn(getString('firstName')).Property("FirstName").SpecialEditor(new TextboxEditor().Required(true).Validation(true)).Filter(false),
-    new SmartTableColumn(getString('lastName')).Property("LastName").SpecialEditor(new TextboxEditor().Required(true).Validation(true)).Filter(false),
-    new SmartTableColumn(getString('email')).Property("Email").SpecialEditor(new TextboxEditor()
-      .Pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$").Validation(true)).Filter(false),
-    new SmartTableColumn(getString('telephone')).Property("Telephone").SpecialEditor(new TextboxEditor().OnlyNumbers(true)).Filter(false),
-    new SmartTableColumn(getString('mobile')).Property("Mobile").SpecialEditor(new TextboxEditor().OnlyNumbers(true)).Filter(false),
-  ];
-
-  public contactsData: any[] = [];
   public genders: any[] = [];
   public rooms: any[] = [];
   public roomsColumns: SelectGridColumn[] = [
@@ -117,68 +104,6 @@ export class NewPersonComponent implements OnInit, OnDestroy {
       this.loading = false;
       this.toastrService.showToast("danger", getString("saveError"), "");
     }));
-  }
-
-  public contactsCreate(event: any) {
-    var allValid: boolean = true;
-    if (!event.newData.FirstName || !event.newData.LastName) allValid = false;
-    else if (event.newData.Email) {
-      //check valid email
-      var re = new RegExp("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$");
-      if (!re.test(event.newData.Email)) allValid = false;
-    } else if (!event.newData.Telephone && !event.newData.Mobile) allValid = false;
-
-    if (allValid) {
-      event.newData.PersonId = this.newPersonData.Id;
-      event.newData.FirstName = event.newData.FirstName.value ?? event.newData.FirstName;
-      event.newData.LastName = event.newData.LastName.value ?? event.newData.LastName;
-      event.newData.Email = event.newData.Email.value ?? event.newData.Email;
-
-      this.subscriptions.push(this.contactsService.add(event.newData).subscribe(data => {
-        if (data.ContactId) {
-          event.confirm.resolve();
-          this.getContacts();
-        }
-      }));
-    }
-  }
-
-  public contactsEdit(event: any) {
-    var allValid: boolean = true;
-    if (!event.newData.FirstName || !event.newData.LastName) allValid = false;
-    else if (event.newData.Email) {
-      //check valid email
-      var re = new RegExp("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$");
-      if (!re.test(event.newData.Email)) allValid = false;
-    } else if (!event.newData.Telephone && !event.newData.Mobile) allValid = false;
-
-    if (allValid) {
-      event.newData.FirstName = event.newData.FirstName.value ?? event.newData.FirstName;
-      event.newData.LastName = event.newData.LastName.value ?? event.newData.LastName;
-      event.newData.Email = event.newData.Email.value ?? event.newData.Email;
-
-      this.subscriptions.push(this.contactsService.update(event.newData).subscribe(data => {
-        event.confirm.resolve();
-        this.getContacts();
-      }));
-    }
-  }
-
-  public contactsDelete(event: any) {
-    this.subscriptions.push(this.contactsService.delete({ Id: event.data.Id }).subscribe(() => {
-      event.confirm.resolve();
-      this.getContacts();
-    }))
-  }
-
-  private getContacts(): void {
-    if (this.newPersonData.Id > 0) {
-      this.subscriptions.push(this.contactsService.getDataForPerson(this.newPersonData.Id).subscribe(data => {
-        if (data.length > 0) {
-          this.contactsData = data;
-        }
-      }));
-    }
   }
 
   private getAvaliableRooms(): void {

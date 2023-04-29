@@ -43,6 +43,8 @@ import { AccomodationManagementComponent } from './accomodation-management/accom
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { AdvancedSearchComponent } from './advanced-search/advanced-search.component';
 import { ProfileComponent } from './profile/profile.component';
+import { ContactsGridComponent } from './contacts-grid/contacts-grid.component';
+import { BasicDataComponent } from './profile/basic-data/basic-data.component';
 
 @NgModule({
   imports: [
@@ -88,7 +90,9 @@ import { ProfileComponent } from './profile/profile.component';
     NewPersonComponent,
     AccomodationManagementComponent,
     AdvancedSearchComponent,
-    ProfileComponent
+    ProfileComponent,
+    ContactsGridComponent,
+    BasicDataComponent
   ],
 })
 export class PagesModule {

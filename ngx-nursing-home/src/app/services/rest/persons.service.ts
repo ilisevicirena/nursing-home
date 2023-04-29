@@ -46,6 +46,10 @@ export class PersonsService extends BaseRestApiService {
   public searchPersons(searchTerm: string): Observable<any> {
     return this.http.get(this.apiRoute + "/searchPersons?searchTerm=" + searchTerm);
   }
+
+  public getHistory(personId: number): Observable<any> {
+    return this.http.get(this.apiRoute + "/getLogForPerson?PersonId=" + personId);
+  }
 }
 
 export interface IPerson extends IBaseSaveModel {

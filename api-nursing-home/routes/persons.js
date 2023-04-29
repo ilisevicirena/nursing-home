@@ -164,4 +164,17 @@ router.get('/searchPersons', async (request, response) => {
     }
 });
 
+router.get('/getLogForPerson', async (request, response) => {
+    try {
+        const pool = await db;
+        const result = await pool.request()
+            .input('personId', request.query.PersonId)
+            .query("EXEC [dbo].[getLogForPerson] @Id=@personId");
+        response.json(result.recordset);
+    } catch (err) {
+        response.status(500);
+        response.send(err.message);
+    }
+});
+
 module.exports = router;

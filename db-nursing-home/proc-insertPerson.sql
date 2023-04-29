@@ -39,6 +39,11 @@ BEGIN
 	INSERT INTO dbo.Person (FirstName, LastName, JMBG, BirthDate, StartDate, Active, CreationDate, EndDate, Address, GenderId)
 	VALUES (@FirstName, @LastName, @JMBG, @BirthDate, @StartDate, @Active, @CreationDate, @EndDate, @Address, @GenderId);
 
+	DECLARE @NewIdent Int
+SET @NewIdent = SCOPE_IDENTITY();
+
+exec dbo.writeLog @LogType='INSERT', @LogEntity='Person', @Key= @NewIdent;
+
 	SELECT SCOPE_IDENTITY() AS PersonId;
 END
 GO

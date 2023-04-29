@@ -39,5 +39,8 @@ BEGIN
 		Capacity = @Capacity,
 		FloorId = @FloorId
 	WHERE Id = @Id
+
+		exec dbo.writeLog @LogType='UPDATE', @LogEntity='Room', @Key= @Id;
+		
 END
 GO

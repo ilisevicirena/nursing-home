@@ -162,12 +162,9 @@
                         <p>
                             {{getString('contactsPersonStepText')}}
                         </p>
-                        <div class="mt-2" style="height: 355px;" *ngIf="newPersonData.Id>0">
-                            <ngx-smart-table [data]="contactsData" [columns]="contactsColumns"
-                                (createConfirm)="contactsCreate($event)" (editConfirm)="contactsEdit($event)"
-                                (deleteConfirm)="contactsDelete($event)" [exportExcelEnabled]="false"
-                                [exportPdfEnabled]="false" [pagerEnabled]="false" [entriesPerPageEnabled]="false"
-                                [refreshEnabled]="false"></ngx-smart-table>
+                        <div class="mt-2" *ngIf="newPersonData.Id>0">
+                            <sample-contacts-grid [personId]="newPersonData.Id"
+                                [elementHeight]="355"></sample-contacts-grid>
                         </div>
                         <sample-no-data class="mt-4" *ngIf="newPersonData.Id==0"
                             [title]="getString('savePersonFirst')"></sample-no-data>

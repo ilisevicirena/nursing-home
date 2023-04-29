@@ -46,6 +46,8 @@ BEGIN
 		Active=@Status,
 		EndDate=@EndDate
 	WHERE Id=@Id;
+
+	exec dbo.writeLog @LogType='UPDATE', @LogEntity='Person', @Key= @Id;
 		
 END
 GO

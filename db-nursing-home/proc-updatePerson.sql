@@ -44,6 +44,8 @@ BEGIN
 		Address=@Address,
 		GenderId=@GenderId
 	WHERE Id = @Id
+
+		exec dbo.writeLog @LogType='UPDATE', @LogEntity='Person', @Key= @Id;
 END
 GO
 

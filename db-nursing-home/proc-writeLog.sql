@@ -15,13 +15,15 @@ SET QUOTED_IDENTIFIER ON
 GO
 -- =============================================
 -- Author:		Irena Ilisevic
--- Create date: 19.4.2023.
--- Description:	deletes person from Person table
+-- Create date: 28.4.2023
+-- Description:	creates new log row
 -- =============================================
-CREATE PROCEDURE [dbo].[deletePerson]
+CREATE PROCEDURE [dbo].[writeLog]
 	-- Add the parameters for the stored procedure here
 	(
-		@Id int
+		@LogType varchar(50),
+		@LogEntity varchar(50),
+		@Key int
 	)
 AS
 BEGIN
@@ -30,8 +32,12 @@ BEGIN
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
-	DELETE FROM dbo.Person WHERE Id = @Id
+	declare @type int, @entity int;
+	
+	select @type=Id from dbo.LogType where [Name]=@LogType;
+	select @entity=Id from dbo.LogEntity where [Name]=@LogEntity;
 
-	exec dbo.writeLog @LogType='DELETE', @LogEntity='Person', @Key= @Id;
+	insert into dbo.Log (LogTypeId, LogEntityId, KeyId, CreationDate) 
+	values (@type, @entity, @Key, GETDATE());
 END
 GO

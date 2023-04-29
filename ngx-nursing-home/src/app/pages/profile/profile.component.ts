@@ -6,8 +6,7 @@ import { getString } from '../../resources/strings';
 import { NgForm } from '@angular/forms';
 import { ToastrService } from '../../services/toastr.service';
 import { GendersService } from '../../services/rest/genders.service';
-import { SmartTableColumn, TextboxEditor } from 'shared-components';
-import { ContactsService } from '../../services/rest/contacts.service';
+import { DateType, SmartTableColumn, TextboxEditor } from 'shared-components';
 import { DialogService } from '../../shared/dialog/dialog.service';
 import { RoomsService } from '../../services/rest/rooms.service';
 import { SelectGridColumn } from 'shared-components/lib/models/select-grid.model';
@@ -24,7 +23,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
     private personsService: PersonsService,
     private toastrService: ToastrService,
     private gendersService: GendersService,
-    private contactsService: ContactsService,
     private dialogService: DialogService,
     private roomsService: RoomsService,
     private router: Router,
@@ -39,21 +37,23 @@ export class ProfileComponent implements OnInit, OnDestroy {
   public newPersonData: any = {};
   public loading: boolean = false;
   public showSidepanel: boolean = true;
-  public contactsData: any[] = [];
   public genders: any[] = [];
   public alertIsOpen: boolean = true;
   public passedTime: any = {};
   public selectedRoom: any = { FloorName: '', IsValid: true };
   public rooms: any[] = [];
   public allRooms: any[] = [];
+  public personHistory: any[] = [];
 
-  public contactsColumns: SmartTableColumn[] = [
-    new SmartTableColumn(getString('firstName')).Property("FirstName").SpecialEditor(new TextboxEditor()),
-    new SmartTableColumn(getString('lastName')).Property("LastName").SpecialEditor(new TextboxEditor()),
-    new SmartTableColumn(getString('email')).Property("Email").SpecialEditor(new TextboxEditor()
-      .Pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")),
-    new SmartTableColumn(getString('telephone')).Property("Telephone").SpecialEditor(new TextboxEditor().OnlyNumbers(true)),
-    new SmartTableColumn(getString('mobile')).Property("Mobile").SpecialEditor(new TextboxEditor().OnlyNumbers(true)),
+  public personHistoryColumns: SmartTableColumn[] = [
+    new SmartTableColumn(getString('id')).Property("Id").SpecialEditor(new TextboxEditor()).Filter(false),
+    new SmartTableColumn(getString("transactionDate")).Property("CreationDate")
+      .SpecialType(new DateType().Format("dd.MM.yyyy. HH:mm")).Filter(false),
+    new SmartTableColumn(getString('firstName')).Property("FirstName").SpecialEditor(new TextboxEditor()).Filter(false),
+    new SmartTableColumn(getString('lastName')).Property("LastName").SpecialEditor(new TextboxEditor()).Filter(false),
+    new SmartTableColumn(getString('jmbg')).Property("Jmbg").SpecialEditor(new TextboxEditor()).Filter(false),
+    new SmartTableColumn(getString('logType')).Property("LogType").SpecialEditor(new TextboxEditor()).Filter(false),
+    new SmartTableColumn(getString('logType')).Property("LogTypePretty").SpecialEditor(new TextboxEditor()).Filter(false),
   ];
 
   public options: any[] = [
@@ -119,9 +119,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.activeView = view.option;
 
     switch (this.activeView) {
-      case 'contacts':
-        this.getContacts();
-        break;
       case 'dormatoryData':
         this.getAvaliableRooms();
         this.getAllRooms();
@@ -134,6 +131,14 @@ export class ProfileComponent implements OnInit, OnDestroy {
   public getGenders(): void {
     this.subscriptions.push(this.gendersService.getData().subscribe(data => {
       this.genders = data;
+    }, err => {
+      console.error(err);
+    }));
+  }
+
+  public getHistory(): void {
+    this.subscriptions.push(this.personsService.getHistory(this.personId).subscribe(data => {
+      this.personHistory = data;
     }, err => {
       console.error(err);
     }));
@@ -161,6 +166,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
         this.person = getIPersonFromJSON(data[0]);
         this.newPersonData = getIPersonFromJSON(data[0]);
         this.passedTime = this.calculatePassedTime();
+        this.getHistory();
       }
 
       this.loading = false;
@@ -169,68 +175,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   //--------------------------------------------------- CONTACTS -----------------------------------------------------------------------
 
-  public getContacts(): void {
-    this.subscriptions.push(this.contactsService.getDataForPerson(this.personId).subscribe(data => {
-      this.contactsData = data;
-    }, err => {
-      console.error(err);
-    }));
-  }
-
-  public contactsCreate(event: any) {
-    var allValid: boolean = true;
-    if (!event.newData.FirstName || !event.newData.LastName) allValid = false;
-    else if (event.newData.Email) {
-      //check valid email
-      var re = new RegExp("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$");
-      if (!re.test(event.newData.Email)) allValid = false;
-    } else if (!event.newData.Telephone && !event.newData.Mobile) allValid = false;
-
-    if (allValid) {
-      event.newData.PersonId = this.personId;
-      event.newData.FirstName = event.newData.FirstName.value ?? event.newData.FirstName;
-      event.newData.LastName = event.newData.LastName.value ?? event.newData.LastName;
-      event.newData.Email = event.newData.Email.value ?? event.newData.Email;
-
-      this.subscriptions.push(this.contactsService.add(event.newData).subscribe(data => {
-        if (data.ContactId) {
-          event.confirm.resolve();
-          this.getContacts();
-          this.toastrService.showToast("success", getString('saveSuccess'), "");
-        }
-      }));
-    }
-  }
-
-  public contactsEdit(event: any) {
-    var allValid: boolean = true;
-    if (!event.newData.FirstName || !event.newData.LastName) allValid = false;
-    else if (event.newData.Email) {
-      //check valid email
-      var re = new RegExp("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$");
-      if (!re.test(event.newData.Email)) allValid = false;
-    } else if (!event.newData.Telephone && !event.newData.Mobile) allValid = false;
-
-    if (allValid) {
-      event.newData.FirstName = event.newData.FirstName.value ?? event.newData.FirstName;
-      event.newData.LastName = event.newData.LastName.value ?? event.newData.LastName;
-      event.newData.Email = event.newData.Email.value ?? event.newData.Email;
-
-      this.subscriptions.push(this.contactsService.update(event.newData).subscribe(() => {
-        event.confirm.resolve();
-        this.getContacts();
-        this.toastrService.showToast("success", getString('saveSuccess'), "");
-      }));
-    }
-  }
-
-  public contactsDelete(event: any) {
-    this.subscriptions.push(this.contactsService.delete({ Id: event.data.Id }).subscribe(() => {
-      event.confirm.resolve();
-      this.getContacts();
-      this.toastrService.showToast("success", getString('saveSuccess'), "");
-    }));
-  }
 
   //--------------------------------------------------- STAY DATA --------------------------------------------------
 

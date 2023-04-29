@@ -33,7 +33,12 @@ BEGIN
 
     -- Insert statements for procedure here
 	INSERT INTO dbo.Room(Name, Capacity, FloorId)
-	VALUES(@Name, @Capacity, @FloorId)
+	VALUES(@Name, @Capacity, @FloorId);
+
+	DECLARE @NewIdent Int
+SET @NewIdent = SCOPE_IDENTITY();
+
+exec dbo.writeLog @LogType='INSERT', @LogEntity='Room', @Key= @NewIdent;
 
 	SELECT SCOPE_IDENTITY() AS RoomId
 END

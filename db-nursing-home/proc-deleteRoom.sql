@@ -29,5 +29,7 @@ BEGIN
 
     -- Insert statements for procedure here
 	DELETE FROM dbo.Room WHERE Id = @Id
+
+	exec dbo.writeLog @LogType='DELETE', @LogEntity='Room', @Key= @Id;
 END
 GO

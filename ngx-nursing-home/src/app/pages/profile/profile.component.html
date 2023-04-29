@@ -183,6 +183,12 @@
                                 {{getString('history')}}
                                 <div class="line"></div>
                             </div>
+                            <div style="height: 248px;">
+                                <ngx-smart-table [columns]="personHistoryColumns" [addEnabled]="false"
+                                    [editEnabled]="false" [deleteEnabled]="false" [exportPdfEnabled]="false"
+                                    [entriesPerPageEnabled]="false" [exportExcelEnabled]="false"
+                                    [refreshEnabled]="false" [(data)]="personHistory"></ngx-smart-table>
+                            </div>
                         </div>
                     </div>
 
@@ -192,13 +198,7 @@
                             {{getString('contacts')}}
                             <div class="line"></div>
                         </div>
-                        <div style="height: 710px;" *ngIf="newPersonData.Id>0">
-                            <ngx-smart-table [data]="contactsData" [columns]="contactsColumns"
-                                (createConfirm)="contactsCreate($event)" (editConfirm)="contactsEdit($event)"
-                                (deleteConfirm)="contactsDelete($event)" [exportExcelEnabled]="true"
-                                [defaultPerPageOption]="10" [exportPdfEnabled]="true" [pagerEnabled]="true"
-                                [entriesPerPageEnabled]="true" [refreshEnabled]="true"></ngx-smart-table>
-                        </div>
+                        <sample-contacts-grid [personId]="person.Id" [elementHeight]="523"></sample-contacts-grid>
                     </div>
 
 
