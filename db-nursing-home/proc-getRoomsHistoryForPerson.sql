@@ -1,7 +1,7 @@
 USE [ENV01_NURSING_HOME]
 GO
 
-/****** Object:  StoredProcedure [dbo].[getRoomsHistoryForPerson]    Script Date: 19.4.2023. 13:56:14 ******/
+/****** Object:  StoredProcedure [dbo].[getRoomsHistoryForPerson]    Script Date: 2.5.2023. 11:01:29 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -29,14 +29,17 @@ BEGIN
 	[Id]=relation.Id, 
 	[PersonId]=relation.PersonId, 
 	[RoomId]=relation.RoomId, 
-	[RoomName]=room.Name, 
+	[RoomName]=room.[Name], 
+	[FloorId]=room.FloorId,
+	[FloorName]=[floor].[Name],
 	[Active]=relation.Active,
 	[StartDate]=relation.StartDate,
 	[EndDate]=relation.EndDate
 FROM [dbo].[PersonRoomRelation] as relation
-INNER JOIN [dbo].[Room] as room 
-ON relation.RoomId=room.Id WHERE relation.PersonId = @PersonId;
+INNER JOIN [dbo].[Room] as room ON relation.RoomId=room.Id
+LEFT JOIN dbo.[Floor] as [floor] on room.FloorId=[floor].Id
+WHERE relation.PersonId = @PersonId
+order by StartDate desc;
 END
 GO
-
 

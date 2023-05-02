@@ -50,6 +50,10 @@ export class PersonsService extends BaseRestApiService {
   public getHistory(personId: number): Observable<any> {
     return this.http.get(this.apiRoute + "/getLogForPerson?PersonId=" + personId);
   }
+
+  public getRoomHistory(personId: number): Observable<any> {
+    return this.http.get(this.apiRoute + "/roomsHistoryForPerson?PersonId=" + personId);
+  }
 }
 
 export interface IPerson extends IBaseSaveModel {

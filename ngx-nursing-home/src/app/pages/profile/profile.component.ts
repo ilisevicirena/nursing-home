@@ -6,7 +6,7 @@ import { getString } from '../../resources/strings';
 import { NgForm } from '@angular/forms';
 import { ToastrService } from '../../services/toastr.service';
 import { GendersService } from '../../services/rest/genders.service';
-import { DateType, SmartTableColumn, TextboxEditor } from 'shared-components';
+import { CheckboxType, DateType, SmartTableColumn, TextboxEditor } from 'shared-components';
 import { DialogService } from '../../shared/dialog/dialog.service';
 import { RoomsService } from '../../services/rest/rooms.service';
 import { SelectGridColumn } from 'shared-components/lib/models/select-grid.model';
@@ -44,6 +44,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   public rooms: any[] = [];
   public allRooms: any[] = [];
   public personHistory: any[] = [];
+  public roomHistory: any[] = [];
 
   public personHistoryColumns: SmartTableColumn[] = [
     new SmartTableColumn(getString('id')).Property("Id").SpecialEditor(new TextboxEditor()).Filter(false),
@@ -54,6 +55,15 @@ export class ProfileComponent implements OnInit, OnDestroy {
     new SmartTableColumn(getString('jmbg')).Property("Jmbg").SpecialEditor(new TextboxEditor()).Filter(false),
     new SmartTableColumn(getString('logType')).Property("LogType").SpecialEditor(new TextboxEditor()).Filter(false),
     new SmartTableColumn(getString('logType')).Property("LogTypePretty").SpecialEditor(new TextboxEditor()).Filter(false),
+  ];
+
+  public roomHistoryColumns: SmartTableColumn[] = [
+    new SmartTableColumn(getString('id')).Property("RoomId").Filter(false),
+    new SmartTableColumn(getString('room')).Property("RoomName").Filter(false),
+    new SmartTableColumn(getString('floor')).Property("FloorName").Filter(false),
+    new SmartTableColumn(getString('activeRoom')).Property("Active").Filter(false).SpecialType(new CheckboxType()),
+    new SmartTableColumn(getString('roomStartDate')).Property("StartDate").Filter(false).SpecialType(new DateType().Format('dd.MM.yyyy.')),
+    new SmartTableColumn(getString('roomEndDate')).Property("EndDate").Filter(false).SpecialType(new DateType().Format('dd.MM.yyyy.')),
   ];
 
   public options: any[] = [
@@ -122,6 +132,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
       case 'dormatoryData':
         this.getAvaliableRooms();
         this.getAllRooms();
+        this.getRoomHistory();
         break;
     }
   }
@@ -172,9 +183,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
       this.loading = false;
     }));
   }
-
-  //--------------------------------------------------- CONTACTS -----------------------------------------------------------------------
-
 
   //--------------------------------------------------- STAY DATA --------------------------------------------------
 
@@ -254,6 +262,12 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   public goToExternalRoomManagement(): void {
     this.router.navigateByUrl('/pages/accomodation-management');
+  }
+
+  public getRoomHistory(): void {
+    this.subscriptions.push(this.personsService.getRoomHistory(this.personId).subscribe(data => {
+      this.roomHistory = data;
+    }));
   }
 
 }
