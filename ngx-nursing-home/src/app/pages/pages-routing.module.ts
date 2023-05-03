@@ -8,6 +8,10 @@ import { NewPersonComponent } from './new-person/new-person.component';
 import { AccomodationManagementComponent } from './accomodation-management/accomodation-management.component';
 import { AdvancedSearchComponent } from './advanced-search/advanced-search.component';
 import { ProfileComponent } from './profile/profile.component';
+import { ServicesComponent } from './services/services.component';
+import { PackagesComponent } from './packages/packages.component';
+import { DiscountsComponent } from './discounts/discounts.component';
+import { ServicesManagementComponent } from './services-management/services-management.component';
 
 const routes: Routes = [{
   path: '',
@@ -45,6 +49,22 @@ const routes: Routes = [{
     {
       path: 'profile/:id',
       component: ProfileComponent
+    },
+    {
+      path: 'services',
+      component: ServicesComponent
+    },
+    {
+      path: 'packages',
+      component: PackagesComponent
+    },
+    {
+      path: 'discounts',
+      component: DiscountsComponent
+    },
+    {
+      path: 'services-management',
+      component: ServicesManagementComponent
     },
   ],
 }];

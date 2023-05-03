@@ -32,4 +32,26 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'search-outline',
     link: '/pages/advanced-search',
   },
+  {
+    title: getString("servicesManagement"),
+    icon: 'settings-outline',
+    children: [
+      {
+        title: getString("servicesSingle"),
+        link: '/pages/services'
+      },
+      {
+        title: getString("packages"),
+        link: '/pages/packages'
+      },
+      {
+        title: getString("discounts"),
+        link: '/pages/discounts'
+      },
+      {
+        title: getString("servicesManagementSingle"),
+        link: '/pages/services-management'
+      },
+    ]
+  }
 ];
