@@ -15,6 +15,10 @@ const rooms = require('./routes/rooms');
 const persons = require('./routes/persons');
 const contacts = require('./routes/contacts');
 const genders = require('./routes/genders');
+const services = require('./routes/services');
+const packages = require('./routes/packages');
+const discounts = require('./routes/discounts');
+const servicesMangement = require('./routes/services-management');
 
 // register routes
 router.use('/floors', floors);
@@ -22,6 +26,10 @@ router.use('/rooms', rooms);
 router.use('/persons', persons);
 router.use('/contacts', contacts);
 router.use('/genders', genders);
+router.use('/services', services);
+router.use('/packages', packages);
+router.use('/discounts', discounts);
+router.use('/services-management', servicesMangement);
 
 // No need to connect the pool
 // Just start the web server
