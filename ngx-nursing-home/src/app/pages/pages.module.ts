@@ -45,6 +45,10 @@ import { AdvancedSearchComponent } from './advanced-search/advanced-search.compo
 import { ProfileComponent } from './profile/profile.component';
 import { ContactsGridComponent } from './contacts-grid/contacts-grid.component';
 import { BasicDataComponent } from './profile/basic-data/basic-data.component';
+import { ServicesComponent } from './services/services.component';
+import { PackagesComponent } from './packages/packages.component';
+import { ServicesManagementComponent } from './services-management/services-management.component';
+import { DiscountsComponent } from './discounts/discounts.component';
 
 @NgModule({
   imports: [
@@ -92,7 +96,11 @@ import { BasicDataComponent } from './profile/basic-data/basic-data.component';
     AdvancedSearchComponent,
     ProfileComponent,
     ContactsGridComponent,
-    BasicDataComponent
+    BasicDataComponent,
+    ServicesComponent,
+    PackagesComponent,
+    ServicesManagementComponent,
+    DiscountsComponent
   ],
 })
 export class PagesModule {
