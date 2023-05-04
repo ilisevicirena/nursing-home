@@ -1,18 +1,13 @@
--- ================================================
--- Template generated from Template Explorer using:
--- Create Procedure (New Menu).SQL
---
--- Use the Specify Values for Template Parameters 
--- command (Ctrl-Shift-M) to fill in the parameter 
--- values below.
---
--- This block of comments will not be included in
--- the definition of the procedure.
--- ================================================
+USE [ENV01_NURSING_HOME]
+GO
+
+/****** Object:  StoredProcedure [dbo].[getServicesForPackage]    Script Date: 4.5.2023. 13:42:58 ******/
 SET ANSI_NULLS ON
 GO
+
 SET QUOTED_IDENTIFIER ON
 GO
+
 -- =============================================
 -- Author:		Irena Ilisevic
 -- Create date: 3.5.2023.
@@ -39,6 +34,7 @@ BEGIN
 	[MeasureUnitId]=s.MeasureUnitId,
 	[MeasureUnitName]=mu.[Name],
 	[MeasureUnitTag]=mu.Tag,
+	[MeasureUnitCode]=mu.Code,
 	[CostPerUnit]=s.CostPerUnit,
 	[DefaultNumberOfUnits]=s.DefaultNumberOfUnits,
 	[PriceUnitId]=s.PriceUnitId,
@@ -56,3 +52,4 @@ BEGIN
 
 END
 GO
+

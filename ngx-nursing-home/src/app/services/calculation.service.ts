@@ -1,0 +1,89 @@
+import { Injectable } from '@angular/core';
+import { IPackage } from './rest/packages.service';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class CalculationService {
+
+  private MonthDayNumber: number = 30;
+  private YearDayNumber: number = 365;
+  private YearMonthNumber: number = 12;
+
+  constructor() { }
+
+  public calculatePackagePrice(selectedPackage: IPackage, services: any[]): ICalculationResult {
+    console.log(services)
+    var result: ICalculationResult = {
+      day: 0,
+      month: 0,
+      year: 0
+    }
+
+    // calculate price from selected services
+    if (selectedPackage.PackagePriceCalculated) {
+      var dailyServices = services.filter(x => x.MeasureUnitCode == 'day');
+      var monthlyServices = services.filter(x => x.MeasureUnitCode == 'month');
+      var yearServices = services.filter(x => x.MeasureUnitCode == 'year');
+      var unitServices = services.filter(x => x.MeasureUnitCode == 'unit');
+
+      var dailyServicesPrice = 0;
+      dailyServices.forEach(element => {
+        dailyServicesPrice += element.Quantity * element.CostPerUnit;
+      });
+
+      var monthlyServicesPrice = 0;
+      monthlyServices.forEach(element => {
+        monthlyServicesPrice += element.Quantity * element.CostPerUnit;
+      });
+
+      var yearServicesPrice = 0;
+      yearServices.forEach(element => {
+        yearServicesPrice += element.Quantity * element.CostPerUnit;
+      });
+
+      var unitServicesPrice = 0;
+      unitServices.forEach(element => {
+        unitServicesPrice += element.Quantity * element.CostPerUnit;
+      });
+
+
+      result.day = dailyServicesPrice + (monthlyServicesPrice / this.MonthDayNumber) + (yearServicesPrice / this.YearDayNumber) + unitServicesPrice;
+      result.month = (dailyServicesPrice * this.MonthDayNumber) + monthlyServicesPrice + (yearServicesPrice / this.YearMonthNumber) + unitServicesPrice;
+      result.year = (dailyServicesPrice * this.YearDayNumber) + (monthlyServicesPrice * this.YearMonthNumber) + yearServicesPrice + unitServicesPrice;
+
+    }
+
+    // price is default for selected measurement unit, others need to be calculated --> month is calculated on 30 day basis
+    else {
+      switch (selectedPackage.MesureUnitCode) {
+        case 'day':
+          result.day = selectedPackage.DefaultPackagePrice;
+          result.month = selectedPackage.DefaultPackagePrice * this.MonthDayNumber;
+          result.year = selectedPackage.DefaultPackagePrice * this.YearDayNumber;
+          break;
+
+        case 'month':
+          result.day = selectedPackage.DefaultPackagePrice / this.MonthDayNumber;
+          result.month = selectedPackage.DefaultPackagePrice;
+          result.year = selectedPackage.DefaultPackagePrice * this.YearMonthNumber;
+          break;
+
+        case 'year':
+          result.day = selectedPackage.DefaultPackagePrice / this.YearDayNumber;
+          result.month = selectedPackage.DefaultPackagePrice / this.YearMonthNumber;
+          result.year = selectedPackage.DefaultPackagePrice;
+          break;
+      }
+    }
+
+    return result;
+  }
+
+}
+
+export interface ICalculationResult {
+  day: number;
+  month: number;
+  year: number;
+}

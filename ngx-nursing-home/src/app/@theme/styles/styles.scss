@@ -37,6 +37,10 @@
     background-color: nb-theme(color-basic-200);
   }
 
+  .card-background-color {
+    background-color: nb-theme(card-background-color);
+  }
+
   ::-webkit-scrollbar {
     width: nb-theme(scrollbar-width);
     height: nb-theme(scrollbar-width);

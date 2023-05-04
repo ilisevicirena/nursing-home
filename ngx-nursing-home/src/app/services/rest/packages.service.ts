@@ -21,4 +21,8 @@ export interface IPackage extends IBaseSaveModel {
   PackagePriceCalculated?: boolean;
   PriceUnitName?: string;
   PriceUnitTag?: string;
+  MeasureUnitId?: number;
+  MesureUnitCode?: string;
+  MesureUnitName?: string;
+  MeasureUnitTag?: string;
 }

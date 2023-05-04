@@ -1,4 +1,15 @@
 .dialog-card {
-    width: 850px;
-    height: max-content;
+    width: 100%;
+    height: 100%;
+}
+
+
+::ng-deep .dialog-overlay {
+    width: 85%;
+    height: 85%;
+}
+
+::ng-deep .dialog-overlay nb-dialog-container {
+    width: 100%;
+    height: 100%;
 }

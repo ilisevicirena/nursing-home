@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NbDialogRef } from '@nebular/theme';
 import { IPackage, PackagesService } from '../../../services/rest/packages.service';
 import { ToastrService } from '../../../services/toastr.service';
@@ -9,15 +9,16 @@ import { DialogService } from '../../../shared/dialog/dialog.service';
 import { Subscription } from 'rxjs';
 import { getString } from '../../../resources/strings';
 import { NgForm } from '@angular/forms';
-import { error } from 'console';
-import { getSidebarResponsiveState$ } from '@nebular/theme/components/sidebar/sidebar.service';
+import { LookupType, SelectFilter, SelectGridComponent, SmartTableColumn, SmartTableComponent } from 'shared-components';
+import { SelectGridColumn, SelectGridSelectionModel } from 'shared-components/lib/models/select-grid.model';
+import { CalculationService, ICalculationResult } from '../../../services/calculation.service';
 
 @Component({
   selector: 'sample-add-edit-package',
   templateUrl: './add-edit-package.component.html',
   styleUrls: ['./add-edit-package.component.scss']
 })
-export class AddEditPackageComponent implements OnInit, OnDestroy {
+export class AddEditPackageComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private subs: Subscription[] = [];
 
@@ -35,7 +36,50 @@ export class AddEditPackageComponent implements OnInit, OnDestroy {
   };
   public priceUnits: any[] = [];
   public servicesData: any[] = [];
+
+  public packagePrice: ICalculationResult = {
+    day: 0,
+    month: 0,
+    year: 0
+  };
+
   public packageServices: any[] = [];
+  public servicesColumns: SmartTableColumn[] = [
+    new SmartTableColumn(getString('name')).Property("ServiceName").Filter(false),
+    new SmartTableColumn(getString('description')).Property("ServiceDescription").Filter(false),
+    new SmartTableColumn(getString('quantity')).Property("Quantity").Filter(false),
+    new SmartTableColumn(getString('costPerUnit')).Property("CostPerUnit").Filter(false),
+    new SmartTableColumn(getString('measureUnit')).Property("MeasureUnitId").SpecialType(new LookupType().NameAttribute("MeasureUnitName")).Filter(false),
+  ];
+
+  public packageServiceSelectGridColumns: SelectGridColumn[] = [
+    {
+      name: "name",
+      title: getString('name'),
+      attributeName: "Name",
+    },
+    {
+      name: "mesureUnitTag",
+      title: getString('measureUnit'),
+      attributeName: "MeasureUnitTag",
+    },
+    {
+      name: "costPerUnit",
+      title: getString('costPerUnit'),
+      attributeName: "CostPerUnit",
+    },
+    {
+      name: "priceUnit",
+      title: getString('priceUnit'),
+      attributeName: "PriceUnitTag",
+    }
+  ];
+  public selectedService: any = { Quantity: 0 };
+
+  private packageServiceUnfiltered: any[] = [];
+
+  @ViewChild('packageServicesGrid') servicesGrid: SmartTableComponent;
+  @ViewChild('servicesSelectGridControl') servicesSelectGridControl: SelectGridComponent;
 
   constructor(
     private ref: NbDialogRef<AddEditPackageComponent>,
@@ -44,7 +88,8 @@ export class AddEditPackageComponent implements OnInit, OnDestroy {
     private servicesService: ServicesService,
     private measureUnitService: MeasureUnitsService,
     private priceUnitsService: PriceUnitsService,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    private calculationService: CalculationService
   ) { }
 
   ngOnInit(): void {
@@ -57,6 +102,11 @@ export class AddEditPackageComponent implements OnInit, OnDestroy {
     this.subs.forEach(element => {
       element.unsubscribe();
     });
+  }
+
+  ngAfterViewInit(): void {
+    var elementRef = this.ref as any;
+    elementRef.overlayRef?._pane?.classList?.add('dialog-overlay');
   }
 
   private getPriceUnits(): void {
@@ -79,10 +129,17 @@ export class AddEditPackageComponent implements OnInit, OnDestroy {
     if (!this.isNew) {
       this.subs.push(this.servicesService.getServicesForPackage(this.package.Id).subscribe(data => {
         this.packageServices = data;
+        this.packageServiceUnfiltered = data;
+        this.calculatePackagePrice();
       }, err => {
         console.error(err);
       }));
     }
+  }
+
+  public calculatePackagePrice(): void {
+    this.package.MesureUnitCode = 'month';
+    this.packagePrice = this.calculationService.calculatePackagePrice(this.package, this.packageServices);
   }
 
   public close(result: boolean): void {
@@ -113,5 +170,38 @@ export class AddEditPackageComponent implements OnInit, OnDestroy {
     }, err => {
       console.error(err);
     }));
+  }
+
+  public onServiceSelectionChanged(event: SelectGridSelectionModel): void {
+    if (event.selectedItems.length > 0) {
+      this.selectedService = event.selectedItems[0];
+      this.selectedService.Quantity = 1;
+      this.selectedService.ServiceName = this.selectedService.Name;
+      this.selectedService.ServiceId = this.selectedService.Id;
+      this.selectedService.ServiceDescription = this.selectedService.Description;
+    }
+  }
+
+  public addService(): void {
+    if (!this.packageServices.find(x => x.ServiceId == this.selectedService.ServiceId)) {
+      this.selectedService.IsNew = true;
+      this.packageServiceUnfiltered.push(this.selectedService)
+      this.packageServices = this.packageServiceUnfiltered.filter(x => !x.IsDeleted);
+      this.servicesGrid.refreshSource(true);
+      this.servicesSelectGridControl.selected = undefined;
+      this.selectedService = { Quantity: 0 };
+    } else {
+      this.toastrService.showToast('warning', getString('alreadyAdded'));
+    }
+
+    this.calculatePackagePrice();
+  }
+
+  public onServiceDeleteConfirm(event: any): void {
+    var item = this.packageServiceUnfiltered.find(x => x.ServiceId == event.data.ServiceId);
+    if (event.data.IsNew) this.packageServiceUnfiltered.splice(this.packageServiceUnfiltered.indexOf(item), 1);
+    else item.IsDeleted = true;
+    this.packageServices = this.packageServiceUnfiltered.filter(x => !x.IsDeleted);
+    this.calculatePackagePrice();
   }
 }
