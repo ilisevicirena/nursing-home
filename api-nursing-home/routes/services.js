@@ -72,4 +72,17 @@ router.delete('/delete', async (request, response) => {
     }
 });
 
+router.get('/getServicesForPackage', async (request, response) => {
+    try {
+        const pool = await db;
+        const result = await pool.request()
+            .input('id', request.query.PackageId)
+            .query("EXEC [dbo].[getServicesForPackage] @Id=@id");
+        response.json(result.recordset);
+    } catch (err) {
+        response.status(500);
+        response.send(err.message);
+    }
+});
+
 module.exports = router;

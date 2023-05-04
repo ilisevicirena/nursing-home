@@ -47,7 +47,8 @@ export class DialogService implements OnDestroy {
       context: {
         dialogTitle: title,
         dialogBody: body
-      }
+      },
+      autoFocus: false
     });
 
     return dialogRef.onClose

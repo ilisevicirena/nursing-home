@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 export class ToastrService {
   constructor(private toastrService: NbToastrService, protected configService: ConfigService, protected router: Router) { }
 
-  public showToast(type: NbComponentStatus, title: string, body: string): void {
+  public showToast(type: NbComponentStatus, title: string, body: string = ''): void {
     const config = {
       status: type,
       destroyByClick: true,

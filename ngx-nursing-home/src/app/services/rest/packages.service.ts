@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BaseRestApiService } from '../base-rest-api.service';
+import { BaseRestApiService, IBaseSaveModel } from '../base-rest-api.service';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -11,4 +11,14 @@ export class PackagesService extends BaseRestApiService {
     super(http, 'api/packages');
   }
 
+}
+
+export interface IPackage extends IBaseSaveModel {
+  Name?: string;
+  DefaultPackagePrice?: number;
+  DefaultPackagePriceUnitId?: number;
+  Description?: string;
+  PackagePriceCalculated?: boolean;
+  PriceUnitName?: string;
+  PriceUnitTag?: string;
 }

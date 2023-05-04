@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BaseRestApiService, IBaseSaveModel } from '../base-rest-api.service';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +12,9 @@ export class ServicesService extends BaseRestApiService {
     super(http, 'api/services');
   }
 
+  public getServicesForPackage(id: number): Observable<any> {
+    return this.http.get(this.apiRoute + "/getServicesForPackage?PackageId=" + id);
+  }
 }
 
 export interface IService extends IBaseSaveModel {

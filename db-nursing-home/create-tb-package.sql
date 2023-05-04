@@ -1,7 +1,7 @@
 USE [ENV01_NURSING_HOME]
 GO
 
-/****** Object:  Table [dbo].[Package]    Script Date: 2.5.2023. 12:01:57 ******/
+/****** Object:  Table [dbo].[Package]    Script Date: 4.5.2023. 9:04:59 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -15,6 +15,7 @@ CREATE TABLE [dbo].[Package](
 	[DefaultPackagePrice] [float] NULL,
 	[PackagePriceCalculated] [bit] NULL,
 	[DefaultPackagePriceUnitId] [int] NULL,
+	[Active] [bit] NULL,
  CONSTRAINT [PK_Package] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC

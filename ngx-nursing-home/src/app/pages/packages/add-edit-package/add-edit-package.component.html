@@ -1,0 +1,103 @@
+<nb-card class="dialog-card">
+    <nb-card-header>
+        <div class="d-flex">
+            <div class="col">
+                {{isNew ? getString('addNew') : getString('editData')}}
+            </div>
+            <div style="width: max-content;">
+                <button nbButton shape="round" ghost (click)="close(false)">
+                    <nb-icon pack="eva" icon="close-outline"></nb-icon>
+                </button>
+            </div>
+        </div>
+    </nb-card-header>
+    <nb-card-body>
+        <form #packageForm="ngForm">
+            <div class="row m-0">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <div class="label">{{getString("id")}}</div>
+                        <div class="value">
+                            <input nbInput [(ngModel)]="package.Id" fullWidth name="id" disabled
+                                [placeholder]="getString('id')">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <div class="label">{{getString("name")}} <nb-icon pack="eva" icon="alert-circle-outline"
+                                status="danger" size="small" class="ms-1 required-mark"
+                                [nbTooltip]="getString('required')"></nb-icon></div>
+                        <div class="value">
+                            <input nbInput [(ngModel)]="package.Name" fullWidth name="nameService"
+                                [placeholder]="getString('name')" required #name1="ngModel" autocomplete="off"
+                                [status]="name1.dirty ? (name1.invalid ? 'danger' : 'success'): 'basic'">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row m-0 mt-2">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <div class="label">{{getString("description")}}</div>
+                        <div class="value">
+                            <textarea nbInput rows="5" [placeholder]="getString('description')" fullWidth
+                                [(ngModel)]="package.Description" name="description"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row m-0 mt-2">
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <div class="label">{{getString('priceCalculated')}}</div>
+                        <div class="value">
+                            <nb-checkbox [(checked)]="package.PackagePriceCalculated"
+                                name="packagePriceCalculated"></nb-checkbox>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <div class="label">{{getString('defaultPackagePrice')}}
+                            <nb-icon *ngIf="!package.PackagePriceCalculated" pack="eva" icon="alert-circle-outline"
+                                status="danger" size="small" class="ms-1 required-mark"
+                                [nbTooltip]="getString('required')"></nb-icon>
+                        </div>
+                        <div class="value">
+                            <input nbInput [(ngModel)]="package.DefaultPackagePrice" fullWidth
+                                name="DefaultPackagePrice" type="number"
+                                [placeholder]="getString('defaultPackagePrice')"
+                                [required]="!package.PackagePriceCalculated" #defaultPackagePrice1="ngModel"
+                                autocomplete="off" [disabled]="package.PackagePriceCalculated"
+                                [status]="defaultPackagePrice1.dirty ? (defaultPackagePrice1.invalid ? 'danger' : 'success'): 'basic'">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <div class="label">{{getString('priceUnit')}}
+                            <nb-icon *ngIf="!package.PackagePriceCalculated" pack="eva" icon="alert-circle-outline"
+                                status="danger" size="small" class="ms-1 required-mark"
+                                [nbTooltip]="getString('required')"></nb-icon>
+                        </div>
+                        <div class="value">
+                            <nb-select [(ngModel)]="package.DefaultPackagePriceUnitId" fullWidth name="priceUnit"
+                                [placeholder]="getString('priceUnit')" [required]="!package.PackagePriceCalculated"
+                                #priceUnit1="ngModel" autocomplete="off" [disabled]="package.PackagePriceCalculated"
+                                [status]="priceUnit1.dirty ? (priceUnit1.invalid ? 'danger' : 'success'): 'basic'">
+                                <nb-option *ngFor="let unit of priceUnits" [value]="unit.Id">{{unit.Tag}}</nb-option>
+                            </nb-select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </nb-card-body>
+    <nb-card-footer class="d-flex justify-content-end">
+        <button nbButton ghost shape="round" size="small" (click)="close(false)"
+            class="me-2">{{getString("cancel")}}</button>
+        <button nbButton status="primary" size="small" shape="round" [disabled]="packageForm.form.invalid"
+            (click)="onSaveClick(packageForm)">{{getString("save")}}</button>
+    </nb-card-footer>
+</nb-card>
