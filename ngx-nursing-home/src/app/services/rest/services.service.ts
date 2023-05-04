@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BaseRestApiService } from '../base-rest-api.service';
+import { BaseRestApiService, IBaseSaveModel } from '../base-rest-api.service';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -11,4 +11,17 @@ export class ServicesService extends BaseRestApiService {
     super(http, 'api/services');
   }
 
+}
+
+export interface IService extends IBaseSaveModel {
+  CostPerUnit?: number;
+  DefaultNumberOfUnits?: number;
+  Description?: string;
+  MeasureUnitId?: number;
+  MeasureUnitName?: string;
+  MeasureUnitTag?: string;
+  Name?: string;
+  PriceUnitId?: number;
+  PriceUnitName?: string;
+  PriceUnitTag?: string;
 }

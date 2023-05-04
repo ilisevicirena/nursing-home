@@ -1,0 +1,119 @@
+<nb-card class="dialog-card">
+    <nb-card-header>
+        <div class="d-flex">
+            <div class="col">
+                {{isNew ? getString('addNew') : getString('editData')}}
+            </div>
+            <div style="width: max-content;">
+                <button nbButton shape="round" ghost (click)="close(false, serviceForm)">
+                    <nb-icon pack="eva" icon="close-outline"></nb-icon>
+                </button>
+            </div>
+        </div>
+    </nb-card-header>
+    <nb-card-body>
+        <form #serviceForm="ngForm">
+            <div class="row m-0">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <div class="label">{{getString("id")}}</div>
+                        <div class="value">
+                            <input nbInput [(ngModel)]="service.Id" fullWidth name="id" disabled
+                                [placeholder]="getString('id')">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <div class="label">{{getString("name")}} <nb-icon pack="eva" icon="alert-circle-outline"
+                                status="danger" size="small" class="ms-1 required-mark"
+                                [nbTooltip]="getString('required')"></nb-icon></div>
+                        <div class="value">
+                            <input nbInput [(ngModel)]="service.Name" fullWidth name="nameService"
+                                [placeholder]="getString('name')" required #name1="ngModel" autocomplete="off"
+                                [status]="name1.dirty ? (name1.invalid ? 'danger' : 'success'): 'basic'">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row m-0 mt-2">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <div class="label">{{getString("description")}}</div>
+                        <div class="value">
+                            <textarea nbInput rows="5" [placeholder]="getString('description')" fullWidth
+                                [(ngModel)]="service.Description" name="description"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row m-0 mt-2">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <div class="label">{{getString("measureUnit")}} <nb-icon pack="eva" icon="alert-circle-outline"
+                                status="danger" size="small" class="ms-1 required-mark"
+                                [nbTooltip]="getString('required')"></nb-icon></div>
+                        <div class="value">
+                            <nb-select [(ngModel)]="service.MeasureUnitId" fullWidth name="measureUnit"
+                                [placeholder]="getString('measureUnit')" required #measureUnit1="ngModel"
+                                autocomplete="off"
+                                [status]="measureUnit1.dirty ? (measureUnit1.invalid ? 'danger' : 'success'): 'basic'">
+                                <nb-option *ngFor="let unit of measureUnitsData" [value]="unit.Id">
+                                    {{unit.Tag}}
+                                </nb-option>
+                            </nb-select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <div class="label">{{getString("costPerUnit")}} <nb-icon pack="eva" icon="alert-circle-outline"
+                                status="danger" size="small" class="ms-1 required-mark"
+                                [nbTooltip]="getString('required')"></nb-icon></div>
+                        <div class="value">
+                            <input nbInput [(ngModel)]="service.CostPerUnit" fullWidth name="costPerUnit" type="number"
+                                [placeholder]="getString('costPerUnit')" required #costPerUnit1="ngModel"
+                                autocomplete="off"
+                                [status]="costPerUnit1.dirty ? (costPerUnit1.invalid ? 'danger' : 'success'): 'basic'">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <div class="label">{{getString("priceUnit")}} <nb-icon pack="eva" icon="alert-circle-outline"
+                                status="danger" size="small" class="ms-1 required-mark"
+                                [nbTooltip]="getString('required')"></nb-icon></div>
+                        <div class="value">
+                            <nb-select [(ngModel)]="service.PriceUnitId" fullWidth name="priceUnit"
+                                [placeholder]="getString('priceUnit')" required #priceUnit1="ngModel" autocomplete="off"
+                                [status]="priceUnit1.dirty ? (priceUnit1.invalid ? 'danger' : 'success'): 'basic'">
+                                <nb-option *ngFor="let unit of priceUnitsData" [value]="unit.Id">
+                                    {{unit.Tag}}
+                                </nb-option>
+                            </nb-select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row m-0 mt-2">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <div class="label">{{getString("defaultNumberOfUnits")}} </div>
+                        <div class="value">
+                            <input nbInput [(ngModel)]="service.DefaultNumberOfUnits" fullWidth
+                                name="defaultNumberOfUnits" type="number"
+                                [placeholder]="getString('defaultNumberOfUnits')" #defaultNumberOfUnits1="ngModel"
+                                autocomplete="off">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </nb-card-body>
+    <nb-card-footer class="d-flex justify-content-end">
+        <button nbButton ghost shape="round" size="small" (click)="close(false, serviceForm)"
+            class="me-2">{{getString("cancel")}}</button>
+        <button nbButton status="primary" size="small" shape="round" [disabled]="serviceForm.form.invalid"
+            (click)="onSaveClick(serviceForm)">{{getString("save")}}</button>
+    </nb-card-footer>
+</nb-card>

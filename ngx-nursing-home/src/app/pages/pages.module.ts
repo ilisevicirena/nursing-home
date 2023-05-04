@@ -49,6 +49,7 @@ import { ServicesComponent } from './services/services.component';
 import { PackagesComponent } from './packages/packages.component';
 import { ServicesManagementComponent } from './services-management/services-management.component';
 import { DiscountsComponent } from './discounts/discounts.component';
+import { AddEditServiceComponent } from './services/add-edit-service/add-edit-service.component';
 
 @NgModule({
   imports: [
@@ -100,7 +101,8 @@ import { DiscountsComponent } from './discounts/discounts.component';
     ServicesComponent,
     PackagesComponent,
     ServicesManagementComponent,
-    DiscountsComponent
+    DiscountsComponent,
+    AddEditServiceComponent
   ],
 })
 export class PagesModule {
