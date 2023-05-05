@@ -119,20 +119,61 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <div class="label">{{getString('calculationMeasurement')}}
-                                    <nb-icon *ngIf="!package.PackagePriceCalculated" pack="eva"
-                                        icon="alert-circle-outline" status="danger" size="small"
+                                    <nb-icon pack="eva" icon="alert-circle-outline" status="danger" size="small"
                                         class="ms-1 required-mark" [nbTooltip]="getString('required')"></nb-icon>
                                 </div>
                                 <div class="value">
                                     <nb-select [(ngModel)]="package.MeasureUnitId" fullWidth name="priceUnit"
-                                        [placeholder]="getString('calculationMeasurement')"
-                                        [required]="package.PackagePriceCalculated" #measureUnit1="ngModel"
-                                        autocomplete="off" [disabled]="!package.PackagePriceCalculated"
+                                        [placeholder]="getString('calculationMeasurement')" required
+                                        #measureUnit1="ngModel" autocomplete="off"
                                         [status]="measureUnit1.dirty ? (measureUnit1.invalid ? 'danger' : 'success'): 'basic'">
                                         <nb-option *ngFor="let unit of calculationMeasureUnits"
                                             [value]="unit.Id">{{unit.Tag}}</nb-option>
                                     </nb-select>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6" *ngIf="package.PackagePriceCalculated">
+                            <div class="form-group">
+                                <div class="label">{{getString('priceUnit')}}
+                                    <nb-icon pack="eva" icon="alert-circle-outline"
+                                        *ngIf="package.PackagePriceCalculated" status="danger" size="small"
+                                        class="ms-1 required-mark" [nbTooltip]="getString('required')"></nb-icon>
+                                </div>
+                                <div class="value">
+                                    <nb-select [(ngModel)]="package.CalculationPriceUnitId" fullWidth name="priceUnit"
+                                        [placeholder]="getString('priceUnit')"
+                                        [required]="package.PackagePriceCalculated" #calculationPriceUnit1="ngModel"
+                                        autocomplete="off"
+                                        [status]="calculationPriceUnit1.dirty ? (calculationPriceUnit1.invalid ? 'danger' : 'success'): 'basic'">
+                                        <nb-option *ngFor="let unit of priceUnits"
+                                            [value]="unit.Id">{{unit.Tag}}</nb-option>
+                                    </nb-select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row m-0 mt-4">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="label">{{getString('sum')}}
+                                </div>
+                                <div class="value">
+                                    <nb-form-field>
+                                        <nb-icon pack="eva" icon="shopping-cart-outline" nbPrefix></nb-icon>
+                                        <input nbInput [placeholder]="getString('sum')" shape="round" fullWidth readonly
+                                            status="primary">
+                                    </nb-form-field>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <div class="form-group">
+                                <button nbButton ghost status="info" shape="round" class="mt-4"
+                                    [nbPopover]="calculationInfoPopover" nbPopoverTrigger="click"
+                                    nbPopoverPlacement="right">
+                                    <nb-icon pack="eva" icon="info-outline"></nb-icon>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -182,3 +223,18 @@
         </div>
     </div>
 </div>
+
+<ng-template #calculationInfoPopover>
+    <nb-card class="m-0" style="width: 300px;">
+        <nb-card-body>
+            <div class="row m-0">
+                <div>
+                    <nb-icon pack="eva" icon="info-outline" status="info" class="info-icon-status"></nb-icon>
+                </div>
+                <div>
+                    <div class="p-2">{{getString("calculationInfoPopover")}}</div>
+                </div>
+            </div>
+        </nb-card-body>
+    </nb-card>
+</ng-template>

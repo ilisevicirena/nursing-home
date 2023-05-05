@@ -114,6 +114,7 @@ const strings: IKeyValue[] = [
 	{ key: "defaultNumberOfUnits", value: "Fiksna količina jedinica" },
 	{ key: "defaultNumberOfUnitsInfo", value: "Kada koristite fiksnu količinu jedinica pri dodavanju usluge u paket, koristi se uneseni broj jedinica i obračunava na temelju unesene cijene po jedinici. Količinu nije moguće mijenjati prilikom dodavanja stavke u obračun." },
 { key: "deactivateService", value: "Želite li ukloniti uslugu iz ponude?" },
+{ key: "sum", value: "Ukupan iznos" },
 ];
 
 const map = new Map(strings.map(obj => [obj.key, obj.value]));
