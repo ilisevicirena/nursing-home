@@ -1,7 +1,7 @@
 USE [ENV01_NURSING_HOME]
 GO
 
-/****** Object:  Table [dbo].[Person]    Script Date: 23.4.2023. 13:46:10 ******/
+/****** Object:  Table [dbo].[Person]    Script Date: 5.5.2023. 9:40:28 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -12,13 +12,13 @@ CREATE TABLE [dbo].[Person](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[FirstName] [varchar](50) NOT NULL,
 	[LastName] [varchar](50) NOT NULL,
-	[JMBG] [varchar](50) NULL,
+	[JMBG] [varchar](50) NOT NULL,
 	[BirthDate] [datetime] NULL,
 	[Active] [bit] NOT NULL,
 	[StartDate] [datetime] NULL,
 	[EndDate] [datetime] NULL,
 	[CreationDate] [datetime] NOT NULL,
-	[GenderId] [int] NULL,
+	[GenderId] [int] NOT NULL,
 	[Address] [varchar](200) NULL,
  CONSTRAINT [PK_Person] PRIMARY KEY CLUSTERED 
 (
@@ -33,5 +33,4 @@ GO
 
 ALTER TABLE [dbo].[Person] CHECK CONSTRAINT [FK_Person_Gender]
 GO
-
 

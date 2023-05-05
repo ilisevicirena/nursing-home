@@ -1,7 +1,7 @@
 USE [ENV01_NURSING_HOME]
 GO
 
-/****** Object:  Table [dbo].[PersonServiceRelation]    Script Date: 2.5.2023. 14:00:42 ******/
+/****** Object:  Table [dbo].[PersonServiceRelation]    Script Date: 5.5.2023. 9:44:18 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -15,7 +15,7 @@ CREATE TABLE [dbo].[PersonServiceRelation](
 	[StartDate] [datetime] NOT NULL,
 	[EndDate] [datetime] NULL,
 	[Active] [bit] NOT NULL,
-	[Quantity] [int] NULL,
+	[Quantity] [int] NOT NULL,
  CONSTRAINT [PK_PersonServiceRelation] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC

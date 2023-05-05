@@ -1,7 +1,7 @@
 USE [ENV01_NURSING_HOME]
 GO
 
-/****** Object:  Table [dbo].[LogType]    Script Date: 28.4.2023. 12:54:59 ******/
+/****** Object:  Table [dbo].[LogType]    Script Date: 5.5.2023. 9:31:55 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -11,7 +11,7 @@ GO
 CREATE TABLE [dbo].[LogType](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[Name] [varchar](50) NOT NULL,
-	[NamePretty] [varchar](50) NULL,
+	[NamePretty] [varchar](50) NOT NULL,
  CONSTRAINT [PK_LogType] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC

@@ -1,7 +1,7 @@
 USE [ENV01_NURSING_HOME]
 GO
 
-/****** Object:  Table [dbo].[Room]    Script Date: 14.4.2023. 12:13:52 ******/
+/****** Object:  Table [dbo].[Room]    Script Date: 5.5.2023. 9:45:09 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -12,7 +12,7 @@ CREATE TABLE [dbo].[Room](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[Name] [varchar](50) NOT NULL,
 	[Capacity] [int] NOT NULL,
-	[FloorId] [int] NULL,
+	[FloorId] [int] NOT NULL,
  CONSTRAINT [PK_Room] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
@@ -26,5 +26,4 @@ GO
 
 ALTER TABLE [dbo].[Room] CHECK CONSTRAINT [FK_Room_Floor]
 GO
-
 

@@ -1,7 +1,7 @@
 USE [ENV01_NURSING_HOME]
 GO
 
-/****** Object:  Table [dbo].[MeasureUnit]    Script Date: 4.5.2023. 13:44:04 ******/
+/****** Object:  Table [dbo].[MeasureUnit]    Script Date: 5.5.2023. 9:34:00 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -12,7 +12,8 @@ CREATE TABLE [dbo].[MeasureUnit](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[Name] [varchar](50) NOT NULL,
 	[Tag] [varchar](50) NOT NULL,
-	[Code] [varchar](50) NULL,
+	[Code] [varchar](50) NOT NULL,
+	[CalculationUnit] [bit] NOT NULL,
  CONSTRAINT [PK_MeasureUnit] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC

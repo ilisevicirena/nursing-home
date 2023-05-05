@@ -1,7 +1,7 @@
 USE [ENV01_NURSING_HOME]
 GO
 
-/****** Object:  Table [dbo].[ServicePackageRelation]    Script Date: 2.5.2023. 12:32:59 ******/
+/****** Object:  Table [dbo].[ServicePackageRelation]    Script Date: 5.5.2023. 11:15:26 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -13,7 +13,7 @@ CREATE TABLE [dbo].[ServicePackageRelation](
 	[ServiceId] [int] NOT NULL,
 	[PackageId] [int] NOT NULL,
 	[Quantity] [int] NOT NULL,
-	[Active] [bit] NULL,
+	[Active] [bit] NOT NULL,
  CONSTRAINT [PK_ServicePackageRelation] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC

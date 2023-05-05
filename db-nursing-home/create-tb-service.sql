@@ -1,7 +1,7 @@
 USE [ENV01_NURSING_HOME]
 GO
 
-/****** Object:  Table [dbo].[Service]    Script Date: 2.5.2023. 12:15:37 ******/
+/****** Object:  Table [dbo].[Service]    Script Date: 5.5.2023. 11:13:02 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -15,8 +15,8 @@ CREATE TABLE [dbo].[Service](
 	[MeasureUnitId] [int] NOT NULL,
 	[CostPerUnit] [float] NOT NULL,
 	[DefaultNumberOfUnits] [int] NULL,
-	[PriceUnitId] [int] NULL,
-	[Active] [bit] NULL,
+	[PriceUnitId] [int] NOT NULL,
+	[Active] [bit] NOT NULL,
  CONSTRAINT [PK_Service] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC

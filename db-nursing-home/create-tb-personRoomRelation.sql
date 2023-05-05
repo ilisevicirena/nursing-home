@@ -1,7 +1,7 @@
 USE [ENV01_NURSING_HOME]
 GO
 
-/****** Object:  Table [dbo].[PersonRoomRelation]    Script Date: 19.4.2023. 13:53:43 ******/
+/****** Object:  Table [dbo].[PersonRoomRelation]    Script Date: 5.5.2023. 9:43:10 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -14,7 +14,7 @@ CREATE TABLE [dbo].[PersonRoomRelation](
 	[Active] [bit] NOT NULL,
 	[CreationDate] [datetime] NOT NULL,
 	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[StartDate] [datetime] NULL,
+	[StartDate] [datetime] NOT NULL,
 	[EndDate] [datetime] NULL,
  CONSTRAINT [PK_PersonRoomRelation] PRIMARY KEY CLUSTERED 
 (
@@ -36,5 +36,4 @@ GO
 
 ALTER TABLE [dbo].[PersonRoomRelation] CHECK CONSTRAINT [FK_PersonRoomRelation_Room]
 GO
-
 
