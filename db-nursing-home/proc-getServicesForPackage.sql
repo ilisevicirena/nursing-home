@@ -1,7 +1,7 @@
 USE [ENV01_NURSING_HOME]
 GO
 
-/****** Object:  StoredProcedure [dbo].[getServicesForPackage]    Script Date: 4.5.2023. 13:42:58 ******/
+/****** Object:  StoredProcedure [dbo].[getServicesForPackage]    Script Date: 5.5.2023. 21:01:42 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -26,7 +26,7 @@ BEGIN
 
     -- Insert statements for procedure here
 	SELECT 
-	[PackageId]=ppr.PackageId,
+	[PackageId]=spr.PackageId,
 	[PackageName]=p.[Name],
 	[ServiceId]=spr.ServiceId,
 	[ServiceName]=s.[Name],
@@ -41,14 +41,12 @@ BEGIN
 	[PriceUnitName]=pu.[Name],
 	[PriceUnitTag]=pu.Tag,
 	[Quantity]=spr.Quantity
-	FROM
-	dbo.PersonPackageRelation as ppr
-	join dbo.Package as p on p.Id=ppr.PackageId
-	left join dbo.ServicePackageRelation as spr on ppr.PackageId=spr.PackageId
+	FROM dbo.ServicePackageRelation as spr
+	join dbo.Package as p on p.Id=spr.PackageId
 	join dbo.[Service] as s on spr.ServiceId=s.Id
 	join dbo.MeasureUnit as mu on s.MeasureUnitId=mu.Id
 	join dbo.PriceUnit as pu on s.PriceUnitId=pu.Id
-	where ppr.PackageId=@Id and spr.Active=1;
+	where spr.PackageId=@Id and spr.Active=1;
 
 END
 GO

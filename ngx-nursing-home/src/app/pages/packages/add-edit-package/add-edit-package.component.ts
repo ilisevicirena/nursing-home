@@ -41,11 +41,7 @@ export class AddEditPackageComponent implements OnInit, OnDestroy, AfterViewInit
     PriceUnitTag: undefined,
   };
 
-  public packagePrice: ICalculationResult = {
-    day: 0,
-    month: 0,
-    year: 0
-  };
+  public packagePrice: number = 0;
 
   public servicesColumns: SmartTableColumn[] = [
     new SmartTableColumn(getString('name')).Property("ServiceName").Filter(false),
@@ -83,6 +79,7 @@ export class AddEditPackageComponent implements OnInit, OnDestroy, AfterViewInit
     this.getServices();
     this.getServicesForPackage();
     this.getCalculationMeasureUnits();
+
   }
 
   ngOnDestroy(): void {
@@ -159,8 +156,8 @@ export class AddEditPackageComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   public calculatePackagePrice(): void {
-    this.package.MesureUnitCode = 'month';
-    this.packagePrice = this.calculationService.calculatePackagePrice(this.package, this.packageServices);
+    var calculationResult: ICalculationResult = this.calculationService.calculatePackagePrice(this.package, this.packageServices);
+    this.packagePrice = calculationResult[this.package.MesureUnitCode];
   }
 
   public close(result: boolean): void {
@@ -174,6 +171,7 @@ export class AddEditPackageComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   private saveNewPackage(data: any): void {
+    data.Services = this.packageServiceUnfiltered;
     this.subs.push(this.packagesService.add(data).subscribe(data => {
       if (data.PackageId) {
         this.toastrService.showToast('success', getString('saveSuccess'));
@@ -185,6 +183,7 @@ export class AddEditPackageComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   private editPackage(data: any): void {
+    data.Services = this.packageServiceUnfiltered;
     this.subs.push(this.packagesService.update(data).subscribe(() => {
       this.toastrService.showToast('success', getString('saveSuccess'));
       this.close(true);
@@ -196,7 +195,8 @@ export class AddEditPackageComponent implements OnInit, OnDestroy, AfterViewInit
   public onServiceSelectionChanged(event: SelectGridSelectionModel): void {
     if (event.selectedItems.length > 0) {
       this.selectedService = event.selectedItems[0];
-      this.selectedService.Quantity = 1;
+      if (this.selectedService.DefaultNumberOfUnits > 0) this.selectedService.Quantity = this.selectedService.DefaultNumberOfUnits
+      else this.selectedService.Quantity = 1;
       this.selectedService.ServiceName = this.selectedService.Name;
       this.selectedService.ServiceId = this.selectedService.Id;
       this.selectedService.ServiceDescription = this.selectedService.Description;
@@ -223,6 +223,17 @@ export class AddEditPackageComponent implements OnInit, OnDestroy, AfterViewInit
     if (event.data.IsNew) this.packageServiceUnfiltered.splice(this.packageServiceUnfiltered.indexOf(item), 1);
     else item.IsDeleted = true;
     this.packageServices = this.packageServiceUnfiltered.filter(x => !x.IsDeleted);
+    this.calculatePackagePrice();
+  }
+
+  public getPriceTag(): string {
+    var tag = "";
+    if (this.package.DefaultPackagePriceUnitId) tag = this.priceUnits.find(x => x.Id == this.package.DefaultPackagePriceUnitId)?.Tag;
+    return tag;
+  }
+
+  public onPackageMeasureUnitSelectedChange(event: any) {
+    this.package.MesureUnitCode = this.calculationMeasureUnits.find(x => x.Id == event)?.Code;
     this.calculatePackagePrice();
   }
 }

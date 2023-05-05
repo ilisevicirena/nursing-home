@@ -51,7 +51,6 @@ export class CalculationService {
       result.day = dailyServicesPrice + (monthlyServicesPrice / this.MonthDayNumber) + (yearServicesPrice / this.YearDayNumber) + unitServicesPrice;
       result.month = (dailyServicesPrice * this.MonthDayNumber) + monthlyServicesPrice + (yearServicesPrice / this.YearMonthNumber) + unitServicesPrice;
       result.year = (dailyServicesPrice * this.YearDayNumber) + (monthlyServicesPrice * this.YearMonthNumber) + yearServicesPrice + unitServicesPrice;
-
     }
 
     // price is default for selected measurement unit, others need to be calculated --> month is calculated on 30 day basis
@@ -77,13 +76,17 @@ export class CalculationService {
       }
     }
 
+    result.day = (Math.round((result.day as number + Number.EPSILON) * 100) / 100).toFixed(2);
+    result.month = (Math.round((result.month as number + Number.EPSILON) * 100) / 100).toFixed(2);
+    result.year = (Math.round((result.year as number + Number.EPSILON) * 100) / 100).toFixed(2);
+
     return result;
   }
 
 }
 
 export interface ICalculationResult {
-  day: number;
-  month: number;
-  year: number;
+  day: string | number;
+  month: string | number;
+  year: string | number;
 }

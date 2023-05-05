@@ -26,8 +26,27 @@ router.post('/add', async (request, response) => {
             .input('priceCalculated', objectToSave.PackagePriceCalculated)
             .input('default', objectToSave.DefaultPackagePriceUnitId)
             .input('price', objectToSave.DefaultPackagePrice)
-            .query("EXEC [dbo].[insertPackage] @Name=@name, @Description=@description, @PackagePriceCalculated=@priceCalculated, @DefaultPackagePriceUnitId=@default, @DefaultPackagePrice=@price");
-        if (result != null) response.json(result.recordset[0]);
+            .input('measure', objectToSave.CalculationMeasureUnitId)
+            .query("EXEC [dbo].[insertPackage] @Name=@name, @Description=@description, @PackagePriceCalculated=@priceCalculated, @DefaultPackagePriceUnitId=@default, @DefaultPackagePrice=@price, @CalculationMeasureUnitId=@measure");
+        if (result != null) {
+            var packageId = result.recordset[0].PackageId;
+            var promises = [];
+            if (packageId) {
+                objectToSave.Services.forEach(element => {
+                    promises.push(pool.request()
+                        .input('service', element.ServiceId)
+                        .input('package', packageId)
+                        .input('qty', element.Quantity)
+                        .query("exec [dbo].[insertServiceForPackage] @ServiceId=@service, @PackageId=@package, @Quantity=@qty")
+                    );
+                });
+
+                Promise.all(promises).then(() => {
+                    response.json(result.recordset[0]);
+                });
+            }
+
+        }
         else response.send(getError(1001));
     } catch (err) {
         response.status(500);
@@ -46,7 +65,8 @@ router.post('/update', async (request, response) => {
             .input('priceCalculated', objectToSave.PackagePriceCalculated)
             .input('default', objectToSave.DefaultPackagePriceUnitId)
             .input('price', objectToSave.DefaultPackagePrice)
-            .query("EXEC [dbo].[updatePackage] @Id=@id, @Name=@name, @Description=@description, @PackagePriceCalculated=@priceCalculated, @DefaultPackagePriceUnitId=@default, @DefaultPackagePrice=@price");
+            .input('measure', objectToSave.CalculationMeasureUnitId)
+            .query("EXEC [dbo].[updatePackage] @Id=@id, @Name=@name, @Description=@description, @PackagePriceCalculated=@priceCalculated, @DefaultPackagePriceUnitId=@default, @DefaultPackagePrice=@price, @CalculationMeasureUnitId=@measure");
         if (result != null) response.json(result.recordset);
         else response.send(getError(1003));
     } catch (err) {
