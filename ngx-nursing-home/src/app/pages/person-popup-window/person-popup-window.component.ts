@@ -6,7 +6,6 @@ import { getString } from '../../resources/strings';
 import { DialogService } from '../../shared/dialog/dialog.service';
 import { ToastrService } from '../../services/toastr.service';
 import { RoomsService } from '../../services/rest/rooms.service';
-import { error } from 'console';
 import { NgForm } from '@angular/forms';
 import { ContactsService } from '../../services/rest/contacts.service';
 import { GendersService } from '../../services/rest/genders.service';

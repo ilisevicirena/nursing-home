@@ -1,7 +1,7 @@
 USE [ENV01_NURSING_HOME]
 GO
 
-/****** Object:  Table [dbo].[Discount]    Script Date: 2.5.2023. 12:01:30 ******/
+/****** Object:  Table [dbo].[Discount]    Script Date: 5.5.2023. 9:30:11 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -14,7 +14,7 @@ CREATE TABLE [dbo].[Discount](
 	[Description] [varchar](2000) NULL,
 	[Quantity] [int] NOT NULL,
 	[PercentCalculation] [bit] NOT NULL,
-	[Active] [bit] NULL,
+	[Active] [bit] NOT NULL,
  CONSTRAINT [PK_Discount] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC

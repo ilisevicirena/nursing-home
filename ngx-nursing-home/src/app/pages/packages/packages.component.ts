@@ -4,8 +4,10 @@ import { PackagesService } from '../../services/rest/packages.service';
 import { PriceUnitsService } from '../../services/rest/price-units.service';
 import { ToastrService } from '../../services/toastr.service';
 import { DialogService } from '../../shared/dialog/dialog.service';
-import { CheckboxType, LookupType, SmartTableColumn, getString } from 'shared-components';
+import { CheckboxType, LookupType, SmartTableColumn } from 'shared-components';
 import { AddEditPackageComponent } from './add-edit-package/add-edit-package.component';
+import { NbWindowService, NbWindowState } from '@nebular/theme';
+import { getString } from '../../resources/strings';
 
 @Component({
   selector: 'sample-packages',
@@ -31,7 +33,8 @@ export class PackagesComponent implements OnInit, OnDestroy {
     private packagesService: PackagesService,
     private priceUnitsService: PriceUnitsService,
     private toastrService: ToastrService,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    private windowService: NbWindowService,
   ) { }
 
   ngOnInit(): void {
@@ -52,15 +55,16 @@ export class PackagesComponent implements OnInit, OnDestroy {
   }
 
   public onCreateStarted(): void {
-    this.subs.push(this.dialogService.open(
+    this.subs.push(this.windowService.open(
       AddEditPackageComponent,
       {
-        context: {
-          isNew: true
-        },
+        context: { isNew: true },
+        buttons: { maximize: false, minimize: false, fullScreen: false, close: false },
+        initialState: NbWindowState.MAXIMIZED,
+        hasBackdrop: true,
+        windowClass: "package-popup-window",
         closeOnBackdropClick: false,
-        closeOnEsc: false,
-        autoFocus: false
+        closeOnEsc: false
       }
     ).onClose.subscribe((data: boolean) => {
       if (data) this.getPackages();
@@ -68,16 +72,16 @@ export class PackagesComponent implements OnInit, OnDestroy {
   }
 
   public onEditStarted(event: any): void {
-    this.subs.push(this.dialogService.open(
+    this.subs.push(this.windowService.open(
       AddEditPackageComponent,
       {
-        context: {
-          isNew: false,
-          package: JSON.parse(JSON.stringify(event.data))
-        },
+        context: { isNew: false, package: JSON.parse(JSON.stringify(event.data)) },
+        buttons: { maximize: false, minimize: false, fullScreen: false, close: false },
+        initialState: NbWindowState.MAXIMIZED,
+        hasBackdrop: true,
+        windowClass: "package-popup-window",
         closeOnBackdropClick: false,
-        closeOnEsc: false,
-        autoFocus: false
+        closeOnEsc: false
       }
     ).onClose.subscribe((data: boolean) => {
       if (data) this.getPackages();

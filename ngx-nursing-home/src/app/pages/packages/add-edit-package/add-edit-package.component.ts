@@ -1,5 +1,5 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { NbDialogRef } from '@nebular/theme';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { NbWindowRef } from '@nebular/theme';
 import { IPackage, PackagesService } from '../../../services/rest/packages.service';
 import { ToastrService } from '../../../services/toastr.service';
 import { ServicesService } from '../../../services/rest/services.service';
@@ -9,7 +9,7 @@ import { DialogService } from '../../../shared/dialog/dialog.service';
 import { Subscription } from 'rxjs';
 import { getString } from '../../../resources/strings';
 import { NgForm } from '@angular/forms';
-import { LookupType, SelectFilter, SelectGridComponent, SmartTableColumn, SmartTableComponent } from 'shared-components';
+import { LookupType, SelectGridComponent, SmartTableColumn, SmartTableComponent } from 'shared-components';
 import { SelectGridColumn, SelectGridSelectionModel } from 'shared-components/lib/models/select-grid.model';
 import { CalculationService, ICalculationResult } from '../../../services/calculation.service';
 
@@ -24,6 +24,12 @@ export class AddEditPackageComponent implements OnInit, OnDestroy, AfterViewInit
 
   public getString = getString;
   public isNew: boolean = true;
+  public packageServices: any[] = [];
+  public selectedService: any = { Quantity: 0 };
+  public priceUnits: any[] = [];
+  public servicesData: any[] = [];
+  public measureUnits: any[] = [];
+
   public package: IPackage = {
     Id: 0,
     Name: undefined,
@@ -34,8 +40,6 @@ export class AddEditPackageComponent implements OnInit, OnDestroy, AfterViewInit
     PriceUnitName: undefined,
     PriceUnitTag: undefined,
   };
-  public priceUnits: any[] = [];
-  public servicesData: any[] = [];
 
   public packagePrice: ICalculationResult = {
     day: 0,
@@ -43,46 +47,28 @@ export class AddEditPackageComponent implements OnInit, OnDestroy, AfterViewInit
     year: 0
   };
 
-  public packageServices: any[] = [];
   public servicesColumns: SmartTableColumn[] = [
     new SmartTableColumn(getString('name')).Property("ServiceName").Filter(false),
-    new SmartTableColumn(getString('description')).Property("ServiceDescription").Filter(false),
     new SmartTableColumn(getString('quantity')).Property("Quantity").Filter(false),
     new SmartTableColumn(getString('costPerUnit')).Property("CostPerUnit").Filter(false),
     new SmartTableColumn(getString('measureUnit')).Property("MeasureUnitId").SpecialType(new LookupType().NameAttribute("MeasureUnitName")).Filter(false),
   ];
 
   public packageServiceSelectGridColumns: SelectGridColumn[] = [
-    {
-      name: "name",
-      title: getString('name'),
-      attributeName: "Name",
-    },
-    {
-      name: "mesureUnitTag",
-      title: getString('measureUnit'),
-      attributeName: "MeasureUnitTag",
-    },
-    {
-      name: "costPerUnit",
-      title: getString('costPerUnit'),
-      attributeName: "CostPerUnit",
-    },
-    {
-      name: "priceUnit",
-      title: getString('priceUnit'),
-      attributeName: "PriceUnitTag",
-    }
+    { name: "name", title: getString('name'), attributeName: "Name" },
+    { name: "mesureUnitTag", title: getString('measureUnit'), attributeName: "MeasureUnitTag" },
+    { name: "costPerUnit", title: getString('costPerUnit'), attributeName: "CostPerUnit" },
+    { name: "defaultNumberOfUnits", title: getString('defaultNumberOfUnits'), attributeName: "DefaultNumberOfUnits" }
   ];
-  public selectedService: any = { Quantity: 0 };
 
   private packageServiceUnfiltered: any[] = [];
 
   @ViewChild('packageServicesGrid') servicesGrid: SmartTableComponent;
   @ViewChild('servicesSelectGridControl') servicesSelectGridControl: SelectGridComponent;
+  @ViewChild("headerTemplate") headerTemplate!: TemplateRef<any>;
 
   constructor(
-    private ref: NbDialogRef<AddEditPackageComponent>,
+    private ref: NbWindowRef,
     private packagesService: PackagesService,
     private toastrService: ToastrService,
     private servicesService: ServicesService,
@@ -99,14 +85,40 @@ export class AddEditPackageComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   ngOnDestroy(): void {
+    var windows = document.getElementsByClassName("package-popup-window");
+
+    for (let index = 0; index < windows.length; index++) {
+      const window = windows[index];
+      window.parentElement.classList.remove("h-100");
+      window.parentElement.classList.remove("w-100");
+      window.parentElement.parentElement.classList.remove("h-100");
+      const cdkOverlayContainer = window.parentElement.parentElement.parentElement.parentElement;
+      if (cdkOverlayContainer.children.length > 0) {
+        cdkOverlayContainer.children[0].classList.remove("d-block");
+      }
+    }
+
     this.subs.forEach(element => {
       element.unsubscribe();
     });
   }
 
   ngAfterViewInit(): void {
-    var elementRef = this.ref as any;
-    elementRef.overlayRef?._pane?.classList?.add('dialog-overlay');
+    var windows = document.getElementsByClassName("package-popup-window");
+
+    for (let index = 0; index < windows.length; index++) {
+      const window = windows[index];
+      window.parentElement.classList.add("h-100");
+      window.parentElement.classList.add("w-100");
+      window.parentElement.parentElement.classList.add("h-100");
+      window.parentElement.parentElement.style.width = "90%";
+      const cdkOverlayContainer = window.parentElement.parentElement.parentElement.parentElement;
+      if (cdkOverlayContainer.children.length > 0) {
+        cdkOverlayContainer.children[0].classList.add("d-block");
+      }
+    }
+
+    this.ref.config.titleTemplate = this.headerTemplate;
   }
 
   private getPriceUnits(): void {

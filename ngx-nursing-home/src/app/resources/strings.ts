@@ -89,8 +89,21 @@ const strings: IKeyValue[] = [
     { key: "days", value: "Dani" },
     { key: "currentAccomodation", value: "Podaci o trenutnom smještaju" },
     { key: "history", value: "Povijest promjena" },
-    { key: "currentAccomodation", value: "Podaci o trenutnom smještaju" },
-    { key: "currentAccomodation", value: "Podaci o trenutnom smještaju" },
+    { key: "packagesManagement", value: "Upravljanje paketima usluga" },
+    { key: "addNew", value: "Dodavanje podataka" },
+    { key: "description", value: "Opis" },
+    { key: "calculation", value: "Izračun cijene" },
+    { key: "priceCalculated", value: "Cijena paketa temeljena na izračunu" },
+    { key: "servicesForPackage", value: "Usluge unutar paketa" },
+    { key: "quantity", value: "Količina" },
+    { key: "costPerUnit", value: "Jedinična cijena" },
+    { key: "measureUnit", value: "Jedinica mjere" },
+    { key: "add", value: "Dodaj" },
+    { key: "service", value: "Usluga" },
+    { key: "priceUnit", value: "Valuta" },
+    { key: "defaultPackagePrice", value: "Prilagođena cijena" },
+    { key: "calculationMeasurement", value: "Obračunsko razdoblje za izračun" },
+    { key: "alreadyAdded", value: "Stavka je već dodana!" },
 
 ];
 
