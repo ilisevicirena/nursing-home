@@ -129,7 +129,7 @@
                                         [required]="package.PackagePriceCalculated" #measureUnit1="ngModel"
                                         autocomplete="off" [disabled]="!package.PackagePriceCalculated"
                                         [status]="measureUnit1.dirty ? (measureUnit1.invalid ? 'danger' : 'success'): 'basic'">
-                                        <nb-option *ngFor="let unit of measureUnits"
+                                        <nb-option *ngFor="let unit of calculationMeasureUnits"
                                             [value]="unit.Id">{{unit.Tag}}</nb-option>
                                     </nb-select>
                                 </div>

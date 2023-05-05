@@ -1,7 +1,7 @@
 USE [ENV01_NURSING_HOME]
 GO
 
-/****** Object:  StoredProcedure [dbo].[getMeasureUnits]    Script Date: 4.5.2023. 13:43:37 ******/
+/****** Object:  StoredProcedure [dbo].[getMeasureUnits]    Script Date: 5.5.2023. 11:45:42 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -27,7 +27,8 @@ BEGIN
 	[Id]=Id,
 	[Name]=[Name],
 	[Tag]=Tag,
-	[Code]=Code
+	[Code]=Code,
+	[CalculationUnit]=CalculationUnit
 	FROM dbo.MeasureUnit;
 
 END

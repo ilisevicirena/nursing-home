@@ -104,7 +104,16 @@ const strings: IKeyValue[] = [
     { key: "defaultPackagePrice", value: "Prilagođena cijena" },
     { key: "calculationMeasurement", value: "Obračunsko razdoblje za izračun" },
     { key: "alreadyAdded", value: "Stavka je već dodana!" },
-
+    { key: "servicesManagement", value: "Upravljanje uslugama" },
+    { key: "servicesSingle", value: "Pojedinačne usluge" },
+    { key: "packages", value: "Paketi usluga" },
+    { key: "discounts", value: "Popusti" },
+    { key: "servicesManagementSingle", value: "Simulacija ponude" },
+    { key: "defaultPrice", value: "Fiksna cijena" },
+    { key: "packagePriceCalculated", value: "Izračunata cijena" },
+	{ key: "defaultNumberOfUnits", value: "Fiksna količina jedinica" },
+	{ key: "defaultNumberOfUnitsInfo", value: "Kada koristite fiksnu količinu jedinica pri dodavanju usluge u paket, koristi se uneseni broj jedinica i obračunava na temelju unesene cijene po jedinici. Količinu nije moguće mijenjati prilikom dodavanja stavke u obračun." },
+{ key: "deactivateService", value: "Želite li ukloniti uslugu iz ponude?" },
 ];
 
 const map = new Map(strings.map(obj => [obj.key, obj.value]));

@@ -15,5 +15,16 @@ router.get('/', async (request, response) => {
     }
 });
 
+router.get('/getCalculationMeasureUnits', async (request, response) => {
+    try {
+        const pool = await db;
+        const result = await pool.request()
+            .query("EXEC [dbo].[getCalculationMeasureUnits]");
+        response.json(result.recordset);
+    } catch (err) {
+        response.status(500);
+        response.send(err.message);
+    }
+});
 
 module.exports = router;

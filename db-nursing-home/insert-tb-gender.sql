@@ -5,8 +5,8 @@ INSERT INTO [dbo].[Gender]
            ([Name]
            ,[Tag])
      VALUES
-           ('Muöki', 'M'),
-		   ('éenski', 'é')
+           ('Mu≈°ki', 'M'),
+		   ('≈Ωenski', '≈Ω')
 GO
 
 

@@ -8,6 +8,7 @@ import { PriceUnitsService } from '../../services/rest/price-units.service';
 import { DialogService } from '../../shared/dialog/dialog.service';
 import { ToastrService } from '../../services/toastr.service';
 import { AddEditServiceComponent } from './add-edit-service/add-edit-service.component';
+import { NbWindowService, NbWindowState } from '@nebular/theme';
 
 @Component({
   selector: 'sample-services',
@@ -36,7 +37,8 @@ export class ServicesComponent implements OnInit, OnDestroy {
     private measureUnitsService: MeasureUnitsService,
     private priceUnitsService: PriceUnitsService,
     private dialogService: DialogService,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private windowService: NbWindowService
   ) { }
 
   ngOnInit(): void {
@@ -59,15 +61,16 @@ export class ServicesComponent implements OnInit, OnDestroy {
 
   public onCreateStarted(): void {
     this.subscriptions.push(
-      this.dialogService.open(
+      this.windowService.open(
         AddEditServiceComponent,
         {
-          context: {
-            isNew: true
-          },
+          context: { isNew: true },
+          buttons: { maximize: false, minimize: false, fullScreen: false, close: false },
+          initialState: NbWindowState.MAXIMIZED,
+          hasBackdrop: true,
+          windowClass: "service-popup-window",
           closeOnBackdropClick: false,
-          closeOnEsc: false,
-          autoFocus: false
+          closeOnEsc: false
         }
       )
         .onClose.subscribe((data: boolean) => {
@@ -77,16 +80,16 @@ export class ServicesComponent implements OnInit, OnDestroy {
 
   public onEditStarted(event: any): void {
     this.subscriptions.push(
-      this.dialogService.open(
+      this.windowService.open(
         AddEditServiceComponent,
         {
-          context: {
-            isNew: false,
-            service: JSON.parse(JSON.stringify(event.data))
-          },
+          context: { isNew: false, service: JSON.parse(JSON.stringify(event.data)) },
+          buttons: { maximize: false, minimize: false, fullScreen: false, close: false },
+          initialState: NbWindowState.MAXIMIZED,
+          hasBackdrop: true,
+          windowClass: "service-popup-window",
           closeOnBackdropClick: false,
-          closeOnEsc: false,
-          autoFocus: false
+          closeOnEsc: false
         }
       )
         .onClose.subscribe((data: boolean) => {

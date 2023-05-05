@@ -28,7 +28,7 @@ export class AddEditPackageComponent implements OnInit, OnDestroy, AfterViewInit
   public selectedService: any = { Quantity: 0 };
   public priceUnits: any[] = [];
   public servicesData: any[] = [];
-  public measureUnits: any[] = [];
+  public calculationMeasureUnits: any[] = [];
 
   public package: IPackage = {
     Id: 0,
@@ -82,6 +82,7 @@ export class AddEditPackageComponent implements OnInit, OnDestroy, AfterViewInit
     this.getPriceUnits();
     this.getServices();
     this.getServicesForPackage();
+    this.getCalculationMeasureUnits();
   }
 
   ngOnDestroy(): void {
@@ -124,6 +125,14 @@ export class AddEditPackageComponent implements OnInit, OnDestroy, AfterViewInit
   private getPriceUnits(): void {
     this.subs.push(this.priceUnitsService.getData().subscribe(data => {
       this.priceUnits = data;
+    }, err => {
+      console.error(err);
+    }));
+  }
+
+  private getCalculationMeasureUnits(): void {
+    this.subs.push(this.measureUnitService.getCalculationMeasureUnits().subscribe(data => {
+      this.calculationMeasureUnits = data;
     }, err => {
       console.error(err);
     }));
