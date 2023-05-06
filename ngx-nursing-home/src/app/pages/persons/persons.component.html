@@ -8,7 +8,8 @@
         </button>
     </nb-button-group>
 </div>
-<div class="content-container">
+<sample-no-data *ngIf="personsData.length==0" [title]="getString('noData')"></sample-no-data>
+<div class="content-container" *ngIf="personsData.length>0">
     <nb-card *ngIf="currentView=='grid'" class="h-100">
         <nb-card-header class="d-flex align-items-center">
             {{unactivePersonsString}}
