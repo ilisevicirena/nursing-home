@@ -1,5 +1,6 @@
 import { NbMenuItem } from '@nebular/theme';
 import { getString } from '../resources/strings';
+import { icon } from 'leaflet';
 
 export const MENU_ITEMS: NbMenuItem[] = [
   {
@@ -8,29 +9,36 @@ export const MENU_ITEMS: NbMenuItem[] = [
     link: '/pages/dashboard',
   },
   {
-    title: getString("roomManagement"),
-    icon: 'pantone-outline',
-    link: '/pages/room-management',
+    title: getString('personsManagement'),
+    icon: "people-outline",
+    children: [
+      {
+        title: getString("persons"),
+        link: '/pages/persons',
+      },
+      {
+        title: getString("searchPersons"),
+        link: '/pages/advanced-search',
+      },
+      {
+        title: getString("addPerson"),
+        link: '/pages/new-person',
+      },
+    ]
   },
   {
     title: getString("accomodationManagement"),
-    icon: 'swap-outline',
-    link: '/pages/accomodation-management',
-  },
-  {
-    title: getString("persons"),
-    icon: 'people-outline',
-    link: '/pages/persons',
-  },
-  {
-    title: getString("addPerson"),
-    icon: 'person-add-outline',
-    link: '/pages/new-person',
-  },
-  {
-    title: getString("searchPersons"),
-    icon: 'search-outline',
-    link: '/pages/advanced-search',
+    icon: "pantone-outline",
+    children: [
+      {
+        title: getString("roomManagement"),
+        link: '/pages/room-management',
+      },
+      {
+        title: getString("accomodationManagementRoom"),
+        link: '/pages/accomodation-management',
+      },
+    ]
   },
   {
     title: getString("servicesManagement"),
