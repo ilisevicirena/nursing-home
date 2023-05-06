@@ -3,7 +3,7 @@
         {{getString('servicesSingle')}}
     </nb-card-header>
     <nb-card-body>
-        <div style="height: 710px;">
+        <div style="height: 550px;">
             <ngx-smart-table [columns]="servicesColumns" [(data)]="servicesData" tableMode="external"
                 (createStarted)="onCreateStarted()" (editStarted)="onEditStarted($event)" [loadingEnabled]="false"
                 (deleteStarted)="onDeleteStarted($event)" [defaultPerPageOption]="20"></ngx-smart-table>

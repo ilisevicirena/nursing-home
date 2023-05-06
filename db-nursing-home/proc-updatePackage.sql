@@ -1,18 +1,13 @@
--- ================================================
--- Template generated from Template Explorer using:
--- Create Procedure (New Menu).SQL
---
--- Use the Specify Values for Template Parameters 
--- command (Ctrl-Shift-M) to fill in the parameter 
--- values below.
---
--- This block of comments will not be included in
--- the definition of the procedure.
--- ================================================
+USE [ENV01_NURSING_HOME]
+GO
+
+/****** Object:  StoredProcedure [dbo].[updatePackage]    Script Date: 6.5.2023. 17:26:23 ******/
 SET ANSI_NULLS ON
 GO
+
 SET QUOTED_IDENTIFIER ON
 GO
+
 -- =============================================
 -- Author:		Irena Ilisevic
 -- Create date: 2.5.2023.
@@ -26,7 +21,8 @@ CREATE PROCEDURE [dbo].[updatePackage]
 		@Description varchar(2000)=NULL,
 		@DefaultPackagePrice float = NULL,
 		@PackagePriceCalculated bit,
-		@DefaultPackagePriceUnitId int = NULL
+		@DefaultPackagePriceUnitId int = NULL,
+		@CalculationMeasureUnitId int
 	)
 AS
 BEGIN
@@ -41,7 +37,9 @@ BEGIN
 	[Description]=@Description,
 	DefaultPackagePrice=@DefaultPackagePrice,
 	PackagePriceCalculated=@PackagePriceCalculated,
-	DefaultPackagePriceUnitId=@DefaultPackagePriceUnitId
+	DefaultPackagePriceUnitId=@DefaultPackagePriceUnitId,
+	CalculationMeasureUnitId=@CalculationMeasureUnitId
 	WHERE Id=@Id;
 END
 GO
+

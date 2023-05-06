@@ -4,10 +4,11 @@ import { PackagesService } from '../../services/rest/packages.service';
 import { PriceUnitsService } from '../../services/rest/price-units.service';
 import { ToastrService } from '../../services/toastr.service';
 import { DialogService } from '../../shared/dialog/dialog.service';
-import { CheckboxType, LookupType, SmartTableColumn } from 'shared-components';
+import { CheckboxType, LookupType, SelectFilter, SmartTableColumn } from 'shared-components';
 import { AddEditPackageComponent } from './add-edit-package/add-edit-package.component';
 import { NbWindowService, NbWindowState } from '@nebular/theme';
 import { getString } from '../../resources/strings';
+import { MeasureUnitsService } from '../../services/rest/measure-units.service';
 
 @Component({
   selector: 'sample-packages',
@@ -24,7 +25,11 @@ export class PackagesComponent implements OnInit, OnDestroy {
     new SmartTableColumn(getString('name')).Property('Name'),
     new SmartTableColumn(getString('description')).Property('Description'),
     new SmartTableColumn(getString('defaultPrice')).Property('DefaultPackagePrice'),
-    new SmartTableColumn(getString('priceUnit')).Property('DefaultPackagePriceUnitId').SpecialType(new LookupType().NameAttribute('PriceUnitTag')),
+    new SmartTableColumn(getString('priceUnit')).Property('DefaultPackagePriceUnitId')
+      .SpecialType(new LookupType().NameAttribute('PriceUnitTag')).SpecialFilter(new SelectFilter('Id', 'Tag').ServerSource(true).ServerEndpoint(this.priceUnitsService.apiRoute)),
+    new SmartTableColumn(getString('measureUnit')).Property("CalculationMeasureUnitId")
+      .SpecialType(new LookupType().NameAttribute("MeasureUnitTag"))
+      .SpecialFilter(new SelectFilter('Id', 'Tag').ServerSource(true).ServerEndpoint(this.measureUnitsService.apiRoute + '/getCalculationMeasureUnits')),
     new SmartTableColumn(getString('packagePriceCalculated')).Property('PackagePriceCalculated').SpecialType(new CheckboxType())
   ];
   public getString = getString;
@@ -32,6 +37,7 @@ export class PackagesComponent implements OnInit, OnDestroy {
   constructor(
     private packagesService: PackagesService,
     private priceUnitsService: PriceUnitsService,
+    private measureUnitsService: MeasureUnitsService,
     private toastrService: ToastrService,
     private dialogService: DialogService,
     private windowService: NbWindowService,

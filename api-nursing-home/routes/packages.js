@@ -58,6 +58,9 @@ router.post('/update', async (request, response) => {
     try {
         var objectToSave = Object.assign(new Package, request.body);
         const pool = await db;
+        var servicesToDeactivate = objectToSave.Services.filter(x => x.IsDeleted == true);
+        var servicesToAdd = objectToSave.Services.filter(x => x.IsNew == true);
+
         const result = await pool.request()
             .input('id', objectToSave.Id)
             .input('name', objectToSave.Name)
@@ -67,8 +70,33 @@ router.post('/update', async (request, response) => {
             .input('price', objectToSave.DefaultPackagePrice)
             .input('measure', objectToSave.CalculationMeasureUnitId)
             .query("EXEC [dbo].[updatePackage] @Id=@id, @Name=@name, @Description=@description, @PackagePriceCalculated=@priceCalculated, @DefaultPackagePriceUnitId=@default, @DefaultPackagePrice=@price, @CalculationMeasureUnitId=@measure");
-        if (result != null) response.json(result.recordset);
+
+        if (result != null) {
+            var promises = [];
+            servicesToDeactivate.forEach(element => {
+                promises.push(
+                    pool.request()
+                        .input('id', element.Id)
+                        .query("exec [dbo].[deactivateServiceFromPackage] @Id=@id")
+                );
+            });
+
+            servicesToAdd.forEach(element => {
+                promises.push(
+                    pool.request()
+                        .input('serviceId', element.ServiceId)
+                        .input('packageId', objectToSave.Id)
+                        .input('qty', element.Quantity)
+                        .query("exec [dbo].[insertServiceForPackage] @ServiceId=@serviceId, @PackageId=@packageId, @Quantity=@qty")
+                );
+            });
+
+            Promise.all(promises).then(() => {
+                response.json(result.recordset);
+            });
+        }
         else response.send(getError(1003));
+
     } catch (err) {
         response.status(500);
         response.send(err.message);

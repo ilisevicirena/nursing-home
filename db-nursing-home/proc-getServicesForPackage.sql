@@ -1,7 +1,7 @@
 USE [ENV01_NURSING_HOME]
 GO
 
-/****** Object:  StoredProcedure [dbo].[getServicesForPackage]    Script Date: 5.5.2023. 21:01:42 ******/
+/****** Object:  StoredProcedure [dbo].[getServicesForPackage]    Script Date: 6.5.2023. 17:29:20 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -26,6 +26,7 @@ BEGIN
 
     -- Insert statements for procedure here
 	SELECT 
+	[Id]=spr.Id,
 	[PackageId]=spr.PackageId,
 	[PackageName]=p.[Name],
 	[ServiceId]=spr.ServiceId,
