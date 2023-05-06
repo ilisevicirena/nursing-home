@@ -3,6 +3,7 @@ import { RoomsService } from '../../services/rest/rooms.service';
 import { Subscription } from 'rxjs';
 import { CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { PersonsService } from '../../services/rest/persons.service';
+import { getString } from '../../resources/strings';
 
 @Component({
   selector: 'sample-accomodation-management',
@@ -15,6 +16,7 @@ export class AccomodationManagementComponent implements OnInit, OnDestroy {
 
   public noRoomPersons: any[] = [];
   public mainSource: any[] = [];
+  public getString = getString;
 
   private subscriptions: Subscription[] = [];
   private originalSource: any;
