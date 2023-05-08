@@ -51,6 +51,7 @@ import { ServicesManagementComponent } from './services-management/services-mana
 import { DiscountsComponent } from './discounts/discounts.component';
 import { AddEditServiceComponent } from './services/add-edit-service/add-edit-service.component';
 import { AddEditPackageComponent } from './packages/add-edit-package/add-edit-package.component';
+import { AddEditDiscountComponent } from './discounts/add-edit-discount/add-edit-discount.component';
 
 @NgModule({
   imports: [
@@ -104,7 +105,8 @@ import { AddEditPackageComponent } from './packages/add-edit-package/add-edit-pa
     ServicesManagementComponent,
     DiscountsComponent,
     AddEditServiceComponent,
-    AddEditPackageComponent
+    AddEditPackageComponent,
+    AddEditDiscountComponent
   ],
 })
 export class PagesModule {

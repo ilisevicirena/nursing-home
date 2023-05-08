@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BaseRestApiService } from '../base-rest-api.service';
+import { BaseRestApiService, IBaseSaveModel } from '../base-rest-api.service';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -8,7 +8,14 @@ import { HttpClient } from '@angular/common/http';
 export class DiscountsService extends BaseRestApiService {
 
   constructor(http: HttpClient) {
-    super(http, 'api/services');
+    super(http, 'api/discounts');
   }
 
+}
+
+export interface IDiscount extends IBaseSaveModel {
+  Name?: string;
+  Description?: string;
+  Quantity?: number;
+  PercentCalculation?: boolean;
 }

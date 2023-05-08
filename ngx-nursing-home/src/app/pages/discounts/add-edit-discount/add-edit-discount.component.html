@@ -1,0 +1,90 @@
+<ng-template #headerTemplate>
+    <div class="widow-header-template w-100">
+        <div class="d-flex title-container-person">
+            <nb-icon pack="eva" [icon]="isNew ? 'plus-outline':'edit-outline'" status="basic"></nb-icon>
+            <div class="window-title-person">{{getString("discountsManagement")}}</div>
+        </div>
+        <div class="d-flex title-container-person-details">
+            <div class="window-title-person">{{isNew ? getString('addNew') : getString('editData')}}</div>
+        </div>
+        <div class="close-button">
+            <button nbButton ghost shape="round" status="basic" (click)="close(false)">
+                <nb-icon pack="eva" icon="close-outline"></nb-icon>
+            </button>
+        </div>
+    </div>
+</ng-template>
+
+<div class="d-flex h-100 w-100 content-container">
+    <div class="person-details-body d-flex h-100 w-100">
+        <div class="col-md-12 left-content">
+            <div class="left-content-form">
+                <form #discountForm="ngForm">
+                    <div class="row m-0 mt-3 p-2">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <div class="label">{{getString("id")}}</div>
+                                <div class="value">
+                                    <input nbInput fullWidth name="id" disabled [placeholder]="getString('id')">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <div class="label">{{getString("name")}} <nb-icon pack="eva" icon="alert-circle-outline"
+                                        status="danger" size="small" class="ms-1 required-mark"
+                                        [nbTooltip]="getString('required')"></nb-icon></div>
+                                <div class="value">
+                                    <input nbInput fullWidth name="nameService" [placeholder]="getString('name')"
+                                        required autocomplete="off" [(ngModel)]="discount.Name" #name1="ngModel"
+                                        [status]="name1.dirty ? (name1.invalid ? 'danger' : 'success'): 'basic'">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row m-0 mt-2 p-2">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <div class="label">{{getString("description")}}</div>
+                                <div class="value">
+                                    <textarea nbInput rows="5" [placeholder]="getString('description')" fullWidth
+                                        name="description" [(ngModel)]="discount.Description"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row m-0 mt-2 p-2">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <div class="label">{{getString("quantity")}} <nb-icon pack="eva"
+                                        icon="alert-circle-outline" status="danger" size="small"
+                                        class="ms-1 required-mark" [nbTooltip]="getString('required')"></nb-icon></div>
+                                <div class="value">
+                                    <input nbInput type="number" required [(ngModel)]="discount.Quantity"
+                                        name="qunatity" #qty1="ngModel" [placeholder]="getString('quantity')" fullWidth
+                                        autocomplete="off"
+                                        [status]="qty1.dirty ? (qty1.invalid ? 'danger' : 'success'): 'basic'">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <div class="label">{{getString("percentCalculation")}}</div>
+                                <div class="value">
+                                    <nb-toggle name="percentCalculation"
+                                        [(ngModel)]="discount.PercentCalculation"></nb-toggle>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="left-content-footer d-flex justify-content-end">
+                    <button nbButton ghost shape="round" size="small" (click)="close(false)"
+                        class="me-2">{{getString("cancel")}}</button>
+                    <button nbButton status="primary" size="small" shape="round" [disabled]="discountForm.form.invalid"
+                        (click)="onSaveClick(discountForm)">{{getString("save")}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

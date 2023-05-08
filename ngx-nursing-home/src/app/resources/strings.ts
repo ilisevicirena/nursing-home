@@ -118,7 +118,12 @@ const strings: IKeyValue[] = [
     { key: "noData", value: "Nema podataka za prikaz!" },
     { key: "deactivatePackage", value: "Želite li ukloniti paket usluga iz ponude?" },
     { key: "accomodationManagementRoom", value: "Razmještaj po sobama" },
-    { key: "personsManagement", value: "Upravljanje osobama" }
+    { key: "percentCalculation", value: "Postotni izračun" },
+    { key: "discountsManagement", value: "Upravljanje popustima" },
+    { key: "deactivateDiscount", value: "Želite li deaktivirati popust?" },
+    { key: "personsManagement", value: "Upravljanje osobama" },
+    { key: "personsManagement", value: "Upravljanje osobama" },
+
 ];
 
 const map = new Map(strings.map(obj => [obj.key, obj.value]));
