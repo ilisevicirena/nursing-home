@@ -3,6 +3,8 @@ import { NbMediaBreakpointsService, NbMenuService, NbSidebarService, NbThemeServ
 import { LayoutService } from '../../../@core/utils';
 import { map, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { getString } from '../../../resources/strings';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'ngx-header',
@@ -11,6 +13,7 @@ import { Subject } from 'rxjs';
 })
 export class HeaderComponent implements OnInit, OnDestroy {
 
+  public getString = getString;
   private destroy$: Subject<void> = new Subject<void>();
   userPictureOnly: boolean = false;
   user: any;
@@ -34,7 +37,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private menuService: NbMenuService,
     private themeService: NbThemeService,
     private layoutService: LayoutService,
-    private breakpointService: NbMediaBreakpointsService) {
+    private breakpointService: NbMediaBreakpointsService,
+    private router: Router
+  ) {
   }
 
   ngOnInit() {
@@ -73,5 +78,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   navigateHome() {
     this.menuService.navigateHome();
     return false;
+  }
+
+  public goToSearchPersons(): void {
+    this.router.navigateByUrl('/pages/advanced-search');
   }
 }

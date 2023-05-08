@@ -1,4 +1,4 @@
-<div class="header-container">
+<div class="header-container w-100">
   <div class="logo-container">
     <a (click)="toggleSidebar()" href="#" class="sidebar-toggle">
       <nb-icon icon="menu-2-outline"></nb-icon>
@@ -6,5 +6,11 @@
     <a class="logo" (click)="navigateHome()">
       <img src="../../../../assets/images/logo.png" height="auto">
     </a>
+  </div>
+  <div class="col d-flex justify-content-end">
+    <button nbButton ghost shape="round" size="small" [nbTooltip]="getString('searchPersons')"
+      (click)="goToSearchPersons()">
+      <nb-icon pack="eva" icon="search-outline"></nb-icon>
+    </button>
   </div>
 </div>
