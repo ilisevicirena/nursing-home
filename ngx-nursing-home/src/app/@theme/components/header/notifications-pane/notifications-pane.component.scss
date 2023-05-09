@@ -1,0 +1,100 @@
+.notification-pane {
+    width: 450px;
+    height: 550px;
+    margin: 0;
+    border-radius: 0.7rem;
+    border: none;
+
+    nb-card-header {
+        border: none;
+        display: flex;
+        align-items: center;
+
+        .title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-top: 0.5rem;
+        }
+    }
+
+    ::ng-deep nb-tabset {
+        a.tab-link {
+            font-size: 12px !important;
+            padding-top: 0.7rem !important;
+            padding-bottom: 0.7rem !important;
+            padding-left: 0.7rem !important;
+            padding-right: 1.5rem !important;
+        }
+
+        .tab nb-badge {
+            border-radius: 50%;
+        }
+
+        nb-tab {
+            overflow: auto;
+            height: 370px;
+        }
+    }
+
+}
+
+@import '../../../styles/themes';
+
+@include nb-install-component() {
+    .notification-card {
+        position: relative;
+        border-radius: 0.5rem;
+        background-color: nb-theme(tag-outline-basic-background-color);
+        padding: 1rem;
+
+        .action-buttons {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 0;
+            background-color: nb-theme(color-basic-200) !important;
+            height: 100%;
+            width: 25%;
+            border-top-right-radius: 0.5rem;
+            border-bottom-right-radius: 0.5rem;
+            animation-name: example;
+            animation-duration: 0.2s;
+            animation-timing-function: linear;
+            animation-fill-mode: forwards;
+            border-left: 2px double nb-theme(color-primary-500);
+        }
+
+        .text {
+            font-weight: 600;
+        }
+
+        .date {
+            color: nb-theme(color-basic-600);
+            font-size: 11px;
+            font-weight: 600;
+            margin-top: 0.3rem;
+        }
+    }
+
+    .notification-card.new {
+        background-color: nb-theme(color-primary-transparent-200) !important;
+    }
+
+    .notification-card:hover {
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+}
+
+@keyframes example {
+    from {
+        clip-path: inset(0 0 0 100%);
+    }
+
+    to {
+        clip-path: inset(0 0 0 0);
+    }
+}

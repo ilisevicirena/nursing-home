@@ -1,0 +1,63 @@
+<nb-card class="notification-pane">
+    <nb-card-header class="ps-3 pe-3">
+        <div class="title">
+            {{getString('notifications')}}
+        </div>
+        <div class="col d-flex justify-content-end">
+            <button nbButton size="small" shape="round" (click)="onCloseClick()">
+                <nb-icon pack="eva" icon="close-outline"></nb-icon>
+            </button>
+        </div>
+    </nb-card-header>
+    <nb-card-body class="pt-0 ps-3 pe-3 pb-2">
+        <nb-tabset>
+            <nb-tab class="ps-0 pe-0 pb-3 pt-3" *ngFor="let type of notificationTypes"
+                [tabTitle]="getString(type.stringKey)"
+                [badgeText]="type.unreadNotificationCount>0 ? type.unreadNotificationCount : false"
+                badgePosition="top end" badgeStatus="basic">
+                <div class="notification-card mb-1" [ngClass]="!notification.Read?'new':''"
+                    *ngFor="let notification of type.notifications">
+                    <nb-badge status="primary" position="top end" style="top: 0.5rem" [dotMode]="true"
+                        *ngIf="!notification.Read"></nb-badge>
+                    <div class="text">{{notification.Text}}</div>
+                    <div class="w-100 d-flex">
+                        <div class="col p-0 date">
+                            {{notification.CreationDate | date:'EEEE HH:mm'}}h
+                        </div>
+                        <div class="col p-0 d-flex justify-content-end date">
+                            {{notification.CreationDate | date:'MMM d, y'}}
+                        </div>
+                    </div>
+                    <div class="action-buttons">
+                        <button nbButton ghost status="primary" size="small" shape="round" class="me-2"
+                            *ngIf="!notification.Read" (click)="markNotificationAsRead(notification)"
+                            [nbTooltip]="getString('markAsRead')">
+                            <nb-icon pack="eva" icon="checkmark-outline"></nb-icon>
+                        </button>
+                        <button nbButton ghost status="primary" size="small" shape="round"
+                            (click)="goToNotification(notification)" [nbTooltip]="getString('goToNotification')">
+                            <nb-icon pack="eva" icon="external-link-outline"></nb-icon>
+                        </button>
+                    </div>
+                </div>
+            </nb-tab>
+        </nb-tabset>
+    </nb-card-body>
+    <nb-card-footer class=" ps-2 d-flex">
+        <div class="d-flex">
+            <button nbButton ghost shape="round" size="small" [nbTooltip]="getString('settings')"
+                (click)="onSettingsClick()">
+                <nb-icon pack="eva" icon="settings-outline"></nb-icon>
+            </button>
+            <button nbButton ghost shape="round" status="primary" size="small" (click)="onMarkAllAsReadClick()">
+                <nb-icon pack="eva" icon="done-all-outline" nbPrefix></nb-icon>
+                {{getString('markAllAsRead')}}
+            </button>
+        </div>
+        <div class="col d-flex justify-content-end">
+            <button nbButton status="primary" shape="round" size="tiny" (click)="onShowAllClick()">
+                {{getString('showAll')}}
+            </button>
+        </div>
+    </nb-card-footer>
+</nb-card>

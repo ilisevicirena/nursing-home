@@ -13,6 +13,11 @@ import {
   NbIconModule,
   NbThemeModule,
   NbTooltipModule,
+  NbPopoverModule,
+  NbBadgeModule,
+  NbCardModule,
+  NbTabsetModule,
+  NbListModule,
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { NbSecurityModule } from '@nebular/security';
@@ -38,6 +43,7 @@ import { DEFAULT_THEME } from './styles/theme.default';
 import { COSMIC_THEME } from './styles/theme.cosmic';
 import { CORPORATE_THEME } from './styles/theme.corporate';
 import { DARK_THEME } from './styles/theme.dark';
+import { NotificationsPaneComponent } from './components/header/notifications-pane/notifications-pane.component';
 
 const NB_MODULES = [
   NbLayoutModule,
@@ -52,7 +58,12 @@ const NB_MODULES = [
   NbSelectModule,
   NbIconModule,
   NbEvaIconsModule,
-  NbTooltipModule
+  NbTooltipModule,
+  NbPopoverModule,
+  NbBadgeModule,
+  NbCardModule,
+  NbTabsetModule,
+  NbListModule
 ];
 const COMPONENTS = [
   HeaderComponent,
@@ -73,7 +84,7 @@ const PIPES = [
 @NgModule({
   imports: [CommonModule, ...NB_MODULES],
   exports: [CommonModule, ...PIPES, ...COMPONENTS],
-  declarations: [...COMPONENTS, ...PIPES],
+  declarations: [...COMPONENTS, ...PIPES, NotificationsPaneComponent],
 })
 export class ThemeModule {
   static forRoot(): ModuleWithProviders<ThemeModule> {

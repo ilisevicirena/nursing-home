@@ -1,0 +1,30 @@
+import { Injectable } from '@angular/core';
+import { BaseRestApiService } from '../base-rest-api.service';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class NotificationsService extends BaseRestApiService {
+
+  constructor(http: HttpClient) {
+    super(http, 'api/notifications');
+  }
+
+  public checkNotificationsStatus(): Observable<any> {
+    return this.http.get(this.apiRoute + "/checkNotificationsStatus");
+  }
+
+  public getLatestNotifications(): Observable<any> {
+    return this.http.get(this.apiRoute + "/getLatestNotifications");
+  }
+
+  public markNotificationAsRead(id: number): Observable<any> {
+    return this.http.post(this.apiRoute + "/markNotificationAsRead", { Id: id });
+  }
+
+  public markAllNotificationsAsRead(): Observable<any> {
+    return this.http.post(this.apiRoute + "/markAllNotificationsAsRead", {});
+  }
+}

@@ -8,9 +8,19 @@
     </a>
   </div>
   <div class="col d-flex justify-content-end">
-    <button nbButton ghost shape="round" size="small" [nbTooltip]="getString('searchPersons')"
-      (click)="goToSearchPersons()">
+    <button nbButton ghost shape="round" [nbPopover]="notificationsPopup" nbPopoverTrigger="click" class="me-2"
+      nbPopoverPlacement="bottom" style="position:relative">
+      <nb-icon pack="eva" icon="bell-outline" class="m-0"></nb-icon>
+      <nb-badge *ngIf="hasNotifications" status="danger" position="top right" style="top:5px; right: 5px;"
+        [dotMode]="true"></nb-badge>
+    </button>
+    <button nbButton ghost shape="round" [nbTooltip]="getString('searchPersons')" (click)="goToSearchPersons()">
       <nb-icon pack="eva" icon="search-outline"></nb-icon>
     </button>
   </div>
 </div>
+
+<ng-template #notificationsPopup>
+  <sample-notifications-pane (closeClick)="onNotificationPaneClose()"
+    (destroy)="onNotificationsDestroy($event)"></sample-notifications-pane>
+</ng-template>

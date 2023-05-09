@@ -12,6 +12,7 @@ import { ServicesComponent } from './services/services.component';
 import { PackagesComponent } from './packages/packages.component';
 import { DiscountsComponent } from './discounts/discounts.component';
 import { ServicesManagementComponent } from './services-management/services-management.component';
+import { NotificationsComponent } from './notifications/notifications.component';
 
 const routes: Routes = [{
   path: '',
@@ -65,6 +66,10 @@ const routes: Routes = [{
     {
       path: 'services-management',
       component: ServicesManagementComponent
+    },
+    {
+      path: 'notifications',
+      component: NotificationsComponent
     },
   ],
 }];
