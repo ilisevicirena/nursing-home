@@ -68,7 +68,7 @@ export class NotificationsPaneComponent implements OnInit, OnDestroy {
 
   public onShowAllClick(): void {
     this.closeClick.emit();
-    this.router.navigateByUrl('/pages/notifications')
+    this.router.navigateByUrl('/pages/notifications');
   }
 
   public markNotificationAsRead(notification: any): void {

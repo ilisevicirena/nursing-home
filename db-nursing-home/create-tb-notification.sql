@@ -1,7 +1,7 @@
 USE [ENV01_NURSING_HOME]
 GO
 
-/****** Object:  Table [dbo].[Notification]    Script Date: 9.5.2023. 8:32:13 ******/
+/****** Object:  Table [dbo].[Notification]    Script Date: 9.5.2023. 14:11:57 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -15,6 +15,8 @@ CREATE TABLE [dbo].[Notification](
 	[ReadDate] [datetime] NULL,
 	[Read] [bit] NOT NULL,
 	[Text] [varchar](2000) NOT NULL,
+	[LinkId] [int] NULL,
+	[GoToLink] [varchar](500) NULL,
  CONSTRAINT [PK_Notification] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
@@ -27,5 +29,12 @@ REFERENCES [dbo].[NotificationType] ([Id])
 GO
 
 ALTER TABLE [dbo].[Notification] CHECK CONSTRAINT [FK_Notification_NotificationType]
+GO
+
+ALTER TABLE [dbo].[Notification]  WITH CHECK ADD  CONSTRAINT [FK_Notification_PageLink] FOREIGN KEY([LinkId])
+REFERENCES [dbo].[PageLink] ([Id])
+GO
+
+ALTER TABLE [dbo].[Notification] CHECK CONSTRAINT [FK_Notification_PageLink]
 GO
 
