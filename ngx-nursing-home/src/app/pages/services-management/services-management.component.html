@@ -1,12 +1,72 @@
 <div class="d-flex h-100 w-100">
     <div class="col-md-3 h-100">
+        <nb-tabset (changeTab)="onTabChange($event)" class="h-100">
+            <nb-tab [tabTitle]="getString('packagesOnly')" [tabId]="1">
+                <div class="w-100 form-group">
+                    <nb-form-field>
+                        <input nbInput shape="round" fullWidth [placeholder]="getString('search')"
+                            [(ngModel)]="searchTermPackages">
+                        <nb-icon pack="eva" icon="search-outline" nbPrefix></nb-icon>
+                        <button nbButton nbSuffix ghost shape="round" status="basic" *ngIf="searchTermPackages.length>0"
+                            (click)="searchTermPackages='';">
+                            <nb-icon pack="eva" icon="close-outline"></nb-icon>
+                        </button>
+                    </nb-form-field>
+                </div>
+                <div class="packages-container mt-2">
+                    <nb-card class="package-card" *ngFor="let package of packagesData | filter: searchTermPackages">
+                        <nb-card-body>
+                            <nb-badge *ngIf="calculateDaysBetweenDates(package.CreationDate)<30"
+                                [text]="getString('new')" status="success" position="top left"></nb-badge>
+                            <nb-tag appearance="outline" status="primary" size="small"
+                                [text]="package.MeasureUnitName"></nb-tag>
+                            <div class="name">{{package.Name}}</div>
+                            <div class="label" *ngIf="!package.PackagePriceCalculated">
+                                <nb-icon pack="eva" icon="pricetags-outline"></nb-icon>
+                                {{package.DefaultPackagePrice}} {{package.PriceUnitTag}}
+                            </div>
+                            <button nbButton ghost [ngClass]="!package.PackagePriceCalculated ? 'mt-2':''"
+                                (click)="openPackageDetails(package)" status="primary" size="tiny"
+                                shape="round">{{getString('showDetails')}}</button>
+                        </nb-card-body>
+                    </nb-card>
+                </div>
+            </nb-tab>
+            <nb-tab [tabTitle]="getString('servicesOnly')" [tabId]="2">
+                <div class="w-100 form-group">
+                    <nb-form-field>
+                        <input nbInput shape="round" fullWidth [placeholder]="getString('search')"
+                            [(ngModel)]="searchTermServices">
+                        <nb-icon pack="eva" icon="search-outline" nbPrefix></nb-icon>
+                        <button nbButton nbSuffix ghost shape="round" status="basic" *ngIf="searchTermServices.length>0"
+                            (click)="searchTermServices='';">
+                            <nb-icon pack="eva" icon="close-outline"></nb-icon>
+                        </button>
+                    </nb-form-field>
+                </div>
+                <div class="packages-container mt-2">
+                    <nb-card class="package-card" *ngFor="let service of servicesData | filter:searchTermServices">
+                        <nb-card-body>
+                            <nb-tag appearance="outline" status="primary" size="small"
+                                [text]="service.MeasureUnitName"></nb-tag>
+                            <div class="name">{{service.Name}}</div>
+                            <div class="label">
+                                <nb-icon pack="eva" icon="pricetags-outline"></nb-icon>
+                                {{service.CostPerUnit}} {{service.PriceUnitTag}}
+                            </div>
+                            <button nbButton ghost (click)="openServiceDetails(service)" status="primary" size="tiny"
+                                shape="round">{{getString('showDetails')}}</button>
+                        </nb-card-body>
+                    </nb-card>
+                </div>
+            </nb-tab>
+        </nb-tabset>
+    </div>
+    <div class="col-md-9 h-100">
         <nb-card class="h-100">
             <nb-card-body>
 
             </nb-card-body>
         </nb-card>
-    </div>
-    <div class="col-md-9">
-
     </div>
 </div>

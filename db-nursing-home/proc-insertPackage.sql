@@ -1,7 +1,7 @@
 USE [ENV01_NURSING_HOME]
 GO
 
-/****** Object:  StoredProcedure [dbo].[insertPackage]    Script Date: 5.5.2023. 21:02:14 ******/
+/****** Object:  StoredProcedure [dbo].[insertPackage]    Script Date: 10.5.2023. 9:20:18 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -30,8 +30,8 @@ BEGIN
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
-	INSERT INTO dbo.Package ([Name], [Description], DefaultPackagePrice, DefaultPackagePriceUnitId, PackagePriceCalculated, CalculationMeasureUnitId, Active)
-	VALUES (@Name, @Description, @DefaultPackagePrice, @DefaultPackagePriceUnitId, @PackagePriceCalculated, @CalculationMeasureUnitId, 1);
+	INSERT INTO dbo.Package ([Name], [Description], DefaultPackagePrice, DefaultPackagePriceUnitId, PackagePriceCalculated, CalculationMeasureUnitId, Active, CreationDate)
+	VALUES (@Name, @Description, @DefaultPackagePrice, @DefaultPackagePriceUnitId, @PackagePriceCalculated, @CalculationMeasureUnitId, 1, GETDATE());
 
 	SELECT SCOPE_IDENTITY() AS [PackageId];
 END

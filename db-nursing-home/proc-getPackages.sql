@@ -1,7 +1,7 @@
 USE [ENV01_NURSING_HOME]
 GO
 
-/****** Object:  StoredProcedure [dbo].[getPackages]    Script Date: 5.5.2023. 21:17:29 ******/
+/****** Object:  StoredProcedure [dbo].[getPackages]    Script Date: 10.5.2023. 9:21:01 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -34,7 +34,8 @@ BEGIN
 	[CalculationMeasureUnitId]=CalculationMeasureUnitId,
 	[MeasureUnitName]=mu.[Name],
 	[MeasureUnitCode]=mu.Code,
-	[MeasureUnitTag]=mu.Tag
+	[MeasureUnitTag]=mu.Tag,
+	[CreationDate]=p.CreationDate
 	FROM dbo.Package as p
 	LEFT JOIN dbo.PriceUnit as pu ON pu.Id=p.DefaultPackagePriceUnitId
 	left join dbo.MeasureUnit as mu on p.CalculationMeasureUnitId=mu.Id

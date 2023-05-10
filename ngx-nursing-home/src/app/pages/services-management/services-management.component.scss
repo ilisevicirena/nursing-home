@@ -1,0 +1,43 @@
+::ng-deep sample-services-management {
+    height: 100%;
+}
+
+::ng-deep nb-tabset {
+    a.tab-link {
+        font-size: 12px;
+        padding: 0.7rem;
+    }
+
+    nb-tab {
+        overflow: hidden;
+        height: calc(100% - 25px);
+        padding-left: 0;
+        padding-bottom: 0;
+        padding-right: 1rem;
+    }
+}
+
+.package-card {
+    margin-bottom: 0.2rem;
+    border-radius: 0.5rem;
+
+    .name {
+        font-weight: 600;
+        padding: 0.5rem 0rem;
+        width: 80%;
+    }
+
+    nb-tag {
+        position: absolute;
+        right: 0px;
+        top: 0.5rem;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        border-right: none;
+    }
+}
+
+.packages-container {
+    overflow: auto;
+    height: calc(100% - 63px);
+}
