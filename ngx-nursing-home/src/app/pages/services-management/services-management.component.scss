@@ -1,3 +1,5 @@
+@import "../../@theme/styles/themes.scss";
+
 ::ng-deep sample-services-management {
     height: 100%;
 }
@@ -39,5 +41,158 @@
 
 .packages-container {
     overflow: auto;
-    height: calc(100% - 63px);
+    height: calc(100% - 75px);
+}
+
+.date {
+    .value {
+        font-weight: 600;
+    }
+}
+
+
+
+@include nb-install-component {
+    .top-frame {
+        background-color: nb-theme(card-background-color);
+        width: 100%;
+        height: 1.6rem;
+        position: absolute;
+        top: 54px;
+        left: 0;
+    }
+
+    .right-frame {
+        background-color: nb-theme(card-background-color);
+        height: 100%;
+        width: 1.6rem;
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+
+    .offer-price {
+        font-weight: 600;
+        font-size: 20px;
+        margin-left: 60px;
+        margin-top: 30px;
+        color: nb-theme(color-primary-500);
+    }
+
+    .bottom-frame {
+        width: 100%;
+        height: 1.6rem;
+        position: absolute;
+        bottom: 0px;
+        left: 0;
+        background-color: nb-theme(card-background-color);
+    }
+
+    .invoice-card {
+        border: none;
+        border-top-left-radius: 2.7rem;
+        border-bottom-left-radius: 2.7rem;
+    }
+
+    .items-container {
+        margin-top: 0.5rem;
+        height: calc(100% - 105px);
+        overflow: hidden;
+
+        .items-header {
+            border-bottom: 2px solid nb-theme(color-basic-300);
+            padding-bottom: 0.5rem;
+            font-weight: 600;
+            color: nb-theme(color-basic-600);
+        }
+
+        .item-title {
+            color: nb-theme(color-primary-500);
+            font-weight: 600;
+        }
+
+        .service-card {
+            font-weight: 600;
+            padding: 0.5rem;
+            border-bottom-width: nb-theme(accordion-header-border-width);
+            border-bottom-style: nb-theme(accordion-header-border-style);
+            border-bottom-color: nb-theme(accordion-header-border-color);
+        }
+
+        .service-title {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .services {
+            font-size: 12px;
+            border-bottom: 1px solid nb-theme(color-basic-500);
+            margin-bottom: 0.5rem;
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+        }
+
+        .services:first-child {
+            padding-top: 0rem;
+        }
+
+        .items {
+            height: calc(100% - 95px);
+            width: 100%;
+            overflow: auto;
+
+            .no-data-title {
+                display: none;
+            }
+
+            nb-accordion {
+                box-shadow: none;
+                border-bottom-width: nb-theme(accordion-header-border-width);
+                border-bottom-style: nb-theme(accordion-header-border-style);
+                border-bottom-color: nb-theme(accordion-header-border-color);
+            }
+
+            nb-accordion-item {
+                margin-bottom: 0.5rem;
+                border-radius: 0;
+
+                nb-accordion-item-body {
+                    background-color: nb-theme(tag-outline-primary-background-color);
+                }
+            }
+
+            nb-accordion-item.expanded {
+                border-left: 2px solid nb-theme(color-primary-500);
+            }
+        }
+
+        .items.no-data {
+            border: 1.5px dashed nb-theme(color-primary-500);
+            border-radius: 1rem;
+            background-color: nb-theme(tag-outline-primary-background-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            .no-data-title {
+                display: block;
+
+                div {
+                    display: flex;
+                    justify-content: center;
+
+                    nb-icon {
+                        font-size: 40px;
+                    }
+                }
+
+                p {
+                    font-weight: 600;
+                    font-size: 16px;
+                    margin-top: 1rem;
+                    color: nb-theme(color-primary-500);
+                }
+            }
+        }
+    }
 }

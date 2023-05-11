@@ -106,6 +106,7 @@ const strings: IKeyValue[] = [
     { key: "alreadyAdded", value: "Stavka je već dodana!" },
     { key: "servicesManagement", value: "Upravljanje uslugama" },
     { key: "servicesSingle", value: "Pojedinačne usluge" },
+    { key: "serviceSingle", value: "Pojedinačna usluga" },
     { key: "packages", value: "Paketi usluga" },
     { key: "discounts", value: "Popusti" },
     { key: "servicesManagementSingle", value: "Simulacija ponude" },
@@ -135,6 +136,10 @@ const strings: IKeyValue[] = [
     { key: "packagesOnly", value: "Paketi" },
     { key: "new", value: "Novo" },
     { key: "showDetails", value: "Prikaži detalje" },
+    { key: "offerDate", value: "Datum ponude" },
+    { key: "offerItems", value: "Stavke ponude" },
+    { key: "offerDragAndDrop", value: "Povucite stavke iz lijevog panela ovdje" },
+    { key: "clearAll", value: "Očisti sve" },
 ];
 
 const map = new Map(strings.map(obj => [obj.key, obj.value]));

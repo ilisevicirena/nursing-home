@@ -1,5 +1,9 @@
+<div class="top-frame"></div>
+<div class="bottom-frame"></div>
+<div class="right-frame"></div>
+<div class="left-frame"></div>
 <div class="d-flex h-100 w-100">
-    <div class="col-md-3 h-100">
+    <div class="col-md-3 h-100 pt-2 pe-1">
         <nb-tabset (changeTab)="onTabChange($event)" class="h-100">
             <nb-tab [tabTitle]="getString('packagesOnly')" [tabId]="1">
                 <div class="w-100 form-group">
@@ -13,8 +17,10 @@
                         </button>
                     </nb-form-field>
                 </div>
-                <div class="packages-container mt-2">
-                    <nb-card class="package-card" *ngFor="let package of packagesData | filter: searchTermPackages">
+                <div class="packages-container mt-2" #packagesDropList="cdkDropList" cdkDropList
+                    cdkDropListSortingDisabled [cdkDropListConnectedTo]="[itemsDropList]">
+                    <nb-card class="package-card" *ngFor="let package of packagesData | filter: searchTermPackages"
+                        cdkDrag [cdkDragData]="package">
                         <nb-card-body>
                             <nb-badge *ngIf="calculateDaysBetweenDates(package.CreationDate)<30"
                                 [text]="getString('new')" status="success" position="top left"></nb-badge>
@@ -44,8 +50,10 @@
                         </button>
                     </nb-form-field>
                 </div>
-                <div class="packages-container mt-2">
-                    <nb-card class="package-card" *ngFor="let service of servicesData | filter:searchTermServices">
+                <div class="packages-container mt-2" #servicesDropList="cdkDropList" cdkDropList
+                    cdkDropListSortingDisabled [cdkDropListConnectedTo]="[itemsDropList]">
+                    <nb-card class="package-card" *ngFor="let service of servicesData | filter:searchTermServices"
+                        cdkDrag [cdkDragData]="service">
                         <nb-card-body>
                             <nb-tag appearance="outline" status="primary" size="small"
                                 [text]="service.MeasureUnitName"></nb-tag>
@@ -63,9 +71,152 @@
         </nb-tabset>
     </div>
     <div class="col-md-9 h-100">
-        <nb-card class="h-100">
-            <nb-card-body>
+        <nb-card class="h-100 invoice-card">
+            <nb-card-body class="pt-0 pb-0 pe-0 ps-4">
+                <div class="d-flex">
+                    <div class="col d-flex align-items-center">
+                        <div class="offer-price">
+                            0.00 KM
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-end" style="width: max-content;">
+                        <div class="date">
+                            <div class="label">{{getString('offerDate')}}:</div>
+                            <div class="value">{{offerDate | date:'dd.MM.yyyy.'}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="items-container">
+                    <div class="group-title">
+                        {{getString('offerItems')}}
+                        <div class="line"></div>
+                    </div>
+                    <div class="items"
+                        [ngClass]="selectedPackages.length==0 && selectedServices.length==0 ? 'no-data':''" cdkDropList
+                        #itemsDropList="cdkDropList" (cdkDropListDropped)="onItemsDrop($event)"
+                        cdkDropListSortingDisabled [cdkDropListConnectedTo]="[packagesDropList, servicesDropList]">
+                        <div class="no-data-title">
+                            <div>
+                                <nb-icon pack="eva" icon="swap-outline" status="primary"></nb-icon>
+                            </div>
+                            <p>{{getString('offerDragAndDrop')}}</p>
+                        </div>
+                        <div *ngIf="selectedPackages.length>0 || selectedServices.length>0"
+                            class="row m-0 items-header">
+                            <div class="col-md-1">
 
+                            </div>
+                            <div class="col-md-3">
+                                {{getString('name')}}
+                            </div>
+                            <div class="col-md-1">
+                                {{getString('quantity')}}
+                            </div>
+                            <div class="col-md-2">
+                                {{getString('costPerUnit')}}
+                            </div>
+                            <div class="col-md-2">
+                                {{getString('measureUnit')}}
+                            </div>
+                            <div class="col-md-2">
+                                {{getString('sum')}}
+                            </div>
+                            <div class="col-md-1">
+
+                            </div>
+                        </div>
+                        <nb-accordion [multi]="true">
+                            <nb-accordion-item *ngFor="let item of selectedPackages">
+                                <nb-accordion-item-header class="p-2">
+                                    <div class="row m-0 w-100">
+                                        <div class="col-md-1 d-flex justify-content-center">
+                                            <button nbButton ghost status="primary" shape="round" size="small"
+                                                (click)="removePackageItem(item)">
+                                                <nb-icon pack="eva" icon="close-outline"></nb-icon>
+                                            </button>
+                                        </div>
+                                        <div class="col-md-3 ps-0">
+                                            <div class="item-title">{{item.Name}}</div>
+                                            <div class="label">{{getString('services')}}</div>
+                                        </div>
+                                        <div class="col-md-1 d-flex align-items-center">
+                                            {{item.Quantity}}
+                                        </div>
+                                        <div class="col-md-2">
+
+                                        </div>
+                                        <div class="col-md-2 d-flex align-items-center">
+                                            {{item.MeasureUnitName}}
+                                        </div>
+                                        <div class="col-md-2">
+
+                                        </div>
+                                    </div>
+                                </nb-accordion-item-header>
+                                <nb-accordion-item-body class="p-0">
+                                    <div class="row m-0 w-100 services" *ngFor="let service of item.Services">
+                                        <div class="col-md-1 d-flex justify-content-center">
+
+                                        </div>
+                                        <div class="col-md-3 ps-0">
+                                            <div class="service-title">{{service.ServiceName}}</div>
+                                        </div>
+                                        <div class="col-md-1 d-flex align-items-center">
+                                            {{service.Quantity}}
+                                        </div>
+                                        <div class="col-md-2 d-flex align-items-center">
+                                            {{service.CostPerUnit}} {{service.PriceUnitTag}}
+                                        </div>
+                                        <div class="col-md-2 d-flex align-items-center">
+                                            {{service.MeasureUnitName}}
+                                        </div>
+                                        <div class="col-md-2 d-flex align-items-center">
+
+                                        </div>
+                                    </div>
+                                </nb-accordion-item-body>
+                            </nb-accordion-item>
+                        </nb-accordion>
+                        <div class="service-card m-0 row" *ngFor="let item of selectedServices">
+                            <div class="col-md-1 d-flex justify-content-center">
+                                <button nbButton ghost status="primary" shape="round" size="small"
+                                    (click)="removeServiceItem(item)">
+                                    <nb-icon pack="eva" icon="close-outline"></nb-icon>
+                                </button>
+                            </div>
+                            <div class="col-md-3 ps-0">
+                                <div class="item-title">{{item.Name}}</div>
+                                <div class="label">{{getString('serviceSingle')}}</div>
+                            </div>
+                            <div class="col-md-1 d-flex align-items-center">
+                                <button nbButton ghost size="tiny" shape="round" status="primary"
+                                    (click)="decreaseQuantityClick(item)">
+                                    <nb-icon pack="eva" icon="minus-outline"></nb-icon>
+                                </button>
+                                <div class="ps-1 pe-1">{{item.Quantity}}</div>
+                                <button nbButton ghost size="tiny" shape="round" status="primary"
+                                    (click)="increaseQuantityClick(item)">
+                                    <nb-icon pack="eva" icon="plus-outline"></nb-icon>
+                                </button>
+                            </div>
+                            <div class="col-md-2 d-flex align-items-center">
+                                {{item.CostPerUnit}} {{item.PriceUnitTag}}
+                            </div>
+                            <div class="col-md-2 d-flex align-items-center">
+                                {{item.MeasureUnitName}}
+                            </div>
+                            <div class="col-md-2 d-flex align-items-center">
+                                {{item.Price}} {{item.PriceUnitTag}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex">
+                    <button *ngIf="selectedPackages.length>0 || selectedServices.length>0" nbButton shape="round"
+                        (click)="onClearAllClick()" size="small" ghost>{{getString('clearAll')}}
+                        <nb-icon pack="eva" icon="close-outline"></nb-icon>
+                    </button>
+                </div>
             </nb-card-body>
         </nb-card>
     </div>

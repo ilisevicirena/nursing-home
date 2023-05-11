@@ -24,6 +24,7 @@ import {
   NbPopoverModule,
   NbStepperModule,
   NbBadgeModule,
+  NbAccordionModule
 
 }
   from '@nebular/theme';
@@ -88,7 +89,8 @@ import { NotificationsSettingsComponent } from './notifications/notifications-se
     Ng2SearchPipeModule,
     NbStepperModule,
     DragDropModule,
-    NbBadgeModule
+    NbBadgeModule,
+    NbAccordionModule
   ],
   declarations: [
     PagesComponent,

@@ -6,6 +6,7 @@ import { ServicesService } from '../../services/rest/services.service';
 import { NbTabComponent, NbWindowService, NbWindowState } from '@nebular/theme';
 import { AddEditPackageComponent } from '../packages/add-edit-package/add-edit-package.component';
 import { AddEditServiceComponent } from '../services/add-edit-service/add-edit-service.component';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'sample-services-management',
@@ -19,6 +20,9 @@ export class ServicesManagementComponent implements OnInit {
   public searchTermServices: string = "";
   public packagesData: any[] = [];
   public servicesData: any[] = [];
+  public offerDate: Date = new Date();
+  public selectedPackages: any[] = [];
+  public selectedServices: any[] = [];
 
   private subs: Subscription[] = [];
   private gotPackages: boolean = false;
@@ -36,7 +40,6 @@ export class ServicesManagementComponent implements OnInit {
   private getPackages(): void {
     this.subs.push(
       this.packagesService.getData().subscribe(data => {
-        console.log(data);
         this.packagesData = data;
         this.gotPackages = true;
       })
@@ -46,7 +49,6 @@ export class ServicesManagementComponent implements OnInit {
   private getServices(): void {
     this.subs.push(
       this.servicesService.getData().subscribe(data => {
-        console.log(data);
         this.servicesData = data;
         this.gotServices = true;
       })
@@ -106,5 +108,55 @@ export class ServicesManagementComponent implements OnInit {
         .onClose.subscribe((data: boolean) => {
           if (data) this.getServices();
         }));
+  }
+
+  public onItemsDrop(event: CdkDragDrop<any[]>): void {
+    console.log(event)
+    if (Object.keys(event.item.data).includes('PackagePriceCalculated')) {
+      if (!this.selectedPackages.find(x => x.Id == event.item.data.Id)) {
+        this.subs.push(
+          this.servicesService.getServicesForPackage(event.item.data.Id).subscribe(data => {
+            event.item.data.Services = data;
+          })
+        );
+        event.item.data.Quantity = 1;
+        this.selectedPackages.push(event.item.data);
+      }
+    } else {
+      if (!this.selectedServices.find(x => x.Id == event.item.data.Id)) {
+        event.item.data.Quantity = 1;
+        this.calculateItemPrice(event.item.data);
+        this.selectedServices.push(event.item.data);
+      }
+    }
+  }
+
+  public onClearAllClick(): void {
+    this.selectedPackages = [];
+    this.selectedServices = [];
+  }
+
+  public decreaseQuantityClick(item: any): void {
+    if (item.Quantity > 1) item.Quantity -= 1;
+    this.calculateItemPrice(item);
+  }
+
+  public increaseQuantityClick(item: any): void {
+    item.Quantity += 1;
+    this.calculateItemPrice(item);
+  }
+
+  private calculateItemPrice(item): void {
+    item.Price = item.Quantity * item.CostPerUnit;
+  }
+
+  public removePackageItem(pack: any): void {
+    var itemIndex = this.selectedPackages.findIndex(x => x.Id == pack.Id);
+    this.selectedPackages.splice(itemIndex, 1);
+  }
+
+  public removeServiceItem(pack: any): void {
+    var itemIndex = this.selectedServices.findIndex(x => x.Id == pack.Id);
+    this.selectedServices.splice(itemIndex, 1);
   }
 }
