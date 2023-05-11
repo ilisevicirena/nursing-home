@@ -63,6 +63,7 @@
                             <div class="label">{{getString('gender')}}</div>
                             <div class="value">
                                 <nb-select name="gender" required #gender1="ngModel" [disabled]="!person.Active"
+                                    fullWidth
                                     [status]="gender1.dirty ? (gender1.invalid ? 'danger' : 'success'): 'basic'"
                                     [(ngModel)]="newPersonData.GenderId">
                                     <nb-option *ngFor="let gender of genders"
