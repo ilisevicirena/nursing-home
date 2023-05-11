@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { getString } from '../../resources/strings';
 import { Subscription } from 'rxjs';
 import { PackagesService } from '../../services/rest/packages.service';
@@ -13,7 +13,7 @@ import { CdkDragDrop } from '@angular/cdk/drag-drop';
   templateUrl: './services-management.component.html',
   styleUrls: ['./services-management.component.scss']
 })
-export class ServicesManagementComponent implements OnInit {
+export class ServicesManagementComponent implements OnInit, OnDestroy {
 
   public getString = getString;
   public searchTermPackages: string = "";
@@ -35,6 +35,12 @@ export class ServicesManagementComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+  }
+
+  ngOnDestroy(): void {
+    this.subs.forEach(element => {
+      element.unsubscribe();
+    });
   }
 
   private getPackages(): void {

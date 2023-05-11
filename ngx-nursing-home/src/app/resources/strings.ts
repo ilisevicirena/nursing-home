@@ -140,6 +140,11 @@ const strings: IKeyValue[] = [
     { key: "offerItems", value: "Stavke ponude" },
     { key: "offerDragAndDrop", value: "Povucite stavke iz lijevog panela ovdje" },
     { key: "clearAll", value: "Očisti sve" },
+    { key: "transactionDate", value: "Datum transakcije" },
+    { key: "logType", value: "Vrsta radnje" },
+    { key: "activeRoom", value: "Trenutni smještaj" },
+    { key: "roomStartDate", value: "Početak boravka" },
+    { key: "roomEndDate", value: "Završetak boravka" },
 ];
 
 const map = new Map(strings.map(obj => [obj.key, obj.value]));
