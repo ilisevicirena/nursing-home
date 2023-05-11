@@ -10,7 +10,7 @@
 
 .end-position {
     position: relative;
-    animation-name: example;
+    animation-name: anim1;
     animation-duration: 1s;
 }
 
@@ -25,10 +25,9 @@
     cursor: pointer;
 }
 
-@keyframes example {
+@keyframes anim1 {
     0% {
         left: 25%;
-        ;
         top: 45%;
     }
 
