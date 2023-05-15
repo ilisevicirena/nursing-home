@@ -157,7 +157,7 @@ export class AddEditPackageComponent implements OnInit, OnDestroy, AfterViewInit
 
   public calculatePackagePrice(): void {
     var calculationResult: ICalculationResult = this.calculationService.calculatePackagePrice(this.package, this.packageServices);
-    this.packagePrice = calculationResult[this.package.MesureUnitCode];
+    this.packagePrice = calculationResult[this.package.MeasureUnitCode];
   }
 
   public close(result: boolean): void {
@@ -233,7 +233,7 @@ export class AddEditPackageComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   public onPackageMeasureUnitSelectedChange(event: any) {
-    this.package.MesureUnitCode = this.calculationMeasureUnits.find(x => x.Id == event)?.Code;
+    this.package.MeasureUnitCode = this.calculationMeasureUnits.find(x => x.Id == event)?.Code;
     this.calculatePackagePrice();
   }
 }

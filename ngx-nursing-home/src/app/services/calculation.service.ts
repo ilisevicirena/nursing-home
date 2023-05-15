@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IPackage } from './rest/packages.service';
+import { IService } from './rest/services.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class CalculationService {
   constructor() { }
 
   public calculatePackagePrice(selectedPackage: IPackage, services: any[]): ICalculationResult {
-    console.log(services)
+
     var result: ICalculationResult = {
       day: 0,
       month: 0,
@@ -55,25 +56,7 @@ export class CalculationService {
 
     // price is default for selected measurement unit, others need to be calculated --> month is calculated on 30 day basis
     else {
-      switch (selectedPackage.MesureUnitCode) {
-        case 'day':
-          result.day = selectedPackage.DefaultPackagePrice;
-          result.month = selectedPackage.DefaultPackagePrice * this.MonthDayNumber;
-          result.year = selectedPackage.DefaultPackagePrice * this.YearDayNumber;
-          break;
-
-        case 'month':
-          result.day = selectedPackage.DefaultPackagePrice / this.MonthDayNumber;
-          result.month = selectedPackage.DefaultPackagePrice;
-          result.year = selectedPackage.DefaultPackagePrice * this.YearMonthNumber;
-          break;
-
-        case 'year':
-          result.day = selectedPackage.DefaultPackagePrice / this.YearDayNumber;
-          result.month = selectedPackage.DefaultPackagePrice / this.YearMonthNumber;
-          result.year = selectedPackage.DefaultPackagePrice;
-          break;
-      }
+      result[selectedPackage.MeasureUnitCode] = selectedPackage.DefaultPackagePrice;
     }
 
     result.day = (Math.round((result.day as number + Number.EPSILON) * 100) / 100).toFixed(2);
@@ -81,6 +64,10 @@ export class CalculationService {
     result.year = (Math.round((result.year as number + Number.EPSILON) * 100) / 100).toFixed(2);
 
     return result;
+  }
+
+  public calculateServicePrice(service: IService): number {
+    return service.Quantity * service.CostPerUnit;
   }
 
 }
