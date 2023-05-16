@@ -161,8 +161,11 @@ export class ServicesManagementComponent implements OnInit, OnDestroy {
   }
 
   public checkCanDropInList(item: CdkDrag, dropList: CdkDropList) {
-    var canDrop: boolean = false;
-    if (item.data.MeasureUnitCode == item.data.OfferMeasureUnit) canDrop = true;
+    var canDrop: boolean = true;
+
+    if (Object.keys(item.data).includes('PackagePriceCalculated')) {
+      if (item.data.MeasureUnitCode != item.data.OfferMeasureUnit) canDrop = false;
+    }
 
     return canDrop;
   }
