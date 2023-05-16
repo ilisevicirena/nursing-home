@@ -13,67 +13,160 @@ export class CalculationService {
 
   constructor() { }
 
-  public calculatePackagePrice(selectedPackage: IPackage, services: any[]): ICalculationResult {
-
+  public calculatePackagePrice(pack: IPackage, services: IService[], measureUnit: ECalculationMeasureUnit): ICalculationResult {
     var result: ICalculationResult = {
-      day: 0,
-      month: 0,
-      year: 0
+      price: 0,
+      priceRounded: '0.00',
+      services: []
+    };
+
+    // check if package price calculated or default
+    if (pack.PackagePriceCalculated) {
+
+      // extract services by measure unit (group by measure unit code)
+      const groups = services.reduce((groups, item) => {
+        const group = (groups[item.MeasureUnitCode] || []);
+        group.push(item);
+        groups[item.MeasureUnitCode] = group;
+        return groups;
+      }, {});
+
+      switch (measureUnit) {
+        case ECalculationMeasureUnit.DAY:
+          groups[ECalculationMeasureUnit.MONTH]?.map(x => x.Price = this.calculateServicePrice(x) / this.MonthDayNumber);
+          groups[ECalculationMeasureUnit.YEAR]?.map(x => x.Price = this.calculateServicePrice(x) / this.YearDayNumber);
+          break;
+
+        case ECalculationMeasureUnit.MONTH:
+          groups[ECalculationMeasureUnit.DAY]?.map(x => x.Price = this.calculateServicePrice(x) * this.MonthDayNumber);
+          groups[ECalculationMeasureUnit.YEAR]?.map(x => x.Price = this.calculateServicePrice(x) / this.YearMonthNumber);
+          break;
+
+        case ECalculationMeasureUnit.YEAR:
+          groups[ECalculationMeasureUnit.DAY]?.map(x => x.Price = this.calculateServicePrice(x) * this.YearDayNumber);
+          groups[ECalculationMeasureUnit.MONTH]?.map(x => x.Price = this.calculateServicePrice(x) * this.YearMonthNumber);
+          break;
+      }
+
+      groups[measureUnit]?.map(x => x.Price = this.calculateServicePrice(x));
+      groups['unit']?.map(x => x.Price = this.calculateServicePrice(x));
+
+      Object.keys(groups).forEach(key => {
+        var group = groups[key];
+        group.forEach(element => {
+          result.price += element.Price;
+          element.PriceRounded = this.roundPriceTwoDecimals(element.Price);
+          result.services.push(element);
+        });
+      });
     }
-
-    // calculate price from selected services
-    if (selectedPackage.PackagePriceCalculated) {
-      var dailyServices = services.filter(x => x.MeasureUnitCode == 'day');
-      var monthlyServices = services.filter(x => x.MeasureUnitCode == 'month');
-      var yearServices = services.filter(x => x.MeasureUnitCode == 'year');
-      var unitServices = services.filter(x => x.MeasureUnitCode == 'unit');
-
-      var dailyServicesPrice = 0;
-      dailyServices.forEach(element => {
-        dailyServicesPrice += element.Quantity * element.CostPerUnit;
-      });
-
-      var monthlyServicesPrice = 0;
-      monthlyServices.forEach(element => {
-        monthlyServicesPrice += element.Quantity * element.CostPerUnit;
-      });
-
-      var yearServicesPrice = 0;
-      yearServices.forEach(element => {
-        yearServicesPrice += element.Quantity * element.CostPerUnit;
-      });
-
-      var unitServicesPrice = 0;
-      unitServices.forEach(element => {
-        unitServicesPrice += element.Quantity * element.CostPerUnit;
-      });
-
-
-      result.day = dailyServicesPrice + (monthlyServicesPrice / this.MonthDayNumber) + (yearServicesPrice / this.YearDayNumber) + unitServicesPrice;
-      result.month = (dailyServicesPrice * this.MonthDayNumber) + monthlyServicesPrice + (yearServicesPrice / this.YearMonthNumber) + unitServicesPrice;
-      result.year = (dailyServicesPrice * this.YearDayNumber) + (monthlyServicesPrice * this.YearMonthNumber) + yearServicesPrice + unitServicesPrice;
-    }
-
-    // price is default for selected measurement unit, others need to be calculated --> month is calculated on 30 day basis
     else {
-      result[selectedPackage.MeasureUnitCode] = selectedPackage.DefaultPackagePrice;
+      result.price = pack.DefaultPackagePrice;
+      result.services = services.map(x => { x.PriceRounded = '-'; return x });
     }
 
-    result.day = (Math.round((result.day as number + Number.EPSILON) * 100) / 100).toFixed(2);
-    result.month = (Math.round((result.month as number + Number.EPSILON) * 100) / 100).toFixed(2);
-    result.year = (Math.round((result.year as number + Number.EPSILON) * 100) / 100).toFixed(2);
-
+    result.priceRounded = this.roundPriceTwoDecimals(result.price);
+    console.log(result)
     return result;
+  }
+
+  private roundPriceTwoDecimals(price: number): string {
+    return (Math.round((price + Number.EPSILON) * 100) / 100).toFixed(2);
   }
 
   public calculateServicePrice(service: IService): number {
     return service.Quantity * service.CostPerUnit;
   }
 
+  public calculateServicePriceRounded(service: IService): string {
+    return this.roundPriceTwoDecimals(service.Quantity * service.CostPerUnit);
+  }
+
+  public calculateOfferPrice(selectedPackages: IPackage[], selectedServices: IService[]): ICalculationResult {
+    var result: ICalculationResult = {
+      price: 0,
+      priceRounded: '0.00',
+      services: []
+    };
+
+    console.log(selectedPackages);
+    console.log(selectedServices)
+    selectedPackages.forEach(element => {
+      result.price += element.Price;
+    });
+    console.log(result)
+    selectedServices.forEach(element => {
+      result.price += element.Price;
+    });
+
+
+    result.priceRounded = this.roundPriceTwoDecimals(result.price);
+
+    return result;
+  }
+
+  public calculateServicePriceByMeasureUnit(service: IService, measureUnit: ECalculationMeasureUnit): ICalculationResult {
+    var result: ICalculationResult = {
+      price: 0,
+      priceRounded: '0.00',
+      services: []
+    };
+
+    result.price = this.calculateServicePrice(service);
+    //result.priceRounded = this.calculateServicePriceRounded(service);
+
+    switch (measureUnit) {
+      case ECalculationMeasureUnit.DAY:
+        switch (service.MeasureUnitCode) {
+          case ECalculationMeasureUnit.MONTH:
+            result.price = result.price / this.MonthDayNumber;
+            break;
+
+          case ECalculationMeasureUnit.YEAR:
+            result.price = result.price / this.YearDayNumber;
+            break;
+        }
+        break;
+
+      case ECalculationMeasureUnit.MONTH:
+        switch (service.MeasureUnitCode) {
+          case ECalculationMeasureUnit.DAY:
+            result.price = result.price * this.MonthDayNumber;
+            break;
+
+          case ECalculationMeasureUnit.YEAR:
+            result.price = result.price / this.YearMonthNumber;
+            break;
+        }
+        break;
+
+      case ECalculationMeasureUnit.YEAR:
+        switch (service.MeasureUnitCode) {
+          case ECalculationMeasureUnit.DAY:
+            result.price = result.price * this.YearDayNumber;
+            break;
+
+          case ECalculationMeasureUnit.MONTH:
+            result.price = result.price + this.YearMonthNumber;
+            break;
+        }
+        break;
+    }
+
+    result.priceRounded = this.roundPriceTwoDecimals(result.price);
+
+    return result;
+  }
+
 }
 
+export enum ECalculationMeasureUnit {
+  DAY = 'day',
+  MONTH = 'month',
+  YEAR = 'year'
+}
 export interface ICalculationResult {
-  day: string | number;
-  month: string | number;
-  year: string | number;
+  price: number;
+  priceRounded: string;
+  services: IService[];
 }

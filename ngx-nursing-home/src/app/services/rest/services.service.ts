@@ -28,4 +28,8 @@ export interface IService extends IBaseSaveModel {
   PriceUnitId?: number;
   PriceUnitName?: string;
   PriceUnitTag?: string;
+  Quantity?: number;
+  Price?: number;
+  MeasureUnitCode?: string;
+  PriceRounded?: string;
 }

@@ -11,7 +11,7 @@ import { getString } from '../../../resources/strings';
 import { NgForm } from '@angular/forms';
 import { LookupType, SelectGridComponent, SmartTableColumn, SmartTableComponent } from 'shared-components';
 import { SelectGridColumn, SelectGridSelectionModel } from 'shared-components/lib/models/select-grid.model';
-import { CalculationService, ICalculationResult } from '../../../services/calculation.service';
+import { CalculationService, ECalculationMeasureUnit } from '../../../services/calculation.service';
 
 @Component({
   selector: 'sample-add-edit-package',
@@ -41,7 +41,7 @@ export class AddEditPackageComponent implements OnInit, OnDestroy, AfterViewInit
     PriceUnitTag: undefined,
   };
 
-  public packagePrice: number = 0;
+  public packagePrice: string = '0.00';
 
   public servicesColumns: SmartTableColumn[] = [
     new SmartTableColumn(getString('name')).Property("ServiceName").Filter(false),
@@ -156,8 +156,9 @@ export class AddEditPackageComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   public calculatePackagePrice(): void {
-    var calculationResult: ICalculationResult = this.calculationService.calculatePackagePrice(this.package, this.packageServices);
-    this.packagePrice = calculationResult[this.package.MeasureUnitCode];
+    //  var calculationResult: ICalculationResult = this.calculationService.calculatePackagePrices(this.package, this.packageServices);
+    this.packagePrice = this.calculationService.calculatePackagePrice(this.package, this.packageServices, this.package.MeasureUnitCode as ECalculationMeasureUnit).priceRounded;
+    //  console.log()
   }
 
   public close(result: boolean): void {

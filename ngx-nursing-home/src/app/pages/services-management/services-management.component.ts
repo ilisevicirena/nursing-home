@@ -6,7 +6,9 @@ import { ServicesService } from '../../services/rest/services.service';
 import { NbTabComponent, NbWindowService, NbWindowState } from '@nebular/theme';
 import { AddEditPackageComponent } from '../packages/add-edit-package/add-edit-package.component';
 import { AddEditServiceComponent } from '../services/add-edit-service/add-edit-service.component';
-import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { CdkDrag, CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
+import { CalculationService, ECalculationMeasureUnit, ICalculationResult } from '../../services/calculation.service';
+import { MeasureUnitsService } from '../../services/rest/measure-units.service';
 
 @Component({
   selector: 'sample-services-management',
@@ -23,6 +25,9 @@ export class ServicesManagementComponent implements OnInit, OnDestroy {
   public offerDate: Date = new Date();
   public selectedPackages: any[] = [];
   public selectedServices: any[] = [];
+  public calculationMeasureUnit: string = 'month';
+  public calculationMeasureUnits: any[] = [];
+  public offerPrice: string = '0.00';
 
   private subs: Subscription[] = [];
   private gotPackages: boolean = false;
@@ -31,10 +36,13 @@ export class ServicesManagementComponent implements OnInit, OnDestroy {
   constructor(
     private packagesService: PackagesService,
     private servicesService: ServicesService,
-    private windowService: NbWindowService
+    private windowService: NbWindowService,
+    private calculationService: CalculationService,
+    private measureUnitsService: MeasureUnitsService
   ) { }
 
   ngOnInit(): void {
+    this.getMeasureUnits();
   }
 
   ngOnDestroy(): void {
@@ -48,6 +56,14 @@ export class ServicesManagementComponent implements OnInit, OnDestroy {
       this.packagesService.getData().subscribe(data => {
         this.packagesData = data;
         this.gotPackages = true;
+      })
+    );
+  }
+
+  private getMeasureUnits(): void {
+    this.subs.push(
+      this.measureUnitsService.getCalculationMeasureUnits().subscribe(data => {
+        this.calculationMeasureUnits = data;
       })
     );
   }
@@ -117,12 +133,15 @@ export class ServicesManagementComponent implements OnInit, OnDestroy {
   }
 
   public onItemsDrop(event: CdkDragDrop<any[]>): void {
-    console.log(event)
     if (Object.keys(event.item.data).includes('PackagePriceCalculated')) {
       if (!this.selectedPackages.find(x => x.Id == event.item.data.Id)) {
         this.subs.push(
           this.servicesService.getServicesForPackage(event.item.data.Id).subscribe(data => {
-            event.item.data.Services = data;
+            var calculationResult: ICalculationResult = this.calculationService.calculatePackagePrice(event.item.data, data, event.item.data.MeasureUnitCode);
+            event.item.data.Price = calculationResult.price;
+            event.item.data.PriceRounded = calculationResult.priceRounded;
+            event.item.data.Services = calculationResult.services;
+            this.offerPrice = this.calculationService.calculateOfferPrice(this.selectedPackages, this.selectedServices).priceRounded;
           })
         );
         event.item.data.Quantity = 1;
@@ -131,38 +150,52 @@ export class ServicesManagementComponent implements OnInit, OnDestroy {
     } else {
       if (!this.selectedServices.find(x => x.Id == event.item.data.Id)) {
         event.item.data.Quantity = 1;
-        this.calculateItemPrice(event.item.data);
+        var calculation: ICalculationResult = this.calculationService.calculateServicePriceByMeasureUnit(event.item.data, this.calculationMeasureUnit as ECalculationMeasureUnit);
+        event.item.data.PriceRounded = calculation.priceRounded;
+        event.item.data.Price = calculation.price;
         this.selectedServices.push(event.item.data);
+        this.offerPrice = this.calculationService.calculateOfferPrice(this.selectedPackages, this.selectedServices).priceRounded;
       }
     }
+  }
+
+  public checkCanDropInList(item: CdkDrag, dropList: CdkDropList) {
+    var canDrop: boolean = true;
+
+    return canDrop;
   }
 
   public onClearAllClick(): void {
     this.selectedPackages = [];
     this.selectedServices = [];
+    this.offerPrice = '0.00';
   }
 
   public decreaseQuantityClick(item: any): void {
     if (item.Quantity > 1) item.Quantity -= 1;
-    this.calculateItemPrice(item);
+    var calculation: ICalculationResult = this.calculationService.calculateServicePriceByMeasureUnit(item, this.calculationMeasureUnit as ECalculationMeasureUnit);
+    item.PriceRounded = calculation.priceRounded;
+    item.Price = calculation.price;
+    this.offerPrice = this.calculationService.calculateOfferPrice(this.selectedPackages, this.selectedServices).priceRounded;
   }
 
   public increaseQuantityClick(item: any): void {
     item.Quantity += 1;
-    this.calculateItemPrice(item);
-  }
-
-  private calculateItemPrice(item): void {
-    item.Price = item.Quantity * item.CostPerUnit;
+    var calculation: ICalculationResult = this.calculationService.calculateServicePriceByMeasureUnit(item, this.calculationMeasureUnit as ECalculationMeasureUnit);
+    item.PriceRounded = calculation.priceRounded;
+    item.Price = calculation.price;
+    this.offerPrice = this.calculationService.calculateOfferPrice(this.selectedPackages, this.selectedServices).priceRounded;
   }
 
   public removePackageItem(pack: any): void {
     var itemIndex = this.selectedPackages.findIndex(x => x.Id == pack.Id);
     this.selectedPackages.splice(itemIndex, 1);
+    this.offerPrice = this.calculationService.calculateOfferPrice(this.selectedPackages, this.selectedServices).priceRounded;;
   }
 
   public removeServiceItem(pack: any): void {
     var itemIndex = this.selectedServices.findIndex(x => x.Id == pack.Id);
     this.selectedServices.splice(itemIndex, 1);
+    this.offerPrice = this.calculationService.calculateOfferPrice(this.selectedPackages, this.selectedServices).priceRounded;
   }
 }

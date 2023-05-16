@@ -76,10 +76,18 @@
                 <div class="d-flex">
                     <div class="col d-flex align-items-center">
                         <div class="offer-price">
-                            0.00 KM
+                            {{offerPrice}} KM
                         </div>
                     </div>
                     <div class="d-flex justify-content-end" style="width: max-content;">
+                        <div class="value me-3">
+                            <nb-select fullWidth [(ngModel)]="calculationMeasureUnit" name="calculationMeasureUnit"
+                                (selectedChange)="onClearAllClick()">
+                                <nb-option *ngFor="let unit of calculationMeasureUnits" [value]="unit.Code">
+                                    {{unit.Tag}}
+                                </nb-option>
+                            </nb-select>
+                        </div>
                         <div class="date">
                             <div class="label">{{getString('offerDate')}}:</div>
                             <div class="value">{{offerDate | date:'dd.MM.yyyy.'}}</div>
@@ -94,7 +102,8 @@
                     <div class="items"
                         [ngClass]="selectedPackages.length==0 && selectedServices.length==0 ? 'no-data':''" cdkDropList
                         #itemsDropList="cdkDropList" (cdkDropListDropped)="onItemsDrop($event)"
-                        cdkDropListSortingDisabled [cdkDropListConnectedTo]="[packagesDropList, servicesDropList]">
+                        [cdkDropListEnterPredicate]="checkCanDropInList" cdkDropListSortingDisabled
+                        [cdkDropListConnectedTo]="[packagesDropList, servicesDropList]">
                         <div class="no-data-title">
                             <div>
                                 <nb-icon pack="eva" icon="swap-outline" status="primary"></nb-icon>
@@ -142,14 +151,14 @@
                                         <div class="col-md-1 d-flex align-items-center">
                                             {{item.Quantity}}
                                         </div>
-                                        <div class="col-md-2">
-
+                                        <div class="col-md-2 d-flex align-items-center">
+                                            {{item.PriceRounded}} {{item.PriceUnitTag}}
                                         </div>
                                         <div class="col-md-2 d-flex align-items-center">
                                             {{item.MeasureUnitName}}
                                         </div>
-                                        <div class="col-md-2">
-
+                                        <div class="col-md-2 d-flex align-items-center">
+                                            {{item.PriceRounded}} {{item.PriceUnitTag}}
                                         </div>
                                     </div>
                                 </nb-accordion-item-header>
@@ -171,7 +180,8 @@
                                             {{service.MeasureUnitName}}
                                         </div>
                                         <div class="col-md-2 d-flex align-items-center">
-
+                                            {{service.PriceRounded}}
+                                            {{service.PriceUnitTag}}
                                         </div>
                                     </div>
                                 </nb-accordion-item-body>
@@ -206,7 +216,7 @@
                                 {{item.MeasureUnitName}}
                             </div>
                             <div class="col-md-2 d-flex align-items-center">
-                                {{item.Price}} {{item.PriceUnitTag}}
+                                {{item.PriceRounded}} {{item.PriceUnitTag}}
                             </div>
                         </div>
                     </div>
