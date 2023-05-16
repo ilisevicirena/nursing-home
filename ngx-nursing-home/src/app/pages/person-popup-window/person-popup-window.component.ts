@@ -102,11 +102,9 @@ export class PersonPopupWindowComponent implements OnInit, AfterViewInit, OnDest
   private getPersonData(): void {
     this.subscriptions.push(
       this.personsService.getPersonDetails(this.personId).subscribe(data => {
-        console.log(data)
         if (data.length > 0) {
           this.newPersonData = getIPersonFromJSON(data[0]);
           this.person = getIPersonFromJSON(data[0]);
-          console.log(this.newPersonData);
         }
       })
     );

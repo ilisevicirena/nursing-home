@@ -66,7 +66,7 @@ export class CalculationService {
     }
 
     result.priceRounded = this.roundPriceTwoDecimals(result.price);
-    console.log(result)
+
     return result;
   }
 
@@ -89,12 +89,10 @@ export class CalculationService {
       services: []
     };
 
-    console.log(selectedPackages);
-    console.log(selectedServices)
     selectedPackages.forEach(element => {
       result.price += element.Price;
     });
-    console.log(result)
+
     selectedServices.forEach(element => {
       result.price += element.Price;
     });

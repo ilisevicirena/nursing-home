@@ -55,7 +55,6 @@ export class PackagesComponent implements OnInit, OnDestroy {
 
   private getPackages(): void {
     this.subs.push(this.packagesService.getData().subscribe(data => {
-      console.log(data);
       this.packagesData = data;
     }));
   }

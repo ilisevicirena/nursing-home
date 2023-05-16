@@ -156,9 +156,7 @@ export class AddEditPackageComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   public calculatePackagePrice(): void {
-    //  var calculationResult: ICalculationResult = this.calculationService.calculatePackagePrices(this.package, this.packageServices);
     this.packagePrice = this.calculationService.calculatePackagePrice(this.package, this.packageServices, this.package.MeasureUnitCode as ECalculationMeasureUnit).priceRounded;
-    //  console.log()
   }
 
   public close(result: boolean): void {

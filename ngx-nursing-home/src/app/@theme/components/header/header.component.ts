@@ -92,7 +92,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   private checkNotifications(): void {
     this.notificationsService.checkNotificationsStatus().subscribe(data => {
-      console.log(data)
       if (data.length > 0) this.hasNotifications = data[0]?.NotificationNumber > 0;
     })
   }

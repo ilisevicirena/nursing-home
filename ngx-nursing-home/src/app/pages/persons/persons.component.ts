@@ -63,7 +63,6 @@ export class PersonsComponent implements OnInit, OnDestroy {
 
   private getData() {
     this.subscriptions.push(this.personsService.getData(!this.showDeactivated).subscribe(data => {
-      console.log(data);
       this.personsData = data;
     }, err => {
       console.error(err);
