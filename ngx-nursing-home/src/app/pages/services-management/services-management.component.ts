@@ -55,6 +55,7 @@ export class ServicesManagementComponent implements OnInit, OnDestroy {
     this.subs.push(
       this.packagesService.getData().subscribe(data => {
         this.packagesData = data;
+        this.packagesData.map(x => x.OfferMeasureUnit = this.calculationMeasureUnit);
         this.gotPackages = true;
       })
     );
@@ -160,7 +161,8 @@ export class ServicesManagementComponent implements OnInit, OnDestroy {
   }
 
   public checkCanDropInList(item: CdkDrag, dropList: CdkDropList) {
-    var canDrop: boolean = true;
+    var canDrop: boolean = false;
+    if (item.data.MeasureUnitCode == item.data.OfferMeasureUnit) canDrop = true;
 
     return canDrop;
   }
@@ -169,6 +171,7 @@ export class ServicesManagementComponent implements OnInit, OnDestroy {
     this.selectedPackages = [];
     this.selectedServices = [];
     this.offerPrice = '0.00';
+    this.packagesData.map(x => x.OfferMeasureUnit = this.calculationMeasureUnit);
   }
 
   public decreaseQuantityClick(item: any): void {
