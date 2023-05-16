@@ -200,12 +200,12 @@
                             </div>
                             <div class="col-md-1 d-flex align-items-center">
                                 <button nbButton ghost size="tiny" shape="round" status="primary"
-                                    (click)="decreaseQuantityClick(item)">
+                                    (click)="decreaseQuantityClick(item)" [disabled]="item.DefaultNumberOfUnits">
                                     <nb-icon pack="eva" icon="minus-outline"></nb-icon>
                                 </button>
                                 <div class="ps-1 pe-1">{{item.Quantity}}</div>
                                 <button nbButton ghost size="tiny" shape="round" status="primary"
-                                    (click)="increaseQuantityClick(item)">
+                                    (click)="increaseQuantityClick(item)" [disabled]="item.DefaultNumberOfUnits">
                                     <nb-icon pack="eva" icon="plus-outline"></nb-icon>
                                 </button>
                             </div>

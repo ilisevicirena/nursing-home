@@ -151,6 +151,7 @@ export class ServicesManagementComponent implements OnInit, OnDestroy {
     } else {
       if (!this.selectedServices.find(x => x.Id == event.item.data.Id)) {
         event.item.data.Quantity = 1;
+        if (event.item.data.DefaultNumberOfUnits) event.item.data.Quantity = event.item.data.DefaultNumberOfUnits;
         var calculation: ICalculationResult = this.calculationService.calculateServicePriceByMeasureUnit(event.item.data, this.calculationMeasureUnit as ECalculationMeasureUnit);
         event.item.data.PriceRounded = calculation.priceRounded;
         event.item.data.Price = calculation.price;
