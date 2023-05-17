@@ -221,11 +221,23 @@
                         </div>
                     </div>
                 </div>
-                <div class="d-flex">
-                    <button *ngIf="selectedPackages.length>0 || selectedServices.length>0" nbButton shape="round"
-                        (click)="onClearAllClick()" size="small" ghost>{{getString('clearAll')}}
+                <div class="d-flex" *ngIf="selectedPackages.length>0 || selectedServices.length>0">
+                    <button nbButton shape="round" (click)="onClearAllClick()" size="small"
+                        ghost>{{getString('clearAll')}}
                         <nb-icon pack="eva" icon="close-outline"></nb-icon>
                     </button>
+                    <button nbButton shape="round" size="small" ghost status="primary" class="ms-2"
+                        (click)="onAddDiscountClick()">
+                        {{getString('addDiscount')}}
+                        <nb-icon pack="eva" icon="plus-outline"></nb-icon>
+                    </button>
+                    <div class="discounts-container d-flex col">
+                        <nb-tag-list>
+                            <nb-tag *ngFor="let discount of selectedDiscounts" appearance="outline" status="primary"
+                                [text]="discount.Name" removable (remove)="onDiscountRemoved(discount)">
+                            </nb-tag>
+                        </nb-tag-list>
+                    </div>
                 </div>
             </nb-card-body>
         </nb-card>

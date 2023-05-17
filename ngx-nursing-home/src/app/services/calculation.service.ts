@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { IPackage } from './rest/packages.service';
 import { IService } from './rest/services.service';
+import { IDiscount } from './rest/discounts.service';
 
 @Injectable({
   providedIn: 'root'
@@ -82,7 +83,7 @@ export class CalculationService {
     return this.roundPriceTwoDecimals(service.Quantity * service.CostPerUnit);
   }
 
-  public calculateOfferPrice(selectedPackages: IPackage[], selectedServices: IService[]): ICalculationResult {
+  public calculateOfferPrice(selectedPackages: IPackage[], selectedServices: IService[], selectedDiscounts: IDiscount[]): ICalculationResult {
     var result: ICalculationResult = {
       price: 0,
       priceRounded: '0.00',
@@ -97,6 +98,19 @@ export class CalculationService {
       result.price += element.Price;
     });
 
+    // calculate discounts
+    if (selectedDiscounts.length > 0) {
+      selectedDiscounts.forEach(element => {
+        if (element.PercentCalculation) {
+          var totalDiscount = (result.price * element.Quantity) / 100;
+          result.price -= totalDiscount;
+        } else
+          result.price -= element.Quantity
+
+      });
+
+      if (result.price < 0) result.price = 0;
+    }
 
     result.priceRounded = this.roundPriceTwoDecimals(result.price);
 

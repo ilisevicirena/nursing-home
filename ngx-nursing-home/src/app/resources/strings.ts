@@ -145,6 +145,9 @@ const strings: IKeyValue[] = [
     { key: "activeRoom", value: "Trenutni smještaj" },
     { key: "roomStartDate", value: "Početak boravka" },
     { key: "roomEndDate", value: "Završetak boravka" },
+    { key: "addDiscount", value: "Dodaj popust" },
+    { key: "selected", value: "Odabrano" },
+
 ];
 
 const map = new Map(strings.map(obj => [obj.key, obj.value]));

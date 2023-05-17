@@ -55,6 +55,7 @@ import { AddEditPackageComponent } from './packages/add-edit-package/add-edit-pa
 import { AddEditDiscountComponent } from './discounts/add-edit-discount/add-edit-discount.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { NotificationsSettingsComponent } from './notifications/notifications-settings/notifications-settings.component';
+import { DiscountsPickerComponent } from './discounts/discounts-picker/discounts-picker.component';
 
 @NgModule({
   imports: [
@@ -112,7 +113,8 @@ import { NotificationsSettingsComponent } from './notifications/notifications-se
     AddEditPackageComponent,
     AddEditDiscountComponent,
     NotificationsComponent,
-    NotificationsSettingsComponent
+    NotificationsSettingsComponent,
+    DiscountsPickerComponent
   ],
 })
 export class PagesModule {
