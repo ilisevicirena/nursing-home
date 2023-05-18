@@ -147,6 +147,7 @@ const strings: IKeyValue[] = [
     { key: "roomEndDate", value: "Završetak boravka" },
     { key: "addDiscount", value: "Dodaj popust" },
     { key: "selected", value: "Odabrano" },
+    { key: "offerPrint", value: "P O N U D A" },
 
 ];
 

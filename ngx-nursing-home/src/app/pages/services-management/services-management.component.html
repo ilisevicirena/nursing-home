@@ -80,6 +80,11 @@
                         </div>
                     </div>
                     <div class="d-flex justify-content-end" style="width: max-content;">
+                        <div class="d-flex align-items-center h-100 me-2">
+                            <sample-print-invoice [(selectedPackages)]="selectedPackages"
+                                [(selectedServices)]="selectedServices" [(selectedDiscounts)]="selectedDiscounts"
+                                [(offerPrice)]="offerPrice"></sample-print-invoice>
+                        </div>
                         <div class="value me-3">
                             <nb-select fullWidth [(ngModel)]="calculationMeasureUnit" name="calculationMeasureUnit"
                                 (selectedChange)="onClearAllClick()">
