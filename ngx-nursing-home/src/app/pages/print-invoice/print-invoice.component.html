@@ -6,9 +6,9 @@
 <div class="w-100" id="pdfTable" style="visibility: hidden; position: absolute;" #pdfTable>
     <table style="border: none; margin: 0;">
         <tr style="height: 200px;">
-            <td style="width: 25%; background-color: #33B9BF; border:none; text-align:center; margin-top: 80px">
-                <i class="far fa-copyright"></i>
-                Brand name
+            <td style="width: 25%; background-color: #33B9BF; border:none; text-align:center; margin-top: 40px;">
+                <img #logo height="70px" width="65px" style="margin:0">
+                <div>{{brand.Name}}</div>
             </td>
             <td
                 style="width: 75%; border:none; text-align: right; margin-right: 80px; margin-top:80px; font-size: 30px; font-weight: bold;">
@@ -99,11 +99,88 @@
 
     <table style="border: none; margin-bottom: 0;">
         <tr style="height: 300px;">
-            <td style="width: 25%; background-color: #33B9BF; border:none; text-align:center; margin-top: 80px">
-
+            <td style="width: 25%; background-color: #33B9BF; border:none; margin-top: 30px;">
+                <table>
+                    <tr style="height: 20px;">
+                        <td style="width: 2%; border:none;"></td>
+                        <td style="border:none;">
+                            <img #marker height="15px" width="12px">
+                        </td>
+                        <td style="font-size: 12px; border:none;">
+                            {{brand.Address}}, {{brand.City}}, {{brand.PostalCode}}
+                        </td>
+                    </tr>
+                    <tr style="height: 20px;">
+                        <td style="width: 2%; border:none;"></td>
+                        <td style="border:none;">
+                            <img #envelope height="12px" width="15px">
+                        </td>
+                        <td style="font-size: 12px; border:none;">
+                            {{brand.Email}}
+                        </td>
+                    </tr>
+                    <tr style="height: 20px;">
+                        <td style="width: 2%; border:none;"></td>
+                        <td style="border:none;">
+                            <img #phone height="15px" width="15px">
+                        </td>
+                        <td style="font-size: 12px; border:none;">
+                            {{brand.Telephone}}
+                        </td>
+                    </tr>
+                    <tr style="height: 20px;">
+                        <td style="width: 2%; border:none;"></td>
+                        <td style="border:none;">
+                            <img #mobile height="15px" width="15px">
+                        </td>
+                        <td style="font-size: 12px; border:none;">
+                            {{brand.Mobile}}
+                        </td>
+                    </tr>
+                </table>
             </td>
             <td style="width: 75%; border:none;">
-
+                <table>
+                    <tr style="height: 20px;">
+                        <td style="border: none; font-size: 12px; width: 25%;">{{getString('thankYou')}}</td>
+                        <td style="border:none; width: 25%;"></td>
+                        <td style="border:none; width: 25%;"></td>
+                        <td style="border:none; width: 25%;"></td>
+                    </tr>
+                    <tr style="height: 20px;">
+                        <td style="border:none; width: 25%;"></td>
+                        <td style="border:none; width: 25%;"></td>
+                        <td style="border:none; width: 25%; font-size: 12px; border-bottom: 1px solid black;">
+                            {{getString('discounts')}}:</td>
+                        <td style="border:none; width: 25%; border-bottom: 1px solid black;"><span
+                                *ngIf="selectedDiscounts.length==0">-</span></td>
+                    </tr>
+                    <tr *ngFor="let d of selectedDiscounts" style="height: 15px;">
+                        <td style="border:none; width: 25%;"></td>
+                        <td style="border:none; width: 25%;"></td>
+                        <td style="border:none; width: 25%;">
+                        </td>
+                        <td style="border:none; width: 25%; font-size: 12px;">{{d.Quantity}} <span
+                                *ngIf="d.PercentCalculation">%</span>
+                        </td>
+                    </tr>
+                    <tr style="height: 20px;">
+                        <td style="border:none; width: 25%;"></td>
+                        <td style="border:none; width: 25%;"></td>
+                        <td style="border:none; width: 25%; ">
+                        </td>
+                        <td style="border:none; width: 25%;">
+                        </td>
+                    </tr>
+                    <tr style="height: 20px;">
+                        <td style="border:none; width: 25%;"></td>
+                        <td style="border:none; width: 25%;"></td>
+                        <td style="border:none; width: 25%; font-size: 14px; border-bottom: 1px solid black;">
+                            {{getString('sum')}}:</td>
+                        <td style="border:none; width: 25%; border-bottom: 1px solid black; font-size: 18px;">
+                            {{offerPrice}}</td>
+                    </tr>
+                </table>
             </td>
         </tr>
     </table>
