@@ -28,7 +28,7 @@
   "dependencies": {
     "@akveo/ng2-completer": "^9.0.1",
     "@angular/animations": "^15.2.9",
-    "@angular/cdk": "^13.3.9",
+    "@angular/cdk": "^15.2.9",
     "@angular/common": "^15.2.9",
     "@angular/compiler": "^15.2.9",
     "@angular/core": "^15.2.9",
@@ -43,7 +43,7 @@
     "@nebular/date-fns": "^9.0.0",
     "@nebular/eva-icons": "^9.0.0",
     "@nebular/security": "9.0.0",
-    "@nebular/theme": "^9.0.3",
+    "@nebular/theme": "^11.0.0",
     "@popperjs/core": "^2.11.5",
     "angular-ng-autocomplete": "^2.0.8",
     "angular2-chartjs": "0.4.1",
