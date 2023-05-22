@@ -26,7 +26,6 @@
     "postinstall": "ngcc --properties es2015 es5 browser module main --first-only --create-ivy-entry-points --tsconfig \"./src/tsconfig.app.json\""
   },
   "dependencies": {
-    "@akveo/ng2-completer": "^9.0.1",
     "@angular/animations": "^15.2.9",
     "@angular/cdk": "^15.2.9",
     "@angular/common": "^15.2.9",
@@ -98,7 +97,7 @@
     "@types/jasminewd2": "^2.0.10",
     "@types/leaflet": "1.2.3",
     "@types/node": "^12.20.55",
-    "codelyzer": "^0.0.28",
+    "@types/pdfmake": "^0.2.2",
     "conventional-changelog-cli": "^2.2.2",
     "husky": "0.13.3",
     "jasmine-core": "^3.99.1",

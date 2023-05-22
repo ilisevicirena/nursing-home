@@ -94,8 +94,7 @@ export class PrintInvoiceComponent implements OnInit, AfterViewInit {
         });
 
         const documentDefinition = { content: html, pageMargins: [0, 0, 0, 0] };
-
-        pdfMake.createPdf(documentDefinition).open();
+        pdfMake.createPdf(documentDefinition as any).open();
       }, 500);
 
     }
