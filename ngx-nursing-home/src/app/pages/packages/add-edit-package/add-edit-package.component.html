@@ -109,7 +109,7 @@
                                     <div class="value">
                                         <input nbInput [(ngModel)]="package.DefaultPackagePrice" fullWidth
                                             name="DefaultPackagePrice" type="number"
-                                            (ngModelChange)="calculatePackagePrice()"
+                                            (ngModelChange)="calculatePackagePrice()" (focusout)="onPriceChange()"
                                             [placeholder]="getString('defaultPackagePrice')"
                                             [required]="!package.PackagePriceCalculated" #defaultPackagePrice1="ngModel"
                                             autocomplete="off" [disabled]="package.PackagePriceCalculated"

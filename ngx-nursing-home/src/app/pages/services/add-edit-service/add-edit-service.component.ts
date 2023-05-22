@@ -7,6 +7,7 @@ import { PriceUnitsService } from '../../../services/rest/price-units.service';
 import { Subscription } from 'rxjs';
 import { NgForm } from '@angular/forms';
 import { ToastrService } from '../../../services/toastr.service';
+import { CalculationService } from '../../../services/calculation.service';
 
 @Component({
   selector: 'sample-add-edit-service',
@@ -42,7 +43,8 @@ export class AddEditServiceComponent implements OnInit, OnDestroy, AfterViewInit
     private measureUnitService: MeasureUnitsService,
     private priceUnitService: PriceUnitsService,
     private servicesService: ServicesService,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private calculationService: CalculationService
   ) { }
 
   ngOnInit(): void {
@@ -136,5 +138,9 @@ export class AddEditServiceComponent implements OnInit, OnDestroy, AfterViewInit
     }, err => {
       console.error(err);
     }));
+  }
+
+  public onPriceChange(): void {
+    this.service.CostPerUnit = this.calculationService.roundToTwoDecimals(this.service.CostPerUnit) as any;
   }
 }

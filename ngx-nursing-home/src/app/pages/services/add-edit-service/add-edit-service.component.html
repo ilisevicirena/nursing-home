@@ -80,7 +80,7 @@
                                 <div class="value">
                                     <input nbInput [(ngModel)]="service.CostPerUnit" fullWidth name="costPerUnit"
                                         type="number" [placeholder]="getString('costPerUnit')" required
-                                        #costPerUnit1="ngModel" autocomplete="off"
+                                        #costPerUnit1="ngModel" autocomplete="off" (focusout)="onPriceChange()"
                                         [status]="costPerUnit1.dirty ? (costPerUnit1.invalid ? 'danger' : 'success'): 'basic'">
                                 </div>
                             </div>

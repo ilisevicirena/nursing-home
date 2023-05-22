@@ -1,7 +1,7 @@
 USE [ENV01_NURSING_HOME]
 GO
 
-/****** Object:  StoredProcedure [dbo].[getPackages]    Script Date: 10.5.2023. 9:21:01 ******/
+/****** Object:  StoredProcedure [dbo].[getPackages]    Script Date: 22.5.2023. 12:18:50 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -26,7 +26,7 @@ BEGIN
 	[Id]=p.Id,
 	[Name]=p.[Name],
 	[Description]=[Description],
-	[DefaultPackagePrice]=DefaultPackagePrice,
+	[DefaultPackagePrice]=FORMAT(DefaultPackagePrice, 'N2'),
 	[PackagePriceCalculated]=PackagePriceCalculated,
 	[DefaultPackagePriceUnitId]=DefaultPackagePriceUnitId,
 	[PriceUnitName]=pu.[Name],

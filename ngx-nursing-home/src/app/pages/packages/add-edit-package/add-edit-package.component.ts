@@ -235,4 +235,8 @@ export class AddEditPackageComponent implements OnInit, OnDestroy, AfterViewInit
     this.package.MeasureUnitCode = this.calculationMeasureUnits.find(x => x.Id == event)?.Code;
     this.calculatePackagePrice();
   }
+
+  public onPriceChange(): void {
+    this.package.DefaultPackagePrice = this.calculationService.roundToTwoDecimals(this.package.DefaultPackagePrice) as any;
+  }
 }

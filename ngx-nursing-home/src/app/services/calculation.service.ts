@@ -62,7 +62,7 @@ export class CalculationService {
       });
     }
     else {
-      result.price = pack.DefaultPackagePrice;
+      result.price = parseFloat(pack.DefaultPackagePrice.toString());
       result.services = services.map(x => { x.PriceRounded = '-'; return x });
     }
 
@@ -73,6 +73,10 @@ export class CalculationService {
 
   private roundPriceTwoDecimals(price: number): string {
     return (Math.round((price + Number.EPSILON) * 100) / 100).toFixed(2);
+  }
+
+  public roundToTwoDecimals(num: number): string {
+    return (Math.round((num + Number.EPSILON) * 100) / 100).toFixed(2);
   }
 
   public calculateServicePrice(service: IService): number {

@@ -1,7 +1,7 @@
 USE [ENV01_NURSING_HOME]
 GO
 
-/****** Object:  StoredProcedure [dbo].[getServicesForPackage]    Script Date: 6.5.2023. 17:29:20 ******/
+/****** Object:  StoredProcedure [dbo].[getServicesForPackage]    Script Date: 22.5.2023. 12:08:16 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -36,7 +36,7 @@ BEGIN
 	[MeasureUnitName]=mu.[Name],
 	[MeasureUnitTag]=mu.Tag,
 	[MeasureUnitCode]=mu.Code,
-	[CostPerUnit]=s.CostPerUnit,
+	[CostPerUnit]=FORMAT(s.CostPerUnit, 'N2'),
 	[DefaultNumberOfUnits]=s.DefaultNumberOfUnits,
 	[PriceUnitId]=s.PriceUnitId,
 	[PriceUnitName]=pu.[Name],
