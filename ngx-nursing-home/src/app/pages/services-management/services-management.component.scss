@@ -39,6 +39,11 @@
     }
 }
 
+.offer-items-container {
+    overflow: auto;
+    height: calc(100% - 40px);
+}
+
 .packages-container {
     overflow: auto;
     height: calc(100% - 75px);
@@ -143,7 +148,7 @@
         .items {
             height: calc(100% - 95px);
             width: 100%;
-            overflow: auto;
+            overflow: hidden;
 
             .no-data-title {
                 display: none;
