@@ -11,10 +11,12 @@
                 <div>{{brand.Name}}</div>
             </td>
             <td
-                style="width: 75%; border:none; text-align: right; margin-right: 80px; margin-top:80px; font-size: 30px; font-weight: bold;">
+                style="width: 75%; border:none; text-align: right; margin-right: 80px; margin-top:50px; font-size: 30px; font-weight: bold;">
                 {{getString('offerPrint')}}<br>
                 <span style="font-size: 14px; font-weight: lighter;">{{getString('offerDate')}}: {{offerDate |
-                    date:'dd.MM.yyyy.'}}</span>
+                    date:'dd.MM.yyyy.'}}</span><br>
+                <span style="font-size: 14px; font-weight: lighter; margin-top: 0;">{{getString('offerFor')}}:
+                    {{offerMeasureUnitName}}</span>
             </td>
         </tr>
     </table>

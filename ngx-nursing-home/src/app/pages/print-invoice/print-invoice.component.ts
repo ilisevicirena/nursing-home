@@ -60,7 +60,10 @@ export class PrintInvoiceComponent implements OnInit, AfterViewInit {
   @Input() selectedServices: any[] = [];
   @Input() selectedDiscounts: any[] = [];
   @Input() offerPrice: string = "0.00";
+  @Input() measureUnits: any[] = [];
+  @Input() selectedMeasureUnit: string = "";
 
+  public offerMeasureUnitName: string = "";
   public getString = getString;
   public offerDate = new Date();
   public freeSpace = '600px';
@@ -82,6 +85,8 @@ export class PrintInvoiceComponent implements OnInit, AfterViewInit {
       this.toastrService.showToast('warning', getString('nothingToPrint'));
     } else {
       this.freeSpace = this.calculateHeight();
+      this.offerMeasureUnitName = this.measureUnits.find(x => x.Code == this.selectedMeasureUnit)?.Name;
+      if (this.offerMeasureUnitName) this.offerMeasureUnitName = this.offerMeasureUnitName.toLowerCase();
 
       setTimeout(() => {
         const doc = new jsPDF();
