@@ -20,7 +20,24 @@
     }
 }
 
+.toggle-btn {
+    position: absolute;
+    top: 45%;
+    left: -1.2rem;
+    z-index: 600;
+}
+
 @include nb-install-component() {
+    nb-card {
+        border-radius: 1rem;
+
+        nb-card-header {
+            border: none;
+            font-size: 18px;
+            padding: 0.7rem;
+        }
+    }
+
     .ngx-tag {
         border-style: nb-theme(tag-border-style);
         border-width: nb-theme(tag-border-width);
@@ -34,37 +51,40 @@
         font-weight: nb-theme(tag-medium-text-font-weight);
         line-height: nb-theme(tag-medium-text-line-height);
         padding: nb-theme(tag-medium-padding);
-        background-color: nb-theme(tag-filled-basic-background-color);
-        border-color: nb-theme(tag-filled-basic-border-color);
-        color: nb-theme(tag-filled-basic-text-color);
+        background-color: nb-theme(tag-outline-primary-background-color);
+        border-color: nb-theme(tag-outline-primary-border-color);
+        color: nb-theme(tag-outline-primary-text-color);
         width: max-content;
 
         i {
             margin-right: 0.5rem;
-            color: nb-theme(tag-filled-basic-text-color);
+            color: nb-theme(tag-outline-primary-text-color);
             font-size: nb-theme(tag-medium-text-font-size);
         }
     }
 
     .ngx-tag:hover {
-        background-color: nb-theme(tag-filled-basic-hover-background-color);
-        border-color: nb-theme(tag-filled-basic-hover-border-color);
+        background-color: nb-theme(tag-outline-primary-hover-background-color);
+        border-color: nb-theme(tag-outline-primary-hover-border-color);
     }
 
     .room {
-        border: 1px solid nb-theme(input-basic-border-color);
+        // border: 1px solid nb-theme(input-basic-border-color);
         height: 10rem;
         padding: 0rem;
         display: flex;
         position: relative;
+        border-radius: 1rem;
+        margin-right: 5px;
+        background-color: nb-theme(color-primary-transparent-200);
 
         .room-name {
             color: nb-theme(color-primary-600);
             opacity: 0.6;
             font-weight: 600;
             font-size: 18px;
-            top: 0.5rem;
-            left: 0.5rem;
+            top: 0.7rem;
+            left: 1rem;
             position: absolute;
         }
 

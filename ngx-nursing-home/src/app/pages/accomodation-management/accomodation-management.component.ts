@@ -17,6 +17,7 @@ export class AccomodationManagementComponent implements OnInit, OnDestroy {
   public noRoomPersons: any[] = [];
   public mainSource: any[] = [];
   public getString = getString;
+  public showSidepanel: boolean = true;
 
   private subscriptions: Subscription[] = [];
   private originalSource: any;
@@ -88,6 +89,10 @@ export class AccomodationManagementComponent implements OnInit, OnDestroy {
     } arr.push('no-room');
 
     return arr;
+  }
+
+  public toggleSidepanel(): void {
+    this.showSidepanel = !this.showSidepanel;
   }
 
 }

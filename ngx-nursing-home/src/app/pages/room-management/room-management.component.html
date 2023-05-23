@@ -36,13 +36,15 @@
                     </nb-tag-list>
                 </div>
                 <div class="row mt-4">
-                    <div class="col-md-4 room" *ngFor="let room of selectedFloorRooms">
-                        <div>
-                            <div class="room-name">{{room.Name}}</div>
-                            <div class="room-capacity">
-                                <nb-icon pack="eva" icon="people-outline"
-                                    [status]="room.Capacity==0 ? 'primary' : room.Capacity==room.People ? 'danger':'success'"></nb-icon>
-                                {{room.People}}/{{room.Capacity}}
+                    <div class="col-md-4 p-1" *ngFor="let room of selectedFloorRooms">
+                        <div class="room">
+                            <div>
+                                <div class="room-name">{{room.Name}}</div>
+                                <div class="room-capacity">
+                                    <nb-icon pack="eva" icon="people-outline"
+                                        [status]="room.Capacity==0 ? 'primary' : room.Capacity==room.People ? 'danger':'success'"></nb-icon>
+                                    {{room.People}}/{{room.Capacity}}
+                                </div>
                             </div>
                         </div>
                     </div>

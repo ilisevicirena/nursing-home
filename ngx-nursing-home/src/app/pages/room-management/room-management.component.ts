@@ -117,6 +117,7 @@ export class RoomManagementComponent implements OnInit, OnDestroy {
         if (data.RoomId) {
           this.toastrService.showToast("success", getString("saveSuccess"), "");
           this.getRooms();
+          this.refreshFloorRooms();
         } else {
           this.toastrService.showToast("danger", getString("saveError"), "");
         }
@@ -135,6 +136,7 @@ export class RoomManagementComponent implements OnInit, OnDestroy {
     this.subscriptions.push(this.roomsService.delete(model).subscribe(data => {
       this.toastrService.showToast("success", getString("saveSuccess"), "");
       this.getRooms();
+      this.refreshFloorRooms();
     }, err => {
       console.error(err);
       this.toastrService.showToast("danger", getString("saveError"), "");
@@ -152,6 +154,7 @@ export class RoomManagementComponent implements OnInit, OnDestroy {
     this.subscriptions.push(this.roomsService.update(model).subscribe(data => {
       this.toastrService.showToast("success", getString("saveSuccess"), "");
       this.getRooms();
+      this.refreshFloorRooms();
     },
       err => {
         console.error(err);
@@ -191,6 +194,15 @@ export class RoomManagementComponent implements OnInit, OnDestroy {
     }, err => {
       console.error(err);
     }));
+  }
+
+  private refreshFloorRooms(): void {
+    var selectedFloor = this.floorsData.find(x => x.selected);
+    if (selectedFloor) {
+      this.subscriptions.push(this.roomsService.getRoomsForFloor(selectedFloor.Id).subscribe(data => {
+        this.selectedFloorRooms = data;
+      }));
+    }
   }
 
   private getRooms(): void {
