@@ -156,6 +156,7 @@
                         </button>
                     </div>
                 </nb-step>
+
                 <nb-step [label]="getString('contacts')">
                     <h4>{{getString('contactsPersonData')}}</h4>
                     <div class="stepper-body">
@@ -178,6 +179,7 @@
                         </button>
                     </div>
                 </nb-step>
+
                 <nb-step [label]="getString('accomodation')">
                     <h4>{{getString('stayData')}}</h4>
                     <div class="stepper-body">
@@ -230,17 +232,24 @@
                         </button>
                     </div>
                 </nb-step>
+
                 <nb-step [label]="getString('services')">
-                    <h4>{{getString('contactsPersonData')}}</h4>
+                    <h4>{{getString('offerPackagesForPerson')}}</h4>
                     <div class="stepper-body">
                         <p>
-                            {{getString('contactsPersonStepText')}}
+                            {{getString('offerPersonStepText')}}
                         </p>
-                        <div class="mt-5">
+                        <div class="mt-5" *ngIf="newPersonData.Id>0">
+                            <button nbButton ghost status="primary" shape="round"
+                                (click)="openOfferDialog(offerDialog)">{{getString('createOffer')}}
+                                <nb-icon pack="eva" icon="external-link-outline"></nb-icon>
+                            </button>
                         </div>
+                        <sample-no-data class="mt-4" *ngIf="newPersonData.Id==0"
+                            [title]="getString('savePersonFirst')"></sample-no-data>
                     </div>
                     <div class="stepper-footer w-100 d-flex justify-content-end">
-                        <button nbButton disabled shape="round" size="small" class="me-2" nbStepperPrevious>
+                        <button nbButton shape="round" size="small" class="me-2" nbStepperPrevious>
                             <nb-icon pack="eva" icon="chevron-left-outline"></nb-icon>
                             {{getString('back')}}</button>
                         <button nbButton shape="round" size="small" nbStepperNext>{{getString('next')}}
@@ -248,6 +257,8 @@
                         </button>
                     </div>
                 </nb-step>
+
+
                 <nb-step [label]="getString('documents')">
                     <h4>{{getString('contactsPersonData')}}</h4>
                     <div class="stepper-body">
@@ -288,3 +299,16 @@
         </nb-card-body>
     </nb-card>
 </div>
+
+<ng-template #offerDialog let-ref="dialogRef">
+    <nb-card class="offer-dialog-card">
+        <nb-card-header class="d-flex justify-content-end p-2">
+            <button nbButton ghost shape="round" size="small" (click)="ref.close()">
+                <nb-icon pack="eva" icon="close-outline"></nb-icon>
+            </button>
+        </nb-card-header>
+        <nb-card-body>
+            <sample-services-management [(personId)]="newPersonData.Id"></sample-services-management>
+        </nb-card-body>
+    </nb-card>
+</ng-template>

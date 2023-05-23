@@ -28,7 +28,7 @@
             </div>
         </div>
     </div>
-    <div class="col p-0" style="position: relative;">
+    <div class="col p-0 h-100" style="position: relative;">
         <button nbButton status="basic" shape="round" class="filter-toggle" (click)="toggleSidepanel()">
             <nb-icon pack="eva" [icon]="showSidepanel ? 'chevron-left-outline' : 'chevron-right-outline'"
                 status="primary"></nb-icon>
@@ -420,6 +420,10 @@
                                     [refreshEnabled]="false" [(data)]="roomHistory"></ngx-smart-table>
                             </div>
                         </div>
+                    </div>
+
+                    <div *ngSwitchCase="'services'" class="h-100">
+                        <sample-services-management [(personId)]="personId"></sample-services-management>
                     </div>
 
                 </div>

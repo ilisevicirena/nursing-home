@@ -151,6 +151,9 @@ const strings: IKeyValue[] = [
     { key: "thankYou", value: "Hvala na povjerenju!" },
     { key: "nothingToPrint", value: "Nema podataka za ispis!" },
     { key: "offerFor", value: "Ponuda za" },
+    { key: "offerPackagesForPerson", value: "Paket usluga za novu osobu" },
+    { key: "offerPersonStepText", value: "Ovdje možete odabrati pakete usluga za novu osobu. Paket i usluge možete dodati i naknadno na portalu za pregled podataka o osobi. Odabrane pakete i usluge možete poslije izmijeniti. Nakon odabira ponude nemojte zaboraviti spremiti podatke!" },
+    { key: "createOffer", value: "Kreiraj ponudu" },
 ];
 
 const map = new Map(strings.map(obj => [obj.key, obj.value]));

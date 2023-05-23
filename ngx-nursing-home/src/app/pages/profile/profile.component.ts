@@ -28,9 +28,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
     private router: Router,
   ) { }
 
-  private personId: number = 0;
   private subscriptions: Subscription[] = [];
 
+  public personId: number = 0;
   public getString = getString;
   public activeView: string = "basicData";
   public person: any = {};

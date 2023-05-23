@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, TemplateRef } from '@angular/core';
 import { getString } from '../../resources/strings';
 import { IPerson, PersonsService } from '../../services/rest/persons.service';
 import { NgForm } from '@angular/forms';
@@ -7,6 +7,7 @@ import { ToastrService } from '../../services/toastr.service';
 import { GendersService } from '../../services/rest/genders.service';
 import { RoomsService } from '../../services/rest/rooms.service';
 import { SelectGridColumn } from 'shared-components/lib/models/select-grid.model';
+import { DialogService } from '../../shared/dialog/dialog.service';
 
 @Component({
   selector: 'sample-new-person',
@@ -20,6 +21,7 @@ export class NewPersonComponent implements OnInit, OnDestroy {
     private toastrService: ToastrService,
     private gendersService: GendersService,
     private roomsService: RoomsService,
+    private dialogService: DialogService
   ) { }
 
   public getString = getString;
@@ -126,5 +128,9 @@ export class NewPersonComponent implements OnInit, OnDestroy {
     this.subscriptions.push(this.personsService.changeRoom(this.newPersonData.Id, this.selectedRoom.Id).subscribe(() => {
       this.toastrService.showToast('success', getString('saveSuccess'), '');
     }));
+  }
+
+  public openOfferDialog(dialog: TemplateRef<any>) {
+    this.dialogService.open(dialog, { autoFocus: false });
   }
 }

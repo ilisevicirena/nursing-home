@@ -1,7 +1,7 @@
-<div class="top-frame"></div>
-<div class="bottom-frame"></div>
-<div class="right-frame"></div>
-<div class="left-frame"></div>
+<div class="top-frame" *ngIf="personId==0"></div>
+<div class="bottom-frame" *ngIf="personId==0"></div>
+<div class="right-frame" *ngIf="personId==0"></div>
+<div class="left-frame" *ngIf="personId==0"></div>
 <div class="d-flex h-100 w-100">
     <div class="col-md-3 h-100 pt-2 pe-1">
         <nb-tabset (changeTab)="onTabChange($event)" class="h-100">
@@ -95,9 +95,13 @@
                                 </nb-option>
                             </nb-select>
                         </div>
-                        <div class="date">
+                        <div class="date" *ngIf="personId==0">
                             <div class="label">{{getString('offerDate')}}:</div>
                             <div class="value">{{offerDate | date:'dd.MM.yyyy.'}}</div>
+                        </div>
+                        <div *ngIf="personId>0">
+                            <button nbButton status="primary" shape="round" [disabled]="!isChanged"
+                                (click)="onSaveClick()">{{getString('save')}}</button>
                         </div>
                     </div>
                 </div>

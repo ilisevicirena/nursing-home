@@ -1,7 +1,7 @@
 USE [ENV01_NURSING_HOME]
 GO
 
-/****** Object:  StoredProcedure [dbo].[getServicesAndPackagesForPerson]    Script Date: 2.5.2023. 14:13:58 ******/
+/****** Object:  StoredProcedure [dbo].[getServicesAndPackagesForPerson]    Script Date: 23.5.2023. 9:10:47 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -31,19 +31,25 @@ BEGIN
 	[LastName]=p.LastName,
 	[Jmbg]=p.JMBG,
 	[RowId]=ppr.Id,
-	[PackageId]=ppr.PackageId,
-	[PackageName]=pc.[Name],
-	[PackageDescription]=pc.[Description],
-	[DefaultPackagePrice]=pc.DefaultPackagePrice,
+	[Id]=ppr.PackageId,
+	[Name]=pc.[Name],
+	[Description]=pc.[Description],
+	[Quantity]=1,
+	[DefaultPackagePrice]=FORMAT(pc.DefaultPackagePrice, 'N2'),
 	[PackagePriceCalculated]=pc.PackagePriceCalculated,
 	[DefaultPackagePriceUnitId]=pc.DefaultPackagePriceUnitId,
 	[DefaultPackagePriceUnitName]=pu.[Name],
 	[DefaultPackagePriceUnitTag]=pu.Tag,
-	[StartDate]=ppr.StartDate
+	[StartDate]=ppr.StartDate,
+	[MeasureUnitId]=pc.CalculationMeasureUnitId,
+	[MeasureUnitName]=mu.[Name],
+	[MeasureUnitTag]=mu.Tag,
+	[MeasureUnitCode]=mu.Code
 	FROM 
 	dbo.PersonPackageRelation as ppr 
 	join dbo.Person as p on p.Id=ppr.PersonId
 	join dbo.Package as pc on pc.Id=ppr.PackageId
+	left join dbo.MeasureUnit as mu on pc.CalculationMeasureUnitId=mu.Id
 	left join dbo.PriceUnit as pu on pc.DefaultPackagePriceUnitId=pu.Id
 	where ppr.PersonId=@Id and ppr.Active=1;
 
@@ -57,7 +63,8 @@ BEGIN
 	[MeasureUnitId]=s.MeasureUnitId,
 	[MeasureUnitName]=mu.[Name],
 	[MeasureUnitTag]=mu.Tag,
-	[CostPerUnit]=s.CostPerUnit,
+	[MeasureUnitCode]=mu.Code,
+	[CostPerUnit]=FORMAT(s.CostPerUnit, 'N2'),
 	[DefaultNumberOfUnits]=s.DefaultNumberOfUnits,
 	[PriceUnitId]=s.PriceUnitId,
 	[PriceUnitName]=pu.[Name],
@@ -74,13 +81,15 @@ BEGIN
 
 	--individual additional services
 	SELECT 
-	[ServiceId]=psr.ServiceId,
-	[ServiceName]=s.[Name],
-	[ServiceDescription]=s.[Description],
+	[RowId]=psr.Id,
+	[Id]=psr.ServiceId,
+	[Name]=s.[Name],
+	[Description]=s.[Description],
 	[MeasureUnitId]=s.MeasureUnitId,
 	[MeasureUnitName]=mu.[Name],
 	[MeasureUnitTag]=mu.Tag,
-	[CostPerUnit]=s.CostPerUnit,
+	[MeasureUnitCode]=mu.Code,
+	[CostPerUnit]=FORMAT(s.CostPerUnit, 'N2'),
 	[DefaultNumberOfUnits]=s.DefaultNumberOfUnits,
 	[PriceUnitId]=s.PriceUnitId,
 	[PriceUnitName]=pu.[Name],
@@ -91,6 +100,19 @@ BEGIN
 	join dbo.MeasureUnit as mu on s.MeasureUnitId=mu.Id
 	join dbo.PriceUnit as pu on s.PriceUnitId=pu.Id
 	where psr.PersonId=@Id and psr.Active=1;
+
+	--discounts
+	select
+	[Id]=pdr.DiscountId,
+	[Name]=d.[Name],
+	[Description]=d.[Description],
+	[Quantity]=d.Quantity,
+	[PercentCalculation]=d.PercentCalculation
+	from
+	dbo.PersonDiscountRelation as pdr
+	join dbo.Discount as d 
+	on pdr.DiscountId=d.Id
+	where pdr.PersonId=@Id and pdr.Active=1;
 END
 GO
 
