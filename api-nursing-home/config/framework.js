@@ -1,7 +1,7 @@
 var config = require('./config');
 var sql = require("mssql/msnodesqlv8");
 
-const db = new sql.ConnectionPool(config)
+const db = new sql.ConnectionPool(config.CONFIG)
     .connect()
     .then(pool => {
         console.log('Connected to MSSQL');

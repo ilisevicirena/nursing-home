@@ -11,6 +11,7 @@
     "body-parser": "~1.0.1",
     "cors": "2.8.1",
     "express": "~4.0.0",
+    "fs": "^0.0.1-security",
     "msnodesqlv8": "^3.1.0",
     "mssql": "^6.2.1"
   },

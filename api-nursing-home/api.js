@@ -22,6 +22,7 @@ const servicesMangement = require('./routes/services-management');
 const measureUnits = require('./routes/measure-units');
 const priceUnits = require('./routes/price-units');
 const notifications = require('./routes/notifications');
+const documents = require('./routes/documents');
 
 // register routes
 router.use('/floors', floors);
@@ -36,6 +37,7 @@ router.use('/services-management', servicesMangement);
 router.use('/measure-units', measureUnits);
 router.use('/price-units', priceUnits);
 router.use('/notifications', notifications);
+router.use('/documents', documents);
 
 // No need to connect the pool
 // Just start the web server

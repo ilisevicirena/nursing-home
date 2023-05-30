@@ -4,4 +4,5 @@ const CONFIG = {
     connectionTimeout: 30000,
 };
 
-module.exports = CONFIG;
+const FILES_FOLDER = "files";
+module.exports = { CONFIG, FILES_FOLDER };

@@ -5,6 +5,7 @@
 
 # dependencies
 /node_modules
+/files
 
 # IDEs and editors
 /.idea
