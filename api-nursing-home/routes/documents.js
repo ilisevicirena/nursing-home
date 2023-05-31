@@ -87,4 +87,17 @@ router.get('/getDocumentsForPersonByType', async (request, response) => {
     }
 });
 
+router.get('/getDocumentTypes', async (request, response) => {
+    try {
+        const pool = await db;
+        const result = await pool.request()
+            .query("EXEC [dbo].[getDocumentTypes]");
+        if (result != null) response.json(result.recordset);
+        else response.send(getError(1001));
+    } catch (err) {
+        response.status(500);
+        response.send(err.message);
+    }
+});
+
 module.exports = router;
