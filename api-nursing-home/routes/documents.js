@@ -6,14 +6,32 @@ const { FILES_FOLDER } = require('../config/config');
 const fs = require('fs');
 const { resolve } = require('path');
 
-//const contents = fs.readFileSync('/path/to/file.jpg', {encoding: 'base64'});
+router.get('/getDocumentContent', async (request, response) => {
+    try {
+        const pool = await db;
+        const result = await pool.request()
+            .input('id', request.query.DocumentId)
+            .query("EXEC [dbo].[getDocumentDetails] @Id=@id");
+        if (result != null) {
+            var documentId = result.recordset[0].Id;
+            if (documentId) {
+                const contents = fs.readFileSync(result.recordset[0].Path, { encoding: 'base64' });
+                response.json({ document: result.recordset[0], content: contents });
+            } else response.send(getError(1001));
+        } else response.send(getError(1001));
+    } catch (err) {
+        response.status(500);
+        response.send(err.message);
+    }
+});
 
 router.post('/add', async (request, response) => {
     try {
-        var objectToSave = request.body;
-        // var objectToSave = Object.assign(new Package, request.body);
+        var objectToSave = Object.assign(new Document, request.body);
         var folderPath = './' + FILES_FOLDER;
+        // if folder doesn't exist create it first
         if (!fs.existsSync(folderPath)) fs.mkdirSync(folderPath);
+        //get full path to new folder
         const absolutePath = resolve(folderPath) + "\\";
         const pool = await db;
         const result = await pool.request()
@@ -31,7 +49,7 @@ router.post('/add', async (request, response) => {
                     if (err) response.send(err);
                     else response.json(result.recordset[0]);
                 });
-            }
+            } else response.send(getError(1001));
         }
         else response.send(getError(1001));
     } catch (err) {
@@ -40,6 +58,33 @@ router.post('/add', async (request, response) => {
     }
 });
 
+router.get('/getDocumentsForPerson', async (request, response) => {
+    try {
+        const pool = await db;
+        const result = await pool.request()
+            .input('id', request.query.PersonId)
+            .query("EXEC [dbo].[getDocumentsForPerson] @PersonId=@id");
+        if (result != null) response.json(result.recordset);
+        else response.send(getError(1001));
+    } catch (err) {
+        response.status(500);
+        response.send(err.message);
+    }
+});
 
+router.get('/getDocumentsForPersonByType', async (request, response) => {
+    try {
+        const pool = await db;
+        const result = await pool.request()
+            .input('id', request.query.PersonId)
+            .input('type', request.query.DocumentTypeId)
+            .query("EXEC [dbo].[getDocumentsForPersonByType] @PersonId=@id, @DocumentTypeId=@type");
+        if (result != null) response.json(result.recordset);
+        else response.send(getError(1001));
+    } catch (err) {
+        response.status(500);
+        response.send(err.message);
+    }
+});
 
 module.exports = router;
