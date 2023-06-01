@@ -32,7 +32,7 @@ router.post('/add', async (request, response) => {
             .input('genderId', objectToSave.GenderId)
             .query("EXEC [dbo].[insertPerson] @FirstName=@firstName, @LastName=@lastName, @JMBG=@jmbg, @BirthDate=@birthDate, @StartDate=@startDate, @Address=@address, @GenderId=@genderId");
         if (result != null) response.json(result.recordset[0]);
-        else response.send(getError(3001));
+        else response.send(getError(8001));
     } catch (err) {
         response.status(500);
         response.send(err.message);
@@ -47,7 +47,7 @@ router.delete('/delete', async (request, response) => {
             .input('id', objectToSave.Id)
             .query("EXEC [dbo].[deletePerson] @Id=@id");
         if (result != null) response.json(result.recordset);
-        else response.send(getError(3002));
+        else response.send(getError(8002));
     } catch (err) {
         response.status(500);
         response.send(err.message);
@@ -70,7 +70,7 @@ router.post('/update', async (request, response) => {
             .input('genderId', objectToSave.GenderId)
             .query("EXEC [dbo].[updatePerson] @Id=@id, @FirstName=@firstName, @LastName=@lastName, @JMBG=@jmbg, @BirthDate=@birthDate, @StartDate=@startDate, @EndDate=@endDate, @Address=@address, @GenderId=@genderId");
         if (result != null) response.json(result.recordset);
-        else response.send(getError(2003));
+        else response.send(getError(8003));
     } catch (err) {
         response.status(500);
         response.send(err.message);
@@ -100,7 +100,7 @@ router.post('/changeStatusPerson', async (request, response) => {
             .input('endDate', objectToSave.EndDate)
             .query("EXEC [dbo].[changeStatusPerson] @Id=@id, @Status=@status, @Date=@endDate");
         if (result != null) response.json(result.recordset);
-        else response.send(getError(3004));
+        else response.send(getError(8004));
     } catch (err) {
         response.status(500);
         response.send(err.message);
@@ -116,7 +116,7 @@ router.post('/changeRoomPerson', async (request, response) => {
             .input('roomId', objectToSave.RoomId)
             .query("EXEC [dbo].[changeRoomPerson] @PersonId=@personId, @RoomId=@roomId");
         if (result != null) response.json(result.recordset);
-        else response.send(getError(3005));
+        else response.send(getError(8005));
     } catch (err) {
         response.status(500);
         response.send(err.message);
@@ -131,7 +131,7 @@ router.post('/deactivateRoomPerson', async (request, response) => {
             .input('personId', objectToSave.PersonId)
             .query("EXEC [dbo].[deactivateRoomPerson] @PersonId=@personId");
         if (result != null) response.json(result.recordset);
-        else response.send(getError(3005));
+        else response.send(getError(8006));
     } catch (err) {
         response.status(500);
         response.send(err.message);

@@ -46,7 +46,7 @@ router.post('/markNotificationAsRead', async (request, response) => {
             .input('id', request.body.Id)
             .query("EXEC [dbo].[markNotificationAsRead] @Id=@id");
         if (result != null) response.json(result);
-        else response.send(getError(4001));
+        else response.send(getError(6001));
     } catch (err) {
         response.status(500);
         response.send(err.message);
@@ -59,7 +59,7 @@ router.post('/markAllNotificationsAsRead', async (request, response) => {
         const result = await pool.request()
             .query("EXEC [dbo].[markAllNotificationsAsRead]");
         if (result != null) response.json(result);
-        else response.send(getError(4001));
+        else response.send(getError(6002));
     } catch (err) {
         response.status(500);
         response.send(err.message);

@@ -30,7 +30,7 @@ router.post('/add', async (request, response) => {
             .input('personId', objectToSave.PersonId)
             .query("EXEC [dbo].[insertContact] @FirstName=@firstName, @LastName=@lastName, @Email=@email, @Telephone=@telephone, @Mobile=@mobile, @PersonId=@personId");
         if (result != null) response.json(result.recordset[0]);
-        else response.send(getError(4001));
+        else response.send(getError(3001));
     } catch (err) {
         response.status(500);
         response.send(err.message);
@@ -45,7 +45,7 @@ router.delete('/delete', async (request, response) => {
             .input('id', objectToSave.Id)
             .query("EXEC [dbo].[deleteContact] @Id=@id");
         if (result != null) response.json(result.recordset);
-        else response.send(getError(4002));
+        else response.send(getError(3002));
     } catch (err) {
         response.status(500);
         response.send(err.message);
@@ -65,7 +65,7 @@ router.post('/update', async (request, response) => {
             .input('mobile', objectToSave.Mobile)
             .query("EXEC [dbo].[updateContact] @Id=@id, @FirstName=@firstName, @LastName=@lastName, @Email=@email, @Telephone=@telephone, @Mobile=@mobile");
         if (result != null) response.json(result.recordset);
-        else response.send(getError(4003));
+        else response.send(getError(3003));
     } catch (err) {
         response.status(500);
         response.send(err.message);

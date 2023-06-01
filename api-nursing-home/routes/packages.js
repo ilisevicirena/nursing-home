@@ -45,9 +45,8 @@ router.post('/add', async (request, response) => {
                     response.json(result.recordset[0]);
                 });
             }
-
         }
-        else response.send(getError(1001));
+        else response.send(getError(7001));
     } catch (err) {
         response.status(500);
         response.send(err.message);
@@ -95,7 +94,7 @@ router.post('/update', async (request, response) => {
                 response.json(result.recordset);
             });
         }
-        else response.send(getError(1003));
+        else response.send(getError(7002));
 
     } catch (err) {
         response.status(500);
@@ -111,7 +110,7 @@ router.delete('/delete', async (request, response) => {
             .input('id', objectToSave.Id)
             .query("EXEC [dbo].[deactivatePackage] @Id=@id");
         if (result != null) response.json(result.recordset);
-        else response.send(getError(2002));
+        else response.send(getError(7003));
     } catch (err) {
         response.status(500);
         response.send(err.message);

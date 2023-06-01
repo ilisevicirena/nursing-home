@@ -98,7 +98,7 @@ router.get('/getAccomodationManagementRooms', async (request, response) => {
         const result = await pool.request()
             .query("EXEC [dbo].[getAccomodationManagementRooms]");
         if (result.recordsets.length == 3) response.json({ Floors: result.recordsets[0], Rooms: result.recordsets[1], Persons: result.recordsets[2] });
-        else response.send(getError(2003));
+        else response.send(getError(2004));
     } catch (err) {
         response.status(500);
         response.send(err.message);

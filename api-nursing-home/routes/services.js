@@ -29,7 +29,7 @@ router.post('/add', async (request, response) => {
             .input('price', objectToSave.PriceUnitId)
             .query("EXEC [dbo].[insertService] @Name=@name, @Description=@description, @MeasureUnitId=@measure, @CostPerUnit=@cost, @DefaultNumberOfUnits=@default, @PriceUnitId=@price");
         if (result != null) response.json(result.recordset[0]);
-        else response.send(getError(1001));
+        else response.send(getError(10001));
     } catch (err) {
         response.status(500);
         response.send(err.message);
@@ -50,7 +50,7 @@ router.post('/update', async (request, response) => {
             .input('price', objectToSave.PriceUnitId)
             .query("EXEC [dbo].[updateService] @Id=@id, @Name=@name, @Description=@description, @MeasureUnitId=@measure, @CostPerUnit=@cost, @DefaultNumberOfUnits=@default, @PriceUnitId=@price");
         if (result != null) response.json(result.recordset);
-        else response.send(getError(1003));
+        else response.send(getError(10002));
     } catch (err) {
         response.status(500);
         response.send(err.message);
@@ -65,7 +65,7 @@ router.delete('/delete', async (request, response) => {
             .input('id', objectToSave.Id)
             .query("EXEC [dbo].[deactivateService] @Id=@id");
         if (result != null) response.json(result.recordset);
-        else response.send(getError(2002));
+        else response.send(getError(10003));
     } catch (err) {
         response.status(500);
         response.send(err.message);

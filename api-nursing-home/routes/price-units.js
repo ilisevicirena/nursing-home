@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const { db } = require('../config/framework');
-const { getError } = require('../resources/error-codes');
 
 router.get('/', async (request, response) => {
     try {
@@ -14,6 +13,5 @@ router.get('/', async (request, response) => {
         response.send(err.message);
     }
 });
-
 
 module.exports = router;

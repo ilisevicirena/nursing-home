@@ -11,7 +11,7 @@ router.get('/getPackageAndServicesForPerson', async (request, response) => {
             .input('id', request.query.PersonId)
             .query("EXEC [dbo].[getServicesAndPackagesForPerson] @Id=@id");
         if (result.recordsets.length == 4) response.json({ Packages: result.recordsets[0], PackagesServices: result.recordsets[1], Services: result.recordsets[2], Discounts: result.recordsets[3] });
-        else response.send(getError(2003));
+        else response.send(getError(9001));
     } catch (err) {
         response.status(500);
         response.send(err.message);

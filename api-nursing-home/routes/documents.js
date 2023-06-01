@@ -18,8 +18,8 @@ router.get('/getDocumentContent', async (request, response) => {
             if (documentId) {
                 const contents = fs.readFileSync(result.recordset[0].Path, { encoding: 'base64' });
                 response.json({ document: result.recordset[0], content: contents });
-            } else response.send(getError(1001));
-        } else response.send(getError(1001));
+            } else response.send(getError(5001));
+        } else response.send(getError(5002));
     } catch (err) {
         response.status(500);
         response.send(err.message);
@@ -50,9 +50,9 @@ router.post('/add', async (request, response) => {
                     if (err) response.send(err);
                     else response.json(result.recordset[0]);
                 });
-            } else response.send(getError(1001));
+            } else response.send(getError(5003));
         }
-        else response.send(getError(1001));
+        else response.send(getError(5003));
     } catch (err) {
         response.status(500);
         response.send(err.message);
@@ -66,7 +66,7 @@ router.get('/getDocumentsForPerson', async (request, response) => {
             .input('id', request.query.PersonId)
             .query("EXEC [dbo].[getDocumentsForPerson] @PersonId=@id");
         if (result != null) response.json(result.recordset);
-        else response.send(getError(1001));
+        else response.send(getError(5004));
     } catch (err) {
         response.status(500);
         response.send(err.message);
@@ -81,7 +81,7 @@ router.get('/getDocumentsForPersonByType', async (request, response) => {
             .input('type', request.query.DocumentTypeId)
             .query("EXEC [dbo].[getDocumentsForPersonByDocumentType] @PersonId=@id, @DocumentTypeId=@type");
         if (result != null) response.json(result.recordset);
-        else response.send(getError(1001));
+        else response.send(getError(5005));
     } catch (err) {
         response.status(500);
         response.send(err.message);
@@ -94,7 +94,7 @@ router.get('/getDocumentTypes', async (request, response) => {
         const result = await pool.request()
             .query("EXEC [dbo].[getDocumentTypes]");
         if (result != null) response.json(result.recordset);
-        else response.send(getError(1001));
+        else response.send(getError(5006));
     } catch (err) {
         response.status(500);
         response.send(err.message);
@@ -108,7 +108,7 @@ router.get('/getDocumentTypesForPerson', async (request, response) => {
             .input('id', request.query.PersonId)
             .query("EXEC [dbo].[getDocumentTypesForPerson] @PersonId=@id");
         if (result != null) response.json(result.recordset);
-        else response.send(getError(1001));
+        else response.send(getError(5007));
     } catch (err) {
         response.status(500);
         response.send(err.message);
@@ -131,13 +131,13 @@ router.delete('/delete', async (request, response) => {
                     .query("EXEC [dbo].[deleteDocument] @Id=@id");
                 if (del != null) {
                     fs.unlink(result.recordset[0].Path, function (err) {
-                        if (err) response.send(getError(1002));
+                        if (err) response.send(getError(5008));
                         response.send({ error: false });
                     });
                 }
-                else response.send(getError(1002));
-            } else response.send(getError(1001));
-        } else response.send(getError(1001));
+                else response.send(getError(5009));
+            } else response.send(getError(5010));
+        } else response.send(getError(5010));
     } catch (err) {
         response.status(500);
         response.send(err.message);
