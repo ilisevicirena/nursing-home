@@ -58,6 +58,7 @@ import { NotificationsSettingsComponent } from './notifications/notifications-se
 import { DiscountsPickerComponent } from './discounts/discounts-picker/discounts-picker.component';
 import { PrintInvoiceComponent } from './print-invoice/print-invoice.component';
 import { DocumentsComponent } from './documents/documents.component';
+import { UploadDocumentComponent } from './documents/upload-document/upload-document.component';
 
 @NgModule({
   imports: [
@@ -118,7 +119,8 @@ import { DocumentsComponent } from './documents/documents.component';
     NotificationsSettingsComponent,
     DiscountsPickerComponent,
     PrintInvoiceComponent,
-    DocumentsComponent
+    DocumentsComponent,
+    UploadDocumentComponent
   ],
 })
 export class PagesModule {

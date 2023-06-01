@@ -1,7 +1,7 @@
 <nb-tabset class="documents-tabset" (changeTab)="onTabChange($event)">
     <nb-tab *ngFor="let type of documentTypes; let indexOfelement=index;" [tabTitle]="type.Name"
         class="h-100 m-0 p-0 overflow-hidden" [badgeText]="type.FileNumber" badgeStatus="primary" [tabId]="type.Id"
-        badgePosition="center end" [active]="indexOfelement==0">
+        badgePosition="center end" [active]="currentDocumentTypeId==type.Id">
         <nb-card class="h-100 tab-card">
             <nb-card-body>
                 <div class="row m-0 w-100 pb-3">
@@ -17,8 +17,8 @@
                         </nb-form-field>
                     </div>
                     <div class="col d-flex align-items-center justify-content-end">
-                        <button nbButton ghost status="primary" shape="round" size="small"
-                            class="me-2">{{getString('addNewData')}}
+                        <button nbButton ghost status="primary" shape="round" size="small" class="me-2"
+                            (click)="addNewDocument()">{{getString('addNewData')}}
                             <nb-icon pack="eva" icon="file-add-outline"></nb-icon>
                         </button>
                         <nb-button-group size="small" (valueChange)="viewChange($event)">

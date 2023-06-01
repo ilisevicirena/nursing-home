@@ -1,0 +1,91 @@
+<nb-card class="discount-picker-card">
+    <nb-card-header class="d-flex">
+        <div class="col">
+            {{getString('addDocument')}}
+        </div>
+        <div class="w-max">
+            <button nbButton ghost shape="round" (click)="close(false)">
+                <nb-icon pack="eva" icon="close-outline"></nb-icon>
+            </button>
+        </div>
+    </nb-card-header>
+    <nb-card-body class="pt-0">
+        <div class="row m-0 h-100">
+            <div class="col-md-6 ps-0">
+                <ngx-filepicker class="h-100" [multiple]="false" [showMaxFilesNumber]="true" [maxFiles]="1"
+                    [showAcceptedFormats]="true" [displayFileSize]="true" (valueChanged)="onFileUploaded($event)"
+                    [accept]="'.pdf, .doc, .docx, .xls, .xlsx, .txt, .png, .jpg, .jpeg'"></ngx-filepicker>
+            </div>
+            <div class="col-md-6 pe-0">
+                <form #documentForm="ngForm">
+                    <div class="row m-0">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <div class="label">{{getString('documentType')}}</div>
+                                <div class="value">
+                                    <nb-select fullWidth [placeholder]="getString('select')" [selected]="selectedType">
+                                        <nb-option *ngFor="let t of documentTypes" [value]="t.Id">{{t.Name}}</nb-option>
+                                    </nb-select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row m-0 mt-2">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <div class="label">{{getString('name')}}</div>
+                                <div class="value">
+                                    <input nbInput [placeholder]="getString('name')" name="documentName" required
+                                        autocomplete="off" [(ngModel)]="documentData.Name" fullWidth>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row m-0 mt-2">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="label">{{getString('fileType')}}</div>
+                                <div class="value">
+                                    <input nbInput [placeholder]="getString('fileType')" name="extension"
+                                        [(ngModel)]="documentData.Extension" fullWidth disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="label">{{getString('uploadDate')}}</div>
+                                <div class="value">
+                                    <nb-form-field>
+                                        <input nbInput #birthDateInput [placeholder]="getString('uploadDate')" fullWidth
+                                            autocomplete="off" name="uploadDate" [(ngModel)]="currentDate" disabled
+                                            [nbDatepicker]="birthDateDatepicker">
+                                        <nb-datepicker #birthDateDatepicker></nb-datepicker>
+                                        <button nbButton nbSuffix ghost (click)="birthDateInput.focus()">
+                                            <nb-icon pack="eva" icon="calendar-outline"></nb-icon>
+                                        </button>
+                                    </nb-form-field>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="row m-0 mt-3">
+                    <div class="col-md-12 d-flex justify-content-end">
+                        <button nbButton ghost shape="round" size="small" class="me-2" (click)="close(false)">
+                            {{getString('cancel')}}
+                        </button>
+                        <button nbButton status="primary" shape="round" size="small" (click)="onSaveClick()"
+                            [disabled]="documentForm.form.invalid || !documentData.Base64">
+                            {{getString('save')}}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nb-card-body>
+    <!--
+    <nb-card-footer class="d-flex justify-content-end">
+      
+    </nb-card-footer>
+    -->
+</nb-card>

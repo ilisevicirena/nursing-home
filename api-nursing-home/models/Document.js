@@ -1,5 +1,6 @@
 class DocumentFile {
-    constructor(personId, documentTypeId, name, extension, fileType, base64) {
+    constructor(id, personId, documentTypeId, name, extension, fileType, base64) {
+        this.Id = id;
         this.Name = name;
         this.PersonId = personId;
         this.DocumentTypeId = documentTypeId;
