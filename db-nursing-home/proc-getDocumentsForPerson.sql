@@ -1,18 +1,13 @@
--- ================================================
--- Template generated from Template Explorer using:
--- Create Procedure (New Menu).SQL
---
--- Use the Specify Values for Template Parameters 
--- command (Ctrl-Shift-M) to fill in the parameter 
--- values below.
---
--- This block of comments will not be included in
--- the definition of the procedure.
--- ================================================
+USE [ENV01_NURSING_HOME]
+GO
+
+/****** Object:  StoredProcedure [dbo].[getDocumentsForPerson]    Script Date: 1.6.2023. 9:29:46 ******/
 SET ANSI_NULLS ON
 GO
+
 SET QUOTED_IDENTIFIER ON
 GO
+
 -- =============================================
 -- Author:		Irena Ilisevic
 -- Create date: 30.5.2023.
@@ -46,7 +41,9 @@ BEGIN
 	from dbo.Document as d
 	left join dbo.DocumentType as dt on d.DocumentTypeId=dt.Id
 	left join dbo.Person as p on d.PersonId=p.Id
-	where d.PersonId=@PersonId;
+	where d.PersonId=@PersonId
+	order by CreationDate desc;
 
 END
 GO
+
