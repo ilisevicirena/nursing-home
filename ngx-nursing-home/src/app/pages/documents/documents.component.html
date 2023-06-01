@@ -35,7 +35,8 @@
                     <div class="row m-0">
                         <div class="ps-0" *ngFor="let d of documents | filter:searchTerm"
                             [class]="currentView=='row' ? 'col-md-12 mb-1':'col-md-2'">
-                            <ngx-file-card [(mode)]="currentView" [formatDate]="true"
+                            <ngx-file-card [(mode)]="currentView" [formatDate]="true" [useCustomPreview]="true"
+                                [useCustomDownload]="true" (fileMenuItemClick)="onFileMenuItemClick($event)"
                                 [fileData]="{id: d.Id, filename: d.Name, extension: d.Extension, createdDate: d.CreationDate, author: d.PersonFirstName+' '+d.PersonLastName}"></ngx-file-card>
                         </div>
                     </div>
