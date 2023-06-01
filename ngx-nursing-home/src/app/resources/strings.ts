@@ -162,6 +162,7 @@ const strings: IKeyValue[] = [
     { key: "fileType", value: "Vrsta datoteke" },
     { key: "uploadDate", value: "Datum učitavanja" },
     { key: "wantToDelete", value: "Sigurno želiš obrisati?" },
+    { key: "wantToSaveOffer", value: "Sigurno želiš spremiti promjene u paketu usluga?" },
 ];
 
 const map = new Map(strings.map(obj => [obj.key, obj.value]));
