@@ -5,6 +5,7 @@ const { getError } = require('../resources/error-codes');
 const { FILES_FOLDER } = require('../config/config');
 const fs = require('fs');
 const { resolve } = require('path');
+const { DocumentFile } = require('../models/Document');
 
 router.get('/getDocumentContent', async (request, response) => {
     try {
@@ -27,7 +28,7 @@ router.get('/getDocumentContent', async (request, response) => {
 
 router.post('/add', async (request, response) => {
     try {
-        var objectToSave = Object.assign(new Document, request.body);
+        var objectToSave = Object.assign(new DocumentFile, request.body);
         var folderPath = './' + FILES_FOLDER;
         // if folder doesn't exist create it first
         if (!fs.existsSync(folderPath)) fs.mkdirSync(folderPath);
@@ -108,6 +109,35 @@ router.get('/getDocumentTypesForPerson', async (request, response) => {
             .query("EXEC [dbo].[getDocumentTypesForPerson] @PersonId=@id");
         if (result != null) response.json(result.recordset);
         else response.send(getError(1001));
+    } catch (err) {
+        response.status(500);
+        response.send(err.message);
+    }
+});
+
+router.delete('/delete', async (request, response) => {
+    try {
+        var objectToSave = Object.assign(new DocumentFile, request.body);
+        const pool = await db;
+        const result = await pool.request()
+            .input('id', objectToSave.Id)
+            .query("EXEC [dbo].[getDocumentDetails] @Id=@id");
+        if (result != null) {
+            var documentId = result.recordset[0].Id;
+
+            if (documentId) {
+                const del = await pool.request()
+                    .input('id', objectToSave.Id)
+                    .query("EXEC [dbo].[deleteDocument] @Id=@id");
+                if (del != null) {
+                    fs.unlink(result.recordset[0].Path, function (err) {
+                        if (err) response.send(getError(1002));
+                        response.send({ error: false });
+                    });
+                }
+                else response.send(getError(1002));
+            } else response.send(getError(1001));
+        } else response.send(getError(1001));
     } catch (err) {
         response.status(500);
         response.send(err.message);

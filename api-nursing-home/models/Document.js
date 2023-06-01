@@ -1,4 +1,4 @@
-class Document {
+class DocumentFile {
     constructor(personId, documentTypeId, name, extension, fileType, base64) {
         this.Name = name;
         this.PersonId = personId;
@@ -10,5 +10,5 @@ class Document {
 }
 
 module.exports = {
-    Document
+    DocumentFile
 }
