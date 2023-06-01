@@ -385,7 +385,7 @@
                                                 class="required-mark ms-2"
                                                 [nbTooltip]="getString('roomSelectionInvalid')"></nb-icon></div>
                                         <div class="value">
-                                            <ngx-select-grid [columns]="roomsColumns" [(source)]="rooms"
+                                            <ngx-select-grid [columns]="roomsColumns" [(source)]="rooms" #roomSelectGrid
                                                 [disabled]="!person.Active"
                                                 (onSelectionChanged)="onRoomSelectionChanged($event)" [valueAttr]="'Id'"
                                                 [multiple]="false" [attributesForLabel]="['Name']"></ngx-select-grid>

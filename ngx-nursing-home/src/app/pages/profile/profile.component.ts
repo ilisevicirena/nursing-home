@@ -1,12 +1,12 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChildren } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Subscription, UnsubscriptionError } from 'rxjs';
 import { PersonsService, getIPersonFromJSON } from '../../services/rest/persons.service';
 import { getString } from '../../resources/strings';
 import { NgForm } from '@angular/forms';
 import { ToastrService } from '../../services/toastr.service';
 import { GendersService } from '../../services/rest/genders.service';
-import { CheckboxType, DateType, SmartTableColumn, TextboxEditor } from 'shared-components';
+import { CheckboxType, DateType, SelectGridComponent, SmartTableColumn, TextboxEditor } from 'shared-components';
 import { DialogService } from '../../shared/dialog/dialog.service';
 import { RoomsService } from '../../services/rest/rooms.service';
 import { SelectGridColumn } from 'shared-components/lib/models/select-grid.model';
@@ -75,6 +75,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
     { option: 'documents', string: 'documents', active: false },
     { option: 'notes', string: 'notes', active: false }
   ];
+
+  @ViewChildren('roomSelectGrid') roomsGrid;
 
   public roomsColumns: SelectGridColumn[] = [
     {
@@ -257,6 +259,12 @@ export class ProfileComponent implements OnInit, OnDestroy {
   public savePersonRoom(): void {
     this.subscriptions.push(this.personsService.changeRoom(this.newPersonData.Id, this.selectedRoom.Id).subscribe(() => {
       this.toastrService.showToast('success', getString('saveSuccess'), '');
+      var grid = this.roomsGrid.first as SelectGridComponent;
+      grid.selected = undefined;
+      this.selectedRoom = { FloorName: '', IsValid: true };
+      this.getPersonDetails(this.personId);
+      this.getAvaliableRooms();
+      this.getRoomHistory();
     }));
   }
 
