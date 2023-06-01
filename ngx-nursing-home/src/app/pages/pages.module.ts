@@ -57,6 +57,7 @@ import { NotificationsComponent } from './notifications/notifications.component'
 import { NotificationsSettingsComponent } from './notifications/notifications-settings/notifications-settings.component';
 import { DiscountsPickerComponent } from './discounts/discounts-picker/discounts-picker.component';
 import { PrintInvoiceComponent } from './print-invoice/print-invoice.component';
+import { DocumentsComponent } from './documents/documents.component';
 
 @NgModule({
   imports: [
@@ -116,7 +117,8 @@ import { PrintInvoiceComponent } from './print-invoice/print-invoice.component';
     NotificationsComponent,
     NotificationsSettingsComponent,
     DiscountsPickerComponent,
-    PrintInvoiceComponent
+    PrintInvoiceComponent,
+    DocumentsComponent
   ],
 })
 export class PagesModule {

@@ -77,4 +77,14 @@
         right: 1rem !important;
         top: 1rem !important;
     }
+
+    .bg-color-transparent {
+        background-color: transparent;
+        border: none;
+
+        nb-card-body {
+            padding: 0;
+            overflow: hidden;
+        }
+    }
 }

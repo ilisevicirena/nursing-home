@@ -78,7 +78,7 @@ router.get('/getDocumentsForPersonByType', async (request, response) => {
         const result = await pool.request()
             .input('id', request.query.PersonId)
             .input('type', request.query.DocumentTypeId)
-            .query("EXEC [dbo].[getDocumentsForPersonByType] @PersonId=@id, @DocumentTypeId=@type");
+            .query("EXEC [dbo].[getDocumentsForPersonByDocumentType] @PersonId=@id, @DocumentTypeId=@type");
         if (result != null) response.json(result.recordset);
         else response.send(getError(1001));
     } catch (err) {
@@ -92,6 +92,20 @@ router.get('/getDocumentTypes', async (request, response) => {
         const pool = await db;
         const result = await pool.request()
             .query("EXEC [dbo].[getDocumentTypes]");
+        if (result != null) response.json(result.recordset);
+        else response.send(getError(1001));
+    } catch (err) {
+        response.status(500);
+        response.send(err.message);
+    }
+});
+
+router.get('/getDocumentTypesForPerson', async (request, response) => {
+    try {
+        const pool = await db;
+        const result = await pool.request()
+            .input('id', request.query.PersonId)
+            .query("EXEC [dbo].[getDocumentTypesForPerson] @PersonId=@id");
         if (result != null) response.json(result.recordset);
         else response.send(getError(1001));
     } catch (err) {

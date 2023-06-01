@@ -1,0 +1,46 @@
+<nb-tabset class="documents-tabset" (changeTab)="onTabChange($event)">
+    <nb-tab *ngFor="let type of documentTypes; let indexOfelement=index;" [tabTitle]="type.Name"
+        class="h-100 m-0 p-0 overflow-hidden" [badgeText]="type.FileNumber" badgeStatus="primary" [tabId]="type.Id"
+        badgePosition="center end" [active]="indexOfelement==0">
+        <nb-card class="h-100 tab-card">
+            <nb-card-body>
+                <div class="row m-0 w-100 pb-3">
+                    <div class="col-md-4 p-0">
+                        <nb-form-field>
+                            <input nbInput shape="round" fullWidth [placeholder]="getString('search')"
+                                [(ngModel)]="searchTerm">
+                            <nb-icon pack="eva" icon="search-outline" nbPrefix></nb-icon>
+                            <button nbButton nbSuffix ghost shape="round" status="basic" *ngIf="searchTerm.length>0"
+                                (click)="searchTerm='';">
+                                <nb-icon pack="eva" icon="close-outline"></nb-icon>
+                            </button>
+                        </nb-form-field>
+                    </div>
+                    <div class="col d-flex align-items-center justify-content-end">
+                        <button nbButton ghost status="primary" shape="round" size="small"
+                            class="me-2">{{getString('addNewData')}}
+                            <nb-icon pack="eva" icon="file-add-outline"></nb-icon>
+                        </button>
+                        <nb-button-group size="small" (valueChange)="viewChange($event)">
+                            <button nbButtonToggle value="small-card" [pressed]="currentView=='small-card'">
+                                <nb-icon pack="eva" icon="grid-outline"></nb-icon>
+                            </button>
+                            <button nbButtonToggle value="row" [pressed]="currentView=='row'">
+                                <nb-icon pack="eva" icon="list-outline"></nb-icon>
+                            </button>
+                        </nb-button-group>
+                    </div>
+                </div>
+                <div class="documents-container">
+                    <div class="row m-0">
+                        <div class="ps-0" *ngFor="let d of documents | filter:searchTerm"
+                            [class]="currentView=='row' ? 'col-md-12 mb-1':'col-md-2'">
+                            <ngx-file-card [(mode)]="currentView" [formatDate]="true"
+                                [fileData]="{id: d.Id, filename: d.Name, extension: d.Extension, createdDate: d.CreationDate, author: d.PersonFirstName+' '+d.PersonLastName}"></ngx-file-card>
+                        </div>
+                    </div>
+                </div>
+            </nb-card-body>
+        </nb-card>
+    </nb-tab>
+</nb-tabset>
