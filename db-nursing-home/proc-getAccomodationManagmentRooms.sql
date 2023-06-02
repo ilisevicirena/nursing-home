@@ -1,7 +1,7 @@
 USE [ENV01_NURSING_HOME]
 GO
 
-/****** Object:  StoredProcedure [dbo].[getAccomodationManagementRooms]    Script Date: 24.4.2023. 11:15:59 ******/
+/****** Object:  StoredProcedure [dbo].[getAccomodationManagementRooms]    Script Date: 2.6.2023. 9:15:36 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -23,36 +23,52 @@ BEGIN
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
-	select * 
-from(
-select 
-[Id]=f.Id,
-[Name]=f.[Name],
-[RoomCount]=isnull(t2.Number,0)
-	from dbo.[Floor] as f
-	left join (select  count(r.FloorId) as Number, r.FloorId
-	from dbo.Room as r
-		join dbo.[Floor] f on r.FloorId=f.Id group by FloorId
-		) as t2 on t2.FloorId=f.Id) as t1 where t1.RoomCount > 0;
+	SELECT 
+    [Id] = f.Id,
+    [Name] = f.[Name],
+    [RoomCount] = ISNULL(t2.Number, 0)
+FROM dbo.[Floor] AS f
+LEFT JOIN (
+    SELECT COUNT(r.FloorId) AS Number, r.FloorId
+    FROM dbo.Room AS r
+    JOIN dbo.[Floor] f ON r.FloorId = f.Id
+    WHERE r.Capacity > 0 -- Only consider rooms with capacity greater than 0
+    GROUP BY FloorId
+) AS t2 ON t2.FloorId = f.Id
+WHERE t2.Number > 0; -- Filter for floors that have at least one room with capacity greater than 0
 
 	SELECT
-	[Id]=r.Id,
-	[Name]=r.[Name],
-	[Capacity]=r.Capacity,
-	[FloorId]=r.FloorId,
-	[FloorName]=f.[Name],
-	[FreeSpace]=r.Capacity- isnull(t2.Number,0),
-	[TakenSpace]=ISNULL(t2.Number,0),
-	[RoomGenderId]=t2.GenderId,
-	[RoomGenderName]=t2.GenderName,
-	[RoomGenderTag]=t2.GenderTag
-	FROM dbo.Room AS r
-	JOIN dbo.[Floor] AS f ON r.FloorId=f.Id
-	left join (select  count(prr.RoomId) as Number, g.Id as GenderId, g.[Name] as GenderName, g.Tag as GenderTag, prr.RoomId 
-	from PersonRoomRelation as prr
-		join Person p on prr.PersonId=p.Id	
-		join Gender g on p.GenderId=g.Id 
-		where prr.Active=1 group by g.Id, g.[Name], g.Tag, prr.RoomId) as t2 on t2.RoomId=r.Id;
+    [Id] = r.Id,
+    [Name] = r.[Name],
+    [Capacity] = r.Capacity,
+    [FloorId] = r.FloorId,
+    [FloorName] = f.[Name],
+    [FreeSpace] = r.Capacity - ISNULL(t2.Number, 0),
+    [TakenSpace] = ISNULL(t2.Number, 0),
+    [RoomGenderId] = t2.GenderId,
+    [RoomGenderName] = t2.GenderName,
+    [RoomGenderTag] = t2.GenderTag
+FROM dbo.Room AS r
+JOIN dbo.[Floor] AS f ON r.FloorId = f.Id
+LEFT JOIN (
+    SELECT COUNT(prr.RoomId) AS Number, g.Id AS GenderId, g.[Name] AS GenderName, g.Tag AS GenderTag, prr.RoomId
+    FROM PersonRoomRelation AS prr
+    JOIN Person p ON prr.PersonId = p.Id
+    JOIN Gender g ON p.GenderId = g.Id
+    WHERE prr.Active = 1
+    GROUP BY g.Id, g.[Name], g.Tag, prr.RoomId
+) AS t2 ON t2.RoomId = r.Id
+WHERE r.FloorId IN (
+    SELECT [Id]
+    FROM dbo.[Floor]
+    LEFT JOIN (
+        SELECT COUNT(r.FloorId) AS RoomCount, r.FloorId
+        FROM dbo.Room AS r
+        WHERE r.Capacity > 0
+        GROUP BY r.FloorId
+    ) AS t1 ON t1.FloorId = dbo.[Floor].[Id]
+    WHERE t1.RoomCount > 0
+);
 
 	SELECT 
 	[PersonId]=p.Id,
