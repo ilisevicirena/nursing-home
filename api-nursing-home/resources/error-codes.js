@@ -68,6 +68,20 @@ var errors = [
     new CodeMessage(10001, "Error while inserting new service into database."),
     new CodeMessage(10002, "Error while updateing service in database."),
     new CodeMessage(10003, "Error while deleting service from database."),
+
+    // note error codes starting with 20000
+    new CodeMessage(20001, "Error while fetching notes for person from database. Fetching resulted with invalid number of datasets."),
+    new CodeMessage(20002, "Error while while inserting new tag for note into database."),
+    new CodeMessage(20003, "Error while deleting document from note in database."),
+    new CodeMessage(20004, "Error while inserting document for note into database."),
+    new CodeMessage(20005, "Error while inserting new note into database."),
+    new CodeMessage(20006, "Error while updateing note in database."),
+
+    // tags error codes starting with 30000
+    new CodeMessage(30001, "Error while while deactivating tag in database."),
+    new CodeMessage(30002, "Error while inserting new tag into database."),
+    new CodeMessage(30003, "Error while updateing tag in database."),
+
 ];
 
 module.exports = {

@@ -23,6 +23,8 @@ const measureUnits = require('./routes/measure-units');
 const priceUnits = require('./routes/price-units');
 const notifications = require('./routes/notifications');
 const documents = require('./routes/documents');
+const notes = require('./routes/notes');
+const tags = require('./routes/tags');
 
 // register routes
 router.use('/floors', floors);
@@ -38,6 +40,8 @@ router.use('/measure-units', measureUnits);
 router.use('/price-units', priceUnits);
 router.use('/notifications', notifications);
 router.use('/documents', documents);
+router.use('/notes', notes);
+router.use('/tags', tags);
 
 // No need to connect the pool
 // Just start the web server
