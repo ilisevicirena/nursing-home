@@ -1,18 +1,13 @@
--- ================================================
--- Template generated from Template Explorer using:
--- Create Procedure (New Menu).SQL
---
--- Use the Specify Values for Template Parameters 
--- command (Ctrl-Shift-M) to fill in the parameter 
--- values below.
---
--- This block of comments will not be included in
--- the definition of the procedure.
--- ================================================
+USE [ENV01_NURSING_HOME]
+GO
+
+/****** Object:  StoredProcedure [dbo].[updateServiceForPerson]    Script Date: 2.6.2023. 9:07:15 ******/
 SET ANSI_NULLS ON
 GO
+
 SET QUOTED_IDENTIFIER ON
 GO
+
 -- =============================================
 -- Author:		Irena Ilisevic
 -- Create date: 2.5.2023.
@@ -31,26 +26,23 @@ BEGIN
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
-    -- Insert statements for procedure here
-	declare @myrow table(Id int, PersonId int, ServiceId int, StartDate datetime, EndDate datetime, Active bit, Quantity int);
-	insert into @myrow
-	select * from dbo.PersonServiceRelation where @Id=Id;
+    DECLARE @serviceId INT, @personId INT;
 
-	declare @serviceId int, @personId int;
+    UPDATE dbo.PersonServiceRelation
+    SET
+        Active = 0,
+        EndDate = GETDATE()
+    WHERE @Id = Id;
 
-    -- Insert statements for procedure here
-	UPDATE dbo.PersonServiceRelation 
-	SET 
-	Active=0,
-	EndDate=GETDATE()
-	WHERE @Id=Id;
+    IF EXISTS (SELECT 1 FROM dbo.PersonServiceRelation WHERE Id = @Id)
+    BEGIN
+        SELECT TOP 1 @serviceId = ServiceId, @personId = PersonId
+        FROM dbo.PersonServiceRelation
+        WHERE Id = @Id;
 
-	IF(EXISTS(SELECT 1 FROM @myrow))
-	begin
-		select top 1 @serviceId=ServiceId, @personId=PersonId from @myRow;
-
-		insert into dbo.PersonServiceRelation (ServiceId, PersonId, Quantity, Active, StartDate, EndDate)
-		values (@serviceId, @personId, @Quantity, 1, GETDATE(), NULL);
-	end
+        INSERT INTO dbo.PersonServiceRelation (ServiceId, PersonId, Quantity, Active, StartDate, EndDate)
+        VALUES (@serviceId, @personId, @Quantity, 1, GETDATE(), NULL);
+    END
 END
 GO
+

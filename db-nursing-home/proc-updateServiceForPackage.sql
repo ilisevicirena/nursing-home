@@ -1,18 +1,13 @@
--- ================================================
--- Template generated from Template Explorer using:
--- Create Procedure (New Menu).SQL
---
--- Use the Specify Values for Template Parameters 
--- command (Ctrl-Shift-M) to fill in the parameter 
--- values below.
---
--- This block of comments will not be included in
--- the definition of the procedure.
--- ================================================
+USE [ENV01_NURSING_HOME]
+GO
+
+/****** Object:  StoredProcedure [dbo].[updateServiceForPackage]    Script Date: 2.6.2023. 9:08:14 ******/
 SET ANSI_NULLS ON
 GO
+
 SET QUOTED_IDENTIFIER ON
 GO
+
 -- =============================================
 -- Author:		Irena Ilisevic
 -- Create date: 2.5.2023.
@@ -30,24 +25,22 @@ BEGIN
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
-	declare @myrow table(Id int,ServiceId int, PackageId int, Quantity int, Active bit);
-	insert into @myrow
-	select * from dbo.ServicePackageRelation where @Id=Id;
+	DECLARE @serviceId INT, @packageId INT;
 
-	declare @serviceId int, @packageId int;
+    UPDATE dbo.ServicePackageRelation
+    SET
+        Active = 0
+    WHERE @Id = Id;
 
-    -- Insert statements for procedure here
-	UPDATE dbo.ServicePackageRelation 
-	SET 
-	Active=0
-	WHERE @Id=Id;
+    IF EXISTS (SELECT 1 FROM dbo.ServicePackageRelation WHERE Id = @Id)
+    BEGIN
+        SELECT TOP 1 @serviceId = ServiceId, @packageId = PackageId
+        FROM dbo.ServicePackageRelation
+        WHERE Id = @Id;
 
-	IF(EXISTS(SELECT 1 FROM @myrow))
-	begin
-		select top 1 @serviceId=ServiceId, @packageId=PackageId from @myRow;
-
-		insert into dbo.ServicePackageRelation (ServiceId, PackageId, Quantity, Active)
-		values (@serviceId, @packageId, @Quantity, 1);
-	end
+        INSERT INTO dbo.ServicePackageRelation (ServiceId, PackageId, Quantity, Active)
+        VALUES (@serviceId, @packageId, @Quantity, 1);
+    END
 END
 GO
+

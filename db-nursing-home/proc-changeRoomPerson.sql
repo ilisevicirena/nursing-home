@@ -1,7 +1,7 @@
 USE [ENV01_NURSING_HOME]
 GO
 
-/****** Object:  StoredProcedure [dbo].[changeRoomPerson]    Script Date: 19.4.2023. 13:55:15 ******/
+/****** Object:  StoredProcedure [dbo].[changeRoomPerson]    Script Date: 2.6.2023. 8:59:09 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -25,30 +25,17 @@ BEGIN
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
-    -- Insert statements for procedure here
-	declare @myrow table(PersonId int,RoomId int, Active bit, CreationDate datetime, Id int);
-	declare @existingId int;
-	
-	--check person already has active room
-	insert into @myrow
-	select PersonId, RoomId, Active, CreationDate, Id from dbo.PersonRoomRelation where PersonId=@PersonId and Active=1;
-	
-	
-	IF(EXISTS(SELECT 1 FROM @myrow))
-	--person has active room
-		BEGIN
-		select top 1 @existingId=Id from @myRow;
-		  -- deactivate that room
-			update dbo.PersonRoomRelation
-		  set Active=0,
-		  EndDate=GETDATE()
-		  where Id=@existingId;
-		END;
-	
-	INSERT INTO dbo.PersonRoomRelation (PersonId, RoomId, Active, CreationDate, StartDate, EndDate)
-	VALUES (@PersonId, @RoomId, 1, GETDATE(), GETDATE(), NULL);	
+   -- Deactivate existing active room for the person
+    UPDATE dbo.PersonRoomRelation
+    SET Active = 0,
+        EndDate = GETDATE()
+    WHERE PersonId = @PersonId
+        AND Active = 1;
+
+    -- Insert new room for the person
+    INSERT INTO dbo.PersonRoomRelation (PersonId, RoomId, Active, CreationDate, StartDate, EndDate)
+    VALUES (@PersonId, @RoomId, 1, GETDATE(), GETDATE(), NULL);
 			
 END
 GO
-
 

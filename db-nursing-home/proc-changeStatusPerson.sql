@@ -1,7 +1,7 @@
 USE [ENV01_NURSING_HOME]
 GO
 
-/****** Object:  StoredProcedure [dbo].[changeStatusPerson]    Script Date: 24.4.2023. 17:17:01 ******/
+/****** Object:  StoredProcedure [dbo].[changeStatusPerson]    Script Date: 2.6.2023. 9:00:43 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -28,27 +28,27 @@ BEGIN
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
-	DECLARE @EndDate datetime;
+	DECLARE @EndDate DATETIME;
 
-	IF (@Status=0)
-		BEGIN
-			exec dbo.deactivateRoomPerson @PersonId=@Id;
-			IF NULLIF(@Date, '') IS NULL
-				SET @EndDate=GETDATE();				
-			ELSE				
-				SET @EndDate=@Date;				
-		END	
-	ELSE
-		SET @EndDate=NULL;
-	
-	UPDATE dbo.Person
-	SET
-		Active=@Status,
-		EndDate=@EndDate
-	WHERE Id=@Id;
+    IF (@Status = 0)
+    BEGIN
+        EXEC dbo.deactivateRoomPerson @PersonId = @Id;
 
-	exec dbo.writeLog @LogType='UPDATE', @LogEntity='Person', @Key= @Id;
-		
+        IF (@Date IS NULL)
+            SET @EndDate = GETDATE();
+        ELSE
+            SET @EndDate = @Date;
+    END
+    ELSE
+        SET @EndDate = NULL;
+
+    UPDATE dbo.Person
+    SET
+        Active = @Status,
+        EndDate = @EndDate
+    WHERE Id = @Id;
+
+    EXEC dbo.writeLog @LogType = 'UPDATE', @LogEntity = 'Person', @Key = @Id;
 END
 GO
 
