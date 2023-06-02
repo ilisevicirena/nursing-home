@@ -1,0 +1,27 @@
+USE [ENV01_NURSING_HOME]
+GO
+
+/****** Object:  Table [dbo].[FavoriteNotes]    Script Date: 2.6.2023. 8:24:14 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[FavoriteNotes](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[NoteId] [int] NOT NULL,
+ CONSTRAINT [PK_FavoriteNotes] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[FavoriteNotes]  WITH CHECK ADD  CONSTRAINT [FK_FavoriteNotes_Note] FOREIGN KEY([NoteId])
+REFERENCES [dbo].[Note] ([Id])
+GO
+
+ALTER TABLE [dbo].[FavoriteNotes] CHECK CONSTRAINT [FK_FavoriteNotes_Note]
+GO
+

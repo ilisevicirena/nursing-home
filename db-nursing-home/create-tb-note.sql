@@ -1,0 +1,31 @@
+USE [ENV01_NURSING_HOME]
+GO
+
+/****** Object:  Table [dbo].[Note]    Script Date: 2.6.2023. 8:23:57 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Note](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[PersonId] [int] NOT NULL,
+	[CreationDate] [datetime] NOT NULL,
+	[LastModified] [datetime] NOT NULL,
+	[Title] [varchar](1000) NOT NULL,
+	[Text] [varchar](max) NOT NULL,
+ CONSTRAINT [PK_Note] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[Note]  WITH CHECK ADD  CONSTRAINT [FK_Note_Person] FOREIGN KEY([PersonId])
+REFERENCES [dbo].[Person] ([Id])
+GO
+
+ALTER TABLE [dbo].[Note] CHECK CONSTRAINT [FK_Note_Person]
+GO
+
