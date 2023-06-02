@@ -59,6 +59,9 @@ import { DiscountsPickerComponent } from './discounts/discounts-picker/discounts
 import { PrintInvoiceComponent } from './print-invoice/print-invoice.component';
 import { DocumentsComponent } from './documents/documents.component';
 import { UploadDocumentComponent } from './documents/upload-document/upload-document.component';
+import { NotesComponent } from './notes/notes.component';
+import { NewNoteComponent } from './notes/new-note/new-note.component';
+import { TagsComponent } from './tags/tags.component';
 
 @NgModule({
   imports: [
@@ -120,7 +123,10 @@ import { UploadDocumentComponent } from './documents/upload-document/upload-docu
     DiscountsPickerComponent,
     PrintInvoiceComponent,
     DocumentsComponent,
-    UploadDocumentComponent
+    UploadDocumentComponent,
+    NotesComponent,
+    NewNoteComponent,
+    TagsComponent
   ],
 })
 export class PagesModule {
