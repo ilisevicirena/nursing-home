@@ -1,7 +1,7 @@
 USE [ENV01_NURSING_HOME]
 GO
 
-/****** Object:  StoredProcedure [dbo].[insertNote]    Script Date: 2.6.2023. 8:55:06 ******/
+/****** Object:  StoredProcedure [dbo].[insertNote]    Script Date: 9.6.2023. 13:50:40 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -34,14 +34,18 @@ BEGIN
 
 	SET @noteId=SCOPE_IDENTITY();
 
+	IF LEN(@tags) > 0
+    BEGIN
 	DECLARE @tagList TABLE (Tag VARCHAR(100))
     INSERT INTO @tagList (Tag)
     SELECT value FROM STRING_SPLIT(@tags, ',');
+	END;
 
+	
 	INSERT INTO dbo.NoteTagRelation(NoteId, TagId)
     SELECT @noteId, Tag
     FROM @tagList;
-
+	
 	SELECT @noteId AS [NoteId];
 END
 GO

@@ -156,7 +156,7 @@ router.post('/update', async (request, response) => {
             .input('text', objectToSave.Text)
             .input('id', objectToSave.Id)
             .query("EXEC [dbo].[updateNote] @Id=@id, @Title=@title, @Text=@text");
-        if (result != null) response.json(result.recordset[0]);
+        if (result != null) response.json(result.recordset);
         else response.send(getError(20006));
     } catch (err) {
         response.status(500);

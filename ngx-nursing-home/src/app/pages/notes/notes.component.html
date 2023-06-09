@@ -1,1 +1,103 @@
-<p>notes works!</p>
+<div class="row m-0 h-100">
+    <div class="col-md-4 p-0 note-container h-100">
+        <div class="header-row w-100">
+            <nb-form-field>
+                <input nbInput shape="round" fullWidth [placeholder]="getString('search')" [(ngModel)]="searchTerm">
+                <nb-icon pack="eva" icon="search-outline" nbPrefix></nb-icon>
+                <button nbButton nbSuffix ghost shape="round" status="basic" *ngIf="searchTerm.length>0"
+                    (click)="searchTerm='';">
+                    <nb-icon pack="eva" icon="close-outline"></nb-icon>
+                </button>
+            </nb-form-field>
+        </div>
+        <div class="notes-container w-100">
+            <div class="notes-card w-100" *ngFor="let note of notes | filter:searchTerm"
+                [ngClass]="note.selected ? 'selected':''">
+                <div class="d-flex w-100">
+                    <div class="col">
+                        <nb-user [name]="note.PersonFirstName+' '+note.PersonLastName" [showInitials]="true"
+                            color="#dde1eb" [title]="note.CreationDate | date: 'dd.MM.yyyy. HH:mm'"
+                            size="small"></nb-user>
+                    </div>
+                    <div class="w-max date">{{note.LastModified | date: 'LLLL dd'}}</div>
+                </div>
+                <div class="note-title" (click)="selectNote(note)">{{note.Title}}</div>
+                <div class="d-flex w-100">
+                    <div class="w-max pe-2 d-flex align-items-center">
+                        <nb-icon pack="eva" class="fovorite-icon" [icon]="note.IsFavorite ? 'star':'star-outline'"
+                            status="primary" (click)="toggleFavorite(note)"
+                            [nbTooltip]="note.IsFavorite ? getString('removeNoteFromFavorites') : getString('markNoteAsFavorite')"></nb-icon>
+                    </div>
+                    <div class="col">
+                        <nb-tag-list *ngIf="note.Tags.length>0">
+                            <nb-tag class="note-tag" *ngFor="let t of note.Tags" [text]="t.Name" size="tiny"
+                                [style.background-color]="hexToRgbA(t.Color)" [appearance]="'outline'"
+                                [style.color]="t.Color" [style.border-color]="t.Color"></nb-tag>
+                        </nb-tag-list>
+                    </div>
+                    <div class="w-max ps-2 d-flex align-items-center">
+                        <nb-icon pack="eva" icon="attach-outline" status="primary"></nb-icon>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-row w-100 d-flex pt-2">
+            <div class="col d-flex align-items-end">
+                <button nbButton ghost size="small" status="primary" shape="round">
+                    {{getString('filters')}}
+                    <nb-icon pack="eva" icon="funnel-outline"></nb-icon>
+                </button>
+            </div>
+            <div class="w-max">
+                <button nbButton status="primary" shape="round" (click)="newNote()">
+                    <nb-icon pack="eva" icon="plus-outline"></nb-icon>
+                </button>
+            </div>
+            <div class="col"></div>
+        </div>
+    </div>
+    <div class="col-md-8 h-100">
+        <div class="note-details h-100" *ngIf="selectedNote && !formMode">
+            <div class="row w-100 m-0">
+                <div class="col d-flex align-items-center">
+                    <nb-user [name]="selectedNote.PersonFirstName+' '+selectedNote.PersonLastName"
+                        [showInitials]="true"></nb-user>
+                </div>
+                <div class="w-max date d-flex align-items-center">
+                    <nb-icon pack="eva" icon="calendar-outline" status="basic" class="me-2"></nb-icon>
+                    {{selectedNote.LastModified | date: 'MMM dd, yyyy HH:mm'}}
+                </div>
+            </div>
+            <div class="row w-100 m-0" style="height: calc(100% - 25px);">
+                <div class="col-md-11 h-100">
+                    <div class="title">
+                        {{selectedNote.Title}}
+                    </div>
+                    <div class="content" [innerHTML]="selectedNote.Text">
+                    </div>
+                    <div class="tags mt-3">
+                        <nb-tag-list *ngIf="selectedNote.Tags.length>0">
+                            <nb-tag size="small" *ngFor="let t of selectedNote.Tags" [text]="t.Name" removable
+                                (remove)="onNoteTagRemoved(t)" [style.background-color]="hexToRgbA(t.Color)"
+                                [appearance]="'outline'" [style.color]="t.Color"
+                                [style.border-color]="t.Color"></nb-tag>
+                        </nb-tag-list>
+                    </div>
+                </div>
+                <div class="col-md-1 d-flex justify-content-center align-items-center actions">
+                    <button nbButton ghost shape="round" status="warning" (click)="editNote()"><nb-icon pack="eva"
+                            icon="edit-outline"></nb-icon></button>
+                    <button nbButton size="small" ghost shape="round" status="primary">
+                        {{selectedNote.Documents.length}}
+                        <nb-icon pack="eva" icon="attach-outline"></nb-icon></button>
+                    <button nbButton ghost size="small" shape="round" status="primary">
+                        {{selectedNote.Tags.length}}
+                        <nb-icon pack="eva" icon="pricetags-outline"></nb-icon></button>
+                </div>
+            </div>
+        </div>
+        <div class="w-100 h-100" *ngIf="formMode">
+            <sample-new-note [(selectedNote)]="editSelectedNote" (saved)="onNoteSaved($event)"
+                (canceled)="onCanceledFormSave()"></sample-new-note>
+        </div>
+    </div>

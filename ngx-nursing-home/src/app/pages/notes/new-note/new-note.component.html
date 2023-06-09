@@ -1,1 +1,42 @@
-<p>new-note works!</p>
+<div class="note-details h-100">
+    <div class="row w-100 m-0">
+        <div class="col d-flex align-items-center">
+            <nb-user [name]="selectedNote.PersonFirstName+' '+selectedNote.PersonLastName"
+                [showInitials]="true"></nb-user>
+        </div>
+        <div class="w-max date d-flex align-items-center">
+            <nb-icon pack="eva" icon="calendar-outline" status="basic" class="me-2"></nb-icon>
+            {{selectedNote.LastModified | date: 'MMM dd, yyyy HH:mm'}}
+        </div>
+    </div>
+    <div class="row w-100 m-0" style="height: calc(100% - 25px);">
+        <div class="col-md-11 h-100">
+            <div class="title">
+                <input nbInput fullWidth [(ngModel)]="selectedNote.Title" [placeholder]="getString('title')">
+            </div>
+            <div class="content p-0">
+                <div [ngxSummernote]="config" [(ngModel)]="selectedNote.Text" nbInput></div>
+            </div>
+
+            <div class="tags mt-3">
+                <nb-tag-list *ngIf="selectedNote.Tags.length>0">
+                    <nb-tag size="small" *ngFor="let t of selectedNote.Tags" [text]="t.Name" removable
+                        (remove)="onNoteTagRemoved(t)" [style.background-color]="hexToRgbA(t.Color)"
+                        [appearance]="'outline'" [style.color]="t.Color" [style.border-color]="t.Color"></nb-tag>
+                </nb-tag-list>
+            </div>
+        </div>
+        <div class="col-md-1 d-flex justify-content-center align-items-center actions">
+            <button nbButton shape="round" status="primary" (click)="saveNote()"><nb-icon pack="eva"
+                    icon="checkmark-outline"></nb-icon></button>
+            <button nbButton ghost shape="round"><nb-icon pack="eva" (click)="cancelSave()"
+                    icon="close-outline"></nb-icon></button>
+            <button nbButton size="small" ghost shape="round" status="primary">
+                {{selectedNote.Documents.length}}
+                <nb-icon pack="eva" icon="attach-outline"></nb-icon></button>
+            <button nbButton ghost size="small" shape="round" status="primary">
+                {{selectedNote.Tags.length}}
+                <nb-icon pack="eva" icon="pricetags-outline"></nb-icon></button>
+        </div>
+    </div>
+</div>

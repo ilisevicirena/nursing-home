@@ -24,7 +24,8 @@ import {
   NbPopoverModule,
   NbStepperModule,
   NbBadgeModule,
-  NbAccordionModule
+  NbAccordionModule,
+  NbUserModule
 
 }
   from '@nebular/theme';
@@ -62,6 +63,7 @@ import { UploadDocumentComponent } from './documents/upload-document/upload-docu
 import { NotesComponent } from './notes/notes.component';
 import { NewNoteComponent } from './notes/new-note/new-note.component';
 import { TagsComponent } from './tags/tags.component';
+import { NgxSummernoteModule } from 'ngx-summernote';
 
 @NgModule({
   imports: [
@@ -97,7 +99,9 @@ import { TagsComponent } from './tags/tags.component';
     NbStepperModule,
     DragDropModule,
     NbBadgeModule,
-    NbAccordionModule
+    NbAccordionModule,
+    NbUserModule,
+    NgxSummernoteModule
   ],
   declarations: [
     PagesComponent,

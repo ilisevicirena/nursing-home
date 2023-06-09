@@ -429,6 +429,11 @@
                     <div *ngSwitchCase="'documents'" class="h-100">
                         <sample-documents [(personId)]="personId"></sample-documents>
                     </div>
+
+                    <div *ngSwitchCase="'notes'" class="h-100">
+                        <sample-notes [(personId)]="personId" [(personName)]="person.FirstName"
+                            [(personLastName)]="person.LastName"></sample-notes>
+                    </div>
                 </div>
             </nb-card-body>
         </nb-card>
