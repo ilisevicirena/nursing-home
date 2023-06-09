@@ -165,6 +165,7 @@ const strings: IKeyValue[] = [
     { key: "wantToSaveOffer", value: "Sigurno želiš spremiti promjene u paketu usluga?" },
     { key: "markNoteAsFavorite", value: "Dodaj bilješku u favorite" },
     { key: "removeNoteFromFavorites", value: "Ukloni bilješku iz favorita" },
+    { key: "tagsManagement", value: "Upravljanje oznakama" },
 ];
 
 const map = new Map(strings.map(obj => [obj.key, obj.value]));

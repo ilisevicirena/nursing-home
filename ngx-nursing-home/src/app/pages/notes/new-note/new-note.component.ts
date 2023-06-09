@@ -2,6 +2,8 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angu
 import { getString } from '../../../resources/strings';
 import { Subscription } from 'rxjs';
 import { NotesService } from '../../../services/rest/notes.service';
+import { DialogService } from '../../../shared/dialog/dialog.service';
+import { NoteTagsComponent } from '../note-tags/note-tags.component';
 
 @Component({
   selector: 'sample-new-note',
@@ -11,7 +13,8 @@ import { NotesService } from '../../../services/rest/notes.service';
 export class NewNoteComponent implements OnInit, OnDestroy {
 
   constructor(
-    private notesService: NotesService
+    private notesService: NotesService,
+    private dialogService: DialogService
   ) {
   }
 
@@ -67,6 +70,7 @@ export class NewNoteComponent implements OnInit, OnDestroy {
 
   public saveNote(): void {
     if (this.selectedNote.Id == 0) {
+      this.selectedNote.Tags = this.selectedNote.Tags.map(x => x.Id);
       this.subs.push(
         this.notesService.add(this.selectedNote).subscribe(data => {
           if (data.NoteId)
@@ -84,5 +88,26 @@ export class NewNoteComponent implements OnInit, OnDestroy {
 
   public cancelSave(): void {
     this.canceled.emit(true);
+  }
+
+  public openTagsDialog(): void {
+    this.subs.push(
+      this.dialogService.open(
+        NoteTagsComponent,
+        {
+          closeOnBackdropClick: false,
+          closeOnEsc: false,
+          autoFocus: false,
+          context: {
+            noteId: 0,
+            selectedTags: this.selectedNote.Tags
+          }
+        }
+      ).onClose.subscribe(result => {
+        if (result.changes) {
+          this.selectedNote.Tags = result.selectedTags;
+        }
+      })
+    );
   }
 }

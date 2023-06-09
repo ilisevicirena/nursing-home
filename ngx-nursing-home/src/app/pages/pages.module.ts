@@ -64,6 +64,8 @@ import { NotesComponent } from './notes/notes.component';
 import { NewNoteComponent } from './notes/new-note/new-note.component';
 import { TagsComponent } from './tags/tags.component';
 import { NgxSummernoteModule } from 'ngx-summernote';
+import { NoteTagsComponent } from './notes/note-tags/note-tags.component';
+import { NoteDocumentsComponent } from './notes/note-documents/note-documents.component';
 
 @NgModule({
   imports: [
@@ -130,7 +132,9 @@ import { NgxSummernoteModule } from 'ngx-summernote';
     UploadDocumentComponent,
     NotesComponent,
     NewNoteComponent,
-    TagsComponent
+    TagsComponent,
+    NoteTagsComponent,
+    NoteDocumentsComponent
   ],
 })
 export class PagesModule {

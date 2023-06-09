@@ -27,6 +27,14 @@ export class NotesService extends BaseRestApiService {
   public removeTagFromNote(noteId: number, tagId: number): Observable<any> {
     return this.http.post(this.apiRoute + "/removeTagFromNote", { NoteId: noteId, TagId: tagId });
   }
+
+  public addTagToNote(noteId: number, tagId: number): Observable<any> {
+    return this.http.post(this.apiRoute + "/addTagToNote", { NoteId: noteId, TagId: tagId });
+  }
+
+  public getNoteTags(id: number): Observable<any> {
+    return this.http.get(this.apiRoute + "/getNoteTags?NoteId=" + id);
+  }
 }
 
 export interface INote extends IBaseSaveModel {

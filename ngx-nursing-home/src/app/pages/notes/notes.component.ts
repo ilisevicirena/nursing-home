@@ -5,7 +5,7 @@ import { DialogService } from '../../shared/dialog/dialog.service';
 import { ToastrService } from '../../services/toastr.service';
 import { Subscription } from 'rxjs';
 import { getString } from '../../resources/strings';
-import { unescape } from 'querystring';
+import { NoteTagsComponent } from './note-tags/note-tags.component';
 
 @Component({
   selector: 'sample-notes',
@@ -23,6 +23,8 @@ export class NotesComponent implements OnInit, OnDestroy {
   public searchTerm: string = "";
 
   private subs: Subscription[] = [];
+  private allTags: any[] = [];
+
   public selectedNote: any;
   public editSelectedNote: any;
   public formMode: boolean = false;
@@ -64,7 +66,7 @@ export class NotesComponent implements OnInit, OnDestroy {
   private getTags(): void {
     this.subs.push(
       this.tagsService.getData().subscribe(data => {
-        console.log(data);
+        this.allTags = data;
       })
     );
   }
@@ -129,10 +131,11 @@ export class NotesComponent implements OnInit, OnDestroy {
   }
 
   public newNote(): void {
+    if (this.formMode) this.formMode = false;
     if (this.selectedNote) this.selectedNote.selected = false;
-    this.formMode = true;
-    this.selectedNote = { Id: 0, Title: undefined, Text: undefined, PersonFirstName: this.personName, LastModified: new Date(), PersonLastName: this.personLastName, PersonId: this.personId, Documents: [], Tags: [] };
+    this.selectedNote = { Id: 0, Title: undefined, Text: null, PersonFirstName: this.personName, LastModified: new Date(), PersonLastName: this.personLastName, PersonId: this.personId, Documents: [], Tags: [] };
     this.editSelectedNote = JSON.parse(JSON.stringify(this.selectedNote));
+    this.formMode = true;
   }
 
   public onNoteSaved(noteId: number): void {
@@ -144,5 +147,25 @@ export class NotesComponent implements OnInit, OnDestroy {
     this.editSelectedNote = JSON.parse(JSON.stringify(this.selectedNote));
     if (this.selectedNote.Id == 0) this.selectedNote = undefined;
     this.formMode = false;
+  }
+
+  public openTagsDialog(): void {
+    this.subs.push(
+      this.dialogService.open(
+        NoteTagsComponent,
+        {
+          closeOnBackdropClick: false,
+          closeOnEsc: false,
+          autoFocus: false,
+          context: {
+            noteId: this.selectedNote.Id
+          }
+        }
+      ).onClose.subscribe(result => {
+        if (result.changes) {
+          this.selectedNote.Tags = result.selectedTags;
+        }
+      })
+    );
   }
 }

@@ -27,14 +27,16 @@
             </div>
         </div>
         <div class="col-md-1 d-flex justify-content-center align-items-center actions">
-            <button nbButton shape="round" status="primary" (click)="saveNote()"><nb-icon pack="eva"
-                    icon="checkmark-outline"></nb-icon></button>
-            <button nbButton ghost shape="round"><nb-icon pack="eva" (click)="cancelSave()"
-                    icon="close-outline"></nb-icon></button>
+            <button nbButton shape="round" status="primary" (click)="saveNote()"
+                [disabled]="!selectedNote.Title || !selectedNote.Text" [nbTooltip]="getString('save')"><nb-icon
+                    pack="eva" icon="checkmark-outline"></nb-icon></button>
+            <button nbButton ghost shape="round" [nbTooltip]="getString('cancel')"><nb-icon pack="eva"
+                    (click)="cancelSave()" icon="close-outline"></nb-icon></button>
             <button nbButton size="small" ghost shape="round" status="primary">
                 {{selectedNote.Documents.length}}
                 <nb-icon pack="eva" icon="attach-outline"></nb-icon></button>
-            <button nbButton ghost size="small" shape="round" status="primary">
+            <button nbButton ghost size="small" shape="round" status="primary" (click)="openTagsDialog()"
+                [nbTooltip]="getString('tagsManagement')">
                 {{selectedNote.Tags.length}}
                 <nb-icon pack="eva" icon="pricetags-outline"></nb-icon></button>
         </div>

@@ -85,12 +85,13 @@
                     </div>
                 </div>
                 <div class="col-md-1 d-flex justify-content-center align-items-center actions">
-                    <button nbButton ghost shape="round" status="warning" (click)="editNote()"><nb-icon pack="eva"
-                            icon="edit-outline"></nb-icon></button>
+                    <button nbButton ghost shape="round" status="warning" (click)="editNote()"
+                        [nbTooltip]="getString('editData')"><nb-icon pack="eva" icon="edit-outline"></nb-icon></button>
                     <button nbButton size="small" ghost shape="round" status="primary">
                         {{selectedNote.Documents.length}}
                         <nb-icon pack="eva" icon="attach-outline"></nb-icon></button>
-                    <button nbButton ghost size="small" shape="round" status="primary">
+                    <button nbButton ghost size="small" shape="round" status="primary" (click)="openTagsDialog()"
+                        [nbTooltip]="getString('tagsManagement')">
                         {{selectedNote.Tags.length}}
                         <nb-icon pack="eva" icon="pricetags-outline"></nb-icon></button>
                 </div>

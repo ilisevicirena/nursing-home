@@ -204,3 +204,7 @@ nb-select.appearance-outline.status-basic .select-button.placeholder {
 .w-max {
   width: max-content;
 }
+
+::ng-deep nb-tag {
+  text-transform: none;
+}
