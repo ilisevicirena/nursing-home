@@ -45,8 +45,10 @@
         </div>
         <div class="footer-row w-100 d-flex pt-2">
             <div class="col d-flex align-items-end">
-                <button nbButton ghost size="small" status="primary" shape="round">
-                    {{getString('filters')}}
+                <button nbButton ghost size="small" status="primary" shape="round" [nbPopover]="filtersTemplate"
+                    nbPopoverTrigger="click" nbPopoverPlacement="top">
+                    {{getString('filters')}} <span class="ps-1 m-0" *ngIf="filters.length>0">
+                        ({{filters.length}})</span>
                     <nb-icon pack="eva" icon="funnel-outline"></nb-icon>
                 </button>
             </div>
@@ -105,3 +107,16 @@
                 (canceled)="onCanceledFormSave()"></sample-new-note>
         </div>
     </div>
+</div>
+
+<ng-template #filtersTemplate>
+    <div class="filters-popover">
+        <button nbButton ghost size="tiny" class="mb-2" shape="round" (click)="removeAllFilters()">
+            {{getString('clearAll')}}
+            <nb-icon pack="eva" icon="close-outline"></nb-icon>
+        </button>
+        <div class="w-100 pe-2" *ngFor="let t of allTags">
+            <nb-checkbox [(checked)]="t.selected" (checkedChange)="filtersChanged(t)">{{t.Name}}</nb-checkbox>
+        </div>
+    </div>
+</ng-template>

@@ -7,6 +7,7 @@ import { Subscription } from 'rxjs';
 import { getString } from '../../resources/strings';
 import { NoteTagsComponent } from './note-tags/note-tags.component';
 import { NoteDocumentsComponent } from './note-documents/note-documents.component';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'sample-notes',
@@ -22,9 +23,11 @@ export class NotesComponent implements OnInit, OnDestroy {
   public notes: any[] = [];
   public getString = getString;
   public searchTerm: string = "";
+  public allTags: any[] = [];
 
   private subs: Subscription[] = [];
-  private allTags: any[] = [];
+  public filters: any[] = [];
+  private allNotes: any[] = [];
 
   public selectedNote: any;
   public editSelectedNote: any;
@@ -55,13 +58,27 @@ export class NotesComponent implements OnInit, OnDestroy {
           });
 
           this.notes = data.Notes;
+          this.allNotes = data.Notes;
+
           if (noteId) {
             var note = this.notes.find(x => x.Id == noteId);
             if (note) this.selectNote(note);
+
+            this.filterNotes();
           }
         }
       })
     );
+  }
+
+  private filterNotes(): void {
+    if (this.filters.length === 0) {
+      this.notes = this.allNotes;
+    } else {
+      this.notes = this.allNotes.filter((note) =>
+        note.Tags.some((tag) => this.filters.some((filter) => filter.Id === tag.Id))
+      );
+    }
   }
 
   private getTags(): void {
@@ -190,5 +207,20 @@ export class NotesComponent implements OnInit, OnDestroy {
         }
       })
     );
+  }
+
+  public filtersChanged(event: any): void {
+    if (event.selected)
+      this.filters.push(event);
+    else
+      this.filters.splice(this.filters.findIndex(x => x.Id == event.Id), 1);
+
+    this.filterNotes();
+  }
+
+  public removeAllFilters(): void {
+    this.allTags.map(t => t.selected = false);
+    this.filters = [];
+    this.filterNotes();
   }
 }

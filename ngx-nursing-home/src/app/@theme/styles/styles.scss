@@ -208,3 +208,8 @@ nb-select.appearance-outline.status-basic .select-button.placeholder {
 ::ng-deep nb-tag {
   text-transform: none !important;
 }
+
+.filters-popover {
+  width: 200px;
+  padding: 0.5rem;
+}
