@@ -1,1 +1,26 @@
-<p>note-documents works!</p>
+<nb-card class="discount-picker-card">
+    <nb-card-header class="d-flex">
+        <div class="col">
+            {{getString('documentsManagement')}}
+            <div class="discounts-selected" *ngIf="showUploadBtn">
+                <button nbButton shape="round" size="small" ghost
+                    (click)="openUploadDocumentDialog()">{{getString('uploadDocument')}}
+                </button>
+            </div>
+        </div>
+        <div class="w-max">
+            <button nbButton ghost shape="round" (click)="close(false)">
+                <nb-icon pack="eva" icon="close-outline"></nb-icon>
+            </button>
+        </div>
+    </nb-card-header>
+    <nb-card-body>
+        <div class="row m-0 w-100">
+            <div class="p-0 col-md-12 mb-2" *ngFor="let d of documents">
+                <ngx-file-card mode="row" [formatDate]="true" [useCustomPreview]="true" [useCustomDownload]="true"
+                    [canDelete]="showUploadBtn" (fileMenuItemClick)="onFileMenuItemClick($event)"
+                    [fileData]="{id: d.Id, filename: d.Name, extension: d.Extension, createdDate: d.CreationDate, author: d.DocumentTypeName}"></ngx-file-card>
+            </div>
+        </div>
+    </nb-card-body>
+</nb-card>

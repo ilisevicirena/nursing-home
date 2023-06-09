@@ -32,7 +32,8 @@
                     pack="eva" icon="checkmark-outline"></nb-icon></button>
             <button nbButton ghost shape="round" [nbTooltip]="getString('cancel')"><nb-icon pack="eva"
                     (click)="cancelSave()" icon="close-outline"></nb-icon></button>
-            <button nbButton size="small" ghost shape="round" status="primary">
+            <button nbButton size="small" ghost shape="round" (click)="openDocumentsDialog()"
+                [nbTooltip]="getString('documentsManagement')" status="primary">
                 {{selectedNote.Documents.length}}
                 <nb-icon pack="eva" icon="attach-outline"></nb-icon></button>
             <button nbButton ghost size="small" shape="round" status="primary" (click)="openTagsDialog()"

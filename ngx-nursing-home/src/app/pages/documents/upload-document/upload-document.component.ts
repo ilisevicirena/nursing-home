@@ -27,6 +27,7 @@ export class UploadDocumentComponent implements OnInit, OnDestroy {
   };
 
   public getString = getString;
+  public notesMode: boolean = false;
 
   constructor(
     private ref: NbDialogRef<UploadDocumentComponent>,
@@ -53,7 +54,7 @@ export class UploadDocumentComponent implements OnInit, OnDestroy {
     );
   }
 
-  public close(result: boolean): void {
+  public close(result: any): void {
     this.ref.close(result);
   }
 
@@ -79,11 +80,15 @@ export class UploadDocumentComponent implements OnInit, OnDestroy {
   public onSaveClick(): void {
     this.documentData.PersonId = this.personId;
     this.documentData.DocumentTypeId = this.selectedType;
-    this.subs.push(
-      this.documentsService.add(this.documentData).subscribe(() => {
-        this.toastrService.showToast('success', getString('saveSuccess'));
-        this.close(true);
-      })
-    );
+    if (!this.notesMode) {
+      this.subs.push(
+        this.documentsService.add(this.documentData).subscribe(() => {
+          this.toastrService.showToast('success', getString('saveSuccess'));
+          this.close(true);
+        })
+      );
+    } else {
+      this.close({ saved: true, document: this.documentData });
+    }
   }
 }

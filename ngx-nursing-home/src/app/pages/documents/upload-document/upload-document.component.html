@@ -23,7 +23,8 @@
                             <div class="form-group">
                                 <div class="label">{{getString('documentType')}}</div>
                                 <div class="value">
-                                    <nb-select fullWidth [placeholder]="getString('select')" [selected]="selectedType">
+                                    <nb-select fullWidth [placeholder]="getString('select')"
+                                        [(selected)]="selectedType">
                                         <nb-option *ngFor="let t of documentTypes" [value]="t.Id">{{t.Name}}</nb-option>
                                     </nb-select>
                                 </div>

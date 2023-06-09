@@ -6,6 +6,7 @@ import { ToastrService } from '../../services/toastr.service';
 import { Subscription } from 'rxjs';
 import { getString } from '../../resources/strings';
 import { NoteTagsComponent } from './note-tags/note-tags.component';
+import { NoteDocumentsComponent } from './note-documents/note-documents.component';
 
 @Component({
   selector: 'sample-notes',
@@ -164,6 +165,28 @@ export class NotesComponent implements OnInit, OnDestroy {
       ).onClose.subscribe(result => {
         if (result.changes) {
           this.selectedNote.Tags = result.selectedTags;
+        }
+      })
+    );
+  }
+
+  public openDocumentsDialog(noteId = null): void {
+    this.subs.push(
+      this.dialogService.open(
+        NoteDocumentsComponent,
+        {
+          closeOnBackdropClick: false,
+          closeOnEsc: false,
+          autoFocus: false,
+          context: {
+            noteId: noteId ?? this.selectedNote.Id,
+            showUploadBtn: noteId ? false : true,
+            personId: this.personId
+          }
+        }
+      ).onClose.subscribe(result => {
+        if (result.changes) {
+          this.selectedNote.Documents = result.documents;
         }
       })
     );

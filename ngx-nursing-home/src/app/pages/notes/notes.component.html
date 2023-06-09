@@ -35,7 +35,9 @@
                                 [style.color]="t.Color" [style.border-color]="t.Color"></nb-tag>
                         </nb-tag-list>
                     </div>
-                    <div class="w-max ps-2 d-flex align-items-center">
+                    <div class="w-max ps-2 d-flex align-items-center attachments" *ngIf="note.Documents.length>0"
+                        (click)="openDocumentsDialog(note.Id)">
+                        <div class="attachments-number">{{note.Documents.length}}</div>
                         <nb-icon pack="eva" icon="attach-outline" status="primary"></nb-icon>
                     </div>
                 </div>
@@ -87,7 +89,8 @@
                 <div class="col-md-1 d-flex justify-content-center align-items-center actions">
                     <button nbButton ghost shape="round" status="warning" (click)="editNote()"
                         [nbTooltip]="getString('editData')"><nb-icon pack="eva" icon="edit-outline"></nb-icon></button>
-                    <button nbButton size="small" ghost shape="round" status="primary">
+                    <button nbButton size="small" ghost shape="round" status="primary" (click)="openDocumentsDialog()"
+                        [nbTooltip]="getString('documentsManagement')">
                         {{selectedNote.Documents.length}}
                         <nb-icon pack="eva" icon="attach-outline"></nb-icon></button>
                     <button nbButton ghost size="small" shape="round" status="primary" (click)="openTagsDialog()"
@@ -98,7 +101,7 @@
             </div>
         </div>
         <div class="w-100 h-100" *ngIf="formMode">
-            <sample-new-note [(selectedNote)]="editSelectedNote" (saved)="onNoteSaved($event)"
+            <sample-new-note [(selectedNote)]="editSelectedNote" [(personId)]="personId" (saved)="onNoteSaved($event)"
                 (canceled)="onCanceledFormSave()"></sample-new-note>
         </div>
     </div>

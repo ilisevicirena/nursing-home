@@ -32,8 +32,20 @@ export class NotesService extends BaseRestApiService {
     return this.http.post(this.apiRoute + "/addTagToNote", { NoteId: noteId, TagId: tagId });
   }
 
+  public getNoteDocuments(id: number): Observable<any> {
+    return this.http.get(this.apiRoute + "/getNoteDocuments?NoteId=" + id);
+  }
+
   public getNoteTags(id: number): Observable<any> {
     return this.http.get(this.apiRoute + "/getNoteTags?NoteId=" + id);
+  }
+
+  public addDocumentToNote(model: IBaseSaveModel): Observable<any> {
+    return this.http.post(this.apiRoute + "/insertDocumentForNote", model);
+  }
+
+  public deleteDocumentFromNote(id: number, noteId: number): Observable<any> {
+    return this.http.delete(this.apiRoute + '/deleteDocumentFromNote', { body: { DocumentId: id, NoteId: noteId } });
   }
 }
 

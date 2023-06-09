@@ -18,8 +18,8 @@
         <div class="row m-0 w-100">
             <nb-tag-list class="p-0">
                 <nb-tag *ngFor="let t of tags" [text]="t.Name" (click)="toggleSelected(t)"
-                    [style.background-color]="!t.selected ? hexToRgbA(t.Color) : t.Color"
-                    [style.color]="!t.selected ? t.Color : 'inherit'" [style.border-color]="t.Color"
+                    [style.background-color]="!t.selected ? hexToRgbA(t.Color) : t.Color" status="primary"
+                    [style.color]="!t.selected ? t.Color : ''" [style.border-color]="t.Color"
                     [appearance]="t.selected ? 'filled': 'outline'"></nb-tag>
             </nb-tag-list>
         </div>

@@ -41,6 +41,16 @@
             background-color: nb-theme(color-primary-transparent-200);
         }
 
+        .attachments-number {
+            font-weight: 600;
+            color: nb-theme(color-primary-500);
+            margin-right: 0.2rem;
+        }
+
+        .attachments:hover {
+            cursor: pointer;
+        }
+
         .note-tag {
             border: none;
             border-radius: 0;

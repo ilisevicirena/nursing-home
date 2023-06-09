@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { NotesService } from '../../../services/rest/notes.service';
 import { DialogService } from '../../../shared/dialog/dialog.service';
 import { NoteTagsComponent } from '../note-tags/note-tags.component';
+import { NoteDocumentsComponent } from '../note-documents/note-documents.component';
 
 @Component({
   selector: 'sample-new-note',
@@ -19,6 +20,7 @@ export class NewNoteComponent implements OnInit, OnDestroy {
   }
 
   @Input() selectedNote: any;
+  @Input() personId: number;
   @Output() saved: EventEmitter<number> = new EventEmitter();
   @Output() canceled: EventEmitter<boolean> = new EventEmitter();
 
@@ -73,8 +75,20 @@ export class NewNoteComponent implements OnInit, OnDestroy {
       this.selectedNote.Tags = this.selectedNote.Tags.map(x => x.Id);
       this.subs.push(
         this.notesService.add(this.selectedNote).subscribe(data => {
-          if (data.NoteId)
-            this.saved.emit(data.NoteId);
+          if (data.NoteId) {
+            //save documents if any
+            if (this.selectedNote.Documents.length > 0) {
+              for (let index = 0; index < this.selectedNote.Documents.length; index++) {
+                const element = this.selectedNote.Documents[index];
+                element.NoteId = data.NoteId;
+                this.subs.push(
+                  this.notesService.addDocumentToNote(element).subscribe(() => {
+                    if (index == this.selectedNote.Documents.length - 1) this.saved.emit(data.NoteId);
+                  })
+                );
+              }
+            } else this.saved.emit(data.NoteId);
+          }
         })
       );
     } else {
@@ -106,6 +120,29 @@ export class NewNoteComponent implements OnInit, OnDestroy {
       ).onClose.subscribe(result => {
         if (result.changes) {
           this.selectedNote.Tags = result.selectedTags;
+        }
+      })
+    );
+  }
+
+  public openDocumentsDialog(): void {
+    this.subs.push(
+      this.dialogService.open(
+        NoteDocumentsComponent,
+        {
+          closeOnBackdropClick: false,
+          closeOnEsc: false,
+          autoFocus: false,
+          context: {
+            noteId: this.selectedNote.Id,
+            showUploadBtn: true,
+            personId: this.personId,
+            documents: this.selectedNote.Documents
+          }
+        }
+      ).onClose.subscribe(result => {
+        if (result.changes) {
+          this.selectedNote.Documents = result.documents;
         }
       })
     );
