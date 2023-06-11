@@ -260,16 +260,31 @@
 
 
                 <nb-step [label]="getString('documents')">
-                    <h4>{{getString('contactsPersonData')}}</h4>
+                    <h4>{{getString('documentsPersonData')}}</h4>
                     <div class="stepper-body">
                         <p>
-                            {{getString('contactsPersonStepText')}}
+                            {{getString('documentsPersonStepText')}}
                         </p>
-                        <div class="mt-5">
+                        <sample-no-data class="mt-4" *ngIf="newPersonData.Id==0"
+                            [title]="getString('savePersonFirst')"></sample-no-data>
+                        <div class="mt-2" *ngIf="newPersonData.Id>0">
+                            <button nbButton ghost size="small" shape="round" status="primary"
+                                (click)="openAddDocumentModal()">
+                                {{getString('addDocument')}}
+                                <nb-icon pack="eva" icon="plus-outline"></nb-icon>
+                            </button>
+                        </div>
+                        <div class="mt-2" *ngIf="newPersonData.Id>0">
+                            <div class="p-0 col-md-12 mb-2" *ngFor="let d of documents">
+                                <ngx-file-card mode="row" [formatDate]="true" [useCustomPreview]="true"
+                                    [useCustomDownload]="true" [canDelete]="false"
+                                    (fileMenuItemClick)="onFileMenuItemClick($event)"
+                                    [fileData]="{id: d.Id, filename: d.Name, extension: d.Extension, createdDate: d.CreationDate, author: d.DocumentTypeName}"></ngx-file-card>
+                            </div>
                         </div>
                     </div>
                     <div class="stepper-footer w-100 d-flex justify-content-end">
-                        <button nbButton disabled shape="round" size="small" class="me-2" nbStepperPrevious>
+                        <button nbButton shape="round" size="small" class="me-2" nbStepperPrevious>
                             <nb-icon pack="eva" icon="chevron-left-outline"></nb-icon>
                             {{getString('back')}}</button>
                         <button nbButton shape="round" size="small" nbStepperNext>{{getString('next')}}
@@ -277,6 +292,8 @@
                         </button>
                     </div>
                 </nb-step>
+
+
                 <nb-step [label]="getString('notes')">
                     <h4>{{getString('contactsPersonData')}}</h4>
                     <div class="stepper-body">

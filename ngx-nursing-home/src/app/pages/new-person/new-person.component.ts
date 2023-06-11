@@ -8,6 +8,10 @@ import { GendersService } from '../../services/rest/genders.service';
 import { RoomsService } from '../../services/rest/rooms.service';
 import { SelectGridColumn } from 'shared-components/lib/models/select-grid.model';
 import { DialogService } from '../../shared/dialog/dialog.service';
+import { DocumentsService } from '../../services/rest/documents.service';
+import { UploadDocumentComponent } from '../documents/upload-document/upload-document.component';
+import { NbMenuItem } from '@nebular/theme';
+import { fileDownload, previewFile } from 'shared-components';
 
 @Component({
   selector: 'sample-new-person',
@@ -21,7 +25,8 @@ export class NewPersonComponent implements OnInit, OnDestroy {
     private toastrService: ToastrService,
     private gendersService: GendersService,
     private roomsService: RoomsService,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    private documentsService: DocumentsService
   ) { }
 
   public getString = getString;
@@ -38,6 +43,7 @@ export class NewPersonComponent implements OnInit, OnDestroy {
   };
 
   public loading: boolean = false;
+  public documents: any[] = [];
   public genders: any[] = [];
   public rooms: any[] = [];
   public roomsColumns: SelectGridColumn[] = [
@@ -132,5 +138,57 @@ export class NewPersonComponent implements OnInit, OnDestroy {
 
   public openOfferDialog(dialog: TemplateRef<any>) {
     this.dialogService.open(dialog, { autoFocus: false });
+  }
+
+  public openAddDocumentModal(): void {
+    this.subscriptions.push(
+      this.dialogService.open(
+        UploadDocumentComponent,
+        {
+          closeOnBackdropClick: false,
+          closeOnEsc: false,
+          autoFocus: false,
+          context: {
+            personId: this.newPersonData.Id
+          }
+        }
+      ).onClose.subscribe(result => {
+        if (result) this.getDocumentsForPerson();
+      })
+    );
+  }
+
+  private getDocumentsForPerson(): void {
+    this.subscriptions.push(
+      this.documentsService.getDocumentsForPerson(this.newPersonData.Id).subscribe(data => {
+        this.documents = data;
+      })
+    );
+  }
+
+  public async onFileMenuItemClick(item: NbMenuItem): Promise<any> {
+    switch (item.data.code) {
+      case "download":
+        this.subscriptions.push(
+          this.documentsService.getDocumentContent(item.data.file.id).subscribe(data => {
+            if (data) {
+              this.toastrService.showToastWithCustumIcon('info', getString('downloadStartSoon'), '', 'download-outline');
+              fileDownload(data.content, data.document.Name + "." + data.document.Extension);
+            }
+          }, err => {
+            this.toastrService.showToast('danger', getString('fileNotFound'));
+          })
+        );
+        break;
+      case "preview":
+        this.subscriptions.push(
+          this.documentsService.getDocumentContent(item.data.file.id).subscribe(data => {
+            if (data) previewFile(data.content, data.document.Extension, data.document.Name + "." + data.document.Extesion);
+          }, err => {
+            this.toastrService.showToast('danger', getString('fileNotFound'));
+          })
+        );
+        break;
+    }
   }
 }
