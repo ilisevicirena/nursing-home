@@ -91,6 +91,9 @@
                 <div class="col-md-1 d-flex justify-content-center align-items-center actions">
                     <button nbButton ghost shape="round" status="warning" (click)="editNote()"
                         [nbTooltip]="getString('editData')"><nb-icon pack="eva" icon="edit-outline"></nb-icon></button>
+                    <button nbButton ghost shape="round" status="danger" (click)="deleteNote()"
+                        [nbTooltip]="getString('deleteData')"><nb-icon pack="eva"
+                            icon="trash-outline"></nb-icon></button>
                     <button nbButton size="small" ghost shape="round" status="primary" (click)="openDocumentsDialog()"
                         [nbTooltip]="getString('documentsManagement')">
                         {{selectedNote.Documents.length}}

@@ -223,4 +223,17 @@ export class NotesComponent implements OnInit, OnDestroy {
     this.filters = [];
     this.filterNotes();
   }
+
+  public async deleteNote(): Promise<void> {
+    const rez = await this.dialogService.openYesNoDialog(getString('areYouSure'), getString('wantToDelete'));
+    if (rez) {
+      this.subs.push(
+        this.notesService.delete(this.selectedNote).subscribe(() => {
+          this.toastrService.showToast('success', getString('saveSuccess'));
+          this.selectedNote = undefined;
+          this.getNotesForPerson();
+        })
+      );
+    }
+  }
 }

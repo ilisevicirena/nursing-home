@@ -22,6 +22,31 @@ router.get('/', async (request, response) => {
     }
 });
 
+router.delete('/delete', async (request, response) => {
+    try {
+        var objectToSave = request.body;
+        const pool = await db;
+        const result = await pool.request()
+            .input('id', objectToSave.Id)
+            .query("EXEC [dbo].[deleteNote] @Id=@id");
+        if (result != null) {
+            var documents = result.recordset;
+            for (let index = 0; index < documents.length; index++) {
+                const doc = documents[index];
+                fs.unlink(doc.Path, function (err) {
+                    if (err) response.send(getError(5008));
+                    if (index == documents.length - 1) response.send({ error: false });
+                });
+            }
+
+            response.send({ error: false });
+        } else response.send(getError(5010));
+    } catch (err) {
+        response.status(500);
+        response.send(err.message);
+    }
+});
+
 router.post('/addTagToNote', async (request, response) => {
     try {
         var objectToSave = request.body;
