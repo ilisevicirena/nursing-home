@@ -295,16 +295,17 @@
 
 
                 <nb-step [label]="getString('notes')">
-                    <h4>{{getString('contactsPersonData')}}</h4>
+                    <h4>{{getString('notesPersonData')}}</h4>
                     <div class="stepper-body">
-                        <p>
-                            {{getString('contactsPersonStepText')}}
-                        </p>
-                        <div class="mt-5">
+                        <sample-no-data class="mt-4" *ngIf="newPersonData.Id==0"
+                            [title]="getString('savePersonFirst')"></sample-no-data>
+                        <div class="mt-2" style="height: calc(100% - 1.5rem);" *ngIf="newPersonData.Id>0">
+                            <sample-notes [(personId)]="newPersonData.Id" [(personName)]="newPersonData.FirstName"
+                                [(personLastName)]="newPersonData.LastName"></sample-notes>
                         </div>
                     </div>
                     <div class="stepper-footer w-100 d-flex justify-content-end">
-                        <button nbButton disabled shape="round" size="small" class="me-2" nbStepperPrevious>
+                        <button nbButton shape="round" size="small" class="me-2" nbStepperPrevious>
                             <nb-icon pack="eva" icon="chevron-left-outline"></nb-icon>
                             {{getString('back')}}</button>
                         <button nbButton shape="round" size="small" nbStepperNext>{{getString('next')}}
@@ -312,6 +313,8 @@
                         </button>
                     </div>
                 </nb-step>
+
+
             </nb-stepper>
         </nb-card-body>
     </nb-card>

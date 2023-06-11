@@ -170,6 +170,7 @@ const strings: IKeyValue[] = [
     { key: "deleteData", value: "Brisanje podataka" },
     { key: "documentsPersonData", value: "Dodavanje dokumenata" },
     { key: "select", value: "Odaberi" },
+    { key: "notesPersonData", value: "Bilješke za novu osobu" },
     { key: "documentsPersonStepText", value: "Ovdje možeš dodati neke dokumente vezane uz novu osobu (kopije osobnih dokumenata, upute za davanje lijekova, liječničke nalaze i slično). Dodane dokumente možeš kasnije pregledati i uređivati unutar profila osobe. Dokumente ne moraš dodati odmah..." },
 ];
 
