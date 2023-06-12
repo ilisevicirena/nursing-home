@@ -89,7 +89,7 @@ export class ServicesManagementComponent implements OnInit, OnDestroy {
     this.subs.push(this.windowService.open(
       AddEditPackageComponent,
       {
-        context: { isNew: false, package: JSON.parse(JSON.stringify(pac)) },
+        context: { isNew: false, package: JSON.parse(JSON.stringify(pac)), blockEdit: true },
         buttons: { maximize: false, minimize: false, fullScreen: false, close: false },
         initialState: NbWindowState.MAXIMIZED,
         hasBackdrop: true,
@@ -107,7 +107,7 @@ export class ServicesManagementComponent implements OnInit, OnDestroy {
       this.windowService.open(
         AddEditServiceComponent,
         {
-          context: { isNew: false, service: JSON.parse(JSON.stringify(service)) },
+          context: { isNew: false, service: JSON.parse(JSON.stringify(service)), blockEdit: true },
           buttons: { maximize: false, minimize: false, fullScreen: false, close: false },
           initialState: NbWindowState.MAXIMIZED,
           hasBackdrop: true,

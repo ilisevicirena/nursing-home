@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { NbWindowRef } from '@nebular/theme';
 import { IPackage, PackagesService } from '../../../services/rest/packages.service';
 import { ToastrService } from '../../../services/toastr.service';
@@ -29,6 +29,7 @@ export class AddEditPackageComponent implements OnInit, OnDestroy, AfterViewInit
   public priceUnits: any[] = [];
   public servicesData: any[] = [];
   public calculationMeasureUnits: any[] = [];
+  public blockEdit: boolean = false;
 
   public package: IPackage = {
     Id: 0,

@@ -64,7 +64,8 @@
                                         [nbTooltip]="getString('required')"></nb-icon></div>
                                 <div class="value">
                                     <input nbInput [(ngModel)]="package.Name" fullWidth name="nameService"
-                                        [placeholder]="getString('name')" required #name1="ngModel" autocomplete="off"
+                                        [disabled]="blockEdit" [placeholder]="getString('name')" required
+                                        #name1="ngModel" autocomplete="off"
                                         [status]="name1.dirty ? (name1.invalid ? 'danger' : 'success'): 'basic'">
                                 </div>
                             </div>
@@ -76,7 +77,8 @@
                                 <div class="label">{{getString("description")}}</div>
                                 <div class="value">
                                     <textarea nbInput rows="3" [placeholder]="getString('description')" fullWidth
-                                        [(ngModel)]="package.Description" name="description"></textarea>
+                                        [disabled]="blockEdit" [(ngModel)]="package.Description"
+                                        name="description"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -90,7 +92,7 @@
                             <div class="col-md-12">
                                 <div class="form-group d-flex">
                                     <div class="value me-2">
-                                        <nb-checkbox [(checked)]="package.PackagePriceCalculated"
+                                        <nb-checkbox [(checked)]="package.PackagePriceCalculated" [disabled]="blockEdit"
                                             name="packagePriceCalculated"
                                             (checkedChange)="calculatePackagePrice()"></nb-checkbox>
                                     </div>
@@ -112,7 +114,7 @@
                                             (ngModelChange)="calculatePackagePrice()" (focusout)="onPriceChange()"
                                             [placeholder]="getString('defaultPackagePrice')"
                                             [required]="!package.PackagePriceCalculated" #defaultPackagePrice1="ngModel"
-                                            autocomplete="off" [disabled]="package.PackagePriceCalculated"
+                                            autocomplete="off" [disabled]="package.PackagePriceCalculated || blockEdit"
                                             [status]="defaultPackagePrice1.dirty ? (defaultPackagePrice1.invalid ? 'danger' : 'success'): 'basic'">
                                     </div>
                                 </div>
@@ -128,7 +130,7 @@
                                         <nb-select [(ngModel)]="package.DefaultPackagePriceUnitId" fullWidth
                                             name="priceUnit" [placeholder]="getString('priceUnit')"
                                             [required]="!package.PackagePriceCalculated" #priceUnit1="ngModel"
-                                            autocomplete="off" [disabled]="package.PackagePriceCalculated"
+                                            autocomplete="off" [disabled]="package.PackagePriceCalculated || blockEdit"
                                             [status]="priceUnit1.dirty ? (priceUnit1.invalid ? 'danger' : 'success'): 'basic'">
                                             <nb-option *ngFor="let unit of priceUnits"
                                                 [value]="unit.Id">{{unit.Tag}}</nb-option>
@@ -147,7 +149,7 @@
                                     <div class="value">
                                         <nb-select [(ngModel)]="package.CalculationMeasureUnitId" fullWidth
                                             name="priceUnit" [placeholder]="getString('calculationMeasurement')"
-                                            required #measureUnit1="ngModel" autocomplete="off"
+                                            required #measureUnit1="ngModel" autocomplete="off" [disabled]="blockEdit"
                                             (selectedChange)="onPackageMeasureUnitSelectedChange($event)"
                                             [status]="measureUnit1.dirty ? (measureUnit1.invalid ? 'danger' : 'success'): 'basic'">
                                             <nb-option *ngFor="let unit of calculationMeasureUnits"
@@ -167,7 +169,7 @@
                                         <nb-select [(ngModel)]="package.DefaultPackagePriceUnitId" fullWidth
                                             name="priceUnit" [placeholder]="getString('priceUnit')"
                                             [required]="package.PackagePriceCalculated" #calculationPriceUnit1="ngModel"
-                                            autocomplete="off"
+                                            autocomplete="off" [disabled]="blockEdit"
                                             [status]="calculationPriceUnit1.dirty ? (calculationPriceUnit1.invalid ? 'danger' : 'success'): 'basic'">
                                             <nb-option *ngFor="let unit of priceUnits"
                                                 [value]="unit.Id">{{unit.Tag}}</nb-option>
@@ -183,7 +185,7 @@
                     <button nbButton ghost shape="round" size="small" (click)="close(false)"
                         class="me-2">{{getString("cancel")}}</button>
                     <button nbButton status="primary" size="small" shape="round"
-                        [disabled]="packageForm.form.invalid || packageServices.length==0"
+                        [disabled]="packageForm.form.invalid || packageServices.length==0 || blockEdit"
                         (click)="onSaveClick(packageForm)">{{getString("save")}}</button>
                 </div>
             </div>
@@ -198,17 +200,17 @@
                     <div class="col-md-8 p-0">
                         <ngx-select-grid #servicesSelectGridControl [columns]="packageServiceSelectGridColumns"
                             [placeholder]="getString('service')" [attributesForLabel]="['Name']"
-                            [(source)]="servicesData" [valueAttr]="'Id'"
+                            [(source)]="servicesData" [valueAttr]="'Id'" [disabled]="blockEdit"
                             (onSelectionChanged)="onServiceSelectionChanged($event)"></ngx-select-grid>
                     </div>
                     <div class="col-md-2">
                         <input nbInput type="number" [placeholder]="getString('quantity')"
-                            [disabled]="selectedService.DefaultNumberOfUnits>0" [(ngModel)]="selectedService.Quantity"
-                            fullWidth>
+                            [disabled]="selectedService.DefaultNumberOfUnits>0 || blockEdit"
+                            [(ngModel)]="selectedService.Quantity" fullWidth>
                     </div>
                     <div class="col-md-2 d-flex align-items-center">
                         <button nbButton ghost status="primary" shape="round" size="small" (click)="addService()"
-                            [disabled]="!selectedService.ServiceId || selectedService.Quantity<=0">
+                            [disabled]="!selectedService.ServiceId || selectedService.Quantity<=0 || blockEdit">
                             {{getString('add')}}
                             <nb-icon pack="eva" icon="plus-outline" nbSuffix></nb-icon>
                         </button>
@@ -219,7 +221,7 @@
                 <ngx-smart-table #packageServicesGrid [columns]="servicesColumns" [(data)]="packageServices"
                     [addEnabled]="false" [exportExcelEnabled]="false" [exportPdfEnabled]="false" [pagerEnabled]="false"
                     [entriesPerPageEnabled]="false" [refreshEnabled]="false" [loadingEnabled]="false"
-                    [editEnabled]="false" (deleteConfirm)="onServiceDeleteConfirm($event)">
+                    [deleteEnabled]="!blockEdit" [editEnabled]="false" (deleteConfirm)="onServiceDeleteConfirm($event)">
                 </ngx-smart-table>
             </div>
         </div>

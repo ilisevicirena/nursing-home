@@ -20,6 +20,7 @@ export class AddEditServiceComponent implements OnInit, OnDestroy, AfterViewInit
   public getString = getString;
   public measureUnitsData: any[] = [];
   public priceUnitsData: any[] = [];
+  public blockEdit: boolean = false;
   public service: IService = {
     Id: 0,
     CostPerUnit: undefined,

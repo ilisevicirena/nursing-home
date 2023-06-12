@@ -37,7 +37,8 @@
                                         [nbTooltip]="getString('required')"></nb-icon></div>
                                 <div class="value">
                                     <input nbInput [(ngModel)]="service.Name" fullWidth name="nameService"
-                                        [placeholder]="getString('name')" required #name1="ngModel" autocomplete="off"
+                                        [disabled]="blockEdit" [placeholder]="getString('name')" required
+                                        #name1="ngModel" autocomplete="off"
                                         [status]="name1.dirty ? (name1.invalid ? 'danger' : 'success'): 'basic'">
                                 </div>
                             </div>
@@ -49,7 +50,8 @@
                                 <div class="label">{{getString("description")}}</div>
                                 <div class="value">
                                     <textarea nbInput rows="5" [placeholder]="getString('description')" fullWidth
-                                        [(ngModel)]="service.Description" name="description"></textarea>
+                                        [disabled]="blockEdit" [(ngModel)]="service.Description"
+                                        name="description"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -63,7 +65,7 @@
                                 <div class="value">
                                     <nb-select [(ngModel)]="service.MeasureUnitId" fullWidth name="measureUnit"
                                         [placeholder]="getString('measureUnit')" required #measureUnit1="ngModel"
-                                        autocomplete="off"
+                                        autocomplete="off" [disabled]="blockEdit"
                                         [status]="measureUnit1.dirty ? (measureUnit1.invalid ? 'danger' : 'success'): 'basic'">
                                         <nb-option *ngFor="let unit of measureUnitsData" [value]="unit.Id">
                                             {{unit.Tag}}
@@ -80,7 +82,8 @@
                                 <div class="value">
                                     <input nbInput [(ngModel)]="service.CostPerUnit" fullWidth name="costPerUnit"
                                         type="number" [placeholder]="getString('costPerUnit')" required
-                                        #costPerUnit1="ngModel" autocomplete="off" (focusout)="onPriceChange()"
+                                        [disabled]="blockEdit" #costPerUnit1="ngModel" autocomplete="off"
+                                        (focusout)="onPriceChange()"
                                         [status]="costPerUnit1.dirty ? (costPerUnit1.invalid ? 'danger' : 'success'): 'basic'">
                                 </div>
                             </div>
@@ -93,7 +96,7 @@
                                 <div class="value">
                                     <nb-select [(ngModel)]="service.PriceUnitId" fullWidth name="priceUnit"
                                         [placeholder]="getString('priceUnit')" required #priceUnit1="ngModel"
-                                        autocomplete="off"
+                                        autocomplete="off" [disabled]="blockEdit"
                                         [status]="priceUnit1.dirty ? (priceUnit1.invalid ? 'danger' : 'success'): 'basic'">
                                         <nb-option *ngFor="let unit of priceUnitsData" [value]="unit.Id">
                                             {{unit.Tag}}
@@ -109,7 +112,7 @@
                                 <div class="label">{{getString("defaultNumberOfUnits")}} </div>
                                 <div class="value">
                                     <input nbInput [(ngModel)]="service.DefaultNumberOfUnits" fullWidth
-                                        name="defaultNumberOfUnits" type="number"
+                                        name="defaultNumberOfUnits" type="number" [disabled]="blockEdit"
                                         [placeholder]="getString('defaultNumberOfUnits')"
                                         #defaultNumberOfUnits1="ngModel" autocomplete="off">
                                 </div>
@@ -126,7 +129,8 @@
                 <div class="left-content-footer d-flex justify-content-end">
                     <button nbButton ghost shape="round" size="small" (click)="close(false, serviceForm)"
                         class="me-2">{{getString("cancel")}}</button>
-                    <button nbButton status="primary" size="small" shape="round" [disabled]="serviceForm.form.invalid"
+                    <button nbButton status="primary" size="small" shape="round"
+                        [disabled]="serviceForm.form.invalid || blockEdit"
                         (click)="onSaveClick(serviceForm)">{{getString("save")}}</button>
                 </div>
             </div>
