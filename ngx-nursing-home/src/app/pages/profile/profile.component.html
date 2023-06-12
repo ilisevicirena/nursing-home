@@ -179,12 +179,21 @@
                             </div>
                         </div>
                         <div class="h-50">
-                            <div class="group-title">
-                                {{getString('history')}}
-                                <div class="line"></div>
+                            <div class="d-flex">
+                                <div class="group-title">
+                                    {{getString('history')}}
+                                    <div class="line"></div>
+                                </div>
+                                <div class="col d-flex justify-content-end">
+                                    <!--  <button nbButton ghost shape="round" class="h-max" status="primary"
+                                        (click)="openPersonHistory(personHistoryModal)">
+                                        <nb-icon pack="eva" icon="external-link-outline"></nb-icon>
+                                    </button>
+                                    -->
+                                </div>
                             </div>
                             <div style="height: 248px;">
-                                <ngx-smart-table [columns]="personHistoryColumns" [addEnabled]="false"
+                                <ngx-smart-table [columns]="getPersonHistoryColumns()" [addEnabled]="false"
                                     [editEnabled]="false" [deleteEnabled]="false" [exportPdfEnabled]="false"
                                     [entriesPerPageEnabled]="false" [exportExcelEnabled]="false"
                                     [refreshEnabled]="false" [(data)]="personHistory"></ngx-smart-table>
@@ -439,3 +448,23 @@
         </nb-card>
     </div>
 </div>
+
+<ng-template #personHistoryModal let-ref="dialogRef">
+    <nb-card class="discount-picker-card">
+        <nb-card-header class="d-flex">
+            <div class="col">
+                {{getString('history')}}
+            </div>
+            <div class="w-max">
+                <button nbButton ghost shape="round" (click)="ref.close()">
+                    <nb-icon pack="eva" icon="close-outline"></nb-icon>
+                </button>
+            </div>
+        </nb-card-header>
+        <nb-card-body>
+            <ngx-smart-table [columns]="getPersonHistoryColumns(true)" [addEnabled]="false" [editEnabled]="false"
+                [deleteEnabled]="false" [exportPdfEnabled]="true" [entriesPerPageEnabled]="true"
+                [exportExcelEnabled]="true" [refreshEnabled]="true" [(data)]="personHistory"></ngx-smart-table>
+        </nb-card-body>
+    </nb-card>
+</ng-template>

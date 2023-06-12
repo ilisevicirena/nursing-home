@@ -26,6 +26,21 @@
     flex-flow: column;
 }
 
+.discount-picker-card {
+    border-radius: 1rem;
+    width: 1300px;
+    height: 800px;
+
+    nb-card-header {
+        padding: 1rem;
+        padding-bottom: 0.5rem;
+
+        .col {
+            font-size: 20px;
+        }
+    }
+}
+
 @include nb-install-component {
     .person-jmbg {
         font-weight: 600;

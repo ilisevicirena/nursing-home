@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChildren } from '@angular/core';
+import { Component, OnDestroy, OnInit, TemplateRef, ViewChildren } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription, UnsubscriptionError } from 'rxjs';
 import { PersonsService, getIPersonFromJSON } from '../../services/rest/persons.service';
@@ -6,7 +6,7 @@ import { getString } from '../../resources/strings';
 import { NgForm } from '@angular/forms';
 import { ToastrService } from '../../services/toastr.service';
 import { GendersService } from '../../services/rest/genders.service';
-import { CheckboxType, DateType, SelectGridComponent, SmartTableColumn, TextboxEditor } from 'shared-components';
+import { CheckboxType, DateTimePickerEditor, DateType, DatepickerFilter, SelectGridComponent, SmartTableColumn, TextboxEditor } from 'shared-components';
 import { DialogService } from '../../shared/dialog/dialog.service';
 import { RoomsService } from '../../services/rest/rooms.service';
 import { SelectGridColumn } from 'shared-components/lib/models/select-grid.model';
@@ -45,17 +45,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
   public allRooms: any[] = [];
   public personHistory: any[] = [];
   public roomHistory: any[] = [];
-
-  public personHistoryColumns: SmartTableColumn[] = [
-    new SmartTableColumn(getString('id')).Property("Id").SpecialEditor(new TextboxEditor()).Filter(false),
-    new SmartTableColumn(getString("transactionDate")).Property("CreationDate")
-      .SpecialType(new DateType().Format("dd.MM.yyyy. HH:mm")).Filter(false),
-    new SmartTableColumn(getString('firstName')).Property("FirstName").SpecialEditor(new TextboxEditor()).Filter(false),
-    new SmartTableColumn(getString('lastName')).Property("LastName").SpecialEditor(new TextboxEditor()).Filter(false),
-    new SmartTableColumn(getString('jmbg')).Property("Jmbg").SpecialEditor(new TextboxEditor()).Filter(false),
-    new SmartTableColumn(getString('logType')).Property("LogType").SpecialEditor(new TextboxEditor()).Filter(false),
-    new SmartTableColumn(getString('logType')).Property("LogTypePretty").SpecialEditor(new TextboxEditor()).Filter(false),
-  ];
 
   public roomHistoryColumns: SmartTableColumn[] = [
     new SmartTableColumn(getString('id')).Property("RoomId").Filter(false),
@@ -278,4 +267,21 @@ export class ProfileComponent implements OnInit, OnDestroy {
     }));
   }
 
+
+  public openPersonHistory(ref: TemplateRef<any>): void {
+    this.dialogService.open(ref);
+  }
+
+  public getPersonHistoryColumns(isModal = false): SmartTableColumn[] {
+    return [
+      new SmartTableColumn(getString('id')).Property("Id").SpecialEditor(new TextboxEditor()).Filter(isModal),
+      new SmartTableColumn(getString("transactionDate")).Property("CreationDate")
+        .SpecialType(new DateType().Format("dd.MM.yyyy. HH:mm")).Filter(isModal).SpecialFilter(new DatepickerFilter().Format("dd.MM.yyyy.")),
+      new SmartTableColumn(getString('firstName')).Property("FirstName").SpecialEditor(new TextboxEditor()).Filter(isModal),
+      new SmartTableColumn(getString('lastName')).Property("LastName").SpecialEditor(new TextboxEditor()).Filter(isModal),
+      new SmartTableColumn(getString('jmbg')).Property("Jmbg").SpecialEditor(new TextboxEditor()).Filter(isModal),
+      new SmartTableColumn(getString('logType')).Property("LogType").SpecialEditor(new TextboxEditor()).Filter(isModal),
+      new SmartTableColumn(getString('logType')).Property("LogTypePretty").SpecialEditor(new TextboxEditor()).Filter(isModal),
+    ];
+  }
 }
