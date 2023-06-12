@@ -44,7 +44,7 @@ export class ContactsGridComponent implements OnInit, OnDestroy {
       //check valid email
       var re = new RegExp("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$");
       if (!re.test(event.newData.Email)) allValid = false;
-    } else if (!event.newData.Telephone && !event.newData.Mobile) allValid = false;
+    }
 
     if (allValid) {
       event.newData.PersonId = this.personId;
@@ -69,7 +69,7 @@ export class ContactsGridComponent implements OnInit, OnDestroy {
       //check valid email
       var re = new RegExp("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$");
       if (!re.test(event.newData.Email)) allValid = false;
-    } else if (!event.newData.Telephone && !event.newData.Mobile) allValid = false;
+    }
 
     if (allValid) {
       event.newData.FirstName = event.newData.FirstName.value ?? event.newData.FirstName;
