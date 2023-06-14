@@ -1,7 +1,7 @@
 USE [ENV01_NURSING_HOME]
 GO
 
-/****** Object:  StoredProcedure [dbo].[getServicesAndPackagesForPerson]    Script Date: 23.5.2023. 9:10:47 ******/
+/****** Object:  StoredProcedure [dbo].[getServicesAndPackagesForPerson]    Script Date: 14.6.2023. 11:25:43 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -72,12 +72,12 @@ BEGIN
 	[Quantity]=spr.Quantity
 	FROM
 	dbo.PersonPackageRelation as ppr
-	join dbo.Package as p on p.Id=ppr.PackageId
+	left join dbo.Package as p on p.Id=ppr.PackageId
 	left join dbo.ServicePackageRelation as spr on ppr.PackageId=spr.PackageId
-	join dbo.[Service] as s on spr.ServiceId=s.Id
-	join dbo.MeasureUnit as mu on s.MeasureUnitId=mu.Id
-	join dbo.PriceUnit as pu on s.PriceUnitId=pu.Id
-	where ppr.PersonId=@Id and spr.Active=1;
+	left join dbo.[Service] as s on spr.ServiceId=s.Id
+	left join dbo.MeasureUnit as mu on s.MeasureUnitId=mu.Id
+	left join dbo.PriceUnit as pu on s.PriceUnitId=pu.Id
+	where ppr.PersonId=@Id and spr.Active=1 and ppr.Active=1;
 
 	--individual additional services
 	SELECT 
@@ -113,6 +113,9 @@ BEGIN
 	join dbo.Discount as d 
 	on pdr.DiscountId=d.Id
 	where pdr.PersonId=@Id and pdr.Active=1;
+
+	-- offer measure unit
+	exec dbo.getOfferMeasureUnitForPerson @PersonId=@Id;
 END
 GO
 

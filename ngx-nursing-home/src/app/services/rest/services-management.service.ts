@@ -22,4 +22,5 @@ export interface IServicesManagement extends IBaseSaveModel {
   Packages: any[];
   Services: any[];
   Discounts: any[];
+  MeasureUnitId: number;
 }

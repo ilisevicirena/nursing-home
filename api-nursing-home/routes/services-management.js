@@ -10,7 +10,7 @@ router.get('/getPackageAndServicesForPerson', async (request, response) => {
         const result = await pool.request()
             .input('id', request.query.PersonId)
             .query("EXEC [dbo].[getServicesAndPackagesForPerson] @Id=@id");
-        if (result.recordsets.length == 4) response.json({ Packages: result.recordsets[0], PackagesServices: result.recordsets[1], Services: result.recordsets[2], Discounts: result.recordsets[3] });
+        if (result.recordsets.length == 5) response.json({ Packages: result.recordsets[0], PackagesServices: result.recordsets[1], Services: result.recordsets[2], Discounts: result.recordsets[3], OfferMeasureUnit: result.recordsets[4] });
         else response.send(getError(9001));
     } catch (err) {
         response.status(500);
@@ -98,6 +98,13 @@ router.post('/update', async (request, response) => {
                     .query("exec [dbo].[insertServiceForPerson] @ServiceId=@service, @PersonId=@person, @Quantity=@qty")
             );
         });
+
+        promises.push(
+            pool.request()
+                .input('person', objectToSave.PersonId)
+                .input('unit', objectToSave.MeasureUnitId)
+                .query("exec [dbo].[insertOfferMeasureUnitForPerson] @PersonId=@person, @MeasureUnitId=@unit")
+        );
 
         Promise.all(promises).then(() => {
             response.json({ error: false });

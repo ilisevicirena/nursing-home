@@ -89,7 +89,7 @@
                         </div>
                         <div class="value me-3">
                             <nb-select fullWidth [(ngModel)]="calculationMeasureUnit" name="calculationMeasureUnit"
-                                (selectedChange)="onClearAllClick()">
+                                (selectedChange)="measureUnitSelectedChange($event)">
                                 <nb-option *ngFor="let unit of calculationMeasureUnits" [value]="unit.Code">
                                     {{unit.Tag}}
                                 </nb-option>

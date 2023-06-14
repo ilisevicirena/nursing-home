@@ -43,6 +43,7 @@ export class ServicesManagementComponent implements OnInit, OnDestroy {
   private packagesOriginal: any[] = [];
   private servicesOriginal: any[] = [];
   private discountsOriginal: any[] = [];
+  private measureUnitId: number = 0;
 
   constructor(
     private packagesService: PackagesService,
@@ -280,7 +281,8 @@ export class ServicesManagementComponent implements OnInit, OnDestroy {
           PersonId: this.personId,
           Services: this.servicesOriginal,
           Packages: this.packagesOriginal,
-          Discounts: this.discountsOriginal
+          Discounts: this.discountsOriginal,
+          MeasureUnitId: this.measureUnitId
         };
 
         this.subs.push(
@@ -327,6 +329,14 @@ export class ServicesManagementComponent implements OnInit, OnDestroy {
   private getPackagesAndServicesForPerson(): void {
     this.subs.push(
       this.servicesManagementService.getPackagesAndServicesForPerson(this.personId).subscribe(data => {
+        // select measure unit
+        if (data.OfferMeasureUnit.length > 0)
+          this.calculationMeasureUnit = data.OfferMeasureUnit[0].MeasureUnitCode;
+        else {
+          var measureUnit = this.calculationMeasureUnits.find(x => x.Code == this.calculationMeasureUnit);
+          if (measureUnit) this.measureUnitId = measureUnit.Id;
+        }
+
         // format packages
         data.Packages.forEach(pack => {
           var serv = data.PackagesServices.filter(x => x.PackageId == pack.Id);
@@ -355,6 +365,12 @@ export class ServicesManagementComponent implements OnInit, OnDestroy {
         this.calculateOfferPrice();
       })
     );
+  }
+
+  public measureUnitSelectedChange(event: any): void {
+    this.onClearAllClick();
+    var measureUnit = this.calculationMeasureUnits.find(x => x.Code == event);
+    if (measureUnit) this.measureUnitId = measureUnit.Id;
   }
 
 }
