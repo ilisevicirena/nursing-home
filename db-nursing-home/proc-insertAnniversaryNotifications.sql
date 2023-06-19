@@ -1,0 +1,53 @@
+USE [ENV01_NURSING_HOME]
+GO
+
+/****** Object:  StoredProcedure [dbo].[insertAnniversaryNotifications]    Script Date: 19.6.2023. 8:28:56 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author:		Irena Ilisevic
+-- Create date: 16.6.2023.
+-- Description:	inserts stay anniversary notifications
+-- =============================================
+CREATE PROCEDURE [dbo].[insertAnniversaryNotifications] 
+	
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+DECLARE @CurrentDate DATE = CONVERT(DATE, GETDATE());
+
+-- Insert for anniversaries with a reminder
+INSERT INTO dbo.[Notification] (NotificationTypeId, CreationDate, ReadDate, [Read], [Text])
+SELECT 
+    nt.[Id],
+    CONVERT(DATE, DATEADD(DAY, -nt.[DaysReminder], DATEFROMPARTS(YEAR(@CurrentDate) + 1, MONTH(p.StartDate), DAY(p.StartDate)))),
+    NULL,
+    0,
+    CONCAT('Godišnjica dolaska osobe ', p.FirstName, ' ', p.LastName, ' je ', DAY(p.StartDate), '.', MONTH(p.StartDate), '. (za ', nt.DaysReminder, ' dana)')
+FROM person p
+INNER JOIN dbo.NotificationType nt ON nt.Code = 'events' AND nt.[Enabled] = 1
+WHERE MONTH(p.StartDate) = MONTH(DATEADD(DAY, nt.DaysReminder, @CurrentDate))
+    AND DAY(p.StartDate) = DAY(DATEADD(DAY, nt.DaysReminder, @CurrentDate)) and p.Active=1;
+
+-- Insert for anniversaries on the current date if 'events' notification type is enabled
+IF EXISTS (SELECT 1 FROM dbo.NotificationType WHERE Code = 'events' AND [Enabled] = 1)
+BEGIN
+    INSERT INTO dbo.[Notification] (NotificationTypeId, CreationDate, ReadDate, [Read], [Text])
+    SELECT 
+        nt.[Id],
+        @CurrentDate,
+        NULL,
+        0,
+        CONCAT('Godišnjica dolaska osobe ', p.FirstName, ' ', p.LastName, ' je danas! (', DATEDIFF(YEAR, p.StartDate, @CurrentDate), ' god.)')
+    FROM person p
+    INNER JOIN dbo.NotificationType nt ON nt.Code = 'events'
+    WHERE MONTH(p.StartDate) = MONTH(@CurrentDate)
+        AND DAY(p.StartDate) = DAY(@CurrentDate) and p.Active=1;
+END
+END
+GO
+
