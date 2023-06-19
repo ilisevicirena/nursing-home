@@ -12,11 +12,11 @@
     <nb-card-body class="pt-0 ps-3 pe-3 pb-2">
         <nb-tabset>
             <nb-tab class="ps-0 pe-0 pb-3 pt-3" *ngFor="let type of notificationTypes"
-                [tabTitle]="getString(type.stringKey)"
-                [badgeText]="type.unreadNotificationCount>0 ? type.unreadNotificationCount : false"
+                [tabTitle]="getString(type.StringKey)"
+                [badgeText]="type.UnreadNotificationCount>0 ? type.UnreadNotificationCount : false"
                 badgePosition="top end" badgeStatus="basic">
                 <div class="notification-card mb-1" [ngClass]="!notification.Read?'new':''"
-                    *ngFor="let notification of type.notifications">
+                    *ngFor="let notification of type.Notifications">
                     <nb-badge status="primary" position="top end" style="top: 0.5rem" [dotMode]="true"
                         *ngIf="!notification.Read"></nb-badge>
                     <div class="text">{{notification.Text}}</div>
@@ -34,7 +34,7 @@
                             [nbTooltip]="getString('markAsRead')">
                             <nb-icon pack="eva" icon="checkmark-outline"></nb-icon>
                         </button>
-                        <button nbButton ghost status="primary" size="small" shape="round"
+                        <button nbButton ghost status="primary" size="small" shape="round" *ngIf="notification.LinkId"
                             (click)="goToNotification(notification)" [nbTooltip]="getString('goToNotification')">
                             <nb-icon pack="eva" icon="external-link-outline"></nb-icon>
                         </button>

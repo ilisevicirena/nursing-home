@@ -9,11 +9,7 @@ export enum SidebarStates {
   COMPACT = "compact",
 }
 
-const notificationTypes = [
-  { code: 'all', stringKey: 'all' },
-  { code: 'events', stringKey: 'events' },
-  { code: 'reminders', stringKey: 'reminders' }
-];
+const notificationAllType = { Code: 'all', StringKey: 'all', Notifications: [], UnreadNotificationCount: 0 };
 
 const Brand = {
   Name: 'Nursing home',
@@ -29,6 +25,6 @@ export const environment = {
   production: true,
   sidebarConfig: SidebarStates.COMPACT,
   configFile: 'assets/config/config.json',
-  notificationTypes: notificationTypes,
+  notificationAllType: notificationAllType,
   brand: Brand,
 };

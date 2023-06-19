@@ -66,4 +66,35 @@ router.post('/markAllNotificationsAsRead', async (request, response) => {
     }
 });
 
+router.get('/notificationTypes', async (request, response) => {
+    try {
+        const pool = await db;
+        const result = await pool.request()
+            .query("EXEC [dbo].[getNotificationTypes]");
+        var res = result.recordset.map(x => {
+            x.Notifications = [];
+            x.UnreadNotificationCount = 0;
+            return x;
+        });
+        response.json(res);
+    } catch (err) {
+        response.status(500);
+        response.send(err.message);
+    }
+});
+
+router.get('/getNotificationsForType', async (request, response) => {
+    try {
+        const pool = await db;
+        const result = await pool.request()
+            .input('id', request.query.Id)
+            .query("EXEC [dbo].[getNotificationsForType] @Id=@id");
+        response.json(result.recordset);
+    } catch (err) {
+        response.status(500);
+        response.send(err.message);
+    }
+});
+
+
 module.exports = router;

@@ -1,0 +1,26 @@
+@import "../../@theme/styles/themes.scss";
+
+::ng-deep sample-notifications {
+    height: 100%;
+}
+
+.read-chx {
+    line-height: 0 !important;
+}
+
+@include nb-install-component {
+
+    .filters-title {
+        color: nb-theme(color-basic-600);
+        font-size: 12px;
+        padding: 0;
+        margin-top: 10px;
+        margin-left: -5px;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+    }
+
+    .notifications-container {
+        padding-top: 1rem;
+    }
+}

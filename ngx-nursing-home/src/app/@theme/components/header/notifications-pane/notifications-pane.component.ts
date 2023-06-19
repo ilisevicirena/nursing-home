@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
 export class NotificationsPaneComponent implements OnInit, OnDestroy {
 
   public getString = getString;
-  public notificationTypes = environment.notificationTypes.map(({ code, stringKey }) => ({ code, stringKey, notifications: [], unreadNotificationCount: 0 }));
+  public notificationTypes = [];
 
   private subs: Subscription[] = [];
   private changes: boolean = false;
@@ -27,7 +27,7 @@ export class NotificationsPaneComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.getNotifications();
+    this.getNotificationTypes();
   }
 
   ngOnDestroy(): void {
@@ -37,13 +37,23 @@ export class NotificationsPaneComponent implements OnInit, OnDestroy {
     });
   }
 
+  private getNotificationTypes(): void {
+    this.subs.push(
+      this.notificationsService.getNotificationTypes().subscribe(data => {
+        this.notificationTypes = data;
+        this.notificationTypes.unshift(environment.notificationAllType);
+        this.getNotifications();
+      })
+    );
+  }
+
   private getNotifications(): void {
     this.subs.push(
       this.notificationsService.getLatestNotifications().subscribe(data => {
         this.notificationTypes.forEach(element => {
-          if (element.code == 'all') element.notifications = data;
-          else element.notifications = data.filter(x => x.TypeCode == element.code);
-          element.unreadNotificationCount = element.notifications.filter(x => !x.Read).length;
+          if (element.Code == 'all') element.Notifications = data;
+          else element.Notifications = data.filter(x => x.TypeCode == element.Code);
+          element.UnreadNotificationCount = element.Notifications.filter(x => !x.Read).length;
         });
       })
     );
@@ -81,6 +91,7 @@ export class NotificationsPaneComponent implements OnInit, OnDestroy {
   }
 
   public goToNotification(notification: any): void {
-
+    this.closeClick.emit();
+    this.router.navigateByUrl(notification.GoToLink);
   }
 }

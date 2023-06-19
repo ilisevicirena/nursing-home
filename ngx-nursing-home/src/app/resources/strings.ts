@@ -147,6 +147,8 @@ const strings: IKeyValue[] = [
     { key: "roomEndDate", value: "Završetak boravka" },
     { key: "addDiscount", value: "Dodaj popust" },
     { key: "selected", value: "Odabrano" },
+    { key: "markSelectedAsRead", value: "Označi odabrano kao pročitano" },
+    { key: "selectAll", value: "Označi sve" },
     { key: "offerPrint", value: "P O N U D A" },
     { key: "thankYou", value: "Hvala na povjerenju!" },
     { key: "nothingToPrint", value: "Nema podataka za ispis!" },
@@ -171,6 +173,10 @@ const strings: IKeyValue[] = [
     { key: "documentsPersonData", value: "Dodavanje dokumenata" },
     { key: "select", value: "Odaberi" },
     { key: "notesPersonData", value: "Bilješke za novu osobu" },
+    { key: "filters", value: "Filtri" },
+    { key: "other", value: "Ostalo" },
+    { key: "unread", value: "Nepročitano" },
+    { key: "manageNotifications", value: "Upravljanje obavijestima" },
     { key: "documentsPersonStepText", value: "Ovdje možeš dodati neke dokumente vezane uz novu osobu (kopije osobnih dokumenata, upute za davanje lijekova, liječničke nalaze i slično). Dodane dokumente možeš kasnije pregledati i uređivati unutar profila osobe. Dokumente ne moraš dodati odmah..." },
 ];
 
