@@ -179,6 +179,10 @@ const strings: IKeyValue[] = [
     { key: "manageNotifications", value: "Upravljanje obavijestima" },
     { key: "reminder", value: "Podsjetnik" },
     { key: "daysBefore", value: "dana prije za vrstu obavijesti: " },
+    { key: "smTableOrdNumber", value: "Redni broj" },
+    { key: "yesBtnText", value: "da" },
+    { key: "noBtnText", value: "ne" },
+    { key: "contactsForPerson", value: "Kontakti osobe: " },
     { key: "documentsPersonStepText", value: "Ovdje možeš dodati neke dokumente vezane uz novu osobu (kopije osobnih dokumenata, upute za davanje lijekova, liječničke nalaze i slično). Dodane dokumente možeš kasnije pregledati i uređivati unutar profila osobe. Dokumente ne moraš dodati odmah..." },
 ];
 

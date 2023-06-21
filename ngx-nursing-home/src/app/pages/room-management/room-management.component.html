@@ -8,7 +8,7 @@
                             <ngx-smart-table #floorsTable [tableMode]="tableMode" [columns]="floorsColumns"
                                 [(data)]="floorsData" [pagerEnabled]="false" [loadingEnabled]="false"
                                 [(load)]="floorsLoading" [entriesPerPageEnabled]="false"
-                                (createConfirm)="onCreateFloorConfirm($event)"
+                                [exportSettings]="exportSettingsFloors" (createConfirm)="onCreateFloorConfirm($event)"
                                 (deleteConfirm)="onDeleteFloorConfirm($event)"
                                 (editConfirm)="onEditFloorConfirm($event)"></ngx-smart-table>
                         </div>
@@ -17,8 +17,9 @@
                         <div style="height: 543px">
                             <ngx-smart-table #roomsTable [tableMode]="tableMode" [columns]="roomsColumns"
                                 [(data)]="roomsData" [pagerEnabled]="false" [loadingEnabled]="false"
-                                [(load)]="roomsLoading" [entriesPerPageEnabled]="false"
-                                (createConfirm)="onCreateRoomConfirm($event)" (editConfirm)="onEditRoomConfirm($event)"
+                                [exportSettings]="exportSettingsRooms" [(load)]="roomsLoading"
+                                [entriesPerPageEnabled]="false" (createConfirm)="onCreateRoomConfirm($event)"
+                                (editConfirm)="onEditRoomConfirm($event)"
                                 (deleteConfirm)="onDeleteRoomConfirm($event)"></ngx-smart-table>
                         </div>
                     </nb-tab>

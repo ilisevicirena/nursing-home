@@ -4,6 +4,8 @@ import { getString } from '../../resources/strings';
 import { Subscription } from 'rxjs';
 import { ContactsService } from '../../services/rest/contacts.service';
 import { ToastrService } from '../../services/toastr.service';
+import { ExportDocSettings } from 'shared-components/lib/models/smart-table.model';
+import { PersonsService } from '../../services/rest/persons.service';
 
 @Component({
   selector: 'sample-contacts-grid',
@@ -12,7 +14,11 @@ import { ToastrService } from '../../services/toastr.service';
 })
 export class ContactsGridComponent implements OnInit, OnDestroy {
 
-  constructor(private contactsService: ContactsService, private toastrService: ToastrService) { }
+  constructor(
+    private contactsService: ContactsService,
+    private toastrService: ToastrService,
+    private personsService: PersonsService
+  ) { }
 
   @Input() elementHeight: number = 300;
   @Input() personId: number = 0;
@@ -29,12 +35,30 @@ export class ContactsGridComponent implements OnInit, OnDestroy {
     new SmartTableColumn(getString('mobile')).Property("Mobile").SpecialEditor(new TextboxEditor().OnlyNumbers(true)),
   ];
 
+  public exportSettings: ExportDocSettings = {
+    title: getString('contacts'),
+    subtitle: undefined,
+    showOrdinalNumbers: true,
+    ordNumColumnName: getString("smTableOrdNumber"),
+    docName: 'contacts-for-person',
+    yesValueText: getString("yesBtnText").toLowerCase(),
+    noValueText: getString("noBtnText").toLowerCase(),
+  }
+
   public getContacts(): void {
     this.subscriptions.push(this.contactsService.getDataForPerson(this.personId).subscribe(data => {
       this.contactsData = data;
     }, err => {
       console.error(err);
     }));
+  }
+
+  private getPersonDetails(): void {
+    this.subscriptions.push(
+      this.personsService.getPersonDetails(this.personId).subscribe(data => {
+        if (data.length > 0) this.exportSettings.subtitle = getString('contactsForPerson') + data[0].FirstName + ' ' + data[0].LastName;
+      })
+    );
   }
 
   public contactsCreate(event: any) {
@@ -95,6 +119,7 @@ export class ContactsGridComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getContacts();
+    this.getPersonDetails();
   }
 
   ngOnDestroy(): void {

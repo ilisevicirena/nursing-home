@@ -5,6 +5,7 @@ import { FloorsService, IFloor } from '../../services/rest/floors.service';
 import { IRoom, RoomsService } from '../../services/rest/rooms.service';
 import { Subscription } from 'rxjs';
 import { ToastrService } from '../../services/toastr.service';
+import { ExportDocSettings } from 'shared-components/lib/models/smart-table.model';
 
 @Component({
   selector: 'sample-room-management',
@@ -35,6 +36,26 @@ export class RoomManagementComponent implements OnInit, OnDestroy {
   public floorsLoading: boolean = false;
   public roomsLoading: boolean = false;
   public selectedFloorRooms: any[] = [];
+
+  public exportSettingsFloors: ExportDocSettings = {
+    title: getString('floors'),
+    subtitle: undefined,
+    showOrdinalNumbers: true,
+    ordNumColumnName: getString("smTableOrdNumber"),
+    docName: 'contacts-for-person',
+    yesValueText: getString("yesBtnText").toLowerCase(),
+    noValueText: getString("noBtnText").toLowerCase(),
+  };
+
+  public exportSettingsRooms: ExportDocSettings = {
+    title: getString('rooms'),
+    subtitle: undefined,
+    showOrdinalNumbers: true,
+    ordNumColumnName: getString("smTableOrdNumber"),
+    docName: 'contacts-for-person',
+    yesValueText: getString("yesBtnText").toLowerCase(),
+    noValueText: getString("noBtnText").toLowerCase(),
+  };
 
   private subscriptions: Subscription[] = [];
 

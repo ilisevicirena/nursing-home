@@ -7,6 +7,7 @@ import { NbWindowService, NbWindowState } from '@nebular/theme';
 import { AddEditDiscountComponent } from './add-edit-discount/add-edit-discount.component';
 import { DialogService } from '../../shared/dialog/dialog.service';
 import { ToastrService } from '../../services/toastr.service';
+import { ExportDocSettings } from 'shared-components/lib/models/smart-table.model';
 
 @Component({
   selector: 'sample-discounts',
@@ -31,6 +32,16 @@ export class DiscountsComponent implements OnInit, OnDestroy {
     new SmartTableColumn(getString('percentCalculation')).Property('PercentCalculation').SpecialType(new CheckboxType())
       .SpecialFilter(new SelectFilter("value", "label").Source(this.percentCalculationFilter)),
   ];
+
+  public exportSettings: ExportDocSettings = {
+    title: getString('discounts'),
+    subtitle: undefined,
+    showOrdinalNumbers: true,
+    ordNumColumnName: getString("smTableOrdNumber"),
+    docName: 'discounts',
+    yesValueText: getString("yesBtnText").toLowerCase(),
+    noValueText: getString("noBtnText").toLowerCase(),
+  }
 
   constructor(
     private discountsService: DiscountsService,

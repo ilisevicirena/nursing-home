@@ -9,6 +9,7 @@ import { DialogService } from '../../shared/dialog/dialog.service';
 import { ToastrService } from '../../services/toastr.service';
 import { AddEditServiceComponent } from './add-edit-service/add-edit-service.component';
 import { NbWindowService, NbWindowState } from '@nebular/theme';
+import { ExportDocSettings } from 'shared-components/lib/models/smart-table.model';
 
 @Component({
   selector: 'sample-services',
@@ -29,6 +30,16 @@ export class ServicesComponent implements OnInit, OnDestroy {
     new SmartTableColumn(getString('priceUnit')).Property("PriceUnitId").SpecialType(new LookupType().NameAttribute("PriceUnitTag"))
       .SpecialFilter(new SelectFilter("Id", "Tag").ServerSource(true).ServerEndpoint(this.priceUnitsService.apiRoute)),
   ];
+
+  public exportSettings: ExportDocSettings = {
+    title: getString('services'),
+    subtitle: undefined,
+    showOrdinalNumbers: true,
+    ordNumColumnName: getString("smTableOrdNumber"),
+    docName: 'contacts-for-person',
+    yesValueText: getString("yesBtnText").toLowerCase(),
+    noValueText: getString("noBtnText").toLowerCase(),
+  };
 
   private subscriptions: Subscription[] = [];
 

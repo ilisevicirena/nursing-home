@@ -9,6 +9,7 @@ import { AddEditPackageComponent } from './add-edit-package/add-edit-package.com
 import { NbWindowService, NbWindowState } from '@nebular/theme';
 import { getString } from '../../resources/strings';
 import { MeasureUnitsService } from '../../services/rest/measure-units.service';
+import { ExportDocSettings } from 'shared-components/lib/models/smart-table.model';
 
 @Component({
   selector: 'sample-packages',
@@ -33,6 +34,16 @@ export class PackagesComponent implements OnInit, OnDestroy {
     new SmartTableColumn(getString('packagePriceCalculated')).Property('PackagePriceCalculated').SpecialType(new CheckboxType())
   ];
   public getString = getString;
+
+  public exportSettings: ExportDocSettings = {
+    title: getString('packages'),
+    subtitle: undefined,
+    showOrdinalNumbers: true,
+    ordNumColumnName: getString("smTableOrdNumber"),
+    docName: 'contacts-for-person',
+    yesValueText: getString("yesBtnText").toLowerCase(),
+    noValueText: getString("noBtnText").toLowerCase(),
+  };
 
   constructor(
     private packagesService: PackagesService,
