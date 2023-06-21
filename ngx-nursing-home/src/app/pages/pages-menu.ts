@@ -61,5 +61,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
         link: '/pages/services-management'
       },
     ]
+  },
+  {
+    title: getString('calendar'),
+    icon: 'calendar-outline',
+    link: '/pages/calendar'
   }
 ];

@@ -25,6 +25,7 @@ const notifications = require('./routes/notifications');
 const documents = require('./routes/documents');
 const notes = require('./routes/notes');
 const tags = require('./routes/tags');
+const events = require('./routes/events');
 
 // register routes
 router.use('/floors', floors);
@@ -42,6 +43,7 @@ router.use('/notifications', notifications);
 router.use('/documents', documents);
 router.use('/notes', notes);
 router.use('/tags', tags);
+router.use('/events', events);
 
 // No need to connect the pool
 // Just start the web server
