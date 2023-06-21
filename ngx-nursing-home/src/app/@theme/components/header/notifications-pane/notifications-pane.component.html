@@ -11,8 +11,8 @@
     </nb-card-header>
     <nb-card-body class="pt-0 ps-3 pe-3 pb-2">
         <nb-tabset>
-            <nb-tab class="ps-0 pe-0 pb-3 pt-3" *ngFor="let type of notificationTypes"
-                [tabTitle]="getString(type.StringKey)"
+            <nb-tab class="ps-0 pe-0 pb-3 pt-3" *ngFor="let type of notificationTypes; let i=index"
+                [tabTitle]="getString(type.StringKey)" [active]="i==0"
                 [badgeText]="type.UnreadNotificationCount>0 ? type.UnreadNotificationCount : false"
                 badgePosition="top end" badgeStatus="basic">
                 <div class="notification-card mb-1" [ngClass]="!notification.Read?'new':''"

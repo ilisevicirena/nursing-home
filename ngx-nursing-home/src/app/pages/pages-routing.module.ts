@@ -13,6 +13,7 @@ import { PackagesComponent } from './packages/packages.component';
 import { DiscountsComponent } from './discounts/discounts.component';
 import { ServicesManagementComponent } from './services-management/services-management.component';
 import { NotificationsComponent } from './notifications/notifications.component';
+import { NotificationsSettingsComponent } from './notifications/notifications-settings/notifications-settings.component';
 
 const routes: Routes = [{
   path: '',
@@ -70,6 +71,10 @@ const routes: Routes = [{
     {
       path: 'notifications',
       component: NotificationsComponent
+    },
+    {
+      path: 'notifications-settings',
+      component: NotificationsSettingsComponent
     },
   ],
 }];

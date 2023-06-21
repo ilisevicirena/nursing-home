@@ -21,13 +21,15 @@
         </div>
         <hr>
         <div class="row m-0 p-0">
-            <button nbButton ghost status="primary" shape="round" size="small" class="w-100 justify-content-start">
+            <button nbButton ghost status="primary" shape="round" size="small" class="w-100 justify-content-start"
+                (click)="manageNotifications()">
                 {{getString('manageNotifications')}}
                 <nb-icon pack="eva" icon="settings-outline"></nb-icon>
             </button>
         </div>
         <div class="row m-0 p-0">
-            <button nbButton ghost status="primary" shape="round" size="small" class="w-100 justify-content-start">
+            <button nbButton ghost status="primary" shape="round" size="small" class="w-100 justify-content-start"
+                (click)="markAllAsRead()">
                 {{getString('markAllAsRead')}}
                 <nb-icon pack="eva" icon="done-all-outline"></nb-icon>
             </button>
@@ -43,13 +45,14 @@
             </button>
         </div>
         <div class="row m-0 p-0">
-            <button nbButton shape="round" size="small" ghost class="w-max">{{getString('selectAll')}}
+            <button nbButton shape="round" size="small" ghost class="w-max"
+                (click)="selectAll()">{{getString('selectAll')}}
                 <nb-icon pack="eva" icon="checkmark-outline"></nb-icon>
             </button>
         </div>
         <div class="row m-0 p-0" *ngIf="selected>0">
-            <button nbButton shape="round" status="primary" size="small" ghost
-                class="w-100 justify-content-start">{{getString('markSelectedAsRead')}}
+            <button nbButton shape="round" status="primary" size="small" ghost class="w-100 justify-content-start"
+                (click)="markSelectedAsRead()">{{getString('markSelectedAsRead')}}
                 <nb-icon pack="eva" icon="checkmark-outline"></nb-icon>
             </button>
         </div>
@@ -87,13 +90,18 @@
                                     <nb-icon pack="eva" status="success" icon="checkmark-circle-outline"
                                         *ngIf="n.Read"></nb-icon>
                                 </div>
-                                <div class="col d-flex align-items-center ps-2">
-                                    {{n.Text}}
+                                <div class="col ps-3">
+                                    <div>{{n.Text}}</div>
+                                    <div class="label">{{n.CreationDate | date: 'EEEE dd.MMMM yyyy. HH:mm'}}h</div>
                                 </div>
-                                <div class="w-max p-0">
+                                <div class="w-max d-flex align-items-center p-0">
                                     <button nbButton *ngIf="!n.Read" status="primary" shape="round" ghost size="small"
-                                        [nbTooltip]="getString('markAsRead')">
+                                        [nbTooltip]="getString('markAsRead')" (click)="markAsRead(n)">
                                         <nb-icon pack="eva" icon="checkmark-outline"></nb-icon>
+                                    </button>
+                                    <button nbButton *ngIf="n.LinkId" status="primary" shape="round" ghost size="small"
+                                        [nbTooltip]="getString('goToNotification')" (click)="goToNotification(n)">
+                                        <nb-icon pack="eva" icon="external-link-outline"></nb-icon>
                                     </button>
                                 </div>
                             </nb-card-header>

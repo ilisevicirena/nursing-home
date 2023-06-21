@@ -2,6 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { getString } from '../../resources/strings';
 import { Subscription } from 'rxjs';
 import { NotificationsService } from '../../services/rest/notifications.service';
+import { Router } from '@angular/router';
+import { ToastrService } from '../../services/toastr.service';
 
 @Component({
   selector: 'sample-notifications',
@@ -22,7 +24,9 @@ export class NotificationsComponent implements OnInit, OnDestroy {
   private subs: Subscription[] = [];
 
   constructor(
-    private notificationsService: NotificationsService
+    private notificationsService: NotificationsService,
+    private router: Router,
+    private toastrService: ToastrService
   ) { }
 
   ngOnInit(): void {
@@ -91,5 +95,64 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 
   public onCheckedChange(): void {
     this.selected = this.notifications.filter(x => x.Selected).length;
+  }
+
+  public selectAll(): void {
+    this.notifications.map(x => {
+      if (!x.Read) x.Selected = true;
+      return x;
+    });
+
+    this.selected = this.notifications.filter(x => x.Selected).length;
+  }
+
+  public clearAll(): void {
+    this.notifications.map(x => x.Selected = false);
+    this.selected = this.notifications.filter(x => x.Selected).length;
+  }
+
+  public markSelectedAsRead(): void {
+    var selectedNotifications = this.notifications.filter(x => x.Selected);
+
+    for (let index = 0; index < selectedNotifications.length; index++) {
+      const element = selectedNotifications[index];
+      this.subs.push(
+        this.notificationsService.markNotificationAsRead(element.Id).subscribe(() => {
+          this.toastrService.showToast('success', getString("saveSuccess"));
+          if (index == selectedNotifications.length - 1) this.refreshNotifications();
+        })
+      );
+    }
+  }
+
+  private refreshNotifications(): void {
+    var selectedType = this.notificationTypes.find(x => x.Selected);
+    this.filterChange(selectedType ?? 'all');
+  }
+
+  public markAllAsRead(): void {
+    this.subs.push(
+      this.notificationsService.markAllNotificationsAsRead().subscribe(() => {
+        this.refreshNotifications();
+        this.toastrService.showToast('success', getString("saveSuccess"));
+      })
+    );
+  }
+
+  public manageNotifications(): void {
+    this.router.navigateByUrl('/pages/notifications-settings');
+  }
+
+  public markAsRead(n: any): void {
+    this.subs.push(
+      this.notificationsService.markNotificationAsRead(n.Id).subscribe(() => {
+        this.refreshNotifications();
+        this.toastrService.showToast('success', getString("saveSuccess"));
+      })
+    );
+  }
+
+  public goToNotification(n: any): void {
+    this.router.navigateByUrl(n.GoToLink);
   }
 }
