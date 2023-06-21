@@ -40,7 +40,7 @@ export class PackagesComponent implements OnInit, OnDestroy {
     subtitle: undefined,
     showOrdinalNumbers: true,
     ordNumColumnName: getString("smTableOrdNumber"),
-    docName: 'contacts-for-person',
+    docName: 'packages',
     yesValueText: getString("yesBtnText").toLowerCase(),
     noValueText: getString("noBtnText").toLowerCase(),
   };

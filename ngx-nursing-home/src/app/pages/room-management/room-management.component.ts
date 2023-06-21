@@ -42,7 +42,7 @@ export class RoomManagementComponent implements OnInit, OnDestroy {
     subtitle: undefined,
     showOrdinalNumbers: true,
     ordNumColumnName: getString("smTableOrdNumber"),
-    docName: 'contacts-for-person',
+    docName: 'floors',
     yesValueText: getString("yesBtnText").toLowerCase(),
     noValueText: getString("noBtnText").toLowerCase(),
   };
@@ -52,7 +52,7 @@ export class RoomManagementComponent implements OnInit, OnDestroy {
     subtitle: undefined,
     showOrdinalNumbers: true,
     ordNumColumnName: getString("smTableOrdNumber"),
-    docName: 'contacts-for-person',
+    docName: 'rooms',
     yesValueText: getString("yesBtnText").toLowerCase(),
     noValueText: getString("noBtnText").toLowerCase(),
   };

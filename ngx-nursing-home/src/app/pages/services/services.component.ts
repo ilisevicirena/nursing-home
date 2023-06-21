@@ -36,7 +36,7 @@ export class ServicesComponent implements OnInit, OnDestroy {
     subtitle: undefined,
     showOrdinalNumbers: true,
     ordNumColumnName: getString("smTableOrdNumber"),
-    docName: 'contacts-for-person',
+    docName: 'services',
     yesValueText: getString("yesBtnText").toLowerCase(),
     noValueText: getString("noBtnText").toLowerCase(),
   };
