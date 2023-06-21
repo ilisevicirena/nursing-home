@@ -4,6 +4,7 @@ import { environment } from '../../../../../environments/environment';
 import { NotificationsService } from '../../../../services/rest/notifications.service';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
+import { emit } from 'process';
 
 @Component({
   selector: 'sample-notifications-pane',
@@ -64,7 +65,8 @@ export class NotificationsPaneComponent implements OnInit, OnDestroy {
   }
 
   public onSettingsClick(): void {
-
+    this.closeClick.emit(true);
+    this.router.navigateByUrl('/pages/notifications-settings');
   }
 
   public onMarkAllAsReadClick(): void {

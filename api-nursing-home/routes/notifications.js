@@ -96,5 +96,32 @@ router.get('/getNotificationsForType', async (request, response) => {
     }
 });
 
+router.get('/getNotificationsSettings', async (request, response) => {
+    try {
+        const pool = await db;
+        const result = await pool.request()
+            .query("EXEC [dbo].[getNotificationsSettings]");
+        response.json(result.recordset);
+    } catch (err) {
+        response.status(500);
+        response.send(err.message);
+    }
+});
+
+router.post('/updateNotificationType', async (request, response) => {
+    try {
+        const pool = await db;
+        const result = await pool.request()
+            .input('id', request.body.Id)
+            .input('enabled', request.body.Enabled)
+            .input('daysReminder', request.body.DaysReminder)
+            .query("EXEC [dbo].[updateNotificationType] @Id=@id, @Enabled=@enabled, @DaysReminder=@daysReminder");
+        if (result != null) response.json(result);
+        else response.status(500);
+    } catch (err) {
+        response.status(500);
+        response.send(err.message);
+    }
+});
 
 module.exports = router;

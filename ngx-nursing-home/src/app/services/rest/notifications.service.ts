@@ -35,4 +35,12 @@ export class NotificationsService extends BaseRestApiService {
   public getNotificationsForType(id: number): Observable<any> {
     return this.http.get(this.apiRoute + "/getNotificationsForType?Id=" + id);
   }
+
+  public getNotificationsSettings(): Observable<any> {
+    return this.http.get(this.apiRoute + "/getNotificationsSettings");
+  }
+
+  public updateNotification(id: number, enabled: boolean, daysReminder: number): Observable<any> {
+    return this.http.post(this.apiRoute + "/updateNotificationType", { Id: id, Enabled: enabled, DaysReminder: daysReminder });
+  }
 }

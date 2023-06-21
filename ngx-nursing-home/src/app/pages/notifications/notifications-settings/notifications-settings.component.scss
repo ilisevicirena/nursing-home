@@ -1,0 +1,12 @@
+::ng-deep sample-notifications-settings {
+    height: 100%;
+}
+
+nb-card {
+    border-radius: 1rem;
+
+    nb-card-header {
+        border: none;
+        font-size: 20px;
+    }
+}
