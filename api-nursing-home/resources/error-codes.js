@@ -82,6 +82,10 @@ var errors = [
     new CodeMessage(30002, "Error while inserting new tag into database."),
     new CodeMessage(30003, "Error while updateing tag in database."),
 
+    // events error codes starting with 40000
+    new CodeMessage(40001, "Error while inserting new event into database."),
+    new CodeMessage(40002, "Error while updateing event in database."),
+
 ];
 
 module.exports = {

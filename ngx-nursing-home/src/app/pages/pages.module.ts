@@ -25,7 +25,8 @@ import {
   NbStepperModule,
   NbBadgeModule,
   NbAccordionModule,
-  NbUserModule
+  NbUserModule,
+  NbRadioModule
 
 }
   from '@nebular/theme';
@@ -67,6 +68,7 @@ import { NgxSummernoteModule } from 'ngx-summernote';
 import { NoteTagsComponent } from './notes/note-tags/note-tags.component';
 import { NoteDocumentsComponent } from './notes/note-documents/note-documents.component';
 import { CalendarComponent } from './calendar/calendar.component';
+import { AddEditEventComponent } from './calendar/add-edit-event/add-edit-event.component';
 
 @NgModule({
   imports: [
@@ -104,7 +106,8 @@ import { CalendarComponent } from './calendar/calendar.component';
     NbBadgeModule,
     NbAccordionModule,
     NbUserModule,
-    NgxSummernoteModule
+    NgxSummernoteModule,
+    NbRadioModule
   ],
   declarations: [
     PagesComponent,
@@ -136,7 +139,8 @@ import { CalendarComponent } from './calendar/calendar.component';
     TagsComponent,
     NoteTagsComponent,
     NoteDocumentsComponent,
-    CalendarComponent
+    CalendarComponent,
+    AddEditEventComponent
   ],
 })
 export class PagesModule {

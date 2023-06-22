@@ -1,0 +1,132 @@
+<nb-card class="event-card">
+    <nb-card-header class="d-flex">
+        <div class="col">
+            <div class="row m-0 p-0 align-items-center">
+                <nb-icon pack="eva" icon="calendar-outline" class="w-max"></nb-icon>
+                {{isNew ? getString('addEvent') : getString('editEvent')}}<br>
+            </div>
+            <div class="row m-0 p-0">
+                <span class="label mt-1">{{getString('eventsManagement')}}</span>
+            </div>
+        </div>
+        <div class="w-max">
+            <button nbButton ghost shape="round" (click)="close(false)">
+                <nb-icon pack="eva" icon="close-outline"></nb-icon>
+            </button>
+        </div>
+    </nb-card-header>
+    <nb-card-body>
+        <form #event="ngForm">
+            <div class="row">
+                <div class="col-md-12 p-0">
+                    <div class="form-group">
+                        <div class="value">
+                            <nb-radio-group class="d-flex" [(value)]="eventDuration">
+                                <nb-radio class="me-5" [value]="1">{{getString('oneDayEvent')}}</nb-radio>
+                                <nb-radio [value]="2">{{getString('multipleDayEvent')}}</nb-radio>
+                            </nb-radio-group>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-6 ps-0">
+                    <div class="form-group">
+                        <div class="label">{{eventDuration==1 ? getString('eventDate') : getString('eventStartDate')}}
+                        </div>
+                        <div class="value">
+                            <nb-form-field>
+                                <input nbInput #startDateInput [(ngModel)]="start"
+                                    [placeholder]="eventDuration==1 ? getString('eventDate') : getString('eventStartDate')"
+                                    fullWidth autocomplete="off" name="startDate" [nbDatepicker]="startDateDatepicker">
+                                <nb-datepicker #startDateDatepicker></nb-datepicker>
+                                <button nbButton nbSuffix ghost (click)="startDateInput.focus()">
+                                    <nb-icon pack="eva" icon="calendar-outline"></nb-icon>
+                                </button>
+                            </nb-form-field>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 pe-0" *ngIf="eventDuration==2">
+                    <div class="form-group">
+                        <div class="label">{{getString('eventEndDate')}}
+                        </div>
+                        <div class="value">
+                            <nb-form-field>
+                                <input nbInput #endDateInput [placeholder]="getString('eventEndDate')" fullWidth
+                                    [(ngModel)]="end" autocomplete="off" name="endDate"
+                                    [nbDatepicker]="endDateDatepicker">
+                                <nb-datepicker #endDateDatepicker></nb-datepicker>
+                                <button nbButton nbSuffix ghost (click)="endDateInput.focus()">
+                                    <nb-icon pack="eva" icon="calendar-outline"></nb-icon>
+                                </button>
+                            </nb-form-field>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-12 p-0">
+                    <div class="form-group">
+                        <div class="label">{{getString('name')}}</div>
+                        <div class="value">
+                            <input nbInput [(ngModel)]="name" fullWidth name="name" [placeholder]="getString('name')">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-12 p-0">
+                    <div class="form-group">
+                        <div class="label">{{getString('description')}}</div>
+                        <div class="value">
+                            <textarea nbInput fullWidth [(ngModel)]="desc" name="description"
+                                [placeholder]="getString('description')" [rows]="3"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-12 p-0">
+                    <div class="form-group">
+                        <div class="label">{{getString('color')}}</div>
+                        <div class="value">
+                            <div class="colors-container">
+                                <div class="color" *ngFor="let c of colors" [style.background-color]="c" [ngClass]="c"
+                                    (click)="selectColor(c)" [class]="selectedColor==c ? 'selected' : ''">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-12 p-0">
+                    <div class="form-group">
+                        <div class="value">
+                            <nb-toggle [(checked)]="recurring">{{getString('recurringEvent')}}</nb-toggle>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-3" *ngIf="showReminder">
+                <div class="col-md-12 p-0">
+                    <div class="form-group">
+                        <div class="value">
+                            <nb-toggle [(checked)]="reminder">{{getString('eventReminder')}}</nb-toggle>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </nb-card-body>
+    <nb-card-footer class="d-flex justify-content-end">
+        <button nbButton ghost shape="round" size="small" class="me-2" (click)="close(false)">
+            {{getString('cancel')}}
+        </button>
+        <button nbButton status="primary" shape="round" size="small"
+            [disabled]="!start || (eventDuration==2 && !end) || !name" (click)="saveEvent()">
+            {{getString('save')}}
+        </button>
+    </nb-card-footer>
+</nb-card>

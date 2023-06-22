@@ -16,11 +16,26 @@ const Brand = {
   Mobile: '+387 63 255 255'
 };
 
+const Colors = [
+  'success',
+  '#e8eb34',
+  'warning',
+  'danger',
+  '#34bdeb',
+  'info',
+  '#7b32a8',
+  '#a83273',
+  '#241454',
+  '#082b12',
+  '#39373b',
+];
+
 export const environment = {
   production: false,
   sidebarConfig: SidebarStates.COMPACT,
   configFile: 'assets/config/config.json',
   notificationAllType: notificationAllType,
-  brand: Brand
+  brand: Brand,
+  colors: Colors
 };
 

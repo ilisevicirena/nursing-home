@@ -1,7 +1,7 @@
 USE [ENV01_NURSING_HOME]
 GO
 
-/****** Object:  StoredProcedure [dbo].[updatePerson]    Script Date: 23.4.2023. 14:09:23 ******/
+/****** Object:  StoredProcedure [dbo].[updatePerson]    Script Date: 22.6.2023. 8:01:42 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -45,8 +45,20 @@ BEGIN
 		GenderId=@GenderId
 	WHERE Id = @Id
 
-		exec dbo.writeLog @LogType='UPDATE', @LogEntity='Person', @Key= @Id;
+	exec dbo.writeLog @LogType='UPDATE', @LogEntity='Person', @Key= @Id;
+	exec dbo.removeAllEventsForPerson @PersonId=@Id;
+
+	DECLARE @Title varchar(200) = 'Rođendan: ' + @FirstName + ' ' + @LastName;
+	DECLARE @Description varchar(max) = 'Rođendan osobe: ' + @FirstName + ' ' + @LastName + ', datum rođenja: ' + CONVERT(varchar(10), @BirthDate, 104);
+
+	EXEC dbo.insertCalendarEvent
+		@Start = @BirthDate,
+		@End = @BirthDate,
+		@Color = 'info', 
+		@Title = @Title,
+		@Description = @Description,
+		@PersonId = @Id,
+		@Recurring = 1;
 END
 GO
-
 

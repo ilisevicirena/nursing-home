@@ -1,4 +1,7 @@
-<div class="h-100 overflow-auto">
-    <ngx-schedule [(events)]="events" (yearSelectionChanged)="onYearSelectionChange($event)"
-        (monthSelectionChanged)="onMonthSelectionChange($event)"></ngx-schedule>
+<div class="h-100 overflow-auto position-relative">
+
+    <ngx-schedule [(events)]="events" (yearSelectionChanged)="onYearSelectionChange($event)" [showAddNewBtn]="true"
+        [addNewBtnTitle]="getString('addEvent')" (addNewClicked)="onAddNewClick()"
+        (monthSelectionChanged)="onMonthSelectionChange($event)" (eventClicked)="onEventClicked($event)">
+    </ngx-schedule>
 </div>

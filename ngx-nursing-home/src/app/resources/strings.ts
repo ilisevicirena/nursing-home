@@ -184,6 +184,17 @@ const strings: IKeyValue[] = [
     { key: "noBtnText", value: "ne" },
     { key: "contactsForPerson", value: "Kontakti osobe: " },
     { key: "calendar", value: "Kalendar" },
+    { key: "addEvent", value: "Novi događaj" },
+    { key: "editEvent", value: "Uređivanje događaja" },
+    { key: "eventsManagement", value: "Upravljanje događajima" },
+    { key: "oneDayEvent", value: "Jednodnevni događaj" },
+    { key: "multipleDayEvent", value: "Višednevni događaj" },
+    { key: "eventDate", value: "Datum" },
+    { key: "eventStartDate", value: "Datum početka" },
+    { key: "eventEndDate", value: "Datum završetka" },
+    { key: "color", value: "Boja" },
+    { key: "recurringEvent", value: "Ponavljaj događaj godišnje" },
+    { key: "eventReminder", value: "Podsjetnik na događaj" },
     { key: "documentsPersonStepText", value: "Ovdje možeš dodati neke dokumente vezane uz novu osobu (kopije osobnih dokumenata, upute za davanje lijekova, liječničke nalaze i slično). Dodane dokumente možeš kasnije pregledati i uređivati unutar profila osobe. Dokumente ne moraš dodati odmah..." },
 ];
 

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BaseRestApiService } from '../base-rest-api.service';
+import { BaseRestApiService, IBaseSaveModel } from '../base-rest-api.service';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
@@ -16,4 +16,13 @@ export class EventsService extends BaseRestApiService {
   public getEvents(month: number, year: number): Observable<any> {
     return this.http.get(this.apiRoute + "?Month=" + month + "&Year=" + year);
   }
+}
+
+export interface IEvent extends IBaseSaveModel {
+  Title: string;
+  Description: string;
+  Start: string;
+  End: string;
+  Color: string;
+  Recurring: boolean;
 }

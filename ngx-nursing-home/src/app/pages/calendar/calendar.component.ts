@@ -4,6 +4,8 @@ import { getString } from '../../resources/strings';
 import { Subscription } from 'rxjs';
 import { ScheduleEvent } from 'shared-components/lib/models/schedule.model';
 import { ScheduleComponent } from 'shared-components';
+import { DialogService } from '../../shared/dialog/dialog.service';
+import { AddEditEventComponent } from './add-edit-event/add-edit-event.component';
 
 @Component({
   selector: 'sample-calendar',
@@ -13,18 +15,21 @@ import { ScheduleComponent } from 'shared-components';
 export class CalendarComponent implements OnInit, OnDestroy {
 
   constructor(
-    private eventsService: EventsService
+    private eventsService: EventsService,
+    private dialogService: DialogService
   ) { }
 
   public getString = getString;
   public events: ScheduleEvent[] = [];
 
   private subs: Subscription[] = [];
+  private eventsOriginal: any[] = [];
 
   @ViewChild(ScheduleComponent) schedule: ScheduleComponent;
 
   ngOnInit(): void {
-    this.getEventsForMonth(this.schedule.getCurrentVisibleMonth(), this.schedule.getCurrentVisibleYear());
+    var today = new Date();
+    this.getEventsForMonth(today.getMonth() + 1, today.getFullYear());
   }
 
   ngOnDestroy(): void {
@@ -36,6 +41,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
   private getEventsForMonth(month: number, year: number): void {
     this.subs.push(
       this.eventsService.getEvents(month, year).subscribe(data => {
+        this.eventsOriginal = data;
         this.events = [];
         data.forEach(element => {
           this.events.push(this.mapDataToEvent(element));
@@ -61,5 +67,52 @@ export class CalendarComponent implements OnInit, OnDestroy {
 
   public onMonthSelectionChange(event: number): void {
     this.getEventsForMonth(event, this.schedule.getCurrentVisibleYear());
+  }
+
+  public onEventClicked(event: ScheduleEvent): void {
+    var originalEvent = this.eventsOriginal.find(x => x.Id == event.id);
+
+    this.subs.push(
+      this.dialogService.open(
+        AddEditEventComponent,
+        {
+          autoFocus: false,
+          closeOnBackdropClick: false,
+          closeOnEsc: false,
+          context: {
+            isNew: false,
+            start: event.start,
+            end: event.end,
+            name: event.title,
+            desc: event.description,
+            selectedColor: event.color,
+            recurring: originalEvent.Recurring,
+            showReminder: !(originalEvent.PersonId > 0),
+            id: originalEvent.Id
+          }
+        }
+      ).onClose.subscribe(result => {
+        if (result) this.getEventsForMonth(this.schedule.getCurrentVisibleMonth(), this.schedule.getCurrentVisibleYear());
+      })
+    );
+  }
+
+  public onAddNewClick(): void {
+    this.subs.push(
+      this.dialogService.open(
+        AddEditEventComponent,
+        {
+          autoFocus: false,
+          closeOnBackdropClick: false,
+          closeOnEsc: false,
+          context: {
+            isNew: true,
+            event: undefined
+          }
+        }
+      ).onClose.subscribe(result => {
+        if (result) this.getEventsForMonth(this.schedule.getCurrentVisibleMonth(), this.schedule.getCurrentVisibleYear());
+      })
+    );
   }
 }

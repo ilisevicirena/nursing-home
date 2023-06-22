@@ -1,7 +1,7 @@
 USE [ENV01_NURSING_HOME]
 GO
 
-/****** Object:  StoredProcedure [dbo].[getCalendarEventsForMonth]    Script Date: 21.6.2023. 15:10:20 ******/
+/****** Object:  StoredProcedure [dbo].[getCalendarEventsForMonth]    Script Date: 22.6.2023. 12:10:54 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -30,7 +30,9 @@ BEGIN
         CASE WHEN [Recurring] = 1 THEN DATEADD(YEAR, @Year - YEAR([End]), [End]) ELSE [End] END AS [End],
         [Color],
         [Title],
-        [Description]
+        [Description],
+		[Recurring]=Recurring,
+		[PersonId]=PersonId
     FROM dbo.CalendarEvent
     WHERE ([Recurring] = 0 AND YEAR([Start]) = @Year AND MONTH([Start]) = @Month)
         OR ([Recurring] = 0 AND YEAR([End]) = @Year AND MONTH([End]) = @Month)
