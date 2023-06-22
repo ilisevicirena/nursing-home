@@ -1,7 +1,7 @@
 USE [ENV01_NURSING_HOME]
 GO
 
-/****** Object:  StoredProcedure [dbo].[insertPerson]    Script Date: 21.6.2023. 14:50:22 ******/
+/****** Object:  StoredProcedure [dbo].[insertPerson]    Script Date: 22.6.2023. 14:12:31 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -56,7 +56,8 @@ exec dbo.writeLog @LogType='INSERT', @LogEntity='Person', @Key= @NewIdent;
 		@Title = @Title,
 		@Description = @Description,
 		@PersonId = @NewIdent,
-		@Recurring = 1;
+		@Recurring = 1,
+		@Reminder=0;
 END
 GO
 

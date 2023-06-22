@@ -25,4 +25,5 @@ export interface IEvent extends IBaseSaveModel {
   End: string;
   Color: string;
   Recurring: boolean;
+  Reminder: boolean;
 }

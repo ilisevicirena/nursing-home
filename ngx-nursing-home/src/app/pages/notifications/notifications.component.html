@@ -82,7 +82,7 @@
                 </div>
                 <div class="notifications-container">
                     <div class="row m-0 p-0 w-100" *ngFor="let n of notifications | filter: searchTerm">
-                        <nb-card>
+                        <nb-card class="mb-2">
                             <nb-card-header class="d-flex p-3">
                                 <div class="w-max d-flex align-items-center">
                                     <nb-checkbox *ngIf="!n.Read" class="read-chx" [(checked)]="n.Selected"

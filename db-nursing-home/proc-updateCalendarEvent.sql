@@ -1,18 +1,13 @@
--- ================================================
--- Template generated from Template Explorer using:
--- Create Procedure (New Menu).SQL
---
--- Use the Specify Values for Template Parameters 
--- command (Ctrl-Shift-M) to fill in the parameter 
--- values below.
---
--- This block of comments will not be included in
--- the definition of the procedure.
--- ================================================
+USE [ENV01_NURSING_HOME]
+GO
+
+/****** Object:  StoredProcedure [dbo].[updateCalendarEvent]    Script Date: 22.6.2023. 14:26:34 ******/
 SET ANSI_NULLS ON
 GO
+
 SET QUOTED_IDENTIFIER ON
 GO
+
 -- =============================================
 -- Author:		Irena Ilisevic
 -- Create date: 22.6.2023.
@@ -27,7 +22,8 @@ CREATE PROCEDURE [dbo].[updateCalendarEvent]
 		@Title varchar(200),
 		@Description varchar(max),
 		@Recurring bit,
-		@Id int
+		@Id int,
+		@Reminder bit
 	)
 AS
 BEGIN
@@ -42,8 +38,10 @@ BEGIN
 	Color=@Color,
 	Title=@Title,
 	[Description]=@Description,
-	Recurring=@Recurring
+	Recurring=@Recurring,
+	Reminder=@Reminder
 	where Id=@Id;
 
 END
 GO
+

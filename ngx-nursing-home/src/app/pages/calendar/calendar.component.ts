@@ -88,6 +88,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
             selectedColor: event.color,
             recurring: originalEvent.Recurring,
             showReminder: !(originalEvent.PersonId > 0),
+            reminder: originalEvent.Reminder,
             id: originalEvent.Id
           }
         }

@@ -1,7 +1,7 @@
 USE [ENV01_NURSING_HOME]
 GO
 
-/****** Object:  StoredProcedure [dbo].[updatePerson]    Script Date: 22.6.2023. 8:01:42 ******/
+/****** Object:  StoredProcedure [dbo].[updatePerson]    Script Date: 22.6.2023. 14:13:07 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -58,7 +58,8 @@ BEGIN
 		@Title = @Title,
 		@Description = @Description,
 		@PersonId = @Id,
-		@Recurring = 1;
+		@Recurring = 1,
+		@Reminder=0;
 END
 GO
 

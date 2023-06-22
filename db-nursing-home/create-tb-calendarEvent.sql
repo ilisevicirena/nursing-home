@@ -1,7 +1,7 @@
 USE [ENV01_NURSING_HOME]
 GO
 
-/****** Object:  Table [dbo].[CalendarEvent]    Script Date: 21.6.2023. 14:26:40 ******/
+/****** Object:  Table [dbo].[CalendarEvent]    Script Date: 22.6.2023. 13:44:21 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -17,6 +17,7 @@ CREATE TABLE [dbo].[CalendarEvent](
 	[Color] [varchar](50) NULL,
 	[Recurring] [bit] NULL,
 	[PersonId] [int] NULL,
+	[Reminder] [bit] NULL,
  CONSTRAINT [PK_CalendarEvent] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC

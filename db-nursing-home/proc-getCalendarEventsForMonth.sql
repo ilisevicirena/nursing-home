@@ -1,7 +1,7 @@
 USE [ENV01_NURSING_HOME]
 GO
 
-/****** Object:  StoredProcedure [dbo].[getCalendarEventsForMonth]    Script Date: 22.6.2023. 12:10:54 ******/
+/****** Object:  StoredProcedure [dbo].[getCalendarEventsForMonth]    Script Date: 22.6.2023. 13:57:38 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -32,7 +32,8 @@ BEGIN
         [Title],
         [Description],
 		[Recurring]=Recurring,
-		[PersonId]=PersonId
+		[PersonId]=PersonId,
+		[Reminder]=Reminder
     FROM dbo.CalendarEvent
     WHERE ([Recurring] = 0 AND YEAR([Start]) = @Year AND MONTH([Start]) = @Month)
         OR ([Recurring] = 0 AND YEAR([End]) = @Year AND MONTH([End]) = @Month)

@@ -65,7 +65,8 @@ export class AddEditEventComponent implements OnInit, OnDestroy {
       Start: this.start.toISOString(),
       End: this.end?.toISOString(),
       Color: this.selectedColor,
-      Recurring: this.recurring
+      Recurring: this.recurring,
+      Reminder: this.reminder
     };
 
     if (this.eventDuration == 1) obj.End = obj.Start;

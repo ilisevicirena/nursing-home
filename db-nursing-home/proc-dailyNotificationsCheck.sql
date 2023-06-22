@@ -1,7 +1,7 @@
 USE [ENV01_NURSING_HOME]
 GO
 
-/****** Object:  StoredProcedure [dbo].[dailyNotificationCheck]    Script Date: 19.6.2023. 8:44:59 ******/
+/****** Object:  StoredProcedure [dbo].[dailyNotificationCheck]    Script Date: 22.6.2023. 14:15:03 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -37,6 +37,7 @@ ELSE
 BEGIN
    exec dbo.insertAnniversaryNotifications;
    exec dbo.insertBirthdayNotifications;
+   exec dbo.insertEventReminderNotification;
     -- End of actions
 
     -- Insert a new row with the current date

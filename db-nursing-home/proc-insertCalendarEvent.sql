@@ -1,18 +1,13 @@
--- ================================================
--- Template generated from Template Explorer using:
--- Create Procedure (New Menu).SQL
---
--- Use the Specify Values for Template Parameters 
--- command (Ctrl-Shift-M) to fill in the parameter 
--- values below.
---
--- This block of comments will not be included in
--- the definition of the procedure.
--- ================================================
+USE [ENV01_NURSING_HOME]
+GO
+
+/****** Object:  StoredProcedure [dbo].[insertCalendarEvent]    Script Date: 22.6.2023. 14:25:37 ******/
 SET ANSI_NULLS ON
 GO
+
 SET QUOTED_IDENTIFIER ON
 GO
+
 -- =============================================
 -- Author:		Irena Ilisevic
 -- Create date: 21.6.2023.
@@ -27,7 +22,8 @@ CREATE PROCEDURE [dbo].[insertCalendarEvent]
 		@Title varchar(200),
 		@Description varchar(max),
 		@PersonId int=NULL,
-		@Recurring bit
+		@Recurring bit,
+		@Reminder bit
 	)
 AS
 BEGIN
@@ -36,9 +32,10 @@ BEGIN
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
-	insert into dbo.CalendarEvent ([Start], [End], [Color], [Title], [Description], [PersonId], [Recurring])
-	values (@Start, @End, @Color, @Title, @Description, @PersonId, @Recurring);
+	insert into dbo.CalendarEvent ([Start], [End], [Color], [Title], [Description], [PersonId], [Recurring], Reminder)
+	values (@Start, @End, @Color, @Title, @Description, @PersonId, @Recurring, @Reminder);
 
 	select SCOPE_IDENTITY() as [EventId];
 END
 GO
+

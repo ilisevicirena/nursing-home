@@ -28,7 +28,8 @@ router.post('/add', async (request, response) => {
             .input('end', objectToSave.End)
             .input('color', objectToSave.Color)
             .input('rec', objectToSave.Recurring ? 1 : 0)
-            .query("EXEC [dbo].[insertCalendarEvent] @Title=@title, @Description=@desc, @Start=@start, @End=@end, @Color=@color, @PersonId=NULL, @Recurring=@rec");
+            .input('rem', objectToSave.Reminder ? 1 : 0)
+            .query("EXEC [dbo].[insertCalendarEvent] @Title=@title, @Description=@desc, @Start=@start, @End=@end, @Color=@color, @PersonId=NULL, @Recurring=@rec, @Reminder=@rem");
         if (result != null) response.json(result.recordset[0]);
         else response.send(getError(40001));
     } catch (err) {
@@ -49,7 +50,8 @@ router.post('/update', async (request, response) => {
             .input('end', objectToSave.End)
             .input('color', objectToSave.Color)
             .input('rec', objectToSave.Recurring ? 1 : 0)
-            .query("EXEC [dbo].[updateCalendarEvent] @Id=@id, @Title=@title, @Description=@desc, @Start=@start, @End=@end, @Color=@color, @Recurring=@rec");
+            .input('rem', objectToSave.Reminder ? 1 : 0)
+            .query("EXEC [dbo].[updateCalendarEvent] @Id=@id, @Title=@title, @Description=@desc, @Start=@start, @End=@end, @Color=@color, @Recurring=@rec, @Reminder=@rem");
         if (result != null) response.json(result.recordset);
         else response.send(getError(40002));
     } catch (err) {
