@@ -1,8 +1,8 @@
-import { NbMenuItem } from '@nebular/theme';
 import { getString } from '../resources/strings';
-import { icon } from 'leaflet';
+import { DialogService } from '../shared/dialog/dialog.service';
+import { FastActionsComponent } from './fast-actions/fast-actions.component';
 
-export const MENU_ITEMS: NbMenuItem[] = [
+export const MENU_ITEMS: any[] = [
   {
     title: getString("dashboard"),
     icon: 'home-outline',
@@ -66,5 +66,18 @@ export const MENU_ITEMS: NbMenuItem[] = [
     title: getString('calendar'),
     icon: 'calendar-outline',
     link: '/pages/calendar'
+  },
+  {
+    title: getString('fastActions'),
+    icon: 'grid-outline',
+    link: undefined,
+    click: (dialogService: DialogService) => {
+      dialogService.open(
+        FastActionsComponent,
+        {
+          autoFocus: false
+        }
+      );
+    }
   }
 ];

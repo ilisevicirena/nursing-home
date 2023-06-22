@@ -195,6 +195,8 @@ const strings: IKeyValue[] = [
     { key: "color", value: "Boja" },
     { key: "recurringEvent", value: "Ponavljaj događaj godišnje" },
     { key: "eventReminder", value: "Podsjetnik na događaj" },
+    { key: "fastActions", value: "Brze akcije" },
+    { key: "startDoctorVisit", value: "Pokreni akciju liječničkog obilaska" },
     { key: "documentsPersonStepText", value: "Ovdje možeš dodati neke dokumente vezane uz novu osobu (kopije osobnih dokumenata, upute za davanje lijekova, liječničke nalaze i slično). Dodane dokumente možeš kasnije pregledati i uređivati unutar profila osobe. Dokumente ne moraš dodati odmah..." },
 ];
 

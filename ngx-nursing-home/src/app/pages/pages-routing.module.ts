@@ -15,6 +15,7 @@ import { ServicesManagementComponent } from './services-management/services-mana
 import { NotificationsComponent } from './notifications/notifications.component';
 import { NotificationsSettingsComponent } from './notifications/notifications-settings/notifications-settings.component';
 import { CalendarComponent } from './calendar/calendar.component';
+import { DoctorVisitTourComponent } from './doctor-visit-tour/doctor-visit-tour.component';
 
 const routes: Routes = [{
   path: '',
@@ -80,6 +81,10 @@ const routes: Routes = [{
     {
       path: 'calendar',
       component: CalendarComponent
+    },
+    {
+      path: 'doctor-visit-tour',
+      component: DoctorVisitTourComponent
     },
   ],
 }];

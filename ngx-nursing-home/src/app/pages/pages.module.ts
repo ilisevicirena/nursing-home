@@ -69,6 +69,8 @@ import { NoteTagsComponent } from './notes/note-tags/note-tags.component';
 import { NoteDocumentsComponent } from './notes/note-documents/note-documents.component';
 import { CalendarComponent } from './calendar/calendar.component';
 import { AddEditEventComponent } from './calendar/add-edit-event/add-edit-event.component';
+import { FastActionsComponent } from './fast-actions/fast-actions.component';
+import { DoctorVisitTourComponent } from './doctor-visit-tour/doctor-visit-tour.component';
 
 @NgModule({
   imports: [
@@ -140,7 +142,9 @@ import { AddEditEventComponent } from './calendar/add-edit-event/add-edit-event.
     NoteTagsComponent,
     NoteDocumentsComponent,
     CalendarComponent,
-    AddEditEventComponent
+    AddEditEventComponent,
+    FastActionsComponent,
+    DoctorVisitTourComponent
   ],
 })
 export class PagesModule {
