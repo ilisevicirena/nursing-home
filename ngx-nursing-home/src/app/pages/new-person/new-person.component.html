@@ -142,9 +142,6 @@
                         </div>
                     </div>
                     <div class="stepper-footer w-100 d-flex justify-content-end">
-                        <button nbButton disabled shape="round" size="small" class="me-2" nbStepperPrevious>
-                            <nb-icon pack="eva" icon="chevron-left-outline"></nb-icon>
-                            {{getString('back')}}</button>
                         <button *ngIf="newPersonData.Id==0" nbButton status="primary" shape="round" size="small"
                             (click)="saveNewPerson(basicDataFrom)"
                             [disabled]="basicDataFrom.form.invalid || newPersonData.Id>0">{{getString('saveNewPerson')}}
@@ -308,9 +305,6 @@
                         <button nbButton shape="round" size="small" class="me-2" nbStepperPrevious>
                             <nb-icon pack="eva" icon="chevron-left-outline"></nb-icon>
                             {{getString('back')}}</button>
-                        <button nbButton shape="round" size="small" nbStepperNext>{{getString('next')}}
-                            <nb-icon pack="eva" icon="chevron-right-outline"></nb-icon>
-                        </button>
                     </div>
                 </nb-step>
 
