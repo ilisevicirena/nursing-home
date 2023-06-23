@@ -13,8 +13,9 @@
                     <nb-icon pack="eva" icon="chevron-right"></nb-icon>
                 </button>
             </div>
-            <div class="col p-0 d-flex align-items-center justify-content-center fw-600">
-                {{currentPersonIndex+1}}/{{persons.length}}
+            <div class="col p-0 d-flex align-items-center">
+                <nb-progress-bar style="width: 100%;" [(value)]="percentage" status="primary"
+                    [nbTooltip]="getString('completed')" [displayValue]="true"></nb-progress-bar>
             </div>
             <div class="col p-0 d-flex justify-content-end">
                 <nb-form-field>

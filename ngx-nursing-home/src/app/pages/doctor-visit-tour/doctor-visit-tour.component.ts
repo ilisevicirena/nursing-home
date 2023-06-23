@@ -25,6 +25,7 @@ export class DoctorVisitTourComponent implements OnInit, OnDestroy {
   public currentPersonId: number = 0;
   public currentNote: any;
   public visitDate: Date = new Date();
+  public percentage: number = 0;
 
   private subs: Subscription[] = [];
   private doctorVisitTagId: number = 5;
@@ -93,8 +94,14 @@ export class DoctorVisitTourComponent implements OnInit, OnDestroy {
       this.notesService.getNoteDetails(ev).subscribe(data => {
         this.persons[this.currentPersonIndex].Note = data;
         this.currentNote = data;
+        this.calculatePercentage();
       })
     );
+  }
+
+  private calculatePercentage(): void {
+    var saved = this.persons.filter(x => x.Note.Id > 0);
+    this.percentage = (saved.length / this.persons.length) * 100
   }
 
   public goToPerson(p: any): void {

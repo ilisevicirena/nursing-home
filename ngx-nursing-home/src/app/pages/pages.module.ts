@@ -26,7 +26,8 @@ import {
   NbBadgeModule,
   NbAccordionModule,
   NbUserModule,
-  NbRadioModule
+  NbRadioModule,
+  NbProgressBarModule
 
 }
   from '@nebular/theme';
@@ -109,7 +110,8 @@ import { DoctorVisitTourComponent } from './doctor-visit-tour/doctor-visit-tour.
     NbAccordionModule,
     NbUserModule,
     NgxSummernoteModule,
-    NbRadioModule
+    NbRadioModule,
+    NbProgressBarModule
   ],
   declarations: [
     PagesComponent,

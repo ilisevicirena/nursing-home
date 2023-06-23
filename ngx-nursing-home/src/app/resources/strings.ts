@@ -204,6 +204,7 @@ const strings: IKeyValue[] = [
     { key: "doctorVisit", value: "Liječnička posjeta za dan: " },
     { key: "startDoctorVisit", value: "Pokreni akciju liječničkog obilaska" },
     { key: "delete", value: "Obriši" },
+    { key: "completed", value: "Dovršeno" },
     { key: "documentsPersonStepText", value: "Ovdje možeš dodati neke dokumente vezane uz novu osobu (kopije osobnih dokumenata, upute za davanje lijekova, liječničke nalaze i slično). Dodane dokumente možeš kasnije pregledati i uređivati unutar profila osobe. Dokumente ne moraš dodati odmah..." },
     { key: "uploadDocument", value: "Dodaj dokument" },
 ];
