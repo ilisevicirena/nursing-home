@@ -60,4 +60,19 @@ router.post('/update', async (request, response) => {
     }
 });
 
+router.delete('/delete', async (request, response) => {
+    try {
+        var objectToSave = Object.assign(new Event, request.body);
+        const pool = await db;
+        const result = await pool.request()
+            .input('id', objectToSave.Id)
+            .query("EXEC [dbo].[deleteCalendarEvent] @Id=@id");
+        if (result != null) response.json(result.recordset);
+        else response.send(getError(40003));
+    } catch (err) {
+        response.status(500);
+        response.send(err.message);
+    }
+});
+
 module.exports = router;

@@ -124,6 +124,10 @@
         <button nbButton ghost shape="round" size="small" class="me-2" (click)="close(false)">
             {{getString('cancel')}}
         </button>
+        <button *ngIf="id>0" nbButton status="danger" ghost shape="round" class="me-2" size="small"
+            (click)="deleteEvent()">
+            {{getString('delete')}}
+        </button>
         <button nbButton status="primary" shape="round" size="small"
             [disabled]="!start || (eventDuration==2 && !end) || !name" (click)="saveEvent()">
             {{getString('save')}}

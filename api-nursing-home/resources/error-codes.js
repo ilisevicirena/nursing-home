@@ -85,6 +85,7 @@ var errors = [
     // events error codes starting with 40000
     new CodeMessage(40001, "Error while inserting new event into database."),
     new CodeMessage(40002, "Error while updateing event in database."),
+    new CodeMessage(40003, "Error while deleting event in database."),
 
 ];
 
