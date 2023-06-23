@@ -14,7 +14,7 @@
             <div class="title">
                 <input nbInput fullWidth [(ngModel)]="selectedNote.Title" [placeholder]="getString('title')">
             </div>
-            <div class="content p-0">
+            <div class="p-0 mt-2">
                 <div [ngxSummernote]="config" [(ngModel)]="selectedNote.Text" nbInput></div>
             </div>
 

@@ -36,6 +36,10 @@ export class NotesService extends BaseRestApiService {
     return this.http.get(this.apiRoute + "/getNoteDocuments?NoteId=" + id);
   }
 
+  public getNoteDetails(id: number): Observable<any> {
+    return this.http.get(this.apiRoute + "/getNoteDetails?NoteId=" + id);
+  }
+
   public getNoteTags(id: number): Observable<any> {
     return this.http.get(this.apiRoute + "/getNoteTags?NoteId=" + id);
   }

@@ -232,4 +232,20 @@ router.post('/removeTagFromNote', async (request, response) => {
     }
 });
 
+router.get('/getNoteDetails', async (request, response) => {
+    try {
+        const pool = await db;
+        const result = await pool.request()
+            .input("note", request.query.NoteId)
+            .query("EXEC [dbo].[getNoteDetails] @Id=@note");
+        var note = result.recordsets[0][0];
+        note.Tags = result.recordsets[1];
+        note.Documents = result.recordsets[2];
+        response.json(note);
+    } catch (err) {
+        response.status(500);
+        response.send(err.message);
+    }
+});
+
 module.exports = router;
