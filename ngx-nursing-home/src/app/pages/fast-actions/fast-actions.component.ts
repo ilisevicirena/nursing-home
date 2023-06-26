@@ -28,4 +28,8 @@ export class FastActionsComponent implements OnInit, OnDestroy {
   public startDoctorVisit(): void {
     this.router.navigateByUrl('/pages/doctor-visit-tour');
   }
+
+  public startCalculation(): void {
+
+  }
 }

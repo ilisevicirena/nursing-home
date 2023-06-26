@@ -1,8 +1,13 @@
 <nb-card>
     <nb-card-body>
-        <button nbButton size="giant" status="basic" [nbTooltip]="getString('startDoctorVisit')"
+        <button nbButton size="giant" class="me-2" status="basic" [nbTooltip]="getString('startDoctorVisit')"
             (click)="startDoctorVisit()">
             <nb-icon status="primary" pack="eva" icon="activity-outline">
+            </nb-icon>
+        </button>
+        <button nbButton size="giant" status="basic" [nbTooltip]="getString('startCalculation')"
+            (click)="startCalculation()">
+            <nb-icon status="primary" pack="eva" icon="play-circle-outline">
             </nb-icon>
         </button>
     </nb-card-body>
