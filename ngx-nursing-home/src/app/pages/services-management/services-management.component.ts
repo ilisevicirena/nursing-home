@@ -330,8 +330,10 @@ export class ServicesManagementComponent implements OnInit, OnDestroy {
     this.subs.push(
       this.servicesManagementService.getPackagesAndServicesForPerson(this.personId).subscribe(data => {
         // select measure unit
-        if (data.OfferMeasureUnit.length > 0)
+        if (data.OfferMeasureUnit.length > 0) {
           this.calculationMeasureUnit = data.OfferMeasureUnit[0].MeasureUnitCode;
+          this.measureUnitId = data.OfferMeasureUnit[0].Id;
+        }
         else {
           var measureUnit = this.calculationMeasureUnits.find(x => x.Code == this.calculationMeasureUnit);
           if (measureUnit) this.measureUnitId = measureUnit.Id;
