@@ -87,6 +87,12 @@ var errors = [
     new CodeMessage(40002, "Error while updateing event in database."),
     new CodeMessage(40003, "Error while deleting event in database."),
 
+    // calculation error codes starting with 50000
+    new CodeMessage(50001, "Error while marking calculation as paid in database."),
+    new CodeMessage(50002, "Error while insertnig calculation real price in database."),
+    new CodeMessage(50003, "Error while cancelling calculation in database."),
+    new CodeMessage(50004, "Error while fetching calculation details from database. Invalid number of datasets."),
+    new CodeMessage(50005, "Error while inserting new calculation into database."),
 ];
 
 module.exports = {
