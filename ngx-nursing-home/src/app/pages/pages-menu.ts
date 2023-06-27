@@ -68,6 +68,11 @@ export const MENU_ITEMS: any[] = [
     link: '/pages/calendar'
   },
   {
+    title: getString('calculationPage'),
+    icon: 'play-circle-outline',
+    link: '/pages/calculation'
+  },
+  {
     title: getString('fastActions'),
     icon: 'grid-outline',
     link: undefined,
