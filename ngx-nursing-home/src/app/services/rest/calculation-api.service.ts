@@ -21,4 +21,7 @@ export class CalculationApiService extends BaseRestApiService {
     return this.http.post(this.apiRoute + '/insertDocumentForCalculation', model);
   }
 
+  public checkCalculationExists(model: any): Observable<any> {
+    return this.http.post(this.apiRoute + '/checkCalculationExists', model);
+  }
 }

@@ -153,42 +153,94 @@ export class StartCalculationComponent implements OnInit, OnDestroy {
       Discounts: person.ServicesManagement.Discounts
     }
 
+    // check calculation exists
     this.subs.push(
-      // save calculation
-      this.calcService.add(objectToSave).subscribe(data => {
-        person.CalculationId = data.CalculationId;
-        var monthName = this.months.find(x => x.key == this.month).name;
-        // create invoice and save it
-        this.invoice.createPdf(objectToSave, monthName, this.year).then(data => {
-          var documentModel = {
-            Id: 0,
-            PersonId: person.Id,
-            Name: person.JMBG + '-' + monthName,
-            Extension: 'pdf',
-            FileType: 'data:application/pdf;base64',
-            CalculationId: person.CalculationId,
-            Base64: data
-          };
-
+      this.calcService.checkCalculationExists({ PersonId: person.Id, Month: this.month + 1, Year: this.year, Delete: this.recalculate == 1 }).subscribe((data) => {
+        if (this.recalculate == 1) {
           this.subs.push(
-            this.calcService.saveDocument(documentModel).subscribe(() => {
+            // save calculation
+            this.calcService.add(objectToSave).subscribe(data => {
+              person.CalculationId = data.CalculationId;
+              var monthName = this.months.find(x => x.key == this.month).name;
 
-              // continue to next person
-              this.calculationPercent = ((index + 1) / this.persons.length) * 100;
-              this.personIndex++;
+              // create invoice pdf and save it
+              this.invoice.createPdf(objectToSave, monthName, this.year).then(data => {
+                var documentModel = {
+                  Id: 0,
+                  PersonId: person.Id,
+                  Name: person.JMBG + '-' + monthName,
+                  Extension: 'pdf',
+                  FileType: 'data:application/pdf;base64',
+                  CalculationId: person.CalculationId,
+                  Base64: data
+                };
 
-              if (this.personIndex > this.persons.length - 1) {
-                this.toastrService.showToast('success', getString('calculationSuccess'));
-                this.calculationInProgress = false;
-                this.close(true);
-              } else this.startPersonCalculation(this.personIndex);
+                this.subs.push(
+                  this.calcService.saveDocument(documentModel).subscribe(() => {
+                    // continue to next person
+                    this.calculationPercent = ((index + 1) / this.persons.length) * 100;
+                    this.personIndex++;
+
+                    if (this.personIndex > this.persons.length - 1) {
+                      this.toastrService.showToast('success', getString('calculationSuccess'));
+                      this.calculationInProgress = false;
+                      this.close(true);
+                    } else this.startPersonCalculation(this.personIndex);
+                  })
+                );
+              })
             })
           );
-        })
+        } else {
+          if (data.result > 0) {
+            // continue to next person
+            this.calculationPercent = ((index + 1) / this.persons.length) * 100;
+            this.personIndex++;
+
+            if (this.personIndex > this.persons.length - 1) {
+              this.toastrService.showToast('success', getString('calculationSuccess'));
+              this.calculationInProgress = false;
+              this.close(true);
+            } else this.startPersonCalculation(this.personIndex);
+          } else {
+            this.subs.push(
+              // save calculation
+              this.calcService.add(objectToSave).subscribe(data => {
+                person.CalculationId = data.CalculationId;
+                var monthName = this.months.find(x => x.key == this.month).name;
+
+                // create invoice pdf and save it
+                this.invoice.createPdf(objectToSave, monthName, this.year).then(data => {
+                  var documentModel = {
+                    Id: 0,
+                    PersonId: person.Id,
+                    Name: person.JMBG + '-' + monthName,
+                    Extension: 'pdf',
+                    FileType: 'data:application/pdf;base64',
+                    CalculationId: person.CalculationId,
+                    Base64: data
+                  };
+
+                  this.subs.push(
+                    this.calcService.saveDocument(documentModel).subscribe(() => {
+
+                      // continue to next person
+                      this.calculationPercent = ((index + 1) / this.persons.length) * 100;
+                      this.personIndex++;
+
+                      if (this.personIndex > this.persons.length - 1) {
+                        this.toastrService.showToast('success', getString('calculationSuccess'));
+                        this.calculationInProgress = false;
+                        this.close(true);
+                      } else this.startPersonCalculation(this.personIndex);
+                    })
+                  );
+                })
+              })
+            );
+          }
+        }
       })
-    );
-
-
+    )
   }
-
 }

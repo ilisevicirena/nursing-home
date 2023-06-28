@@ -245,4 +245,40 @@ router.post('/insertDocumentForCalculation', async (request, response) => {
     }
 });
 
+router.post('/checkCalculationExists', async (request, response) => {
+    try {
+        var objectToSave = request.body;
+        const pool = await db;
+        const result = await pool.request()
+            .input('id', objectToSave.PersonId)
+            .input('month', objectToSave.Month)
+            .input('year', objectToSave.Year)
+            .input('delete', objectToSave.Delete ? 1 : 0)
+            .query("EXEC [dbo].[checkCalculationExists] @PersonId=@id, @Month=@month, @Year=@year, @Delete=@delete");
+        if (result != null) {
+            if (objectToSave.Delete) {
+                if (result.recordsets[1].length > 0) {
+                    // delete files from file system     
+                    for (let index = 0; index < result.recordsets[1].length; index++) {
+                        const element = result.recordsets[1][index];
+                        fs.unlink(element.Path, function (err) {
+                            if (index == result.recordsets[1].length - 1) response.json({ result: result.recordset[0].SelectedId });
+                        });
+                    }
+                } else {
+                    response.json({ result: result.recordset[0].SelectedId });
+                }
+            }
+            else {
+                response.json({ result: result.recordset[0].SelectedId });
+            }
+        }
+        else response.send(getError(50005));
+    } catch (err) {
+        response.status(500);
+        response.send(err.message);
+    }
+});
+
+
 module.exports = router;
