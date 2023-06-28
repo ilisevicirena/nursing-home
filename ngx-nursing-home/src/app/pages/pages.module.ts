@@ -74,6 +74,7 @@ import { FastActionsComponent } from './fast-actions/fast-actions.component';
 import { DoctorVisitTourComponent } from './doctor-visit-tour/doctor-visit-tour.component';
 import { CalculationComponent } from './calculation/calculation.component';
 import { StartCalculationComponent } from './calculation/start-calculation/start-calculation.component';
+import { GeneratedInvoiceComponent } from './calculation/generated-invoice/generated-invoice.component';
 
 @NgModule({
   imports: [
@@ -150,7 +151,8 @@ import { StartCalculationComponent } from './calculation/start-calculation/start
     FastActionsComponent,
     DoctorVisitTourComponent,
     CalculationComponent,
-    StartCalculationComponent
+    StartCalculationComponent,
+    GeneratedInvoiceComponent
   ],
 })
 export class PagesModule {

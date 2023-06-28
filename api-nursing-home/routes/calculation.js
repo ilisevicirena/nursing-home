@@ -4,6 +4,9 @@ const { db } = require('../config/framework');
 const { getError } = require('../resources/error-codes');
 const { CalculationPaid, CalculationRealPrice, Calculation } = require('../models/Calculation');
 const { DocumentFile } = require('../models/Document');
+const { FILES_FOLDER } = require('../config/config');
+const fs = require('fs');
+const { resolve } = require('path');
 
 router.post('/calculationPaid', async (request, response) => {
     try {

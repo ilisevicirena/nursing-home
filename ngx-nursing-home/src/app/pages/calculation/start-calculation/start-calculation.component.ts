@@ -1,4 +1,4 @@
-import { Component, Inject, LOCALE_ID, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, LOCALE_ID, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { getString } from '../../../resources/strings';
 import { NbDialogRef } from '@nebular/theme';
@@ -7,6 +7,8 @@ import { PersonsService } from '../../../services/rest/persons.service';
 import { ServicesManagementService } from '../../../services/rest/services-management.service';
 import { CalculationService, ICalculationResult } from '../../../services/calculation.service';
 import { CalculationApiService } from '../../../services/rest/calculation-api.service';
+import { GeneratedInvoiceComponent } from '../generated-invoice/generated-invoice.component';
+import { ToastrService } from '../../../services/toastr.service';
 
 @Component({
   selector: 'sample-start-calculation',
@@ -17,7 +19,7 @@ export class StartCalculationComponent implements OnInit, OnDestroy {
 
   private subs: Subscription[] = [];
   private persons: any[] = [];
-  private calculationTotalPrice: string;
+  private personIndex: number = 0;
 
   public getString = getString;
   public month: number = new Date().getMonth();
@@ -27,7 +29,9 @@ export class StartCalculationComponent implements OnInit, OnDestroy {
   public paymentDeadline: number = 3;
   public recalculate: number = 1;
   public calculationInProgress: boolean = false;
-  public calculationPercent: number = 50;
+  public calculationPercent: number = 0;
+
+  @ViewChild(GeneratedInvoiceComponent) invoice: GeneratedInvoiceComponent;
 
   constructor(
     @Inject(LOCALE_ID) private locale: string,
@@ -35,7 +39,8 @@ export class StartCalculationComponent implements OnInit, OnDestroy {
     private personsService: PersonsService,
     private servicesManagementService: ServicesManagementService,
     private calculationService: CalculationService,
-    private calcService: CalculationApiService
+    private calcService: CalculationApiService,
+    private toastrService: ToastrService
   ) { }
 
   ngOnInit(): void {
@@ -82,54 +87,47 @@ export class StartCalculationComponent implements OnInit, OnDestroy {
     this.subs.push(
       this.personsService.getData(true).subscribe(data => {
         this.persons = data;
-
-        for (let index = 0; index < this.persons.length; index++) {
-          const element = this.persons[index];
-          this.subs.push(
-            this.servicesManagementService.getPackagesAndServicesForPerson(element.Id).subscribe(data => {
-              element.ServicesManagement = data;
-              if (index == this.persons.length - 1) this.calculatePackageAndServices();
-            })
-          );
-        }
+        this.personIndex = 0;
+        this.startPersonCalculation(this.personIndex);
       })
     );
   }
 
-  private calculatePackageAndServices(): void {
-    // for each person calculate result and save calculation
-    for (let index = 0; index < this.persons.length; index++) {
-      const element = this.persons[index];
+  private startPersonCalculation(personIndex: number): void {
+    const person = this.persons[personIndex];
+    this.subs.push(
+      // get packages and services for person
+      this.servicesManagementService.getPackagesAndServicesForPerson(person.Id).subscribe(data => {
+        person.ServicesManagement = data;
+        // calculate packages and services prices
 
-      if (element.ServicesManagement) {
         // calculate price foreach package
-        for (let j = 0; j < element.ServicesManagement.Packages.length; j++) {
-          const pack = element.ServicesManagement.Packages[j];
-          var services = element.ServicesManagement.PackagesServices.filter(x => x.PackageId == pack.Id);
+        person.ServicesManagement.Packages.forEach(pack => {
+          var services = person.ServicesManagement.PackagesServices.filter(x => x.PackageId == pack.Id);
           var result: ICalculationResult = this.calculationService.calculatePackagePrice(pack, services, pack.MeasureUnitCode);
           pack.Services = result.services;
           pack.Price = result.price;
           pack.TotalPrice = result.priceRounded;
           pack.PriceRounded = result.priceRounded;
-        }
+        });
 
         // calculate price foreach additional service
-        for (let k = 0; k < element.ServicesManagement.Services.length; k++) {
-          const service = element.ServicesManagement.Services[k];
-          var result: ICalculationResult = this.calculationService.calculateServicePriceByMeasureUnit(service, element.ServicesManagement.OfferMeasureUnit[0]?.MeasureUnitCode);
+        person.ServicesManagement.Services.forEach(service => {
+          var result: ICalculationResult = this.calculationService.calculateServicePriceByMeasureUnit(service, person.ServicesManagement.OfferMeasureUnit[0]?.MeasureUnitCode);
           service.Price = result.price;
           service.PriceRounded = result.priceRounded;
           service.TotalPrice = result.priceRounded;
           service.PackageId = null;
-        }
+        });
 
-        var result: ICalculationResult = this.calculationService.calculateOfferPrice(element.ServicesManagement.Packages, element.ServicesManagement.Services, element.ServicesManagement.Discounts);
-        element.CalculationTotalPrice = result.price;
-        element.CalculationTotalPriceRounded = result.priceRounded;
+        // calculate offer price
+        var result: ICalculationResult = this.calculationService.calculateOfferPrice(person.ServicesManagement.Packages, person.ServicesManagement.Services, person.ServicesManagement.Discounts);
+        person.CalculationTotalPrice = result.price;
+        person.CalculationTotalPriceRounded = result.priceRounded;
 
-        this.saveCalculation(element, index);
-      }
-    }
+        this.saveCalculation(person, personIndex);
+      })
+    );
   }
 
   private saveCalculation(person: any, index: number) {
@@ -137,6 +135,10 @@ export class StartCalculationComponent implements OnInit, OnDestroy {
     var lastDay = new Date(this.year, this.month + 1, 0);
 
     var objectToSave: any = {
+      CalculationDate: new Date(),
+      PersonFirstName: person.FirstName,
+      PersonLastName: person.LastName,
+      PersonJMBG: person.JMBG,
       Month: this.month + 1,
       Year: this.year,
       PersonId: person.Id,
@@ -152,13 +154,41 @@ export class StartCalculationComponent implements OnInit, OnDestroy {
     }
 
     this.subs.push(
+      // save calculation
       this.calcService.add(objectToSave).subscribe(data => {
-        console.log(data);
-        this.calculationPercent = ((index + 1) / this.persons.length) * 100;
-        if (this.calculationPercent == 100) this.calculationInProgress = false;
-        this.close(true);
+        person.CalculationId = data.CalculationId;
+        var monthName = this.months.find(x => x.key == this.month).name;
+        // create invoice and save it
+        this.invoice.createPdf(objectToSave, monthName, this.year).then(data => {
+          var documentModel = {
+            Id: 0,
+            PersonId: person.Id,
+            Name: person.JMBG + '-' + monthName,
+            Extension: 'pdf',
+            FileType: 'data:application/pdf;base64',
+            CalculationId: person.CalculationId,
+            Base64: data
+          };
+
+          this.subs.push(
+            this.calcService.saveDocument(documentModel).subscribe(() => {
+
+              // continue to next person
+              this.calculationPercent = ((index + 1) / this.persons.length) * 100;
+              this.personIndex++;
+
+              if (this.personIndex > this.persons.length - 1) {
+                this.toastrService.showToast('success', getString('calculationSuccess'));
+                this.calculationInProgress = false;
+                this.close(true);
+              } else this.startPersonCalculation(this.personIndex);
+            })
+          );
+        })
       })
     );
+
+
   }
 
 }

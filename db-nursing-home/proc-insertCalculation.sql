@@ -1,7 +1,7 @@
 USE [ENV01_NURSING_HOME]
 GO
 
-/****** Object:  StoredProcedure [dbo].[insertCalculation]    Script Date: 27.6.2023. 9:17:18 ******/
+/****** Object:  StoredProcedure [dbo].[insertCalculation]    Script Date: 28.6.2023. 9:37:14 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -34,7 +34,7 @@ BEGIN
 
     -- Insert statements for procedure here
 	insert into dbo.Calculation ([CreationDate],[Month], [Year], [PersonId], [SystemPrice], [RealPrice], [PaidPrice], [DateFrom], [DateTo], [StatusId], [PaymentDaysDeadline], [PriceUnitId], [MeasureUnitId], [DatePaid])
-	values (GETDATE(), @Month, @Year,@PersonId, @SystemPrice, NULL, NULL, @DateFrom, @DateTo, 1, @PaymentDaysDeadline, @PriceUnitId, @MeasureUnitId, NULL);
+	values (GETDATE(), @Month, @Year,@PersonId, @SystemPrice, NULL, NULL, @DateFrom, @DateTo, 2, @PaymentDaysDeadline, @PriceUnitId, @MeasureUnitId, NULL);
 
 	select SCOPE_IDENTITY() as [CalculationId];
 

@@ -217,7 +217,13 @@ const strings: IKeyValue[] = [
     { key: "recalculateForExisting", value: "Preračunaj za osobe koje već imaju obračun u odabranom razdoblju" },
     { key: "skipExisting", value: "Kreiraj obračun samo za osobe koje nemaju obračun u odabranom razdoblju" },
     { key: "start", value: "Pokreni" },
-    { key: "calculationInProgress", value: "Kalkulacija je u tijeku, molimo pričekajte (može potrajati nekoliko minuta)" }
+    { key: "calculationInProgress", value: "Kalkulacija je u tijeku, molimo pričekajte (može potrajati nekoliko minuta)" },
+    { key: "invoice", value: "R A Č U N" },
+    { key: "invoiceForMonth", value: "Račun za mjesec" },
+    { key: "generatedDate", value: "Generirano dana" },
+    { key: "invoicePeriod", value: "Razdoblje: " },
+    { key: "invoiceGenerated", value: "Napomena: Ovaj dokument automatski je generiran iz sustava i može se razlikovati od stvarnog stanja!" },
+    { key: "calculationSuccess", value: "Obračun uspješno kreiran" },
 ];
 
 const map = new Map(strings.map(obj => [obj.key, obj.value]));
