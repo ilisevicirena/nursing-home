@@ -210,6 +210,14 @@ const strings: IKeyValue[] = [
     { key: "uploadDocument", value: "Dodaj dokument" },
     { key: "startCalculation", value: "Pokreni obračun za sve aktivne osobe" },
     { key: "calculationPage", value: "Obračun" },
+    { key: "calculationFor", value: "Obračun za" },
+    { key: "newCalculation", value: "Novi obračun" },
+    { key: "startingCalculation", value: "Pokretanje obračuna za sve aktivne osobe" },
+    { key: "daysForPayment", value: "Rok za uplatu (dani)" },
+    { key: "recalculateForExisting", value: "Preračunaj za osobe koje već imaju obračun u odabranom razdoblju" },
+    { key: "skipExisting", value: "Kreiraj obračun samo za osobe koje nemaju obračun u odabranom razdoblju" },
+    { key: "start", value: "Pokreni" },
+    { key: "calculationInProgress", value: "Kalkulacija je u tijeku, molimo pričekajte (može potrajati nekoliko minuta)" }
 ];
 
 const map = new Map(strings.map(obj => [obj.key, obj.value]));

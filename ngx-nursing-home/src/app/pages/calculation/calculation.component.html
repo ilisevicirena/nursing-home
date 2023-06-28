@@ -1,1 +1,18 @@
-<p>calculation works!</p>
+<div class="row m-0 h-100 w-100">
+    <div class="col-md-10 ps-0 h-100">
+        <nb-card class="h-100 m-0 calculation-card">
+            <nb-card-header>
+                {{getString('calculationFor')}}
+                <nb-select [(selected)]="month">
+                    <nb-option *ngFor="let m of months" [value]="m.key">{{m.name}}</nb-option>
+                </nb-select>
+                <nb-select [(selected)]="year">
+                    <nb-option *ngFor="let y of years" [value]="y">{{y}}</nb-option>
+                </nb-select>
+            </nb-card-header>
+        </nb-card>
+    </div>
+    <div class="col-md-2 h-100">
+
+    </div>
+</div>

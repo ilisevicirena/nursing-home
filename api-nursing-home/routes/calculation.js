@@ -5,19 +5,6 @@ const { getError } = require('../resources/error-codes');
 const { CalculationPaid, CalculationRealPrice, Calculation } = require('../models/Calculation');
 const { DocumentFile } = require('../models/Document');
 
-router.get('/', async (request, response) => {
-    try {
-        const pool = await db;
-        const result = await pool.request()
-            .input("personId", request.query.PersonId)
-            .query("EXEC [dbo].[getContacts] @PersonId=@personId");
-        response.json(result.recordset);
-    } catch (err) {
-        response.status(500);
-        response.send(err.message);
-    }
-});
-
 router.post('/calculationPaid', async (request, response) => {
     try {
         var objectToSave = Object.assign(new CalculationPaid, request.body);
@@ -135,6 +122,7 @@ router.get('/getCalculationStatuses', async (request, response) => {
 router.post('/add', async (request, response) => {
     try {
         var objectToSave = Object.assign(new Calculation, request.body);
+
         const pool = await db;
         const result = await pool.request()
             .input('month', objectToSave.Month)
@@ -146,59 +134,72 @@ router.post('/add', async (request, response) => {
             .input('deadline', objectToSave.PaymentDaysDeadline)
             .input('priceUnit', objectToSave.PriceUnitId)
             .input('measure', objectToSave.MeasureUnitId)
-            .query("EXEC [dbo].[insertCalculation] @Month=@month, @Year=@year, @PersonId=@personId, @SystemPrice=@systemPrice, @DateFrom=@dateFrom, @DateTo=@dateTo, @PaymentDaysDeadline=@deadline, @PriceUnitId=@priceUnit, @MeasureUnitId=@mesure");
+            .query("EXEC [dbo].[insertCalculation] @Month=@month, @Year=@year, @PersonId=@person, @SystemPrice=@systemPrice, @DateFrom=@dateFrom, @DateTo=@dateTo, @PaymentDaysDeadline=@deadline, @PriceUnitId=@priceUnit, @MeasureUnitId=@measure");
 
         if (result != null) {
             var calculationId = result.recordset[0].CalculationId;
-            var promises = [];
 
-            objectToSave.Packages.forEach(p => {
-                promises.push(
-                    pool.request()
-                        .input('name', p.Name)
-                        .input('desc', p.Description)
-                        .input('price', p.DefaultPackagePrice)
-                        .input('calculated', p.PackagePriceCalculated)
-                        .input('defUnit', p.DefaultPackagePriceUnitId)
-                        .input('measure', p.CalculationMeasureUnitId)
-                        .input('calc', calculationId)
-                        .input('totalPrice', p.TotalPrice)
-                        .input('priceUnit', p.PriceUnitId)
-                        .query("exec [dbo].[insertCalculationPackage] @Name=@name, @Description=@desc, @DefaultPackagePrice=@price, @PackagePriceCalculated=@calculated, @DefaultPackagePriceUnitId=@defUnit, @CalculationMeasureUnitId=@measure, @CalculationId=@calc, @TotalPrice=@totalPrice, @PriceUnitId=@priceUnit")
-                );
-            });
+            await Promise.all(objectToSave.Packages.map(async (p) => {
+                const res = await pool.request()
+                    .input('name', p.Name)
+                    .input('desc', p.Description)
+                    .input('price', p.DefaultPackagePrice)
+                    .input('calculated', p.PackagePriceCalculated)
+                    .input('defUnit', p.DefaultPackagePriceUnitId)
+                    .input('measure', p.MeasureUnitId)
+                    .input('calc', calculationId)
+                    .input('totalPrice', p.TotalPrice)
+                    .input('priceUnit', p.DefaultPackagePriceUnitId)
+                    .query("exec [dbo].[insertCalculationPackage] @Name=@name, @Description=@desc, @DefaultPackagePrice=@price, @PackagePriceCalculated=@calculated, @DefaultPackagePriceUnitId=@defUnit, @CalculationMeasureUnitId=@measure, @CalculationId=@calc, @TotalPrice=@totalPrice, @PriceUnitId=@priceUnit");
 
-            objectToSave.Services.forEach(p => {
-                promises.push(
-                    pool.request()
-                        .input('name', p.Name)
-                        .input('desc', p.Description)
-                        .input('measure', p.MeasureUnitId)
-                        .input('cost', p.CostPerUnit)
-                        .input('units', p.DefaultNumberOfUnits)
-                        .input('qty', p.Quantity)
-                        .input('calc', calculationId)
-                        .input('totalPrice', p.TotalPrice)
-                        .input('priceUnit', p.PriceUnitId)
-                        .query("exec [dbo].[insertCalculationService] @Name=@name, @Description=@desc, @CostPerUnit=@cost, @DefaultNumberOfUnits=@units, @Quantity=@qty, @MeasureUnitId=@measure, @CalculationId=@calc, @TotalPrice=@totalPrice, @PriceUnitId=@priceUnit")
-                );
-            });
+                if (res.recordset[0]) {
+                    var packageId = res.recordset[0].CalculationPackageRelationId;
 
-            objectToSave.Discounts.forEach(p => {
-                promises.push(
-                    pool.request()
-                        .input('name', p.Name)
-                        .input('desc', p.Description)
-                        .input('qty', p.Quantity)
-                        .input('calc', calculationId)
-                        .input('percent', p.PercentCalculation)
-                        .query("exec [dbo].[insertCalculationDiscount] @Name=@name, @Description=@desc, @Quantity=@qty, @CalculationId=@calc, @PercentCalculation=@percent")
-                );
-            });
+                    await Promise.all(p.Services.map(async (s) => {
+                        s.TotalPrice = isNaN(parseFloat(s.PriceRounded)) ? null : s.PriceRounded;
 
-            Promise.all(promises).then(() => {
-                response.json({ Error: false, CalculationId: calculationId });
-            });
+                        await pool.request()
+                            .input('name', s.ServiceName ?? s.Name)
+                            .input('desc', s.ServiceDescription ?? s.Description)
+                            .input('measure', s.MeasureUnitId)
+                            .input('cost', s.CostPerUnit)
+                            .input('units', s.DefaultNumberOfUnits)
+                            .input('qty', s.Quantity)
+                            .input('calc', calculationId)
+                            .input('totalPrice', s.TotalPrice)
+                            .input('priceUnit', s.PriceUnitId)
+                            .input('pack', packageId)
+                            .query("exec [dbo].[insertCalculationService] @Name=@name, @PackageId=@pack, @Description=@desc, @CostPerUnit=@cost, @DefaultNumberOfUnits=@units, @Quantity=@qty, @MeasureUnitId=@measure, @CalculationId=@calc, @TotalPrice=@totalPrice, @PriceUnitId=@priceUnit")
+                    }))
+                }
+            }));
+
+            await Promise.all(objectToSave.Services.map(async (s) => {
+                await pool.request()
+                    .input('name', s.ServiceName ?? s.Name)
+                    .input('desc', s.ServiceDescription ?? s.Description)
+                    .input('measure', s.MeasureUnitId)
+                    .input('cost', s.CostPerUnit)
+                    .input('units', s.DefaultNumberOfUnits)
+                    .input('qty', s.Quantity)
+                    .input('calc', calculationId)
+                    .input('totalPrice', s.TotalPrice)
+                    .input('priceUnit', s.PriceUnitId)
+                    .input('pack', undefined)
+                    .query("exec [dbo].[insertCalculationService] @Name=@name, @PackageId=@pack, @Description=@desc, @CostPerUnit=@cost, @DefaultNumberOfUnits=@units, @Quantity=@qty, @MeasureUnitId=@measure, @CalculationId=@calc, @TotalPrice=@totalPrice, @PriceUnitId=@priceUnit")
+            }));
+
+            await Promise.all(objectToSave.Discounts.map(async (p) => {
+                await pool.request()
+                    .input('name', p.Name)
+                    .input('desc', p.Description)
+                    .input('qty', p.Quantity)
+                    .input('calc', calculationId)
+                    .input('percent', p.PercentCalculation)
+                    .query("exec [dbo].[insertCalculationDiscount] @Name=@name, @Description=@desc, @Quantity=@qty, @CalculationId=@calc, @PercentCalculation=@percent")
+            }))
+
+            response.json({ Error: false, CalculationId: calculationId });
 
         } else response.send(getError(50005));
     } catch (err) {
@@ -206,6 +207,7 @@ router.post('/add', async (request, response) => {
         response.send(err.message);
     }
 });
+
 
 router.post('/insertDocumentForCalculation', async (request, response) => {
     try {

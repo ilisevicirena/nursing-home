@@ -2,6 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NbDialogRef } from '@nebular/theme';
 import { getString } from '../../resources/strings';
 import { Router } from '@angular/router';
+import { DialogService } from '../../shared/dialog/dialog.service';
+import { StartCalculationComponent } from '../calculation/start-calculation/start-calculation.component';
 
 @Component({
   selector: 'sample-fast-actions',
@@ -12,7 +14,8 @@ export class FastActionsComponent implements OnInit, OnDestroy {
 
   constructor(
     private ref: NbDialogRef<FastActionsComponent>,
-    private router: Router
+    private router: Router,
+    private dialogService: DialogService
   ) { }
 
   public getString = getString;
@@ -30,6 +33,17 @@ export class FastActionsComponent implements OnInit, OnDestroy {
   }
 
   public startCalculation(): void {
+    this.ref.close();
+    this.dialogService.open(
+      StartCalculationComponent,
+      {
+        autoFocus: false,
+        closeOnBackdropClick: false,
+        closeOnEsc: false,
+        context: {
 
+        }
+      }
+    )
   }
 }

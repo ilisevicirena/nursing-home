@@ -73,6 +73,7 @@ import { AddEditEventComponent } from './calendar/add-edit-event/add-edit-event.
 import { FastActionsComponent } from './fast-actions/fast-actions.component';
 import { DoctorVisitTourComponent } from './doctor-visit-tour/doctor-visit-tour.component';
 import { CalculationComponent } from './calculation/calculation.component';
+import { StartCalculationComponent } from './calculation/start-calculation/start-calculation.component';
 
 @NgModule({
   imports: [
@@ -148,7 +149,8 @@ import { CalculationComponent } from './calculation/calculation.component';
     AddEditEventComponent,
     FastActionsComponent,
     DoctorVisitTourComponent,
-    CalculationComponent
+    CalculationComponent,
+    StartCalculationComponent
   ],
 })
 export class PagesModule {

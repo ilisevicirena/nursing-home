@@ -1,0 +1,16 @@
+::ng-deep sample-calculation {
+    height: 100%;
+}
+
+.calculation-card {
+    nb-card-header {
+        border: none;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+
+        nb-select {
+            width: 150px;
+        }
+    }
+}

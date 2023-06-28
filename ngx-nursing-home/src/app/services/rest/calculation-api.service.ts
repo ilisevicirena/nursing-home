@@ -13,8 +13,10 @@ export class CalculationApiService extends BaseRestApiService {
     super(http, 'api/calculation');
   }
 
-  /*
-  public getDataForPerson(personId: number): Observable<any> {
-    return this.http.get(this.apiRoute + "?PersonId=" + personId);
-  }*/
+  public getCalculations(month: number, year: number): Observable<any> {
+    return this.http.get(this.apiRoute + "/calculations?Month=" + month + "&Year=" + year);
+  }
+
+
+
 }
