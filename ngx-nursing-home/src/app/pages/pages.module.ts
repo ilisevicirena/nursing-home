@@ -112,7 +112,7 @@ import { GeneratedInvoiceComponent } from './calculation/generated-invoice/gener
     NbUserModule,
     NgxSummernoteModule,
     NbRadioModule,
-    NbProgressBarModule
+    NbProgressBarModule,
   ],
   declarations: [
     PagesComponent,
