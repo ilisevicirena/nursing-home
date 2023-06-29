@@ -52,7 +52,7 @@ registerLocaleData(hr);
     NbDialogModule,
     NbIconModule,
     NbButtonModule,
-    NbAlertModule
+    NbAlertModule,
   ],
   bootstrap: [AppComponent],
   providers: [

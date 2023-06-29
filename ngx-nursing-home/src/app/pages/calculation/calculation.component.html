@@ -20,7 +20,18 @@
             </nb-card-body>
         </nb-card>
     </div>
-    <div class="col-md-2 h-100">
-
+    <div class="col-md-2 h-100 pe-0 ps-0">
+        <nb-card class="chart-card">
+            <nb-card-body>
+                <div class="row m-0 position-relative align-items-center" style="height: 100px;">
+                    <div class="info" style="width: 60%;">
+                        <div class="value fw-600 d-flex justify-content-center">7 osoba</div>
+                        <div class="details subtitle-2"><span>obračunato od</span> 7 </div>
+                    </div>
+                    <div echarts [options]="options" class="echart">
+                    </div>
+                </div>
+            </nb-card-body>
+        </nb-card>
     </div>
 </div>

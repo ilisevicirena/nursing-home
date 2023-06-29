@@ -73,6 +73,7 @@ import { DoctorVisitTourComponent } from './doctor-visit-tour/doctor-visit-tour.
 import { CalculationComponent } from './calculation/calculation.component';
 import { StartCalculationComponent } from './calculation/start-calculation/start-calculation.component';
 import { GeneratedInvoiceComponent } from './calculation/generated-invoice/generated-invoice.component';
+import { NgxEchartsModule } from 'ngx-echarts';
 
 @NgModule({
   imports: [
@@ -113,6 +114,9 @@ import { GeneratedInvoiceComponent } from './calculation/generated-invoice/gener
     NgxSummernoteModule,
     NbRadioModule,
     NbProgressBarModule,
+    NgxEchartsModule.forRoot({
+      echarts: () => import('echarts')
+    })
   ],
   declarations: [
     PagesComponent,

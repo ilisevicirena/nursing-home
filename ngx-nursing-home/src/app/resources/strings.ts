@@ -233,6 +233,7 @@ const strings: IKeyValue[] = [
     { key: "calculationPaid", value: "Plaćeno" },
     { key: "calculationCancelled", value: "Stornirano" },
     { key: "calculationSuccess", value: "Obračun uspješno kreiran" },
+    { key: "chartCalculated", value: "Obračunato" },
 ];
 
 const map = new Map(strings.map(obj => [obj.key, obj.value]));

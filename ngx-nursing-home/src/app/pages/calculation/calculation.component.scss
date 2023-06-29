@@ -21,3 +21,33 @@
         border-radius: 0;
     }
 }
+
+@import '../../@theme/styles/themes';
+
+@include nb-install-component() {
+
+    nb-card-body {
+        overflow: hidden;
+    }
+
+    .chart-card {
+        margin: 0;
+        border-radius: 1rem;
+    }
+
+    .echart {
+        position: absolute;
+        right: -25px;
+        height: calc(100% - 0rem);
+        width: 50%;
+    }
+
+    .value {
+        margin: 0;
+        font-size: 18px;
+    }
+
+    .details {
+        color: nb-theme(text-hint-color);
+    }
+}

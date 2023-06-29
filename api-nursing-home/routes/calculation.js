@@ -122,6 +122,20 @@ router.get('/getCalculationStatuses', async (request, response) => {
     }
 });
 
+router.get('/calculationSummary', async (request, response) => {
+    try {
+        const pool = await db;
+        const result = await pool.request()
+            .input("month", request.query.Month)
+            .input("year", request.query.Year)
+            .query("EXEC [dbo].[calculationSummary] @Month=@month, @Year=@year");
+        response.json(result.recordset);
+    } catch (err) {
+        response.status(500);
+        response.send(err.message);
+    }
+});
+
 router.post('/add', async (request, response) => {
     try {
         var objectToSave = Object.assign(new Calculation, request.body);

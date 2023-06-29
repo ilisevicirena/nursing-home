@@ -16,6 +16,10 @@ export class CalculationApiService extends BaseRestApiService {
     return this.http.get(this.apiRoute + "/calculations?Month=" + month + "&Year=" + year);
   }
 
+  public getCalculationSummary(month: number, year: number): Observable<any> {
+    return this.http.get(this.apiRoute + "/calculationSummary?Month=" + month + "&Year=" + year);
+  }
+
   public getCalculationStatuses(): Observable<any> {
     return this.http.get(this.apiRoute + "/getCalculationStatuses");
   }
