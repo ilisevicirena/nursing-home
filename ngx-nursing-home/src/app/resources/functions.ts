@@ -1,7 +1,7 @@
 import { ScheduleMonth } from "shared-components/lib/models/schedule.model";
 
 export function getMonthNames(locale: string): ScheduleMonth[] {
-    var baseDate = new Date(Date.UTC(this.year, 0, 1));
+    var baseDate = new Date(Date.UTC(new Date().getFullYear(), 0, 1));
     var months: ScheduleMonth[] = [];
 
     for (var i = 0; i < 12; i++) {

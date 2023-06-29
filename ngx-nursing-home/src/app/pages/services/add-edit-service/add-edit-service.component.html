@@ -127,7 +127,7 @@
                     </div>
                 </form>
                 <div class="left-content-footer d-flex justify-content-end">
-                    <button nbButton ghost shape="round" size="small" (click)="close(false, serviceForm)"
+                    <button nbButton ghost shape="round" size="small" (click)="close(false)"
                         class="me-2">{{getString("cancel")}}</button>
                     <button nbButton status="primary" size="small" shape="round"
                         [disabled]="serviceForm.form.invalid || blockEdit"
