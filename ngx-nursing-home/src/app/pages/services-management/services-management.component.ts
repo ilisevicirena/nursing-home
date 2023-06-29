@@ -83,24 +83,26 @@ export class ServicesManagementComponent implements OnInit, OnDestroy {
     var date2 = new Date(date);
     var diff = Math.abs(date1.getTime() - date2.getTime());
     var diffDays = Math.ceil(diff / (1000 * 3600 * 24));
+
     return diffDays;
   }
 
   public openPackageDetails(pac: any): void {
-    this.subs.push(this.windowService.open(
-      AddEditPackageComponent,
-      {
-        context: { isNew: false, package: JSON.parse(JSON.stringify(pac)), blockEdit: true },
-        buttons: { maximize: false, minimize: false, fullScreen: false, close: false },
-        initialState: NbWindowState.MAXIMIZED,
-        hasBackdrop: true,
-        windowClass: "package-popup-window",
-        closeOnBackdropClick: false,
-        closeOnEsc: false
-      }
-    ).onClose.subscribe((data: boolean) => {
-      if (data) this.getPackages();
-    }));
+    this.subs.push(
+      this.windowService.open(
+        AddEditPackageComponent,
+        {
+          context: { isNew: false, package: JSON.parse(JSON.stringify(pac)), blockEdit: true },
+          buttons: { maximize: false, minimize: false, fullScreen: false, close: false },
+          initialState: NbWindowState.MAXIMIZED,
+          hasBackdrop: true,
+          windowClass: "package-popup-window",
+          closeOnBackdropClick: false,
+          closeOnEsc: false
+        }
+      ).onClose.subscribe((data: boolean) => {
+        if (data) this.getPackages();
+      }));
   }
 
   public openServiceDetails(service: any): void {
@@ -125,6 +127,7 @@ export class ServicesManagementComponent implements OnInit, OnDestroy {
   public onItemsDrop(event: CdkDragDrop<any[]>): void {
     if (Object.keys(event.item.data).includes('PackagePriceCalculated')) {
       var pack = this.packagesOriginal.find(x => x.Id == event.item.data.Id);
+
       if (!pack) {
         this.subs.push(
           this.servicesService.getServicesForPackage(event.item.data.Id).subscribe(data => {
@@ -360,10 +363,8 @@ export class ServicesManagementComponent implements OnInit, OnDestroy {
 
         this.selectedServices = data.Services;
         this.servicesOriginal = this.selectedServices;
-
         this.selectedDiscounts = data.Discounts;
         this.discountsOriginal = this.selectedDiscounts;
-
         this.calculateOfferPrice();
       })
     );

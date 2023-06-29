@@ -15,17 +15,16 @@ export class DoctorVisitTourComponent implements OnInit, OnDestroy {
 
   public getString = getString;
   public persons: any[] = [];
-  public statuses: any[] = [
-    { Id: 0, Name: getString('notProvided'), Icon: 'close-circle-outline', Status: 'danger' },
-    { Id: 1, Name: getString('provided'), Icon: 'checkmark-circle-2-outline', Status: 'success' },
-    { Id: 2, Name: getString('inProgress'), Icon: 'loader-outline', Status: 'warning' }
-  ];
-
   public currentPersonIndex: number = 1;
   public currentPersonId: number = 0;
   public currentNote: any;
   public visitDate: Date = new Date();
   public percentage: number = 0;
+  public statuses: any[] = [
+    { Id: 0, Name: getString('notProvided'), Icon: 'close-circle-outline', Status: 'danger' },
+    { Id: 1, Name: getString('provided'), Icon: 'checkmark-circle-2-outline', Status: 'success' },
+    { Id: 2, Name: getString('inProgress'), Icon: 'loader-outline', Status: 'warning' }
+  ];
 
   private subs: Subscription[] = [];
   private doctorVisitTagId: number = 5;
@@ -74,7 +73,8 @@ export class DoctorVisitTourComponent implements OnInit, OnDestroy {
             CreationDate: this.visitDate,
             LastModified: this.visitDate,
             PersonId: x.Id
-          }
+          };
+
           return x;
         });
 
@@ -101,7 +101,7 @@ export class DoctorVisitTourComponent implements OnInit, OnDestroy {
 
   private calculatePercentage(): void {
     var saved = this.persons.filter(x => x.Note.Id > 0);
-    this.percentage = (saved.length / this.persons.length) * 100
+    this.percentage = (saved.length / this.persons.length) * 100;
   }
 
   public goToPerson(p: any): void {

@@ -14,7 +14,6 @@ export class InterceptorService implements HttpInterceptor {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
-
     const authReq = req.clone({
       //  headers: req.headers.set('Authorization', 'Bearer ' + this.authService.getAccessTokenValue()).set('Request-Date', new Date().toISOString()),
       url: (req.url.substring(0, 3) === 'api' ? `${this.apiBaseUrl}/${req.url}` : req.url)

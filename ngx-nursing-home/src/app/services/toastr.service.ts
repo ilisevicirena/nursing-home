@@ -7,7 +7,12 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class ToastrService {
-  constructor(private toastrService: NbToastrService, protected configService: ConfigService, protected router: Router) { }
+
+  constructor(
+    private toastrService: NbToastrService,
+    protected configService: ConfigService,
+    protected router: Router
+  ) { }
 
   public showToast(type: NbComponentStatus, title: string, body: string = ''): void {
     const config = {

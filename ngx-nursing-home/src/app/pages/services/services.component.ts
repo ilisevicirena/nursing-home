@@ -30,7 +30,6 @@ export class ServicesComponent implements OnInit, OnDestroy {
     new SmartTableColumn(getString('priceUnit')).Property("PriceUnitId").SpecialType(new LookupType().NameAttribute("PriceUnitTag"))
       .SpecialFilter(new SelectFilter("Id", "Tag").ServerSource(true).ServerEndpoint(this.priceUnitsService.apiRoute)),
   ];
-
   public exportSettings: ExportDocSettings = {
     title: getString('services'),
     subtitle: undefined,
@@ -63,11 +62,12 @@ export class ServicesComponent implements OnInit, OnDestroy {
   }
 
   private getServices(): void {
-    this.subscriptions.push(this.servicesService.getData().subscribe(data => {
-      this.servicesData = data;
-    }, err => {
-      console.error(err);
-    }));
+    this.subscriptions.push(
+      this.servicesService.getData().subscribe(data => {
+        this.servicesData = data;
+      }, err => {
+        console.error(err);
+      }));
   }
 
   public onCreateStarted(): void {
@@ -110,13 +110,15 @@ export class ServicesComponent implements OnInit, OnDestroy {
 
   public async onDeleteStarted(event: any): Promise<void> {
     const result = await this.dialogService.openYesNoDialog(getString('areYouSure'), getString("deactivateService"));
+
     if (result) {
-      this.subscriptions.push(this.servicesService.delete(event.data).subscribe(() => {
-        this.toastrService.showToast('success', getString('saveSuccess'), '');
-        this.getServices();
-      }, err => {
-        console.error(err);
-      }));
+      this.subscriptions.push(
+        this.servicesService.delete(event.data).subscribe(() => {
+          this.toastrService.showToast('success', getString('saveSuccess'));
+          this.getServices();
+        }, err => {
+          console.error(err);
+        }));
     }
   }
 }

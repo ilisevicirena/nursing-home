@@ -5,7 +5,6 @@ import { ToastrService } from '../../../services/toastr.service';
 import { ServicesService } from '../../../services/rest/services.service';
 import { MeasureUnitsService } from '../../../services/rest/measure-units.service';
 import { PriceUnitsService } from '../../../services/rest/price-units.service';
-import { DialogService } from '../../../shared/dialog/dialog.service';
 import { Subscription } from 'rxjs';
 import { getString } from '../../../resources/strings';
 import { NgForm } from '@angular/forms';
@@ -21,6 +20,7 @@ import { CalculationService, ECalculationMeasureUnit } from '../../../services/c
 export class AddEditPackageComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private subs: Subscription[] = [];
+  private packageServiceUnfiltered: any[] = [];
 
   public getString = getString;
   public isNew: boolean = true;
@@ -30,7 +30,7 @@ export class AddEditPackageComponent implements OnInit, OnDestroy, AfterViewInit
   public servicesData: any[] = [];
   public calculationMeasureUnits: any[] = [];
   public blockEdit: boolean = false;
-
+  public packagePrice: string = '0.00';
   public package: IPackage = {
     Id: 0,
     Name: undefined,
@@ -41,24 +41,18 @@ export class AddEditPackageComponent implements OnInit, OnDestroy, AfterViewInit
     PriceUnitName: undefined,
     PriceUnitTag: undefined,
   };
-
-  public packagePrice: string = '0.00';
-
   public servicesColumns: SmartTableColumn[] = [
     new SmartTableColumn(getString('name')).Property("ServiceName").Filter(false),
     new SmartTableColumn(getString('quantity')).Property("Quantity").Filter(false),
     new SmartTableColumn(getString('costPerUnit')).Property("CostPerUnit").Filter(false),
     new SmartTableColumn(getString('measureUnit')).Property("MeasureUnitId").SpecialType(new LookupType().NameAttribute("MeasureUnitName")).Filter(false),
   ];
-
   public packageServiceSelectGridColumns: SelectGridColumn[] = [
     { name: "name", title: getString('name'), attributeName: "Name" },
     { name: "mesureUnitTag", title: getString('measureUnit'), attributeName: "MeasureUnitTag" },
     { name: "costPerUnit", title: getString('costPerUnit'), attributeName: "CostPerUnit" },
     { name: "defaultNumberOfUnits", title: getString('defaultNumberOfUnits'), attributeName: "DefaultNumberOfUnits" }
   ];
-
-  private packageServiceUnfiltered: any[] = [];
 
   @ViewChild('packageServicesGrid') servicesGrid: SmartTableComponent;
   @ViewChild('servicesSelectGridControl') servicesSelectGridControl: SelectGridComponent;
@@ -71,7 +65,6 @@ export class AddEditPackageComponent implements OnInit, OnDestroy, AfterViewInit
     private servicesService: ServicesService,
     private measureUnitService: MeasureUnitsService,
     private priceUnitsService: PriceUnitsService,
-    private dialogService: DialogService,
     private calculationService: CalculationService
   ) { }
 
@@ -92,9 +85,7 @@ export class AddEditPackageComponent implements OnInit, OnDestroy, AfterViewInit
       window.parentElement.classList.remove("w-100");
       window.parentElement.parentElement.classList.remove("h-100");
       const cdkOverlayContainer = window.parentElement.parentElement.parentElement.parentElement;
-      if (cdkOverlayContainer.children.length > 0) {
-        cdkOverlayContainer.children[0].classList.remove("d-block");
-      }
+      if (cdkOverlayContainer.children.length > 0) cdkOverlayContainer.children[0].classList.remove("d-block");
     }
 
     this.subs.forEach(element => {
@@ -112,47 +103,49 @@ export class AddEditPackageComponent implements OnInit, OnDestroy, AfterViewInit
       window.parentElement.parentElement.classList.add("h-100");
       window.parentElement.parentElement.style.width = "90%";
       const cdkOverlayContainer = window.parentElement.parentElement.parentElement.parentElement;
-      if (cdkOverlayContainer.children.length > 0) {
-        cdkOverlayContainer.children[0].classList.add("d-block");
-      }
+      if (cdkOverlayContainer.children.length > 0) cdkOverlayContainer.children[0].classList.add("d-block");
     }
 
     this.ref.config.titleTemplate = this.headerTemplate;
   }
 
   private getPriceUnits(): void {
-    this.subs.push(this.priceUnitsService.getData().subscribe(data => {
-      this.priceUnits = data;
-    }, err => {
-      console.error(err);
-    }));
+    this.subs.push(
+      this.priceUnitsService.getData().subscribe(data => {
+        this.priceUnits = data;
+      }, err => {
+        console.error(err);
+      }));
   }
 
   private getCalculationMeasureUnits(): void {
-    this.subs.push(this.measureUnitService.getCalculationMeasureUnits().subscribe(data => {
-      this.calculationMeasureUnits = data;
-    }, err => {
-      console.error(err);
-    }));
+    this.subs.push(
+      this.measureUnitService.getCalculationMeasureUnits().subscribe(data => {
+        this.calculationMeasureUnits = data;
+      }, err => {
+        console.error(err);
+      }));
   }
 
   private getServices(): void {
-    this.subs.push(this.servicesService.getData().subscribe(data => {
-      this.servicesData = data;
-    }, err => {
-      console.error(err);
-    }));
+    this.subs.push(
+      this.servicesService.getData().subscribe(data => {
+        this.servicesData = data;
+      }, err => {
+        console.error(err);
+      }));
   }
 
   private getServicesForPackage(): void {
     if (!this.isNew) {
-      this.subs.push(this.servicesService.getServicesForPackage(this.package.Id).subscribe(data => {
-        this.packageServices = data;
-        this.packageServiceUnfiltered = data;
-        this.calculatePackagePrice();
-      }, err => {
-        console.error(err);
-      }));
+      this.subs.push(
+        this.servicesService.getServicesForPackage(this.package.Id).subscribe(data => {
+          this.packageServices = data;
+          this.packageServiceUnfiltered = data;
+          this.calculatePackagePrice();
+        }, err => {
+          console.error(err);
+        }));
     }
   }
 
@@ -172,24 +165,26 @@ export class AddEditPackageComponent implements OnInit, OnDestroy, AfterViewInit
 
   private saveNewPackage(data: any): void {
     data.Services = this.packageServiceUnfiltered;
-    this.subs.push(this.packagesService.add(data).subscribe(data => {
-      if (data.PackageId) {
-        this.toastrService.showToast('success', getString('saveSuccess'));
-        this.close(true);
-      }
-    }, err => {
-      console.error(err);
-    }));
+    this.subs.push(
+      this.packagesService.add(data).subscribe(data => {
+        if (data.PackageId) {
+          this.toastrService.showToast('success', getString('saveSuccess'));
+          this.close(true);
+        }
+      }, err => {
+        console.error(err);
+      }));
   }
 
   private editPackage(data: any): void {
     data.Services = this.packageServiceUnfiltered;
-    this.subs.push(this.packagesService.update(data).subscribe(() => {
-      this.toastrService.showToast('success', getString('saveSuccess'));
-      this.close(true);
-    }, err => {
-      console.error(err);
-    }));
+    this.subs.push(
+      this.packagesService.update(data).subscribe(() => {
+        this.toastrService.showToast('success', getString('saveSuccess'));
+        this.close(true);
+      }, err => {
+        console.error(err);
+      }));
   }
 
   public onServiceSelectionChanged(event: SelectGridSelectionModel): void {
@@ -211,9 +206,7 @@ export class AddEditPackageComponent implements OnInit, OnDestroy, AfterViewInit
       this.servicesGrid.refreshSource(true);
       this.servicesSelectGridControl.selected = undefined;
       this.selectedService = { Quantity: 0 };
-    } else {
-      this.toastrService.showToast('warning', getString('alreadyAdded'));
-    }
+    } else this.toastrService.showToast('warning', getString('alreadyAdded'));
 
     this.calculatePackagePrice();
   }

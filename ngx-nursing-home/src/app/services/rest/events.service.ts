@@ -8,7 +8,6 @@ import { Observable } from 'rxjs';
 })
 export class EventsService extends BaseRestApiService {
 
-
   constructor(http: HttpClient) {
     super(http, 'api/events');
   }

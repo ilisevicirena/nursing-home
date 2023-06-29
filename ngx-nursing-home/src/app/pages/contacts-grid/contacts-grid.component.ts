@@ -22,10 +22,10 @@ export class ContactsGridComponent implements OnInit, OnDestroy {
 
   @Input() elementHeight: number = 300;
   @Input() personId: number = 0;
-  public contactsData: any[] = [];
 
   private subscriptions: Subscription[] = [];
 
+  public contactsData: any[] = [];
   public contactsColumns: SmartTableColumn[] = [
     new SmartTableColumn(getString('firstName')).Property("FirstName").SpecialEditor(new TextboxEditor()),
     new SmartTableColumn(getString('lastName')).Property("LastName").SpecialEditor(new TextboxEditor()),
@@ -43,14 +43,26 @@ export class ContactsGridComponent implements OnInit, OnDestroy {
     docName: 'contacts-for-person',
     yesValueText: getString("yesBtnText").toLowerCase(),
     noValueText: getString("noBtnText").toLowerCase(),
+  };
+
+  ngOnInit(): void {
+    this.getContacts();
+    this.getPersonDetails();
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(element => {
+      element.unsubscribe();
+    });
   }
 
   public getContacts(): void {
-    this.subscriptions.push(this.contactsService.getDataForPerson(this.personId).subscribe(data => {
-      this.contactsData = data;
-    }, err => {
-      console.error(err);
-    }));
+    this.subscriptions.push(
+      this.contactsService.getDataForPerson(this.personId).subscribe(data => {
+        this.contactsData = data;
+      }, err => {
+        console.error(err);
+      }));
   }
 
   private getPersonDetails(): void {
@@ -63,6 +75,7 @@ export class ContactsGridComponent implements OnInit, OnDestroy {
 
   public contactsCreate(event: any) {
     var allValid: boolean = true;
+
     if (!event.newData.FirstName || !event.newData.LastName) allValid = false;
     else if (event.newData.Email) {
       //check valid email
@@ -76,18 +89,20 @@ export class ContactsGridComponent implements OnInit, OnDestroy {
       event.newData.LastName = event.newData.LastName.value ?? event.newData.LastName;
       event.newData.Email = event.newData.Email.value ?? event.newData.Email;
 
-      this.subscriptions.push(this.contactsService.add(event.newData).subscribe(data => {
-        if (data.ContactId) {
-          event.confirm.resolve();
-          this.getContacts();
-          this.toastrService.showToast("success", getString('saveSuccess'), "");
-        }
-      }));
+      this.subscriptions.push(
+        this.contactsService.add(event.newData).subscribe(data => {
+          if (data.ContactId) {
+            event.confirm.resolve();
+            this.getContacts();
+            this.toastrService.showToast("success", getString('saveSuccess'), "");
+          }
+        }));
     }
   }
 
   public contactsEdit(event: any) {
     var allValid: boolean = true;
+
     if (!event.newData.FirstName || !event.newData.LastName) allValid = false;
     else if (event.newData.Email) {
       //check valid email
@@ -100,31 +115,22 @@ export class ContactsGridComponent implements OnInit, OnDestroy {
       event.newData.LastName = event.newData.LastName.value ?? event.newData.LastName;
       event.newData.Email = event.newData.Email.value ?? event.newData.Email;
 
-      this.subscriptions.push(this.contactsService.update(event.newData).subscribe(() => {
-        event.confirm.resolve();
-        this.getContacts();
-        this.toastrService.showToast("success", getString('saveSuccess'), "");
-      }));
+      this.subscriptions.push(
+        this.contactsService.update(event.newData).subscribe(() => {
+          event.confirm.resolve();
+          this.getContacts();
+          this.toastrService.showToast("success", getString('saveSuccess'), "");
+        }));
     }
   }
 
   public contactsDelete(event: any) {
-    this.subscriptions.push(this.contactsService.delete({ Id: event.data.Id }).subscribe(() => {
-      event.confirm.resolve();
-      this.getContacts();
-      this.toastrService.showToast("success", getString('saveSuccess'), "");
-    }));
+    this.subscriptions.push(
+      this.contactsService.delete({ Id: event.data.Id }).subscribe(() => {
+        event.confirm.resolve();
+        this.getContacts();
+        this.toastrService.showToast("success", getString('saveSuccess'), "");
+      }));
   }
 
-
-  ngOnInit(): void {
-    this.getContacts();
-    this.getPersonDetails();
-  }
-
-  ngOnDestroy(): void {
-    this.subscriptions.forEach(element => {
-      element.unsubscribe();
-    });
-  }
 }

@@ -19,8 +19,7 @@ export class DialogComponent implements OnInit {
   public dialogBody: string;
   public getString = getString;
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
   public close(result: boolean): void {
     this.dialogRef.close(result);

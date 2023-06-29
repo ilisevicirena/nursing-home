@@ -48,6 +48,7 @@ export class DiscountsPickerComponent implements OnInit, OnDestroy {
         this.discounts.map(x => {
           if (this.selectedDiscounts.find(y => y.Id == x.Id)) x.selected = true;
           else x.selected = false;
+
           return x;
         })
       })

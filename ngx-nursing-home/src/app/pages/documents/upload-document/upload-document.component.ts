@@ -15,6 +15,8 @@ export class UploadDocumentComponent implements OnInit, OnDestroy {
   private subs: Subscription[] = [];
 
   public documentTypes: any[] = [];
+  public getString = getString;
+  public notesMode: boolean = false;
   public currentDate: Date = new Date();
   public selectedType: number;
   public personId: number;
@@ -26,15 +28,11 @@ export class UploadDocumentComponent implements OnInit, OnDestroy {
     Base64: undefined
   };
 
-  public getString = getString;
-  public notesMode: boolean = false;
-
   constructor(
     private ref: NbDialogRef<UploadDocumentComponent>,
     private documentsService: DocumentsService,
     private toastrService: ToastrService
-  ) {
-  }
+  ) { }
 
   ngOnInit(): void {
     this.getDocumentTypes();
@@ -80,6 +78,7 @@ export class UploadDocumentComponent implements OnInit, OnDestroy {
   public onSaveClick(): void {
     this.documentData.PersonId = this.personId;
     this.documentData.DocumentTypeId = this.selectedType;
+
     if (!this.notesMode) {
       this.subs.push(
         this.documentsService.add(this.documentData).subscribe(() => {
@@ -87,8 +86,7 @@ export class UploadDocumentComponent implements OnInit, OnDestroy {
           this.close(true);
         })
       );
-    } else {
-      this.close({ saved: true, document: this.documentData });
-    }
+    } else this.close({ saved: true, document: this.documentData });
   }
+
 }

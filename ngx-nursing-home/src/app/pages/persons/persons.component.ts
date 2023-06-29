@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/c
 import { getString } from '../../resources/strings';
 import { PersonsService } from '../../services/rest/persons.service';
 import { Subscription } from 'rxjs';
-import { DateType, SmartTableColumn, CheckboxType, DatepickerFilter, SelectFilter, LookupType, SpecialFilter } from 'shared-components';
+import { DateType, SmartTableColumn, CheckboxType, DatepickerFilter, SelectFilter, LookupType } from 'shared-components';
 import { NbWindowService, NbWindowState } from '@nebular/theme';
 import { PersonPopupWindowComponent } from '../person-popup-window/person-popup-window.component';
 import { GendersService } from '../../services/rest/genders.service';
@@ -20,19 +20,13 @@ export class PersonsComponent implements OnInit, OnDestroy {
   public unactivePersonsString: string = getString("unactivePersons");
   public personsData: any[] = [];
   public showDeactivated: boolean = false;
+  public searchTerm: string = "";
   public cardData: any[] = [
     { label: getString('jmbg'), field: "JMBG", type: "" },
     { label: getString('birthDate'), field: "BirthDate", type: "date" },
     { label: getString('startDate'), field: "StartDate", type: "date" },
     { label: getString('active'), field: "Active", type: "checkbox" },
   ];
-  public searchTerm: string = "";
-
-  private activeFilter = [
-    { value: true, label: getString('active') },
-    { value: false, label: getString('unactive') }
-  ];
-
   public exportSettings: ExportDocSettings = {
     title: getString('persons'),
     subtitle: undefined,
@@ -42,7 +36,10 @@ export class PersonsComponent implements OnInit, OnDestroy {
     yesValueText: getString("yesBtnText").toLowerCase(),
     noValueText: getString("noBtnText").toLowerCase(),
   }
-
+  private activeFilter = [
+    { value: true, label: getString('active') },
+    { value: false, label: getString('unactive') }
+  ];
   public gridColumns: SmartTableColumn[] = [
     new SmartTableColumn(getString('id')).Property("Id"),
     new SmartTableColumn(getString('firstName')).Property("FirstName"),
@@ -58,9 +55,14 @@ export class PersonsComponent implements OnInit, OnDestroy {
   ];
 
   private subscriptions: Subscription[] = [];
+
   @ViewChild('contentTemplate') contentTemplate: TemplateRef<any>;
 
-  constructor(private personsService: PersonsService, private windowService: NbWindowService, private gendersService: GendersService) { }
+  constructor(
+    private personsService: PersonsService,
+    private windowService: NbWindowService,
+    private gendersService: GendersService
+  ) { }
 
   ngOnInit(): void {
     this.getData();
@@ -73,11 +75,12 @@ export class PersonsComponent implements OnInit, OnDestroy {
   }
 
   private getData() {
-    this.subscriptions.push(this.personsService.getData(!this.showDeactivated).subscribe(data => {
-      this.personsData = data;
-    }, err => {
-      console.error(err);
-    }));
+    this.subscriptions.push(
+      this.personsService.getData(!this.showDeactivated).subscribe(data => {
+        this.personsData = data;
+      }, err => {
+        console.error(err);
+      }));
   }
 
   public showDeactivatedChange(): void {
@@ -106,9 +109,7 @@ export class PersonsComponent implements OnInit, OnDestroy {
   }
 
   public gridSelectionChanged(event: any) {
-    if (event.selectedRows.length == 1) {
-      this.openPersonDetails(event.selectedRows[0]);
-    }
+    if (event.selectedRows.length == 1) this.openPersonDetails(event.selectedRows[0]);
   }
 }
 

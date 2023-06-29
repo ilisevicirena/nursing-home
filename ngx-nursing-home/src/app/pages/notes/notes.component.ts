@@ -7,7 +7,6 @@ import { Subscription } from 'rxjs';
 import { getString } from '../../resources/strings';
 import { NoteTagsComponent } from './note-tags/note-tags.component';
 import { NoteDocumentsComponent } from './note-documents/note-documents.component';
-import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'sample-notes',
@@ -24,27 +23,30 @@ export class NotesComponent implements OnInit, OnDestroy {
   public getString = getString;
   public searchTerm: string = "";
   public allTags: any[] = [];
-
-  private subs: Subscription[] = [];
   public filters: any[] = [];
-  private allNotes: any[] = [];
-
   public selectedNote: any;
   public editSelectedNote: any;
   public formMode: boolean = false;
+
+  private subs: Subscription[] = [];
+  private allNotes: any[] = [];
 
   constructor(
     private tagsService: TagsService,
     private notesService: NotesService,
     private dialogService: DialogService,
     private toastrService: ToastrService
-  ) {
-
-  }
+  ) { }
 
   ngOnInit(): void {
     if (this.personId > 0) this.getNotesForPerson();
     this.getTags();
+  }
+
+  ngOnDestroy(): void {
+    this.subs.forEach(element => {
+      element.unsubscribe();
+    });
   }
 
   private getNotesForPerson(noteId = null): void {
@@ -72,9 +74,9 @@ export class NotesComponent implements OnInit, OnDestroy {
   }
 
   private filterNotes(): void {
-    if (this.filters.length === 0) {
+    if (this.filters.length === 0)
       this.notes = this.allNotes;
-    } else {
+    else {
       this.notes = this.allNotes.filter((note) =>
         note.Tags.some((tag) => this.filters.some((filter) => filter.Id === tag.Id))
       );
@@ -87,31 +89,6 @@ export class NotesComponent implements OnInit, OnDestroy {
         this.allTags = data;
       })
     );
-  }
-
-  ngOnDestroy(): void {
-    this.subs.forEach(element => {
-      element.unsubscribe();
-    });
-  }
-
-  public hexToRgbA(hex: string | undefined): string {
-    var c: any;
-    if (hex) {
-      if (/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)) {
-        c = hex.substring(1).split('');
-        if (c.length == 3) {
-          c = [c[0], c[0], c[1], c[1], c[2], c[2]];
-        }
-        c = '0x' + c.join('');
-
-        return 'rgba(' + [(c >> 16) & 255, (c >> 8) & 255, c & 255].join(',') + ',0.08)';
-      }
-
-      return ''
-    }
-
-    return '';
   }
 
   public toggleFavorite(note: any) {
@@ -139,9 +116,10 @@ export class NotesComponent implements OnInit, OnDestroy {
   }
 
   public onNoteTagRemoved(tag: any): void {
-    this.subs.push(this.notesService.removeTagFromNote(this.selectedNote.Id, tag.Id).subscribe(() => {
-      this.selectedNote.Tags.splice(this.selectedNote.Tags.findIndex(x => x.Id == tag.Id), 1);
-    }));
+    this.subs.push(
+      this.notesService.removeTagFromNote(this.selectedNote.Id, tag.Id).subscribe(() => {
+        this.selectedNote.Tags.splice(this.selectedNote.Tags.findIndex(x => x.Id == tag.Id), 1);
+      }));
   }
 
   public editNote(): void {
@@ -210,10 +188,8 @@ export class NotesComponent implements OnInit, OnDestroy {
   }
 
   public filtersChanged(event: any): void {
-    if (event.selected)
-      this.filters.push(event);
-    else
-      this.filters.splice(this.filters.findIndex(x => x.Id == event.Id), 1);
+    if (event.selected) this.filters.push(event);
+    else this.filters.splice(this.filters.findIndex(x => x.Id == event.Id), 1);
 
     this.filterNotes();
   }
@@ -226,6 +202,7 @@ export class NotesComponent implements OnInit, OnDestroy {
 
   public async deleteNote(): Promise<void> {
     const rez = await this.dialogService.openYesNoDialog(getString('areYouSure'), getString('wantToDelete'));
+
     if (rez) {
       this.subs.push(
         this.notesService.delete(this.selectedNote).subscribe(() => {

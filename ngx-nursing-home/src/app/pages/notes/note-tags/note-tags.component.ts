@@ -4,7 +4,7 @@ import { getString } from '../../../resources/strings';
 import { NbDialogRef } from '@nebular/theme';
 import { NotesService } from '../../../services/rest/notes.service';
 import { TagsService } from '../../../services/rest/tags.service';
-import { kMaxLength } from 'buffer';
+import { hexToRgbA } from '../../../resources/functions';
 
 @Component({
   selector: 'sample-note-tags',
@@ -17,6 +17,7 @@ export class NoteTagsComponent implements OnInit, OnDestroy {
   public noteId: number = 0;
   public tags: any[] = [];
   public selectedTags: any[] = [];
+  public hexToRgbA = hexToRgbA;
 
   private subs: Subscription[] = [];
   private changes: boolean = false;
@@ -60,25 +61,6 @@ export class NoteTagsComponent implements OnInit, OnDestroy {
     this.ref.close({ selectedTags: this.selectedTags, changes: this.changes });
   }
 
-  public hexToRgbA(hex: string | undefined): string {
-    var c: any;
-    if (hex) {
-      if (/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)) {
-        c = hex.substring(1).split('');
-        if (c.length == 3) {
-          c = [c[0], c[0], c[1], c[1], c[2], c[2]];
-        }
-        c = '0x' + c.join('');
-
-        return 'rgba(' + [(c >> 16) & 255, (c >> 8) & 255, c & 255].join(',') + ',0.08)';
-      }
-
-      return ''
-    }
-
-    return '';
-  }
-
   public toggleSelected(t: any): void {
     t.selected = !t.selected;
     this.changes = true;
@@ -117,8 +99,6 @@ export class NoteTagsComponent implements OnInit, OnDestroy {
           })
         );
       }
-    } else {
-      this.selectedTags = [];
-    }
+    } else this.selectedTags = [];
   }
 }

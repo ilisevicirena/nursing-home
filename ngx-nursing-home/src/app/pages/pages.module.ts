@@ -48,7 +48,6 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { AdvancedSearchComponent } from './advanced-search/advanced-search.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ContactsGridComponent } from './contacts-grid/contacts-grid.component';
-import { BasicDataComponent } from './profile/basic-data/basic-data.component';
 import { ServicesComponent } from './services/services.component';
 import { PackagesComponent } from './packages/packages.component';
 import { ServicesManagementComponent } from './services-management/services-management.component';
@@ -64,7 +63,6 @@ import { DocumentsComponent } from './documents/documents.component';
 import { UploadDocumentComponent } from './documents/upload-document/upload-document.component';
 import { NotesComponent } from './notes/notes.component';
 import { NewNoteComponent } from './notes/new-note/new-note.component';
-import { TagsComponent } from './tags/tags.component';
 import { NgxSummernoteModule } from 'ngx-summernote';
 import { NoteTagsComponent } from './notes/note-tags/note-tags.component';
 import { NoteDocumentsComponent } from './notes/note-documents/note-documents.component';
@@ -127,7 +125,6 @@ import { GeneratedInvoiceComponent } from './calculation/generated-invoice/gener
     AdvancedSearchComponent,
     ProfileComponent,
     ContactsGridComponent,
-    BasicDataComponent,
     ServicesComponent,
     PackagesComponent,
     ServicesManagementComponent,
@@ -143,7 +140,6 @@ import { GeneratedInvoiceComponent } from './calculation/generated-invoice/gener
     UploadDocumentComponent,
     NotesComponent,
     NewNoteComponent,
-    TagsComponent,
     NoteTagsComponent,
     NoteDocumentsComponent,
     CalendarComponent,

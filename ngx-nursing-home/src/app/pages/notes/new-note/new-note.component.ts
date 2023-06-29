@@ -5,6 +5,7 @@ import { NotesService } from '../../../services/rest/notes.service';
 import { DialogService } from '../../../shared/dialog/dialog.service';
 import { NoteTagsComponent } from '../note-tags/note-tags.component';
 import { NoteDocumentsComponent } from '../note-documents/note-documents.component';
+import { hexToRgbA } from '../../../resources/functions';
 
 @Component({
   selector: 'sample-new-note',
@@ -16,29 +17,17 @@ export class NewNoteComponent implements OnInit, OnDestroy {
   constructor(
     private notesService: NotesService,
     private dialogService: DialogService
-  ) {
-  }
+  ) { }
 
   @Input() selectedNote: any;
   @Input() personId: number;
+
   @Output() saved: EventEmitter<number> = new EventEmitter();
   @Output() canceled: EventEmitter<boolean> = new EventEmitter();
 
   public getString = getString;
-
-  private subs: Subscription[] = [];
-
-  ngOnInit(): void {
-
-  }
-
-  ngOnDestroy(): void {
-    this.subs.forEach(element => {
-      element.unsubscribe();
-    });
-  }
-
-  config = {
+  public hexToRgbA = hexToRgbA;
+  public config = {
     placeholder: getString('typeText'),
     height: '350px',
     toolbar: [
@@ -49,25 +38,16 @@ export class NewNoteComponent implements OnInit, OnDestroy {
       ['insert', ['table', 'link', 'hr']]
     ],
     fontNames: ['Open Sans']
-  }
+  };
 
-  public hexToRgbA(hex: string | undefined): string {
-    var c: any;
-    if (hex) {
-      if (/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)) {
-        c = hex.substring(1).split('');
-        if (c.length == 3) {
-          c = [c[0], c[0], c[1], c[1], c[2], c[2]];
-        }
-        c = '0x' + c.join('');
+  private subs: Subscription[] = [];
 
-        return 'rgba(' + [(c >> 16) & 255, (c >> 8) & 255, c & 255].join(',') + ',0.08)';
-      }
+  ngOnInit(): void { }
 
-      return ''
-    }
-
-    return '';
+  ngOnDestroy(): void {
+    this.subs.forEach(element => {
+      element.unsubscribe();
+    });
   }
 
   public saveNote(): void {
@@ -118,9 +98,7 @@ export class NewNoteComponent implements OnInit, OnDestroy {
           }
         }
       ).onClose.subscribe(result => {
-        if (result.changes) {
-          this.selectedNote.Tags = result.selectedTags;
-        }
+        if (result.changes) this.selectedNote.Tags = result.selectedTags;
       })
     );
   }
@@ -141,9 +119,7 @@ export class NewNoteComponent implements OnInit, OnDestroy {
           }
         }
       ).onClose.subscribe(result => {
-        if (result.changes) {
-          this.selectedNote.Documents = result.documents;
-        }
+        if (result.changes) this.selectedNote.Documents = result.documents;
       })
     );
   }

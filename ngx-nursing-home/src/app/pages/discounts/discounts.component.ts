@@ -17,13 +17,13 @@ import { ExportDocSettings } from 'shared-components/lib/models/smart-table.mode
 export class DiscountsComponent implements OnInit, OnDestroy {
 
   private subs: Subscription[] = [];
-
-  public getString = getString;
-  public discountsData: any[] = [];
   private percentCalculationFilter = [
     { value: true, label: getString('yes') },
     { value: false, label: getString('no') }
   ];
+
+  public getString = getString;
+  public discountsData: any[] = [];
   public discountsColumns: SmartTableColumn[] = [
     new SmartTableColumn(getString('id')).Property('Id'),
     new SmartTableColumn(getString('name')).Property('Name'),
@@ -32,7 +32,6 @@ export class DiscountsComponent implements OnInit, OnDestroy {
     new SmartTableColumn(getString('percentCalculation')).Property('PercentCalculation').SpecialType(new CheckboxType())
       .SpecialFilter(new SelectFilter("value", "label").Source(this.percentCalculationFilter)),
   ];
-
   public exportSettings: ExportDocSettings = {
     title: getString('discounts'),
     subtitle: undefined,
@@ -61,11 +60,12 @@ export class DiscountsComponent implements OnInit, OnDestroy {
   }
 
   private getDiscounts(): void {
-    this.subs.push(this.discountsService.getData().subscribe(data => {
-      this.discountsData = data;
-    }, err => {
-      console.error(err);
-    }));
+    this.subs.push(
+      this.discountsService.getData().subscribe(data => {
+        this.discountsData = data;
+      }, err => {
+        console.error(err);
+      }));
   }
 
   public onCreateStarted(): void {
@@ -89,13 +89,15 @@ export class DiscountsComponent implements OnInit, OnDestroy {
 
   public async onDeleteStarted(event: any): Promise<void> {
     const result = await this.dialogService.openYesNoDialog(getString('areYouSure'), getString("deactivateDiscount"));
+
     if (result) {
-      this.subs.push(this.discountsService.delete(event.data).subscribe(() => {
-        this.toastrService.showToast('success', getString('saveSuccess'), '');
-        this.getDiscounts();
-      }, err => {
-        console.error(err);
-      }));
+      this.subs.push(
+        this.discountsService.delete(event.data).subscribe(() => {
+          this.toastrService.showToast('success', getString('saveSuccess'), '');
+          this.getDiscounts();
+        }, err => {
+          console.error(err);
+        }));
     }
   }
 }

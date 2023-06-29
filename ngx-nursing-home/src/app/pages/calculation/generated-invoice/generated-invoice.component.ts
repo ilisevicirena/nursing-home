@@ -1,10 +1,10 @@
-import { AfterViewInit, Component, ElementRef, Input, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 declare var require: any;
-import jsPDF from 'jspdf';
 import * as pdfMake from "pdfmake/build/pdfmake";
 import * as pdfFonts from "pdfmake/build/vfs_fonts";
 import { environment } from '../../../../environments/environment';
 import { getString } from '../../../resources/strings';
+import { getBase64ImageFromUrl } from '../../../resources/functions';
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 const htmlToPdfmake = require("html-to-pdfmake");
 
@@ -17,16 +17,12 @@ export class GeneratedInvoiceComponent implements OnInit, AfterViewInit {
 
   constructor() { }
 
-  ngOnInit(): void {
-
-  }
+  ngOnInit(): void { }
 
   ngAfterViewInit(): void {
-    this.getBase64ImageFromUrl('../../../assets/images/logo.png')
-      .then(result => {
-        this.logoImg.nativeElement.src = result
-      })
-      .catch(err => console.error(err));
+    getBase64ImageFromUrl('../../../assets/images/logo.png').then(result => {
+      this.logoImg.nativeElement.src = result;
+    }).catch(err => console.error(err));
   }
 
   public calculation: any = {};
@@ -35,14 +31,13 @@ export class GeneratedInvoiceComponent implements OnInit, AfterViewInit {
   public selectedDiscounts: any[] = [];
   public month: string = "";
   public year: number = 0;
-
   public getString = getString;
   public brand = environment.brand;
 
   @ViewChild('logo') logoImg: ElementRef;
   @ViewChild('pdfTable') pdfTable: ElementRef;
 
-  //PDF genrate button click function
+  //PDF genrate function
   public createPdf(calculation: any, month: string, year: number): Promise<any> {
     this.calculation = calculation;
     this.selectedPackages = calculation.Packages;
@@ -53,11 +48,7 @@ export class GeneratedInvoiceComponent implements OnInit, AfterViewInit {
 
     var promise = new Promise((resolve, reject) => {
       setTimeout(() => {
-        const doc = new jsPDF();
-        //get table html
         const pdfTable = this.pdfTable.nativeElement;
-
-        //html to pdf format
         var html = htmlToPdfmake(pdfTable.innerHTML, {
           tableAutoSize: true,
         });
@@ -73,22 +64,5 @@ export class GeneratedInvoiceComponent implements OnInit, AfterViewInit {
     });
 
     return promise;
-  }
-
-  async getBase64ImageFromUrl(imageUrl) {
-    var res = await fetch(imageUrl);
-    var blob = await res.blob();
-
-    return new Promise((resolve, reject) => {
-      var reader = new FileReader();
-      reader.addEventListener("load", function () {
-        resolve(reader.result);
-      }, false);
-
-      reader.onerror = () => {
-        return reject(this);
-      };
-      reader.readAsDataURL(blob);
-    })
   }
 }

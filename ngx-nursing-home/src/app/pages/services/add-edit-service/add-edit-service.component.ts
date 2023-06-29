@@ -62,9 +62,7 @@ export class AddEditServiceComponent implements OnInit, OnDestroy, AfterViewInit
       window.parentElement.classList.remove("w-100");
       window.parentElement.parentElement.classList.remove("h-100");
       const cdkOverlayContainer = window.parentElement.parentElement.parentElement.parentElement;
-      if (cdkOverlayContainer.children.length > 0) {
-        cdkOverlayContainer.children[0].classList.remove("d-block");
-      }
+      if (cdkOverlayContainer.children.length > 0) cdkOverlayContainer.children[0].classList.remove("d-block");
     }
 
     this.subs.forEach(element => {
@@ -82,9 +80,7 @@ export class AddEditServiceComponent implements OnInit, OnDestroy, AfterViewInit
       window.parentElement.parentElement.classList.add("h-100");
       window.parentElement.parentElement.style.width = "70%";
       const cdkOverlayContainer = window.parentElement.parentElement.parentElement.parentElement;
-      if (cdkOverlayContainer.children.length > 0) {
-        cdkOverlayContainer.children[0].classList.add("d-block");
-      }
+      if (cdkOverlayContainer.children.length > 0) cdkOverlayContainer.children[0].classList.add("d-block");
     }
 
     this.ref.config.titleTemplate = this.headerTemplate;
@@ -111,34 +107,35 @@ export class AddEditServiceComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   public onSaveClick(form: NgForm): void {
-    if (this.isNew) this.saveNewService(form);
-    else this.editService(form);
+    if (this.isNew) this.saveNewService();
+    else this.editService();
     form.form.markAsPristine();
   }
 
-  public close(result: boolean, form: NgForm) {
-    //  form.form.reset();
+  public close(result: boolean) {
     this.ref.close(result);
   }
 
-  private saveNewService(form: NgForm): void {
-    this.subs.push(this.servicesService.add(this.service).subscribe(data => {
-      if (data.ServiceId) {
-        this.toastrService.showToast('success', getString('saveSuccess'), '');
-        this.close(true, form);
-      }
-    }, err => {
-      console.error(err);
-    }));
+  private saveNewService(): void {
+    this.subs.push(
+      this.servicesService.add(this.service).subscribe(data => {
+        if (data.ServiceId) {
+          this.toastrService.showToast('success', getString('saveSuccess'));
+          this.close(true);
+        }
+      }, err => {
+        console.error(err);
+      }));
   }
 
-  private editService(form: NgForm): void {
-    this.subs.push(this.servicesService.update(this.service).subscribe(data => {
-      this.toastrService.showToast('success', getString('saveSuccess'), '');
-      this.close(true, form);
-    }, err => {
-      console.error(err);
-    }));
+  private editService(): void {
+    this.subs.push(
+      this.servicesService.update(this.service).subscribe(() => {
+        this.toastrService.showToast('success', getString('saveSuccess'));
+        this.close(true);
+      }, err => {
+        console.error(err);
+      }));
   }
 
   public onPriceChange(): void {

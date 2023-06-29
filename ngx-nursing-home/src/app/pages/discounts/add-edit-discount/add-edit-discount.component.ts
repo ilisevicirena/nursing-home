@@ -21,7 +21,7 @@ export class AddEditDiscountComponent implements OnInit, OnDestroy, AfterViewIni
     Description: undefined,
     PercentCalculation: true,
     Quantity: undefined
-  }
+  };
 
   private subs: Subscription[] = [];
 
@@ -33,8 +33,7 @@ export class AddEditDiscountComponent implements OnInit, OnDestroy, AfterViewIni
     private toastrService: ToastrService
   ) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
   ngOnDestroy(): void {
     var windows = document.getElementsByClassName("discount-popup-window");
@@ -45,9 +44,8 @@ export class AddEditDiscountComponent implements OnInit, OnDestroy, AfterViewIni
       window.parentElement.classList.remove("w-100");
       window.parentElement.parentElement.classList.remove("h-100");
       const cdkOverlayContainer = window.parentElement.parentElement.parentElement.parentElement;
-      if (cdkOverlayContainer.children.length > 0) {
-        cdkOverlayContainer.children[0].classList.remove("d-block");
-      }
+      if (cdkOverlayContainer.children.length > 0) cdkOverlayContainer.children[0].classList.remove("d-block");
+
     }
 
     this.subs.forEach(element => {
@@ -65,9 +63,7 @@ export class AddEditDiscountComponent implements OnInit, OnDestroy, AfterViewIni
       window.parentElement.parentElement.classList.add("h-100");
       window.parentElement.parentElement.style.width = "70%";
       const cdkOverlayContainer = window.parentElement.parentElement.parentElement.parentElement;
-      if (cdkOverlayContainer.children.length > 0) {
-        cdkOverlayContainer.children[0].classList.add("d-block");
-      }
+      if (cdkOverlayContainer.children.length > 0) cdkOverlayContainer.children[0].classList.add("d-block");
     }
 
     this.ref.config.titleTemplate = this.headerTemplate;
@@ -84,22 +80,24 @@ export class AddEditDiscountComponent implements OnInit, OnDestroy, AfterViewIni
   }
 
   private saveNewDiscount() {
-    this.subs.push(this.discountsService.add(this.discount).subscribe(data => {
-      if (data.DiscountId) {
-        this.toastrService.showToast('success', getString('saveSuccess'), '');
-        this.close(true);
-      }
-    }, err => {
-      console.error(err);
-    }));
+    this.subs.push(
+      this.discountsService.add(this.discount).subscribe(data => {
+        if (data.DiscountId) {
+          this.toastrService.showToast('success', getString('saveSuccess'), '');
+          this.close(true);
+        }
+      }, err => {
+        console.error(err);
+      }));
   }
 
   private editDiscount() {
-    this.subs.push(this.discountsService.update(this.discount).subscribe(data => {
-      this.toastrService.showToast('success', getString('saveSuccess'), '');
-      this.close(true);
-    }, err => {
-      console.error(err);
-    }));
+    this.subs.push(
+      this.discountsService.update(this.discount).subscribe(data => {
+        this.toastrService.showToast('success', getString('saveSuccess'), '');
+        this.close(true);
+      }, err => {
+        console.error(err);
+      }));
   }
 }

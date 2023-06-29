@@ -10,7 +10,12 @@ export class ConfigService {
   private AppConfig: IAppWebConfig;
   private http: HttpClient;
 
-  constructor(httpBackend: HttpBackend, protected httpApiClient: HttpClient, @Inject(NB_AUTH_OPTIONS) protected options = {}) {
+  constructor(
+    httpBackend: HttpBackend,
+    protected httpApiClient: HttpClient,
+    @Inject(NB_AUTH_OPTIONS)
+    protected options = {}
+  ) {
     this.http = new HttpClient(httpBackend);
   }
 
@@ -29,7 +34,7 @@ export class ConfigService {
   }
 }
 
-interface IAppWebConfig {
+export interface IAppWebConfig {
   ApiServiceUrl: string;
 }
 

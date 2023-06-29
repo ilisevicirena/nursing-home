@@ -9,6 +9,7 @@ import { CalculationService, ICalculationResult } from '../../../services/calcul
 import { CalculationApiService } from '../../../services/rest/calculation-api.service';
 import { GeneratedInvoiceComponent } from '../generated-invoice/generated-invoice.component';
 import { ToastrService } from '../../../services/toastr.service';
+import { getMonthNames, getYearsInRange } from '../../../resources/functions';
 
 @Component({
   selector: 'sample-start-calculation',
@@ -44,8 +45,8 @@ export class StartCalculationComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.months = this.getMonthNames(this.locale);
-    this.years = this.getYearsInRange();
+    this.months = getMonthNames(this.locale);
+    this.years = getYearsInRange();
   }
 
   ngOnDestroy(): void {
@@ -56,29 +57,6 @@ export class StartCalculationComponent implements OnInit, OnDestroy {
 
   public close(result: boolean): void {
     this.ref.close(result);
-  }
-
-  private getMonthNames(locale: string): ScheduleMonth[] {
-    var baseDate = new Date(Date.UTC(this.year, 0, 1));
-    var months: ScheduleMonth[] = [];
-
-    for (var i = 0; i < 12; i++) {
-      months.push({ name: baseDate.toLocaleDateString(locale, { month: 'long' }), key: baseDate.getMonth(), shortName: baseDate.toLocaleDateString(locale, { month: 'short' }) });
-      baseDate.setMonth(baseDate.getMonth() + 1);
-    }
-
-    return months;
-  }
-
-  private getYearsInRange(): number[] {
-    var arr: number[] = [];
-    var startYear = new Date().getFullYear() - 50;
-    var endYear = new Date().getFullYear() + 50;
-    for (let index = startYear; index <= endYear; index++) {
-      arr.push(index);
-    }
-
-    return arr;
   }
 
   public startCalculation() {
@@ -99,7 +77,6 @@ export class StartCalculationComponent implements OnInit, OnDestroy {
       // get packages and services for person
       this.servicesManagementService.getPackagesAndServicesForPerson(person.Id).subscribe(data => {
         person.ServicesManagement = data;
-        // calculate packages and services prices
 
         // calculate price foreach package
         person.ServicesManagement.Packages.forEach(pack => {
@@ -156,42 +133,9 @@ export class StartCalculationComponent implements OnInit, OnDestroy {
     // check calculation exists
     this.subs.push(
       this.calcService.checkCalculationExists({ PersonId: person.Id, Month: this.month + 1, Year: this.year, Delete: this.recalculate == 1 }).subscribe((data) => {
-        if (this.recalculate == 1) {
-          this.subs.push(
-            // save calculation
-            this.calcService.add(objectToSave).subscribe(data => {
-              person.CalculationId = data.CalculationId;
-              var monthName = this.months.find(x => x.key == this.month).name;
-
-              // create invoice pdf and save it
-              this.invoice.createPdf(objectToSave, monthName, this.year).then(data => {
-                var documentModel = {
-                  Id: 0,
-                  PersonId: person.Id,
-                  Name: person.JMBG + '-' + monthName,
-                  Extension: 'pdf',
-                  FileType: 'data:application/pdf;base64',
-                  CalculationId: person.CalculationId,
-                  Base64: data
-                };
-
-                this.subs.push(
-                  this.calcService.saveDocument(documentModel).subscribe(() => {
-                    // continue to next person
-                    this.calculationPercent = ((index + 1) / this.persons.length) * 100;
-                    this.personIndex++;
-
-                    if (this.personIndex > this.persons.length - 1) {
-                      this.toastrService.showToast('success', getString('calculationSuccess'));
-                      this.calculationInProgress = false;
-                      this.close(true);
-                    } else this.startPersonCalculation(this.personIndex);
-                  })
-                );
-              })
-            })
-          );
-        } else {
+        if (this.recalculate == 1)
+          this.saveCalculationToDb(objectToSave, person, index);
+        else {
           if (data.result > 0) {
             // continue to next person
             this.calculationPercent = ((index + 1) / this.persons.length) * 100;
@@ -202,45 +146,47 @@ export class StartCalculationComponent implements OnInit, OnDestroy {
               this.calculationInProgress = false;
               this.close(true);
             } else this.startPersonCalculation(this.personIndex);
-          } else {
-            this.subs.push(
-              // save calculation
-              this.calcService.add(objectToSave).subscribe(data => {
-                person.CalculationId = data.CalculationId;
-                var monthName = this.months.find(x => x.key == this.month).name;
 
-                // create invoice pdf and save it
-                this.invoice.createPdf(objectToSave, monthName, this.year).then(data => {
-                  var documentModel = {
-                    Id: 0,
-                    PersonId: person.Id,
-                    Name: person.JMBG + '-' + monthName,
-                    Extension: 'pdf',
-                    FileType: 'data:application/pdf;base64',
-                    CalculationId: person.CalculationId,
-                    Base64: data
-                  };
-
-                  this.subs.push(
-                    this.calcService.saveDocument(documentModel).subscribe(() => {
-
-                      // continue to next person
-                      this.calculationPercent = ((index + 1) / this.persons.length) * 100;
-                      this.personIndex++;
-
-                      if (this.personIndex > this.persons.length - 1) {
-                        this.toastrService.showToast('success', getString('calculationSuccess'));
-                        this.calculationInProgress = false;
-                        this.close(true);
-                      } else this.startPersonCalculation(this.personIndex);
-                    })
-                  );
-                })
-              })
-            );
-          }
+          } else this.saveCalculationToDb(objectToSave, person, index);
         }
       })
-    )
+    );
+  }
+
+  private saveCalculationToDb(objectToSave, person, index): void {
+    this.subs.push(
+      // save calculation
+      this.calcService.add(objectToSave).subscribe(data => {
+        person.CalculationId = data.CalculationId;
+        var monthName = this.months.find(x => x.key == this.month).name;
+
+        // create invoice pdf and save it
+        this.invoice.createPdf(objectToSave, monthName, this.year).then(data => {
+          var documentModel = {
+            Id: 0,
+            PersonId: person.Id,
+            Name: person.JMBG + '-' + monthName,
+            Extension: 'pdf',
+            FileType: 'data:application/pdf;base64',
+            CalculationId: person.CalculationId,
+            Base64: data
+          };
+
+          this.subs.push(
+            this.calcService.saveDocument(documentModel).subscribe(() => {
+              // continue to next person
+              this.calculationPercent = ((index + 1) / this.persons.length) * 100;
+              this.personIndex++;
+
+              if (this.personIndex > this.persons.length - 1) {
+                this.toastrService.showToast('success', getString('calculationSuccess'));
+                this.calculationInProgress = false;
+                this.close(true);
+              } else this.startPersonCalculation(this.personIndex);
+            })
+          );
+        })
+      })
+    );
   }
 }

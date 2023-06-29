@@ -43,6 +43,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
       this.eventsService.getEvents(month, year).subscribe(data => {
         this.eventsOriginal = data;
         this.events = [];
+
         data.forEach(element => {
           this.events.push(this.mapDataToEvent(element));
         });

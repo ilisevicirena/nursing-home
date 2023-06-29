@@ -80,7 +80,6 @@ export class NoteDocumentsComponent implements OnInit, OnDestroy {
             data.document.Id = makeId(15);
             this.documents.push(data.document);
           }
-
         }
       })
     );
@@ -109,6 +108,7 @@ export class NoteDocumentsComponent implements OnInit, OnDestroy {
           fileDownload(doc.Base64, doc.Name + "." + doc.Extension);
         }
         break;
+
       case "preview":
         if (this.noteId > 0) {
           this.subs.push(
@@ -124,6 +124,7 @@ export class NoteDocumentsComponent implements OnInit, OnDestroy {
           previewFile(doc.Base64, doc.Extension, doc.Name + "." + doc.Extension);
         }
         break;
+
       case "delete":
         this.changes = true;
 
@@ -133,10 +134,7 @@ export class NoteDocumentsComponent implements OnInit, OnDestroy {
               this.getNoteDocuments();
             })
           );
-        } else {
-          this.documents.splice(this.documents.findIndex(y => y.Id == item.data.file.id), 1);
-        }
-
+        } else this.documents.splice(this.documents.findIndex(y => y.Id == item.data.file.id), 1);
         break;
     }
   }

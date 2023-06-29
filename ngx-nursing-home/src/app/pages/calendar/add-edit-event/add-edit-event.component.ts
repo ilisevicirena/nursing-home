@@ -6,7 +6,6 @@ import { NbDialogRef } from '@nebular/theme';
 import { ScheduleEvent } from 'shared-components/lib/models/schedule.model';
 import { environment } from '../../../../environments/environment';
 import { ToastrService } from '../../../services/toastr.service';
-import { DialogService } from '../../../shared/dialog/dialog.service';
 
 @Component({
   selector: 'sample-add-edit-event',
@@ -35,8 +34,7 @@ export class AddEditEventComponent implements OnInit, OnDestroy {
   constructor(
     private eventsService: EventsService,
     private ref: NbDialogRef<AddEditEventComponent>,
-    private toastrService: ToastrService,
-    private dialogService: DialogService
+    private toastrService: ToastrService
   ) { }
 
   ngOnInit(): void {
@@ -88,13 +86,13 @@ export class AddEditEventComponent implements OnInit, OnDestroy {
         })
       );
     }
-
   }
 
   public deleteEvent(): void {
-    this.subs.push(this.eventsService.delete({ Id: this.id }).subscribe(() => {
-      this.toastrService.showToast('success', getString('saveSuccess'));
-      this.close(true);
-    }));
+    this.subs.push(
+      this.eventsService.delete({ Id: this.id }).subscribe(() => {
+        this.toastrService.showToast('success', getString('saveSuccess'));
+        this.close(true);
+      }));
   }
 }

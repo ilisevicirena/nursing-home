@@ -108,9 +108,7 @@ export class CalculationService {
         if (element.PercentCalculation) {
           var totalDiscount = (result.price * element.Quantity) / 100;
           result.price -= totalDiscount;
-        } else
-          result.price -= element.Quantity
-
+        } else result.price -= element.Quantity
       });
 
       if (result.price < 0) result.price = 0;
@@ -173,7 +171,6 @@ export class CalculationService {
 
     return result;
   }
-
 }
 
 export enum ECalculationMeasureUnit {

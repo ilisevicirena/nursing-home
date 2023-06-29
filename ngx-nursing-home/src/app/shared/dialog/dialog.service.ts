@@ -24,24 +24,20 @@ export class DialogService implements OnDestroy {
   }
 
   public close(dialog: NbDialogRef<any>, result?: any): void {
-    if (dialog) {
-      dialog.close(result);
-    }
+    if (dialog) dialog.close(result);
   }
 
-  //dohvat svih referenci aktivnih dialoga
   public getActive(): NbDialogRef<any> {
     return this.dialogRefs.length ? this.dialogRefs[this.dialogRefs.length - 1] : new NbDialogRef<any>(null);
   }
 
-  //metoda za otvaranje componente unutar dialoga
   public open<T>(content: Type<T> | TemplateRef<T>, userConfig?: Partial<NbDialogConfig<Partial<T> | string>>, onClose?: Function): NbDialogRef<T> {
     const dialogRef = this.dialogService.open(content, userConfig);
     this.dialogRefs.push(dialogRef);
+
     return dialogRef;
   }
 
-  //otvaranje da/ne dialoga
   public async openYesNoDialog(title: string, body: string): Promise<number> {
     const dialogRef = this.open(DialogComponent, {
       context: {

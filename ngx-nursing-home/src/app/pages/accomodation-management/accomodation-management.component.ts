@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { RoomsService } from '../../services/rest/rooms.service';
 import { Subscription } from 'rxjs';
-import { CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { CdkDrag, CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
 import { PersonsService } from '../../services/rest/persons.service';
 import { getString } from '../../resources/strings';
 
@@ -12,7 +12,10 @@ import { getString } from '../../resources/strings';
 })
 export class AccomodationManagementComponent implements OnInit, OnDestroy {
 
-  constructor(private roomsService: RoomsService, private personsService: PersonsService) { }
+  constructor(
+    private roomsService: RoomsService,
+    private personsService: PersonsService
+  ) { }
 
   public noRoomPersons: any[] = [];
   public mainSource: any[] = [];
@@ -34,22 +37,24 @@ export class AccomodationManagementComponent implements OnInit, OnDestroy {
 
   private getAccomodationManagement(): void {
     this.mainSource = [];
-    this.subscriptions.push(this.roomsService.getAccomodationManagement().subscribe(data => {
-      if (data) {
-        this.originalSource = data;
-        this.noRoomPersons = data.Persons.filter(x => !x.RoomId);
 
-        data.Floors.forEach(floor => {
-          var newFloor = floor;
-          newFloor.Rooms = data.Rooms.filter(x => x.FloorId == floor.Id);
-          newFloor.Rooms.forEach(room => {
-            room.People = data.Persons.filter(x => x.RoomId == room.Id);
+    this.subscriptions.push(
+      this.roomsService.getAccomodationManagement().subscribe(data => {
+        if (data) {
+          this.originalSource = data;
+          this.noRoomPersons = data.Persons.filter(x => !x.RoomId);
+
+          data.Floors.forEach(floor => {
+            var newFloor = floor;
+            newFloor.Rooms = data.Rooms.filter(x => x.FloorId == floor.Id);
+            newFloor.Rooms.forEach(room => {
+              room.People = data.Persons.filter(x => x.RoomId == room.Id);
+            });
+
+            this.mainSource.push(newFloor);
           });
-
-          this.mainSource.push(newFloor);
-        });
-      }
-    }));
+        }
+      }));
   }
 
   public drop(event: CdkDragDrop<any[]>): void {
@@ -59,16 +64,17 @@ export class AccomodationManagementComponent implements OnInit, OnDestroy {
 
       if (personId && roomId) {
         // just save and reload
-        this.subscriptions.push(this.personsService.changeRoom(personId, roomId).subscribe(() => {
-          this.getAccomodationManagement();
-        }));
+        this.subscriptions.push(
+          this.personsService.changeRoom(personId, roomId).subscribe(() => {
+            this.getAccomodationManagement();
+          }));
       } else if (personId) {
         // just save and reload
-        this.subscriptions.push(this.personsService.deactivateRoom(personId).subscribe(() => {
-          this.getAccomodationManagement();
-        }));
+        this.subscriptions.push(
+          this.personsService.deactivateRoom(personId).subscribe(() => {
+            this.getAccomodationManagement();
+          }));
       }
-
     }
   }
 
@@ -80,13 +86,17 @@ export class AccomodationManagementComponent implements OnInit, OnDestroy {
 
     return canDrop;
   }
+
   public getConnectedTo(): string[] {
     var arr = [];
+
     if (this.originalSource) {
       arr = this.originalSource.Rooms.map(x => {
         return 'drop-room-' + x.Id;
       });
-    } arr.push('no-room');
+    }
+
+    arr.push('no-room');
 
     return arr;
   }

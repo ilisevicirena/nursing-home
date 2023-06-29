@@ -10,7 +10,6 @@ import {
   NbAlertModule,
   NbButtonModule,
   NbCardModule,
-  NbChatModule,
   NbDatepickerModule,
   NbDialogModule,
   NbIconModule,
@@ -18,7 +17,6 @@ import {
   NbMenuModule,
   NbSidebarModule,
   NbToastrModule,
-  NbToggleModule,
   NbWindowModule,
 } from '@nebular/theme';
 

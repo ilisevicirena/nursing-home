@@ -21,7 +21,7 @@ export class PersonsService extends BaseRestApiService {
     return this.http.get(this.apiRoute + "/personDetails?id=" + id);
   }
 
-  public deactivatePerson(id, date: Date = null): Observable<any> {
+  public deactivatePerson(id: number, date: Date = null): Observable<any> {
     return this.http.post(this.apiRoute + "/changeStatusPerson", { Id: id, Active: false, EndDate: date ? date.toISOString() : null });
   }
 

@@ -22,17 +22,16 @@ export class DocumentsComponent implements OnInit, OnDestroy {
   public getString = getString;
   public searchTerm: string = "";
   public currentView: string = "row";
+  public currentDocumentTypeId: number = 0;
 
   private subs: Subscription[] = [];
   private loadedData: boolean = false;
-  public currentDocumentTypeId: number = 0;
 
   constructor(
     private documentsService: DocumentsService,
     private toastrService: ToastrService,
     private dialogService: DialogService
-  ) {
-  }
+  ) { }
 
   ngOnInit(): void {
     this.getDocumentTypes();
@@ -48,8 +47,7 @@ export class DocumentsComponent implements OnInit, OnDestroy {
     this.subs.push(
       this.documentsService.getDocumentTypesForPerson(this.personId).subscribe(data => {
         this.documentTypes = data;
-        if (!this.loadedData && this.documentTypes.length > 0)
-          this.getDocumentsForType(this.documentTypes[0].Id);
+        if (!this.loadedData && this.documentTypes.length > 0) this.getDocumentsForType(this.documentTypes[0].Id);
       })
     );
   }
@@ -86,6 +84,7 @@ export class DocumentsComponent implements OnInit, OnDestroy {
           })
         );
         break;
+
       case "preview":
         this.subs.push(
           this.documentsService.getDocumentContent(item.data.file.id).subscribe(data => {
@@ -95,6 +94,7 @@ export class DocumentsComponent implements OnInit, OnDestroy {
           })
         );
         break;
+
       case "delete":
         const res = await this.dialogService.openYesNoDialog(getString('areYouSure'), getString('wantToDelete'));
         if (res) {
@@ -129,4 +129,5 @@ export class DocumentsComponent implements OnInit, OnDestroy {
       };
     })
   }
+
 }

@@ -20,13 +20,9 @@ export class FastActionsComponent implements OnInit, OnDestroy {
 
   public getString = getString;
 
-  ngOnInit(): void {
+  ngOnInit(): void { }
 
-  }
-
-  ngOnDestroy(): void {
-
-  }
+  ngOnDestroy(): void { }
 
   public startDoctorVisit(): void {
     this.router.navigateByUrl('/pages/doctor-visit-tour');
@@ -44,6 +40,6 @@ export class FastActionsComponent implements OnInit, OnDestroy {
 
         }
       }
-    )
+    );
   }
 }
