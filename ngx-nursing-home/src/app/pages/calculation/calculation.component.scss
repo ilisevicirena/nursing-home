@@ -14,3 +14,10 @@
         }
     }
 }
+
+::ng-deep ngx-smart-table-tag {
+    nb-tag {
+        border: none;
+        border-radius: 0;
+    }
+}

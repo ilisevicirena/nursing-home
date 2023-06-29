@@ -175,7 +175,7 @@ export class StartCalculationComponent implements OnInit, OnDestroy {
           this.subs.push(
             this.calcService.saveDocument(documentModel).subscribe(() => {
               // continue to next person
-              this.calculationPercent = ((index + 1) / this.persons.length) * 100;
+              this.calculationPercent = Math.trunc(((index + 1) / this.persons.length) * 100);
               this.personIndex++;
 
               if (this.personIndex > this.persons.length - 1) {

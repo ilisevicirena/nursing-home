@@ -1,7 +1,7 @@
 USE [ENV01_NURSING_HOME]
 GO
 
-/****** Object:  StoredProcedure [dbo].[getCalculationsForMonth]    Script Date: 28.6.2023. 9:37:33 ******/
+/****** Object:  StoredProcedure [dbo].[getCalculationsForMonth]    Script Date: 29.6.2023. 11:22:12 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -42,6 +42,7 @@ BEGIN
    [StatusId]=c.StatusId,
    [StatusName]=s.[Name],
    [StatusStringKey]=s.StringKey,
+   [StatusColor]=s.Color,
    [PaymentDaysDeadline]=PaymentDaysDeadline,
    [PriceUnitId]=c.PriceUnitId,
    [PriceUnitName]=pu.[Name],

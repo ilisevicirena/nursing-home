@@ -223,6 +223,15 @@ const strings: IKeyValue[] = [
     { key: "generatedDate", value: "Generirano dana" },
     { key: "invoicePeriod", value: "Razdoblje: " },
     { key: "invoiceGenerated", value: "Napomena: Ovaj dokument automatski je generiran iz sustava i može se razlikovati od stvarnog stanja!" },
+    { key: "calculationDate", value: "Datum obračuna" },
+    { key: "status", value: "Status" },
+    { key: "systemPrice", value: "Izračunati iznos" },
+    { key: "realPrice", value: "Stvarni iznos" },
+    { key: "paidPrice", value: "Plaćeni iznos" },
+    { key: "paidDate", value: "Datum uplate" },
+    { key: "calculationNotPaid", value: "Nije plaćeno" },
+    { key: "calculationPaid", value: "Plaćeno" },
+    { key: "calculationCancelled", value: "Stornirano" },
     { key: "calculationSuccess", value: "Obračun uspješno kreiran" },
 ];
 

@@ -3,13 +3,21 @@
         <nb-card class="h-100 m-0 calculation-card">
             <nb-card-header>
                 {{getString('calculationFor')}}
-                <nb-select [(selected)]="month">
+                <nb-select [(selected)]="month" (selectedChange)="refreshData()">
                     <nb-option *ngFor="let m of months" [value]="m.key">{{m.name}}</nb-option>
                 </nb-select>
-                <nb-select [(selected)]="year">
+                <nb-select [(selected)]="year" (selectedChange)="refreshData()">
                     <nb-option *ngFor="let y of years" [value]="y">{{y}}</nb-option>
                 </nb-select>
             </nb-card-header>
+            <nb-card-body>
+                <div style="height: 500px;">
+                    <ngx-smart-table [columns]="columns" [(data)]="calculations" [addEnabled]="false"
+                        [loadingEnabled]="false" [editEnabled]="false" [deleteEnabled]="false" [selectionEnabled]="true"
+                        [selectRowByClick]="true" [selctionModeMultiple]=" true"
+                        [defaultPerPageOption]="10"></ngx-smart-table>
+                </div>
+            </nb-card-body>
         </nb-card>
     </div>
     <div class="col-md-2 h-100">

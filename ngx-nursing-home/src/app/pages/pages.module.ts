@@ -148,7 +148,7 @@ import { GeneratedInvoiceComponent } from './calculation/generated-invoice/gener
     DoctorVisitTourComponent,
     CalculationComponent,
     StartCalculationComponent,
-    GeneratedInvoiceComponent
+    GeneratedInvoiceComponent,
   ],
 })
 export class PagesModule {

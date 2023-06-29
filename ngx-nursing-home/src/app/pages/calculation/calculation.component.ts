@@ -8,6 +8,7 @@ import { ToastrService } from '../../services/toastr.service';
 import { ServicesManagementService } from '../../services/rest/services-management.service';
 import { ScheduleMonth } from 'shared-components/lib/models/schedule.model';
 import { getMonthNames, getYearsInRange } from '../../resources/functions';
+import { DateType, DatepickerFilter, SelectFilter, SmartTableColumn, TagType } from 'shared-components';
 
 @Component({
   selector: 'sample-calculation',
@@ -24,6 +25,23 @@ export class CalculationComponent implements OnInit, OnDestroy {
   public calculations: any[] = [];
   public months: ScheduleMonth[] = [];
   public years: number[] = [];
+  public columns: SmartTableColumn[] = [
+    new SmartTableColumn(getString('firstName')).Property('PersonFirstName'),
+    new SmartTableColumn(getString('lastName')).Property('PersonLastName'),
+    new SmartTableColumn(getString('jmbg')).Property('PersonJMBG'),
+    new SmartTableColumn(getString('calculationDate')).Property('CalculationDate').SpecialType(new DateType().Format('dd.MM.yyyy. HH:mm')).SpecialFilter(new DatepickerFilter()),
+    new SmartTableColumn(getString('status')).Property('StatusObj').SpecialType(new TagType()).SpecialFilter(new SelectFilter("Id", "StringKey")
+      .ServerSource(true).ServerEndpoint(this.calculationService.apiRoute + '/getCalculationStatuses'))
+      .FilterFunction((cell?: any, search?: string) => {
+        if (search.length > 0) {
+          return cell.id == search;
+        }
+      }),
+    new SmartTableColumn(getString('systemPrice')).Property('SystemPrice'),
+    new SmartTableColumn(getString('realPrice')).Property('RealPrice'),
+    new SmartTableColumn(getString('paidPrice')).Property('PaidPrice'),
+    new SmartTableColumn(getString('paidDate')).Property('DatePaod').SpecialType(new DateType().Format('dd.MM.yyyy.')).SpecialFilter(new DatepickerFilter())
+  ];
 
   constructor(
     @Inject(LOCALE_ID) private locale: string,
@@ -50,7 +68,12 @@ export class CalculationComponent implements OnInit, OnDestroy {
     this.subs.push(
       this.calculationService.getCalculations(this.month + 1, this.year).subscribe(data => {
         this.calculations = data;
+        this.calculations.map(x => x.StatusObj = { status: x.StatusColor, text: getString(x.StatusStringKey), id: x.StatusId });
       })
     );
+  }
+
+  public refreshData(): void {
+    this.getCalculations();
   }
 }
