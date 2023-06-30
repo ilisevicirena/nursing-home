@@ -6,7 +6,7 @@ import { getString } from '../../resources/strings';
 import { NgForm } from '@angular/forms';
 import { ToastrService } from '../../services/toastr.service';
 import { GendersService } from '../../services/rest/genders.service';
-import { CheckboxType, DateType, SelectGridComponent, SmartTableColumn } from 'shared-components';
+import { CheckboxType, DateType, DatepickerFilter, SelectGridComponent, SmartTableColumn, TextboxEditor } from 'shared-components';
 import { DialogService } from '../../shared/dialog/dialog.service';
 import { RoomsService } from '../../services/rest/rooms.service';
 import { SelectGridColumn } from 'shared-components/lib/models/select-grid.model';
@@ -253,5 +253,18 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   public openPersonHistory(ref: TemplateRef<any>): void {
     this.dialogService.open(ref);
+  }
+
+  public getPersonHistoryColumns(isModal = false): SmartTableColumn[] {
+    return [
+      new SmartTableColumn(getString('id')).Property("Id").SpecialEditor(new TextboxEditor()).Filter(isModal),
+      new SmartTableColumn(getString("transactionDate")).Property("CreationDate")
+        .SpecialType(new DateType().Format("dd.MM.yyyy. HH:mm")).Filter(isModal).SpecialFilter(new DatepickerFilter().Format("dd.MM.yyyy.")),
+      new SmartTableColumn(getString('firstName')).Property("FirstName").SpecialEditor(new TextboxEditor()).Filter(isModal),
+      new SmartTableColumn(getString('lastName')).Property("LastName").SpecialEditor(new TextboxEditor()).Filter(isModal),
+      new SmartTableColumn(getString('jmbg')).Property("Jmbg").SpecialEditor(new TextboxEditor()).Filter(isModal),
+      new SmartTableColumn(getString('logType')).Property("LogType").SpecialEditor(new TextboxEditor()).Filter(isModal),
+      new SmartTableColumn(getString('logType')).Property("LogTypePretty").SpecialEditor(new TextboxEditor()).Filter(isModal),
+    ];
   }
 }

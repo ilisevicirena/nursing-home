@@ -1,4 +1,4 @@
-import { Component, Inject, LOCALE_ID, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, LOCALE_ID, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { getString } from '../../resources/strings';
 import { CalculationApiService } from '../../services/rest/calculation-api.service';
@@ -8,10 +8,11 @@ import { ToastrService } from '../../services/toastr.service';
 import { ServicesManagementService } from '../../services/rest/services-management.service';
 import { ScheduleMonth } from 'shared-components/lib/models/schedule.model';
 import { getMonthNames, getYearsInRange } from '../../resources/functions';
-import { DateType, DatepickerFilter, SelectFilter, SmartTableColumn, TagType } from 'shared-components';
+import { DateType, DatepickerFilter, SelectFilter, SmartTableColumn, SmartTableComponent, TagType } from 'shared-components';
 import { EChartsOption } from 'echarts';
 import { DEFAULT_THEME, NbThemeService } from '@nebular/theme';
 import { delay } from 'rxjs/operators';
+import { StartCalculationComponent } from './start-calculation/start-calculation.component';
 declare const echarts: any;
 @Component({
   selector: 'sample-calculation',
@@ -35,7 +36,7 @@ export class CalculationComponent implements OnInit, OnDestroy {
     new SmartTableColumn(getString('lastName')).Property('PersonLastName'),
     new SmartTableColumn(getString('jmbg')).Property('PersonJMBG'),
     new SmartTableColumn(getString('calculationDate')).Property('CalculationDate').SpecialType(new DateType().Format('dd.MM.yyyy. HH:mm')).SpecialFilter(new DatepickerFilter()),
-    new SmartTableColumn(getString('status')).Property('StatusObj').SpecialType(new TagType()).SpecialFilter(new SelectFilter("Id", "StringKey")
+    new SmartTableColumn(getString('status')).Property('StatusObj').SpecialType(new TagType()).Width('13%').SpecialFilter(new SelectFilter("Id", "StringKey")
       .ServerSource(true).ServerEndpoint(this.calculationService.apiRoute + '/getCalculationStatuses'))
       .FilterFunction((cell?: any, search?: string) => {
         if (search.length > 0) {
@@ -45,8 +46,10 @@ export class CalculationComponent implements OnInit, OnDestroy {
     new SmartTableColumn(getString('systemPrice')).Property('SystemPrice'),
     new SmartTableColumn(getString('realPrice')).Property('RealPrice'),
     new SmartTableColumn(getString('paidPrice')).Property('PaidPrice'),
-    new SmartTableColumn(getString('paidDate')).Property('DatePaod').SpecialType(new DateType().Format('dd.MM.yyyy.')).SpecialFilter(new DatepickerFilter())
+    new SmartTableColumn(getString('paidDate')).Property('DatePaid').SpecialType(new DateType().Format('dd.MM.yyyy.')).SpecialFilter(new DatepickerFilter())
   ];
+
+  @ViewChild(SmartTableComponent) table: SmartTableComponent;
 
   constructor(
     @Inject(LOCALE_ID) private locale: string,
@@ -59,7 +62,6 @@ export class CalculationComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.configureChart();
     this.months = getMonthNames(this.locale);
     this.years = getYearsInRange();
     this.refreshData();
@@ -92,14 +94,116 @@ export class CalculationComponent implements OnInit, OnDestroy {
         if (data.length > 0) {
           this.summary = data[0];
           this.value = Math.trunc((this.summary.CalculatedForPersons / this.summary.Persons) * 100);
-          console.log(this.value)
-          this.options.series[0].data[0].value = this.value;
-          this.options.series[0].data[1].value = 100 - this.value;
-          this.options.series[1].data[0].value = this.value;
-          this.options.series[1].data[1].value = 100 - this.value;
+          this.configureChart();
         }
       })
     );
+  }
+
+  public newCalculationClick(): void {
+    this.subs.push(
+      this.dialogService.open(
+        StartCalculationComponent,
+        {
+          autoFocus: false,
+          closeOnEsc: false,
+          closeOnBackdropClick: false
+        }
+      ).onClose.subscribe(result => {
+        if (result) this.refreshData();
+      })
+    );
+  }
+
+  public recalculateSelectedClick(): void {
+    var selected = this.table.getSelectedRows().map(x => x.PersonId);
+    if (selected.length > 0) {
+      this.subs.push(
+        this.dialogService.open(
+          StartCalculationComponent,
+          {
+            autoFocus: false,
+            closeOnBackdropClick: false,
+            closeOnEsc: false,
+            context: {
+              personsIds: selected,
+              disableInputs: true,
+              recalculate: 1,
+              month: this.month,
+              year: this.year,
+            }
+          }
+        ).onClose.subscribe(result => {
+          if (result) this.refreshData();
+        })
+      );
+    } else this.toastrService.showToast('warning', getString('nothingSelected'));
+  }
+
+  public async markRealPriceClick(): Promise<void> {
+    var selected = this.table.getSelectedRows();
+    if (selected.length > 0) {
+      const rez = await this.dialogService.openYesNoDialog(getString('areYouSure'), getString('wantToMarkRealPrice'));
+      if (rez) {
+        for (let index = 0; index < selected.length; index++) {
+          const element = selected[index];
+          this.subs.push(
+            this.calculationService.calculationRealPriceSave({ Id: element.Id, RealPrice: element.SystemPrice.replace(',', '') }).subscribe(() => {
+              if (index == selected.length - 1) {
+                this.toastrService.showToast('success', getString('saveSuccess'));
+                this.refreshData();
+              }
+            })
+          );
+        }
+      }
+    } else this.toastrService.showToast('warning', getString('nothingSelected'));
+  }
+
+  public async markPaidPriceClick(): Promise<void> {
+    var selected = this.table.getSelectedRows();
+    if (selected.length > 0) {
+      const rez = await this.dialogService.openYesNoDialog(getString('areYouSure'), getString('wantToMarkPaid'));
+      if (rez) {
+        for (let index = 0; index < selected.length; index++) {
+          const element = selected[index];
+          if (!element.RealPrice) {
+            this.subs.push(
+              this.calculationService.calculationRealPriceSave({ Id: element.Id, RealPrice: element.SystemPrice.replace(',', '') }).subscribe()
+            );
+          }
+
+          this.subs.push(
+            this.calculationService.calculationPaid({ Id: element.Id, PaidPrice: element.RealPrice ? element.RealPrice.replace(',', '') : element.SystemPrice.replace(',', ''), PaidDate: new Date().toISOString() }).subscribe(() => {
+              if (index == selected.length - 1) {
+                this.toastrService.showToast('success', getString('saveSuccess'));
+                this.refreshData();
+              }
+            })
+          );
+        }
+      }
+    } else this.toastrService.showToast('warning', getString('nothingSelected'));
+  }
+
+  public async cancelCalculationClick(): Promise<void> {
+    var selected = this.table.getSelectedRows();
+    if (selected.length > 0) {
+      const rez = await this.dialogService.openYesNoDialog(getString('areYouSure'), getString('wantToCancelSelected'));
+      if (rez) {
+        for (let index = 0; index < selected.length; index++) {
+          const element = selected[index];
+          this.subs.push(
+            this.calculationService.cancelCalculation({ Id: element.Id }).subscribe(() => {
+              if (index == selected.length - 1) {
+                this.toastrService.showToast('success', getString('saveSuccess'));
+                this.refreshData();
+              }
+            })
+          );
+        }
+      }
+    } else this.toastrService.showToast('warning', getString('nothingSelected'));
   }
 
   private configureChart(): void {
@@ -112,51 +216,44 @@ export class CalculationComponent implements OnInit, OnDestroy {
           },
           series: [
             {
-              name: ' ',
-              clockWise: true,
-              hoverAnimation: true,
+              name: getString('chartCalculated'),
+              clockwise: true,
+              emphasis: { scale: true },
               type: 'pie',
               center: ['45%', '50%'],
               radius: ['80%', '90%'],
               data: [
                 {
                   value: this.value,
-                  name: getString('charCalculated'),
+                  name: getString('chartCalculated'),
                   label: {
-                    normal: {
-                      position: 'center',
-                      formatter: '{d}%',
-                      textStyle: {
-                        fontSize: '22',
-                        fontFamily: config.variables.fontSecondary,
-                        fontWeight: '600',
-                        color: config.variables.fgHeading,
-                      },
-                    },
+                    position: 'center',
+                    formatter: '{d}%',
+                    fontSize: '22',
+                    fontFamily: config.variables.fontSecondary,
+                    fontWeight: '600',
+                    color: config.variables.fgHeading,
                   },
                   tooltip: {
-                    show: true,
-                    position: ['50%', '50%']
+                    show: false,
                   },
                   itemStyle: {
-                    normal: {
-                      color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                        {
-                          offset: 0,
-                          color: DEFAULT_THEME.variables.primary,
-                        },
-                        {
-                          offset: 1,
-                          color: DEFAULT_THEME.variables.primary,
-                        },
-                      ]),
-                      shadowColor: 'rgba(0, 0, 0, 0)',
-                      shadowBlur: 0,
-                      shadowOffsetX: 0,
-                      shadowOffsetY: 3,
-                    },
+                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                      {
+                        offset: 0,
+                        color: '#33B9BF',
+                      },
+                      {
+                        offset: 1,
+                        color: '#33B9BF',
+                      },
+                    ]),
+                    shadowColor: 'rgba(0, 0, 0, 0)',
+                    shadowBlur: 0,
+                    shadowOffsetX: 0,
+                    shadowOffsetY: 3,
                   },
-                  hoverAnimation: false,
+                  emphasis: { scale: false },
                 },
                 {
                   value: 100 - this.value,
@@ -165,22 +262,18 @@ export class CalculationComponent implements OnInit, OnDestroy {
                     show: false,
                   },
                   label: {
-                    normal: {
-                      position: 'inner',
-                    },
+                    position: 'inner',
                   },
                   itemStyle: {
-                    normal: {
-                      color: DEFAULT_THEME.variables.bg2,
-                    },
+                    color: DEFAULT_THEME.variables.bg2,
                   },
                 },
               ],
             },
             {
               name: ' ',
-              clockWise: true,
-              hoverAnimation: false,
+              clockwise: true,
+              emphasis: { scale: false },
               type: 'pie',
               center: ['45%', '50%'],
               radius: ['80%', '90%'],
@@ -189,31 +282,27 @@ export class CalculationComponent implements OnInit, OnDestroy {
                   value: this.value,
                   name: ' ',
                   label: {
-                    normal: {
-                      position: 'inner',
-                      show: false,
-                    },
+                    position: 'inner',
+                    show: false,
                   },
                   tooltip: {
                     show: false,
                   },
                   itemStyle: {
-                    normal: {
-                      color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                        {
-                          offset: 0,
-                          color: DEFAULT_THEME.variables.primary,
-                        },
-                        {
-                          offset: 1,
-                          color: DEFAULT_THEME.variables.primary,
-                        },
-                      ]),
-                      shadowColor: 'rgba(0, 0, 0, 0)',
-                      shadowBlur: 7,
-                    },
+                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                      {
+                        offset: 0,
+                        color: '#33B9BF',
+                      },
+                      {
+                        offset: 1,
+                        color: '#33B9BF',
+                      },
+                    ]),
+                    shadowColor: 'rgba(0, 0, 0, 0)',
+                    shadowBlur: 7,
                   },
-                  hoverAnimation: false,
+                  emphasis: { scale: false },
                 },
                 {
                   value: 100 - this.value,
@@ -222,14 +311,10 @@ export class CalculationComponent implements OnInit, OnDestroy {
                     show: false,
                   },
                   label: {
-                    normal: {
-                      position: 'inner',
-                    },
+                    position: 'inner',
                   },
                   itemStyle: {
-                    normal: {
-                      color: 'none',
-                    },
+                    color: 'none',
                   },
                 },
               ],

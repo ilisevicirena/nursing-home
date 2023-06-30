@@ -22,12 +22,12 @@
                         <div class="label">{{getString("calculationFor")}}</div>
                         <div class="value d-flex w-100">
                             <div class="col-md-6 pe-1">
-                                <nb-select [(selected)]="month" fullWidth>
+                                <nb-select [(selected)]="month" fullWidth [disabled]="disableInputs">
                                     <nb-option *ngFor="let m of months" [value]="m.key">{{m.name}}</nb-option>
                                 </nb-select>
                             </div>
                             <div class="col-md-6 ps-1">
-                                <nb-select [(selected)]="year" fullWidth>
+                                <nb-select [(selected)]="year" fullWidth [disabled]="disableInputs">
                                     <nb-option *ngFor="let y of years" [value]="y">{{y}}</nb-option>
                                 </nb-select>
                             </div>
@@ -51,7 +51,7 @@
                 <div class="col-md-12 p-0">
                     <div class="form-group">
                         <div class="value">
-                            <nb-radio-group [(value)]="recalculate">
+                            <nb-radio-group [(value)]="recalculate" [disabled]="disableInputs">
                                 <nb-radio [value]="1">{{getString('recalculateForExisting')}}</nb-radio>
                                 <nb-radio [value]="2">{{getString('skipExisting')}}</nb-radio>
                             </nb-radio-group>

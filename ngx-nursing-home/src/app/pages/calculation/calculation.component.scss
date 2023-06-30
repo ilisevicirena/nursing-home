@@ -33,21 +33,60 @@
     .chart-card {
         margin: 0;
         border-radius: 1rem;
+
+        nb-card-header {
+            border: none;
+            font-size: 16px;
+            padding-bottom: 0;
+        }
     }
 
     .echart {
         position: absolute;
         right: -25px;
         height: calc(100% - 0rem);
-        width: 50%;
+        width: 60%;
     }
 
     .value {
         margin: 0;
-        font-size: 18px;
+        font-size: 20px;
     }
 
     .details {
         color: nb-theme(text-hint-color);
+    }
+
+    .summary-card {
+        border-bottom: 1px solid nb-theme(card-border-color);
+        padding: 0.5rem;
+
+        nb-badge {
+            top: 0.5rem !important;
+        }
+
+        nb-badge.status-basic {
+            background-color: nb-theme(color-basic-500);
+        }
+
+        .indicator {
+            font-size: 12px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .indicator.success {
+            color: nb-theme(color-success-500);
+        }
+
+        .indicator.danger {
+            color: nb-theme(color-danger-500);
+        }
+
+        .indicator.basic {
+            color: nb-theme(color-basic-500);
+        }
     }
 }

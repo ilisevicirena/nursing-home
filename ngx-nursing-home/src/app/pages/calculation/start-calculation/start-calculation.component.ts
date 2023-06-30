@@ -31,6 +31,8 @@ export class StartCalculationComponent implements OnInit, OnDestroy {
   public recalculate: number = 1;
   public calculationInProgress: boolean = false;
   public calculationPercent: number = 0;
+  public personsIds: number[] = [];
+  public disableInputs: boolean = false;
 
   @ViewChild(GeneratedInvoiceComponent) invoice: GeneratedInvoiceComponent;
 
@@ -64,7 +66,8 @@ export class StartCalculationComponent implements OnInit, OnDestroy {
     // get active persons first
     this.subs.push(
       this.personsService.getData(true).subscribe(data => {
-        this.persons = data;
+        if (this.personsIds.length > 0) this.persons = data.filter(x => this.personsIds.includes(x.Id));
+        else this.persons = data;
         this.personIndex = 0;
         this.startPersonCalculation(this.personIndex);
       })

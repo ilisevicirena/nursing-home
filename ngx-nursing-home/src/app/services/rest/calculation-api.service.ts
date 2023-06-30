@@ -31,4 +31,16 @@ export class CalculationApiService extends BaseRestApiService {
   public checkCalculationExists(model: any): Observable<any> {
     return this.http.post(this.apiRoute + '/checkCalculationExists', model);
   }
+
+  public calculationRealPriceSave(model: any): Observable<any> {
+    return this.http.post(this.apiRoute + '/calculationRealPriceSave', model);
+  }
+
+  public calculationPaid(model: any): Observable<any> {
+    return this.http.post(this.apiRoute + '/calculationPaid', model);
+  }
+
+  public cancelCalculation(model: any): Observable<any> {
+    return this.http.post(this.apiRoute + '/cancelCalculation', model);
+  }
 }
