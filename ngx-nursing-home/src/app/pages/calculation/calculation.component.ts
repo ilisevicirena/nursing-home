@@ -13,6 +13,7 @@ import { EChartsOption } from 'echarts';
 import { DEFAULT_THEME, NbThemeService } from '@nebular/theme';
 import { delay } from 'rxjs/operators';
 import { StartCalculationComponent } from './start-calculation/start-calculation.component';
+import { CalculationSummaryComponent } from './calculation-summary/calculation-summary.component';
 declare const echarts: any;
 @Component({
   selector: 'sample-calculation',
@@ -90,13 +91,25 @@ export class CalculationComponent implements OnInit, OnDestroy {
   private getCalculationSummary(): void {
     this.subs.push(
       this.calculationService.getCalculationSummary(this.month + 1, this.year).subscribe(data => {
-        console.log(data)
-        if (data.length > 0) {
-          this.summary = data[0];
+        if (data.Summary) {
+          this.summary = data.Summary;
           this.value = Math.trunc((this.summary.CalculatedForPersons / this.summary.Persons) * 100);
           this.configureChart();
         }
       })
+    );
+  }
+
+  public calculationSummaryDetailsClick(): void {
+    this.dialogService.open(
+      CalculationSummaryComponent,
+      {
+        autoFocus: false,
+        context: {
+          month: this.month + 1,
+          year: this.year
+        }
+      }
     );
   }
 

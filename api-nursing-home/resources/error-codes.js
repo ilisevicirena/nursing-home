@@ -93,6 +93,7 @@ var errors = [
     new CodeMessage(50003, "Error while cancelling calculation in database."),
     new CodeMessage(50004, "Error while fetching calculation details from database. Invalid number of datasets."),
     new CodeMessage(50005, "Error while inserting new calculation into database."),
+    new CodeMessage(50006, "Error while fetching calculation summary from database. Invalid number of datasets."),
 ];
 
 module.exports = {

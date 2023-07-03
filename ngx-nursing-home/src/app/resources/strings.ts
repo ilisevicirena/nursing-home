@@ -249,7 +249,20 @@ const strings: IKeyValue[] = [
     { key: "nothingSelected", value: "Nema odabranih redaka" },
     { key: "wantToMarkRealPrice", value: "Želite li unijeti izračunati iznos kao stvarni iznos za odabrane obračune?" },
     { key: "wantToMarkPaid", value: "Želite li označiti odabrane obračune kao plaćene? Unijet će se stvarni iznos kao plaćeni, ako stvarni iznos nije unsen iskoristit će se izračunati iznos. Datum plaćanja će biti trenutni datum." },
-    { key: "wantToCancelSelected", value: "Želite li stornirati plaćanje obračuna? Stornirani obračuni ne ulaze u računanje ukupnih iznosa." }
+    { key: "wantToCancelSelected", value: "Želite li stornirati plaćanje obračuna? Stornirani obračuni ne ulaze u računanje ukupnih iznosa." },
+    { key: "calculationSummary", value: "Detalji obračuna" },
+    { key: "month", value: "mjesec" },
+    { key: "period", value: "Razdoblje" },
+    { key: "calculationNumber", value: "Broj obračuna" },
+    { key: "numberOfPersons", value: "Ukupan broj aktivnih osoba" },
+    { key: "calculationCreatedFor", value: "Obračun kreiran za" },
+    { key: "calculationSystemPrice", value: "Izračunati iznos" },
+    { key: "lastMonth", value: "u odnosu na prošli mjesec" },
+    { key: "calculationRealPrice", value: "Stvarni iznos" },
+    { key: "calculationPaidPrice", value: "Plaćeni iznos" },
+    { key: "calculationCancelled", value: "Stornirani obračuni" },
+    { key: "cancelledCalculationsDescription", value: "Stornirani obračuni izuzeti su iz ukupnog izračunatog, stvarnog i plaćenog iznosa." },
+    { key: "numberOfCancelledCalculations", value: "Broj storniranih obračuna" }
 ];
 
 const map = new Map(strings.map(obj => [obj.key, obj.value]));

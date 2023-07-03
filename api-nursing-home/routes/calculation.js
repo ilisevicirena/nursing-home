@@ -129,7 +129,8 @@ router.get('/calculationSummary', async (request, response) => {
             .input("month", request.query.Month)
             .input("year", request.query.Year)
             .query("EXEC [dbo].[calculationSummary] @Month=@month, @Year=@year");
-        response.json(result.recordset);
+        if (result.recordsets.length != 2) response.send(getError(50006))
+        else response.json({ Summary: result.recordsets[0][0], Calculation: result.recordsets[1][0] });
     } catch (err) {
         response.status(500);
         response.send(err.message);

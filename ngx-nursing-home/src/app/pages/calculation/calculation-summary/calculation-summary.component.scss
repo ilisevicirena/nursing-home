@@ -1,0 +1,101 @@
+@import "../../../@theme/styles/themes.scss";
+
+@include nb-install-component {
+    .calculation-card {
+        border-radius: 1rem;
+        width: 650px;
+        height: 8cap;
+
+        .title-container {
+            font-weight: 600;
+            font-size: 18px;
+            border-bottom: 2px solid nb-theme(card-border-color);
+            padding-bottom: 0.5rem;
+
+            .w-max {
+                display: flex;
+                align-items: center;
+            }
+
+            nb-tag {
+                border-radius: 0;
+                border: none;
+                margin-left: 0.5rem;
+            }
+        }
+
+        .top-card {
+            background-color: nb-theme(tag-outline-basic-background-color);
+            height: 100px;
+            padding-top: 0.6rem;
+
+            .price {
+                font-weight: 600;
+                font-size: 16px;
+                margin-top: 0.5rem;
+            }
+
+            .icon-container {
+                .icon {
+                    padding: 5px;
+                }
+            }
+
+            .icon-container.success .icon {
+                background-color: nb-theme(color-success-transparent-200);
+            }
+
+            .icon-container.danger .icon {
+                background-color: nb-theme(color-danger-transparent-200);
+            }
+
+            .icon-container.basic .icon {
+                background-color: nb-theme(color-basic-transparent-200);
+            }
+        }
+
+        .calculation-stepper {
+            .dotted-border {
+                border-right: 2px dotted nb-theme(color-basic-700);
+                margin-right: 10px;
+            }
+
+            .solid-border {
+                border-bottom: 2px solid nb-theme(card-border-color);
+            }
+
+            .title {
+                font-weight: 600;
+                font-size: 14px;
+                padding-top: 0.5rem;
+                padding-bottom: 2px;
+                padding-left: 2px;
+            }
+
+            .text {
+                font-size: 12px;
+            }
+
+            .subtitle {
+                height: 100%;
+                font-weight: normal;
+                position: relative;
+                font-size: 12px;
+                color: nb-theme(color-basic-600);
+                padding-left: 2px;
+
+                .circle {
+                    width: 15px;
+                    height: 15px;
+                    border: 3px solid nb-theme(color-basic-700);
+                    border-radius: 50%;
+                    position: absolute;
+                    top: -8px;
+                    right: -8.7px;
+                    padding: 0;
+                    background-color: nb-theme(card-background-color);
+                }
+            }
+        }
+    }
+}

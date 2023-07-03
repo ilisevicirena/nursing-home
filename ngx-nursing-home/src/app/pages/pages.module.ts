@@ -74,6 +74,7 @@ import { CalculationComponent } from './calculation/calculation.component';
 import { StartCalculationComponent } from './calculation/start-calculation/start-calculation.component';
 import { GeneratedInvoiceComponent } from './calculation/generated-invoice/generated-invoice.component';
 import { NgxEchartsModule } from 'ngx-echarts';
+import { CalculationSummaryComponent } from './calculation/calculation-summary/calculation-summary.component';
 
 @NgModule({
   imports: [
@@ -153,6 +154,7 @@ import { NgxEchartsModule } from 'ngx-echarts';
     CalculationComponent,
     StartCalculationComponent,
     GeneratedInvoiceComponent,
+    CalculationSummaryComponent,
   ],
 })
 export class PagesModule {

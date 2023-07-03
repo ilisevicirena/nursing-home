@@ -82,7 +82,8 @@
                     </div>
                 </div>
                 <div class="mt-2 d-flex justify-content-end">
-                    <button nbButton ghost status="primary" shape="round" size="small">{{getString('summaryDetails')}}
+                    <button *ngIf="calculations.length>0" nbButton ghost status="primary" shape="round"
+                        (click)="calculationSummaryDetailsClick()" size="small">{{getString('summaryDetails')}}
                         <nb-icon pack="eva" icon="external-link-outline"></nb-icon>
                     </button>
                 </div>

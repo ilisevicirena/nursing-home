@@ -1,7 +1,7 @@
 USE [ENV01_NURSING_HOME]
 GO
 
-/****** Object:  StoredProcedure [dbo].[calculationSummary]    Script Date: 30.6.2023. 14:33:16 ******/
+/****** Object:  StoredProcedure [dbo].[calculationSummary]    Script Date: 3.7.2023. 8:42:06 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -132,6 +132,9 @@ FROM dbo.Calculation as c
 WHERE [Month] = @Month AND [Year] = @Year;
 
 
+select top 1 CreationDate, DateFrom, DateTo
+from dbo.Calculation 
+where [Month]=@Month and [Year]=@Year;
 
 END
 GO
