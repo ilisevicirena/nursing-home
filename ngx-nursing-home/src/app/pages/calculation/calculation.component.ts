@@ -17,6 +17,7 @@ import { CalculationSummaryComponent } from './calculation-summary/calculation-s
 import { getSidebarResponsiveState$ } from '@nebular/theme/components/sidebar/sidebar.service';
 import { RealPriceModalComponent } from './real-price-modal/real-price-modal.component';
 import { PaidCalculationModalComponent } from './paid-calculation-modal/paid-calculation-modal.component';
+import { CalculationDocumentsComponent } from './calculation-documents/calculation-documents.component';
 declare const echarts: any;
 @Component({
   selector: 'sample-calculation',
@@ -305,7 +306,21 @@ export class CalculationComponent implements OnInit, OnDestroy {
   }
 
   private openDocumentsDialog(calculation: any): void {
-
+    this.subs.push(
+      this.dialogService.open(
+        CalculationDocumentsComponent,
+        {
+          autoFocus: false,
+          closeOnBackdropClick: false,
+          closeOnEsc: false,
+          context: {
+            id: calculation.Id
+          }
+        }
+      ).onClose.subscribe(result => {
+        if (result) this.refreshData();
+      })
+    );
   }
 
   private async cancelCalculation(id: number): Promise<void> {
