@@ -8,12 +8,15 @@ import { ToastrService } from '../../services/toastr.service';
 import { ServicesManagementService } from '../../services/rest/services-management.service';
 import { ScheduleMonth } from 'shared-components/lib/models/schedule.model';
 import { getMonthNames, getYearsInRange } from '../../resources/functions';
-import { DateType, DatepickerFilter, SelectFilter, SmartTableColumn, SmartTableComponent, TagType } from 'shared-components';
+import { ButtonsType, DateType, DatepickerFilter, SelectFilter, SmartTableColumn, SmartTableComponent, TagType } from 'shared-components';
 import { EChartsOption } from 'echarts';
 import { DEFAULT_THEME, NbThemeService } from '@nebular/theme';
 import { delay } from 'rxjs/operators';
 import { StartCalculationComponent } from './start-calculation/start-calculation.component';
 import { CalculationSummaryComponent } from './calculation-summary/calculation-summary.component';
+import { getSidebarResponsiveState$ } from '@nebular/theme/components/sidebar/sidebar.service';
+import { RealPriceModalComponent } from './real-price-modal/real-price-modal.component';
+import { PaidCalculationModalComponent } from './paid-calculation-modal/paid-calculation-modal.component';
 declare const echarts: any;
 @Component({
   selector: 'sample-calculation',
@@ -47,7 +50,8 @@ export class CalculationComponent implements OnInit, OnDestroy {
     new SmartTableColumn(getString('systemPrice')).Property('SystemPrice'),
     new SmartTableColumn(getString('realPrice')).Property('RealPrice'),
     new SmartTableColumn(getString('paidPrice')).Property('PaidPrice'),
-    new SmartTableColumn(getString('paidDate')).Property('DatePaid').SpecialType(new DateType().Format('dd.MM.yyyy.')).SpecialFilter(new DatepickerFilter())
+    new SmartTableColumn(getString('paidDate')).Property('DatePaid').SpecialType(new DateType().Format('dd.MM.yyyy.')).SpecialFilter(new DatepickerFilter()),
+    new SmartTableColumn(getString('actions')).SpecialType(new ButtonsType()).Property('Buttons').Width('17%')
   ];
 
   @ViewChild(SmartTableComponent) table: SmartTableComponent;
@@ -78,7 +82,27 @@ export class CalculationComponent implements OnInit, OnDestroy {
     this.subs.push(
       this.calculationService.getCalculations(this.month + 1, this.year).subscribe(data => {
         this.calculations = data;
-        this.calculations.map(x => x.StatusObj = { status: x.StatusColor, text: getString(x.StatusStringKey), id: x.StatusId });
+        this.calculations.map(x => {
+          x.StatusObj = { status: x.StatusColor, text: getString(x.StatusStringKey), id: x.StatusId };
+          x.Buttons = [];
+
+          switch (x.StatusId) {
+            case 1:
+              x.Buttons.push({ id: 'cancel', shape: 'round', icon: 'close-square-outline', ghost: true, status: 'warning', tooltip: getString('cancelCalculation') });
+              break;
+            case 2:
+              x.Buttons.push(
+                { id: 'realPrice', shape: 'round', icon: 'checkmark-square-2-outline', ghost: true, status: 'primary', tooltip: getString('enterRealPrice') },
+                { id: 'paidPrice', shape: 'round', icon: 'checkmark-square-outline', ghost: true, status: 'primary', tooltip: getString('enterPaidPrice') },
+                { id: 'cancel', shape: 'round', icon: 'close-square-outline', ghost: true, status: 'warning', tooltip: getString('cancelCalculation') }
+              );
+              break;
+          }
+
+          x.Buttons.push({ id: 'documents', shape: 'round', icon: 'attach-outline', ghost: true, status: 'primary', tooltip: getString('calculationDocuments'), text: x.Documents })
+
+          return x;
+        });
       })
     );
   }
@@ -217,6 +241,83 @@ export class CalculationComponent implements OnInit, OnDestroy {
         }
       }
     } else this.toastrService.showToast('warning', getString('nothingSelected'));
+  }
+
+  public onButtonItemClicked(event: any): void {
+    switch (event.button.id) {
+      case 'realPrice':
+        this.openRealPriceDialog(event.rowData);
+        break;
+
+      case 'paidPrice':
+        this.openPaidPriceDialog(event.rowData);
+        break;
+
+      case 'cancel':
+        this.cancelCalculation(event.rowData.Id);
+        break;
+
+      case 'documents':
+        this.openDocumentsDialog(event.rowData);
+        break;
+    }
+  }
+
+  private openRealPriceDialog(calculation: any): void {
+    this.subs.push(
+      this.dialogService.open(
+        RealPriceModalComponent,
+        {
+          autoFocus: false,
+          closeOnBackdropClick: false,
+          closeOnEsc: false,
+          context: {
+            realPrice: calculation.RealPrice ?? calculation.SystemPrice,
+            id: calculation.Id
+          }
+        }
+
+      ).onClose.subscribe(result => {
+        if (result) this.refreshData();
+      })
+    );
+  }
+
+  private openPaidPriceDialog(calculation: any): void {
+    this.subs.push(
+      this.dialogService.open(
+        PaidCalculationModalComponent,
+        {
+          autoFocus: false,
+          closeOnBackdropClick: false,
+          closeOnEsc: false,
+          context: {
+            realPrice: calculation.RealPrice ?? calculation.SystemPrice,
+            paidPrice: calculation.RealPrice ?? calculation.SystemPrice,
+            id: calculation.Id,
+            personId: calculation.PersonId
+          }
+        }
+      ).onClose.subscribe(result => {
+        if (result) this.refreshData();
+      })
+    );
+  }
+
+  private openDocumentsDialog(calculation: any): void {
+
+  }
+
+  private async cancelCalculation(id: number): Promise<void> {
+    const rez = await this.dialogService.openYesNoDialog(getString('areYouSure'), getString('wantToCancelCalculation'));
+    if (rez) {
+      this.subs.push(
+        this.calculationService.cancelCalculation({ Id: id }).subscribe(() => {
+          this.toastrService.showToast('success', getString('saveSuccess'));
+          this.refreshData();
+        })
+      );
+    }
   }
 
   private configureChart(): void {

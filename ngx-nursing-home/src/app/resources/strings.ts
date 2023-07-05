@@ -262,7 +262,14 @@ const strings: IKeyValue[] = [
     { key: "calculationPaidPrice", value: "Plaćeni iznos" },
     { key: "calculationCancelled", value: "Stornirani obračuni" },
     { key: "cancelledCalculationsDescription", value: "Stornirani obračuni izuzeti su iz ukupnog izračunatog, stvarnog i plaćenog iznosa." },
-    { key: "numberOfCancelledCalculations", value: "Broj storniranih obračuna" }
+    { key: "numberOfCancelledCalculations", value: "Broj storniranih obračuna" },
+    { key: "enterRealPrice", value: "Unesi stvarnu cijenu" },
+    { key: "enterPaidPrice", value: "Unesi podatke o plaćanju" },
+    { key: "cancelCalculation", value: "Storniraj obračun" },
+    { key: "calculationDocuments", value: "Pregledaj dokumente vezane uz obračun" },
+    { key: "wantToCancelCalculation", value: "Sigurno želiš stornirati obračun? Nakon storniranja obračun više ne ulazi u izračun ukupnog iznosa." },
+    { key: "realPriceModalTitle", value: "Unos stvarne cijene" },
+    { key: "paidPriceModalTitle", value: "Plaćanje obračuna" },
 ];
 
 const map = new Map(strings.map(obj => [obj.key, obj.value]));

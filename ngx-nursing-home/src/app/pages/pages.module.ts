@@ -75,6 +75,9 @@ import { StartCalculationComponent } from './calculation/start-calculation/start
 import { GeneratedInvoiceComponent } from './calculation/generated-invoice/generated-invoice.component';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { CalculationSummaryComponent } from './calculation/calculation-summary/calculation-summary.component';
+import { RealPriceModalComponent } from './calculation/real-price-modal/real-price-modal.component';
+import { PaidCalculationModalComponent } from './calculation/paid-calculation-modal/paid-calculation-modal.component';
+import { CalculationDocumentsComponent } from './calculation/calculation-documents/calculation-documents.component';
 
 @NgModule({
   imports: [
@@ -155,6 +158,9 @@ import { CalculationSummaryComponent } from './calculation/calculation-summary/c
     StartCalculationComponent,
     GeneratedInvoiceComponent,
     CalculationSummaryComponent,
+    RealPriceModalComponent,
+    PaidCalculationModalComponent,
+    CalculationDocumentsComponent,
   ],
 })
 export class PagesModule {

@@ -15,7 +15,7 @@
                     <ngx-smart-table [columns]="columns" [(data)]="calculations" [addEnabled]="false"
                         [loadingEnabled]="false" [editEnabled]="false" [deleteEnabled]="false" [selectionEnabled]="true"
                         [selectRowByClick]="true" [selctionModeMultiple]=" true"
-                        [defaultPerPageOption]="10"></ngx-smart-table>
+                        (buttonItemClicked)="onButtonItemClicked($event)" [defaultPerPageOption]="10"></ngx-smart-table>
                 </div>
             </nb-card-body>
         </nb-card>

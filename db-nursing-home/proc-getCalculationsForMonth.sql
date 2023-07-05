@@ -1,7 +1,7 @@
 USE [ENV01_NURSING_HOME]
 GO
 
-/****** Object:  StoredProcedure [dbo].[getCalculationsForMonth]    Script Date: 29.6.2023. 11:22:12 ******/
+/****** Object:  StoredProcedure [dbo].[getCalculationsForMonth]    Script Date: 3.7.2023. 14:42:57 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -51,12 +51,14 @@ BEGIN
    [MeasureUnitName]=mu.[Name],
    [MeasureUnitCode]=mu.[Code],
    [MeasureUnitTag]=mu.Tag,
-   [DatePaid]=c.DatePaid
+   [DatePaid]=c.DatePaid,
+   [Documents]=t1.NumberOfDocuments
    from dbo.Calculation as c
    left join dbo.Person as p on c.PersonId=p.Id
    left join dbo.CalculationStatus as s on c.StatusId=s.Id
    left join dbo.PriceUnit as pu on c.PriceUnitId=pu.Id
    left join dbo.MeasureUnit as mu on c.MeasureUnitId=mu.Id
+   left join (select CalculationId, COUNT(CalculationId) as NumberOfDocuments from dbo.CalculationDocumentRelation group by CalculationId) as t1 on t1.CalculationId=c.Id
    where [Month]=@Month and [Year]=@Year;
    
 END

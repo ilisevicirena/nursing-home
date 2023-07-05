@@ -41,7 +41,6 @@ export class CalculationSummaryComponent implements OnInit, OnDestroy {
         this.summary = data.Summary;
         this.percent = Math.trunc((this.summary.CalculatedForPersons / this.summary.Persons) * 100) + "%";
         this.dates = data.Calculation;
-        console.log(this.summary)
       })
     );
   }

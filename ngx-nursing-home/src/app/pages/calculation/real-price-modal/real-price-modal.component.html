@@ -1,0 +1,35 @@
+<nb-card class="event-card">
+    <nb-card-header class="d-flex">
+        <div class="col">
+            <div class="row m-0 p-0 align-items-center">
+                {{getString('realPriceModalTitle')}}<br>
+            </div>
+        </div>
+        <div class="w-max">
+            <button nbButton ghost shape="round" (click)="close(false)">
+                <nb-icon pack="eva" icon="close-outline"></nb-icon>
+            </button>
+        </div>
+    </nb-card-header>
+    <nb-card-body class="pt-0">
+        <div class="row">
+            <div class="form-group">
+                <div class="label">{{getString("realPrice")}} <nb-icon pack="eva" icon="alert-circle-outline"
+                        status="danger" size="small" class="ms-1 required-mark"
+                        [nbTooltip]="getString('required')"></nb-icon></div>
+                <div class="value">
+                    <input nbInput [(ngModel)]="realPrice" fullWidth name="price" type="number"
+                        [placeholder]="getString('realPrice')" autocomplete="off" (focusout)="onPriceChange()">
+                </div>
+            </div>
+        </div>
+    </nb-card-body>
+    <nb-card-footer class="d-flex justify-content-end">
+        <button nbButton ghost shape="round" size="small" class="me-2" (click)="close(false)">
+            {{getString('cancel')}}
+        </button>
+        <button nbButton status="primary" shape="round" size="small" [disabled]="!realPrice" (click)="onSaveClick">
+            {{getString('save')}}
+        </button>
+    </nb-card-footer>
+</nb-card>
