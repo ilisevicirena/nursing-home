@@ -314,7 +314,8 @@ export class CalculationComponent implements OnInit, OnDestroy {
           closeOnBackdropClick: false,
           closeOnEsc: false,
           context: {
-            id: calculation.Id
+            id: calculation.Id,
+            personId: calculation.PersonId
           }
         }
       ).onClose.subscribe(result => {

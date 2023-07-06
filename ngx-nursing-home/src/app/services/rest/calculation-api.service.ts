@@ -47,4 +47,8 @@ export class CalculationApiService extends BaseRestApiService {
   public cancelCalculation(model: any): Observable<any> {
     return this.http.post(this.apiRoute + '/cancelCalculation', model);
   }
+
+  public deleteDocumentFromCalculation(id: number, calculationId: number): Observable<any> {
+    return this.http.delete(this.apiRoute + '/deleteDocumentFromCalculation', { body: { DocumentId: id, CalculationId: calculationId } });
+  }
 }

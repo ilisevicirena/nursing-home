@@ -295,5 +295,34 @@ router.post('/checkCalculationExists', async (request, response) => {
     }
 });
 
+router.delete('/deleteDocumentFromCalculation', async (request, response) => {
+    try {
+        var objectToSave = request.body;
+        const pool = await db;
+        const result = await pool.request()
+            .input('id', objectToSave.DocumentId)
+            .query("EXEC [dbo].[getDocumentDetails] @Id=@id");
+        if (result != null) {
+            var documentId = result.recordset[0].Id;
+
+            if (documentId) {
+                const del = await pool.request()
+                    .input('id', objectToSave.DocumentId)
+                    .input('calc', objectToSave.CalculationId)
+                    .query("EXEC [dbo].[deleteDocumentFromCalculation] @DocumentId=@id, @CalculationId=@calc");
+                if (del != null) {
+                    fs.unlink(result.recordset[0].Path, function (err) {
+                        if (err) response.send(getError(5008));
+                        response.send({ error: false });
+                    });
+                }
+                else response.send(getError(20003));
+            } else response.send(getError(5010));
+        } else response.send(getError(5010));
+    } catch (err) {
+        response.status(500);
+        response.send(err.message);
+    }
+});
 
 module.exports = router;
