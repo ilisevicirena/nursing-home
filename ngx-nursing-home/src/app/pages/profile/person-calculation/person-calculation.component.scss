@@ -8,3 +8,19 @@
         border-radius: 0;
     }
 }
+
+@import "../../../@theme/styles/themes.scss";
+
+@include nb-install-component {
+    .top-card {
+        background-color: nb-theme(color-primary-transparent-200);
+        height: 70px;
+        padding-top: 0.6rem;
+
+        .price {
+            font-weight: 600;
+            font-size: 16px;
+            margin-top: 0.5rem;
+        }
+    }
+}

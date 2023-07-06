@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { getString } from '../../../resources/strings';
 import { CalculationApiService } from '../../../services/rest/calculation-api.service';
@@ -21,8 +21,11 @@ export class PersonCalculationComponent implements OnInit, OnDestroy {
 
   public getString = getString;
   public calculations: any[] = [];
+  public summary: any;
 
   @Input() personId: number;
+
+  @ViewChild(SmartTableComponent) table: SmartTableComponent;
 
   public columns: SmartTableColumn[] = [
     new SmartTableColumn(getString('calculationMonth')).Property('Month'),
@@ -56,7 +59,6 @@ export class PersonCalculationComponent implements OnInit, OnDestroy {
   private getCalculations(): void {
     this.subs.push(
       this.calculationService.getCalculationsForPerson(this.personId).subscribe(data => {
-        console.log(data);
         this.calculations = data;
         this.calculations.map(x => {
           x.StatusObj = { status: x.StatusColor, text: getString(x.StatusStringKey), id: x.StatusId };
@@ -80,6 +82,12 @@ export class PersonCalculationComponent implements OnInit, OnDestroy {
 
           return x;
         });
+      })
+    );
+
+    this.subs.push(
+      this.calculationService.getCalculationsSummaryForPerson(this.personId).subscribe(data => {
+        this.summary = data;
       })
     );
   }
@@ -180,5 +188,71 @@ export class PersonCalculationComponent implements OnInit, OnDestroy {
         })
       );
     }
+  }
+
+  public async markRealPriceClick(): Promise<void> {
+    var selected = this.table.getSelectedRows();
+    if (selected.length > 0) {
+      const rez = await this.dialogService.openYesNoDialog(getString('areYouSure'), getString('wantToMarkRealPrice'));
+      if (rez) {
+        for (let index = 0; index < selected.length; index++) {
+          const element = selected[index];
+          this.subs.push(
+            this.calculationService.calculationRealPriceSave({ Id: element.Id, RealPrice: element.SystemPrice.replace(',', '') }).subscribe(() => {
+              if (index == selected.length - 1) {
+                this.toastrService.showToast('success', getString('saveSuccess'));
+                this.getCalculations();
+              }
+            })
+          );
+        }
+      }
+    } else this.toastrService.showToast('warning', getString('nothingSelected'));
+  }
+
+  public async markPaidPriceClick(): Promise<void> {
+    var selected = this.table.getSelectedRows();
+    if (selected.length > 0) {
+      const rez = await this.dialogService.openYesNoDialog(getString('areYouSure'), getString('wantToMarkPaid'));
+      if (rez) {
+        for (let index = 0; index < selected.length; index++) {
+          const element = selected[index];
+          if (!element.RealPrice) {
+            this.subs.push(
+              this.calculationService.calculationRealPriceSave({ Id: element.Id, RealPrice: element.SystemPrice.replace(',', '') }).subscribe()
+            );
+          }
+
+          this.subs.push(
+            this.calculationService.calculationPaid({ Id: element.Id, PaidPrice: element.RealPrice ? element.RealPrice.replace(',', '') : element.SystemPrice.replace(',', ''), PaidDate: new Date().toISOString() }).subscribe(() => {
+              if (index == selected.length - 1) {
+                this.toastrService.showToast('success', getString('saveSuccess'));
+                this.getCalculations();
+              }
+            })
+          );
+        }
+      }
+    } else this.toastrService.showToast('warning', getString('nothingSelected'));
+  }
+
+  public async cancelCalculationClick(): Promise<void> {
+    var selected = this.table.getSelectedRows();
+    if (selected.length > 0) {
+      const rez = await this.dialogService.openYesNoDialog(getString('areYouSure'), getString('wantToCancelSelected'));
+      if (rez) {
+        for (let index = 0; index < selected.length; index++) {
+          const element = selected[index];
+          this.subs.push(
+            this.calculationService.cancelCalculation({ Id: element.Id }).subscribe(() => {
+              if (index == selected.length - 1) {
+                this.toastrService.showToast('success', getString('saveSuccess'));
+                this.getCalculations();
+              }
+            })
+          );
+        }
+      }
+    } else this.toastrService.showToast('warning', getString('nothingSelected'));
   }
 }

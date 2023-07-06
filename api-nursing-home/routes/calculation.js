@@ -110,6 +110,19 @@ router.get('/getCalculationsForPerson', async (request, response) => {
     }
 });
 
+router.get('/getCalculationsSummaryForPerson', async (request, response) => {
+    try {
+        const pool = await db;
+        const result = await pool.request()
+            .input("id", request.query.PersonId)
+            .query("EXEC [dbo].[personCalculationsSummary] @PersonId=@id");
+        response.json(result.recordset[0]);
+    } catch (err) {
+        response.status(500);
+        response.send(err.message);
+    }
+});
+
 router.get('/getCalculationStatuses', async (request, response) => {
     try {
         const pool = await db;
