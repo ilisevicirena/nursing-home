@@ -59,3 +59,19 @@ export function hexToRgbA(hex: string | undefined): string {
 
     return '';
 }
+
+export function sortFloats(direction: any, a: any, b: any): number {
+    if (a) {
+        a = a.replace(",", "");
+        a = parseFloat(a);
+    }
+
+    if (b) {
+        b = b.replace(",", "");
+        b = parseFloat(b);
+    }
+
+    if (a < b) return -1 * direction;
+    if (a > b) return direction;
+    return 0;
+}

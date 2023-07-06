@@ -2,19 +2,14 @@ import { Component, Inject, LOCALE_ID, OnDestroy, OnInit, ViewChild } from '@ang
 import { Subscription } from 'rxjs';
 import { getString } from '../../resources/strings';
 import { CalculationApiService } from '../../services/rest/calculation-api.service';
-import { CalculationService } from '../../services/calculation.service';
 import { DialogService } from '../../shared/dialog/dialog.service';
 import { ToastrService } from '../../services/toastr.service';
-import { ServicesManagementService } from '../../services/rest/services-management.service';
 import { ScheduleMonth } from 'shared-components/lib/models/schedule.model';
-import { getMonthNames, getYearsInRange } from '../../resources/functions';
+import { getMonthNames, getYearsInRange, sortFloats } from '../../resources/functions';
 import { ButtonsType, DateType, DatepickerFilter, SelectFilter, SmartTableColumn, SmartTableComponent, TagType } from 'shared-components';
-import { EChartsOption } from 'echarts';
 import { DEFAULT_THEME, NbThemeService } from '@nebular/theme';
-import { delay } from 'rxjs/operators';
 import { StartCalculationComponent } from './start-calculation/start-calculation.component';
 import { CalculationSummaryComponent } from './calculation-summary/calculation-summary.component';
-import { getSidebarResponsiveState$ } from '@nebular/theme/components/sidebar/sidebar.service';
 import { RealPriceModalComponent } from './real-price-modal/real-price-modal.component';
 import { PaidCalculationModalComponent } from './paid-calculation-modal/paid-calculation-modal.component';
 import { CalculationDocumentsComponent } from './calculation-documents/calculation-documents.component';
@@ -48,11 +43,11 @@ export class CalculationComponent implements OnInit, OnDestroy {
           return cell.id == search;
         }
       }),
-    new SmartTableColumn(getString('systemPrice')).Property('SystemPrice'),
-    new SmartTableColumn(getString('realPrice')).Property('RealPrice'),
-    new SmartTableColumn(getString('paidPrice')).Property('PaidPrice'),
+    new SmartTableColumn(getString('systemPrice')).Property('SystemPrice').CompareFunction(sortFloats),
+    new SmartTableColumn(getString('realPrice')).Property('RealPrice').CompareFunction(sortFloats),
+    new SmartTableColumn(getString('paidPrice')).Property('PaidPrice').CompareFunction(sortFloats),
     new SmartTableColumn(getString('paidDate')).Property('DatePaid').SpecialType(new DateType().Format('dd.MM.yyyy.')).SpecialFilter(new DatepickerFilter()),
-    new SmartTableColumn(getString('actions')).SpecialType(new ButtonsType()).Property('Buttons').Width('17%')
+    new SmartTableColumn(getString('actions')).SpecialType(new ButtonsType()).Property('Buttons').Width('17%').Sort(false)
   ];
 
   @ViewChild(SmartTableComponent) table: SmartTableComponent;
@@ -60,10 +55,8 @@ export class CalculationComponent implements OnInit, OnDestroy {
   constructor(
     @Inject(LOCALE_ID) private locale: string,
     private calculationService: CalculationApiService,
-    private calcService: CalculationService,
     private dialogService: DialogService,
     private toastrService: ToastrService,
-    private servicesManagementService: ServicesManagementService,
     private theme: NbThemeService
   ) { }
 

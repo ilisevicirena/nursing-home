@@ -10,6 +10,7 @@ import { NbWindowService, NbWindowState } from '@nebular/theme';
 import { getString } from '../../resources/strings';
 import { MeasureUnitsService } from '../../services/rest/measure-units.service';
 import { ExportDocSettings } from 'shared-components/lib/models/smart-table.model';
+import { sortFloats } from '../../resources/functions';
 
 @Component({
   selector: 'sample-packages',
@@ -26,7 +27,7 @@ export class PackagesComponent implements OnInit, OnDestroy {
     new SmartTableColumn(getString('id')).Property('Id'),
     new SmartTableColumn(getString('name')).Property('Name'),
     new SmartTableColumn(getString('description')).Property('Description'),
-    new SmartTableColumn(getString('defaultPrice')).Property('DefaultPackagePrice'),
+    new SmartTableColumn(getString('defaultPrice')).Property('DefaultPackagePrice').CompareFunction(sortFloats),
     new SmartTableColumn(getString('priceUnit')).Property('DefaultPackagePriceUnitId')
       .SpecialType(new LookupType().NameAttribute('PriceUnitTag')).SpecialFilter(new SelectFilter('Id', 'Tag')
         .ServerSource(true).ServerEndpoint(this.priceUnitsService.apiRoute)),

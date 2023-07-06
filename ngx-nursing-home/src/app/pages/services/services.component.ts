@@ -10,6 +10,7 @@ import { ToastrService } from '../../services/toastr.service';
 import { AddEditServiceComponent } from './add-edit-service/add-edit-service.component';
 import { NbWindowService, NbWindowState } from '@nebular/theme';
 import { ExportDocSettings } from 'shared-components/lib/models/smart-table.model';
+import { sortFloats } from '../../resources/functions';
 
 @Component({
   selector: 'sample-services',
@@ -24,7 +25,7 @@ export class ServicesComponent implements OnInit, OnDestroy {
     new SmartTableColumn(getString('id')).Property("Id"),
     new SmartTableColumn(getString('name')).Property("Name"),
     new SmartTableColumn(getString('description')).Property("Description"),
-    new SmartTableColumn(getString('costPerUnit')).Property("CostPerUnit"),
+    new SmartTableColumn(getString('costPerUnit')).Property("CostPerUnit").CompareFunction(sortFloats),
     new SmartTableColumn(getString('measureUnit')).Property("MeasureUnitId").SpecialType(new LookupType().NameAttribute("MeasureUnitName"))
       .SpecialFilter(new SelectFilter("Id", "Tag").ServerSource(true).ServerEndpoint(this.measureUnitsService.apiRoute)),
     new SmartTableColumn(getString('priceUnit')).Property("PriceUnitId").SpecialType(new LookupType().NameAttribute("PriceUnitTag"))
