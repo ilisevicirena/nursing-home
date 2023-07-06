@@ -12,7 +12,8 @@
                             <div class="label">{{getString("firstName")}}</div>
                             <div class="value">
                                 <input [placeholder]="getString('firstName')" nbInput fullWidth name="firstName"
-                                    [(ngModel)]="newPersonData.FirstName" required #firstName1="ngModel"
+                                    autocomplete="off" [(ngModel)]="newPersonData.FirstName" required
+                                    #firstName1="ngModel"
                                     [status]="firstName1.dirty ? (firstName1.invalid ? 'danger' : 'success'): 'basic'"
                                     [disabled]="!person.Active">
                             </div>
@@ -22,7 +23,8 @@
                         <div class="form-group">
                             <div class="label">{{getString("lastName")}}</div>
                             <div class="value"><input nbInput fullWidth [placeholder]="getString('lastName')"
-                                    name="surname" [(ngModel)]="newPersonData.LastName" required #lastName1="ngModel"
+                                    autocomplete="off" name="surname" [(ngModel)]="newPersonData.LastName" required
+                                    #lastName1="ngModel"
                                     [status]="lastName1.dirty ? (lastName1.invalid ? 'danger' : 'success'): 'basic'"
                                     [disabled]="!person.Active">
                             </div>
@@ -35,7 +37,7 @@
                             <div class="label">{{getString("jmbg")}}</div>
                             <div class="value">
                                 <input nbInput [placeholder]="getString('jmbg')" fullWidth name="jmbg" required
-                                    #jmbg1="ngModel" pattern="[0-9]{13}$"
+                                    #jmbg1="ngModel" pattern="[0-9]{13}$" autocomplete="off"
                                     (keypress)="($event.charCode == 8 || $event.charCode == 0) ? null : $event.charCode >= 48 && $event.charCode <= 57;"
                                     [status]="jmbg1.dirty ? (jmbg1.invalid ? 'danger' : 'success'): 'basic'"
                                     [(ngModel)]="newPersonData.JMBG" [disabled]="!person.Active">
@@ -48,7 +50,7 @@
                             <div class="value">
                                 <nb-form-field>
                                     <input nbInput #birthDateInput [placeholder]="getString('birthDate')" fullWidth
-                                        name="birthData" [(ngModel)]="newPersonData.BirthDate"
+                                        name="birthData" [(ngModel)]="newPersonData.BirthDate" autocomplete="off"
                                         [disabled]="!person.Active" [nbDatepicker]="birthDateDatepicker">
                                     <nb-datepicker #birthDateDatepicker></nb-datepicker>
                                     <button nbButton nbSuffix ghost (click)="birthDateInput.focus()">
@@ -79,7 +81,7 @@
                             <div class="label">{{getString('address')}}</div>
                             <div class="value">
                                 <input nbInput fullWidth [placeholder]="getString('address')" name="address"
-                                    [(ngModel)]="newPersonData.Address" [disabled]="!person.Active">
+                                    autocomplete="off" [(ngModel)]="newPersonData.Address" [disabled]="!person.Active">
                             </div>
                         </div>
                     </div>
@@ -95,7 +97,7 @@
                             <div class="value">
                                 <nb-form-field>
                                     <input nbInput [placeholder]="getString('startDate')" fullWidth #startDateInput
-                                        name="startDate" [(ngModel)]="newPersonData.StartDate"
+                                        name="startDate" [(ngModel)]="newPersonData.StartDate" autocomplete="off"
                                         [disabled]="!person.Active" [nbDatepicker]="startDateDatepicker">
                                     <nb-datepicker #startDateDatepicker></nb-datepicker>
                                     <button nbButton nbSuffix ghost (click)="startDateInput.focus();">
@@ -111,7 +113,7 @@
                             <div class="value">
                                 <nb-form-field>
                                     <input nbInput fullWidth [placeholder]="getString('endDate')" #endDateInput
-                                        name="endDate" [(ngModel)]="newPersonData.EndDate"
+                                        name="endDate" [(ngModel)]="newPersonData.EndDate" autocomplete="off"
                                         [nbDatepicker]="endDateDatepicker">
                                     <nb-datepicker #endDateDatepicker></nb-datepicker>
                                     <button nbButton nbSuffix ghost (click)="endDateInput.focus();">
@@ -127,8 +129,9 @@
                             <div class="value">
                                 <nb-form-field>
                                     <input nbInput [placeholder]="getString('creationDate')" fullWidth
-                                        #creationDateInput name="creationDate" [(ngModel)]="newPersonData.CreationDate"
-                                        disabled [nbDatepicker]="creationDateDatepicker">
+                                        autocomplete="off" #creationDateInput name="creationDate"
+                                        [(ngModel)]="newPersonData.CreationDate" disabled
+                                        [nbDatepicker]="creationDateDatepicker">
                                     <nb-datepicker #creationDateDatepicker></nb-datepicker>
                                     <button nbButton nbSuffix ghost>
                                         <nb-icon pack="eva" icon="calendar-outline"></nb-icon>

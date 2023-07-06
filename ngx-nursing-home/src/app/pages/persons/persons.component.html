@@ -43,8 +43,7 @@
                 </nb-form-field>
             </div>
         </div>
-        <div class="row m-0" style="height: calc(100% - 1rem);
-    overflow: auto;">
+        <div class="row m-0" id="cards">
             <div class="col-md-3 p-1" *ngFor="let person of personsData | filter:searchTerm">
                 <nb-card class="m-0">
                     <nb-card-header class="d-flex align-items-center person-card-header"

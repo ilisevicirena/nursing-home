@@ -10,3 +10,8 @@
 .content-container {
     height: calc(100% - 2.1rem);
 }
+
+#cards {
+    max-height: calc(100% - 1rem);
+    overflow: auto;
+}

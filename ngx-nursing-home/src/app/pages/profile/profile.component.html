@@ -194,9 +194,10 @@
                             </div>
                             <div style="height: 248px;">
                                 <ngx-smart-table [columns]="getPersonHistoryColumns()" [addEnabled]="false"
-                                    [editEnabled]="false" [deleteEnabled]="false" [exportPdfEnabled]="false"
-                                    [entriesPerPageEnabled]="false" [exportExcelEnabled]="false"
-                                    [refreshEnabled]="false" [(data)]="personHistory"></ngx-smart-table>
+                                    [pagerEnabled]="false" [editEnabled]="false" [deleteEnabled]="false"
+                                    [exportPdfEnabled]="false" [entriesPerPageEnabled]="false"
+                                    [exportExcelEnabled]="false" [refreshEnabled]="false"
+                                    [(data)]="personHistory"></ngx-smart-table>
                             </div>
                         </div>
                     </div>
@@ -425,7 +426,7 @@
                             <div style="height: 248px;">
                                 <ngx-smart-table [columns]="roomHistoryColumns" [addEnabled]="false"
                                     [editEnabled]="false" [deleteEnabled]="false" [exportPdfEnabled]="false"
-                                    [entriesPerPageEnabled]="false" [exportExcelEnabled]="false"
+                                    [pagerEnabled]="false" [entriesPerPageEnabled]="false" [exportExcelEnabled]="false"
                                     [refreshEnabled]="false" [(data)]="roomHistory"></ngx-smart-table>
                             </div>
                         </div>
