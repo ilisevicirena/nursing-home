@@ -3,3 +3,69 @@ nb-card {
     width: 400px;
     border-radius: 1rem;
 }
+
+@import '../../@theme/styles/themes';
+
+@include nb-install-component() {
+    .fast-button {
+        background-color: nb-theme(tag-outline-basic-background-color);
+        padding: 1rem;
+        border-radius: 0.5rem;
+        position: relative;
+        display: flex;
+        width: 100%;
+
+        .col {
+            margin: 0 1rem;
+        }
+
+        .icon {
+            width: max-content;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            .icon-container {
+                padding: 0.5rem;
+            }
+
+            .icon-container.success {
+                background-color: nb-theme(color-success-transparent-200);
+            }
+
+            .icon-container.warning {
+                background-color: nb-theme(color-warning-transparent-200);
+            }
+        }
+
+        .title {
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .subtitle {
+            font-size: 12px;
+            color: nb-theme(color-basic-600);
+            line-height: 12px;
+            margin-top: 5px;
+        }
+
+        .go-icon {
+            display: none;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: max-content;
+        }
+
+    }
+
+    .fast-button:hover {
+        cursor: pointer;
+        background-color: nb-theme(button-filled-basic-background-color);
+
+        .go-icon {
+            display: block;
+        }
+    }
+}

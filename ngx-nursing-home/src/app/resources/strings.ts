@@ -202,13 +202,13 @@ const strings: IKeyValue[] = [
     { key: "inProgress", value: "U tijeku" },
     { key: "provided", value: "Uneseno" },
     { key: "doctorVisit", value: "Liječnička posjeta za dan: " },
-    { key: "startDoctorVisit", value: "Pokreni akciju liječničkog obilaska" },
+    { key: "startDoctorVisit", value: "Pokretanje akcije liječničkog obilaska za sve aktivne osobe" },
     { key: "delete", value: "Obriši" },
     { key: "completed", value: "Dovršeno" },
     { key: "completed", value: "Dovršeno" },
     { key: "documentsPersonStepText", value: "Ovdje možeš dodati neke dokumente vezane uz novu osobu (kopije osobnih dokumenata, upute za davanje lijekova, liječničke nalaze i slično). Dodane dokumente možeš kasnije pregledati i uređivati unutar profila osobe. Dokumente ne moraš dodati odmah..." },
     { key: "uploadDocument", value: "Dodaj dokument" },
-    { key: "startCalculation", value: "Pokreni obračun za sve aktivne osobe" },
+    { key: "startCalculation", value: "Pokretanje obračuna za sve aktivne osobe" },
     { key: "calculationPage", value: "Obračun" },
     { key: "calculationFor", value: "Obračun za" },
     { key: "newCalculation", value: "Novi obračun" },
@@ -273,6 +273,8 @@ const strings: IKeyValue[] = [
     { key: "personCalculation", value: "Računi" },
     { key: "calculationMonth", value: "Mjesec" },
     { key: "calculationYear", value: "Godina" },
+    { key: "doctorVisitAction", value: "Liječnički obilazak" },
+    { key: "startCalculationAction", value: "Brzi obračun" },
 ];
 
 const map = new Map(strings.map(obj => [obj.key, obj.value]));
