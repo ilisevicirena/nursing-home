@@ -7,6 +7,7 @@ import { Subscription } from 'rxjs';
 import { getString } from '../../resources/strings';
 import { NoteTagsComponent } from './note-tags/note-tags.component';
 import { NoteDocumentsComponent } from './note-documents/note-documents.component';
+import { hexToRgbA } from '../../resources/functions';
 
 @Component({
   selector: 'sample-notes',
@@ -21,6 +22,7 @@ export class NotesComponent implements OnInit, OnDestroy {
 
   public notes: any[] = [];
   public getString = getString;
+  public hexToRgbA = hexToRgbA;
   public searchTerm: string = "";
   public allTags: any[] = [];
   public filters: any[] = [];
