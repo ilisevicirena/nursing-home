@@ -28,7 +28,7 @@
                             {{notification.CreationDate | date:'MMM d, y'}}
                         </div>
                     </div>
-                    <div class="action-buttons">
+                    <div class="action-buttons" *ngIf="!notification.Read || notification.LinkId>0">
                         <button nbButton ghost status="primary" size="small" shape="round" class="me-2"
                             *ngIf="!notification.Read" (click)="markNotificationAsRead(notification)"
                             [nbTooltip]="getString('markAsRead')">
