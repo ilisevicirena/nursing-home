@@ -78,6 +78,7 @@ import { CalculationSummaryComponent } from './calculation/calculation-summary/c
 import { RealPriceModalComponent } from './calculation/real-price-modal/real-price-modal.component';
 import { PaidCalculationModalComponent } from './calculation/paid-calculation-modal/paid-calculation-modal.component';
 import { CalculationDocumentsComponent } from './calculation/calculation-documents/calculation-documents.component';
+import { PersonCalculationComponent } from './profile/person-calculation/person-calculation.component';
 
 @NgModule({
   imports: [
@@ -161,6 +162,7 @@ import { CalculationDocumentsComponent } from './calculation/calculation-documen
     RealPriceModalComponent,
     PaidCalculationModalComponent,
     CalculationDocumentsComponent,
+    PersonCalculationComponent,
   ],
 })
 export class PagesModule {

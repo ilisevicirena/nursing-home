@@ -270,6 +270,9 @@ const strings: IKeyValue[] = [
     { key: "wantToCancelCalculation", value: "Sigurno želiš stornirati obračun? Nakon storniranja obračun više ne ulazi u izračun ukupnog iznosa." },
     { key: "realPriceModalTitle", value: "Unos stvarne cijene" },
     { key: "paidPriceModalTitle", value: "Plaćanje obračuna" },
+    { key: "personCalculation", value: "Računi" },
+    { key: "calculationMonth", value: "Mjesec" },
+    { key: "calculationYear", value: "Godina" },
 ];
 
 const map = new Map(strings.map(obj => [obj.key, obj.value]));

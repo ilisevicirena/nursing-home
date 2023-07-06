@@ -1,0 +1,8 @@
+<div class="h-100 w-100">
+    <div style="height: 700px;">
+        <ngx-smart-table [columns]="columns" [(data)]="calculations" [addEnabled]="false" [loadingEnabled]="false"
+            [editEnabled]="false" [deleteEnabled]="false" [selectionEnabled]="true" [selectRowByClick]="true"
+            [selctionModeMultiple]=" true" (buttonItemClicked)="onButtonItemClicked($event)"
+            [defaultPerPageOption]="10"></ngx-smart-table>
+    </div>
+</div>

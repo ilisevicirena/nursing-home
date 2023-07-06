@@ -1,18 +1,13 @@
--- ================================================
--- Template generated from Template Explorer using:
--- Create Procedure (New Menu).SQL
---
--- Use the Specify Values for Template Parameters 
--- command (Ctrl-Shift-M) to fill in the parameter 
--- values below.
---
--- This block of comments will not be included in
--- the definition of the procedure.
--- ================================================
+USE [ENV01_NURSING_HOME]
+GO
+
+/****** Object:  StoredProcedure [dbo].[getCalculationsForPerson]    Script Date: 6.7.2023. 11:43:25 ******/
 SET ANSI_NULLS ON
 GO
+
 SET QUOTED_IDENTIFIER ON
 GO
+
 -- =============================================
 -- Author:		Irena Ilisevic
 -- Create date: 26.6.2023.
@@ -30,7 +25,7 @@ BEGIN
 	SET NOCOUNT ON;
 
      select 
-   [Id]=c.Id,
+  [Id]=c.Id,
    [CalculationDate]=c.CreationDate,
    [Month]=c.[Month],
    [Year]=[Year],
@@ -38,14 +33,15 @@ BEGIN
    [PersonFirstName]=p.FirstName,
    [PersonLastName]=p.LastName,
    [PersonJMBG]=P.JMBG,
-   [SystemPrice]=[SystemPrice],
-   [RealPrice]=[RealPrice],
-   [PaidPrice]=[PaidPrice],
+   [SystemPrice]=FORMAT(SystemPrice, 'N2'),
+   [RealPrice]=FORMAT(RealPrice, 'N2'),
+   [PaidPrice]=FORMAT(PaidPrice, 'N2'),
    [DateFrom]=c.[DateFrom],
    [DateTo]=c.DateTo,
    [StatusId]=c.StatusId,
    [StatusName]=s.[Name],
    [StatusStringKey]=s.StringKey,
+   [StatusColor]=s.Color,
    [PaymentDaysDeadline]=PaymentDaysDeadline,
    [PriceUnitId]=c.PriceUnitId,
    [PriceUnitName]=pu.[Name],
@@ -54,12 +50,16 @@ BEGIN
    [MeasureUnitName]=mu.[Name],
    [MeasureUnitCode]=mu.[Code],
    [MeasureUnitTag]=mu.Tag,
-   [DatePaid]=c.DatePaid
+   [DatePaid]=c.DatePaid,
+   [Documents]=t1.NumberOfDocuments
    from dbo.Calculation as c
    left join dbo.Person as p on c.PersonId=p.Id
    left join dbo.CalculationStatus as s on c.StatusId=s.Id
    left join dbo.PriceUnit as pu on c.PriceUnitId=pu.Id
    left join dbo.MeasureUnit as mu on c.MeasureUnitId=mu.Id
-	where c.PersonId=@PersonId;
+    left join (select CalculationId, COUNT(CalculationId) as NumberOfDocuments from dbo.CalculationDocumentRelation group by CalculationId) as t1 on t1.CalculationId=c.Id
+	where c.PersonId=@PersonId
+	order by c.[Year] desc, c.[Month] desc;
 END
 GO
+

@@ -47,7 +47,7 @@ export class CalculationComponent implements OnInit, OnDestroy {
     new SmartTableColumn(getString('realPrice')).Property('RealPrice').CompareFunction(sortFloats),
     new SmartTableColumn(getString('paidPrice')).Property('PaidPrice').CompareFunction(sortFloats),
     new SmartTableColumn(getString('paidDate')).Property('DatePaid').SpecialType(new DateType().Format('dd.MM.yyyy.')).SpecialFilter(new DatepickerFilter()),
-    new SmartTableColumn(getString('actions')).SpecialType(new ButtonsType()).Property('Buttons').Width('17%').Sort(false)
+    new SmartTableColumn(getString('actions')).SpecialType(new ButtonsType()).Property('Buttons').Width('17%').Sort(false).Filter(false)
   ];
 
   @ViewChild(SmartTableComponent) table: SmartTableComponent;

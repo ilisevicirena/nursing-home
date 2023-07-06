@@ -443,6 +443,10 @@
                         <sample-notes [(personId)]="personId" [(personName)]="person.FirstName"
                             [(personLastName)]="person.LastName"></sample-notes>
                     </div>
+
+                    <div *ngSwitchCase="'calculation'" class="h-100">
+                        <sample-person-calculation [(personId)]="personId"></sample-person-calculation>
+                    </div>
                 </div>
             </nb-card-body>
         </nb-card>

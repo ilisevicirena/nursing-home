@@ -24,6 +24,10 @@ export class CalculationApiService extends BaseRestApiService {
     return this.http.get(this.apiRoute + "/getCalculationStatuses");
   }
 
+  public getCalculationsForPerson(id: number): Observable<any> {
+    return this.http.get(this.apiRoute + "/getCalculationsForPerson?PersonId=" + id);
+  }
+
   public getCalculationDocuments(id: number): Observable<any> {
     return this.http.get(this.apiRoute + "/calculationDocuments?Id=" + id);
   }

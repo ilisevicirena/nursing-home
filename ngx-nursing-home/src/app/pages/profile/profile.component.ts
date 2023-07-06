@@ -60,7 +60,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
     { option: 'dormatoryData', string: 'dormatoryData', active: false },
     { option: 'services', string: 'services', active: false },
     { option: 'documents', string: 'documents', active: false },
-    { option: 'notes', string: 'notes', active: false }
+    { option: 'notes', string: 'notes', active: false },
+    { option: 'calculation', string: 'personCalculation', active: false }
   ];
   public roomsColumns: SelectGridColumn[] = [
     { name: "name", title: getString('room'), attributeName: "Name" },
