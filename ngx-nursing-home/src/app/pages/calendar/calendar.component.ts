@@ -117,4 +117,8 @@ export class CalendarComponent implements OnInit, OnDestroy {
       })
     );
   }
+
+  public onTodayClicked(): void {
+    this.getEventsForMonth(this.schedule.getCurrentVisibleMonth(), this.schedule.getCurrentVisibleYear());
+  }
 }

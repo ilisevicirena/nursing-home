@@ -1,7 +1,7 @@
 <div class="h-100 overflow-auto position-relative">
 
     <ngx-schedule [(events)]="events" (yearSelectionChanged)="onYearSelectionChange($event)" [showAddNewBtn]="true"
-        [addNewBtnTitle]="getString('addEvent')" (addNewClicked)="onAddNewClick()"
+        [addNewBtnTitle]="getString('addEvent')" (addNewClicked)="onAddNewClick()" (todayClicked)="onTodayClicked()"
         (monthSelectionChanged)="onMonthSelectionChange($event)" (eventClicked)="onEventClicked($event)">
     </ngx-schedule>
 </div>
