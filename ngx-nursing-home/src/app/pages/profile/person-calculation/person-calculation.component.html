@@ -1,11 +1,11 @@
 <div class="h-100 w-100">
     <div class="toolbar d-flex mb-3">
         <div class="col d-flex align-items-center">
-            <button nbButton ghost status="primary" shape="round" class="me-2"
-                [nbTooltip]="getString('newCalculation')">
+            <button nbButton ghost status="primary" shape="round" class="me-2" [nbTooltip]="getString('newCalculation')"
+                (click)="newCalculationClick()">
                 <nb-icon pack="eva" icon="plus-outline"></nb-icon>
             </button>
-            <button nbButton ghost status="primary" shape="round" class="me-2"
+            <button nbButton ghost status="primary" shape="round" class="me-2" (click)="recalculateSelectedClick()"
                 [nbTooltip]="getString('recalculateSelected')">
                 <nb-icon pack="eva" icon="flip-2-outline"></nb-icon>
             </button>

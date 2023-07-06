@@ -9,6 +9,7 @@ import { ToastrService } from '../../../services/toastr.service';
 import { RealPriceModalComponent } from '../../calculation/real-price-modal/real-price-modal.component';
 import { PaidCalculationModalComponent } from '../../calculation/paid-calculation-modal/paid-calculation-modal.component';
 import { CalculationDocumentsComponent } from '../../calculation/calculation-documents/calculation-documents.component';
+import { StartCalculationComponent } from '../../calculation/start-calculation/start-calculation.component';
 
 @Component({
   selector: 'sample-person-calculation',
@@ -255,4 +256,51 @@ export class PersonCalculationComponent implements OnInit, OnDestroy {
       }
     } else this.toastrService.showToast('warning', getString('nothingSelected'));
   }
+
+  public newCalculationClick(): void {
+    this.subs.push(
+      this.dialogService.open(
+        StartCalculationComponent,
+        {
+          autoFocus: false,
+          closeOnEsc: false,
+          closeOnBackdropClick: false,
+          context: {
+            personsIds: [parseInt(this.personId as any)],
+            profileMode: true
+          }
+        }
+      ).onClose.subscribe(result => {
+        if (result) this.getCalculations();
+      })
+    );
+  }
+
+  public recalculateSelectedClick(): void {
+    var selected = this.table.getSelectedRows();
+    console.log(selected)
+    if (selected.length == 1) {
+      this.subs.push(
+        this.dialogService.open(
+          StartCalculationComponent,
+          {
+            autoFocus: false,
+            closeOnBackdropClick: false,
+            closeOnEsc: false,
+            context: {
+              personsIds: [parseInt(selected[0].PersonId)],
+              disableInputs: true,
+              recalculate: 1,
+              month: selected[0].Month - 1,
+              year: selected[0].Year,
+              profileMode: true
+            }
+          }
+        ).onClose.subscribe(result => {
+          if (result) this.getCalculations();
+        })
+      );
+    } else this.toastrService.showToast('warning', getString('nothingSelected'));
+  }
+
 }

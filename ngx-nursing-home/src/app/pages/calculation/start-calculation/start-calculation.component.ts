@@ -33,6 +33,7 @@ export class StartCalculationComponent implements OnInit, OnDestroy {
   public calculationPercent: number = 0;
   public personsIds: number[] = [];
   public disableInputs: boolean = false;
+  public profileMode: boolean = false;
 
   @ViewChild(GeneratedInvoiceComponent) invoice: GeneratedInvoiceComponent;
 

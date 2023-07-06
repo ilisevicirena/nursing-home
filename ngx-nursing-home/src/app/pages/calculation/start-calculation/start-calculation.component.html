@@ -4,7 +4,7 @@
             <div class="row m-0 p-0 align-items-center">
                 {{getString('newCalculation')}}<br>
             </div>
-            <div class="row m-0 p-0">
+            <div class="row m-0 p-0" *ngIf="!profileMode">
                 <span class="p-0 label mt-1">{{getString('startingCalculation')}}</span>
             </div>
         </div>
@@ -47,7 +47,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row m-0 pt-2">
+            <div class="row m-0 pt-2" *ngIf="!profileMode">
                 <div class="col-md-12 p-0">
                     <div class="form-group">
                         <div class="value">
