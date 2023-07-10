@@ -1,7 +1,7 @@
 USE [ENV01_NURSING_HOME]
 GO
 
-/****** Object:  StoredProcedure [dbo].[dailyNotificationCheck]    Script Date: 22.6.2023. 14:15:03 ******/
+/****** Object:  StoredProcedure [dbo].[checkNotificationsStatus]    Script Date: 10.7.2023. 9:02:15 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -10,10 +10,10 @@ GO
 
 -- =============================================
 -- Author:		Irena Ilisevic
--- Create date: 19.6.2023.
--- Description:	daily checks
+-- Create date: 9.5.2023.
+-- Description:	checks if there any unread notification
 -- =============================================
-CREATE PROCEDURE [dbo].[dailyNotificationCheck]
+CREATE PROCEDURE [dbo].[checkNotificationsStatus]
 	-- Add the parameters for the stored procedure here	
 AS
 BEGIN
@@ -22,37 +22,9 @@ BEGIN
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
-	DECLARE @TodayDate DATE = CONVERT(DATE, GETDATE())
-	DECLARE @RowCount INT
+	select [NotificationNumber]=isnull(t1.NotificationsNumber,0)
+	from (select count(Id) as NotificationsNumber from dbo.[Notification] where [Read]=0) as t1;
 
--- Check if a row with today's date exists
-IF EXISTS (SELECT 1 FROM dbo.NotificationsChecked WHERE CONVERT(DATE, [Date]) = @TodayDate)
-BEGIN
-    -- Row with today's date exists, perform necessary actions
-    -- Replace the following code with your desired actions
-    PRINT 'Row with today''s date exists'
-    -- End of actions
-END
-ELSE
-BEGIN
-   exec dbo.insertAnniversaryNotifications;
-   exec dbo.insertBirthdayNotifications;
-   exec dbo.insertEventReminderNotification;
-    -- End of actions
-
-    -- Insert a new row with the current date
-    INSERT INTO dbo.NotificationsChecked ([Date]) VALUES (GETDATE())
-END
-
--- Get the row count
-SELECT @RowCount = COUNT(*) FROM dbo.NotificationsChecked
-
--- Check if the row count exceeds 100
-IF @RowCount > 100
-BEGIN
-    -- Delete all rows except the one with today's date
-    DELETE FROM dbo.NotificationsChecked WHERE CONVERT(DATE, [Date]) != @TodayDate
-END
 END
 GO
 
