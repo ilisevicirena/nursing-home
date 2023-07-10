@@ -192,7 +192,7 @@
                                     -->
                                 </div>
                             </div>
-                            <div style="height: 248px;">
+                            <div style="height: calc(100% - 2rem);">
                                 <ngx-smart-table [columns]="getPersonHistoryColumns()" [addEnabled]="false"
                                     [pagerEnabled]="false" [editEnabled]="false" [deleteEnabled]="false"
                                     [exportPdfEnabled]="false" [entriesPerPageEnabled]="false"
@@ -208,7 +208,9 @@
                             {{getString('contacts')}}
                             <div class="line"></div>
                         </div>
-                        <sample-contacts-grid [personId]="person.Id" [elementHeight]="523"></sample-contacts-grid>
+                        <div style="max-height: calc(100% - 2rem);">
+                            <sample-contacts-grid [personId]="person.Id"></sample-contacts-grid>
+                        </div>
                     </div>
 
                     <div *ngSwitchCase="'stayData'" class="h-100">
@@ -423,7 +425,7 @@
                                 {{getString('history')}}
                                 <div class="line"></div>
                             </div>
-                            <div style="height: 248px;">
+                            <div style="height: calc(100% - 2rem);">
                                 <ngx-smart-table [columns]="roomHistoryColumns" [addEnabled]="false"
                                     [editEnabled]="false" [deleteEnabled]="false" [exportPdfEnabled]="false"
                                     [pagerEnabled]="false" [entriesPerPageEnabled]="false" [exportExcelEnabled]="false"

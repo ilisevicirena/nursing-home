@@ -3,7 +3,7 @@
         {{getString('discounts')}}
     </nb-card-header>
     <nb-card-body>
-        <div style="height: 550px;">
+        <div class="h-100">
             <ngx-smart-table [columns]="discountsColumns" [(data)]="discountsData" tableMode="external"
                 [exportSettings]="exportSettings" (createStarted)="onCreateStarted()" [editEnabled]="false"
                 (deleteStarted)="onDeleteStarted($event)" [loadingEnabled]="false"

@@ -1,10 +1,11 @@
 <div class="row h-100">
     <div class="col-md-6 ps-0 h-100">
         <nb-card class="h-100">
-            <nb-card-body>
-                <nb-tabset (changeTab)="onTabChange($event)">
-                    <nb-tab [tabTitle]="floorsTitle" class="ps-0 pe-0 pb-0">
-                        <div style="height: 543px">
+            <nb-card-body class="overflow-hidden">
+                <nb-tabset (changeTab)="onTabChange($event)" class="h-100">
+                    <nb-tab [tabTitle]="floorsTitle" class="ps-0 pe-0 pb-0 overflow-hidden"
+                        style="height: calc(100% - 4rem);">
+                        <div class="max-h-100 h-100">
                             <ngx-smart-table #floorsTable [tableMode]="tableMode" [columns]="floorsColumns"
                                 [(data)]="floorsData" [pagerEnabled]="false" [loadingEnabled]="false"
                                 [(load)]="floorsLoading" [entriesPerPageEnabled]="false"
@@ -13,8 +14,9 @@
                                 (editConfirm)="onEditFloorConfirm($event)"></ngx-smart-table>
                         </div>
                     </nb-tab>
-                    <nb-tab [tabTitle]="roomsTitle" class="ps-0 pe-0 pb-0">
-                        <div style="height: 543px">
+                    <nb-tab [tabTitle]="roomsTitle" class="ps-0 pe-0 pb-0 overflow-hidden"
+                        style="height: calc(100% - 4rem);">
+                        <div class="max-h-100 h-100">
                             <ngx-smart-table #roomsTable [tableMode]="tableMode" [columns]="roomsColumns"
                                 [(data)]="roomsData" [pagerEnabled]="false" [loadingEnabled]="false"
                                 [exportSettings]="exportSettingsRooms" [(load)]="roomsLoading"

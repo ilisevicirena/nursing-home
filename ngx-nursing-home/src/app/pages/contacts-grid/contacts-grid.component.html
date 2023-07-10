@@ -1,6 +1,4 @@
-<div [style]="'height: '+elementHeight+'px'">
-    <ngx-smart-table [data]="contactsData" [columns]="contactsColumns" (createConfirm)="contactsCreate($event)"
-        (editConfirm)="contactsEdit($event)" (deleteConfirm)="contactsDelete($event)" [exportExcelEnabled]="true"
-        [(exportSettings)]="exportSettings" [defaultPerPageOption]="10" [exportPdfEnabled]="true" [pagerEnabled]="true"
-        [entriesPerPageEnabled]="true" [refreshEnabled]="true"></ngx-smart-table>
-</div>
+<ngx-smart-table [data]="contactsData" [columns]="contactsColumns" (createConfirm)="contactsCreate($event)"
+    (editConfirm)="contactsEdit($event)" (deleteConfirm)="contactsDelete($event)" [exportExcelEnabled]="true"
+    [(exportSettings)]="exportSettings" [defaultPerPageOption]="10" [exportPdfEnabled]="true" [pagerEnabled]="true"
+    [entriesPerPageEnabled]="true" [refreshEnabled]="true"></ngx-smart-table>

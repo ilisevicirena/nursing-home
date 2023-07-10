@@ -17,11 +17,11 @@
                 (checkedChange)="showDeactivatedChange()"></nb-toggle>
         </nb-card-header>
         <nb-card-body>
-            <div style="height: 510px;">
+            <div class="max-h-100 h-100">
                 <ngx-smart-table [(data)]="personsData" [columns]="gridColumns" [addEnabled]="false"
                     [exportSettings]="exportSettings" [loadingEnabled]="false" [editEnabled]="false"
-                    [deleteEnabled]="false" [selectionEnabled]="true" [selectRowByClick]="true"
-                    (selectionChanged)="gridSelectionChanged($event)"></ngx-smart-table>
+                    [defaultPerPageOption]="10" [deleteEnabled]="false" [selectionEnabled]="true"
+                    [selectRowByClick]="true" (selectionChanged)="gridSelectionChanged($event)"></ngx-smart-table>
             </div>
         </nb-card-body>
     </nb-card>
