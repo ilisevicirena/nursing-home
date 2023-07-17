@@ -80,34 +80,40 @@ export class StartCalculationComponent implements OnInit, OnDestroy {
     this.subs.push(
       // get packages and services for person
       this.servicesManagementService.getPackagesAndServicesForPerson(person.Id).subscribe(data => {
-        person.ServicesManagement = data;
 
-        // calculate price foreach package
-        person.ServicesManagement.Packages.forEach(pack => {
-          var services = person.ServicesManagement.PackagesServices.filter(x => x.PackageId == pack.Id);
-          var result: ICalculationResult = this.calculationService.calculatePackagePrice(pack, services, pack.MeasureUnitCode);
-          pack.Services = result.services;
-          pack.Price = result.price;
-          pack.TotalPrice = result.priceRounded;
-          pack.PriceRounded = result.priceRounded;
-        });
+        // if person doesn't have saved packages or services skip it
+        if (data.Packages.length > 0 || data.Services.length > 0) {
+          person.ServicesManagement = data;
 
-        // calculate price foreach additional service
-        person.ServicesManagement.Services.forEach(service => {
-          var result: ICalculationResult = this.calculationService.calculateServicePriceByMeasureUnit(service, person.ServicesManagement.OfferMeasureUnit[0]?.MeasureUnitCode);
-          service.Price = result.price;
-          service.PriceRounded = result.priceRounded;
-          service.TotalPrice = result.priceRounded;
-          service.PackageId = null;
-        });
+          // calculate price foreach package
+          person.ServicesManagement.Packages.forEach(pack => {
+            var services = person.ServicesManagement.PackagesServices.filter(x => x.PackageId == pack.Id);
+            var result: ICalculationResult = this.calculationService.calculatePackagePrice(pack, services, pack.MeasureUnitCode);
+            pack.Services = result.services;
+            pack.Price = result.price;
+            pack.TotalPrice = result.priceRounded;
+            pack.PriceRounded = result.priceRounded;
+          });
 
-        // calculate offer price
-        var result: ICalculationResult = this.calculationService.calculateOfferPrice(person.ServicesManagement.Packages, person.ServicesManagement.Services, person.ServicesManagement.Discounts);
-        person.CalculationTotalPrice = result.price;
-        person.CalculationTotalPriceRounded = result.priceRounded;
+          // calculate price foreach additional service
+          person.ServicesManagement.Services.forEach(service => {
+            var result: ICalculationResult = this.calculationService.calculateServicePriceByMeasureUnit(service, person.ServicesManagement.OfferMeasureUnit[0]?.MeasureUnitCode);
+            service.Price = result.price;
+            service.PriceRounded = result.priceRounded;
+            service.TotalPrice = result.priceRounded;
+            service.PackageId = null;
+          });
 
-        this.saveCalculation(person, personIndex);
+          // calculate offer price
+          var result: ICalculationResult = this.calculationService.calculateOfferPrice(person.ServicesManagement.Packages, person.ServicesManagement.Services, person.ServicesManagement.Discounts);
+          person.CalculationTotalPrice = result.price;
+          person.CalculationTotalPriceRounded = result.priceRounded;
+
+          this.saveCalculation(person, personIndex);
+        }
+        else this.countinueToNextPerson(personIndex);
       })
+
     );
   }
 
@@ -140,18 +146,8 @@ export class StartCalculationComponent implements OnInit, OnDestroy {
         if (this.recalculate == 1)
           this.saveCalculationToDb(objectToSave, person, index);
         else {
-          if (data.result > 0) {
-            // continue to next person
-            this.calculationPercent = ((index + 1) / this.persons.length) * 100;
-            this.personIndex++;
-
-            if (this.personIndex > this.persons.length - 1) {
-              this.toastrService.showToast('success', getString('calculationSuccess'));
-              this.calculationInProgress = false;
-              this.close(true);
-            } else this.startPersonCalculation(this.personIndex);
-
-          } else this.saveCalculationToDb(objectToSave, person, index);
+          if (data.result > 0) this.countinueToNextPerson(index);
+          else this.saveCalculationToDb(objectToSave, person, index);
         }
       })
     );
@@ -178,19 +174,24 @@ export class StartCalculationComponent implements OnInit, OnDestroy {
 
           this.subs.push(
             this.calcService.saveDocument(documentModel).subscribe(() => {
-              // continue to next person
-              this.calculationPercent = Math.trunc(((index + 1) / this.persons.length) * 100);
-              this.personIndex++;
-
-              if (this.personIndex > this.persons.length - 1) {
-                this.toastrService.showToast('success', getString('calculationSuccess'));
-                this.calculationInProgress = false;
-                this.close(true);
-              } else this.startPersonCalculation(this.personIndex);
+              this.countinueToNextPerson(index);
             })
           );
         })
       })
     );
+  }
+
+
+  private countinueToNextPerson(index: number): void {
+    // continue to next person
+    this.calculationPercent = Math.trunc(((index + 1) / this.persons.length) * 100);
+    this.personIndex++;
+
+    if (this.personIndex > this.persons.length - 1) {
+      this.toastrService.showToast('success', getString('calculationSuccess'));
+      this.calculationInProgress = false;
+      this.close(true);
+    } else this.startPersonCalculation(this.personIndex);
   }
 }
