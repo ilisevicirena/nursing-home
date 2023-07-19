@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { TagsService } from '../../services/rest/tags.service';
 import { NotesService } from '../../services/rest/notes.service';
 import { DialogService } from '../../shared/dialog/dialog.service';
@@ -8,6 +8,7 @@ import { getString } from '../../resources/strings';
 import { NoteTagsComponent } from './note-tags/note-tags.component';
 import { NoteDocumentsComponent } from './note-documents/note-documents.component';
 import { hexToRgbA } from '../../resources/functions';
+import { NoteExportComponent } from './note-export/note-export.component';
 
 @Component({
   selector: 'sample-notes',
@@ -19,6 +20,8 @@ export class NotesComponent implements OnInit, OnDestroy {
   @Input() personId: number = 0;
   @Input() personName: string = "";
   @Input() personLastName: string = "";
+
+  @ViewChild(NoteExportComponent) noteExport: NoteExportComponent;
 
   public notes: any[] = [];
   public getString = getString;
@@ -213,6 +216,13 @@ export class NotesComponent implements OnInit, OnDestroy {
           this.getNotesForPerson();
         })
       );
+    }
+  }
+
+  public downloadNote(all: boolean = false): void {
+    if (all) this.noteExport.downloadAsPDF(this.notes);
+    else {
+      if (this.selectedNote) this.noteExport.downloadAsPDF([this.selectedNote]);
     }
   }
 }

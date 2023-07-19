@@ -93,3 +93,10 @@
         border-top: 1px solid nb-theme(card-border-color);
     }
 }
+
+.export-container {
+    height: 0px;
+    overflow: hidden;
+    width: 0;
+    position: relative;
+}

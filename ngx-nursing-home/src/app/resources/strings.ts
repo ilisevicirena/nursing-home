@@ -275,7 +275,8 @@ const strings: IKeyValue[] = [
     { key: "calculationYear", value: "Godina" },
     { key: "doctorVisitAction", value: "Liječnički obilazak" },
     { key: "startCalculationAction", value: "Brzi obračun" },
-    { key: "calculationInfoPopover", value: "Ukoliko paket ima unesenu prilagođenu cijenu, konačna cijena paketa je jednaka prilagođenoj cijeni. Ukoliko paket ima izračunatu cijenu, cijena se računa temeljem usluga koje obuhvaća paket (uporabom cijena i količina usluga)." }
+    { key: "calculationInfoPopover", value: "Ukoliko paket ima unesenu prilagođenu cijenu, konačna cijena paketa je jednaka prilagođenoj cijeni. Ukoliko paket ima izračunatu cijenu, cijena se računa temeljem usluga koje obuhvaća paket (uporabom cijena i količina usluga)." },
+    { key: "download", value: "Preuzimanje" },
 ];
 
 const map = new Map(strings.map(obj => [obj.key, obj.value]));

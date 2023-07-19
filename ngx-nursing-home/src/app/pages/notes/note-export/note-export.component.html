@@ -1,0 +1,22 @@
+<div class="w-100" id="pdfTable" style="visibility: hidden; position: absolute; top: 0;" #pdfTable>
+    <table style="border: none;" *ngFor="let note of notes; let i=index" #noteTable>
+        <tr>
+            <td style="border: none; width: 100%; font-size: 12px;">{{note.PersonFirstName}} {{note.PersonLastName}}
+                <div style="font-size: 10px;">{{note.LastModified |
+                    date:'dd.MM.yyyy. HH:mm'}}
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td style="border: none; width: 100%; font-size: 18px; margin: 10px;">{{note.Title}}</td>
+        </tr>
+        <tr style="height: 950px;">
+            <td style="border: none; width: 100%;" [innerHTML]="note.Text"></td>
+        </tr>
+        <tr>
+            <td style="border: none; width: 100%; margin-top:20px; ">
+                <span style="font-size: 10px; padding-right: 15px;" *ngFor="let tag of note.Tags">#{{tag.Name}}</span>
+            </td>
+        </tr>
+    </table>
+</div>

@@ -79,6 +79,7 @@ import { RealPriceModalComponent } from './calculation/real-price-modal/real-pri
 import { PaidCalculationModalComponent } from './calculation/paid-calculation-modal/paid-calculation-modal.component';
 import { CalculationDocumentsComponent } from './calculation/calculation-documents/calculation-documents.component';
 import { PersonCalculationComponent } from './profile/person-calculation/person-calculation.component';
+import { NoteExportComponent } from './notes/note-export/note-export.component';
 
 @NgModule({
   imports: [
@@ -163,6 +164,7 @@ import { PersonCalculationComponent } from './profile/person-calculation/person-
     PaidCalculationModalComponent,
     CalculationDocumentsComponent,
     PersonCalculationComponent,
+    NoteExportComponent,
   ],
 })
 export class PagesModule {

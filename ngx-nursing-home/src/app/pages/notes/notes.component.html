@@ -57,10 +57,17 @@
                     <nb-icon pack="eva" icon="plus-outline"></nb-icon>
                 </button>
             </div>
-            <div class="col"></div>
+            <div class="col d-flex align-items-end justify-content-end">
+                <button nbButton ghost size="small" shape="round" status="primary" (click)="downloadNote(true)"
+                    [nbTooltip]="getString('download')">
+                    <nb-icon pack="eva" icon="download-outline"></nb-icon></button>
+            </div>
         </div>
     </div>
     <div class="col-md-8 h-100">
+        <div class="export-container">
+            <sample-note-export></sample-note-export>
+        </div>
         <div class="note-details h-100" *ngIf="selectedNote && !formMode">
             <div class="row w-100 m-0">
                 <div class="col d-flex align-items-center">
@@ -102,6 +109,9 @@
                         [nbTooltip]="getString('tagsManagement')">
                         {{selectedNote.Tags.length}}
                         <nb-icon pack="eva" icon="pricetags-outline"></nb-icon></button>
+                    <button nbButton ghost shape="round" status="primary" (click)="downloadNote()"
+                        [nbTooltip]="getString('download')">
+                        <nb-icon pack="eva" icon="download-outline"></nb-icon></button>
                 </div>
             </div>
         </div>
