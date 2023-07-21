@@ -1,7 +1,7 @@
 USE [ENV01_NURSING_HOME]
 GO
 
-/****** Object:  StoredProcedure [dbo].[getDashboardSummary]    Script Date: 19.7.2023. 15:13:43 ******/
+/****** Object:  StoredProcedure [dbo].[getDashboardSummary]    Script Date: 21.7.2023. 12:06:31 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -70,6 +70,28 @@ BEGIN
 	left join dbo.Gender as g on p.GenderId=g.Id
 	where Active=1 order by(StartDate);
 
+	-- active persons per month
+
+	 DECLARE @CurrentDate DATE;
+    SET @CurrentDate = GETDATE();
+
+    ;WITH Last6Months AS
+    (
+        SELECT EOMONTH(@CurrentDate) AS [Month]
+        UNION ALL
+        SELECT DATEADD(MONTH, -1, [Month])
+        FROM Last6Months
+        WHERE [Month] >= DATEADD(MONTH, -5, EOMONTH(@CurrentDate))
+    )
+
+    SELECT 
+        CONVERT(CHAR(7), L6M.[Month], 120) AS [YearMonth],
+        COUNT(CASE WHEN (p.StartDate <= EOMONTH(L6M.[Month]) AND (p.EndDate IS NULL OR p.EndDate >= L6M.[Month]))
+                   THEN 1 ELSE NULL END) AS [ActivePersonsCount]
+    FROM Last6Months L6M
+    LEFT JOIN Person p ON (p.StartDate <= EOMONTH(L6M.[Month]) AND (p.EndDate IS NULL OR p.EndDate >= L6M.[Month]))
+    GROUP BY CONVERT(CHAR(7), L6M.[Month], 120)
+    ORDER BY [YearMonth];
 END
 GO
 
