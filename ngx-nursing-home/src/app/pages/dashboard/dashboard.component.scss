@@ -1,3 +1,43 @@
 @import '../../@theme/styles/themes';
-@import 'bootstrap/scss/mixins/breakpoints';
-@import '@nebular/theme/styles/global/breakpoints';
+
+::ng-deep ngx-dashboard {
+    height: 100%;
+}
+
+@include nb-install-component {
+    .summary-card {
+        border-radius: 1rem;
+
+        nb-card-body {
+            padding: 0.5rem;
+
+            .col {
+                font-weight: 600;
+                font-size: 20px;
+                display: flex;
+                align-items: center;
+            }
+
+            nb-icon {
+                font-size: 30px;
+            }
+
+            .value {
+                font-size: 14px;
+            }
+        }
+
+    }
+}
+
+.echart {
+    height: 100% !important;
+}
+
+::ng-deep .echart div {
+    top: -20px !important;
+}
+
+.round-card {
+    border-radius: 1rem;
+}

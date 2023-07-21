@@ -94,6 +94,9 @@ var errors = [
     new CodeMessage(50004, "Error while fetching calculation details from database. Invalid number of datasets."),
     new CodeMessage(50005, "Error while inserting new calculation into database."),
     new CodeMessage(50006, "Error while fetching calculation summary from database. Invalid number of datasets."),
+
+    // calculation error codes starting with 60000
+    new CodeMessage(60001, "Error while fetching dashboard summary from database. Invalid number of datasets."),
 ];
 
 module.exports = {
