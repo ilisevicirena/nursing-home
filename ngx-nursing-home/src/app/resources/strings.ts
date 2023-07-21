@@ -277,6 +277,16 @@ const strings: IKeyValue[] = [
     { key: "startCalculationAction", value: "Brzi obračun" },
     { key: "calculationInfoPopover", value: "Ukoliko paket ima unesenu prilagođenu cijenu, konačna cijena paketa je jednaka prilagođenoj cijeni. Ukoliko paket ima izračunatu cijenu, cijena se računa temeljem usluga koje obuhvaća paket (uporabom cijena i količina usluga)." },
     { key: "download", value: "Preuzimanje" },
+    { key: "genderChartTitle", value: "Udio osoba po spolu" },
+    { key: "male", value: "Muški" },
+    { key: "female", value: "Ženski" },
+    { key: "activePersonsChartTitle", value: "Broj aktivnih osoba u mjesecu" },
+    { key: "oldestPerson", value: "Najstarija osoba" },
+    { key: "longestPerson", value: "Najduži boravak" },
+    { key: "longestPersonYears", value: "godina" },
+    { key: "longestPersonMonths", value: "mjeseci" },
+    { key: "longestPersonDays", value: "dana" },
+    { key: "forMonth", value: "za mjesec" },
 ];
 
 const map = new Map(strings.map(obj => [obj.key, obj.value]));

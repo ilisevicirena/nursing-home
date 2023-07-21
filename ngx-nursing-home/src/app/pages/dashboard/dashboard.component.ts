@@ -19,6 +19,7 @@ export class DashboardComponent implements OnDestroy, OnInit {
   public progressValue: number = 0;
   public genderPieOptions: any;
   public activePersonsBarOptions: any;
+  public today: Date = new Date();
 
   private subs: Subscription[] = [];
 
@@ -45,15 +46,19 @@ export class DashboardComponent implements OnDestroy, OnInit {
             this.summary = data.Summary[0];
             this.progressValue = Math.trunc((this.summary.TakenSpace / this.summary.Capacity) * 100);
           }
+
           if (data.LongestPerson.length > 0) {
             this.longestPerson = data.LongestPerson[0];
             this.longestPerson.PassedTime = this.calculatePassedTime();
           }
+
           if (data.OldestPerson.length > 0) this.oldestPerson = data.OldestPerson[0];
+
           if (data.ActivePersons.length > 0) {
             this.summary.ActivePersons = data.ActivePersons;
             this.setUpEcharts();
           }
+
           this.events = data.Events;
         }
       })
@@ -100,7 +105,7 @@ export class DashboardComponent implements OnDestroy, OnInit {
       ],
       series: [
         {
-          name: 'Udio osoba po spolu',
+          name: getString('genderChartTitle'),
           type: 'pie',
           radius: [50, 100],
           center: ['50%', '50%'],
@@ -112,8 +117,8 @@ export class DashboardComponent implements OnDestroy, OnInit {
             show: false
           },
           data: [
-            { value: this.summary.MalePersons, name: 'muško' },
-            { value: this.summary.FemalePersons, name: 'žensko' },
+            { value: this.summary.MalePersons, name: getString('male') },
+            { value: this.summary.FemalePersons, name: getString('female') },
           ]
         }
       ]
@@ -144,7 +149,7 @@ export class DashboardComponent implements OnDestroy, OnInit {
       },
       series: [
         {
-          name: 'Broj aktivnih osoba u mjesecu',
+          name: getString('activePersonsChartTitle'),
           data: this.summary.ActivePersons.map((x, i) => {
             var color = "#197189";
             if (i == this.summary.ActivePersons.length - 1) color = "#33B9BF";
