@@ -287,6 +287,7 @@ const strings: IKeyValue[] = [
     { key: "longestPersonMonths", value: "mjeseci" },
     { key: "longestPersonDays", value: "dana" },
     { key: "forMonth", value: "za mjesec" },
+    { key: "allEvents", value: "Svi događaji" },
 ];
 
 const map = new Map(strings.map(obj => [obj.key, obj.value]));

@@ -1,7 +1,7 @@
 USE [ENV01_NURSING_HOME]
 GO
 
-/****** Object:  StoredProcedure [dbo].[getDashboardSummary]    Script Date: 21.7.2023. 12:06:31 ******/
+/****** Object:  StoredProcedure [dbo].[getDashboardSummary]    Script Date: 9.8.2023. 14:13:40 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -37,9 +37,10 @@ BEGIN
 	[Start],
 	[End],
 	[Title],
-	[Description]
+	[Description],
+	[Color]
 	from dbo.CalendarEvent
-	where  MONTH([Start])=MONTH(GETDATE());
+	where  MONTH([Start])=MONTH(GETDATE()) order by [Start];
 
 	-- oldest person data
 	select top 1 

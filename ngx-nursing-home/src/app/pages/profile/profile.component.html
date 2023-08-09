@@ -36,7 +36,7 @@
         <nb-icon pack="eva" icon="arrow-left" class="dotted-arrow"
             *ngIf="activeView=='basicData' || activeView=='dormatoryData'"></nb-icon>
         <div class="dotted-line" *ngIf="activeView=='basicData' || activeView=='dormatoryData'"></div>
-        <nb-card class="h-100" [ngClass]="activeView=='documents'?'bg-color-transparent':''">
+        <nb-card class="h-100 m-0" [ngClass]="activeView=='documents'?'bg-color-transparent':''">
             <nb-card-body>
                 <div [ngSwitch]="activeView" style="height: calc(100% - 2rem);">
                     <div *ngSwitchCase="'basicData'" class="mt-3 h-100">

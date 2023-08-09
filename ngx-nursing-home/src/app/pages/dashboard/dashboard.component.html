@@ -95,10 +95,11 @@
 
         <div class="col-md-4 h-100 pe-0 ps-0">
             <nb-card class="mb-0 h-100 round-card events-card">
-                <nb-card-body class="ps-2 pe-2">
+                <nb-card-body class="ps-2 pe-2 overflow-hidden">
                     <div class="row">
                         <div class="col position-relative">
-                            <nb-tag [text]="today | date:'LLLL'" status="primary" appearance="outline"></nb-tag>
+                            <nb-tag class="semi-tag" [text]="today | date:'LLLL'" status="primary"
+                                appearance="outline"></nb-tag>
                             <div class="title">
                                 {{getString('events')}}
                             </div>
@@ -108,7 +109,20 @@
                             {{today | date:'EEEE, dd.MM.yyyy.'}}
                         </div>
                     </div>
+                    <div class="events-container">
+                        <div class="dashboard-event" *ngFor="let event of events" [ngClass]="event.Color"
+                            [style.background-color]="hexToRgbA(event.Color)">
+                            <div class="date label">{{event.Start | date:'EEEE, dd. MMMM'}} -
+                                {{event.End | date:'EEEE, dd. MMMM'}} </div>
+                            <div class="title" [style.color]="event.Color">{{event.Title}}</div>
+                            <div class="description">{{event.Description}}</div>
+                        </div>
+                    </div>
                 </nb-card-body>
+                <nb-card-footer class="d-flex justify-content-end">
+                    <button nbButton size="small" status="primary" shape="round"
+                        (click)="goToEvents()">{{getString('allEvents')}}</button>
+                </nb-card-footer>
             </nb-card>
         </div>
     </div>

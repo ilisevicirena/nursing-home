@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { NbButtonModule, NbCardModule, NbIconModule, NbProgressBarModule, NbSelectModule, NbTabsetModule, NbTagModule, NbUserModule } from '@nebular/theme';
+import { NbAlertModule, NbButtonModule, NbCardModule, NbIconModule, NbProgressBarModule, NbSelectModule, NbTabsetModule, NbTagModule, NbUserModule } from '@nebular/theme';
 import { SharedComponentsModule } from 'shared-components';
 import { ThemeModule } from '../../@theme/theme.module';
 import { DashboardComponent } from './dashboard.component';
@@ -21,7 +21,8 @@ import { NgxEchartsModule } from 'ngx-echarts';
     NgxEchartsModule.forRoot({
       echarts: () => import('echarts')
     }),
-    NbTagModule
+    NbTagModule,
+    NbAlertModule
   ],
   declarations: [
     DashboardComponent,

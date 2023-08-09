@@ -2,6 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { getString } from '../../resources/strings';
 import { Subscription } from 'rxjs';
 import { SummaryService } from '../../services/rest/summary.service';
+import { hexToRgbA } from '../../resources/functions';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'ngx-dashboard',
@@ -12,6 +14,7 @@ import { SummaryService } from '../../services/rest/summary.service';
 export class DashboardComponent implements OnDestroy, OnInit {
 
   public getString = getString;
+  public hexToRgbA = hexToRgbA;
   public summary: any;
   public longestPerson: any;
   public oldestPerson: any;
@@ -24,7 +27,8 @@ export class DashboardComponent implements OnDestroy, OnInit {
   private subs: Subscription[] = [];
 
   constructor(
-    private summaryService: SummaryService
+    private summaryService: SummaryService,
+    private router: Router
   ) { }
 
   ngOnDestroy() {
@@ -165,5 +169,9 @@ export class DashboardComponent implements OnDestroy, OnInit {
         }
       ]
     };
+  }
+
+  public goToEvents(): void {
+    this.router.navigateByUrl('pages/calendar');
   }
 }
