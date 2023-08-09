@@ -1,5 +1,11 @@
 @import "../../../@theme/styles/themes.scss";
 
+span {
+    padding: 0 2px;
+    width: max-content;
+    margin: 0;
+}
+
 @include nb-install-component {
     .calculation-card {
         border-radius: 1rem;
@@ -55,6 +61,8 @@
         }
 
         .calculation-stepper {
+            overflow: auto;
+
             .dotted-border {
                 border-right: 2px dotted nb-theme(color-basic-700);
                 margin-right: 10px;
@@ -97,5 +105,11 @@
                 }
             }
         }
+    }
+}
+
+@media only screen and (min-height: 400px) and (max-height: 700px) {
+    .calculation-stepper {
+        height: 450px;
     }
 }

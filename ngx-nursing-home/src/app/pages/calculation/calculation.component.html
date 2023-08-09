@@ -20,76 +20,8 @@
             </nb-card-body>
         </nb-card>
     </div>
-    <div class="col-md-2 h-100 pe-0 ps-0">
+    <div class="col-md-2 h-100 pe-0 ps-0 overflow-auto">
         <nb-card class="chart-card">
-            <nb-card-body>
-                <div class="row m-0 position-relative align-items-center" style="height: 100px;">
-                    <div class="info" style="width: 60%;">
-                        <div class="value fw-600 d-flex justify-content-center">{{summary?.CalculatedForPersons}}
-                            {{getString('person')}}</div>
-                        <div class="details subtitle-2"><span>{{getString('calculatedFrom')}}</span>
-                            {{summary?.Persons}}
-                        </div>
-                    </div>
-                    <div echarts [options]="options" class="echart">
-                    </div>
-                </div>
-            </nb-card-body>
-        </nb-card>
-        <nb-card class="chart-card mt-2">
-            <nb-card-body>
-                <div class="position-relative summary-card">
-                    <nb-badge [dotMode]="true" position="top end"
-                        [status]="summary?.TotalCalculatedPriceDiff ? summary?.TotalCalculatedPriceDiff?.startsWith('+')?'success':'danger' :'basic'"></nb-badge>
-                    <div class="fw-600 mb-1">{{getString('calculatedSum')}}</div>
-                    <div class="fw-600 h5 m-0">{{summary?.TotalCalculatedPrice}} <span
-                            *ngIf="!summary?.TotalCalculatedPrice">0</span> KM</div>
-                    <div class="indicator"
-                        [ngClass]="summary?.TotalCalculatedPriceDiff ? summary?.TotalCalculatedPriceDiff?.startsWith('+')?'success':'danger' :'basic'">
-                        <nb-icon pack="eva"
-                            [status]="summary?.TotalCalculatedPriceDiff ? summary?.TotalCalculatedPriceDiff?.startsWith('+')?'success':'danger' :'basic'"
-                            [icon]="summary?.TotalCalculatedPriceDiff ? summary?.TotalCalculatedPriceDiff?.startsWith('+')?'trending-up-outline':'trending-down-outline':'minus-outline'"></nb-icon>
-                        {{summary?.TotalCalculatedPriceDiff}}%
-                    </div>
-                </div>
-                <div class="position-relative summary-card">
-                    <nb-badge [dotMode]="true" position="top end"
-                        [status]="summary?.TotalRealPriceDiff ? summary?.TotalRealPriceDiff?.startsWith('+')?'success':'danger' :'basic'"></nb-badge>
-                    <div class="fw-600 mb-1">{{getString('calculatedSumReal')}}</div>
-                    <div class="fw-600 h5 m-0">{{summary?.TotalRealPrice}}<span
-                            *ngIf="!summary?.TotalRealPrice">0</span> KM</div>
-                    <div class="indicator"
-                        [ngClass]="summary?.TotalRealPriceDiff ? summary?.TotalRealPriceDiff?.startsWith('+')?'success':'danger' :'basic'">
-                        <nb-icon pack="eva"
-                            [status]="summary?.TotalRealPriceDiff ? summary?.TotalRealPriceDiff?.startsWith('+')?'success':'danger' :'basic'"
-                            [icon]="summary?.TotalRealPriceDiff ? summary?.TotalRealPriceDiff?.startsWith('+')?'trending-up-outline':'trending-down-outline':'minus-outline'"></nb-icon>
-                        {{summary?.TotalRealPriceDiff}}%
-                    </div>
-                </div>
-                <div class="position-relative summary-card">
-                    <nb-badge [dotMode]="true" position="top end"
-                        [status]="summary?.TotalPaidPriceDiff ? summary?.TotalPaidPriceDiff?.startsWith('+')?'success':'danger' :'basic'"></nb-badge>
-                    <div class="fw-600 mb-1">{{getString('calculatedSumPaid')}}</div>
-                    <div class="fw-600 h5 m-0">{{summary?.TotalPaidPrice}}
-                        <span *ngIf="!summary?.TotalPaidPrice">0</span> KM
-                    </div>
-                    <div class="indicator"
-                        [ngClass]="summary?.TotalPaidPriceDiff ? summary?.TotalPaidPriceDiff?.startsWith('+')?'success':'danger' :'basic'">
-                        <nb-icon pack="eva"
-                            [status]="summary?.TotalPaidPriceDiff ? summary?.TotalPaidPriceDiff?.startsWith('+')?'success':'danger' :'basic'"
-                            [icon]="summary?.TotalPaidPriceDiff ? summary?.TotalPaidPriceDiff?.startsWith('+')?'trending-up-outline':'trending-down-outline':'minus-outline'"></nb-icon>
-                        {{summary?.TotalPaidPriceDiff}}%
-                    </div>
-                </div>
-                <div class="mt-2 d-flex justify-content-end">
-                    <button *ngIf="calculations.length>0" nbButton ghost status="primary" shape="round"
-                        (click)="calculationSummaryDetailsClick()" size="small">{{getString('summaryDetails')}}
-                        <nb-icon pack="eva" icon="external-link-outline"></nb-icon>
-                    </button>
-                </div>
-            </nb-card-body>
-        </nb-card>
-        <nb-card class="chart-card mt-2">
             <nb-card-header>
                 {{getString('actions')}}
             </nb-card-header>
@@ -113,5 +45,74 @@
                 </button>
             </nb-card-body>
         </nb-card>
+        <nb-card class="chart-card mt-2">
+            <nb-card-body>
+                <div class="row m-0 position-relative align-items-center" style="height: 100px;">
+                    <div class="info" style="width: 60%;">
+                        <div class="value fw-600 d-flex justify-content-center">{{summary?.CalculatedForPersons}}
+                            {{getString('person')}}</div>
+                        <div class="details subtitle-2"><span>{{getString('calculatedFrom')}}</span>
+                            {{summary?.Persons}}
+                        </div>
+                    </div>
+                    <div echarts [options]="options" class="echart">
+                    </div>
+                </div>
+            </nb-card-body>
+        </nb-card>
+        <nb-card class="chart-card mt-2">
+            <nb-card-body>
+                <div class="position-relative summary-card">
+                    <nb-badge [dotMode]="true" position="top end"
+                        [status]="summary?.TotalCalculatedPriceDiff ? summary?.TotalCalculatedPriceDiff?.startsWith('+')?'success':'danger' :'basic'"></nb-badge>
+                    <div class="fw-600 mb-1">{{getString('calculatedSum')}}</div>
+                    <div class="fw-600 h6 m-0">{{summary?.TotalCalculatedPrice}} <span
+                            *ngIf="!summary?.TotalCalculatedPrice">0</span> KM</div>
+                    <div class="indicator"
+                        [ngClass]="summary?.TotalCalculatedPriceDiff ? summary?.TotalCalculatedPriceDiff?.startsWith('+')?'success':'danger' :'basic'">
+                        <nb-icon pack="eva"
+                            [status]="summary?.TotalCalculatedPriceDiff ? summary?.TotalCalculatedPriceDiff?.startsWith('+')?'success':'danger' :'basic'"
+                            [icon]="summary?.TotalCalculatedPriceDiff ? summary?.TotalCalculatedPriceDiff?.startsWith('+')?'trending-up-outline':'trending-down-outline':'minus-outline'"></nb-icon>
+                        {{summary?.TotalCalculatedPriceDiff}}%
+                    </div>
+                </div>
+                <div class="position-relative summary-card">
+                    <nb-badge [dotMode]="true" position="top end"
+                        [status]="summary?.TotalRealPriceDiff ? summary?.TotalRealPriceDiff?.startsWith('+')?'success':'danger' :'basic'"></nb-badge>
+                    <div class="fw-600 mb-1">{{getString('calculatedSumReal')}}</div>
+                    <div class="fw-600 h6 m-0">{{summary?.TotalRealPrice}}<span
+                            *ngIf="!summary?.TotalRealPrice">0</span> KM</div>
+                    <div class="indicator"
+                        [ngClass]="summary?.TotalRealPriceDiff ? summary?.TotalRealPriceDiff?.startsWith('+')?'success':'danger' :'basic'">
+                        <nb-icon pack="eva"
+                            [status]="summary?.TotalRealPriceDiff ? summary?.TotalRealPriceDiff?.startsWith('+')?'success':'danger' :'basic'"
+                            [icon]="summary?.TotalRealPriceDiff ? summary?.TotalRealPriceDiff?.startsWith('+')?'trending-up-outline':'trending-down-outline':'minus-outline'"></nb-icon>
+                        {{summary?.TotalRealPriceDiff}}%
+                    </div>
+                </div>
+                <div class="position-relative summary-card">
+                    <nb-badge [dotMode]="true" position="top end"
+                        [status]="summary?.TotalPaidPriceDiff ? summary?.TotalPaidPriceDiff?.startsWith('+')?'success':'danger' :'basic'"></nb-badge>
+                    <div class="fw-600 mb-1">{{getString('calculatedSumPaid')}}</div>
+                    <div class="fw-600 h6 m-0">{{summary?.TotalPaidPrice}}
+                        <span *ngIf="!summary?.TotalPaidPrice">0</span> KM
+                    </div>
+                    <div class="indicator"
+                        [ngClass]="summary?.TotalPaidPriceDiff ? summary?.TotalPaidPriceDiff?.startsWith('+')?'success':'danger' :'basic'">
+                        <nb-icon pack="eva"
+                            [status]="summary?.TotalPaidPriceDiff ? summary?.TotalPaidPriceDiff?.startsWith('+')?'success':'danger' :'basic'"
+                            [icon]="summary?.TotalPaidPriceDiff ? summary?.TotalPaidPriceDiff?.startsWith('+')?'trending-up-outline':'trending-down-outline':'minus-outline'"></nb-icon>
+                        {{summary?.TotalPaidPriceDiff}}%
+                    </div>
+                </div>
+                <div class="mt-1 d-flex justify-content-end">
+                    <button *ngIf="calculations.length>0" nbButton ghost status="primary" shape="round"
+                        (click)="calculationSummaryDetailsClick()" size="small">{{getString('summaryDetails')}}
+                        <nb-icon pack="eva" icon="external-link-outline"></nb-icon>
+                    </button>
+                </div>
+            </nb-card-body>
+        </nb-card>
+
     </div>
 </div>

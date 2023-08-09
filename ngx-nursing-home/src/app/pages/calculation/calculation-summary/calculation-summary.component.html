@@ -140,7 +140,9 @@
                             {{getString('calculatedSum')}}: {{summary?.TotalCalculatedPrice}} KM
                         </div>
                         <div class="row">
-                            {{summary?.TotalCalculatedPriceDiff}}% {{getString('lastMonth')}}
+                            {{summary?.TotalCalculatedPriceDiff}}
+                            <span *ngIf="!summary?.TotalCalculatedPriceDiff">0</span>
+                            % {{getString('lastMonth')}}
                         </div>
                     </div>
                 </div>
@@ -156,18 +158,20 @@
             <div class="row m-0 p-0">
                 <div class="col-4 p-0">
                     <div class="row dotted-border subtitle">
-                        {{summary?.TotalRealPrice}} <span *ngIf="!summary?.TotalRealPrice">0 </span> KM
+                        {{summary?.TotalRealPrice}} <span class="w-max" *ngIf="!summary?.TotalRealPrice">0 </span> KM
                         <div class="circle"></div>
                     </div>
                 </div>
                 <div class="col-8 p-0">
                     <div class="row m-0  p-2 text">
                         <div class="row">
-                            {{getString('calculatedSumReal')}}: {{summary?.TotalRealPrice}} <span
+                            {{getString('calculatedSumReal')}}: {{summary?.TotalRealPrice}} <span class="w-max"
                                 *ngIf="!summary?.TotalRealPrice">0 </span> KM
                         </div>
                         <div class="row">
-                            {{summary?.TotalRealPriceDiff}}% {{getString('lastMonth')}}
+                            {{summary?.TotalRealPriceDiff}}
+                            <span *ngIf="!summary?.TotalRealPriceDiff">0</span>
+                            % {{getString('lastMonth')}}
                         </div>
                     </div>
                 </div>
@@ -183,19 +187,21 @@
             <div class="row m-0 p-0">
                 <div class="col-4 p-0">
                     <div class="row dotted-border subtitle">
-                        {{summary?.TotalPaidPrice}} <span *ngIf="!summary?.TotalPaidPrice">0 </span> KM
+                        {{summary?.TotalPaidPrice}} <span class="w-max" *ngIf="!summary?.TotalPaidPrice">0 </span> KM
                         <div class="circle"></div>
                     </div>
                 </div>
                 <div class="col-8 p-0">
                     <div class="row m-0  p-2 text">
                         <div class="row">
-                            {{getString('calculatedSumPaid')}}: {{summary?.TotalPaidPrice}} <span
+                            {{getString('calculatedSumPaid')}}: {{summary?.TotalPaidPrice}} <span class="w-max"
                                 *ngIf="!summary?.TotalPaidPrice">0
                             </span> KM
                         </div>
                         <div class="row">
-                            {{summary?.TotalPaidPriceDiff}}% {{getString('lastMonth')}}
+                            {{summary?.TotalPaidPriceDiff}}
+                            <span *ngIf="!summary?.TotalPaidPriceDiff">0</span>
+                            % {{getString('lastMonth')}}
                         </div>
                         <div class="row">
                             {{getString('calculationPaid')}}: {{summary?.NumberOfPaidCalculations}},
