@@ -38,7 +38,7 @@
     }
 
     .dashboard-event.info {
-        background-color: nb-theme(color-warning-transparent-200);
+        background-color: nb-theme(color-info-transparent-200);
 
         .title {
             color: nb-theme(color-info-500);
@@ -46,7 +46,7 @@
     }
 
     .dashboard-event.danger {
-        background-color: nb-theme(color-warning-transparent-200);
+        background-color: nb-theme(color-danger-transparent-200);
 
         .title {
             color: nb-theme(color-danger-500);
@@ -54,7 +54,7 @@
     }
 
     .dashboard-event.success {
-        background-color: nb-theme(color-warning-transparent-200);
+        background-color: nb-theme(color-success-transparent-200);
 
         .title {
             color: nb-theme(color-success-500);
@@ -79,8 +79,8 @@
     }
 
     .events-container {
-        padding: 1rem;
-        height: calc(100% - 3rem);
+        padding: 0rem 1rem;
+        height: calc(100% - 5rem);
         overflow: auto;
 
         .dashboard-event {
@@ -103,6 +103,11 @@
             .description {
                 font-size: 12px;
             }
+        }
+
+        .line {
+            border-bottom: 1px solid nb-theme(color-primary-500);
+            width: 100%;
         }
     }
 }

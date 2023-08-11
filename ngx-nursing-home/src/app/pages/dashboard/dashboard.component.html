@@ -95,8 +95,8 @@
 
         <div class="col-md-4 h-100 pe-0 ps-0">
             <nb-card class="mb-0 h-100 round-card events-card">
-                <nb-card-body class="ps-2 pe-2 overflow-hidden">
-                    <div class="row">
+                <nb-card-body class="ps-2 pe-2">
+                    <div class="row mb-3">
                         <div class="col position-relative">
                             <nb-tag class="semi-tag" [text]="today | date:'LLLL'" status="primary"
                                 appearance="outline"></nb-tag>
@@ -110,12 +110,27 @@
                         </div>
                     </div>
                     <div class="events-container">
-                        <div class="dashboard-event" *ngFor="let event of events" [ngClass]="event.Color"
-                            [style.background-color]="hexToRgbA(event.Color)">
-                            <div class="date label">{{event.Start | date:'EEEE, dd. MMMM'}} -
-                                {{event.End | date:'EEEE, dd. MMMM'}} </div>
-                            <div class="title" [style.color]="event.Color">{{event.Title}}</div>
-                            <div class="description">{{event.Description}}</div>
+                        <div *ngFor="let event of events">
+                            <div *ngIf="event.Id == nextEvent.Id" class="row mt-2 mb-2">
+                                <div class="col d-flex align-items-center ps-0">
+                                    <div class="line"></div>
+                                </div>
+                                <div class="w-max d-flex">
+                                    <div class="text-primary fw-600">{{getString('nextEvents')}}</div>
+                                    <nb-icon pack="eva" icon="arrowhead-down-outline" class="ms-2"
+                                        status="primary"></nb-icon>
+                                </div>
+                                <div class="col d-flex align-items-center pe-0">
+                                    <div class="line"></div>
+                                </div>
+                            </div>
+                            <div class="dashboard-event" [ngClass]="event.Color" [id]="'dashboard-event-'+event.Id"
+                                [style.background-color]="hexToRgbA(event.Color)">
+                                <div class="date label">{{event.Start | date:'EEEE, dd. MMMM'}} -
+                                    {{event.End | date:'EEEE, dd. MMMM'}} </div>
+                                <div class="title" [style.color]="event.Color">{{event.Title}}</div>
+                                <div class="description">{{event.Description}}</div>
+                            </div>
                         </div>
                     </div>
                 </nb-card-body>

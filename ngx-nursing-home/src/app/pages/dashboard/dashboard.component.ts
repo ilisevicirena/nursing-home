@@ -23,6 +23,7 @@ export class DashboardComponent implements OnDestroy, OnInit {
   public genderPieOptions: any;
   public activePersonsBarOptions: any;
   public today: Date = new Date();
+  public nextEvent: any;
 
   private subs: Subscription[] = [];
 
@@ -44,7 +45,6 @@ export class DashboardComponent implements OnDestroy, OnInit {
   private getSummary(): void {
     this.subs.push(
       this.summaryService.getDashboardSummary().subscribe(data => {
-        console.log(data)
         if (data) {
           if (data.Summary.length > 0) {
             this.summary = data.Summary[0];
@@ -64,6 +64,15 @@ export class DashboardComponent implements OnDestroy, OnInit {
           }
 
           this.events = data.Events;
+
+          this.nextEvent = this.events.find(x => new Date(x.Start) >= this.today);
+
+          if (this.nextEvent) {
+            setTimeout(() => {
+              var elem = document.getElementById('dashboard-event-' + this.nextEvent.Id);
+              if (elem) elem.scrollIntoView({ behavior: 'smooth' });
+            }, 500);
+          }
         }
       })
     );
