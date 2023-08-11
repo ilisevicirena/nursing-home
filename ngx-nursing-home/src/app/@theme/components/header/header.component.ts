@@ -1,8 +1,7 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { NbMediaBreakpointsService, NbMenuService, NbPopoverDirective, NbSidebarService, NbThemeService } from '@nebular/theme';
+import { NbPopoverDirective, NbSidebarService } from '@nebular/theme';
 import { LayoutService } from '../../../@core/utils';
-import { map, takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { getString } from '../../../resources/strings';
 import { Router } from '@angular/router';
 import { NotificationsService } from '../../../services/rest/notifications.service';
@@ -16,73 +15,33 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   public getString = getString;
   public hasNotifications: boolean = false;
-  private destroy$: Subject<void> = new Subject<void>();
-  userPictureOnly: boolean = false;
-  user: any;
 
-  themes = [
-    {
-      value: 'default',
-      name: 'Light',
-    },
-    {
-      value: 'dark',
-      name: 'Dark',
-    }
-  ];
+  private subs: Subscription[] = [];
 
-  currentTheme = 'light';
   @ViewChild(NbPopoverDirective) popover: NbPopoverDirective;
 
-  userMenu = [{ title: 'Profile' }, { title: 'Log out' }];
-
-  constructor(private sidebarService: NbSidebarService,
-    private menuService: NbMenuService,
-    private themeService: NbThemeService,
+  constructor(
+    private sidebarService: NbSidebarService,
     private layoutService: LayoutService,
-    private breakpointService: NbMediaBreakpointsService,
     private router: Router,
     private notificationsService: NotificationsService
   ) {
   }
 
   ngOnInit() {
-    const { xl } = this.breakpointService.getBreakpointsMap();
-    this.themeService.onMediaQueryChange()
-      .pipe(
-        map(([, currentBreakpoint]) => currentBreakpoint.width < xl),
-        takeUntil(this.destroy$),
-      )
-      .subscribe((isLessThanXl: boolean) => this.userPictureOnly = isLessThanXl);
-
-    this.themeService.onThemeChange()
-      .pipe(
-        map(({ name }) => name),
-        takeUntil(this.destroy$),
-      )
-      .subscribe(themeName => this.currentTheme = themeName);
-
     this.checkNotifications();
   }
 
   ngOnDestroy() {
-    this.destroy$.next();
-    this.destroy$.complete();
+    this.subs.forEach(element => {
+      element.unsubscribe();
+    });
   }
 
-  changeTheme(themeName: string) {
-    this.themeService.changeTheme(themeName);
-  }
-
-  toggleSidebar(): boolean {
+  public toggleSidebar(): boolean {
     this.sidebarService.toggle(true, 'menu-sidebar');
     this.layoutService.changeLayoutSize();
 
-    return false;
-  }
-
-  navigateHome() {
-    this.menuService.navigateHome();
     return false;
   }
 
@@ -91,9 +50,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   private checkNotifications(): void {
-    this.notificationsService.checkNotificationsStatus().subscribe(data => {
-      if (data.length > 0) this.hasNotifications = data[0]?.NotificationNumber > 0;
-    })
+    this.subs.push(
+      this.notificationsService.checkNotificationsStatus().subscribe(data => {
+        if (data.length > 0) this.hasNotifications = data[0]?.NotificationNumber > 0;
+      }));
   }
 
   public onNotificationPaneClose(): void {
