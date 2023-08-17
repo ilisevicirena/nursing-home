@@ -20,7 +20,7 @@ export class ToastrService {
       destroyByClick: true,
       duration: type === 'danger' ? 15000 : 5000,
       hasIcon: true,
-      position: NbGlobalPhysicalPosition.TOP_RIGHT,
+      position: NbGlobalPhysicalPosition.BOTTOM_RIGHT,
       preventDuplicates: false,
     };
     const titleContent = title ? ` ${title}` : '';
@@ -36,7 +36,7 @@ export class ToastrService {
       destroyByClick: true,
       duration: type === 'danger' ? 15000 : 5000,
       hasIcon: true,
-      position: NbGlobalPhysicalPosition.TOP_RIGHT,
+      position: NbGlobalPhysicalPosition.BOTTOM_RIGHT,
       preventDuplicates: true,
     };
     const titleContent = title ? ` ${title}` : '';
@@ -52,7 +52,7 @@ export class ToastrService {
       destroyByClick: true,
       duration: type === 'danger' ? 10000 : 5000,
       hasIcon: true,
-      position: NbGlobalPhysicalPosition.TOP_RIGHT,
+      position: NbGlobalPhysicalPosition.BOTTOM_RIGHT,
       preventDuplicates: false,
       icon: { icon: icon, pack: 'eva' }
     };

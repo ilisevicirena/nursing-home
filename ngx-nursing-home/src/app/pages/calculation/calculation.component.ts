@@ -13,6 +13,7 @@ import { CalculationSummaryComponent } from './calculation-summary/calculation-s
 import { RealPriceModalComponent } from './real-price-modal/real-price-modal.component';
 import { PaidCalculationModalComponent } from './paid-calculation-modal/paid-calculation-modal.component';
 import { CalculationDocumentsComponent } from './calculation-documents/calculation-documents.component';
+import { ExportDocSettings } from 'shared-components/lib/models/smart-table.model';
 declare const echarts: any;
 @Component({
   selector: 'sample-calculation',
@@ -47,8 +48,17 @@ export class CalculationComponent implements OnInit, OnDestroy {
     new SmartTableColumn(getString('realPrice')).Property('RealPrice').CompareFunction(sortFloats),
     new SmartTableColumn(getString('paidPrice')).Property('PaidPrice').CompareFunction(sortFloats),
     new SmartTableColumn(getString('paidDate')).Property('DatePaid').SpecialType(new DateType().Format('dd.MM.yyyy.')).SpecialFilter(new DatepickerFilter()),
-    new SmartTableColumn(getString('actions')).SpecialType(new ButtonsType()).Property('Buttons').Width('17%').Sort(false).Filter(false)
+    new SmartTableColumn(getString('actions')).SpecialType(new ButtonsType()).Property('Buttons').Width('17%').Sort(false).Filter(false).Export(false)
   ];
+  public exportSettings: ExportDocSettings = {
+    title: getString('calculationPage'),
+    subtitle: getString('calculationFor') + ': ' + (this.month + 1) + '. ' + this.year,
+    showOrdinalNumbers: true,
+    ordNumColumnName: getString("smTableOrdNumber"),
+    docName: 'calculation',
+    yesValueText: getString("yesBtnText").toLowerCase(),
+    noValueText: getString("noBtnText").toLowerCase(),
+  };
 
   @ViewChild(SmartTableComponent) table: SmartTableComponent;
 
@@ -104,6 +114,7 @@ export class CalculationComponent implements OnInit, OnDestroy {
   public refreshData(): void {
     this.getCalculations();
     this.getCalculationSummary();
+    this.exportSettings.subtitle = getString('calculationFor') + ': ' + (this.month + 1) + '. ' + this.year;
   }
 
   private getCalculationSummary(): void {

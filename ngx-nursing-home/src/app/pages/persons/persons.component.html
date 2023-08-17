@@ -46,8 +46,10 @@
         <div class="row m-0" id="cards">
             <div class="col-md-3 p-1" *ngFor="let person of personsData | filter:searchTerm">
                 <nb-card class="m-0">
-                    <nb-card-header class="d-flex align-items-center person-card-header"
+                    <nb-card-header class="d-flex align-items-center person-card-header position-relative"
                         (click)="openPersonDetails(person)">
+                        <nb-badge [dotMode]="true" [status]="person.Active ? 'success' : 'danger'"
+                            [style.right]="'1rem'" [position]="'center right'"></nb-badge>
                         <nb-icon pack="eva" icon="person-outline" status="primary" class="me-3">
                         </nb-icon>
                         {{person.FirstName}} {{person.LastName}}

@@ -60,7 +60,7 @@ export class AccomodationManagementComponent implements OnInit, OnDestroy {
   public drop(event: CdkDragDrop<any[]>): void {
     if (event.previousContainer != event.container) {
       var personId = event.item.data.PersonId;
-      var roomId = event.container.data[0].Id;
+      var roomId = event.container.data[0]?.Id;
 
       if (personId && roomId) {
         // just save and reload
