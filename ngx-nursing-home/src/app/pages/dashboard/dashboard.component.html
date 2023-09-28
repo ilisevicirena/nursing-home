@@ -1,146 +1,203 @@
 <div class="dashboard-container h-100">
-    <div class="row h-100">
-        <div class="col-md-8 h-100 ps-0">
-            <div class="row">
-                <div class="col-md-4 ps-0">
-                    <div class="row">
-                        <nb-card class="m-0 summary-card">
-                            <nb-card-body>
-                                <div class="row mb-2">
-                                    <div class="w-max">
-                                        <nb-icon pack="eva" icon="people-outline" status="primary"
-                                            size="large"></nb-icon>
-                                    </div>
-                                    <div class="col">
-                                        {{summary?.TakenSpace}} / {{summary?.Capacity}}
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <nb-progress-bar [value]="progressValue" status="primary"
-                                        [displayValue]="true"></nb-progress-bar>
-                                </div>
-                            </nb-card-body>
-                        </nb-card>
-                    </div>
-
-                    <div class="row mt-2">
-                        <nb-card class="m-0 summary-card">
-                            <nb-card-body>
-                                <div class="row label mb-2 ps-2">
-                                    {{getString('oldestPerson')}}
-                                </div>
-                                <div class="row">
-                                    <div class="w-max">
-                                        <nb-icon pack="eva" icon="person-outline" status="primary"></nb-icon>
-                                    </div>
-                                    <div class="col d-block">
-                                        <div class="value">
-                                            {{oldestPerson?.FirstName}} {{oldestPerson?.LastName}}
-                                        </div>
-                                        <div class="value">
-                                            {{oldestPerson?.BirthDate | date: 'dd.MM.yyyy.'}} ({{oldestPerson?.Years}})
-                                        </div>
-                                    </div>
-                                </div>
-                            </nb-card-body>
-                        </nb-card>
-                    </div>
-
-                    <div class="row mt-2">
-                        <nb-card class="m-0 summary-card">
-                            <nb-card-body>
-                                <div class="row label mb-2 ps-2">
-                                    {{getString('longestPerson')}}
-                                </div>
-                                <div class="row">
-                                    <div class="w-max d-flex align-items-center">
-                                        <nb-icon pack="eva" icon="person-done-outline" status="primary"></nb-icon>
-                                    </div>
-                                    <div class="col d-block">
-                                        <div class="value">
-                                            {{longestPerson?.FirstName}} {{longestPerson?.LastName}}
-                                        </div>
-                                        <div class="value">
-                                            {{longestPerson?.StartDate | date: 'dd.MM.yyyy.'}}
-                                        </div>
-                                        <div class="value">
-                                            {{longestPerson?.PassedTime?.years}} {{getString('longestPersonYears')}},
-                                            {{longestPerson?.PassedTime?.months}} {{getString('longestPersonMonths')}},
-                                            {{longestPerson?.PassedTime?.days}} {{getString('longestPersonDays')}}
-                                        </div>
-                                    </div>
-                                </div>
-                            </nb-card-body>
-                        </nb-card>
-                    </div>
+  <div class="row h-100">
+    <div class="col-md-8 h-100 ps-0">
+      <div class="row">
+        <div class="col-md-4 ps-0">
+          <div class="row">
+            <nb-card class="m-0 summary-card">
+              <nb-card-body>
+                <div class="row mb-2">
+                  <div class="w-max">
+                    <nb-icon
+                      pack="eva"
+                      icon="people-outline"
+                      status="primary"
+                      size="large"
+                    ></nb-icon>
+                  </div>
+                  <div class="col">
+                    {{ summary?.TakenSpace }} / {{ summary?.Capacity }}
+                  </div>
                 </div>
-
-                <div class="col-md-4 ps-0">
-                    <nb-card class="mb-0 h-100 round-card">
-                        <nb-card-body class="position-relative p-1">
-                            <div echarts [options]="genderPieOptions" class="echart-dash"></div>
-                        </nb-card-body>
-                    </nb-card>
+                <div class="row">
+                  <nb-progress-bar
+                    [value]="progressValue"
+                    status="primary"
+                    [displayValue]="true"
+                  ></nb-progress-bar>
                 </div>
-
-                <div class="col-md-4 ps-0 pe-0">
-                    <nb-card class="mb-0 h-100 round-card">
-                        <nb-card-body class="position-relative p-1">
-                            <div echarts [options]="activePersonsBarOptions" class="echart-dash"></div>
-                        </nb-card-body>
-                    </nb-card>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-4 h-100 pe-0 ps-0">
-            <nb-card class="mb-0 h-100 round-card events-card">
-                <nb-card-body class="ps-2 pe-2">
-                    <div class="row mb-3">
-                        <div class="col position-relative">
-                            <nb-tag class="semi-tag" [text]="today | date:'LLLL'" status="primary"
-                                appearance="outline"></nb-tag>
-                            <div class="title">
-                                {{getString('events')}}
-                            </div>
-                        </div>
-                        <div class="w-max label">
-                            <nb-icon pack="eva" icon="calendar-outline" status="basic" class="me-1"></nb-icon>
-                            {{today | date:'EEEE, dd.MM.yyyy.'}}
-                        </div>
-                    </div>
-                    <div class="events-container">
-                        <div *ngFor="let event of events">
-                            <div *ngIf="event.Id == nextEvent.Id" class="row mt-2 mb-2">
-                                <div class="col d-flex align-items-center ps-0">
-                                    <div class="line"></div>
-                                </div>
-                                <div class="w-max d-flex">
-                                    <div class="text-primary fw-600">{{getString('nextEvents')}}</div>
-                                    <nb-icon pack="eva" icon="arrowhead-down-outline" class="ms-2"
-                                        status="primary"></nb-icon>
-                                </div>
-                                <div class="col d-flex align-items-center pe-0">
-                                    <div class="line"></div>
-                                </div>
-                            </div>
-                            <div class="dashboard-event" [ngClass]="event.Color" [id]="'dashboard-event-'+event.Id"
-                                [style.background-color]="hexToRgbA(event.Color)">
-                                <div class="date label">{{event.Start | date:'EEEE, dd. MMMM'}} -
-                                    {{event.End | date:'EEEE, dd. MMMM'}} </div>
-                                <div class="title" [style.color]="event.Color">{{event.Title}}</div>
-                                <div class="description">{{event.Description}}</div>
-                            </div>
-                        </div>
-                    </div>
-                </nb-card-body>
-                <nb-card-footer class="d-flex justify-content-end">
-                    <button nbButton size="small" status="primary" shape="round"
-                        (click)="goToEvents()">{{getString('allEvents')}}</button>
-                </nb-card-footer>
+              </nb-card-body>
             </nb-card>
+          </div>
+
+          <div class="row mt-2">
+            <nb-card class="m-0 summary-card">
+              <nb-card-body>
+                <div class="row label mb-2 ps-2">
+                  {{ getString("oldestPerson") }}
+                </div>
+                <div class="row">
+                  <div class="w-max">
+                    <nb-icon
+                      pack="eva"
+                      icon="person-outline"
+                      status="primary"
+                    ></nb-icon>
+                  </div>
+                  <div class="col d-block">
+                    <div class="value">
+                      {{ oldestPerson?.FirstName }} {{ oldestPerson?.LastName }}
+                    </div>
+                    <div class="value">
+                      {{ oldestPerson?.BirthDate | date : "dd.MM.yyyy." }} ({{
+                        oldestPerson?.Years
+                      }})
+                    </div>
+                  </div>
+                </div>
+              </nb-card-body>
+            </nb-card>
+          </div>
+
+          <div class="row mt-2">
+            <nb-card class="m-0 summary-card">
+              <nb-card-body>
+                <div class="row label mb-2 ps-2">
+                  {{ getString("longestPerson") }}
+                </div>
+                <div class="row">
+                  <div class="w-max d-flex align-items-center">
+                    <nb-icon
+                      pack="eva"
+                      icon="person-done-outline"
+                      status="primary"
+                    ></nb-icon>
+                  </div>
+                  <div class="col d-block">
+                    <div class="value">
+                      {{ longestPerson?.FirstName }}
+                      {{ longestPerson?.LastName }}
+                    </div>
+                    <div class="value">
+                      {{ longestPerson?.StartDate | date : "dd.MM.yyyy." }}
+                    </div>
+                    <div class="value">
+                      {{ longestPerson?.PassedTime?.years }}
+                      {{ getString("longestPersonYears") }},
+                      {{ longestPerson?.PassedTime?.months }}
+                      {{ getString("longestPersonMonths") }},
+                      {{ longestPerson?.PassedTime?.days }}
+                      {{ getString("longestPersonDays") }}
+                    </div>
+                  </div>
+                </div>
+              </nb-card-body>
+            </nb-card>
+          </div>
         </div>
+
+        <div class="col-md-4 ps-0">
+          <nb-card class="mb-0 h-100 round-card">
+            <nb-card-body class="position-relative p-1">
+              <div
+                echarts
+                [options]="genderPieOptions"
+                class="echart-dash"
+              ></div>
+            </nb-card-body>
+          </nb-card>
+        </div>
+
+        <div class="col-md-4 ps-0 pe-0">
+          <nb-card class="mb-0 h-100 round-card">
+            <nb-card-body class="position-relative p-1">
+              <div
+                echarts
+                [options]="activePersonsBarOptions"
+                class="echart-dash"
+              ></div>
+            </nb-card-body>
+          </nb-card>
+        </div>
+      </div>
     </div>
 
-
+    <div class="col-md-4 h-100 pe-0 ps-0">
+      <nb-card class="mb-0 h-100 round-card events-card">
+        <nb-card-body class="ps-2 pe-2">
+          <div class="row mb-3">
+            <div class="col position-relative">
+              <nb-tag
+                class="semi-tag"
+                [text]="today | date : 'LLLL'"
+                status="primary"
+                appearance="outline"
+              ></nb-tag>
+              <div class="title">
+                {{ getString("events") }}
+              </div>
+            </div>
+            <div class="w-max label">
+              <nb-icon
+                pack="eva"
+                icon="calendar-outline"
+                status="basic"
+                class="me-1"
+              ></nb-icon>
+              {{ today | date : "EEEE, dd.MM.yyyy." }}
+            </div>
+          </div>
+          <div class="events-container">
+            <div *ngFor="let event of events">
+              <div *ngIf="event?.Id == nextEvent?.Id" class="row mt-2 mb-2">
+                <div class="col d-flex align-items-center ps-0">
+                  <div class="line"></div>
+                </div>
+                <div class="w-max d-flex">
+                  <div class="text-primary fw-600">
+                    {{ getString("nextEvents") }}
+                  </div>
+                  <nb-icon
+                    pack="eva"
+                    icon="arrowhead-down-outline"
+                    class="ms-2"
+                    status="primary"
+                  ></nb-icon>
+                </div>
+                <div class="col d-flex align-items-center pe-0">
+                  <div class="line"></div>
+                </div>
+              </div>
+              <div
+                class="dashboard-event"
+                [ngClass]="event.Color"
+                [id]="'dashboard-event-' + event?.Id"
+                [style.background-color]="hexToRgbA(event.Color)"
+              >
+                <div class="date label">
+                  {{ event.Start | date : "EEEE, dd. MMMM" }} -
+                  {{ event.End | date : "EEEE, dd. MMMM" }}
+                </div>
+                <div class="title" [style.color]="event.Color">
+                  {{ event.Title }}
+                </div>
+                <div class="description">{{ event.Description }}</div>
+              </div>
+            </div>
+          </div>
+        </nb-card-body>
+        <nb-card-footer class="d-flex justify-content-end">
+          <button
+            nbButton
+            size="small"
+            status="primary"
+            shape="round"
+            (click)="goToEvents()"
+          >
+            {{ getString("allEvents") }}
+          </button>
+        </nb-card-footer>
+      </nb-card>
+    </div>
+  </div>
 </div>

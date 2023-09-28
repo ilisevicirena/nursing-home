@@ -1,7 +1,7 @@
 USE [ENV01_NURSING_HOME]
 GO
 
-/****** Object:  StoredProcedure [dbo].[updatePerson]    Script Date: 22.6.2023. 14:13:07 ******/
+/****** Object:  StoredProcedure [dbo].[updatePerson]    Script Date: 27.9.2023. 19:37:08 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -31,6 +31,7 @@ BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
+	SET @BirthDate = CAST(DATEADD(hour, 2, @BirthDate) AS DATE);
 
     -- Insert statements for procedure here
 	UPDATE dbo.Person
@@ -49,7 +50,7 @@ BEGIN
 	exec dbo.removeAllEventsForPerson @PersonId=@Id;
 
 	DECLARE @Title varchar(200) = 'Rođendan: ' + @FirstName + ' ' + @LastName;
-	DECLARE @Description varchar(max) = 'Rođendan osobe: ' + @FirstName + ' ' + @LastName + ', datum rođenja: ' + CONVERT(varchar(10), @BirthDate, 104);
+	DECLARE @Description varchar(max) = 'Rođendan osobe: ' + @FirstName + ' ' + @LastName + ', datum rođenja: ' + CONVERT(varchar(10),  @BirthDate, 104);
 
 	EXEC dbo.insertCalendarEvent
 		@Start = @BirthDate,

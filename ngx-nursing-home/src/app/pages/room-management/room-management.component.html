@@ -1,59 +1,93 @@
 <div class="row h-100">
-    <div class="col-md-6 ps-0 h-100">
-        <nb-card class="h-100">
-            <nb-card-body class="overflow-hidden">
-                <nb-tabset (changeTab)="onTabChange($event)" class="h-100">
-                    <nb-tab [tabTitle]="floorsTitle" class="ps-0 pe-0 pb-0 overflow-hidden"
-                        style="height: calc(100% - 4rem);">
-                        <div class="max-h-100 h-100">
-                            <ngx-smart-table #floorsTable [tableMode]="tableMode" [columns]="floorsColumns"
-                                [(data)]="floorsData" [pagerEnabled]="false" [loadingEnabled]="false"
-                                [(load)]="floorsLoading" [entriesPerPageEnabled]="false"
-                                [exportSettings]="exportSettingsFloors" (createConfirm)="onCreateFloorConfirm($event)"
-                                (deleteConfirm)="onDeleteFloorConfirm($event)"
-                                (editConfirm)="onEditFloorConfirm($event)"></ngx-smart-table>
-                        </div>
-                    </nb-tab>
-                    <nb-tab [tabTitle]="roomsTitle" class="ps-0 pe-0 pb-0 overflow-hidden"
-                        style="height: calc(100% - 4rem);">
-                        <div class="max-h-100 h-100">
-                            <ngx-smart-table #roomsTable [tableMode]="tableMode" [columns]="roomsColumns"
-                                [(data)]="roomsData" [pagerEnabled]="false" [loadingEnabled]="false"
-                                [exportSettings]="exportSettingsRooms" [(load)]="roomsLoading"
-                                [entriesPerPageEnabled]="false" (createConfirm)="onCreateRoomConfirm($event)"
-                                (editConfirm)="onEditRoomConfirm($event)"
-                                (deleteConfirm)="onDeleteRoomConfirm($event)"></ngx-smart-table>
-                        </div>
-                    </nb-tab>
-                </nb-tabset>
-            </nb-card-body>
-        </nb-card>
-    </div>
-    <div class="col-md-6 h-100 p-0">
-        <nb-card class="h-100">
-            <nb-card-body>
-                <div class="row">
-                    <nb-tag-list class="p-0">
-                        <nb-tag *ngFor="let floor of floorsData" [text]="floor.Name" status="primary" class="floor-tag"
-                            (click)="onTagClick(floor)" [appearance]="floor.selected ? 'filled' : 'outline'"></nb-tag>
-                    </nb-tag-list>
+  <div class="col-md-6 ps-0 h-100">
+    <nb-card class="h-100">
+      <nb-card-body class="overflow-hidden">
+        <nb-tabset (changeTab)="onTabChange($event)" class="h-100">
+          <nb-tab
+            [tabTitle]="floorsTitle"
+            class="ps-0 pe-0 pb-0 overflow-hidden"
+            style="height: calc(100% - 4rem)"
+          >
+            <div class="max-h-100 h-100">
+              <ngx-grid
+                [gridMode]="tableMode"
+                [columns]="floorsGridColumns"
+                [(data)]="floorsData"
+                [exportSettings]="exportSettingsFloors"
+                (createConfirm)="onCreateFloorConfirm($event)"
+                (editConfirm)="onEditFloorConfirm($event)"
+                (deleteConfirm)="onDeleteFloorConfirm($event)"
+                [selectionEnabled]="false"
+              >
+              </ngx-grid>
+            </div>
+          </nb-tab>
+          <nb-tab
+            [tabTitle]="roomsTitle"
+            class="ps-0 pe-0 pb-0 overflow-hidden"
+            style="height: calc(100% - 4rem)"
+          >
+            <div class="max-h-100 h-100">
+              <ngx-grid
+                #roomsTable
+                [gridMode]="tableMode"
+                [columns]="roomsGridColumns"
+                [selectionEnabled]="false"
+                [(data)]="roomsData"
+                [exportSettings]="exportSettingsRooms"
+                (createConfirm)="onCreateRoomConfirm($event)"
+                (editConfirm)="onEditRoomConfirm($event)"
+                (deleteConfirm)="onDeleteRoomConfirm($event)"
+              ></ngx-grid>
+            </div>
+          </nb-tab>
+        </nb-tabset>
+      </nb-card-body>
+    </nb-card>
+  </div>
+  <div class="col-md-6 h-100 p-0">
+    <nb-card class="h-100">
+      <nb-card-body>
+        <div class="row">
+          <nb-tag-list class="p-0">
+            <nb-tag
+              *ngFor="let floor of floorsData"
+              [text]="floor.Name"
+              status="primary"
+              class="floor-tag"
+              (click)="onTagClick(floor)"
+              [appearance]="floor.selected ? 'filled' : 'outline'"
+            ></nb-tag>
+          </nb-tag-list>
+        </div>
+        <div class="row mt-4">
+          <div class="col-md-4 p-1" *ngFor="let room of selectedFloorRooms">
+            <div class="room">
+              <div>
+                <div class="room-name">{{ room.Name }}</div>
+                <div class="room-capacity">
+                  <nb-icon
+                    pack="eva"
+                    icon="people-outline"
+                    [status]="
+                      room.Capacity == 0
+                        ? 'primary'
+                        : room.Capacity == room.People
+                        ? 'danger'
+                        : 'success'
+                    "
+                  ></nb-icon>
+                  {{ room.People }}/{{ room.Capacity }}
                 </div>
-                <div class="row mt-4">
-                    <div class="col-md-4 p-1" *ngFor="let room of selectedFloorRooms">
-                        <div class="room">
-                            <div>
-                                <div class="room-name">{{room.Name}}</div>
-                                <div class="room-capacity">
-                                    <nb-icon pack="eva" icon="people-outline"
-                                        [status]="room.Capacity==0 ? 'primary' : room.Capacity==room.People ? 'danger':'success'"></nb-icon>
-                                    {{room.People}}/{{room.Capacity}}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <sample-no-data [title]="noRoomsTitle" *ngIf="selectedFloorRooms.length==0"></sample-no-data>
-                </div>
-            </nb-card-body>
-        </nb-card>
-    </div>
+              </div>
+            </div>
+          </div>
+          <sample-no-data
+            [title]="noRoomsTitle"
+            *ngIf="selectedFloorRooms.length == 0"
+          ></sample-no-data>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </div>
 </div>

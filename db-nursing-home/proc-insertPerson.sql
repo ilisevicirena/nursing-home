@@ -1,7 +1,7 @@
 USE [ENV01_NURSING_HOME]
 GO
 
-/****** Object:  StoredProcedure [dbo].[insertPerson]    Script Date: 22.6.2023. 14:12:31 ******/
+/****** Object:  StoredProcedure [dbo].[insertPerson]    Script Date: 27.9.2023. 19:37:24 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -32,9 +32,11 @@ BEGIN
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
-		DECLARE @Active bit = 1;
+	DECLARE @Active bit = 1;
 	DECLARE @CreationDate datetime = GETDATE();
 	DECLARE @EndDate datetime = NULL;
+
+	SET @BirthDate = CAST(DATEADD(hour, 2, @BirthDate) AS DATE);
 
 	INSERT INTO dbo.Person (FirstName, LastName, JMBG, BirthDate, StartDate, Active, CreationDate, EndDate, Address, GenderId)
 	VALUES (@FirstName, @LastName, @JMBG, @BirthDate, @StartDate, @Active, @CreationDate, @EndDate, @Address, @GenderId);

@@ -1,23 +1,41 @@
-import { Component, OnDestroy, OnInit, TemplateRef, ViewChildren } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { PersonsService, getIPersonFromJSON } from '../../services/rest/persons.service';
-import { getString } from '../../resources/strings';
-import { NgForm } from '@angular/forms';
-import { ToastrService } from '../../services/toastr.service';
-import { GendersService } from '../../services/rest/genders.service';
-import { CheckboxType, DateType, DatepickerFilter, SelectGridComponent, SmartTableColumn, TextboxEditor } from 'shared-components';
-import { DialogService } from '../../shared/dialog/dialog.service';
-import { RoomsService } from '../../services/rest/rooms.service';
-import { SelectGridColumn } from 'shared-components/lib/models/select-grid.model';
+import {
+  Component,
+  OnDestroy,
+  OnInit,
+  TemplateRef,
+  ViewChildren,
+} from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
+import { Subscription } from "rxjs";
+import {
+  PersonsService,
+  getIPersonFromJSON,
+} from "../../services/rest/persons.service";
+import { getString } from "../../resources/strings";
+import { NgForm } from "@angular/forms";
+import { ToastrService } from "../../services/toastr.service";
+import { GendersService } from "../../services/rest/genders.service";
+import {
+  CheckboxType,
+  DateType,
+  DatepickerFilter,
+  GridCheckboxColumn,
+  GridColumn,
+  GridDateColumn,
+  SelectGridComponent,
+  SmartTableColumn,
+  TextboxEditor,
+} from "shared-components";
+import { DialogService } from "../../shared/dialog/dialog.service";
+import { RoomsService } from "../../services/rest/rooms.service";
+import { SelectGridColumn } from "shared-components/lib/models/select-grid.model";
 
 @Component({
-  selector: 'sample-profile',
-  templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.scss']
+  selector: "sample-profile",
+  templateUrl: "./profile.component.html",
+  styleUrls: ["./profile.component.scss"],
 })
 export class ProfileComponent implements OnInit, OnDestroy {
-
   constructor(
     private activatedRoute: ActivatedRoute,
     private personsService: PersonsService,
@@ -25,8 +43,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
     private gendersService: GendersService,
     private dialogService: DialogService,
     private roomsService: RoomsService,
-    private router: Router,
-  ) { }
+    private router: Router
+  ) {}
 
   private subscriptions: Subscription[] = [];
 
@@ -40,51 +58,78 @@ export class ProfileComponent implements OnInit, OnDestroy {
   public genders: any[] = [];
   public alertIsOpen: boolean = true;
   public passedTime: any = {};
-  public selectedRoom: any = { FloorName: '', IsValid: true };
+  public selectedRoom: any = { FloorName: "", IsValid: true };
   public rooms: any[] = [];
   public allRooms: any[] = [];
   public personHistory: any[] = [];
   public roomHistory: any[] = [];
-  public roomHistoryColumns: SmartTableColumn[] = [
-    new SmartTableColumn(getString('id')).Property("RoomId").Filter(false),
-    new SmartTableColumn(getString('room')).Property("RoomName").Filter(false),
-    new SmartTableColumn(getString('floor')).Property("FloorName").Filter(false),
-    new SmartTableColumn(getString('activeRoom')).Property("Active").Filter(false).SpecialType(new CheckboxType()),
-    new SmartTableColumn(getString('roomStartDate')).Property("StartDate").Filter(false).SpecialType(new DateType().Format('dd.MM.yyyy.')),
-    new SmartTableColumn(getString('roomEndDate')).Property("EndDate").Filter(false).SpecialType(new DateType().Format('dd.MM.yyyy.')),
+  public roomHistoryColumns: GridColumn[] = [
+    new GridColumn().Title(getString("id")).DataField("RoomId").Filter(false),
+    new GridColumn()
+      .Title(getString("room"))
+      .DataField("RoomName")
+      .Filter(false),
+    new GridColumn()
+      .Title(getString("floor"))
+      .DataField("FloorName")
+      .Filter(false),
+    new GridColumn()
+      .Title(getString("activeRoom"))
+      .DataField("Active")
+      .Filter(false)
+      .Type(new GridCheckboxColumn()),
+    new GridColumn()
+      .Title(getString("roomStartDate"))
+      .DataField("StartDate")
+      .Filter(false)
+      .Type(new GridDateColumn().Format("dd.MM.yyyy.")),
+    new GridColumn()
+      .Title(getString("roomEndDate"))
+      .DataField("EndDate")
+      .Filter(false)
+      .Type(new GridDateColumn().Format("dd.MM.yyyy.")),
   ];
   public options: any[] = [
-    { option: 'basicData', string: 'basicData', active: true },
-    { option: 'contacts', string: 'contacts', active: false },
-    { option: 'stayData', string: 'stayData', active: false },
-    { option: 'dormatoryData', string: 'dormatoryData', active: false },
-    { option: 'services', string: 'services', active: false },
-    { option: 'documents', string: 'documents', active: false },
-    { option: 'notes', string: 'notes', active: false },
-    { option: 'calculation', string: 'personCalculation', active: false }
+    { option: "basicData", string: "basicData", active: true },
+    { option: "contacts", string: "contacts", active: false },
+    { option: "stayData", string: "stayData", active: false },
+    { option: "dormatoryData", string: "dormatoryData", active: false },
+    { option: "services", string: "services", active: false },
+    { option: "documents", string: "documents", active: false },
+    { option: "notes", string: "notes", active: false },
+    { option: "calculation", string: "personCalculation", active: false },
   ];
   public roomsColumns: SelectGridColumn[] = [
-    { name: "name", title: getString('room'), attributeName: "Name" },
-    { name: "floor", title: getString('floor'), attributeName: "FloorName" },
-    { name: "capacity", title: getString('capacity'), attributeName: "Capacity" },
-    { name: "freeSpace", title: getString('freeSpace'), attributeName: "FreeSpace" },
-    { name: "gender", title: getString('gender'), attributeName: "GenderName" }
+    { name: "name", title: getString("room"), attributeName: "Name" },
+    { name: "floor", title: getString("floor"), attributeName: "FloorName" },
+    {
+      name: "capacity",
+      title: getString("capacity"),
+      attributeName: "Capacity",
+    },
+    {
+      name: "freeSpace",
+      title: getString("freeSpace"),
+      attributeName: "FreeSpace",
+    },
+    { name: "gender", title: getString("gender"), attributeName: "GenderName" },
   ];
 
-  @ViewChildren('roomSelectGrid') roomsGrid;
+  @ViewChildren("roomSelectGrid") roomsGrid;
 
   ngOnInit(): void {
     this.loading = true;
     this.subscriptions.push(
       this.activatedRoute.paramMap.subscribe((params) => {
-        this.personId = params.get('id') as any;
+        this.personId = params.get("id") as any;
         this.getPersonDetails(this.personId);
         this.getGenders();
-      }));
+      })
+    );
   }
 
   ngOnDestroy(): void {
-    this.subscriptions.forEach(element => {
+    this.subscriptions.forEach((element) => {
       element.unsubscribe();
     });
   }
@@ -94,12 +139,12 @@ export class ProfileComponent implements OnInit, OnDestroy {
   }
 
   public toggleView(view: any): void {
-    this.options.find(x => x.option == this.activeView)!.active = false;
+    this.options.find((x) => x.option == this.activeView)!.active = false;
     view.active = true;
     this.activeView = view.option;
 
     switch (this.activeView) {
-      case 'dormatoryData':
+      case "dormatoryData":
         this.getAvaliableRooms();
         this.getAllRooms();
         this.getRoomHistory();
@@ -111,42 +156,56 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   public getGenders(): void {
     this.subscriptions.push(
-      this.gendersService.getData().subscribe(data => {
-        this.genders = data;
-      }, err => {
-        console.error(err);
-      }));
+      this.gendersService.getData().subscribe(
+        (data) => {
+          this.genders = data;
+        },
+        (err) => {
+          console.error(err);
+        }
+      )
+    );
   }
 
   public getHistory(): void {
     this.subscriptions.push(
-      this.personsService.getHistory(this.personId).subscribe(data => {
-        this.personHistory = data;
-      }, err => {
-        console.error(err);
-      }));
+      this.personsService.getHistory(this.personId).subscribe(
+        (data) => {
+          this.personHistory = data;
+        },
+        (err) => {
+          console.error(err);
+        }
+      )
+    );
   }
 
   public saveBasicData(form: NgForm): void {
     this.subscriptions.push(
-      this.personsService.update(this.newPersonData).subscribe(() => {
-        this.getPersonDetails(this.personId);
-        form.form.markAsPristine();
-        this.toastrService.showToast("success", getString('saveSuccess'), "");
-      }, err => {
-        console.error(err);
-        this.toastrService.showToast("danger", getString('saveError'), "");
-      }));
+      this.personsService.update(this.newPersonData).subscribe(
+        () => {
+          this.getPersonDetails(this.personId);
+          form.form.markAsPristine();
+          this.toastrService.showToast("success", getString("saveSuccess"), "");
+        },
+        (err) => {
+          console.error(err);
+          this.toastrService.showToast("danger", getString("saveError"), "");
+        }
+      )
+    );
   }
 
   public cancelEditBasicData(form: NgForm) {
-    this.newPersonData = getIPersonFromJSON(JSON.parse(JSON.stringify(this.person)));
+    this.newPersonData = getIPersonFromJSON(
+      JSON.parse(JSON.stringify(this.person))
+    );
     form.form.markAsPristine();
   }
 
   private getPersonDetails(personId: number): void {
     this.subscriptions.push(
-      this.personsService.getPersonDetails(personId).subscribe(data => {
+      this.personsService.getPersonDetails(personId).subscribe((data) => {
         if (data.length > 0) {
           this.person = getIPersonFromJSON(data[0]);
           this.newPersonData = getIPersonFromJSON(data[0]);
@@ -155,25 +214,44 @@ export class ProfileComponent implements OnInit, OnDestroy {
         }
 
         this.loading = false;
-      }));
+      })
+    );
   }
 
   //--------------------------------------------------- STAY DATA --------------------------------------------------
 
   public async deactivatePerson(): Promise<void> {
     var endDate: string = new Date().toLocaleDateString();
-    if (this.person.EndDate != undefined) endDate = this.person.EndDate.toLocaleDateString();
-    const rezDialog = await this.dialogService.openYesNoDialog(getString("areYouSure"), getString("questionDeactivatePerson") + endDate);
+    if (this.person.EndDate != undefined)
+      endDate = this.person.EndDate.toLocaleDateString();
+    const rezDialog = await this.dialogService.openYesNoDialog(
+      getString("areYouSure"),
+      getString("questionDeactivatePerson") + endDate
+    );
 
     if (rezDialog) {
       this.subscriptions.push(
-        this.personsService.deactivatePerson(this.personId, this.person.EndDate ?? null).subscribe(() => {
-          this.toastrService.showToast("success", getString("saveSuccess"), "");
-          this.getPersonDetails(this.personId);
-        }, err => {
-          this.toastrService.showToast("danger", getString("saveError"), "");
-          console.error(err);
-        }));
+        this.personsService
+          .deactivatePerson(this.personId, this.person.EndDate ?? null)
+          .subscribe(
+            () => {
+              this.toastrService.showToast(
+                "success",
+                getString("saveSuccess"),
+                ""
+              );
+              this.getPersonDetails(this.personId);
+            },
+            (err) => {
+              this.toastrService.showToast(
+                "danger",
+                getString("saveError"),
+                ""
+              );
+              console.error(err);
+            }
+          )
+      );
     }
   }
 
@@ -198,7 +276,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
       months = months + 12;
     }
 
-    days = Math.floor((today.getTime() - (new Date(yy + years, mm + months - 1, dd)).getTime()) / (24 * 60 * 60 * 1000));
+    days = Math.floor(
+      (today.getTime() - new Date(yy + years, mm + months - 1, dd).getTime()) /
+        (24 * 60 * 60 * 1000)
+    );
 
     return { years: years, months: months, days: days };
   }
@@ -207,65 +288,87 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   private getAvaliableRooms(): void {
     this.subscriptions.push(
-      this.roomsService.getAvaliableRooms().subscribe(data => {
+      this.roomsService.getAvaliableRooms().subscribe((data) => {
         this.rooms = data;
-      }));
+      })
+    );
   }
 
   private getAllRooms(): void {
     this.subscriptions.push(
-      this.roomsService.getData().subscribe(data => {
+      this.roomsService.getData().subscribe((data) => {
         this.allRooms = data;
-      }));
+      })
+    );
   }
 
   public onRoomSelectionChanged(event: any) {
     if (event.selectedItems.length == 1) {
       this.selectedRoom = event.selectedItems[0];
-      if (event.selectedItems[0].GenderId > 0 && event.selectedItems[0].GenderId != this.newPersonData.GenderId) this.selectedRoom.IsValid = false;
+      if (
+        event.selectedItems[0].GenderId > 0 &&
+        event.selectedItems[0].GenderId != this.newPersonData.GenderId
+      )
+        this.selectedRoom.IsValid = false;
       else this.selectedRoom.IsValid = true;
-    }
-    else this.selectedRoom = { FloorName: '', IsValid: true };
+    } else this.selectedRoom = { FloorName: "", IsValid: true };
   }
 
   public savePersonRoom(): void {
     this.subscriptions.push(
-      this.personsService.changeRoom(this.newPersonData.Id, this.selectedRoom.Id).subscribe(() => {
-        this.toastrService.showToast('success', getString('saveSuccess'), '');
-        var grid = this.roomsGrid.first as SelectGridComponent;
-        grid.selected = undefined;
-        this.selectedRoom = { FloorName: '', IsValid: true };
-        this.getPersonDetails(this.personId);
-        this.getAvaliableRooms();
-        this.getRoomHistory();
-      }));
+      this.personsService
+        .changeRoom(this.newPersonData.Id, this.selectedRoom.Id)
+        .subscribe(() => {
+          this.toastrService.showToast("success", getString("saveSuccess"), "");
+          var grid = this.roomsGrid.first as SelectGridComponent;
+          grid.selected = undefined;
+          this.selectedRoom = { FloorName: "", IsValid: true };
+          this.getPersonDetails(this.personId);
+          this.getAvaliableRooms();
+          this.getRoomHistory();
+        })
+    );
   }
 
   public goToExternalRoomManagement(): void {
-    this.router.navigateByUrl('/pages/accomodation-management');
+    this.router.navigateByUrl("/pages/accomodation-management");
   }
 
   public getRoomHistory(): void {
     this.subscriptions.push(
-      this.personsService.getRoomHistory(this.personId).subscribe(data => {
+      this.personsService.getRoomHistory(this.personId).subscribe((data) => {
         this.roomHistory = data;
-      }));
+      })
+    );
   }
 
   public openPersonHistory(ref: TemplateRef<any>): void {
     this.dialogService.open(ref);
   }
 
-  public getPersonHistoryColumns(isModal = false): SmartTableColumn[] {
-    return [
-      new SmartTableColumn(getString('id')).Property("Id").SpecialEditor(new TextboxEditor()).Filter(isModal),
-      new SmartTableColumn(getString("transactionDate")).Property("CreationDate")
-        .SpecialType(new DateType().Format("dd.MM.yyyy. HH:mm")).Filter(isModal).SpecialFilter(new DatepickerFilter().Format("dd.MM.yyyy.")),
-      new SmartTableColumn(getString('firstName')).Property("FirstName").SpecialEditor(new TextboxEditor()).Filter(isModal),
-      new SmartTableColumn(getString('lastName')).Property("LastName").SpecialEditor(new TextboxEditor()).Filter(isModal),
-      new SmartTableColumn(getString('jmbg')).Property("Jmbg").SpecialEditor(new TextboxEditor()).Filter(isModal),
-      new SmartTableColumn(getString('logType')).Property("LogType").SpecialEditor(new TextboxEditor()).Filter(isModal),
-      new SmartTableColumn(getString('logType')).Property("LogTypePretty").SpecialEditor(new TextboxEditor()).Filter(isModal),
-    ];
-  }
+  public historyColumns: GridColumn[] = [
+    new GridColumn().Title(getString("id")).DataField("Id").Filter(false),
+    new GridColumn()
+      .Title(getString("transactionDate"))
+      .DataField("CreationDate")
+      .Type(new GridDateColumn().Format("dd.MM.yyyy. HH:mm"))
+      .Filter(false),
+    new GridColumn()
+      .Title(getString("firstName"))
+      .DataField("FirstName")
+      .Filter(false),
+    new GridColumn()
+      .Title(getString("lastName"))
+      .DataField("LastName")
+      .Filter(false),
+    new GridColumn().Title(getString("jmbg")).DataField("Jmbg").Filter(false),
+    new GridColumn()
+      .Title(getString("logType"))
+      .DataField("LogType")
+      .Filter(false),
+    new GridColumn()
+      .Title(getString("logType"))
+      .DataField("LogTypePretty")
+      .Filter(false),
+  ];
 }

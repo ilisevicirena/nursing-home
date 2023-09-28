@@ -1,4 +1,16 @@
-<ngx-smart-table [data]="contactsData" [columns]="contactsColumns" (createConfirm)="contactsCreate($event)"
-    (editConfirm)="contactsEdit($event)" (deleteConfirm)="contactsDelete($event)" [exportExcelEnabled]="true"
-    [(exportSettings)]="exportSettings" [defaultPerPageOption]="10" [exportPdfEnabled]="true" [pagerEnabled]="true"
-    [entriesPerPageEnabled]="true" [refreshEnabled]="true"></ngx-smart-table>
+<ngx-grid
+  [(data)]="contactsData"
+  [columns]="contactsColumns"
+  (editConfirm)="contactsEdit($event)"
+  (deleteConfirm)="contactsDelete($event)"
+  [exportExcelEnabled]="true"
+  [(exportSettings)]="exportSettings"
+  [defaultPerPageOption]="10"
+  [exportPdfEnabled]="true"
+  [pagerEnabled]="true"
+  [entriesPerPageEnabled]="true"
+  [refreshEnabled]="true"
+  [gridMode]="gridMode"
+  [selectionEnabled]="false"
+  (createConfirm)="onCreateConfirm($event)"
+></ngx-grid>

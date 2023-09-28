@@ -1,244 +1,473 @@
 <ng-template #headerTemplate>
-    <div class="widow-header-template w-100">
-        <div class="d-flex title-container-person">
-            <nb-icon pack="eva" [icon]="isNew ? 'plus-outline':'edit-outline'" status="basic"></nb-icon>
-            <div class="window-title-person">{{getString("packagesManagement")}}</div>
-        </div>
-        <div class="d-flex title-container-person-details">
-            <div class="window-title-person">{{isNew ? getString('addNew') : getString('editData')}}</div>
-        </div>
-        <div class="row m-0 mt-2">
-            <div class="col-md-7 p-0">
-                <div class="form-group">
-                    <div class="value">
-                        <nb-form-field class="w-100">
-                            <nb-icon pack="eva" icon="shopping-cart-outline" nbPrefix></nb-icon>
-                            <input nbInput [placeholder]="getString('sum')" [(ngModel)]="packagePrice" shape="round"
-                                fullWidth readonly status="primary">
-                            <button nbButton nbSuffix class="noHover me-2" ghost status="primary" shape="round"
-                                (click)="$event.preventDefault()">{{getPriceTag()}}</button>
-                        </nb-form-field>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-1">
-                <div class="form-group">
-                    <button nbButton ghost status="info" shape="round" [nbPopover]="calculationInfoPopover"
-                        nbPopoverTrigger="click" nbPopoverPlacement="right">
-                        <nb-icon pack="eva" icon="info-outline"></nb-icon>
-                    </button>
-                </div>
-            </div>
-        </div>
-        <div class="close-button">
-            <button nbButton ghost shape="round" status="basic" (click)="close(false)">
-                <nb-icon pack="eva" icon="close-outline"></nb-icon>
-            </button>
-        </div>
+  <div class="widow-header-template w-100">
+    <div class="d-flex title-container-person">
+      <nb-icon
+        pack="eva"
+        [icon]="isNew ? 'plus-outline' : 'edit-outline'"
+        status="basic"
+      ></nb-icon>
+      <div class="window-title-person">
+        {{ getString("packagesManagement") }}
+      </div>
     </div>
+    <div class="d-flex title-container-person-details">
+      <div class="window-title-person">
+        {{ isNew ? getString("addNew") : getString("editData") }}
+      </div>
+    </div>
+    <div class="row m-0 mt-2">
+      <div class="col-md-7 p-0">
+        <div class="form-group">
+          <div class="value">
+            <nb-form-field class="w-100">
+              <nb-icon
+                pack="eva"
+                icon="shopping-cart-outline"
+                nbPrefix
+              ></nb-icon>
+              <input
+                nbInput
+                [placeholder]="getString('sum')"
+                [(ngModel)]="packagePrice"
+                shape="round"
+                fullWidth
+                readonly
+                status="primary"
+              />
+              <button
+                nbButton
+                nbSuffix
+                class="noHover me-2"
+                ghost
+                status="primary"
+                shape="round"
+                (click)="$event.preventDefault()"
+              >
+                {{ getPriceTag() }}
+              </button>
+            </nb-form-field>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-1">
+        <div class="form-group">
+          <button
+            nbButton
+            ghost
+            status="info"
+            shape="round"
+            [nbPopover]="calculationInfoPopover"
+            nbPopoverTrigger="click"
+            nbPopoverPlacement="right"
+          >
+            <nb-icon pack="eva" icon="info-outline"></nb-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="close-button">
+      <button
+        nbButton
+        ghost
+        shape="round"
+        status="basic"
+        (click)="close(false)"
+      >
+        <nb-icon pack="eva" icon="close-outline"></nb-icon>
+      </button>
+    </div>
+  </div>
 </ng-template>
 
 <div class="d-flex h-100 w-100 content-container">
-    <div class="person-details-body d-flex h-100 w-100">
-        <div class="col-md-5 left-content">
-            <div class="left-content-form">
-                <form #packageForm="ngForm">
-                    <div class="group-title">
-                        {{getString('basicData')}}
-                        <div class="line"></div>
-                    </div>
-                    <div class="row m-0">
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <div class="label">{{getString("id")}}</div>
-                                <div class="value">
-                                    <input nbInput [(ngModel)]="package.Id" fullWidth name="id" disabled
-                                        [placeholder]="getString('id')">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-9">
-                            <div class="form-group">
-                                <div class="label">{{getString("name")}} <nb-icon pack="eva" icon="alert-circle-outline"
-                                        status="danger" size="small" class="ms-1 required-mark"
-                                        [nbTooltip]="getString('required')"></nb-icon></div>
-                                <div class="value">
-                                    <input nbInput [(ngModel)]="package.Name" fullWidth name="nameService"
-                                        [disabled]="blockEdit" [placeholder]="getString('name')" required
-                                        #name1="ngModel" autocomplete="off"
-                                        [status]="name1.dirty ? (name1.invalid ? 'danger' : 'success'): 'basic'">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row m-0 mt-2">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <div class="label">{{getString("description")}}</div>
-                                <div class="value">
-                                    <textarea nbInput rows="3" [placeholder]="getString('description')" fullWidth
-                                        [disabled]="blockEdit" [(ngModel)]="package.Description"
-                                        name="description"></textarea>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="group-title">
-                            {{getString('calculation')}}
-                            <div class="line"></div>
-                        </div>
-                        <div class="row m-0">
-                            <div class="col-md-12">
-                                <div class="form-group d-flex">
-                                    <div class="value me-2">
-                                        <nb-checkbox [(checked)]="package.PackagePriceCalculated" [disabled]="blockEdit"
-                                            name="packagePriceCalculated"
-                                            (checkedChange)="calculatePackagePrice()"></nb-checkbox>
-                                    </div>
-                                    <div class="label d-flex align-items-center">{{getString('priceCalculated')}}</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row m-0 mt-2" *ngIf="!package.PackagePriceCalculated">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <div class="label">{{getString('defaultPackagePrice')}}
-                                        <nb-icon *ngIf="!package.PackagePriceCalculated" pack="eva"
-                                            icon="alert-circle-outline" status="danger" size="small"
-                                            class="ms-1 required-mark" [nbTooltip]="getString('required')"></nb-icon>
-                                    </div>
-                                    <div class="value">
-                                        <input nbInput [(ngModel)]="package.DefaultPackagePrice" fullWidth
-                                            name="DefaultPackagePrice" type="number"
-                                            (ngModelChange)="calculatePackagePrice()" (focusout)="onPriceChange()"
-                                            [placeholder]="getString('defaultPackagePrice')"
-                                            [required]="!package.PackagePriceCalculated" #defaultPackagePrice1="ngModel"
-                                            autocomplete="off" [disabled]="package.PackagePriceCalculated || blockEdit"
-                                            [status]="defaultPackagePrice1.dirty ? (defaultPackagePrice1.invalid ? 'danger' : 'success'): 'basic'">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <div class="label">{{getString('priceUnit')}}
-                                        <nb-icon *ngIf="!package.PackagePriceCalculated" pack="eva"
-                                            icon="alert-circle-outline" status="danger" size="small"
-                                            class="ms-1 required-mark" [nbTooltip]="getString('required')"></nb-icon>
-                                    </div>
-                                    <div class="value">
-                                        <nb-select [(ngModel)]="package.DefaultPackagePriceUnitId" fullWidth
-                                            name="priceUnit" [placeholder]="getString('priceUnit')"
-                                            [required]="!package.PackagePriceCalculated" #priceUnit1="ngModel"
-                                            autocomplete="off" [disabled]="package.PackagePriceCalculated || blockEdit"
-                                            [status]="priceUnit1.dirty ? (priceUnit1.invalid ? 'danger' : 'success'): 'basic'">
-                                            <nb-option *ngFor="let unit of priceUnits"
-                                                [value]="unit.Id">{{unit.Tag}}</nb-option>
-                                        </nb-select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row m-0 mt-2">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <div class="label">{{getString('calculationMeasurement')}}
-                                        <nb-icon pack="eva" icon="alert-circle-outline" status="danger" size="small"
-                                            class="ms-1 required-mark" [nbTooltip]="getString('required')"></nb-icon>
-                                    </div>
-                                    <div class="value">
-                                        <nb-select [(ngModel)]="package.CalculationMeasureUnitId" fullWidth
-                                            name="priceUnit" [placeholder]="getString('calculationMeasurement')"
-                                            required #measureUnit1="ngModel" autocomplete="off" [disabled]="blockEdit"
-                                            (selectedChange)="onPackageMeasureUnitSelectedChange($event)"
-                                            [status]="measureUnit1.dirty ? (measureUnit1.invalid ? 'danger' : 'success'): 'basic'">
-                                            <nb-option *ngFor="let unit of calculationMeasureUnits"
-                                                [value]="unit.Id">{{unit.Tag}}</nb-option>
-                                        </nb-select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6" *ngIf="package.PackagePriceCalculated">
-                                <div class="form-group">
-                                    <div class="label">{{getString('priceUnit')}}
-                                        <nb-icon pack="eva" icon="alert-circle-outline"
-                                            *ngIf="package.PackagePriceCalculated" status="danger" size="small"
-                                            class="ms-1 required-mark" [nbTooltip]="getString('required')"></nb-icon>
-                                    </div>
-                                    <div class="value">
-                                        <nb-select [(ngModel)]="package.DefaultPackagePriceUnitId" fullWidth
-                                            name="priceUnit" [placeholder]="getString('priceUnit')"
-                                            [required]="package.PackagePriceCalculated" #calculationPriceUnit1="ngModel"
-                                            autocomplete="off" [disabled]="blockEdit"
-                                            [status]="calculationPriceUnit1.dirty ? (calculationPriceUnit1.invalid ? 'danger' : 'success'): 'basic'">
-                                            <nb-option *ngFor="let unit of priceUnits"
-                                                [value]="unit.Id">{{unit.Tag}}</nb-option>
-                                        </nb-select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </form>
-                <div class="left-content-footer d-flex justify-content-end">
-                    <button nbButton ghost shape="round" size="small" (click)="close(false)"
-                        class="me-2">{{getString("cancel")}}</button>
-                    <button nbButton status="primary" size="small" shape="round"
-                        [disabled]="packageForm.form.invalid || packageServices.length==0 || blockEdit"
-                        (click)="onSaveClick(packageForm)">{{getString("save")}}</button>
+  <div class="person-details-body d-flex h-100 w-100">
+    <div class="col-md-5 left-content">
+      <div class="left-content-form">
+        <form #packageForm="ngForm">
+          <div class="group-title">
+            {{ getString("basicData") }}
+            <div class="line"></div>
+          </div>
+          <div class="row m-0">
+            <div class="col-md-3">
+              <div class="form-group">
+                <div class="label">{{ getString("id") }}</div>
+                <div class="value">
+                  <input
+                    nbInput
+                    [(ngModel)]="package.Id"
+                    fullWidth
+                    name="id"
+                    disabled
+                    [placeholder]="getString('id')"
+                  />
                 </div>
+              </div>
             </div>
-        </div>
-        <div class="col-md-7 grey-card h-100 pt-0">
+            <div class="col-md-9">
+              <div class="form-group">
+                <div class="label">
+                  {{ getString("name") }}
+                  <nb-icon
+                    pack="eva"
+                    icon="alert-circle-outline"
+                    status="danger"
+                    size="small"
+                    class="ms-1 required-mark"
+                    [nbTooltip]="getString('required')"
+                  ></nb-icon>
+                </div>
+                <div class="value">
+                  <input
+                    nbInput
+                    [(ngModel)]="package.Name"
+                    fullWidth
+                    name="nameService"
+                    [disabled]="blockEdit"
+                    [placeholder]="getString('name')"
+                    required
+                    #name1="ngModel"
+                    autocomplete="off"
+                    [status]="
+                      name1.dirty
+                        ? name1.invalid
+                          ? 'danger'
+                          : 'success'
+                        : 'basic'
+                    "
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row m-0 mt-2">
+            <div class="col-md-12">
+              <div class="form-group">
+                <div class="label">{{ getString("description") }}</div>
+                <div class="value">
+                  <textarea
+                    nbInput
+                    rows="3"
+                    [placeholder]="getString('description')"
+                    fullWidth
+                    [disabled]="blockEdit"
+                    [(ngModel)]="package.Description"
+                    name="description"
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
             <div class="group-title">
-                {{getString('servicesForPackage')}}
-                <div class="line"></div>
+              {{ getString("calculation") }}
+              <div class="line"></div>
             </div>
-            <div class="grid-header card-background-color">
-                <div class="row m-0 p-3">
-                    <div class="col-md-8 p-0">
-                        <ngx-select-grid #servicesSelectGridControl [columns]="packageServiceSelectGridColumns"
-                            [placeholder]="getString('service')" [attributesForLabel]="['Name']"
-                            [(source)]="servicesData" [valueAttr]="'Id'" [disabled]="blockEdit"
-                            (onSelectionChanged)="onServiceSelectionChanged($event)"></ngx-select-grid>
-                    </div>
-                    <div class="col-md-2">
-                        <input nbInput type="number" [placeholder]="getString('quantity')"
-                            [disabled]="selectedService.DefaultNumberOfUnits>0 || blockEdit"
-                            [(ngModel)]="selectedService.Quantity" fullWidth>
-                    </div>
-                    <div class="col-md-2 d-flex align-items-center">
-                        <button nbButton ghost status="primary" shape="round" size="small" (click)="addService()"
-                            [disabled]="!selectedService.ServiceId || selectedService.Quantity<=0 || blockEdit">
-                            {{getString('add')}}
-                            <nb-icon pack="eva" icon="plus-outline" nbSuffix></nb-icon>
-                        </button>
-                    </div>
+            <div class="row m-0">
+              <div class="col-md-12">
+                <div class="form-group d-flex">
+                  <div class="value me-2">
+                    <nb-checkbox
+                      [(checked)]="package.PackagePriceCalculated"
+                      [disabled]="blockEdit"
+                      name="packagePriceCalculated"
+                      (checkedChange)="calculatePackagePrice()"
+                    ></nb-checkbox>
+                  </div>
+                  <div class="label d-flex align-items-center">
+                    {{ getString("priceCalculated") }}
+                  </div>
                 </div>
+              </div>
             </div>
-            <div style="height: 400px;">
-                <ngx-smart-table #packageServicesGrid [columns]="servicesColumns" [(data)]="packageServices"
-                    [addEnabled]="false" [exportExcelEnabled]="false" [exportPdfEnabled]="false" [pagerEnabled]="false"
-                    [entriesPerPageEnabled]="false" [refreshEnabled]="false" [loadingEnabled]="false"
-                    [deleteEnabled]="!blockEdit" [editEnabled]="false" (deleteConfirm)="onServiceDeleteConfirm($event)">
-                </ngx-smart-table>
+            <div class="row m-0 mt-2" *ngIf="!package.PackagePriceCalculated">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <div class="label">
+                    {{ getString("defaultPackagePrice") }}
+                    <nb-icon
+                      *ngIf="!package.PackagePriceCalculated"
+                      pack="eva"
+                      icon="alert-circle-outline"
+                      status="danger"
+                      size="small"
+                      class="ms-1 required-mark"
+                      [nbTooltip]="getString('required')"
+                    ></nb-icon>
+                  </div>
+                  <div class="value">
+                    <input
+                      nbInput
+                      [(ngModel)]="package.DefaultPackagePrice"
+                      fullWidth
+                      name="DefaultPackagePrice"
+                      type="number"
+                      (ngModelChange)="calculatePackagePrice()"
+                      (focusout)="onPriceChange()"
+                      [placeholder]="getString('defaultPackagePrice')"
+                      [required]="!package.PackagePriceCalculated"
+                      #defaultPackagePrice1="ngModel"
+                      autocomplete="off"
+                      [disabled]="package.PackagePriceCalculated || blockEdit"
+                      [status]="
+                        defaultPackagePrice1.dirty
+                          ? defaultPackagePrice1.invalid
+                            ? 'danger'
+                            : 'success'
+                          : 'basic'
+                      "
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <div class="label">
+                    {{ getString("priceUnit") }}
+                    <nb-icon
+                      *ngIf="!package.PackagePriceCalculated"
+                      pack="eva"
+                      icon="alert-circle-outline"
+                      status="danger"
+                      size="small"
+                      class="ms-1 required-mark"
+                      [nbTooltip]="getString('required')"
+                    ></nb-icon>
+                  </div>
+                  <div class="value">
+                    <nb-select
+                      [(ngModel)]="package.DefaultPackagePriceUnitId"
+                      fullWidth
+                      name="priceUnit"
+                      [placeholder]="getString('priceUnit')"
+                      [required]="!package.PackagePriceCalculated"
+                      #priceUnit1="ngModel"
+                      autocomplete="off"
+                      [disabled]="package.PackagePriceCalculated || blockEdit"
+                      [status]="
+                        priceUnit1.dirty
+                          ? priceUnit1.invalid
+                            ? 'danger'
+                            : 'success'
+                          : 'basic'
+                      "
+                    >
+                      <nb-option
+                        *ngFor="let unit of priceUnits"
+                        [value]="unit.Id"
+                        >{{ unit.Tag }}</nb-option
+                      >
+                    </nb-select>
+                  </div>
+                </div>
+              </div>
             </div>
+            <div class="row m-0 mt-2">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <div class="label">
+                    {{ getString("calculationMeasurement") }}
+                    <nb-icon
+                      pack="eva"
+                      icon="alert-circle-outline"
+                      status="danger"
+                      size="small"
+                      class="ms-1 required-mark"
+                      [nbTooltip]="getString('required')"
+                    ></nb-icon>
+                  </div>
+                  <div class="value">
+                    <nb-select
+                      [(ngModel)]="package.CalculationMeasureUnitId"
+                      fullWidth
+                      name="priceUnit"
+                      [placeholder]="getString('calculationMeasurement')"
+                      required
+                      #measureUnit1="ngModel"
+                      autocomplete="off"
+                      [disabled]="blockEdit"
+                      (selectedChange)="
+                        onPackageMeasureUnitSelectedChange($event)
+                      "
+                      [status]="
+                        measureUnit1.dirty
+                          ? measureUnit1.invalid
+                            ? 'danger'
+                            : 'success'
+                          : 'basic'
+                      "
+                    >
+                      <nb-option
+                        *ngFor="let unit of calculationMeasureUnits"
+                        [value]="unit.Id"
+                        >{{ unit.Tag }}</nb-option
+                      >
+                    </nb-select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6" *ngIf="package.PackagePriceCalculated">
+                <div class="form-group">
+                  <div class="label">
+                    {{ getString("priceUnit") }}
+                    <nb-icon
+                      pack="eva"
+                      icon="alert-circle-outline"
+                      *ngIf="package.PackagePriceCalculated"
+                      status="danger"
+                      size="small"
+                      class="ms-1 required-mark"
+                      [nbTooltip]="getString('required')"
+                    ></nb-icon>
+                  </div>
+                  <div class="value">
+                    <nb-select
+                      [(ngModel)]="package.DefaultPackagePriceUnitId"
+                      fullWidth
+                      name="priceUnit"
+                      [placeholder]="getString('priceUnit')"
+                      [required]="package.PackagePriceCalculated"
+                      #calculationPriceUnit1="ngModel"
+                      autocomplete="off"
+                      [disabled]="blockEdit"
+                      [status]="
+                        calculationPriceUnit1.dirty
+                          ? calculationPriceUnit1.invalid
+                            ? 'danger'
+                            : 'success'
+                          : 'basic'
+                      "
+                    >
+                      <nb-option
+                        *ngFor="let unit of priceUnits"
+                        [value]="unit.Id"
+                        >{{ unit.Tag }}</nb-option
+                      >
+                    </nb-select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+        <div class="left-content-footer d-flex justify-content-end">
+          <button
+            nbButton
+            ghost
+            shape="round"
+            size="small"
+            (click)="close(false)"
+            class="me-2"
+          >
+            {{ getString("cancel") }}
+          </button>
+          <button
+            nbButton
+            status="primary"
+            size="small"
+            shape="round"
+            [disabled]="
+              packageForm.form.invalid ||
+              packageServices.length == 0 ||
+              blockEdit
+            "
+            (click)="onSaveClick(packageForm)"
+          >
+            {{ getString("save") }}
+          </button>
         </div>
+      </div>
     </div>
+    <div class="col-md-7 grey-card h-100 pt-0">
+      <div class="group-title">
+        {{ getString("servicesForPackage") }}
+        <div class="line"></div>
+      </div>
+      <div class="grid-header card-background-color">
+        <div class="row m-0 p-3">
+          <div class="col-md-8 p-0">
+            <ngx-select-grid
+              #servicesSelectGridControl
+              [columns]="packageServiceSelectGridColumns"
+              [placeholder]="getString('service')"
+              [attributesForLabel]="['Name']"
+              [(source)]="servicesData"
+              [valueAttr]="'Id'"
+              [disabled]="blockEdit"
+              (onSelectionChanged)="onServiceSelectionChanged($event)"
+            ></ngx-select-grid>
+          </div>
+          <div class="col-md-2">
+            <input
+              nbInput
+              type="number"
+              [placeholder]="getString('quantity')"
+              [disabled]="selectedService.DefaultNumberOfUnits > 0 || blockEdit"
+              [(ngModel)]="selectedService.Quantity"
+              fullWidth
+            />
+          </div>
+          <div class="col-md-2 d-flex align-items-center">
+            <button
+              nbButton
+              ghost
+              status="primary"
+              shape="round"
+              size="small"
+              (click)="addService()"
+              [disabled]="
+                !selectedService.ServiceId ||
+                selectedService.Quantity <= 0 ||
+                blockEdit
+              "
+            >
+              {{ getString("add") }}
+              <nb-icon pack="eva" icon="plus-outline" nbSuffix></nb-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div style="height: 400px">
+        <ngx-grid
+          #packageServicesGrid
+          [columns]="servicesColumns"
+          [(data)]="packageServices"
+          [addEnabled]="false"
+          [exportExcelEnabled]="false"
+          [exportPdfEnabled]="false"
+          [pagerEnabled]="false"
+          [entriesPerPageEnabled]="false"
+          [refreshEnabled]="false"
+          [loadingEnabled]="false"
+          gridMode="popup"
+          [deleteEnabled]="!blockEdit"
+          [editEnabled]="false"
+          [selectionEnabled]="false"
+          [filtersEnabled]="false"
+          (deleteConfirm)="onServiceDeleteConfirm($event)"
+        >
+        </ngx-grid>
+      </div>
+    </div>
+  </div>
 </div>
 
 <ng-template #calculationInfoPopover>
-    <nb-card class="m-0" style="width: 300px;">
-        <nb-card-body>
-            <div class="row m-0">
-                <div>
-                    <nb-icon pack="eva" icon="info-outline" status="info" class="info-icon-status"></nb-icon>
-                </div>
-                <div>
-                    <div class="p-2">{{getString("calculationInfoPopover")}}</div>
-                </div>
-            </div>
-        </nb-card-body>
-    </nb-card>
+  <nb-card class="m-0" style="width: 300px">
+    <nb-card-body>
+      <div class="row m-0">
+        <div>
+          <nb-icon
+            pack="eva"
+            icon="info-outline"
+            status="info"
+            class="info-icon-status"
+          ></nb-icon>
+        </div>
+        <div>
+          <div class="p-2">{{ getString("calculationInfoPopover") }}</div>
+        </div>
+      </div>
+    </nb-card-body>
+  </nb-card>
 </ng-template>
