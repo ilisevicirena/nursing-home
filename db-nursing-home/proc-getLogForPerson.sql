@@ -1,13 +1,3 @@
-USE [ENV01_NURSING_HOME]
-GO
-
-/****** Object:  StoredProcedure [dbo].[getLogForPerson]    Script Date: 28.4.2023. 12:52:10 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
 -- =============================================
 -- Author:		Irena Ilisevic
 -- Create date: 28.4.2023.
@@ -22,7 +12,6 @@ BEGIN
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
-    -- Insert statements for procedure here
 	select 
 	[Id]=l.Id,
 	[LogTypeId]=l.LogTypeId,
@@ -41,5 +30,3 @@ BEGIN
 	join dbo.Person as p on l.[KeyId]=p.Id where e.[Name]='Person' and l.[KeyId]=@Id
 	order by Id desc;
 END
-GO
-

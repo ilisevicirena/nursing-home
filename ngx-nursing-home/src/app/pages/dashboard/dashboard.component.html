@@ -44,7 +44,7 @@
                       status="primary"
                     ></nb-icon>
                   </div>
-                  <div class="col d-block">
+                  <div class="col d-block" *ngIf="oldestPerson">
                     <div class="value">
                       {{ oldestPerson?.FirstName }} {{ oldestPerson?.LastName }}
                     </div>
@@ -73,7 +73,7 @@
                       status="primary"
                     ></nb-icon>
                   </div>
-                  <div class="col d-block">
+                  <div class="col d-block" *ngIf="longestPerson">
                     <div class="value">
                       {{ longestPerson?.FirstName }}
                       {{ longestPerson?.LastName }}

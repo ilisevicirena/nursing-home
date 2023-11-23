@@ -1,13 +1,3 @@
-USE [ENV01_NURSING_HOME]
-GO
-
-/****** Object:  StoredProcedure [dbo].[updateCalendarEvent]    Script Date: 22.6.2023. 14:26:34 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
 -- =============================================
 -- Author:		Irena Ilisevic
 -- Create date: 22.6.2023.
@@ -30,6 +20,8 @@ BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
+	SET @Start = CAST(DATEADD(hour, 2, @Start) AS DATE);
+	SET @End= CAST(DATEADD(hour, 2, @End) AS DATE);
 
     update dbo.CalendarEvent
 	set
@@ -43,5 +35,3 @@ BEGIN
 	where Id=@Id;
 
 END
-GO
-

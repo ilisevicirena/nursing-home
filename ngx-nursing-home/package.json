@@ -69,6 +69,7 @@
     "ngx-summernote": "^0.8.8",
     "normalize.css": "6.0.0",
     "pace-js": "1.0.2",
+    "pdfform.js": "^1.0.14",
     "prismjs": "^1.29.0",
     "roboto-fontface": "0.8.0",
     "rxjs": "6.6.2",

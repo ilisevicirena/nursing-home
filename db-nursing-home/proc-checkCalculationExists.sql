@@ -1,13 +1,3 @@
-USE [ENV01_NURSING_HOME]
-GO
-
-/****** Object:  StoredProcedure [dbo].[checkCalculationExists]    Script Date: 28.6.2023. 15:35:54 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
 -- =============================================
 -- Author:		Irena Ilisevic
 -- Create date: 28.6.2023.
@@ -73,5 +63,3 @@ doc.[Path]
 	DROP TABLE #DocumentIds;
 
 END
-GO
-

@@ -1,13 +1,3 @@
-USE [ENV01_NURSING_HOME]
-GO
-
-/****** Object:  StoredProcedure [dbo].[getServicesAndPackagesForPerson]    Script Date: 14.6.2023. 11:25:43 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
 -- =============================================
 -- Author:		Irena Ilisevic
 -- Create date: 2.5.2023.
@@ -117,5 +107,3 @@ BEGIN
 	-- offer measure unit
 	exec dbo.getOfferMeasureUnitForPerson @PersonId=@Id;
 END
-GO
-

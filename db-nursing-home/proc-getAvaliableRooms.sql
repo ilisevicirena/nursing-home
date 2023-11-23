@@ -1,13 +1,3 @@
-USE [ENV01_NURSING_HOME]
-GO
-
-/****** Object:  StoredProcedure [dbo].[getAvaliableRooms]    Script Date: 23.4.2023. 19:31:08 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
 -- =============================================
 -- Author:		Irena Ilisevic
 -- Create date: 23.4.2023
@@ -21,7 +11,6 @@ BEGIN
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
-    -- Insert statements for procedure here
 	select * from (
 	select 
 	[Id]=r.Id,
@@ -43,5 +32,3 @@ BEGIN
 	where t.FreeSpace>0;
 	
 END
-GO
-

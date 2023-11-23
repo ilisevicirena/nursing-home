@@ -1,19 +1,3 @@
--- ================================================
--- Template generated from Template Explorer using:
--- Create Procedure (New Menu).SQL
---
--- Use the Specify Values for Template Parameters 
--- command (Ctrl-Shift-M) to fill in the parameter 
--- values below.
---
--- This block of comments will not be included in
--- the definition of the procedure.
--- ================================================
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
--- =============================================
 -- Author:		Irena Ilisevic
 -- Create date: 2.6.2023.
 -- Description:	updates tag
@@ -22,7 +6,8 @@ CREATE PROCEDURE [dbo].[updateTag]
 	-- Add the parameters for the stored procedure here
 	(
 		@Id int,
-		@Name varchar(50)
+		@Name varchar(50),
+		@Color varchar(50)
 	)
 AS
 BEGIN
@@ -32,8 +17,8 @@ BEGIN
 
     -- Insert statements for procedure here
 	UPDATE dbo.NotesTag
-	SET [Name]=@Name
+	SET [Name]=@Name,
+	[Color]=@Color
 	WHERE Id=@Id;
 
 END
-GO

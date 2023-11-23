@@ -1,13 +1,3 @@
-USE [ENV01_NURSING_HOME]
-GO
-
-/****** Object:  StoredProcedure [dbo].[insertCalendarEvent]    Script Date: 22.6.2023. 14:25:37 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
 -- =============================================
 -- Author:		Irena Ilisevic
 -- Create date: 21.6.2023.
@@ -31,11 +21,11 @@ BEGIN
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
+SET @Start = CAST(DATEADD(hour, 2, @Start) AS DATE);
+	SET @End= CAST(DATEADD(hour, 2, @End) AS DATE);
     -- Insert statements for procedure here
 	insert into dbo.CalendarEvent ([Start], [End], [Color], [Title], [Description], [PersonId], [Recurring], Reminder)
 	values (@Start, @End, @Color, @Title, @Description, @PersonId, @Recurring, @Reminder);
 
 	select SCOPE_IDENTITY() as [EventId];
 END
-GO
-

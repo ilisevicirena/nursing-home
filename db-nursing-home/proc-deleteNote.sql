@@ -1,13 +1,3 @@
-USE [ENV01_NURSING_HOME]
-GO
-
-/****** Object:  StoredProcedure [dbo].[deleteNote]    Script Date: 14.6.2023. 10:58:57 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
 -- =============================================
 -- Author:		Irena Ilisevic
 -- Create date: 11.6.2023.
@@ -65,5 +55,3 @@ BEGIN
     -- Drop the temporary table
     DROP TABLE #NoteDocuments;
 END
-GO
-

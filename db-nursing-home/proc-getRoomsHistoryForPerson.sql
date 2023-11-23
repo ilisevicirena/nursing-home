@@ -1,13 +1,3 @@
-USE [ENV01_NURSING_HOME]
-GO
-
-/****** Object:  StoredProcedure [dbo].[getRoomsHistoryForPerson]    Script Date: 2.5.2023. 11:01:29 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
 -- =============================================
 -- Author:		Irena Ilisevic
 -- Create date: 19.4.2023.
@@ -41,5 +31,3 @@ LEFT JOIN dbo.[Floor] as [floor] on room.FloorId=[floor].Id
 WHERE relation.PersonId = @PersonId
 order by StartDate desc;
 END
-GO
-

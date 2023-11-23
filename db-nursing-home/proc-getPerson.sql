@@ -1,13 +1,3 @@
-USE [ENV01_NURSING_HOME]
-GO
-
-/****** Object:  StoredProcedure [dbo].[getPerson]    Script Date: 23.4.2023. 14:51:25 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
 -- =============================================
 -- Author:		Irena Ilisevic
 -- Create date: 21.4.2023.
@@ -52,6 +42,3 @@ left join dbo.Gender as g on p.GenderId=g.Id
 where p.Id=@Id
 	
 END
-GO
-
-

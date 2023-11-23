@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule } from "@angular/core";
 import {
   NbAlertModule,
   NbButtonModule,
@@ -27,59 +27,58 @@ import {
   NbAccordionModule,
   NbUserModule,
   NbRadioModule,
-  NbProgressBarModule
-
-}
-  from '@nebular/theme';
-import { Ng2SearchPipeModule } from 'ng2-search-filter';
-import { ThemeModule } from '../@theme/theme.module';
-import { PagesComponent } from './pages.component';
-import { DashboardModule } from './dashboard/dashboard.module';
-import { PagesRoutingModule } from './pages-routing.module';
-import { SharedComponentsModule } from 'shared-components';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RoomManagementComponent } from './room-management/room-management.component';
-import { PersonsComponent } from './persons/persons.component';
-import { PersonPopupWindowComponent } from './person-popup-window/person-popup-window.component';
-import { NoDataComponent } from '../shared/no-data/no-data.component';
-import { NewPersonComponent } from './new-person/new-person.component';
-import { AccomodationManagementComponent } from './accomodation-management/accomodation-management.component';
-import { DragDropModule } from '@angular/cdk/drag-drop';
-import { AdvancedSearchComponent } from './advanced-search/advanced-search.component';
-import { ProfileComponent } from './profile/profile.component';
-import { ContactsGridComponent } from './contacts-grid/contacts-grid.component';
-import { ServicesComponent } from './services/services.component';
-import { PackagesComponent } from './packages/packages.component';
-import { ServicesManagementComponent } from './services-management/services-management.component';
-import { DiscountsComponent } from './discounts/discounts.component';
-import { AddEditServiceComponent } from './services/add-edit-service/add-edit-service.component';
-import { AddEditPackageComponent } from './packages/add-edit-package/add-edit-package.component';
-import { AddEditDiscountComponent } from './discounts/add-edit-discount/add-edit-discount.component';
-import { NotificationsComponent } from './notifications/notifications.component';
-import { NotificationsSettingsComponent } from './notifications/notifications-settings/notifications-settings.component';
-import { DiscountsPickerComponent } from './discounts/discounts-picker/discounts-picker.component';
-import { PrintInvoiceComponent } from './print-invoice/print-invoice.component';
-import { DocumentsComponent } from './documents/documents.component';
-import { UploadDocumentComponent } from './documents/upload-document/upload-document.component';
-import { NotesComponent } from './notes/notes.component';
-import { NewNoteComponent } from './notes/new-note/new-note.component';
-import { NgxSummernoteModule } from 'ngx-summernote';
-import { NoteTagsComponent } from './notes/note-tags/note-tags.component';
-import { NoteDocumentsComponent } from './notes/note-documents/note-documents.component';
-import { CalendarComponent } from './calendar/calendar.component';
-import { AddEditEventComponent } from './calendar/add-edit-event/add-edit-event.component';
-import { FastActionsComponent } from './fast-actions/fast-actions.component';
-import { DoctorVisitTourComponent } from './doctor-visit-tour/doctor-visit-tour.component';
-import { CalculationComponent } from './calculation/calculation.component';
-import { StartCalculationComponent } from './calculation/start-calculation/start-calculation.component';
-import { GeneratedInvoiceComponent } from './calculation/generated-invoice/generated-invoice.component';
-import { NgxEchartsModule } from 'ngx-echarts';
-import { CalculationSummaryComponent } from './calculation/calculation-summary/calculation-summary.component';
-import { RealPriceModalComponent } from './calculation/real-price-modal/real-price-modal.component';
-import { PaidCalculationModalComponent } from './calculation/paid-calculation-modal/paid-calculation-modal.component';
-import { CalculationDocumentsComponent } from './calculation/calculation-documents/calculation-documents.component';
-import { PersonCalculationComponent } from './profile/person-calculation/person-calculation.component';
-import { NoteExportComponent } from './notes/note-export/note-export.component';
+  NbProgressBarModule,
+} from "@nebular/theme";
+import { Ng2SearchPipeModule } from "ng2-search-filter";
+import { ThemeModule } from "../@theme/theme.module";
+import { PagesComponent } from "./pages.component";
+import { DashboardModule } from "./dashboard/dashboard.module";
+import { PagesRoutingModule } from "./pages-routing.module";
+import { SharedComponentsModule } from "shared-components";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { RoomManagementComponent } from "./room-management/room-management.component";
+import { PersonsComponent } from "./persons/persons.component";
+import { PersonPopupWindowComponent } from "./person-popup-window/person-popup-window.component";
+import { NoDataComponent } from "../shared/no-data/no-data.component";
+import { NewPersonComponent } from "./new-person/new-person.component";
+import { AccomodationManagementComponent } from "./accomodation-management/accomodation-management.component";
+import { DragDropModule } from "@angular/cdk/drag-drop";
+import { AdvancedSearchComponent } from "./advanced-search/advanced-search.component";
+import { ProfileComponent } from "./profile/profile.component";
+import { ContactsGridComponent } from "./contacts-grid/contacts-grid.component";
+import { ServicesComponent } from "./services/services.component";
+import { PackagesComponent } from "./packages/packages.component";
+import { ServicesManagementComponent } from "./services-management/services-management.component";
+import { DiscountsComponent } from "./discounts/discounts.component";
+import { AddEditServiceComponent } from "./services/add-edit-service/add-edit-service.component";
+import { AddEditPackageComponent } from "./packages/add-edit-package/add-edit-package.component";
+import { AddEditDiscountComponent } from "./discounts/add-edit-discount/add-edit-discount.component";
+import { NotificationsComponent } from "./notifications/notifications.component";
+import { NotificationsSettingsComponent } from "./notifications/notifications-settings/notifications-settings.component";
+import { DiscountsPickerComponent } from "./discounts/discounts-picker/discounts-picker.component";
+import { PrintInvoiceComponent } from "./print-invoice/print-invoice.component";
+import { DocumentsComponent } from "./documents/documents.component";
+import { UploadDocumentComponent } from "./documents/upload-document/upload-document.component";
+import { NotesComponent } from "./notes/notes.component";
+import { NewNoteComponent } from "./notes/new-note/new-note.component";
+import { NgxSummernoteModule } from "ngx-summernote";
+import { NoteTagsComponent } from "./notes/note-tags/note-tags.component";
+import { NoteDocumentsComponent } from "./notes/note-documents/note-documents.component";
+import { CalendarComponent } from "./calendar/calendar.component";
+import { AddEditEventComponent } from "./calendar/add-edit-event/add-edit-event.component";
+import { FastActionsComponent } from "./fast-actions/fast-actions.component";
+import { DoctorVisitTourComponent } from "./doctor-visit-tour/doctor-visit-tour.component";
+import { CalculationComponent } from "./calculation/calculation.component";
+import { StartCalculationComponent } from "./calculation/start-calculation/start-calculation.component";
+import { GeneratedInvoiceComponent } from "./calculation/generated-invoice/generated-invoice.component";
+import { NgxEchartsModule } from "ngx-echarts";
+import { CalculationSummaryComponent } from "./calculation/calculation-summary/calculation-summary.component";
+import { RealPriceModalComponent } from "./calculation/real-price-modal/real-price-modal.component";
+import { PaidCalculationModalComponent } from "./calculation/paid-calculation-modal/paid-calculation-modal.component";
+import { CalculationDocumentsComponent } from "./calculation/calculation-documents/calculation-documents.component";
+import { PersonCalculationComponent } from "./profile/person-calculation/person-calculation.component";
+import { NoteExportComponent } from "./notes/note-export/note-export.component";
+import { TagsComponent } from "./tags/tags.component";
 
 @NgModule({
   imports: [
@@ -121,8 +120,8 @@ import { NoteExportComponent } from './notes/note-export/note-export.component';
     NbRadioModule,
     NbProgressBarModule,
     NgxEchartsModule.forRoot({
-      echarts: () => import('echarts')
-    })
+      echarts: () => import("echarts"),
+    }),
   ],
   declarations: [
     PagesComponent,
@@ -165,7 +164,7 @@ import { NoteExportComponent } from './notes/note-export/note-export.component';
     CalculationDocumentsComponent,
     PersonCalculationComponent,
     NoteExportComponent,
+    TagsComponent,
   ],
 })
-export class PagesModule {
-}
+export class PagesModule {}

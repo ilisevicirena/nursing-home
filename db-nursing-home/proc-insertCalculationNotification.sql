@@ -1,13 +1,3 @@
-USE [ENV01_NURSING_HOME]
-GO
-
-/****** Object:  StoredProcedure [dbo].[insertCalculationNotification]    Script Date: 10.7.2023. 9:02:38 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
 -- =============================================
 -- Author:		Irena Ilisevic
 -- Create date: 10.7.2023.
@@ -22,7 +12,7 @@ BEGIN
 	-- interfering with SELECT statements.
 SET NOCOUNT ON;
 DECLARE @currentDateTime DATETIME;
-SET @currentDateTime = CONVERT(DATE, GETDATE());
+SET @currentDateTime = CAST(DATEADD(hour, 2, GETDATE()) AS DATE);
 
 -- Check if notification type "reminder" is enabled
 DECLARE @isReminderEnabled BIT;
@@ -37,7 +27,7 @@ IF @isReminderEnabled = 1
 BEGIN
     INSERT INTO dbo.[Notification] (NotificationTypeId, CreationDate, ReadDate, [Read], [Text], LinkId, GoToLink)
     SELECT NT.Id AS NotificationTypeId,
-           GETDATE() AS CreationDate,
+           CAST(DATEADD(hour, 2, GETDATE()) AS DATE) AS CreationDate,
            NULL AS ReadDate,
            0 AS [Read],
            CONCAT('Uplata za osobu ',P.FirstName, ' ', P.LastName, ' za ', C.[Month],'. mjesec ', C.[Year],' kasni ',
@@ -54,5 +44,3 @@ END;
 
    
 END
-GO
-

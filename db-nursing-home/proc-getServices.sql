@@ -1,13 +1,3 @@
-USE [ENV01_NURSING_HOME]
-GO
-
-/****** Object:  StoredProcedure [dbo].[getServices]    Script Date: 22.5.2023. 12:08:03 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
 -- =============================================
 -- Author:		Irena Ilisevic
 -- Create date: 2.5.2023.
@@ -41,5 +31,3 @@ BEGIN
 	WHERE s.Active=1;
 
 END
-GO
-

@@ -1,13 +1,3 @@
-USE [ENV01_NURSING_HOME]
-GO
-
-/****** Object:  StoredProcedure [dbo].[changeStatusPerson]    Script Date: 21.6.2023. 14:31:42 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
 -- =============================================
 -- Author:		Irena Ilisevic
 -- Create date: 19.4.2023.
@@ -27,8 +17,8 @@ BEGIN
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
-    -- Insert statements for procedure here
 	DECLARE @EndDate DATETIME;
+    SET @Date= CAST(DATEADD(hour, 2, @Date) AS DATE);
 
     IF (@Status = 0)
     BEGIN
@@ -36,7 +26,7 @@ BEGIN
 		exec dbo.removeAllEventsForPerson @PersonId=@Id;
 
         IF (@Date IS NULL)
-            SET @EndDate = GETDATE();
+            SET @EndDate = CAST(DATEADD(hour, 2, GETDATE()) AS DATE);
         ELSE
             SET @EndDate = @Date;
     END
@@ -51,5 +41,3 @@ BEGIN
 
     EXEC dbo.writeLog @LogType = 'UPDATE', @LogEntity = 'Person', @Key = @Id;
 END
-GO
-

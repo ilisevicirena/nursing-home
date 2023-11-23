@@ -63,6 +63,7 @@ export class PersonCalculationComponent implements OnInit, OnDestroy {
     new GridColumn()
       .Title(getString("status"))
       .DataField("StatusId")
+      .Width("136px")
       .Type(
         new GridTagColumn()
           .LookupColumn("StatusStringKey")
@@ -77,9 +78,18 @@ export class PersonCalculationComponent implements OnInit, OnDestroy {
             this.calculationService.apiRoute + "/getCalculationStatuses"
           )
       ),
-    new GridColumn().Title(getString("systemPrice")).DataField("SystemPrice"),
-    new GridColumn().Title(getString("realPrice")).DataField("RealPrice"),
-    new GridColumn().Title(getString("paidPrice")).DataField("PaidPrice"),
+    new GridColumn()
+      .Title(getString("systemPrice"))
+      .DataField("SystemPrice")
+      .Width("110px"),
+    new GridColumn()
+      .Title(getString("realPrice"))
+      .DataField("RealPrice")
+      .Width("110px"),
+    new GridColumn()
+      .Title(getString("paidPrice"))
+      .DataField("PaidPrice")
+      .Width("110px"),
     new GridColumn()
       .Title(getString("paidDate"))
       .DataField("DatePaid")

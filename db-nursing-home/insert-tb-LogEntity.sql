@@ -1,6 +1,3 @@
-USE [ENV01_NURSING_HOME]
-GO
-
 INSERT INTO [dbo].[LogEntity]
            ([Name]
            ,[Key])
@@ -9,6 +6,3 @@ INSERT INTO [dbo].[LogEntity]
 		   ('Room','Id'),
 		   ('Floor','Id'),
 		   ('Contact','Id')
-GO
-
-

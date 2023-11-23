@@ -1,13 +1,3 @@
-USE [ENV01_NURSING_HOME]
-GO
-
-/****** Object:  StoredProcedure [dbo].[calculationPaid]    Script Date: 30.6.2023. 14:22:47 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
 -- =============================================
 -- Author:		Irena Ilisevic
 -- Create date: 26.6.2023.
@@ -25,14 +15,14 @@ BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
+	
+	SET @PaidDate= CAST(DATEADD(hour, 2, @PaidDate) AS DATE);
 
-    update dbo.Calculation
-	set
+    UPDATE dbo.Calculation
+	SET
 	DatePaid=@PaidDate,
 	PaidPrice=@PaidPrice,
 	StatusId=1
-	where Id=@CalculationId;
+	WHERE Id=@CalculationId;
 
 END
-GO
-

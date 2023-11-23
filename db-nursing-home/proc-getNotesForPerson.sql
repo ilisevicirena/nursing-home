@@ -1,13 +1,3 @@
-USE [ENV01_NURSING_HOME]
-GO
-
-/****** Object:  StoredProcedure [dbo].[getNotesForPerson]    Script Date: 2.6.2023. 11:35:54 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
 -- =============================================
 -- Author:		Irena Ilisevic
 -- Create date: 2.6.2023.
@@ -73,5 +63,3 @@ BEGIN
 	where n.PersonId=@PersonId;
 
 END
-GO
-

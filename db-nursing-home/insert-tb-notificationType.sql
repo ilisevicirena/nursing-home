@@ -1,14 +1,11 @@
-USE [ENV01_NURSING_HOME]
-GO
 
 INSERT INTO [dbo].[NotificationType]
            ([Name]
            ,[Code]
-           ,[StringKey])
+           ,[StringKey]
+           ,[Enabled]
+           ,[DaysReminder])
      VALUES
-           ('Events', 'events','events'),
-		   ('Reminders', 'reminders', 'reminders'),
-		   ('Other', 'other','')
-GO
-
-
+           ('Events', 'events','events',1,2),
+		   ('Reminders', 'reminders', 'reminders',1,2),
+		   ('Other', 'other','other',1,2)

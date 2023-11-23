@@ -1,13 +1,3 @@
-USE [ENV01_NURSING_HOME]
-GO
-
-/****** Object:  StoredProcedure [dbo].[insertDiscount]    Script Date: 7.5.2023. 13:02:10 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
 -- =============================================
 -- Author:		Irena Ilisevic
 -- Create date: 7.5.2023.
@@ -33,5 +23,3 @@ BEGIN
 
 	select SCOPE_IDENTITY() as [DiscountId];
 END
-GO
-

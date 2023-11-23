@@ -1,13 +1,3 @@
-USE [ENV01_NURSING_HOME]
-GO
-
-/****** Object:  StoredProcedure [dbo].[insertPackage]    Script Date: 10.5.2023. 9:20:18 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
 -- =============================================
 -- Author:		Irena Ilisevic
 -- Create date: 2.5.2023.
@@ -35,5 +25,3 @@ BEGIN
 
 	SELECT SCOPE_IDENTITY() AS [PackageId];
 END
-GO
-

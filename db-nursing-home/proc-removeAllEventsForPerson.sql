@@ -1,12 +1,3 @@
-USE [ENV01_NURSING_HOME]
-GO
-
-/****** Object:  StoredProcedure [dbo].[removeAllEventsForPerson]    Script Date: 22.6.2023. 8:03:42 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
 
 -- =============================================
 -- Author:		Irena Ilisevic
@@ -26,5 +17,3 @@ BEGIN
 
     delete from dbo.CalendarEvent where PersonId=@PersonId;
 END
-GO
-

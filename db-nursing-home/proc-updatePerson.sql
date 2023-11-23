@@ -1,13 +1,3 @@
-USE [ENV01_NURSING_HOME]
-GO
-
-/****** Object:  StoredProcedure [dbo].[updatePerson]    Script Date: 27.9.2023. 19:37:08 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
 -- =============================================
 -- Author:		Irena Ilisevic
 -- Create date: 19.4.2023.
@@ -32,6 +22,7 @@ BEGIN
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 	SET @BirthDate = CAST(DATEADD(hour, 2, @BirthDate) AS DATE);
+	SET @StartDate= CAST(DATEADD(hour, 2, @StartDate) AS DATE);
 
     -- Insert statements for procedure here
 	UPDATE dbo.Person
@@ -62,5 +53,3 @@ BEGIN
 		@Recurring = 1,
 		@Reminder=0;
 END
-GO
-

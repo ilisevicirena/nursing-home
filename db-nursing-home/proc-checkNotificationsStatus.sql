@@ -1,13 +1,3 @@
-USE [ENV01_NURSING_HOME]
-GO
-
-/****** Object:  StoredProcedure [dbo].[checkNotificationsStatus]    Script Date: 21.6.2023. 12:01:02 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
 -- =============================================
 -- Author:		Irena Ilisevic
 -- Create date: 9.5.2023.
@@ -21,10 +11,7 @@ BEGIN
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
-    -- Insert statements for procedure here
 	select [NotificationNumber]=isnull(t1.NotificationsNumber,0)
 	from (select count(Id) as NotificationsNumber from dbo.[Notification] where [Read]=0) as t1;
 
 END
-GO
-

@@ -1,13 +1,3 @@
-USE [ENV01_NURSING_HOME]
-GO
-
-/****** Object:  StoredProcedure [dbo].[getCalculationsForPerson]    Script Date: 6.7.2023. 11:43:25 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
 -- =============================================
 -- Author:		Irena Ilisevic
 -- Create date: 26.6.2023.
@@ -61,5 +51,3 @@ BEGIN
 	where c.PersonId=@PersonId
 	order by c.[Year] desc, c.[Month] desc;
 END
-GO
-

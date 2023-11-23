@@ -1,13 +1,3 @@
-USE [ENV01_NURSING_HOME]
-GO
-
-/****** Object:  StoredProcedure [dbo].[writeLog]    Script Date: 2.6.2023. 9:05:08 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
 -- =============================================
 -- Author:		Irena Ilisevic
 -- Create date: 28.4.2023
@@ -34,5 +24,3 @@ BEGIN
         @Key,
         GETDATE();
 END
-GO
-

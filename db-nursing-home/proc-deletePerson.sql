@@ -1,18 +1,3 @@
--- ================================================
--- Template generated from Template Explorer using:
--- Create Procedure (New Menu).SQL
---
--- Use the Specify Values for Template Parameters 
--- command (Ctrl-Shift-M) to fill in the parameter 
--- values below.
---
--- This block of comments will not be included in
--- the definition of the procedure.
--- ================================================
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
 -- =============================================
 -- Author:		Irena Ilisevic
 -- Create date: 19.4.2023.
@@ -29,9 +14,7 @@ BEGIN
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
-    -- Insert statements for procedure here
-	DELETE FROM dbo.Person WHERE Id = @Id
+	DELETE FROM dbo.Person WHERE Id = @Id;
 
 	exec dbo.writeLog @LogType='DELETE', @LogEntity='Person', @Key= @Id;
 END
-GO

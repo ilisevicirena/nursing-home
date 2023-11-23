@@ -1,13 +1,3 @@
-USE [ENV01_NURSING_HOME]
-GO
-
-/****** Object:  StoredProcedure [dbo].[insertBirthdayNotifications]    Script Date: 6.7.2023. 8:43:02 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
 -- =============================================
 -- Author:		Irena Ilisevic
 -- Create date: 16.6.2023.
@@ -21,7 +11,7 @@ BEGIN
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
-	DECLARE @CurrentDate DATE = CONVERT(DATE, GETDATE());
+	DECLARE @CurrentDate DATE = CONVERT(DATE, CAST(DATEADD(hour, 2, GETDATE()) AS DATE));
 
 INSERT INTO dbo.[Notification] (NotificationTypeId, CreationDate, ReadDate, [Read], [Text], LinkId, GoToLink)
 SELECT 
@@ -60,5 +50,3 @@ BEGIN
 END
 
 END
-GO
-

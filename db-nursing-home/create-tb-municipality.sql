@@ -1,0 +1,18 @@
+CREATE TABLE [dbo].[Municipality](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [varchar](300) NOT NULL,
+	[CountryId] [int] NOT NULL,
+ CONSTRAINT [PK_Municipality] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[Municipality]  WITH CHECK ADD  CONSTRAINT [FK_Municipality_Country] FOREIGN KEY([CountryId])
+REFERENCES [dbo].[Country] ([Id])
+GO
+
+ALTER TABLE [dbo].[Municipality] CHECK CONSTRAINT [FK_Municipality_Country]
+GO
+

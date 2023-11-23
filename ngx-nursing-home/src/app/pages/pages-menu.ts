@@ -1,30 +1,30 @@
-import { getString } from '../resources/strings';
-import { DialogService } from '../shared/dialog/dialog.service';
-import { FastActionsComponent } from './fast-actions/fast-actions.component';
+import { getString } from "../resources/strings";
+import { DialogService } from "../shared/dialog/dialog.service";
+import { FastActionsComponent } from "./fast-actions/fast-actions.component";
 
 export const MENU_ITEMS: any[] = [
   {
     title: getString("dashboard"),
-    icon: 'home-outline',
-    link: '/pages/dashboard',
+    icon: "home-outline",
+    link: "/pages/dashboard",
   },
   {
-    title: getString('personsManagement'),
+    title: getString("personsManagement"),
     icon: "people-outline",
     children: [
       {
         title: getString("persons"),
-        link: '/pages/persons',
+        link: "/pages/persons",
       },
       {
         title: getString("searchPersons"),
-        link: '/pages/advanced-search',
+        link: "/pages/advanced-search",
       },
       {
         title: getString("addPerson"),
-        link: '/pages/new-person',
+        link: "/pages/new-person",
       },
-    ]
+    ],
   },
   {
     title: getString("accomodationManagement"),
@@ -32,57 +32,64 @@ export const MENU_ITEMS: any[] = [
     children: [
       {
         title: getString("roomManagement"),
-        link: '/pages/room-management',
+        link: "/pages/room-management",
       },
       {
         title: getString("accomodationManagementRoom"),
-        link: '/pages/accomodation-management',
+        link: "/pages/accomodation-management",
       },
-    ]
+    ],
   },
   {
     title: getString("servicesManagement"),
-    icon: 'settings-outline',
+    icon: "settings-outline",
     children: [
       {
         title: getString("servicesSingle"),
-        link: '/pages/services'
+        link: "/pages/services",
       },
       {
         title: getString("packages"),
-        link: '/pages/packages'
+        link: "/pages/packages",
       },
       {
         title: getString("discounts"),
-        link: '/pages/discounts'
+        link: "/pages/discounts",
       },
       {
         title: getString("servicesManagementSingle"),
-        link: '/pages/services-management'
+        link: "/pages/services-management",
       },
-    ]
+    ],
   },
   {
-    title: getString('calendar'),
-    icon: 'calendar-outline',
-    link: '/pages/calendar'
+    title: getString("calendar"),
+    icon: "calendar-outline",
+    link: "/pages/calendar",
   },
   {
-    title: getString('calculationPage'),
-    icon: 'play-circle-outline',
-    link: '/pages/calculation'
+    title: getString("calculationPage"),
+    icon: "play-circle-outline",
+    link: "/pages/calculation",
   },
   {
-    title: getString('fastActions'),
-    icon: 'grid-outline',
+    title: getString("fastActions"),
+    icon: "grid-outline",
     link: undefined,
     click: (dialogService: DialogService) => {
-      dialogService.open(
-        FastActionsComponent,
-        {
-          autoFocus: false
-        }
-      );
-    }
-  }
+      dialogService.open(FastActionsComponent, {
+        autoFocus: false,
+      });
+    },
+  },
+  {
+    title: getString("settings"),
+    icon: "settings-2-outline",
+    children: [
+      {
+        title: getString("tagsManagement"),
+        link: "/pages/tags",
+      },
+    ],
+  },
 ];

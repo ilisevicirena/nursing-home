@@ -1,13 +1,3 @@
-USE [ENV01_NURSING_HOME]
-GO
-
-/****** Object:  Table [dbo].[Notification]    Script Date: 9.5.2023. 14:11:57 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
 CREATE TABLE [dbo].[Notification](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[NotificationTypeId] [int] NOT NULL,
@@ -22,19 +12,19 @@ CREATE TABLE [dbo].[Notification](
 	[Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
-GO
+ 
 
 ALTER TABLE [dbo].[Notification]  WITH CHECK ADD  CONSTRAINT [FK_Notification_NotificationType] FOREIGN KEY([NotificationTypeId])
 REFERENCES [dbo].[NotificationType] ([Id])
-GO
+ 
 
 ALTER TABLE [dbo].[Notification] CHECK CONSTRAINT [FK_Notification_NotificationType]
-GO
+ 
 
 ALTER TABLE [dbo].[Notification]  WITH CHECK ADD  CONSTRAINT [FK_Notification_PageLink] FOREIGN KEY([LinkId])
 REFERENCES [dbo].[PageLink] ([Id])
-GO
+ 
 
 ALTER TABLE [dbo].[Notification] CHECK CONSTRAINT [FK_Notification_PageLink]
-GO
+ 
 

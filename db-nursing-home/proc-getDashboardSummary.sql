@@ -1,13 +1,3 @@
-USE [ENV01_NURSING_HOME]
-GO
-
-/****** Object:  StoredProcedure [dbo].[getDashboardSummary]    Script Date: 9.8.2023. 14:13:40 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
 -- =============================================
 -- Author:		Irena Ilisevic
 -- Create date: 19.7.2023.
@@ -94,5 +84,3 @@ BEGIN
     GROUP BY CONVERT(CHAR(7), L6M.[Month], 120)
     ORDER BY [YearMonth];
 END
-GO
-

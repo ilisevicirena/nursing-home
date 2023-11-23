@@ -1,13 +1,3 @@
-USE [ENV01_NURSING_HOME]
-GO
-
-/****** Object:  StoredProcedure [dbo].[getAccomodationManagementRooms]    Script Date: 2.6.2023. 9:15:36 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
 -- =============================================
 -- Author:		Irena Ilisevic
 -- Create date: 24.4.2023.
@@ -22,7 +12,6 @@ BEGIN
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
-    -- Insert statements for procedure here
 	SELECT 
     [Id] = f.Id,
     [Name] = f.[Name],
@@ -86,5 +75,3 @@ WHERE r.FloorId IN (
 	left join dbo.Room as r on r.Id=prr.RoomId
 	where p.Active=1;
 END
-GO
-

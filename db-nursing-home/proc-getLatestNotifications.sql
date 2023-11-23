@@ -1,13 +1,3 @@
-USE [ENV01_NURSING_HOME]
-GO
-
-/****** Object:  StoredProcedure [dbo].[getLatestNotifications]    Script Date: 9.5.2023. 14:13:46 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
 -- =============================================
 -- Author:		Irena Ilisevic
 -- Create date: 9.5.2023.
@@ -21,7 +11,6 @@ BEGIN
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
-    -- Insert statements for procedure here
 	select top 50 
 	[Id]=n.Id,
 	[Text]=n.[Text],
@@ -38,5 +27,3 @@ BEGIN
 	order by n.CreationDate desc;
 
 END
-GO
-

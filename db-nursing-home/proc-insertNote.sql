@@ -1,13 +1,3 @@
-USE [ENV01_NURSING_HOME]
-GO
-
-/****** Object:  StoredProcedure [dbo].[insertNote]    Script Date: 9.6.2023. 13:50:40 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
 -- =============================================
 -- Author:		Irena Ilisevic
 -- Create date: 2.6.2023.
@@ -48,5 +38,3 @@ BEGIN
 	
 	SELECT @noteId AS [NoteId];
 END
-GO
-

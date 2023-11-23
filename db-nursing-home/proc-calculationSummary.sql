@@ -1,13 +1,3 @@
-USE [ENV01_NURSING_HOME]
-GO
-
-/****** Object:  StoredProcedure [dbo].[calculationSummary]    Script Date: 3.7.2023. 8:42:06 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
 -- =============================================
 -- Author:		Irena Ilisevic
 -- Create date: 29.6.2023.
@@ -137,5 +127,3 @@ from dbo.Calculation
 where [Month]=@Month and [Year]=@Year;
 
 END
-GO
-

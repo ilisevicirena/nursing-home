@@ -1,13 +1,3 @@
-USE [ENV01_NURSING_HOME]
-GO
-
-/****** Object:  StoredProcedure [dbo].[insertDocumentForNote]    Script Date: 2.6.2023. 9:27:41 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
 CREATE PROCEDURE [dbo].[insertDocumentForNote]
 	-- Add the parameters for the stored procedure here
 	(
@@ -54,5 +44,3 @@ BEGIN
 	SELECT * FROM @DocumentTable;
 	SELECT @NoteDocumentRelationId AS NoteDocumentRelationId;
 END
-GO
-

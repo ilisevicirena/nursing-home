@@ -1,13 +1,3 @@
-USE [ENV01_NURSING_HOME]
-GO
-
-/****** Object:  StoredProcedure [dbo].[insertCalculationDocument]    Script Date: 26.6.2023. 13:58:36 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
 -- =============================================
 -- Author:		Irena Ilisevic
 -- Create date: 26.6.2023.
@@ -55,5 +45,3 @@ BEGIN
 	SELECT @CalculationDocumentRelationId AS CalculationDocumentRelationId;
 
 END
-GO
-

@@ -1,0 +1,16 @@
+<nb-card class="h-100">
+  <nb-card-header>
+    {{ getString("tagsManagement") }}
+  </nb-card-header>
+  <nb-card-body>
+    <ngx-grid
+      [columns]="columns"
+      [(data)]="data"
+      gridMode="popup"
+      [selectionEnabled]="false"
+      (createConfirm)="createConfirm($event)"
+      (editConfirm)="editConfirm($event)"
+      (deleteConfirm)="deleteConfirm($event)"
+    ></ngx-grid>
+  </nb-card-body>
+</nb-card>

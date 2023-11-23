@@ -1,13 +1,3 @@
-USE [ENV01_NURSING_HOME]
-GO
-
-/****** Object:  StoredProcedure [dbo].[getMeasureUnits]    Script Date: 5.5.2023. 11:45:42 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
 -- =============================================
 -- Author:		Irena Ilisevic
 -- Create date: 3.5.2023.
@@ -32,5 +22,3 @@ BEGIN
 	FROM dbo.MeasureUnit;
 
 END
-GO
-

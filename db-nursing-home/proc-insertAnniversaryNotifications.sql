@@ -1,13 +1,3 @@
-USE [ENV01_NURSING_HOME]
-GO
-
-/****** Object:  StoredProcedure [dbo].[insertAnniversaryNotifications]    Script Date: 19.6.2023. 8:28:56 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
 -- =============================================
 -- Author:		Irena Ilisevic
 -- Create date: 16.6.2023.
@@ -18,7 +8,7 @@ CREATE PROCEDURE [dbo].[insertAnniversaryNotifications]
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
-DECLARE @CurrentDate DATE = CONVERT(DATE, GETDATE());
+DECLARE @CurrentDate DATE = CONVERT(DATE, CAST(DATEADD(hour, 2, GETDATE()) AS DATE));
 
 -- Insert for anniversaries with a reminder
 INSERT INTO dbo.[Notification] (NotificationTypeId, CreationDate, ReadDate, [Read], [Text])
@@ -49,5 +39,3 @@ BEGIN
         AND DAY(p.StartDate) = DAY(@CurrentDate) and p.Active=1;
 END
 END
-GO
-

@@ -1,13 +1,3 @@
-USE [ENV01_NURSING_HOME]
-GO
-
-/****** Object:  StoredProcedure [dbo].[getOfferMeasureUnitForPerson]    Script Date: 14.6.2023. 11:06:19 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
 -- =============================================
 -- Author:		Irena Ilisevic
 -- Create date: 14.6.2023.
@@ -34,5 +24,3 @@ BEGIN
 	from dbo.PersonOfferRelation as por
 	left join dbo.MeasureUnit as mu on por.MeasureUnitId=mu.Id where por.PersonId=@PersonId;
 END
-GO
-

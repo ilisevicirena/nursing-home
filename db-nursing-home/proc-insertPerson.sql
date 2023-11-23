@@ -1,13 +1,3 @@
-USE [ENV01_NURSING_HOME]
-GO
-
-/****** Object:  StoredProcedure [dbo].[insertPerson]    Script Date: 27.9.2023. 19:37:24 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
 -- =============================================
 -- Author:		Irena Ilisevic
 -- Create date: 19.4.2023.
@@ -37,6 +27,7 @@ BEGIN
 	DECLARE @EndDate datetime = NULL;
 
 	SET @BirthDate = CAST(DATEADD(hour, 2, @BirthDate) AS DATE);
+	SET @StartDate= CAST(DATEADD(hour, 2, @StartDate) AS DATE);
 
 	INSERT INTO dbo.Person (FirstName, LastName, JMBG, BirthDate, StartDate, Active, CreationDate, EndDate, Address, GenderId)
 	VALUES (@FirstName, @LastName, @JMBG, @BirthDate, @StartDate, @Active, @CreationDate, @EndDate, @Address, @GenderId);
@@ -61,5 +52,3 @@ exec dbo.writeLog @LogType='INSERT', @LogEntity='Person', @Key= @NewIdent;
 		@Recurring = 1,
 		@Reminder=0;
 END
-GO
-

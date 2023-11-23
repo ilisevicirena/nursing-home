@@ -1,13 +1,3 @@
-USE [ENV01_NURSING_HOME]
-GO
-
-/****** Object:  StoredProcedure [dbo].[getCalendarEventsForMonth]    Script Date: 22.6.2023. 13:57:38 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
 -- =============================================
 -- Author:		Irena Ilisevic
 -- Create date: 21.6.2023
@@ -39,5 +29,3 @@ BEGIN
         OR ([Recurring] = 0 AND YEAR([End]) = @Year AND MONTH([End]) = @Month)
         OR ([Recurring] = 1 AND (MONTH([Start]) = @Month OR MONTH([End]) = @Month));
 END
-GO
-

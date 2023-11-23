@@ -1,13 +1,3 @@
-USE [ENV01_NURSING_HOME]
-GO
-
-/****** Object:  StoredProcedure [dbo].[insertOfferMeasureUnitForPerson]    Script Date: 14.6.2023. 11:16:46 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
 -- =============================================
 -- Author:		Irena Ilisevic
 -- Create date: 14.6.2023
@@ -39,5 +29,3 @@ BEGIN
         VALUES (@PersonId, @MeasureUnitId)
     END
 END
-GO
-

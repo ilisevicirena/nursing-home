@@ -1,13 +1,3 @@
-USE [ENV01_NURSING_HOME]
-GO
-
-/****** Object:  StoredProcedure [dbo].[insertEventReminderNotification]    Script Date: 23.6.2023. 8:36:46 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
 -- =============================================
 -- Author:		Irena Ilisevic
 -- Create date: 22.06.2023.
@@ -16,7 +6,7 @@ GO
 CREATE PROCEDURE [dbo].[insertEventReminderNotification]
 AS
 BEGIN
-     DECLARE @Today DATE = CONVERT(DATE, GETDATE());
+     DECLARE @Today DATE = CAST(DATEADD(hour, 2, GETDATE()) AS DATE);
 
 -- Insert notifications for events before the specified number of days
 -- Insert notifications for events before the specified number of days
@@ -78,6 +68,3 @@ WHERE
         )
         AND nt.[Enabled] = 1;
 END;
-
-GO
-

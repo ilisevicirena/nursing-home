@@ -1,13 +1,3 @@
-USE [ENV01_NURSING_HOME]
-GO
-
-/****** Object:  StoredProcedure [dbo].[getRooms]    Script Date: 21.4.2023. 12:35:54 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
 -- =============================================
 -- Author:		Irena Ilisevic
 -- Create date: 14.4.2023.
@@ -49,6 +39,3 @@ INNER JOIN [dbo].[Floor] as floor
 ON room.FloorId=floor.Id;
 END
 END
-GO
-
-

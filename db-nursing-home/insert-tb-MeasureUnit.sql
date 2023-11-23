@@ -1,6 +1,3 @@
-USE [ENV01_NURSING_HOME]
-GO
-
 INSERT INTO [dbo].[MeasureUnit]
            ([Name]
            ,[Tag]
@@ -12,6 +9,3 @@ INSERT INTO [dbo].[MeasureUnit]
 	      ('Mjesec','mjesec','month',1),
             ('Godina','godina','year',1),
             ('Komad','komad','unit', 0)
-GO
-
-

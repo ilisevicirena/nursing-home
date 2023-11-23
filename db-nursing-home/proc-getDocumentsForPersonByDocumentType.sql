@@ -1,13 +1,3 @@
-USE [ENV01_NURSING_HOME]
-GO
-
-/****** Object:  StoredProcedure [dbo].[getDocumentsForPersonByDocumentType]    Script Date: 1.6.2023. 9:30:17 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
 -- =============================================
 -- Author:		Irena Ilisevic
 -- Create date: 30.5.2023.
@@ -25,7 +15,6 @@ BEGIN
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
-    -- Insert statements for procedure here
 	select 
 	[Id]=d.Id,
 	[Name]=d.[Name],
@@ -45,5 +34,3 @@ BEGIN
 	where d.PersonId=@PersonId and d.DocumentTypeId=@DocumentTypeId
 	order by CreationDate desc;
 END
-GO
-
