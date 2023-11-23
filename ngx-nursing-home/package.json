@@ -44,6 +44,7 @@
     "@nebular/security": "11.0.0",
     "@nebular/theme": "^11.0.0",
     "@popperjs/core": "^2.11.5",
+    "@types/ws": "^8.5.4",
     "angular-ng-autocomplete": "^2.0.8",
     "angular2-chartjs": "0.4.1",
     "bootstrap": "5.1.3",
