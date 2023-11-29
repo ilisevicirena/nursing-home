@@ -1,7 +1,7 @@
 CREATE TABLE [dbo].[Gender](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[Name] [varchar](50) NOT NULL,
-	[Tag] [char](1) NOT NULL,
+	[Name] [nvarchar](50) NOT NULL,
+	[Tag] [nvarchar](10) NOT NULL,
  CONSTRAINT [PK_Gender] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC

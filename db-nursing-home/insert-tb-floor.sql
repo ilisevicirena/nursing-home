@@ -1,5 +1,5 @@
 INSERT INTO [dbo].[Floor]
            ([Name])
      VALUES
-           ('Prizemlje'),
-		   ('1. kat')
+           (N'Prizemlje'),
+		   (N'1. kat')

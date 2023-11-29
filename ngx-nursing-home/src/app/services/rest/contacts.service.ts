@@ -1,15 +1,14 @@
-import { Injectable } from '@angular/core';
-import { BaseRestApiService, IBaseSaveModel } from '../base-rest-api.service';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Injectable } from "@angular/core";
+import { BaseRestApiService, IBaseSaveModel } from "../base-rest-api.service";
+import { HttpClient } from "@angular/common/http";
+import { Observable } from "rxjs";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class ContactsService extends BaseRestApiService {
-
   constructor(http: HttpClient) {
-    super(http, 'api/contacts');
+    super(http, "api/contacts");
   }
 
   public getDataForPerson(personId: number): Observable<any> {
@@ -24,4 +23,10 @@ export interface IContact extends IBaseSaveModel {
   Telephone?: string;
   Mobile?: string;
   PersonId: number;
+  Jmbg?: string;
+  ResidanceCityId?: number;
+  ResidanceStreetName?: string;
+  ResidanceHouseNumber?: string;
+  IsObligeeToPay?: boolean;
+  IsGuardian?: boolean;
 }

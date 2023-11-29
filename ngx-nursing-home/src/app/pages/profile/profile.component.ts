@@ -14,21 +14,16 @@ import {
 import { getString } from "../../resources/strings";
 import { NgForm } from "@angular/forms";
 import { ToastrService } from "../../services/toastr.service";
-import { GendersService } from "../../services/rest/genders.service";
 import {
-  CheckboxType,
-  DateType,
-  DatepickerFilter,
   GridCheckboxColumn,
   GridColumn,
   GridDateColumn,
   SelectGridComponent,
-  SmartTableColumn,
-  TextboxEditor,
 } from "shared-components";
 import { DialogService } from "../../shared/dialog/dialog.service";
 import { RoomsService } from "../../services/rest/rooms.service";
 import { SelectGridColumn } from "shared-components/lib/models/select-grid.model";
+import { AccommodationPdfRequestService } from "../../services/rest/accommodation-pdf-request.service";
 
 @Component({
   selector: "sample-profile",
@@ -40,10 +35,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private personsService: PersonsService,
     private toastrService: ToastrService,
-    private gendersService: GendersService,
     private dialogService: DialogService,
     private roomsService: RoomsService,
-    private router: Router
+    private router: Router,
+    private requestGeneratorService: AccommodationPdfRequestService
   ) {}
 
   private subscriptions: Subscription[] = [];
@@ -89,8 +84,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
       .Filter(false)
       .Type(new GridDateColumn().Format("dd.MM.yyyy.")),
   ];
+
   public options: any[] = [
     { option: "basicData", string: "basicData", active: true },
+    { option: "categories", string: "categories", active: false },
     { option: "contacts", string: "contacts", active: false },
     { option: "stayData", string: "stayData", active: false },
     { option: "dormatoryData", string: "dormatoryData", active: false },
@@ -99,6 +96,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     { option: "notes", string: "notes", active: false },
     { option: "calculation", string: "personCalculation", active: false },
   ];
+
   public roomsColumns: SelectGridColumn[] = [
     { name: "name", title: getString("room"), attributeName: "Name" },
     { name: "floor", title: getString("floor"), attributeName: "FloorName" },
@@ -123,7 +121,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
       this.activatedRoute.paramMap.subscribe((params) => {
         this.personId = params.get("id") as any;
         this.getPersonDetails(this.personId);
-        this.getGenders();
       })
     );
   }
@@ -153,20 +150,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
   }
 
   // ------------------------------------------------- BASIC DATA ---------------------------------------------------------------------
-
-  public getGenders(): void {
-    this.subscriptions.push(
-      this.gendersService.getData().subscribe(
-        (data) => {
-          this.genders = data;
-        },
-        (err) => {
-          console.error(err);
-        }
-      )
-    );
-  }
-
   public getHistory(): void {
     this.subscriptions.push(
       this.personsService.getHistory(this.personId).subscribe(
@@ -182,7 +165,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   public saveBasicData(form: NgForm): void {
     this.subscriptions.push(
-      this.personsService.update(this.newPersonData).subscribe(
+      this.personsService.updateDetailed(this.newPersonData).subscribe(
         () => {
           this.getPersonDetails(this.personId);
           form.form.markAsPristine();
@@ -205,7 +188,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   private getPersonDetails(personId: number): void {
     this.subscriptions.push(
-      this.personsService.getPersonDetails(personId).subscribe((data) => {
+      this.personsService.getPersonDetailed(personId).subscribe((data) => {
         if (data.length > 0) {
           this.person = getIPersonFromJSON(data[0]);
           this.newPersonData = getIPersonFromJSON(data[0]);
@@ -347,28 +330,30 @@ export class ProfileComponent implements OnInit, OnDestroy {
   }
 
   public historyColumns: GridColumn[] = [
-    new GridColumn().Title(getString("id")).DataField("Id").Filter(false),
+    new GridColumn().Title(getString("id")).DataField("Id"),
     new GridColumn()
       .Title(getString("transactionDate"))
       .DataField("CreationDate")
-      .Type(new GridDateColumn().Format("dd.MM.yyyy. HH:mm"))
-      .Filter(false),
-    new GridColumn()
-      .Title(getString("firstName"))
-      .DataField("FirstName")
-      .Filter(false),
-    new GridColumn()
-      .Title(getString("lastName"))
-      .DataField("LastName")
-      .Filter(false),
-    new GridColumn().Title(getString("jmbg")).DataField("Jmbg").Filter(false),
-    new GridColumn()
-      .Title(getString("logType"))
-      .DataField("LogType")
-      .Filter(false),
-    new GridColumn()
-      .Title(getString("logType"))
-      .DataField("LogTypePretty")
-      .Filter(false),
+      .Type(new GridDateColumn().Format("dd.MM.yyyy. HH:mm")),
+    new GridColumn().Title(getString("firstName")).DataField("FirstName"),
+    new GridColumn().Title(getString("lastName")).DataField("LastName"),
+    new GridColumn().Title(getString("jmbg")).DataField("Jmbg"),
+    new GridColumn().Title(getString("logType")).DataField("LogType"),
+    new GridColumn().Title(getString("logType")).DataField("LogTypePretty"),
   ];
+
+  public generateAccommodationRequest() {
+    this.subscriptions.push(
+      this.requestGeneratorService
+        .generateRequest(this.newPersonData.Id)
+        .subscribe((data) => {
+          this.toastrService.showToastWithCustumIcon(
+            "info",
+            "",
+            getString("requestGenerated"),
+            "info-outline"
+          );
+        })
+    );
+  }
 }

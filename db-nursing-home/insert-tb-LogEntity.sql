@@ -2,7 +2,7 @@ INSERT INTO [dbo].[LogEntity]
            ([Name]
            ,[Key])
      VALUES
-           ('Person','Id'),
-		   ('Room','Id'),
-		   ('Floor','Id'),
-		   ('Contact','Id')
+           (N'Person','Id'),
+		   (N'Room','Id'),
+		   (N'Floor','Id'),
+		   (N'Contact','Id')

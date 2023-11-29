@@ -5,7 +5,7 @@ INSERT INTO [dbo].[MeasureUnit]
            ,[CalculationUnit]
            )
      VALUES
-           ('Dan','dan','day',1),		  
-	      ('Mjesec','mjesec','month',1),
-            ('Godina','godina','year',1),
-            ('Komad','komad','unit', 0)
+           (N'Dan','dan','day',1),		  
+	      (N'Mjesec','mjesec','month',1),
+            (N'Godina','godina','year',1),
+            (N'Komad','komad','unit', 0)

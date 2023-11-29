@@ -6,6 +6,12 @@ CREATE TABLE [dbo].[Contact](
 	[Telephone] [varchar](50) NULL,
 	[Mobile] [varchar](50) NULL,
 	[PersonId] [int] NOT NULL,
+	[Jmbg] [varchar](50) NULL,
+	[ResidanceCityId] [int] NULL,
+	[ResidanceStreetName] [varchar](300) NULL,
+	[ResidanceHouseNumber] [varchar](50) NULL,
+	[IsObligeeToPay] [bit] NULL,
+	[IsGuardian] [bit] NULL,
  CONSTRAINT [PK_Contact] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
@@ -13,10 +19,9 @@ CREATE TABLE [dbo].[Contact](
 ) ON [PRIMARY]
  
 
-ALTER TABLE [dbo].[Contact]  WITH CHECK ADD  CONSTRAINT [FK_Contact_Person] FOREIGN KEY([PersonId])
-REFERENCES [dbo].[Person] ([Id])
+ALTER TABLE [dbo].[Contact]  WITH CHECK ADD  CONSTRAINT [FK_Contact_Person] FOREIGN KEY([ResidanceCityId])
+REFERENCES [dbo].[City] ([Id])
  
 
 ALTER TABLE [dbo].[Contact] CHECK CONSTRAINT [FK_Contact_Person]
- 
 

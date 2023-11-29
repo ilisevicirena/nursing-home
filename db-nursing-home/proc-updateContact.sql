@@ -11,7 +11,13 @@ CREATE PROCEDURE [dbo].[updateContact]
 	@LastName varchar(50),
 	@Email varchar(50),
 	@Telephone varchar(50),
-	@Mobile varchar(50)
+	@Mobile varchar(50),
+	@Jmbg varchar(50) =NULL,
+	@ResidanceCityId int= NULL,
+	@ResidanceStreetName varchar(300)= NULL,
+	@ResidanceHouseNumber varchar(50) =NULL,
+	@IsObligeeToPay bit= 0,
+	@IsGuardian bit= 0
 )
 AS
 BEGIN
@@ -21,6 +27,6 @@ BEGIN
 
     -- Insert statements for procedure here
 	UPDATE dbo.Contact
-	SET FirstName=@FirstName, LastName=@LastName, Email=@Email, Telephone=@Telephone, Mobile=@Mobile
+	SET FirstName=@FirstName, LastName=@LastName, Email=@Email, Telephone=@Telephone, Mobile=@Mobile, Jmbg=@Jmbg, ResidanceCityId=@ResidanceCityId, ResidanceStreetName=@ResidanceStreetName, ResidanceHouseNumber=@ResidanceHouseNumber, IsObligeeToPay=@IsObligeeToPay, IsGuardian=@IsGuardian
 	WHERE Id=@Id;
 END

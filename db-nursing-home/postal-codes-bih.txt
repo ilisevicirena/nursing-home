@@ -1,0 +1,564 @@
+78255 – Aleksandrovac, Pošte Srpske
+89245 – Avtovac, Pošte Srpske
+72286 – Babanovac, BH Pošta
+75290 – Banovići, BH Pošta
+78000 – Banja Luka, Pošte Srpske
+78103 – Banja Luka, Pošte Srpske
+78108 – Banja Luka, Pošte Srpske
+78114 – Banja Luka, Pošte Srpske
+70267 – Baraći, Pošte Srpske
+76312 – Batković, Pošte Srpske
+72233 – Begov Han, BH Pošta
+88363 – Berkovići, Pošte Srpske
+77000 – Bihać, BH Pošta
+76204 – Bijela, HP Mostar
+73263 – Bijelo Brdo, Pošte Srpske
+76300 – Bijeljina, Pošte Srpske
+76321 – Suho Polje, Pošte Srpske
+72256 – Bila, HP Mostar
+88268 – Biletić Polje, HP Mostar
+71253 – Bilalovac, BH Pošta
+89230 – Bileća, Pošte Srpske
+72248 – Bilješevo, BH Pošta
+88407 – Bjelimići, BH Pošta
+88201 – Blagaj, BH Pošta
+74275 – Blatnica, Pošte Srpske
+88263 – Blatnica, HP Mostar
+71215 – Blažuj, BH Pošta
+76210 – Boće, HP Mostar
+76277 – Bok, HP Mostar
+74322 – Boljanić, Pošte Srpske
+88405 – Boračko Jezero, BH Pošta
+88365 – Borojevići, HP Mostar – Pošta privremeno zatvorena
+73225 – Borike, Pošte Srpske
+77240 – Bosanska Krupa, BH Pošta
+77250 – Bosanski Petrovac, BH Pošta
+80270 – Bosansko Grahovo, HP Mostar
+75420 – Bratunac, Pošte Srpske
+76100 – Brčko, Pošte Srpske
+76120 – Brčko, BH Pošta
+76101 – Brčko, Pošte Srpske
+77205 – Brekovica, BH Pošta
+74210 – Brestovo, Pošte Srpske
+71255 – Brestovsko, HP Mostar
+71370 – Breza, BH Pošta
+79208 – Brezičani, Pošte Srpske
+76216 – Brezovo Polje, Pošte Srpske
+74206 – Brijesnica, BH Pošta
+76206 – Brka, BH Pošta
+72243 – Brnjic, BH Pošta
+88243 – Broćanac, HP Mostar
+73309 – Brod, Pošte Srpske
+74450 – Brod, Pošte Srpske
+76313 – Brodac, Pošte Srpske
+78204 – Bronzani Majdan, Pošte Srpske
+70230 – Bugojno, BH Pošta
+75203 – Bukinje, BH Pošta
+74277 – Buletić, Pošte Srpske Pošta zatvorena
+72293 – Bučići, HP Mostar – Pošta privremeno zatvorena
+88202 – Buna, HP Mostar
+72260 – Busovača, HP Mostar
+88366 – Burmazi, HP Mostar – Pošta privremeno zatvorena
+88409 – Buturović Polje, BH Pošta
+77245 – Bužim, BH Pošta
+75405 – Caparde, Pošte Srpske
+71347 – Careva Ćuprija, BH Pošta
+77220 – Cazin, BH Pošta
+76239 – Crkvina, Pošte Srpske
+88367 – Crnići, HP Mostar
+76328 – Crnjelovo, Pošte Srpske
+73280 – Čajniče, Pošte Srpske
+88300 – Čapljina, HP Mostar
+88302 – Čapljina-Euroherc, HP Mostar
+72224 – Čardak, BH Pošta
+72246 – Čatići, BH Pošta
+74274 – Čečava, Pošte Srpske
+73307 – Čelebići, Pošte Srpske
+88404 – Čelebići, BH Pošta
+75246 – Čelić, BH Pošta
+78240 – Čelinac, Pošte Srpske
+88265 – Čerin, HP Mostar
+88260 – Čitluk, HP Mostar
+88261 – Čitluk-Euroherc, HP Mostar
+77226 – Ćoralići, BH Pošta
+78427 – Ćukali, Pošte Srpske
+71223 – Delijaš, BH Pošta
+79243 – Demirovac, Pošte Srpske
+74400 – Derventa, Pošte Srpske
+75444 – Derventa, Pošte Srpske
+70204 – Divičani, HP Mostar
+89233 – Divin, Pošte Srpske
+74101 – Doboj, Pošte Srpske
+75328 – Doborovci, BH Pošta
+70210 – Dobretići, HP Mostar
+79223 – Dobrljin, Pošte Srpske
+73247 – Dobrun, Pošte Srpske
+72278 – Dolac na Lašvi, BH Pošta
+88446 – Doljani, HP Mostar
+76233 – Domaljevac, HP Mostar
+76231 – Domaljevac-Granični, HP Mostar
+88305 – Domanovići, HP Mostar
+76274 – Donja Mahala, HP Mostar
+76257 – Donja Međiđa, BH Pošta
+76237 – Donja Slatina, Pošte Srpske
+71305 – Donje Moštre, BH Pošta
+79228 – Donji Agići, Pošte Srpske
+79266 – Donji Kamengrad, BH Pošta
+88343 – Donji Mamići, HP Mostar
+76297 – Donji Svilaj, HP Mostar
+70220 – Donji Vakuf, BH Pošta
+78432 – Donji Vijačani, Pošte Srpske
+79289 – Donji Vrbljani, Pošte Srpske
+76273 – Donji Žabar, Pošte Srpske
+74209 – Dragalovci, Pošte Srpske
+76323 – Dragaljevac, Pošte Srpske
+78215 – Dragočaj, Pošte Srpske
+88215 – Drežnica, BH Pošta
+79290 – Drinić, Pošte Srpske
+88344 – Drinovci, HP Mostar
+75410 – Drinjača (Zvornik), Pošte Srpske
+80260 – Drvar, HP Mostar
+70237 – Drvetine, BH Pošta
+75358 – Duboki Potok, BH Pošta
+75308 – Duboštica, BH Pošta
+79227 – Dubovik, Pošte Srpske
+78411 – Dubrave, Pošte Srpske
+75274 – Dubrave Donje, BH Pošta
+75273 – Dubrave Gornje, BH Pošta
+74483 – Dugo Polje, Pošte Srpske
+88342 – Dužice, HP Mostar
+76311 – Dvorovi, Pošte Srpske
+75272 – Đurđevik, BH Pošta
+79264 – Fajtovci, BH Pošta
+75423 – Fakovići, Pošte Srpske
+73302 – Foča, Pošte Srpske
+71270 – Fojnica, BH Pošta
+89247 – Fojnica, Pošte Srpske
+88306 – Gabela, HP Mostar – Pošta privremeno zatvorena
+89240 – Gacko, Pošte Srpske
+74484 – Garevac, Pošte Srpske
+80230 – Glamoč, HP Mostar
+88406 – Glavatičevo,BH Pošta
+76318 – Glavičice, Pošte Srpske
+74258 – Globarica, HP Mostar
+88422 – Glogošnica, BH Pošta
+88392 – Gradac, HP Mostar – Pošta privremeno zatvorena
+71275 – Gojevići, HP Mostar
+78203 – Goleši, Pošte Srpske
+73101 – Goražde, BH Pošta
+76296 – Gornja Dubica, HP Mostar
+77222 – Gornja Koprivna, BH Pošta
+76238 – Gornja Slatina, Pošte Srpske
+75208 – Gornja Tuzla, BH Pošta
+78405 – Gornji Podgradci, Pošte Srpske
+76207 – Gornji Rahić, BH Pošta
+79288 – Gornji Ribnik, Pošte Srpske
+78438 – Gornji Smrtići, Pošte Srpske
+78439 – Gornji Štrpci, Pošte Srpske
+74272 – Gornji Teslić, Pošte Srpske
+70240 – Gornji Vakuf, BH Pošta
+89201 – Grab, Pošte Srpske
+74219 – Grabovica (RS 74219), Pošte Srpske
+78227 – Grabovica (RS 78227), Pošte Srpske
+88443 – Gračac, HP Mostar
+75320 – Gračanica, BH Pošta
+70233 – Gračanica kod Bugojna, BH Pošta
+75276 – Gračanica (Živinice), BH Pošta
+76250 – Gradačac, BH Pošta
+78400 – Gradiška, Pošte Srpske
+76234 – Grebnice, HP Mostar – Pošta privremeno zatvorena
+88340 – Grude, HP Mostar
+88341 – Grude-MUP, HP Mostar
+80205 – Guber, HP Mostar – Pošta privremeno zatvorena
+72277 – Guča Gora, BH Pošta
+75404 – Gušteri, Pošte Srpske
+71240 – Hadžići, BH Pošta
+72225 – Hajderovići, BH Pošta
+72245 – Haljinići, BH Pošta
+72281 – Han Bila, BH Pošta
+71360 – Han Pijesak, Pošte Srpske
+88368 – Hodovo, HP Mostar- Pošta privremeno zatvorena
+88395 – Hrasno, HP Mostar- Pošta privremeno zatvorena
+71144 – Hreša, Pošte Srpske
+78436 – Hrvaćani, Pošte Srpske
+75216 – Husino, BH Pošta
+88394 – Hutovo, HP Mostar,
+71210 – Ilidža, BH Pošta
+71380 – Ilijaš, BH Pošta
+73208 – Ilovača, BH Pošta
+78234 – Imljani, Pošte Srpske
+71123 – Istočno Sarajevo, Pošte Srpske
+77208 – Izačić, BH Pošta
+88420 – Jablanica, BH Pošta
+70101 – Jajce, HP Mostar,
+76316 – Janja, Pošte Srpske
+72215 – Janjići, BH Pošta
+88224 – Jare, HP Mostar,
+78233 – Javorani, Pošte Srpske
+74264 – Jelah, BH Pošta
+70206 – Jezero, Pošte Srpske
+77241 – Jezerski, BH Pošta
+79244 – Johova, Pošte Srpske
+78244 – Jošavka, Pošte Srpske
+72264 – Kaćuni, BH Pošta
+72240 – Kakanj, BH Pošta
+74413 – Kalenderovci, Pošte Srpske
+75260 – Kalesija, BH Pošta
+71230 – Kalinovik, Pošte Srpske
+71355 – Kaljina, Pošte Srpske
+77204 – Kamenica, BH Pošta
+72265 – Kaonik, BH Pošta
+70235 – Karadže, BH Pošta
+72284 – Karaula, BH Pošta
+71213 – Kasindo, Pošte Srpske
+80246 – Kazaginac, HP Mostar – Pošta privremeno zatvorena
+88283 – Kifino Selo, Pošte Srpske
+71250 – Kiseljak, HP Mostar,
+75211 – Kiseljak kod Tuzle, BH Pošta
+75280 – Kladanj, BH Pošta
+88324 – Klobuk (Ljubuški), HP Mostar,
+74207 – Klokotnica, BH Pošta
+79280 – Ključ, BH Pošta
+78230 – Kneževo, Pošte Srpske
+79246 – Knežica, Pošte Srpske
+71356 – Knežina, Pošte Srpske
+78423 – Kobaš, Pošte Srpske
+88226 – Kočerin, HP Mostar,
+80244 – Kongora, HP Mostar
+76276 – Kostrč, HP Mostar
+78207 – Kola, Pošte Srpske
+88400 – Konjic, BH Pošta
+77249 – Konjodor, BH Pošta
+74489 – Koprivna, Pošte Srpske
+75247 – Koraj, Pošte Srpske
+76236 – Kornica, Pošte Srpske
+74253 – Kosova, BH Pošta
+74222 – Kostajnica (Doboj), Pošte Srpske
+79224 – Kostajnica, Pošte Srpske
+78220 – Kotor Varoš, Pošte Srpske
+74215 – Kotorsko, Pošte Srpske
+72226 – Kovači (Zavidovići), BH Pošta
+79202 – Kozarac, Pošte Srpske
+79240 – Kozarska Dubica, Pošte Srpske
+75413 – Kozluk, Pošte Srpske
+72244 – Kraljeva Sutjeska, BH Pošta
+79284 – Krasulje, BH Pošta
+76212 – Krepšić, Pošte Srpske
+71260 – Kreševo, HP Mostar
+78256 – Kriškovci, Pošte Srpske
+77253 – Krnjeuša, BH Pošta
+78206 – Krupa na Vrbasu, Pošte Srpske
+88203 – Kruševo, HP Mostar
+78424 – Kukulje, Pošte Srpske
+78443 – Kulaši, Pošte Srpske
+77206 – Kulen Vakuf, BH Pošta
+78212 – Kuljani, Pošte Srpske
+80320 – Kupres, HP Mostar
+78250 – Laktaši, Pošte Srpske
+78407 – Laminci Sređani, Pošte Srpske
+79204 – Lamovita, Pošte Srpske
+89208 – Lastva, Pošte Srpske
+71254 – Lepenica, HP Mostar
+75213 – Lipnica, BH Pošta
+80101 – Livno, HP Mostar
+80204 – Lištani, HP Mostar
+76278 – Lončari, Pošte Srpske
+75240 – Lopare, Pošte Srpske
+75300 – Lukavac, BH Pošta
+75327 – Lukavica, BH Pošta
+80203 – Lusnić, HP Mostar – Pošta privremeno zatvorena
+79267 – Lušci Palanka, BH Pošta
+75214 – Ljubače, BH Pošta
+79206 – Ljubija, Pošte Srpske
+88380 – Ljubinje, Pošte Srpske
+89209 – Ljubomir, Pošte Srpske
+88320 – Ljubuški, HP Mostar
+88321 – Ljubuški-Euroherc, HP Mostar
+88322 – Ljubuški-Općina, HP Mostar
+88223 – Ljuti Dolac, HP Mostar
+74250 – Maglaj, BH Pošta
+74216 – Majevac, Pošte Srpske
+77235 – Mala Kladuša, BH Pošta
+74418 – Mala Sočanica, Pošte Srpske
+75326 – Malešići, BH Pošta
+76208 – Maoča, BH Pošta
+78223 – Maslovare, Pošte Srpske
+78410 – Mašići, Pošte Srpske
+76271 – Matići, HP Mostar
+74203 – Matuzići, BH Pošta
+88266 – Međugorje, HP Mostar
+88267 – Međugorje, HP Mostar
+88264 – Međugorje-kiosk, HP Mostar
+79247 – Međuvođe, Pošte Srpske
+72282 – Mehurići, BH Pošta
+80243 – Mesihovina, HP Mostar
+75446 – Milići, Pošte Srpske
+74485 – Miloševac, Pošte Srpske
+73283 – Miljeno, Pošte Srpske
+73313 – Miljevina, Pošte Srpske
+75329 – Miričina, BH Pošta
+74480 – Modriča, Pošte Srpske
+71428 – Mokro, Pošte Srpske
+89204 – Mosko, Pošte Srpske
+88000 – Mostar, HP Mostar
+88101 – Mostar, HP Mostar
+88103 – Mostar, BH Pošta
+88104 – Mostar-Mehanizacija, BH Pošta
+88105 – Mostar-Avenija, HP Mostar
+88107 – Mostar-Balinovac, HP Mostar
+88108 – Mostar-Cernica, BH Pošta
+88109 – Mostar-Cim, HP Mostar
+88110 – Mostar, BH Pošta
+88123 – Mostar-CIPS – Pošta privremeno zatvorena
+88122 – Mostar-Euroherc, HP Mostar
+88005 – Mostar-Glavni telegraf, HP Mostar
+88106 – Mostar-Rodoč, HP Mostar
+88121 – Mostar-MUP, HP Mostar
+75212 – Mramor, BH Pošta
+73206 – Mravinjac, BH Pošta
+70260 – Mrkonjić Grad, Pošte Srpske
+78434 – Naseobina Lišnja, Pošte Srpske
+72212 – Nemila, BH Pošta
+88390 – Neum, HP Mostar
+88280 – Nevesinje, Pošte Srpske
+71383 – Nišići, BH Pošta
+72276 – Nova Bila, HP Mostar
+75445 – Nova Kasaba, Pošte Srpske
+78418 – Nova Topola, Pošte Srpske
+79220 – Novi Grad (Bosanski Novi), Pošte Srpske
+74254 – Novi Šeher, BH Pošta / HP Mostar
+72290 – Novi Travnik, BH Pošta / HP Mostar
+73110 – Novo Goražde, Pošte Srpske
+78428 – Nožičko, Pošte Srpske
+70225 – Oborci, BH Pošta
+76235 – Obudovac, Pošte Srpske
+76290 – Odžak, HP Mostar
+88285 – Odžak, Pošte Srpske
+71340 – Olovo, BH Pošta
+79203 – Omarska, Pošte Srpske
+79293 – Opara, BH Pošta
+78406 – Orahova, Pošte Srpske
+75323 – Orahovica Donja, BH Pošta
+76270 – Orašje, HP Mostar
+76281 – Orašje-Granični, HP Mostar
+80206 – Orguz, HP Mostar
+74412 – Osinja, Pošte Srpske
+74225 – Osječani, Pošte Srpske
+75406 – Osmaci, Pošte Srpske
+88423 – Ostrožac, BH Pošta
+77228 – Ostrožac, BH Pošta
+76279 – Oštra Luka, HP Mostar
+79263 – Oštra Luka, Pošte Srpske
+77244 – Otoka, BH Pošta
+72238 – Ozimica, HP Mostar
+70243 – Pajić Polje, BH Pošta
+74255 – Paklenica, Pošte Srpske
+71420 – Pale, Pošte Srpske
+75453 – Papraća, Pošte Srpske
+76315 – Patkovača, Pošte Srpske
+71243 – Pazarić, BH Pošta
+77227 – Pećigrad, BH Pošta
+76256 – Pelagićevo, Pošte Srpske
+74317 – Petrovo, Pošte Srpske
+75412 – Pilica, Pošte Srpske
+75248 – Piperi, Pošte Srpske
+78217 – Piskavica, Pošte Srpske
+70275 – Pljeva, Pošte Srpske
+72252 – Počulica, BH Pošta
+71425 – Podgrab, Pošte Srpske
+80209 – Podhum, HP Mostar
+71387 – Podlugovi, BH Pošta
+74217 – Podnovlje, Pošte Srpske
+88403 – Podorašac, BH Pošta
+75355 – Podorašje, BH Pošta
+70266 – Podrašnica, Pošte Srpske
+88206 – Podvelež, BH Pošta
+77232 – Podzvizd, BH Pošta
+77209 – Pokoj, BH Pošta
+75303 – Poljice, BH Pošta
+88240 – Posušje, HP Mostar
+88241 – Posušje-Inđilović, HP Mostar
+88242 – Posušje-Lager, HP Mostar
+88240 – Posušje-Općina, HP Mostar
+78216 – Potkozarje, Pošte Srpske
+88208 – Potoci, BH Pošta
+78435 – Potočani, Doboj, Pošte Srpske
+76298 – Potočani, Odžak, Mostar (pošta privremeno zatvorena)
+75433 – Potočari, Pošte Srpske
+73290 – Prača, BH Pošta
+73245 – Prelovo, Pošte Srpske
+79287 – Previja, Pošte Srpske
+74276 – Pribinić, Pošte Srpske
+75249 – Priboj, Pošte Srpske
+79102 – Prijedor, Pošte Srpske
+80202 – Priluka, HP Mostar- Pošta privremeno zatvorena
+80245 – Prisoje, HP Mostar
+78430 – Prnjavor, Pošte Srpske
+74214 – Prnjavor Mali, Pošte Srpske
+88327 – Prolog, HP Mostar – Pošta privremeno zatvorena
+88440 – Prozor, HP Mostar
+76292 – Prud, HP Mostar
+70223 – Prusac, BH Pošta
+71335 – Pržići, HP Mostar
+72207 – Puhovac, BH Pošta
+75305 – Puračić, BH Pošta
+88325 – Radišići, HP Mostar
+75268 – Rainci Gornji, BH Pošta
+88245 – Rakitno, HP Mostar
+71217 – Rakovica, BH Pošta
+88370 – Ravno, HP Mostar
+78249 – Razboj Lijevče Pošte Srpske
+76218 – Ražljevo, Pošte Srpske
+79283 – Ribnik, Pošte Srpske
+77215 – Ripač, BH Pošta
+73220 – Rogatica, Pošte Srpske
+80247 – Roško Polje, HP Mostar
+79226 – Rudice, Pošte Srpske
+73260 – Rudo, Pošte Srpske
+88347 – Ružići, HP Mostar
+79285 – Sanica Gornja, BH Pošta
+79260 – Sanski Most, BH Pošta
+75411 – Sapna, BH Pošta
+78202 – Saračica, Pošte Srpske
+71000 – Sarajevo, BH Pošta
+71321 – Semizovac, BH Pošta
+76205 – Seonjaci, HP Mostar
+75207 – Simin Han, BH Pošta
+78422 – Sitneši, Pošte Srpske
+79283 – Sitnica, Pošte Srpske
+74212 – Sjenina, Pošte Srpske
+75436 – Skelani, Pošte Srpske
+74261 – Skugrić, Pošte Srpske
+75353 – Sladna, BH Pošta
+78253 – Slatina Ilidža, Pošte Srpske
+74323 – Sočkovac, Pošte Srpske
+71350 – Sokolac, Pošte Srpske
+71357 – Sokolovići, Pošte Srpske
+88345 – Sovići, HP Mostar
+78420 – Srbac, Pošte Srpske
+75430 – Srebrenica, Pošte Srpske
+75350 – Srebrenik, BH Pošta
+71385 – Srednje (F BiH), BH Pošta
+79249 – Sreflije, Pošte Srpske
+74208 – Stanari, Pošte Srpske
+78243 – Stara Dubrava, Pošte Srpske
+79268 – Stari Majdan, BH Pošta
+72251 – Stari Vitez, BH Pošta
+77224 – Stijena, BH Pošta
+73223 – Stjenice, Pošte Srpske
+75324 – Stjepan Polje, BH Pošta
+88360 – Stolac, HP Mostar
+72209 – Stranjani, BH Pošta
+78208 – Stričići, Pošte Srpske
+70273 – Strojice, Pošte Srpske
+88323 – Studenci, HP Mostar
+75283 – Stupari, BH Pošta
+74221 – Suho Polje, Pošte Srpske
+79229 – Svodna, Pošte Srpske
+76230 – Šamac, Pošte Srpske
+76209 – Šatorovići, BH Pošta
+75450 – Šekovići, Pošte Srpske
+75275 – Šerići, BH Pošta
+75245 – Šibošnica, BH Pošta
+78433 – Šibovska, Pošte Srpske
+70270 – Šipovo, Pošte Srpske
+78224 – Šiprage, Pošte Srpske
+88220 – Široki Brijeg, HP Mostar
+88221 – Široki Brijeg-ALTRA
+88222 – Široki Brijeg-Cips
+74279 – Šnjegotina Gornja, Pošte Srpske
+75356 – Špionica, BH Pošta
+77223 – Šturlić, BH Pošta
+80249 – Šujica, HP Mostar
+77234 – Šumatac, BH Pošta
+71244 – Tarčin, BH Pošta
+75414 – Teočak, BH Pošta
+74270 – Teslić, Pošte Srpske
+74260 – Tešanj, BH Pošta
+74266 – Tešanjka, BH Pošta
+88348 – Tihaljina, HP Mostar
+75357 – Tinja, BH Pošta
+75455 – Tišća, Pošte Srpske
+73311 – Tjentište, Pošte Srpske
+77233 – Todorovo, BH Pošta
+75265 – Tojšići, BH Pošta
+76272 – Tolisa, HP Mostar
+80240 – Tomislavgrad, HP Mostar
+80241 – Tomislavgrad-Općina, HP Mostar
+72213 – Topčić Polje,BH Pošta
+70224 – Torlakovac, BH Pošta
+72270 – Travnik, BH Pošta
+88375 – Trebinja, HP Mostar- Pošta privremeno zatvorena
+89101 – Trebinje, Pošte Srpske
+78252 – Trn, Pošte Srpske
+76335 – Trnova Donja, Pošte Srpske
+71220 – Trnovo, Pošte Srpske
+76310 – Trnjaci, Pošte Srpske
+77225 – Tržačka Raštela, BH Pošta
+72283 – Turbe, BH Pošta
+75306 – Turija, BH Pošta
+78404 – Turjak, Pošte Srpske
+75000 – Tuzla, BH Pošta
+76330 – Ugljevik, Pošte Srpske
+74278 – Ugodnovići, Pošte Srpske
+70280 – Uskoplje, HP Mostar
+74321 – Usora-Sivša, HP Mostar
+74230 – Usora-Žabljak, HP Mostar
+73250 – Ustikolina, BH Pošta
+73265 – Uvac, Pošte Srpske
+88444 – Uzdol, HP Mostar
+73249 – Vardište, Pošte Srpske
+71330 – Vareš, BH Pošta
+71333 – Vareš Majdan, BH Pošta
+77243 – Varoška Rijeka, BH Pošta
+74213 – Velika Bukovica, Pošte Srpske
+77207 – Velika Gata, BH Pošta
+77230 – Velika Kladuša, BH Pošta
+76329 – Velika Obarska, Pošte Srpske
+70234 – Vesela, BH Pošta
+80208 – Vidoši, HP Mostar
+76275 – Vidovice, HP Mostar
+70202 – Vinac, BH Pošta
+74455 – Vinska, Pošte Srpske
+88247 – Vir, HP Mostar
+71300 – Visoko, BH Pošta
+73240 – Višegrad, Pošte Srpske
+88307 – Višići, HP Mostar
+72250 – Vitez, HP Mostar
+88326 – Vitina, HP Mostar
+74265 – Vitkovci Donji, Pošte Srpske
+73205 – Vitkovići, BH Pošta
+75440 – Vlasenica, Pošte Srpske
+71320 – Vogošća, BH Pošta
+88301 – Vojarna Grabovine, HP Mostar- Pošta privremeno zatvorena
+72227 – Vozuća, BH Pošta
+74487 – Vranjak 7, Pošte Srpske
+74488 – Vranjak 8, Pošte Srpske
+88113 – Vrapčići, BH Pošta
+78211 – Vrbanja, Pošte Srpske
+78225 – Vrbanjci, Pošte Srpske
+78408 – Vrbaška, Pošte Srpske
+79262 – Vrhpolje, BH Pošta
+77231 – Vrnograč, BH Pošta
+77203 – Vrsta, BH Pošta
+76325 – Vršani (Bijeljina), Pošte Srpske
+76254 – Vučkovci, BH Pošta
+74470 – Vukosavlje, Pošte Srpske
+73287 – Zaborak, Pošte Srpske
+76333 – Zabrđe, Pošte Srpske
+78214 – Zalužani, Pošte Srpske
+73305 – Zavajt, Pošte Srpske
+72220 – Zavidovići, BH Pošta
+74451 – Zborište, Pošte Srpske
+77236 – Zborište, BH Pošta
+76259 – Zelinja, BH Pošta
+72101 – Zenica, BH Pošta
+72102 – Zenica, BH Pošta
+72112 – Zenica, BH Pošta
+88286 – Zovi Do, Pošte Srpske
+76214 – Zovik Gornji, HP Mostar
+75400 – Zvornik, Pošte Srpske
+72236 – Željezno Polje, BH Pošta
+72230 – Žepče, HP Mostar
+75270 – Živinice, BH Pošta
+71373 – Župča, BH Pošta

@@ -410,6 +410,62 @@ const strings: IKeyValue[] = [
   { key: "allEvents", value: "Svi događaji" },
   { key: "nextEvents", value: "NADOLAZEĆI DOGAĐAJI" },
   { key: "tagsManagement", value: "Upravljanje oznakama" },
+  { key: "maidenLastName", value: "Djevojačko prezime" },
+  { key: "fatherFirstName", value: "Ime oca" },
+  { key: "motherFirstName", value: "Ime majke" },
+  { key: "motherMaidenLastName", value: "Djevojačko prezime majke" },
+  { key: "birthCountry", value: "Država rođenja" },
+  { key: "birthMunicipality", value: "Općina/grad rođenja" },
+  { key: "birthCity", value: "Mjesto rođenja" },
+  { key: "residanceCity", value: "Mjesto prebivališta" },
+  { key: "residanceStreetName", value: "Ulica" },
+  { key: "residanceHouseNumber", value: "Kućni broj" },
+  { key: "doctorName", value: "Ime i prezime liječnika" },
+  { key: "isObligeeToPay", value: "Obveznik plaćanja" },
+  { key: "isGuardian", value: "Skrbnik" },
+  { key: "categoryChooser", value: "Izbor kategorije" },
+  {
+    key: "categoryChooserStepText",
+    value:
+      "Ovdje izaberite odgovarajuću kategoriju za novu osobu, unesite podatke koji najbolje opisuju zdravstveno stanje osobe te zaberite vrstu smještaja koju osoba zahtjeva.",
+  },
+  { key: "categoryChooserData", value: "Izbor kategorije za novu osobu" },
+  { key: "healthCondition", value: "Zdravstveno stanje" },
+  {
+    key: "healthConditionInfo",
+    value:
+      "Odaberite kućice kraj odgovarajućeg odgovora. Moguće je odabrati više opcija.",
+  },
+  { key: "personCategory", value: "Kategorija korisnika" },
+  {
+    key: "personCategoryInfo",
+    value:
+      "Odaberite kućicu kraj odgovarajućeg odgovora. Moguće je odabrati samo jednu opciju.",
+  },
+  { key: "accommodationType", value: "Vrsta smještaja" },
+  {
+    key: "accommodationTypeInfo",
+    value:
+      "Odaberite kućicu kraj odgovarajućeg odgovora. Moguće je odabrati samo jednu opciju.",
+  },
+  { key: "writeOther", value: "Upisati ostala zdravstvena stanja" },
+  {
+    key: "generateAccommodationRequest",
+    value: "Generiraj zahtjev za smještaj",
+  },
+  {
+    key: "showHistory",
+    value: "Prikaži povijest promjena",
+  },
+  {
+    key: "categories",
+    value: "Kategorije",
+  },
+  {
+    key: "requestGenerated",
+    value:
+      "Zahtjev za smještaj uspješno je generiran te dostupan u sekciji Dokumenti korisnika pod tipom Osobni dokument",
+  },
 ];
 
 const map = new Map(strings.map((obj) => [obj.key, obj.value]));

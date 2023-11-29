@@ -1,8 +1,8 @@
 INSERT INTO [dbo].[DocumentType]
            ([Name])
      VALUES
-           ('Medicinski dokument'),
-		   ('Osobni dokument'),
-		   ('Račun'),
-		   ('Ponuda'),
-		   ('Ostalo')
+           (N'Medicinski dokument'),
+		   (N'Osobni dokument'),
+		   (N'Račun'),
+		   (N'Ponuda'),
+		   (N'Ostalo')

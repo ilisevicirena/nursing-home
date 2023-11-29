@@ -13,13 +13,24 @@ CREATE PROCEDURE [dbo].[insertPerson]
 		@StartDate datetime = NULL,
 		@RoomId int = NULL,
 		@Address varchar(200)=NULL,
-		@GenderId int=NULL
+		@GenderId int=NULL,
+		@MaidenLastName varchar(50)= NULL,
+		@FatherFirstName varchar(50)= NULL,
+		@MotherFirstName varchar(50)= NULL,
+		@MotherMaidenLastName varchar(50)= NULL,
+		@BirthCityId int = NULL,
+		@BirthMunicipalityId int= NULL,
+		@BirthCountryId int= NULL,
+		@ResidanceCityId int= NULL,
+		@ResidanceStreetName varchar(200)= NULL,
+		@ResidanceHouseNumber varchar(50)= NULL,
+		@Telephone varchar(50)= NULL,
+		@Mobile varchar(50)= NULL,
+		@Email varchar(50)= NULL,
+		@DoctorName varchar(200)= NULL
 	)
 AS
 BEGIN
-	-- SET NOCOUNT ON added to prevent extra result sets from
-	-- interfering with SELECT statements.
-	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
 	DECLARE @Active bit = 1;
@@ -29,8 +40,13 @@ BEGIN
 	SET @BirthDate = CAST(DATEADD(hour, 2, @BirthDate) AS DATE);
 	SET @StartDate= CAST(DATEADD(hour, 2, @StartDate) AS DATE);
 
-	INSERT INTO dbo.Person (FirstName, LastName, JMBG, BirthDate, StartDate, Active, CreationDate, EndDate, Address, GenderId)
-	VALUES (@FirstName, @LastName, @JMBG, @BirthDate, @StartDate, @Active, @CreationDate, @EndDate, @Address, @GenderId);
+	INSERT INTO dbo.Person (FirstName, LastName, JMBG, BirthDate, StartDate, Active, CreationDate, EndDate, [Address], 
+	GenderId, MaidenLastName, FatherFirstName, MotherFirstName, MotherMaidenLastName, BirthCityId, BirthMunicipalityId, BirthCountryId, ResidanceCityId,
+	ResidanceStreetName, ResidanceHouseNumber, Telephone, Mobile,Email,DoctorName)
+	VALUES (@FirstName, @LastName, @JMBG, @BirthDate, @StartDate, @Active, @CreationDate, @EndDate, @Address, @GenderId,
+	@MaidenLastName, @FatherFirstName, @MotherFirstName,@MotherMaidenLastName, @BirthCityId, @BirthMunicipalityId, @BirthCountryId, @ResidanceCityId, @ResidanceStreetName,
+	@ResidanceHouseNumber, @Telephone, @Mobile, @Email, @DoctorName
+	);
 
 	DECLARE @NewIdent Int
 SET @NewIdent = SCOPE_IDENTITY();

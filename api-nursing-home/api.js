@@ -35,6 +35,12 @@ const events = require("./routes/events");
 const calculation = require("./routes/calculation");
 const summary = require("./routes/summary");
 const accommodationPdfRequest = require("./routes/accomodation-pdf-request");
+const countries = require("./routes/countries");
+const municipalities = require("./routes/municipalities");
+const cities = require("./routes/cities");
+const healthConditions = require("./routes/health-conditions");
+const accommodationTypes = require("./routes/accommodation-types");
+const personCategories = require("./routes/person-categories");
 
 // register routes
 router.use("/floors", floors);
@@ -56,6 +62,12 @@ router.use("/events", events);
 router.use("/calculation", calculation);
 router.use("/summary", summary);
 router.use("/accommodation-pdf-request", accommodationPdfRequest);
+router.use("/countries", countries);
+router.use("/municipalities", municipalities);
+router.use("/cities", cities);
+router.use("/health-conditions", healthConditions);
+router.use("/person-categories", personCategories);
+router.use("/accommodation-types", accommodationTypes);
 
 // No need to connect the pool
 // Just start the web server

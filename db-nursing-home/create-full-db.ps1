@@ -1,5 +1,7 @@
 # Define your database name and the folder containing SQL scripts
-$databaseName = "ENV09_NURSING_HOME"
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+
+$databaseName = "ENV01_NURSING_HOME"
 $scriptFolderPath = "C:\nursing-home\db-nursing-home"
 $executeOrderFile = "$scriptFolderPath\execute-order.txt"
 
@@ -45,7 +47,7 @@ try {
 
     # Check if the script file exists
     if (Test-Path $scriptFile) {
-        $scriptContent = Get-Content $scriptFile -Raw
+        $scriptContent = Get-Content $scriptFile -Raw -Encoding UTF8
 
         # Create a command and execute the script
         $executeScriptCommand = $databaseConnection.CreateCommand()

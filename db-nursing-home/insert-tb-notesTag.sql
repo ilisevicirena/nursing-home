@@ -3,7 +3,7 @@ INSERT INTO [dbo].[NotesTag]
            ,[Color]
            ,[Active])
      VALUES
-           ('liječnička posjeta', '#517594', 1),
-           ('nalazi', '#cf8138', 1),
-		    ('dokumenti', '#8c63c9', 1),
-			 ('lijekovi', '#428058', 1)
+           (N'liječnička posjeta', '#517594', 1),
+           (N'nalazi', '#cf8138', 1),
+		    (N'dokumenti', '#8c63c9', 1),
+			 (N'lijekovi', '#428058', 1)

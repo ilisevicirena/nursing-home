@@ -79,6 +79,8 @@ import { CalculationDocumentsComponent } from "./calculation/calculation-documen
 import { PersonCalculationComponent } from "./profile/person-calculation/person-calculation.component";
 import { NoteExportComponent } from "./notes/note-export/note-export.component";
 import { TagsComponent } from "./tags/tags.component";
+import { CategoriesChooserComponent } from './categories-chooser/categories-chooser.component';
+import { PersonBasicDataComponent } from './person-basic-data/person-basic-data.component';
 
 @NgModule({
   imports: [
@@ -165,6 +167,8 @@ import { TagsComponent } from "./tags/tags.component";
     PersonCalculationComponent,
     NoteExportComponent,
     TagsComponent,
+    CategoriesChooserComponent,
+    PersonBasicDataComponent,
   ],
 })
 export class PagesModule {}

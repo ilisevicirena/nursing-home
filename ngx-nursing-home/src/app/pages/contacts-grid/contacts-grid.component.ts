@@ -5,6 +5,11 @@ import {
   SmartTableColumn,
   TABLE_MODE,
   TextboxEditor,
+  GridLookupColumn,
+  GridSelectEditor,
+  GridToggleEditor,
+  GridCheckboxColumn,
+  GridSelectFilter,
 } from "shared-components";
 import { getString } from "../../resources/strings";
 import { Subscription } from "rxjs";
@@ -12,6 +17,7 @@ import { ContactsService } from "../../services/rest/contacts.service";
 import { ToastrService } from "../../services/toastr.service";
 import { ExportDocSettings } from "shared-components/lib/models/smart-table.model";
 import { PersonsService } from "../../services/rest/persons.service";
+import { CitiesService } from "../../services/rest/cities.service";
 
 @Component({
   selector: "sample-contacts-grid",
@@ -22,13 +28,19 @@ export class ContactsGridComponent implements OnInit, OnDestroy {
   constructor(
     private contactsService: ContactsService,
     private toastrService: ToastrService,
-    private personsService: PersonsService
+    private personsService: PersonsService,
+    private citiesService: CitiesService
   ) {}
 
   @Input() elementHeight: number = 300;
   @Input() personId: number = 0;
+  @Input() detailed: boolean = false;
 
   private subscriptions: Subscription[] = [];
+  private activeFilter = [
+    { value: true, label: getString("yes") },
+    { value: false, label: getString("no") },
+  ];
 
   public gridMode: TABLE_MODE = TABLE_MODE.POPUP;
   public contactsData: any[] = [];
@@ -38,7 +50,7 @@ export class ContactsGridComponent implements OnInit, OnDestroy {
       .DataField("FirstName")
       .Editor(
         new GridTextboxEditor()
-          .WidthClass("col-md-6")
+          .WidthClass("col-md-4")
           .Required(true)
           .Label(getString("firstName"))
       ),
@@ -47,16 +59,29 @@ export class ContactsGridComponent implements OnInit, OnDestroy {
       .DataField("LastName")
       .Editor(
         new GridTextboxEditor()
-          .WidthClass("col-md-6")
+          .WidthClass("col-md-4")
           .Required(true)
           .Label(getString("lastName"))
       ),
     new GridColumn()
+      .Title(getString("jmbg"))
+      .DataField("Jmbg")
+      .Visible(this.detailed)
+      .Editor(
+        new GridTextboxEditor()
+          .Pattern("[0-9]{13}$")
+          .LettersDisabled(true)
+          .WidthClass("col-md-4")
+          .Label(getString("jmbg"))
+      ),
+    new GridColumn()
       .Title(getString("email"))
       .DataField("Email")
+      .Visible(this.detailed)
       .Editor(
         new GridTextboxEditor()
           .Pattern("[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$")
+          .WidthClass("col-md-4")
           .Label(getString("email"))
       ),
     new GridColumn()
@@ -65,7 +90,7 @@ export class ContactsGridComponent implements OnInit, OnDestroy {
       .Editor(
         new GridTextboxEditor()
           .LettersDisabled(true)
-          .WidthClass("col-md-6")
+          .WidthClass("col-md-4")
           .Label(getString("telephone"))
       ),
     new GridColumn()
@@ -74,8 +99,71 @@ export class ContactsGridComponent implements OnInit, OnDestroy {
       .Editor(
         new GridTextboxEditor()
           .LettersDisabled(true)
-          .WidthClass("col-md-6")
+          .WidthClass("col-md-4")
           .Label(getString("mobile"))
+      ),
+    new GridColumn()
+      .Title(getString("residanceCity"))
+      .DataField("ResidanceCityId")
+      .Visible(this.detailed)
+      .Type(new GridLookupColumn().LookupColumn("ResidanceCityName"))
+      .Editor(
+        new GridSelectEditor()
+          .DisplayExpression("Name")
+          .KeyExpression("Id")
+          .ServerDataSource(true)
+          .ServerEndpoint(this.citiesService.apiRoute)
+          .WidthClass("col-md-4")
+          .Label(getString("residanceCity"))
+      ),
+    new GridColumn()
+      .Title(getString("residanceStreetName"))
+      .DataField("ResidanceStreetName")
+      .Visible(this.detailed)
+      .Editor(
+        new GridTextboxEditor()
+          .WidthClass("col-md-6")
+          .Label(getString("residanceStreetName"))
+      ),
+    new GridColumn()
+      .Title(getString("residanceHouseNumber"))
+      .DataField("ResidanceHouseNumber")
+      .Visible(this.detailed)
+      .Editor(
+        new GridTextboxEditor()
+          .WidthClass("col-md-2")
+          .Label(getString("residanceHouseNumber"))
+      ),
+    new GridColumn()
+      .Title(getString("isObligeeToPay"))
+      .Width("100px")
+      .DataField("IsObligeeToPay")
+      .Type(new GridCheckboxColumn())
+      .Filter(
+        new GridSelectFilter()
+          .DisplayExpression("label")
+          .KeyExpression("value")
+          .DataSource(this.activeFilter)
+      )
+      .Editor(
+        new GridToggleEditor()
+          .WidthClass("col-md-2")
+          .Label(getString("isObligeeToPay"))
+      ),
+    new GridColumn()
+      .Title(getString("isGuardian"))
+      .DataField("IsGuardian")
+      .Type(new GridCheckboxColumn())
+      .Filter(
+        new GridSelectFilter()
+          .DisplayExpression("label")
+          .KeyExpression("value")
+          .DataSource(this.activeFilter)
+      )
+      .Editor(
+        new GridToggleEditor()
+          .WidthClass("col-md-2")
+          .Label(getString("isGuardian"))
       ),
   ];
 

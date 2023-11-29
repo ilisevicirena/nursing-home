@@ -1,0 +1,33 @@
+@import "../../@theme/styles/themes";
+
+@include nb-install-component() {
+  .subtitle {
+    font-size: 12px;
+    font-weight: 500;
+    color: nb-theme(color-basic-600);
+    line-height: 12px;
+    margin-top: 5px;
+  }
+
+  .grey-card {
+    display: flex;
+    flex-flow: column;
+    height: 100%;
+  }
+
+  .grey-card-header {
+    flex: 0 1 auto;
+  }
+
+  .grey-card-body {
+    flex: 1 1 auto;
+    margin-top: 0.5rem;
+    overflow: auto;
+  }
+
+  .grey-card-footer {
+    flex: 0 1 40px;
+    display: flex;
+    justify-content: end;
+  }
+}

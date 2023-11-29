@@ -2,5 +2,5 @@ INSERT INTO [dbo].[Gender]
            ([Name]
            ,[Tag])
      VALUES
-           ('Muški', 'M'),
-		   ('Ženski', 'Z')
+           (N'Muški', N'M'),
+		   (N'Ženski', N'Ž')

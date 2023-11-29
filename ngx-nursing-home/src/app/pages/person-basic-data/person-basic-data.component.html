@@ -1,0 +1,582 @@
+<div class="row form-row">
+  <div class="col-md-4">
+    <div class="form-group">
+      <div class="label">
+        {{ getString("firstName") }}
+        <nb-icon
+          pack="eva"
+          icon="alert-circle-outline"
+          status="danger"
+          size="small"
+          class="ms-1 required-mark"
+          [nbTooltip]="getString('required')"
+        ></nb-icon>
+      </div>
+      <div class="value">
+        <input
+          [placeholder]="getString('firstName')"
+          nbInput
+          fullWidth
+          name="firstName"
+          [(ngModel)]="newPersonData.FirstName"
+          required
+          #firstName1="ngModel"
+          [disabled]="newPersonData.Id > 0 && formModeAddNew"
+          autocomplete="off"
+          [status]="
+            firstName1.dirty
+              ? firstName1.invalid
+                ? 'danger'
+                : 'success'
+              : 'basic'
+          "
+        />
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="form-group">
+      <div class="label">
+        {{ getString("lastName") }}
+        <nb-icon
+          pack="eva"
+          icon="alert-circle-outline"
+          status="danger"
+          size="small"
+          class="ms-1 required-mark"
+          [nbTooltip]="getString('required')"
+        ></nb-icon>
+      </div>
+      <div class="value">
+        <input
+          nbInput
+          fullWidth
+          autocomplete="off"
+          [placeholder]="getString('lastName')"
+          name="surname"
+          [disabled]="newPersonData.Id > 0 && formModeAddNew"
+          [(ngModel)]="newPersonData.LastName"
+          required
+          #lastName1="ngModel"
+          [status]="
+            lastName1.dirty
+              ? lastName1.invalid
+                ? 'danger'
+                : 'success'
+              : 'basic'
+          "
+        />
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="form-group">
+      <div class="label">
+        {{ getString("maidenLastName") }}
+      </div>
+      <div class="value">
+        <input
+          nbInput
+          fullWidth
+          autocomplete="off"
+          [placeholder]="getString('maidenLastName')"
+          name="maidenLastName"
+          [disabled]="newPersonData.Id > 0 && formModeAddNew"
+          [(ngModel)]="newPersonData.MaidenLastName"
+          #maidenLastName1="ngModel"
+          [status]="
+            maidenLastName1.dirty
+              ? maidenLastName1.invalid
+                ? 'danger'
+                : 'success'
+              : 'basic'
+          "
+        />
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row form-row mt-2">
+  <div class="col-md-4">
+    <div class="form-group">
+      <div class="label">
+        {{ getString("fatherFirstName") }}
+      </div>
+      <div class="value">
+        <input
+          [placeholder]="getString('fatherFirstName')"
+          nbInput
+          fullWidth
+          name="fatherFirstName"
+          [(ngModel)]="newPersonData.FatherFirstName"
+          #fatherFirstName1="ngModel"
+          [disabled]="newPersonData.Id > 0 && formModeAddNew"
+          autocomplete="off"
+          [status]="
+            fatherFirstName1.dirty
+              ? fatherFirstName1.invalid
+                ? 'danger'
+                : 'success'
+              : 'basic'
+          "
+        />
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="form-group">
+      <div class="label">
+        {{ getString("motherFirstName") }}
+      </div>
+      <div class="value">
+        <input
+          nbInput
+          fullWidth
+          autocomplete="off"
+          [placeholder]="getString('motherFirstName')"
+          name="motherFirstName"
+          [disabled]="newPersonData.Id > 0 && formModeAddNew"
+          [(ngModel)]="newPersonData.MotherFirstName"
+          #motherFirstName1="ngModel"
+          [status]="
+            motherFirstName1.dirty
+              ? motherFirstName1.invalid
+                ? 'danger'
+                : 'success'
+              : 'basic'
+          "
+        />
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="form-group">
+      <div class="label">
+        {{ getString("motherMaidenLastName") }}
+      </div>
+      <div class="value">
+        <input
+          nbInput
+          fullWidth
+          autocomplete="off"
+          [placeholder]="getString('motherMaidenLastName')"
+          name="motherMaidenLastName"
+          [disabled]="newPersonData.Id > 0 && formModeAddNew"
+          [(ngModel)]="newPersonData.MotherMaidenLastName"
+          #motherMaidenLastName1="ngModel"
+          [status]="
+            motherMaidenLastName1.dirty
+              ? motherMaidenLastName1.invalid
+                ? 'danger'
+                : 'success'
+              : 'basic'
+          "
+        />
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row form-row mt-2">
+  <div class="col-md-4">
+    <div class="form-group">
+      <div class="label">
+        {{ getString("jmbg") }}
+        <nb-icon
+          pack="eva"
+          icon="alert-circle-outline"
+          status="danger"
+          size="small"
+          class="ms-1 required-mark"
+          [nbTooltip]="getString('required')"
+        ></nb-icon>
+      </div>
+      <div class="value">
+        <input
+          nbInput
+          [placeholder]="getString('jmbg')"
+          fullWidth
+          name="jmbg"
+          required
+          #jmbg1="ngModel"
+          [disabled]="newPersonData.Id > 0 && formModeAddNew"
+          type="text"
+          pattern="[0-9]{13}$"
+          autocomplete="off"
+          (keypress)="
+            ($event.charCode == 8 || $event.charCode == 0
+              ? null
+              : $event.charCode >= 48 && $event.charCode <= 57)
+          "
+          [status]="
+            jmbg1.dirty ? (jmbg1.invalid ? 'danger' : 'success') : 'basic'
+          "
+          [(ngModel)]="newPersonData.JMBG"
+        />
+      </div>
+    </div>
+  </div>
+  <div class="col-md-2">
+    <div class="form-group">
+      <div class="label">
+        {{ getString("birthDate") }}
+        <nb-icon
+          pack="eva"
+          icon="alert-circle-outline"
+          status="danger"
+          size="small"
+          class="ms-1 required-mark"
+          [nbTooltip]="getString('required')"
+        ></nb-icon>
+      </div>
+      <div class="value">
+        <nb-form-field>
+          <input
+            nbInput
+            #birthDateInput
+            [disabled]="newPersonData.Id > 0 && formModeAddNew"
+            [placeholder]="getString('birthDate')"
+            fullWidth
+            required
+            autocomplete="off"
+            name="birthData"
+            [(ngModel)]="newPersonData.BirthDate"
+            [nbDatepicker]="birthDateDatepicker"
+          />
+          <nb-datepicker #birthDateDatepicker></nb-datepicker>
+          <button nbButton nbSuffix ghost (click)="birthDateInput.focus()">
+            <nb-icon pack="eva" icon="calendar-outline"></nb-icon>
+          </button>
+        </nb-form-field>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-2">
+    <div class="form-group">
+      <div class="label">
+        {{ getString("startDate") }}
+        <nb-icon
+          pack="eva"
+          icon="alert-circle-outline"
+          status="danger"
+          size="small"
+          class="ms-1 required-mark"
+          [nbTooltip]="getString('required')"
+        ></nb-icon>
+      </div>
+      <div class="value">
+        <nb-form-field>
+          <input
+            nbInput
+            required
+            [placeholder]="getString('startDate')"
+            fullWidth
+            #startDateInput
+            name="startDate"
+            autocomplete="off"
+            [(ngModel)]="newPersonData.StartDate"
+            [nbDatepicker]="startDateDatepicker"
+            #startDate1="ngModel"
+            [disabled]="newPersonData.Id > 0 && formModeAddNew"
+            [status]="
+              startDate1.dirty
+                ? startDate1.invalid
+                  ? 'danger'
+                  : 'success'
+                : 'basic'
+            "
+          />
+          <nb-datepicker #startDateDatepicker></nb-datepicker>
+          <button nbButton nbSuffix ghost (click)="startDateInput.focus()">
+            <nb-icon pack="eva" icon="calendar-outline"></nb-icon>
+          </button>
+        </nb-form-field>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="form-group">
+      <div class="label">
+        {{ getString("gender") }}
+        <nb-icon
+          pack="eva"
+          icon="alert-circle-outline"
+          status="danger"
+          size="small"
+          class="ms-1 required-mark"
+          [nbTooltip]="getString('required')"
+        ></nb-icon>
+      </div>
+      <div class="value">
+        <nb-select
+          [disabled]="newPersonData.Id > 0 && formModeAddNew"
+          required
+          #gender1="ngModel"
+          [status]="
+            gender1.dirty ? (gender1.invalid ? 'danger' : 'success') : 'basic'
+          "
+          [placeholder]="getString('gender')"
+          fullWidth
+          name="gender"
+          [(ngModel)]="newPersonData.GenderId"
+        >
+          <nb-option *ngFor="let gender of genders" [value]="gender.Id">{{
+            gender.Name
+          }}</nb-option>
+        </nb-select>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row form-row mt-2">
+  <div class="col-md-4">
+    <div class="form-group">
+      <div class="label">
+        {{ getString("birthCountry") }}
+      </div>
+      <div class="value">
+        <ngx-tags-autocomplete
+          [emptyPlaceholder]="getString('birthCountry')"
+          [keyAttribute]="'Id'"
+          [displayArrow]="true"
+          [attributesToFilter]="['Name']"
+          [attributesToShow]="['Name']"
+          [attributesToShowInTag]="['Name']"
+          [multiple]="false"
+          [(source)]="countries"
+          [(selectedKeys)]="selectedCountryKeys"
+          [disabled]="newPersonData.Id > 0 && formModeAddNew"
+          (onSelectionChanged)="countriesOnSelectionChanged($event)"
+        ></ngx-tags-autocomplete>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="form-group">
+      <div class="label">
+        {{ getString("birthMunicipality") }}
+      </div>
+      <div class="value">
+        <ngx-tags-autocomplete
+          [emptyPlaceholder]="getString('birthMunicipality')"
+          [keyAttribute]="'Id'"
+          [displayArrow]="true"
+          [attributesToFilter]="['Name']"
+          [attributesToShow]="['Name']"
+          [attributesToShowInTag]="['Name']"
+          [multiple]="false"
+          [(source)]="municipalities"
+          [(selectedKeys)]="selectedMunicipalityKeys"
+          [disabled]="newPersonData.Id > 0 && formModeAddNew"
+          (onSelectionChanged)="municipalitiesOnSelectionChanged($event)"
+        ></ngx-tags-autocomplete>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="form-group">
+      <div class="label">
+        {{ getString("birthCity") }}
+      </div>
+      <div class="value">
+        <ngx-tags-autocomplete
+          [emptyPlaceholder]="getString('birthCity')"
+          [keyAttribute]="'Id'"
+          [displayArrow]="true"
+          [attributesToFilter]="['Name']"
+          [attributesToShow]="['Name']"
+          [attributesToShowInTag]="['Name']"
+          [multiple]="false"
+          [(source)]="cities"
+          [(selectedKeys)]="selectedCityKeys"
+          [disabled]="newPersonData.Id > 0 && formModeAddNew"
+          (onSelectionChanged)="citiesOnSelectionChanged($event)"
+        ></ngx-tags-autocomplete>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row form-row mt-2">
+  <div class="col-md-4">
+    <div class="form-group">
+      <div class="label">
+        {{ getString("residanceCity") }}
+      </div>
+      <div class="value">
+        <ngx-tags-autocomplete
+          [emptyPlaceholder]="getString('residanceCity')"
+          [keyAttribute]="'Id'"
+          [displayArrow]="true"
+          [attributesToFilter]="['Name']"
+          [attributesToShow]="['Name']"
+          [attributesToShowInTag]="['Name']"
+          [multiple]="false"
+          [(source)]="cities"
+          [(selectedKeys)]="selectedResidanceKeys"
+          [disabled]="newPersonData.Id > 0 && formModeAddNew"
+          (onSelectionChanged)="residanceOnSelectionChanged($event)"
+        ></ngx-tags-autocomplete>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="form-group">
+      <div class="label">
+        {{ getString("residanceStreetName") }}
+      </div>
+      <div class="value">
+        <input
+          nbInput
+          fullWidth
+          autocomplete="off"
+          [placeholder]="getString('residanceStreetName')"
+          name="residanceStreetName"
+          [disabled]="newPersonData.Id > 0 && formModeAddNew"
+          [(ngModel)]="newPersonData.ResidanceStreetName"
+          #residanceStreetName1="ngModel"
+          [status]="
+            residanceStreetName1.dirty
+              ? residanceStreetName1.invalid
+                ? 'danger'
+                : 'success'
+              : 'basic'
+          "
+        />
+      </div>
+    </div>
+  </div>
+  <div class="col-md-2">
+    <div class="form-group">
+      <div class="label">
+        {{ getString("residanceHouseNumber") }}
+      </div>
+      <div class="value">
+        <input
+          nbInput
+          fullWidth
+          autocomplete="off"
+          [placeholder]="getString('residanceHouseNumber')"
+          name="residanceHouseNumber"
+          [disabled]="newPersonData.Id > 0 && formModeAddNew"
+          [(ngModel)]="newPersonData.ResidanceHouseNumber"
+          #residanceHouseNumber1="ngModel"
+          [status]="
+            residanceHouseNumber1.dirty
+              ? residanceHouseNumber1.invalid
+                ? 'danger'
+                : 'success'
+              : 'basic'
+          "
+        />
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row form-row mt-2">
+  <div class="col-md-4">
+    <div class="form-group">
+      <div class="label">
+        {{ getString("telephone") }}
+      </div>
+      <div class="value">
+        <input
+          nbInput
+          fullWidth
+          autocomplete="off"
+          [placeholder]="getString('telephone')"
+          name="telephone"
+          (keypress)="onKeyPress($event)"
+          [disabled]="newPersonData.Id > 0 && formModeAddNew"
+          [(ngModel)]="newPersonData.Telephone"
+          #telephone1="ngModel"
+          [status]="
+            telephone1.dirty
+              ? telephone1.invalid
+                ? 'danger'
+                : 'success'
+              : 'basic'
+          "
+        />
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="form-group">
+      <div class="label">
+        {{ getString("mobile") }}
+      </div>
+      <div class="value">
+        <input
+          nbInput
+          fullWidth
+          autocomplete="off"
+          [placeholder]="getString('mobile')"
+          name="mobile"
+          (keypress)="onKeyPress($event)"
+          [disabled]="newPersonData.Id > 0 && formModeAddNew"
+          [(ngModel)]="newPersonData.Mobile"
+          #mobile1="ngModel"
+          [status]="
+            mobile1.dirty ? (mobile1.invalid ? 'danger' : 'success') : 'basic'
+          "
+        />
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="form-group">
+      <div class="label">
+        {{ getString("email") }}
+      </div>
+      <div class="value">
+        <input
+          nbInput
+          fullWidth
+          autocomplete="off"
+          [placeholder]="getString('email')"
+          name="email"
+          [disabled]="newPersonData.Id > 0 && formModeAddNew"
+          [(ngModel)]="newPersonData.Email"
+          pattern="[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$"
+          #email1="ngModel"
+          [status]="
+            email1.dirty ? (email1.invalid ? 'danger' : 'success') : 'basic'
+          "
+        />
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row form-row mt-2">
+  <div class="col-md-8">
+    <div class="form-group">
+      <div class="label">
+        {{ getString("doctorName") }}
+      </div>
+      <div class="value">
+        <input
+          nbInput
+          fullWidth
+          autocomplete="off"
+          [placeholder]="getString('doctorName')"
+          name="doctorName"
+          [disabled]="newPersonData.Id > 0 && formModeAddNew"
+          [(ngModel)]="newPersonData.DoctorName"
+          #doctorName1="ngModel"
+          [status]="
+            doctorName1.dirty
+              ? doctorName1.invalid
+                ? 'danger'
+                : 'success'
+              : 'basic'
+          "
+        />
+      </div>
+    </div>
+  </div>
+</div>

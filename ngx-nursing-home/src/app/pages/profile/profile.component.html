@@ -67,12 +67,9 @@
       pack="eva"
       icon="arrow-left"
       class="dotted-arrow"
-      *ngIf="activeView == 'basicData' || activeView == 'dormatoryData'"
+      *ngIf="activeView == 'dormatoryData'"
     ></nb-icon>
-    <div
-      class="dotted-line"
-      *ngIf="activeView == 'basicData' || activeView == 'dormatoryData'"
-    ></div>
+    <div class="dotted-line" *ngIf="activeView == 'dormatoryData'"></div>
     <nb-card
       class="h-100 m-0"
       [ngClass]="activeView == 'documents' ? 'bg-color-transparent' : ''"
@@ -80,264 +77,37 @@
       <nb-card-body>
         <div [ngSwitch]="activeView" style="height: calc(100% - 2rem)">
           <div *ngSwitchCase="'basicData'" class="mt-3 h-100">
-            <div class="h-50">
+            <div class="group-title pt-0">
+              {{ getString("basicData") }}
+              <div class="line"></div>
+            </div>
+            <div class="history-btn">
+              <button
+                nbButton
+                ghost
+                size="small"
+                shape="round"
+                status="primary"
+                (click)="generateAccommodationRequest()"
+              >
+                {{ getString("generateAccommodationRequest") }}
+              </button>
+              <button
+                nbButton
+                ghost
+                status="primary"
+                shape="round"
+                [nbTooltip]="getString('showHistory')"
+                (click)="openPersonHistory(personHistoryModal)"
+              >
+                <nb-icon pack="eva" icon="external-link-outline"></nb-icon>
+              </button>
+            </div>
+            <div style="height: calc(100% - 2rem)">
               <form #basicDataFrom="ngForm">
-                <div class="row form-row">
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <div class="label">
-                        {{ getString("firstName") }}
-                        <nb-icon
-                          pack="eva"
-                          icon="alert-circle-outline"
-                          status="danger"
-                          size="small"
-                          class="ms-1 required-mark"
-                          [nbTooltip]="getString('required')"
-                        ></nb-icon>
-                      </div>
-                      <div class="value">
-                        <input
-                          [placeholder]="getString('firstName')"
-                          nbInput
-                          fullWidth
-                          name="firstName"
-                          [(ngModel)]="newPersonData.FirstName"
-                          required
-                          #firstName1="ngModel"
-                          autocomplete="off"
-                          [disabled]="!person.Active"
-                          [status]="
-                            firstName1.dirty
-                              ? firstName1.invalid
-                                ? 'danger'
-                                : 'success'
-                              : 'basic'
-                          "
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <div class="label">
-                        {{ getString("lastName") }}
-                        <nb-icon
-                          pack="eva"
-                          icon="alert-circle-outline"
-                          status="danger"
-                          size="small"
-                          class="ms-1 required-mark"
-                          [nbTooltip]="getString('required')"
-                        ></nb-icon>
-                      </div>
-                      <div class="value">
-                        <input
-                          nbInput
-                          fullWidth
-                          autocomplete="off"
-                          [placeholder]="getString('lastName')"
-                          name="surname"
-                          [disabled]="!person.Active"
-                          [(ngModel)]="newPersonData.LastName"
-                          required
-                          #lastName1="ngModel"
-                          [status]="
-                            lastName1.dirty
-                              ? lastName1.invalid
-                                ? 'danger'
-                                : 'success'
-                              : 'basic'
-                          "
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="row form-row mt-2">
-                  <div class="col-md-4">
-                    <div class="form-group">
-                      <div class="label">
-                        {{ getString("jmbg") }}
-                        <nb-icon
-                          pack="eva"
-                          icon="alert-circle-outline"
-                          status="danger"
-                          size="small"
-                          class="ms-1 required-mark"
-                          [nbTooltip]="getString('required')"
-                        ></nb-icon>
-                      </div>
-                      <div class="value">
-                        <input
-                          nbInput
-                          [placeholder]="getString('jmbg')"
-                          fullWidth
-                          name="jmbg"
-                          required
-                          #jmbg1="ngModel"
-                          type="text"
-                          pattern="[0-9]{13}$"
-                          autocomplete="off"
-                          [disabled]="!person.Active"
-                          (keypress)="
-                            ($event.charCode == 8 || $event.charCode == 0
-                              ? null
-                              : $event.charCode >= 48 && $event.charCode <= 57)
-                          "
-                          [status]="
-                            jmbg1.dirty
-                              ? jmbg1.invalid
-                                ? 'danger'
-                                : 'success'
-                              : 'basic'
-                          "
-                          [(ngModel)]="newPersonData.JMBG"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-4">
-                    <div class="form-group">
-                      <div class="label">{{ getString("birthDate") }}</div>
-                      <div class="value">
-                        <nb-form-field>
-                          <input
-                            nbInput
-                            #birthDateInput
-                            [placeholder]="getString('birthDate')"
-                            fullWidth
-                            autocomplete="off"
-                            name="birthData"
-                            [(ngModel)]="newPersonData.BirthDate"
-                            [disabled]="!person.Active"
-                            [nbDatepicker]="birthDateDatepicker"
-                          />
-                          <nb-datepicker #birthDateDatepicker></nb-datepicker>
-                          <button
-                            nbButton
-                            nbSuffix
-                            ghost
-                            (click)="birthDateInput.focus()"
-                          >
-                            <nb-icon
-                              pack="eva"
-                              icon="calendar-outline"
-                            ></nb-icon>
-                          </button>
-                        </nb-form-field>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-4">
-                    <div class="form-group">
-                      <div class="label">
-                        {{ getString("startDate") }}
-                        <nb-icon
-                          pack="eva"
-                          icon="alert-circle-outline"
-                          status="danger"
-                          size="small"
-                          class="ms-1 required-mark"
-                          [nbTooltip]="getString('required')"
-                        ></nb-icon>
-                      </div>
-                      <div class="value">
-                        <nb-form-field>
-                          <input
-                            nbInput
-                            required
-                            [placeholder]="getString('startDate')"
-                            fullWidth
-                            #startDateInput
-                            name="startDate"
-                            autocomplete="off"
-                            [(ngModel)]="newPersonData.StartDate"
-                            [disabled]="!person.Active"
-                            [nbDatepicker]="startDateDatepicker"
-                            #startDate1="ngModel"
-                            [status]="
-                              startDate1.dirty
-                                ? startDate1.invalid
-                                  ? 'danger'
-                                  : 'success'
-                                : 'basic'
-                            "
-                          />
-                          <nb-datepicker #startDateDatepicker></nb-datepicker>
-                          <button
-                            nbButton
-                            nbSuffix
-                            ghost
-                            (click)="startDateInput.focus()"
-                          >
-                            <nb-icon
-                              pack="eva"
-                              icon="calendar-outline"
-                            ></nb-icon>
-                          </button>
-                        </nb-form-field>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="row form-row mt-2">
-                  <div class="col-md-8">
-                    <div class="form-group">
-                      <div class="label">{{ getString("address") }}</div>
-                      <div class="value">
-                        <input
-                          nbInput
-                          [placeholder]="getString('address')"
-                          fullWidth
-                          [disabled]="!person.Active"
-                          autocomplete="off"
-                          name="address"
-                          [(ngModel)]="newPersonData.Address"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-4">
-                    <div class="form-group">
-                      <div class="label">
-                        {{ getString("gender") }}
-                        <nb-icon
-                          pack="eva"
-                          icon="alert-circle-outline"
-                          status="danger"
-                          size="small"
-                          class="ms-1 required-mark"
-                          [nbTooltip]="getString('required')"
-                        ></nb-icon>
-                      </div>
-                      <div class="value">
-                        <nb-select
-                          required
-                          #gender1="ngModel"
-                          [disabled]="!person.Active"
-                          [status]="
-                            gender1.dirty
-                              ? gender1.invalid
-                                ? 'danger'
-                                : 'success'
-                              : 'basic'
-                          "
-                          [placeholder]="getString('gender')"
-                          fullWidth
-                          name="gender"
-                          [(ngModel)]="newPersonData.GenderId"
-                        >
-                          <nb-option
-                            *ngFor="let gender of genders"
-                            [value]="gender.Id"
-                            >{{ gender.Name }}</nb-option
-                          >
-                        </nb-select>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <sample-person-basic-data
+                  [(newPersonData)]="newPersonData"
+                ></sample-person-basic-data>
               </form>
               <div class="w-100 d-flex justify-content-end p-2">
                 <button
@@ -362,36 +132,17 @@
                 </button>
               </div>
             </div>
-            <div class="h-50">
-              <div class="d-flex">
-                <div class="group-title">
-                  {{ getString("history") }}
-                  <div class="line"></div>
-                </div>
-                <div class="col d-flex justify-content-end">
-                  <!--  <button nbButton ghost shape="round" class="h-max" status="primary"
-                                        (click)="openPersonHistory(personHistoryModal)">
-                                        <nb-icon pack="eva" icon="external-link-outline"></nb-icon>
-                                    </button>
-                                    -->
-                </div>
-              </div>
-              <div style="height: calc(100% - 2rem)">
-                <ngx-grid
-                  [columns]="historyColumns"
-                  [addEnabled]="false"
-                  [pagerEnabled]="false"
-                  [editEnabled]="false"
-                  [deleteEnabled]="false"
-                  [exportPdfEnabled]="false"
-                  [entriesPerPageEnabled]="false"
-                  [exportExcelEnabled]="false"
-                  [refreshEnabled]="false"
-                  [selectionEnabled]="false"
-                  [filtersEnabled]="false"
-                  [(data)]="personHistory"
-                ></ngx-grid>
-              </div>
+          </div>
+
+          <div *ngSwitchCase="'categories'" class="h-100">
+            <div class="group-title">
+              {{ getString("categories") }}
+              <div class="line"></div>
+            </div>
+            <div style="height: 70%">
+              <sample-categories-chooser
+                [personId]="person.Id"
+              ></sample-categories-chooser>
             </div>
           </div>
 
@@ -403,6 +154,7 @@
             <div style="height: calc(100% - 2rem)">
               <sample-contacts-grid
                 [personId]="person.Id"
+                [detailed]="true"
               ></sample-contacts-grid>
             </div>
           </div>
@@ -808,17 +560,20 @@
       </div>
     </nb-card-header>
     <nb-card-body>
-      <ngx-smart-table
-        [columns]="getPersonHistoryColumns(true)"
+      <ngx-grid
+        [columns]="historyColumns"
         [addEnabled]="false"
+        [pagerEnabled]="true"
         [editEnabled]="false"
         [deleteEnabled]="false"
         [exportPdfEnabled]="true"
         [entriesPerPageEnabled]="true"
         [exportExcelEnabled]="true"
         [refreshEnabled]="true"
+        [selectionEnabled]="false"
+        [filtersEnabled]="true"
         [(data)]="personHistory"
-      ></ngx-smart-table>
+      ></ngx-grid>
     </nb-card-body>
   </nb-card>
 </ng-template>

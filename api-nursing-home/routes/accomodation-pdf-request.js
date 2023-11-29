@@ -9,6 +9,105 @@ const fs = require("fs");
 const util = require("util");
 const fontkit = require("@pdf-lib/fontkit");
 
+const HealthConditionOtherId = 8;
+
+function formatDataObject(
+  person,
+  payPerson,
+  guardian,
+  conditions,
+  category,
+  type,
+  city
+) {
+  var data = {};
+  var options = {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  };
+  Object.keys(person).forEach(function (key) {
+    if (key == "Id") return;
+    else if (key == "JMBG") {
+      var jmbgParsed = person[key].split("");
+      for (let index = 0; index < jmbgParsed.length; index++) {
+        const element = jmbgParsed[index];
+        var keyName = "Jmbg_" + parseInt(index + 1);
+        data[keyName] = { value: element, type: "text" };
+      }
+    } else if (key == "BirthDate") {
+      var birthDate = new Date(person.BirthDate)
+        .toLocaleDateString("en-US", options)
+        .replaceAll("/", "")
+        .split("");
+      for (let index = 0; index < birthDate.length; index++) {
+        const element = birthDate[index];
+        var keyName = "BirthDate_" + parseInt(index + 1);
+        data[keyName] = { value: element, type: "text" };
+      }
+    } else data[key] = { value: person[key] ?? "-", type: "text" };
+  });
+
+  if (payPerson) {
+    Object.keys(payPerson).forEach(function (key) {
+      if (key == "Jmbg") {
+        var jmbgParsed = payPerson[key].split("");
+        for (let index = 0; index < jmbgParsed.length; index++) {
+          const element = jmbgParsed[index];
+          var keyName = "PayJmbg_" + parseInt(index + 1);
+          data[keyName] = { value: element, type: "text" };
+        }
+      } else data[key] = { value: payPerson[key] ?? "-", type: "text" };
+    });
+  }
+
+  if (guardian) {
+    Object.keys(guardian).forEach(function (key) {
+      if (key == "Jmbg") {
+        var jmbgParsed = guardian[key].split("");
+        for (let index = 0; index < jmbgParsed.length; index++) {
+          const element = jmbgParsed[index];
+          var keyName = "GuardianJmbg_" + parseInt(index + 1);
+          data[keyName] = { value: element, type: "text" };
+        }
+      } else data[key] = { value: guardian[key] ?? "-", type: "text" };
+    });
+  }
+
+  if (conditions) {
+    conditions.forEach((element) => {
+      var keyName = "Health_" + element.HealthConditionId;
+      data[keyName] = { value: 1, type: "bool" };
+      if (element.HealthConditionId == HealthConditionOtherId)
+        data["Health_Other"] = {
+          value: element.Description ?? "-",
+          type: "text",
+        };
+    });
+  }
+
+  if (cat) {
+    var cat = "Category_" + category.PersonCategoryId;
+    data[cat] = { value: 1, type: "bool" };
+  }
+
+  if (type) {
+    var typ = "Accommodation_" + type.AccommodationTypeId;
+    data[typ] = { value: 1, type: "bool" };
+  }
+
+  data["CreatedCity"] = { value: city, type: "text" };
+  var date = new Date()
+    .toLocaleDateString("hr-HR", options)
+    .replaceAll(" ", "");
+  data["CreatedDate"] = {
+    value: date,
+    type: "text",
+  };
+
+  return data;
+}
+
 router.post("/generateRequest", async (request, response) => {
   try {
     const inputFile = resolve(
@@ -19,15 +118,26 @@ router.post("/generateRequest", async (request, response) => {
     const result = await pool
       .request()
       .input("id", request.body.id)
-      .query("EXEC [dbo].[getPerson] @Id=@id");
+      .query("EXEC [dbo].[getAccommodationRequestData] @PersonId=@id");
 
-    if (result.recordset.length > 0) {
-      var person = result.recordset[0];
-      var data = {
-        FirstName: { value: person.FirstName, type: "text" },
-        LastName: { value: person.LastName, type: "text" },
-        Health_1: { value: 1, type: "bool" },
-      };
+    if (result.recordsets.length > 0) {
+      var person = result.recordsets[0][0];
+      var obligeeToPay = result.recordsets[1][0];
+      var guardian = result.recordsets[2][0];
+      var conditions = result.recordsets[3];
+      var category = result.recordsets[4][0];
+      var accommodation = result.recordsets[5][0];
+
+      var data = formatDataObject(
+        person,
+        obligeeToPay,
+        guardian,
+        conditions,
+        category,
+        accommodation,
+        request.body.city
+      );
+
       var outputFileName = "zahtjev-za-smjestaj-" + person.JMBG + ".pdf";
       const readFile = util.promisify(fs.readFile);
       function getStuff() {

@@ -1,0 +1,105 @@
+<div class="w-100 h-100 row">
+  <div class="col-md-4 h-100">
+    <div class="grey-card">
+      <div class="grey-card-header">
+        <div class="group-title p-0">
+          {{ getString("healthCondition") }}
+          <div class="line"></div>
+        </div>
+        <div class="subtitle">{{ getString("healthConditionInfo") }}</div>
+      </div>
+      <div class="grey-card-body">
+        <div class="w-100" *ngFor="let c of healthConditions">
+          <nb-checkbox
+            [checked]="selectedConditions.includes(c.Id)"
+            (checkedChange)="onConditionCheckedChange($event, c)"
+            >{{ c.Name }}</nb-checkbox
+          >
+        </div>
+        <div class="mt-1" *ngIf="showConditionDescription">
+          <textarea
+            nbInput
+            fullWidth
+            name="categoryOtherDescription"
+            rows="5"
+            [placeholder]="getString('writeOther')"
+            [(ngModel)]="categoryOtherDescription"
+          ></textarea>
+        </div>
+      </div>
+      <div class="grey-card-footer">
+        <button
+          class="mt-2"
+          nbButton
+          status="primary"
+          size="small"
+          shape="round"
+          (click)="saveHealthConditions()"
+        >
+          {{ getString("save") }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4 h-100">
+    <div class="grey-card">
+      <div class="grey-card-header">
+        <div class="group-title p-0">
+          {{ getString("personCategory") }}
+          <div class="line"></div>
+        </div>
+        <div class="subtitle">{{ getString("personCategoryInfo") }}</div>
+      </div>
+      <div class="grey-card-body">
+        <nb-radio-group [(ngModel)]="selectedCategory" name="personCategory">
+          <nb-radio [value]="c.Id" *ngFor="let c of categories">{{
+            c.Name
+          }}</nb-radio>
+        </nb-radio-group>
+      </div>
+      <div class="grey-card-footer">
+        <button
+          nbButton
+          class="mt-2"
+          status="primary"
+          size="small"
+          shape="round"
+          (click)="saveCategory()"
+        >
+          {{ getString("save") }}
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4 h-100">
+    <div class="grey-card">
+      <div class="grey-card-header">
+        <div class="group-title p-0">
+          {{ getString("accommodationType") }}
+          <div class="line"></div>
+        </div>
+        <div class="subtitle">{{ getString("accommodationTypeInfo") }}</div>
+      </div>
+      <div class="grey-card-body">
+        <nb-radio-group [(ngModel)]="selectedType" name="accommodationType">
+          <nb-radio [value]="t.Id" *ngFor="let t of types">{{
+            t.Name
+          }}</nb-radio>
+        </nb-radio-group>
+      </div>
+      <div class="grey-card-footer">
+        <button
+          class="mt-2"
+          nbButton
+          status="primary"
+          size="small"
+          shape="round"
+          (click)="saveAccommodationType()"
+        >
+          {{ getString("save") }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

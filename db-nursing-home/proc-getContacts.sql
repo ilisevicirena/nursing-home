@@ -15,11 +15,20 @@ BEGIN
 	SET NOCOUNT ON;
 
 	SELECT 
-	[Id]=Id,
+	[Id]=cont.Id,
 	[FirstName]=FirstName,
 	[LastName]=LastName,
 	[Email]=Email,
 	[Telephone]=Telephone,
-	[Mobile]=Mobile
-	FROM dbo.Contact WHERE PersonId=@PersonId;
+	[Mobile]=Mobile,
+	[Jmbg]=Jmbg,
+	[ResidanceCityId]=cont.ResidanceCityId,
+	[ResidanceCityName]=c.[Name],
+	[ResidanceStreetName]=ResidanceStreetName,
+	[ResidanceHouseNumber]=ResidanceHouseNumber,
+	[IsObligeeToPay]=IsObligeeToPay,
+	[IsGuardian] = IsGuardian
+	FROM dbo.Contact as cont
+	left join dbo.City as c on c.Id=cont.ResidanceCityId
+	WHERE PersonId=@PersonId;
 END

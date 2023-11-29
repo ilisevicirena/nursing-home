@@ -4,6 +4,7 @@ CREATE TABLE [dbo].[Person](
 	[LastName] [varchar](50) NOT NULL,
 	[JMBG] [varchar](50) NOT NULL,
 	[BirthDate] [datetime] NULL,
+	[Address] [varchar](200) NULL,
 	[Active] [bit] NOT NULL,
 	[StartDate] [datetime] NULL,
 	[EndDate] [datetime] NULL,

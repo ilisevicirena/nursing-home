@@ -11,7 +11,13 @@ CREATE PROCEDURE [dbo].[insertContact]
 		@Email varchar(50)=NULL,
 		@Telephone varchar(50)=NULL,
 		@Mobile varchar(50)=NULL,
-		@PersonId int
+		@PersonId int,
+		@Jmbg varchar(50)=NULL,
+		@ResidanceCityId int=NULL,
+		@ResidanceStreetName varchar(300)=NULL,
+		@ResidanceHouseNumber varchar(50)=NULL,
+		@IsObligeeToPay bit=0,
+		@IsGuardian bit=0
 	)
 AS
 BEGIN
@@ -20,8 +26,8 @@ BEGIN
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
-	INSERT INTO dbo.Contact (FirstName, LastName, Email, Telephone, Mobile, PersonId)
-	VALUES (@FirstName, @LastName, @Email, @Telephone, @Mobile, @PersonId);
+	INSERT INTO dbo.Contact (FirstName, LastName, Email, Telephone, Mobile, PersonId, Jmbg, ResidanceCityId, ResidanceStreetName, ResidanceHouseNumber, IsObligeeToPay, IsGuardian)
+	VALUES (@FirstName, @LastName, @Email, @Telephone, @Mobile, @PersonId, @Jmbg, @ResidanceCityId, @ResidanceStreetName, @ResidanceHouseNumber, @IsObligeeToPay, @IsGuardian)
 
 	SELECT SCOPE_IDENTITY() AS ContactId;
 END
