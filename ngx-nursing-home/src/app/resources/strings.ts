@@ -466,6 +466,11 @@ const strings: IKeyValue[] = [
     value:
       "Zahtjev za smještaj uspješno je generiran te dostupan u sekciji Dokumenti korisnika pod tipom Osobni dokument",
   },
+  { key: "postalCode", value: "Poštanski broj" },
+  { key: "country", value: "Država" },
+  { key: "cities", value: "Gradovi" },
+  { key: "municipality", value: "Općina" },
+  { key: "municipalities", value: "Općine" },
 ];
 
 const map = new Map(strings.map((obj) => [obj.key, obj.value]));

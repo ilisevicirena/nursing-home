@@ -18,6 +18,8 @@ import { CalendarComponent } from "./calendar/calendar.component";
 import { DoctorVisitTourComponent } from "./doctor-visit-tour/doctor-visit-tour.component";
 import { CalculationComponent } from "./calculation/calculation.component";
 import { TagsComponent } from "./tags/tags.component";
+import { CitiesComponent } from "./cities/cities.component";
+import { MunicipalitiesComponent } from "./municipalities/municipalities.component";
 
 const routes: Routes = [
   {
@@ -96,6 +98,14 @@ const routes: Routes = [
       {
         path: "tags",
         component: TagsComponent,
+      },
+      {
+        path: "cities",
+        component: CitiesComponent,
+      },
+      {
+        path: "municipalities",
+        component: MunicipalitiesComponent,
       },
     ],
   },

@@ -81,6 +81,8 @@ import { NoteExportComponent } from "./notes/note-export/note-export.component";
 import { TagsComponent } from "./tags/tags.component";
 import { CategoriesChooserComponent } from './categories-chooser/categories-chooser.component';
 import { PersonBasicDataComponent } from './person-basic-data/person-basic-data.component';
+import { MunicipalitiesComponent } from './municipalities/municipalities.component';
+import { CitiesComponent } from './cities/cities.component';
 
 @NgModule({
   imports: [
@@ -169,6 +171,8 @@ import { PersonBasicDataComponent } from './person-basic-data/person-basic-data.
     TagsComponent,
     CategoriesChooserComponent,
     PersonBasicDataComponent,
+    MunicipalitiesComponent,
+    CitiesComponent,
   ],
 })
 export class PagesModule {}

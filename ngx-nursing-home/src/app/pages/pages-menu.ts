@@ -90,6 +90,14 @@ export const MENU_ITEMS: any[] = [
         title: getString("tagsManagement"),
         link: "/pages/tags",
       },
+      {
+        title: getString("cities"),
+        link: "/pages/cities",
+      },
+      {
+        title: getString("municipalities"),
+        link: "/pages/municipalities",
+      },
     ],
   },
 ];

@@ -192,3 +192,9 @@ proc-insertAccommodationTypeForPerson.sql
 proc-getAccommodationTypeForPerson.sql
 proc-getCategoryForPerson.sql
 proc-getAccommodationRequestData.sql
+proc-insertCity.sql
+proc-deleteCity.sql
+proc-updateCity.sql
+proc-insertMunicipality.sql
+proc-updateMunicipality.sql
+proc-deleteMunicipality.sql
