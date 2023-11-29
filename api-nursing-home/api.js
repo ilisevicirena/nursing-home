@@ -41,6 +41,10 @@ const cities = require("./routes/cities");
 const healthConditions = require("./routes/health-conditions");
 const accommodationTypes = require("./routes/accommodation-types");
 const personCategories = require("./routes/person-categories");
+const qualifications = require("./routes/qualifications");
+const jobPositions = require("./routes/job-positions");
+const employmentTypes = require("./routes/employment-types");
+const employees = require("./routes/employees");
 
 // register routes
 router.use("/floors", floors);
@@ -68,6 +72,10 @@ router.use("/cities", cities);
 router.use("/health-conditions", healthConditions);
 router.use("/person-categories", personCategories);
 router.use("/accommodation-types", accommodationTypes);
+router.use("/qualifications", qualifications);
+router.use("/job-positions", jobPositions);
+router.use("/employment-types", employmentTypes);
+router.use("/employees", employees);
 
 // No need to connect the pool
 // Just start the web server

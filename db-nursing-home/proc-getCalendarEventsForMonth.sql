@@ -23,6 +23,7 @@ BEGIN
         [Description],
 		[Recurring]=Recurring,
 		[PersonId]=PersonId,
+    [EmployeeId]=EmployeeId,
 		[Reminder]=Reminder
     FROM dbo.CalendarEvent
     WHERE ([Recurring] = 0 AND YEAR([Start]) = @Year AND MONTH([Start]) = @Month)

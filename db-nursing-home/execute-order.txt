@@ -11,7 +11,6 @@ create-tb-measureUnit.sql
 create-tb-priceUnit.sql
 create-tb-healthCondition.sql
 create-tb-calculationStatus.sql
-create-tb-calendarEvent.sql
 create-tb-discount.sql
 create-tb-documentType.sql
 create-tb-document.sql
@@ -43,6 +42,11 @@ create-tb-personCategory.sql
 create-tb-personCategoryRelation.sql
 create-tb-accommodationType.sql
 create-tb-personAccommodationTypeRelation.sql
+create-tb-qualification.sql
+create-tb-jobPosition.sql
+create-tb-employmentType.sql
+create-tb-employee.sql
+create-tb-calendarEvent.sql
 insert-tb-documentType.sql
 insert-tb-healthCondition.sql
 insert-tb-floor.sql
@@ -58,6 +62,10 @@ insert-tb-municipality.sql
 insert-tb-city.sql
 insert-tb-personCategory.sql
 insert-tb-accommodationType.sql
+insert-tb-qualification.sql
+insert-tb-employmentType.sql
+insert-tb-jobPosition.sql
+insert-tb-pageLink.sql
 proc-addTagToNote.sql
 proc-calculationPaid.sql
 proc-calculationRealPrice.sql
@@ -198,3 +206,12 @@ proc-updateCity.sql
 proc-insertMunicipality.sql
 proc-updateMunicipality.sql
 proc-deleteMunicipality.sql
+proc-getQualifications.sql
+proc-getJobPositions.sql
+proc-getEmploymentTypes.sql
+proc-insertEmployee.sql
+proc-removeAllEventsForEmployee.sql
+proc-updateEmployee.sql
+proc-changeStatusEmployee.sql
+proc-getEmployee.sql
+proc-getEmployees.sql
