@@ -84,7 +84,7 @@ export function getIEmployeeFromJSON(json: any): IEmployee {
     LastName: json.LastName,
     JMBG: json.JMBG,
     Active: json.Active,
-    EmploymentEndDate: json.EndDate
+    EmploymentEndDate: json.EmploymentEndDate
       ? new Date(json.EmploymentEndDate)
       : undefined,
     BirthDate: json.BirthDate ? new Date(json.BirthDate) : undefined,

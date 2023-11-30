@@ -34,10 +34,12 @@ export class EmployeeComponent implements OnInit, OnDestroy {
   public loading: boolean = false;
   public showPanel: boolean = true;
   public passedTime: any;
+  public alertIsOpen: boolean = true;
 
   public options: any[] = [
     { option: "basicData", string: "basicData", active: true },
     { option: "vacation", string: "vacation", active: false },
+    { option: "employeeLeave", string: "employeeLeave", active: false },
   ];
 
   ngOnInit(): void {
@@ -105,7 +107,10 @@ export class EmployeeComponent implements OnInit, OnDestroy {
     if (rezDialog) {
       this.subscriptions.push(
         this.employeesService
-          .deactivateEmployee(this.employeeId, this.employee.EndDate ?? null)
+          .deactivateEmployee(
+            this.employeeId,
+            this.employee.EmploymentEndDate ?? null
+          )
           .subscribe(
             () => {
               this.toastrService.showToast(

@@ -85,7 +85,7 @@
         </div>
         <div class="col-md-2 p-0">
           <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-12 p-0">
               <div class="label">
                 {{ getString("daysOfVacation") }}
               </div>
@@ -95,7 +95,7 @@
             </div>
           </div>
           <div class="row mt-2">
-            <div class="col-md-12">
+            <div class="col-md-12 p-0">
               <div class="label">
                 {{ getString("daysOfVacationLeft") }}
               </div>
@@ -128,9 +128,183 @@
             [formModeAddNew]="false"
           ></sample-employee-basic-data>
         </ng-container>
-        <ng-container *ngIf="activeView == 'vacation'"> im here </ng-container>
+        <ng-container *ngIf="activeView == 'employeeLeave'">
+          <div class="d-inline-block h-100 w-100 overflow-auto">
+            <div class="pb-2 h-40" *ngIf="alertIsOpen">
+              <nb-alert accent="primary" closable (close)="alertIsOpen = false">
+                <div class="row m-0">
+                  <div class="col-md-1 d-flex justify-content-center pt-3">
+                    <nb-icon
+                      pack="eva"
+                      icon="info-outline"
+                      status="primary"
+                    ></nb-icon>
+                  </div>
+                  <div class="col-md-10">
+                    <nb-list>
+                      <nb-list-item>{{
+                        getString("activeEmployeeDetails")
+                      }}</nb-list-item>
+                      <nb-list-item>{{
+                        getString("unactiveEmployeeDetails")
+                      }}</nb-list-item>
+                      <nb-list-item class="d-block">
+                        <p>
+                          {{ getString("changeStatusEmployeeText1") }}
+                          <button
+                            nbButton
+                            status="danger"
+                            shape="round"
+                            size="tiny"
+                            class="ms-3"
+                          >
+                            {{ getString("deactivateEmployee") }}
+                            <nb-icon pack="eva" icon="lock-outline"></nb-icon>
+                          </button>
+                        </p>
+                        <p>{{ getString("changeStatusEmployeeText2") }}</p>
+                      </nb-list-item>
+                    </nb-list>
+                  </div>
+                </div>
+              </nb-alert>
+            </div>
+            <div
+              [ngClass]="alertIsOpen ? 'h-60' : 'h-100'"
+              style="overflow: auto"
+            >
+              <div class="group-title">
+                {{ getString("passedTimeEmployee") }}
+                <div class="line"></div>
+              </div>
+              <div class="row m-0">
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <div class="label">{{ getString("employmentDate") }}</div>
+                    <div class="value">
+                      <nb-form-field>
+                        <input
+                          nbInput
+                          [placeholder]="getString('employmentDate')"
+                          fullWidth
+                          #startDateInput22
+                          name="employmentDate"
+                          [(ngModel)]="employee.EmploymentDate"
+                          disabled
+                          [nbDatepicker]="startDateDatepicker22"
+                        />
+                        <nb-datepicker #startDateDatepicker22></nb-datepicker>
+                        <button
+                          nbButton
+                          nbSuffix
+                          ghost
+                          (click)="startDateInput22.focus()"
+                        >
+                          <nb-icon pack="eva" icon="calendar-outline"></nb-icon>
+                        </button>
+                      </nb-form-field>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <div class="label">
+                      {{ getString("employmentEndDate") }}
+                    </div>
+                    <div class="value">
+                      <nb-form-field>
+                        <input
+                          nbInput
+                          fullWidth
+                          [placeholder]="getString('employmentEndDate')"
+                          #endDateInput22
+                          name="employmentEndDate"
+                          [(ngModel)]="employee.EmploymentEndDate"
+                          [disabled]="!employee.Active"
+                          [nbDatepicker]="endDateDatepicker22"
+                        />
+                        <nb-datepicker #endDateDatepicker22></nb-datepicker>
+                        <button
+                          nbButton
+                          nbSuffix
+                          ghost
+                          (click)="endDateInput22.focus()"
+                        >
+                          <nb-icon pack="eva" icon="calendar-outline"></nb-icon>
+                        </button>
+                      </nb-form-field>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row m-0 mt-2">
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <div class="value">
+                      <table class="w-100">
+                        <thead>
+                          <th>{{ getString("years") }}</th>
+                          <th>{{ getString("months") }}</th>
+                          <th>{{ getString("days") }}</th>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>{{ passedTime.years }}</td>
+                            <td>{{ passedTime.months }}</td>
+                            <td>{{ passedTime.days }}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="group-title mt-3">
+                {{ getString("currentStatusEmployee") }}
+                <div class="line"></div>
+              </div>
+              <div class="row m-0">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <div class="value">
+                      <nb-tag
+                        appearance="outline"
+                        [status]="newEmployeeData.Active ? 'success' : 'danger'"
+                        [text]="
+                          newEmployeeData.Active
+                            ? getString('active')
+                            : getString('unactive')
+                        "
+                        [nbTooltip]="
+                          newEmployeeData.Active
+                            ? getString('activeTooltip')
+                            : getString('unactiveTooltip')
+                        "
+                      ></nb-tag>
+                      <button
+                        *ngIf="newEmployeeData.Active"
+                        nbButton
+                        status="danger"
+                        shape="round"
+                        size="small"
+                        class="ms-3"
+                        (click)="deactivateEmployee()"
+                      >
+                        {{ getString("deactivateEmployee") }}
+                        <nb-icon pack="eva" icon="lock-outline"></nb-icon>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
       </nb-card-body>
-      <nb-card-footer class="d-flex justify-content-end">
+      <nb-card-footer
+        *ngIf="activeView == 'basicData'"
+        class="d-flex justify-content-end"
+      >
         <button
           nbButton
           ghost

@@ -491,9 +491,43 @@ const strings: IKeyValue[] = [
   { key: "employedTime", value: "Staž u poduzeću" },
   { key: "daysOfVacationLeft", value: "Neiskorišteni dani godišnjeg odmora" },
   { key: "vacation", value: "Godišnji odmor" },
-  { key: "employmentType", value: "Vrsta zaposlenja" },
-  { key: "employmentType", value: "Vrsta zaposlenja" },
-  { key: "employmentType", value: "Vrsta zaposlenja" },
+  { key: "employeeLeave", value: "Odlazak i deaktivacija" },
+  {
+    key: "activeEmployeeDetails",
+    value: "Aktivan zaposlenik je zaposlenik koji je trenutno u radnom odnosu.",
+  },
+  {
+    key: "unactiveEmployeeDetails",
+    value: "Neaktivan zaposlenik je zaposlenik koji više nije u radnom odnosu.",
+  },
+  {
+    key: "changeStatusEmployeeText1",
+    value:
+      "Za prebacivanje zaposlenika iz aktivnog u neaktivnog potrebno je kliknuti na gumb: ",
+  },
+  {
+    key: "changeStatusEmployeeText2",
+    value:
+      "Ukoliko ne unsete datum završetka zaposlenja, kao datum završetka uzet će se trenutni datum.",
+  },
+  {
+    key: "deactivateEmployee",
+    value: "Deaktiviraj zaposlenika",
+  },
+  {
+    key: "currentStatusEmployee",
+    value: "Trenutni status zaposlenika",
+  },
+  {
+    key: "passedTimeEmployee",
+    value: "Staž u poduzeću",
+  },
+  { key: "employmentEndDate", value: "Datum završetka zaposlenja" },
+  {
+    key: "questionDeactivateemployee",
+    value: "Želite li deaktivirati zaposlenika s datumom: ",
+  },
+  { key: "employeeLeave", value: "Odlazak i deaktivacija" },
 ];
 
 const map = new Map(strings.map((obj) => [obj.key, obj.value]));
