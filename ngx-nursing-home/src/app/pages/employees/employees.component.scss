@@ -1,0 +1,18 @@
+.person-card-header:hover {
+  cursor: pointer;
+}
+
+::ng-deep sample-employees {
+  height: 100%;
+  overflow: hidden;
+}
+
+.content-container {
+  height: calc(100% - 2.1rem);
+}
+
+#cards {
+  max-height: calc(100% - 1rem);
+  overflow: auto;
+  padding-bottom: 1rem;
+}

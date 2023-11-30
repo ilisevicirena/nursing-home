@@ -6,46 +6,50 @@ import {
   ViewChild,
 } from "@angular/core";
 import { getString } from "../../resources/strings";
-import { PersonsService } from "../../services/rest/persons.service";
-import { Subscription } from "rxjs";
+import { ExportDocSettings } from "shared-components/lib/models/smart-table.model";
 import {
+  GridCheckboxColumn,
   GridColumn,
   GridDateColumn,
   GridDateboxFilter,
-  GridCheckboxColumn,
-  GridSelectFilter,
   GridLookupColumn,
   GridNumberColumn,
+  GridSelectFilter,
 } from "shared-components";
-import { NbWindowService, NbWindowState } from "@nebular/theme";
-import { PersonPopupWindowComponent } from "../person-popup-window/person-popup-window.component";
-import { GendersService } from "../../services/rest/genders.service";
-import { ExportDocSettings } from "shared-components/lib/models/smart-table.model";
+import { Subscription } from "rxjs";
+import { JobPositionsService } from "../../services/rest/job-positions.service";
+import { EmployeesService } from "../../services/rest/employees.service";
+import { Router } from "@angular/router";
 
 @Component({
-  selector: "sample-persons",
-  templateUrl: "./persons.component.html",
-  styleUrls: ["./persons.component.scss"],
+  selector: "sample-employees",
+  templateUrl: "./employees.component.html",
+  styleUrls: ["./employees.component.scss"],
 })
-export class PersonsComponent implements OnInit, OnDestroy {
+export class EmployeesComponent implements OnInit, OnDestroy {
   public getString = getString;
   public currentView: string = "card";
-  public unactivePersonsString: string = getString("unactivePersons");
-  public personsData: any[] = [];
+  public unactiveEmployeesString: string = getString("unactiveEmployees");
+  public employeesData: any[] = [];
   public showDeactivated: boolean = false;
   public searchTerm: string = "";
   public cardData: any[] = [
     { label: getString("jmbg"), field: "JMBG", type: "" },
     { label: getString("birthDate"), field: "BirthDate", type: "date" },
-    { label: getString("startDate"), field: "StartDate", type: "date" },
+    {
+      label: getString("employmentDate"),
+      field: "EmploymentDate",
+      type: "date",
+    },
+    { label: getString("jobPosition"), field: "JobPositionName", type: "" },
     { label: getString("active"), field: "Active", type: "checkbox" },
   ];
   public exportSettings: ExportDocSettings = {
-    title: getString("persons"),
+    title: getString("employees"),
     subtitle: undefined,
     showOrdinalNumbers: true,
     ordNumColumnName: getString("smTableOrdNumber"),
-    docName: "persons",
+    docName: "employees",
     yesValueText: getString("yesBtnText").toLowerCase(),
     noValueText: getString("noBtnText").toLowerCase(),
   };
@@ -68,13 +72,8 @@ export class PersonsComponent implements OnInit, OnDestroy {
       .Type(new GridDateColumn())
       .Filter(new GridDateboxFilter()),
     new GridColumn()
-      .Title(getString("startDate"))
-      .DataField("StartDate")
-      .Type(new GridDateColumn())
-      .Filter(new GridDateboxFilter()),
-    new GridColumn()
-      .Title(getString("endDate"))
-      .DataField("EndDate")
+      .Title(getString("employmentDate"))
+      .DataField("EmploymentDate")
       .Type(new GridDateColumn())
       .Filter(new GridDateboxFilter()),
     new GridColumn()
@@ -88,15 +87,15 @@ export class PersonsComponent implements OnInit, OnDestroy {
           .DataSource(this.activeFilter)
       ),
     new GridColumn()
-      .Title(getString("gender"))
-      .DataField("GenderId")
-      .Type(new GridLookupColumn().LookupColumn("GenderTag"))
+      .Title(getString("jobPosition"))
+      .DataField("JobPositionId")
+      .Type(new GridLookupColumn().LookupColumn("JobPositionName"))
       .Filter(
         new GridSelectFilter()
-          .DisplayExpression("Tag")
+          .DisplayExpression("Name")
           .KeyExpression("Id")
           .ServerDataSource(true)
-          .ServerEndpoint(this.gendersService.apiRoute)
+          .ServerEndpoint(this.jobPositionsService.apiRoute)
       ),
   ];
 
@@ -105,9 +104,9 @@ export class PersonsComponent implements OnInit, OnDestroy {
   @ViewChild("contentTemplate") contentTemplate: TemplateRef<any>;
 
   constructor(
-    private personsService: PersonsService,
-    private windowService: NbWindowService,
-    private gendersService: GendersService
+    private employeesService: EmployeesService,
+    private jobPositionsService: JobPositionsService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -122,9 +121,9 @@ export class PersonsComponent implements OnInit, OnDestroy {
 
   private getData() {
     this.subscriptions.push(
-      this.personsService.getData(!this.showDeactivated).subscribe(
+      this.employeesService.getData(!this.showDeactivated).subscribe(
         (data) => {
-          this.personsData = data;
+          this.employeesData = data;
         },
         (err) => {
           console.error(err);
@@ -141,29 +140,12 @@ export class PersonsComponent implements OnInit, OnDestroy {
     if (event.length > 0) this.currentView = event[0];
   }
 
-  public openPersonDetails(person: any) {
-    this.windowService
-      .open(PersonPopupWindowComponent, {
-        context: { person: person, personId: person.Id },
-        buttons: {
-          maximize: false,
-          minimize: false,
-          fullScreen: false,
-          close: false,
-        },
-        initialState: NbWindowState.MAXIMIZED,
-        hasBackdrop: true,
-        windowClass: "person-popup-window",
-        closeOnBackdropClick: false,
-        closeOnEsc: false,
-      })
-      .onClose.subscribe((result: boolean) => {
-        if (result) this.getData();
-      });
-  }
-
   public gridSelectionChanged(event: any) {
     if (event.selectedRows.length == 1)
-      this.openPersonDetails(event.selectedRows[0]);
+      this.router.navigateByUrl("/pages/employee/" + event.selectedRows[0].Id);
+  }
+
+  public openPersonDetails(data) {
+    this.router.navigateByUrl("/pages/employee/" + data.Id);
   }
 }

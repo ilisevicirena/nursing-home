@@ -20,6 +20,9 @@ import { CalculationComponent } from "./calculation/calculation.component";
 import { TagsComponent } from "./tags/tags.component";
 import { CitiesComponent } from "./cities/cities.component";
 import { MunicipalitiesComponent } from "./municipalities/municipalities.component";
+import { EmployeesComponent } from "./employees/employees.component";
+import { NewEmployeeComponent } from "./new-employee/new-employee.component";
+import { EmployeeComponent } from "./employee/employee.component";
 
 const routes: Routes = [
   {
@@ -106,6 +109,18 @@ const routes: Routes = [
       {
         path: "municipalities",
         component: MunicipalitiesComponent,
+      },
+      {
+        path: "employees",
+        component: EmployeesComponent,
+      },
+      {
+        path: "new-employee",
+        component: NewEmployeeComponent,
+      },
+      {
+        path: "employee/:id",
+        component: EmployeeComponent,
       },
     ],
   },

@@ -68,7 +68,7 @@ export interface IEmployee extends IBaseSaveModel {
   EmploymentTypeId?: number;
   EmploymentTypeName?: string;
   FatherName?: string;
-  YearsOfExperience?: number;
+  YearsOfExperiance?: number;
   DaysOfVacation?: number;
   SchoolName?: string;
   SchoolQualificationName?: string;
@@ -112,7 +112,7 @@ export function getIEmployeeFromJSON(json: any): IEmployee {
     JobPositionName: json.JobPositionName,
     EmploymentTypeId: json.EmploymentTypeId,
     EmploymentTypeName: json.EmploymentTypeName,
-    YearsOfExperience: json.YearsOfExperience,
+    YearsOfExperiance: json.YearsOfExperiance,
     DaysOfVacation: json.DaysOfVacation,
     SchoolName: json.SchoolName,
     SchoolQualificationName: json.SchoolQualificationName,

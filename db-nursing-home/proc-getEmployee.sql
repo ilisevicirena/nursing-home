@@ -34,14 +34,16 @@ BEGIN
         [BirthMunicipality]=m.[Name],
         [BirthCountryId]=e.[BirthCountryId],
         [BirthCountry]=ct.[Name],
-		[JobPositonId]=e.JobPositionId,
-		[JobPositonName]=jp.[Name],
+		[JobPositionId]=e.JobPositionId,
+		[JobPositionName]=jp.[Name],
 		[EmploymentTypeId]=e.EmploymentTypeId,
 		[EmploymentTypeName]=et.[Name],
 		[YearsOfExperiance]=e.YearsOfExperiance,
 		[DaysOfVacation]=e.DaysOfVacation,
 		[SchoolName]=e.SchoolName,
-		[SchoolQualificationName]=e.SchoolQualificationName
+		[SchoolQualificationName]=e.SchoolQualificationName,
+		[QualificationId]=e.QualificationId,
+		[QualificationName]=q.[Name]
 		from dbo.Employee as e
 left join dbo.Gender as g on e.GenderId=g.Id
 left join dbo.City as c on c.Id=e.BirthCityId
@@ -50,6 +52,8 @@ left join dbo.Country as ct on ct.Id=e.BirthCountryId
 left join dbo.City as city on city.Id=e.ResidanceCityId
 left join dbo.JobPosition as jp on e.JobPositionId=jp.Id
 left join dbo.EmploymentType as et on e.EmploymentTypeId=et.Id
+left join dbo.Qualification as q on e.QualificationId=q.Id
 where e.Id=@Id
+	
 	
 END

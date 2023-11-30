@@ -1,0 +1,138 @@
+<div class="d-flex justify-content-end mb-2">
+  <nb-button-group size="small" (valueChange)="viewChange($event)">
+    <button nbButtonToggle value="card" [pressed]="true">
+      <nb-icon pack="eva" icon="grid-outline"></nb-icon>
+    </button>
+    <button nbButtonToggle value="grid">
+      <nb-icon pack="eva" icon="list-outline"></nb-icon>
+    </button>
+  </nb-button-group>
+</div>
+<sample-no-data
+  *ngIf="employeesData.length == 0"
+  [title]="getString('noData')"
+></sample-no-data>
+<div class="content-container" *ngIf="employeesData.length > 0">
+  <nb-card *ngIf="currentView == 'grid'" class="h-100">
+    <nb-card-header class="d-flex align-items-center">
+      {{ unactiveEmployeesString }}
+      <nb-toggle
+        status="primary"
+        class="ms-3"
+        [(checked)]="showDeactivated"
+        (checkedChange)="showDeactivatedChange()"
+      ></nb-toggle>
+    </nb-card-header>
+    <nb-card-body>
+      <div class="max-h-100 h-100">
+        <ngx-grid
+          [(data)]="employeesData"
+          [columns]="columns"
+          [editEnabled]="false"
+          [addEnabled]="false"
+          [defaultPerPageOption]="10"
+          [deleteEnabled]="false"
+          [selectionEnabled]="true"
+          [selectRowByClick]="true"
+          [exportSettings]="exportSettings"
+          (selectionChanged)="gridSelectionChanged($event)"
+        ></ngx-grid>
+      </div>
+    </nb-card-body>
+  </nb-card>
+  <div class="cards-container h-100" *ngIf="currentView == 'card'">
+    <div class="row mt-0 ms-0 me-0 mb-2">
+      <div
+        class="col-md-9 p-1 d-flex justify-content-start align-items-center card-value"
+      >
+        {{ unactiveEmployeesString }}
+        <nb-toggle
+          status="primary"
+          class="ms-3"
+          [(checked)]="showDeactivated"
+          (checkedChange)="showDeactivatedChange()"
+        ></nb-toggle>
+      </div>
+      <div class="col-md-3 p-0">
+        <nb-form-field>
+          <input
+            nbInput
+            shape="round"
+            fullWidth
+            [placeholder]="getString('search')"
+            [(ngModel)]="searchTerm"
+          />
+          <nb-icon pack="eva" icon="search-outline" nbPrefix></nb-icon>
+          <button
+            nbButton
+            nbSuffix
+            ghost
+            shape="round"
+            status="basic"
+            *ngIf="searchTerm.length > 0"
+            (click)="searchTerm = ''"
+          >
+            <nb-icon pack="eva" icon="close-outline"></nb-icon>
+          </button>
+        </nb-form-field>
+      </div>
+    </div>
+    <div class="row m-0" id="cards">
+      <div
+        class="col-md-3 p-1"
+        *ngFor="let person of employeesData | filter : searchTerm"
+      >
+        <nb-card class="m-0">
+          <nb-card-header
+            class="d-flex align-items-center person-card-header position-relative"
+            (click)="openPersonDetails(person)"
+          >
+            <nb-badge
+              [dotMode]="true"
+              [status]="person.Active ? 'success' : 'danger'"
+              [style.right]="'1rem'"
+              [position]="'center right'"
+            ></nb-badge>
+            <nb-icon
+              pack="eva"
+              icon="briefcase-outline"
+              status="primary"
+              class="me-3"
+            >
+            </nb-icon>
+            {{ person.FirstName }} {{ person.LastName }}
+          </nb-card-header>
+          <nb-card-body>
+            <div class="row ms-0 me-0 mt-0 mb-1" *ngFor="let data of cardData">
+              <div class="col-md-6">
+                <div class="label">{{ data.label }}</div>
+              </div>
+              <div class="col-md-6">
+                <div *ngIf="person[data.field] != null; else noValue">
+                  <ng-container [ngSwitch]="data.type">
+                    <div class="card-value" *ngSwitchCase="'date'">
+                      {{ person[data.field] | date : "dd.MM.yyyy." }}
+                    </div>
+                    <div class="card-value" *ngSwitchCase="'checkbox'">
+                      <nb-checkbox
+                        status="primary"
+                        disabled
+                        [checked]="person[data.field]"
+                      ></nb-checkbox>
+                    </div>
+                    <div class="card-value" *ngSwitchDefault="">
+                      {{ person[data.field] }}
+                    </div>
+                  </ng-container>
+                </div>
+                <ng-template #noValue>
+                  <div class="card-value">-</div>
+                </ng-template>
+              </div>
+            </div>
+          </nb-card-body>
+        </nb-card>
+      </div>
+    </div>
+  </div>
+</div>

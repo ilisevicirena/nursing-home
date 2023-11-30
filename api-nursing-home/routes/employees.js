@@ -28,6 +28,7 @@ router.post("/add", async (request, response) => {
       .input("lastName", objectToSave.LastName)
       .input("jmbg", objectToSave.JMBG)
       .input("birthDate", objectToSave.BirthDate)
+      .input("qualification", objectToSave.QualificationId)
       .input("genderId", objectToSave.GenderId)
       .input("tel", objectToSave.Telephone)
       .input("mob", objectToSave.Mobile)
@@ -50,7 +51,7 @@ router.post("/add", async (request, response) => {
       .input("birthMunicipalityId", objectToSave.BirthMunicipalityId)
       .input("birthCountryId", objectToSave.BirthCountryId)
       .query(
-        "EXEC [dbo].[insertEmployee] @FirstName=@firstName, @LastName=@lastName, @JMBG=@jmbg, @BirthDate=@birthDate, @GenderId=@genderId, @FatherName=@fatherFirstName,@BirthCityId=@birthCityId, @BirthMunicipalityId=@birthMunicipalityId, @BirthCountryId=@birthCountryId, @ResidanceCityId=@residanceCityId,@ResidanceStreetName=@residanceStreetName, @ResidanceHouseNumber=@residanceHouseNumber, @Telephone=@tel, @Mobile=@mob, @Email=@email, @EmploymentDate=@empDate, @BankName=@bank, @BankAccountNumber=@bankAcc, @JobPositionId=@jp, @EmploymentTypeId=@et, @YearsOfExperiance=@years, @EmploymentEndDate=@empEnd, @DaysOfVacation=@daysVcc, @SchoolName=@school, @SchoolQualificationName=@schoolQ"
+        "EXEC [dbo].[insertEmployee] @FirstName=@firstName, @LastName=@lastName, @JMBG=@jmbg, @BirthDate=@birthDate, @GenderId=@genderId, @FatherName=@fatherFirstName,@BirthCityId=@birthCityId, @BirthMunicipalityId=@birthMunicipalityId, @BirthCountryId=@birthCountryId, @ResidanceCityId=@residanceCityId,@ResidanceStreetName=@residanceStreetName, @ResidanceHouseNumber=@residanceHouseNumber, @Telephone=@tel, @Mobile=@mob, @Email=@email, @EmploymentDate=@empDate, @BankName=@bank, @BankAccountNumber=@bankAcc, @JobPositionId=@jp, @EmploymentTypeId=@et, @YearsOfExperiance=@years, @EmploymentEndDate=@empEnd, @DaysOfVacation=@daysVcc, @SchoolName=@school, @SchoolQualificationName=@schoolQ, @QualificationId=@qualification"
       );
     if (result != null) response.json(result.recordset[0]);
     else response.send(getError(8001));
@@ -92,8 +93,9 @@ router.post("/update", async (request, response) => {
       .input("birthCityId", objectToSave.BirthCityId)
       .input("birthMunicipalityId", objectToSave.BirthMunicipalityId)
       .input("birthCountryId", objectToSave.BirthCountryId)
+      .input("qualification", objectToSave.QualificationId)
       .query(
-        "EXEC [dbo].[updateEmployee] @Id=@id, @FirstName=@firstName, @LastName=@lastName, @JMBG=@jmbg, @BirthDate=@birthDate, @GenderId=@genderId, @FatherName=@fatherFirstName,@BirthCityId=@birthCityId, @BirthMunicipalityId=@birthMunicipalityId, @BirthCountryId=@birthCountryId, @ResidanceCityId=@residanceCityId,@ResidanceStreetName=@residanceStreetName, @ResidanceHouseNumber=@residanceHouseNumber, @Telephone=@tel, @Mobile=@mob, @Email=@email, @EmploymentDate=@empDate, @BankName=@bank, @BankAccountNumber=@bankAcc, @JobPositionId=@jp, @EmploymentTypeId=@et, @YearsOfExperiance=@years, @EmploymentEndDate=@empEnd, @DaysOfVacation=@daysVcc, @SchoolName=@school, @SchoolQualificationName=@schoolQ"
+        "EXEC [dbo].[updateEmployee] @Id=@id, @FirstName=@firstName, @LastName=@lastName, @JMBG=@jmbg, @BirthDate=@birthDate, @GenderId=@genderId, @FatherName=@fatherFirstName,@BirthCityId=@birthCityId, @BirthMunicipalityId=@birthMunicipalityId, @BirthCountryId=@birthCountryId, @ResidanceCityId=@residanceCityId,@ResidanceStreetName=@residanceStreetName, @ResidanceHouseNumber=@residanceHouseNumber, @Telephone=@tel, @Mobile=@mob, @Email=@email, @EmploymentDate=@empDate, @BankName=@bank, @BankAccountNumber=@bankAcc, @JobPositionId=@jp, @EmploymentTypeId=@et, @YearsOfExperiance=@years, @EmploymentEndDate=@empEnd, @DaysOfVacation=@daysVcc, @SchoolName=@school, @SchoolQualificationName=@schoolQ, @QualificationId=@qualification"
       );
     if (result != null) response.json(result.recordset);
     else response.send(getError(8003));

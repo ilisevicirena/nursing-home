@@ -1,0 +1,97 @@
+@import "../../@theme/styles/themes.scss";
+
+::ng-deep sample-employee {
+  height: 100%;
+}
+
+.profile-container {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+}
+
+@include nb-install-component {
+  .top-panel {
+    flex: 0 1 150px; /* Expanded height */
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    transition: flex 0.3s ease;
+    overflow: hidden;
+
+    #toggle-btn {
+      position: absolute;
+      z-index: 100;
+      bottom: 5px;
+      left: 47%;
+    }
+
+    #toggle-btn:focus {
+      box-shadow: none;
+      border: none;
+    }
+  }
+
+  .top-panel.collapsed {
+    flex: 0 1 45px;
+
+    #toggle-btn {
+      bottom: 0;
+    }
+
+    #top-panel-card {
+      display: none;
+    }
+  }
+
+  .top-panel.expanded {
+    #top-panel-card {
+      display: block;
+    }
+
+    nb-card.grey-card {
+      width: 93%;
+      position: relative;
+    }
+
+    .menu-container {
+      position: relative;
+
+      .menu-line {
+        width: 5px;
+        height: calc(100% + 2.5rem);
+        background-color: nb-theme(layout-background-color);
+        position: absolute;
+        top: -1rem;
+        left: 0;
+      }
+
+      nb-tag:hover {
+        cursor: pointer;
+      }
+    }
+  }
+
+  .profile-content {
+    flex: 1 1 auto;
+    margin-top: 0.5rem;
+    overflow: auto;
+  }
+
+  .circle.grey-card {
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    position: absolute;
+    left: -5rem;
+    top: 1rem;
+    border: 1px solid nb-theme(color-basic-300);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    nb-icon {
+      font-size: 2rem;
+    }
+  }
+}

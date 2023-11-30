@@ -27,6 +27,20 @@ export const MENU_ITEMS: any[] = [
     ],
   },
   {
+    title: getString("employeesManagement"),
+    icon: "briefcase-outline",
+    children: [
+      {
+        title: getString("employees"),
+        link: "/pages/employees",
+      },
+      {
+        title: getString("addEmployee"),
+        link: "/pages/new-employee",
+      },
+    ],
+  },
+  {
     title: getString("accomodationManagement"),
     icon: "pantone-outline",
     children: [

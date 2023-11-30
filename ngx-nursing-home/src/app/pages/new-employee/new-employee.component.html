@@ -1,0 +1,32 @@
+<div class="h-100 w-100">
+  <nb-card class="h-100">
+    <nb-card-header>
+      {{ getString("addEmployee") }}
+    </nb-card-header>
+    <nb-card-body
+      [nbSpinner]="loading"
+      nbSpinnerStatus="primary"
+      nbSpinnerSize="large"
+    >
+      <form #basicDataFrom="ngForm">
+        <sample-employee-basic-data
+          [(employeeData)]="employeeData"
+          [formModeAddNew]="true"
+        ></sample-employee-basic-data>
+      </form>
+    </nb-card-body>
+    <nb-card-footer class="d-flex justify-content-end">
+      <button
+        nbButton
+        status="primary"
+        shape="round"
+        size="small"
+        (click)="saveNewEmployee(basicDataFrom)"
+        [disabled]="basicDataFrom.form.invalid || employeeData.Id > 0"
+      >
+        {{ getString("saveNewEmployee") }}
+        <nb-icon pack="eva" icon="person-add-outline"></nb-icon>
+      </button>
+    </nb-card-footer>
+  </nb-card>
+</div>

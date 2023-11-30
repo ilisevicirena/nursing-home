@@ -1,0 +1,156 @@
+<div class="profile-container">
+  <div class="top-panel" [ngClass]="showPanel ? 'expanded' : 'collapsed'">
+    <button
+      nbButton
+      status="basic"
+      shape="round"
+      (click)="togglePanel()"
+      id="toggle-btn"
+    >
+      <nb-icon
+        pack="eva"
+        [icon]="showPanel ? 'chevron-up-outline' : 'chevron-down-outline'"
+        status="primary"
+      ></nb-icon>
+    </button>
+    <nb-card class="grey-card m-0 h-100" id="top-panel-card">
+      <div class="circle grey-card">
+        <nb-icon pack="eva" icon="briefcase-outline" status="primary"></nb-icon>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-md-3">
+              <div class="label">
+                {{ getString("firstName") }}
+              </div>
+              <div class="card-value">
+                {{ employee.FirstName }}
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="label">
+                {{ getString("lastName") }}
+              </div>
+              <div class="card-value">
+                {{ employee.LastName }}
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="label">
+                {{ getString("jmbg") }}
+              </div>
+              <div class="card-value">
+                {{ employee.JMBG }}
+              </div>
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col-md-3">
+              <div class="label" style="margin-bottom: 3px">
+                {{ getString("status") }}
+              </div>
+              <div class="card-value position-relative">
+                <nb-badge
+                  [text]="
+                    employee.Active
+                      ? getString('active')
+                      : getString('unactive')
+                  "
+                  [status]="employee.Active ? 'success' : 'danger'"
+                  position="left"
+                ></nb-badge>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="label">
+                {{ getString("jobPosition") }}
+              </div>
+              <div class="card-value">
+                {{ employee.JobPositionName }}
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="label">
+                {{ getString("employedTime") }}
+              </div>
+              <div class="card-value">
+                {{ getString("years") }}: {{ passedTime?.years }},
+                {{ getString("months").toLowerCase() }}:
+                {{ passedTime?.months }}, {{ getString("days").toLowerCase() }}:
+                {{ passedTime?.days }}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2 p-0">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="label">
+                {{ getString("daysOfVacation") }}
+              </div>
+              <div class="card-value">
+                {{ employee.DaysOfVacation }}
+              </div>
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col-md-12">
+              <div class="label">
+                {{ getString("daysOfVacationLeft") }}
+              </div>
+              <div class="card-value">
+                {{ employee.DaysOfVacation }}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 menu-container">
+          <div class="menu-line"></div>
+          <nb-tag-list>
+            <nb-tag
+              *ngFor="let o of options"
+              [status]="o.active ? 'primary' : 'basic'"
+              [text]="getString(o.string)"
+              (click)="toggleView(o)"
+            ></nb-tag
+          ></nb-tag-list>
+        </div>
+      </div>
+    </nb-card>
+  </div>
+  <div class="profile-content">
+    <nb-card class="h-100 m-0">
+      <nb-card-body class="overflow-hidden" style="min-height: 50px">
+        <ng-container *ngIf="activeView == 'basicData'">
+          <sample-employee-basic-data
+            [(employeeData)]="newEmployeeData"
+            [formModeAddNew]="false"
+          ></sample-employee-basic-data>
+        </ng-container>
+        <ng-container *ngIf="activeView == 'vacation'"> im here </ng-container>
+      </nb-card-body>
+      <nb-card-footer class="d-flex justify-content-end">
+        <button
+          nbButton
+          ghost
+          shape="round"
+          size="small"
+          class="me-2"
+          (click)="cancelEditBasicData()"
+        >
+          {{ getString("cancel") }}
+        </button>
+        <button
+          nbButton
+          status="primary"
+          shape="round"
+          size="small"
+          (click)="saveBasicData()"
+        >
+          {{ getString("save") }}
+        </button>
+      </nb-card-footer>
+    </nb-card>
+  </div>
+</div>
