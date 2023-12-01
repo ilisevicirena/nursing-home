@@ -1,0 +1,57 @@
+@import "../../../@theme/styles/themes.scss";
+
+@include nb-install-component {
+  .event-card {
+    border-radius: 1rem;
+    width: 650px;
+    overflow: hidden;
+
+    .top-card {
+      background-color: nb-theme(tag-outline-basic-background-color);
+      height: 100px;
+      padding-top: 0.6rem;
+
+      .price {
+        font-weight: 600;
+        font-size: 16px;
+        margin-top: 0.5rem;
+      }
+
+      .icon-container {
+        .icon {
+          padding: 5px;
+        }
+      }
+
+      .icon-container.success .icon {
+        background-color: nb-theme(color-success-transparent-200);
+      }
+
+      .icon-container.danger .icon {
+        background-color: nb-theme(color-danger-transparent-200);
+      }
+
+      .icon-container.info .icon {
+        background-color: nb-theme(color-info-transparent-200);
+      }
+
+      .icon-container.basic .icon {
+        background-color: nb-theme(color-basic-transparent-200);
+      }
+    }
+
+    nb-card-header {
+      padding: 1rem;
+      padding-bottom: 0.5rem;
+      border: none;
+
+      .col {
+        font-size: 20px;
+
+        div nb-icon {
+          font-size: 25px;
+        }
+      }
+    }
+  }
+}

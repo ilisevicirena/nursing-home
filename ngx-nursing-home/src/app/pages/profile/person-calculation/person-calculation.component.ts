@@ -3,11 +3,6 @@ import { Subscription } from "rxjs";
 import { getString } from "../../../resources/strings";
 import { CalculationApiService } from "../../../services/rest/calculation-api.service";
 import {
-  ButtonsType,
-  DateRangePickerEditor,
-  DateRangeType,
-  DateType,
-  DatepickerFilter,
   GRID_BUTTON_TYPE,
   GridButtonType,
   GridButtonsColumn,
@@ -19,12 +14,7 @@ import {
   GridSelectFilter,
   GridTagColumn,
   IGridCellButtonClick,
-  SelectFilter,
-  SmartTableColumn,
-  SmartTableComponent,
-  TagType,
 } from "shared-components";
-import { sortFloats } from "../../../resources/functions";
 import { DialogService } from "../../../shared/dialog/dialog.service";
 import { ToastrService } from "../../../services/toastr.service";
 import { RealPriceModalComponent } from "../../calculation/real-price-modal/real-price-modal.component";

@@ -1,7 +1,8 @@
 CREATE PROCEDURE [dbo].[removeAllEventsForEmployee] 
 	-- Add the parameters for the stored procedure here
 	(
-	@EmployeeId int
+	@EmployeeId int,
+	@EventTypeId int=NULL
 	)
 AS
 BEGIN
@@ -9,5 +10,10 @@ BEGIN
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
+	IF @EventTypeId IS NULL begin
     delete from dbo.CalendarEvent where EmployeeId=@EmployeeId;
+	End
+	else begin
+	delete from dbo.CalendarEvent where EmployeeId=@EmployeeId and @EventTypeId=@EventTypeId;
+	end
 END

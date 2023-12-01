@@ -100,7 +100,7 @@
                 {{ getString("daysOfVacationLeft") }}
               </div>
               <div class="card-value">
-                {{ employee.DaysOfVacation }}
+                {{ summary?.RemainingDays }}
               </div>
             </div>
           </div>
@@ -127,6 +127,11 @@
             [(employeeData)]="newEmployeeData"
             [formModeAddNew]="false"
           ></sample-employee-basic-data>
+        </ng-container>
+        <ng-container *ngIf="activeView == 'vacation'">
+          <sample-employee-vacations
+            [employeeId]="employeeId"
+          ></sample-employee-vacations>
         </ng-container>
         <ng-container *ngIf="activeView == 'employeeLeave'">
           <div class="d-inline-block h-100 w-100 overflow-auto">

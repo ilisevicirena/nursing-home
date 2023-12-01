@@ -38,7 +38,7 @@ BEGIN
 	WHERE Id = @Id
 
 	exec dbo.writeLog @LogType='UPDATE', @LogEntity='Person', @Key= @Id;
-	exec dbo.removeAllEventsForPerson @PersonId=@Id;
+	exec dbo.removeAllEventsForPerson @PersonId=@Id, @EventTypeId=1;
 
 	DECLARE @Title varchar(200) = 'Rođendan: ' + @FirstName + ' ' + @LastName;
 	DECLARE @Description varchar(max) = 'Rođendan osobe: ' + @FirstName + ' ' + @LastName + ', datum rođenja: ' + CONVERT(varchar(10),  @BirthDate, 104);
@@ -49,6 +49,7 @@ BEGIN
 		@Color = 'info', 
 		@Title = @Title,
 		@Description = @Description,
+		@EventTypeId=1,
 		@PersonId = @Id,
 		@Recurring = 1,
 		@Reminder=0;

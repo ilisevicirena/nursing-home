@@ -45,6 +45,7 @@ const qualifications = require("./routes/qualifications");
 const jobPositions = require("./routes/job-positions");
 const employmentTypes = require("./routes/employment-types");
 const employees = require("./routes/employees");
+const vacations = require("./routes/vacations");
 
 // register routes
 router.use("/floors", floors);
@@ -76,6 +77,7 @@ router.use("/qualifications", qualifications);
 router.use("/job-positions", jobPositions);
 router.use("/employment-types", employmentTypes);
 router.use("/employees", employees);
+router.use("/vacations", vacations);
 
 // No need to connect the pool
 // Just start the web server

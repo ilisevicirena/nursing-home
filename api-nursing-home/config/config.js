@@ -1,7 +1,7 @@
 const CONFIG = {
   driver: "msnodesqlv8",
   connectionString:
-    "Driver={SQL Server Native Client 11.0};Server=LAPTOP-F98M3C9R;Database=ENV06_NURSING_HOME;Trusted_Connection=yes;",
+    "Driver={SQL Server Native Client 11.0};Server=LAPTOP-F98M3C9R;Database=ENV08_NURSING_HOME;Trusted_Connection=yes;",
   connectionTimeout: 30000,
 };
 

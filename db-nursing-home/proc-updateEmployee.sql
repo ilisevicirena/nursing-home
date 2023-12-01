@@ -68,7 +68,7 @@ BEGIN
 		BirthCountryId=@BirthCountryId	
 	WHERE Id = @Id
 	
-	exec dbo.removeAllEventsForEmployee @EmployeeId=@Id;
+	exec dbo.removeAllEventsForEmployee @EmployeeId=@Id, @EventTypeId=1;
 
 	DECLARE @Title varchar(200) = 'Rođendan: ' + @FirstName + ' ' + @LastName;
 	DECLARE @Description varchar(max) = 'Rođendan zaposlenika: ' + @FirstName + ' ' + @LastName + ', datum rođenja: ' + CONVERT(varchar(10),  @BirthDate, 104);
@@ -80,6 +80,7 @@ BEGIN
 		@Title = @Title,
 		@Description = @Description,
 		@EmployeeId = @Id,
+		@EventTypeId=1,
 		@Recurring = 1,
 		@Reminder=0;
 END

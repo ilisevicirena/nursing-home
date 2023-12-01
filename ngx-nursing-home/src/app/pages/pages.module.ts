@@ -79,14 +79,17 @@ import { CalculationDocumentsComponent } from "./calculation/calculation-documen
 import { PersonCalculationComponent } from "./profile/person-calculation/person-calculation.component";
 import { NoteExportComponent } from "./notes/note-export/note-export.component";
 import { TagsComponent } from "./tags/tags.component";
-import { CategoriesChooserComponent } from './categories-chooser/categories-chooser.component';
-import { PersonBasicDataComponent } from './person-basic-data/person-basic-data.component';
-import { MunicipalitiesComponent } from './municipalities/municipalities.component';
-import { CitiesComponent } from './cities/cities.component';
-import { EmployeesComponent } from './employees/employees.component';
-import { NewEmployeeComponent } from './new-employee/new-employee.component';
-import { EmployeeBasicDataComponent } from './employee-basic-data/employee-basic-data.component';
-import { EmployeeComponent } from './employee/employee.component';
+import { CategoriesChooserComponent } from "./categories-chooser/categories-chooser.component";
+import { PersonBasicDataComponent } from "./person-basic-data/person-basic-data.component";
+import { MunicipalitiesComponent } from "./municipalities/municipalities.component";
+import { CitiesComponent } from "./cities/cities.component";
+import { EmployeesComponent } from "./employees/employees.component";
+import { NewEmployeeComponent } from "./new-employee/new-employee.component";
+import { EmployeeBasicDataComponent } from "./employee-basic-data/employee-basic-data.component";
+import { EmployeeComponent } from "./employee/employee.component";
+import { EmployeeVacationsComponent } from "./employee/employee-vacations/employee-vacations.component";
+import { NewVacationComponent } from './employee/new-vacation/new-vacation.component';
+import { ChangeVacationStatusComponent } from './employee/change-vacation-status/change-vacation-status.component';
 
 @NgModule({
   imports: [
@@ -181,6 +184,9 @@ import { EmployeeComponent } from './employee/employee.component';
     NewEmployeeComponent,
     EmployeeBasicDataComponent,
     EmployeeComponent,
+    EmployeeVacationsComponent,
+    NewVacationComponent,
+    ChangeVacationStatusComponent,
   ],
 })
 export class PagesModule {}

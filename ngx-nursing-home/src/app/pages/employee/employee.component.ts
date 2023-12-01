@@ -9,6 +9,7 @@ import { DialogService } from "../../shared/dialog/dialog.service";
 import { Subscription } from "rxjs";
 import { getString } from "../../resources/strings";
 import { NgForm } from "@angular/forms";
+import { VacationsService } from "../../services/rest/vacations.service";
 
 @Component({
   selector: "sample-employee",
@@ -21,6 +22,7 @@ export class EmployeeComponent implements OnInit, OnDestroy {
     private employeesService: EmployeesService,
     private toastrService: ToastrService,
     private dialogService: DialogService,
+    private vacationsService: VacationsService,
     private router: Router
   ) {}
 
@@ -35,6 +37,7 @@ export class EmployeeComponent implements OnInit, OnDestroy {
   public showPanel: boolean = true;
   public passedTime: any;
   public alertIsOpen: boolean = true;
+  public summary: any;
 
   public options: any[] = [
     { option: "basicData", string: "basicData", active: true },
@@ -48,6 +51,7 @@ export class EmployeeComponent implements OnInit, OnDestroy {
       this.activatedRoute.paramMap.subscribe((params) => {
         this.employeeId = params.get("id") as any;
         this.getEmployeeDetails(this.employeeId);
+        this.getSummary();
       })
     );
   }
@@ -56,6 +60,16 @@ export class EmployeeComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach((element) => {
       element.unsubscribe();
     });
+  }
+
+  private getSummary() {
+    this.subscriptions.push(
+      this.vacationsService
+        .getRemainingVacationDays(this.employeeId)
+        .subscribe((data) => {
+          this.summary = data;
+        })
+    );
   }
 
   // ------------------------------------------------- BASIC DATA ---------------------------------------------------------------------

@@ -62,5 +62,6 @@ BEGIN
 		@Description = @Description,
 		@EmployeeId = @NewIdent,
 		@Recurring = 1,
+		@EventTypeId=1,
 		@Reminder=0;
 END

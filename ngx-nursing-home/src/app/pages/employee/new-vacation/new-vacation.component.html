@@ -1,0 +1,233 @@
+<nb-card class="event-card">
+  <nb-card-header class="d-flex">
+    <div class="col">
+      <div class="row m-0 p-0 align-items-center">
+        {{ getString("newVacation") }}<br />
+      </div>
+    </div>
+    <div class="w-max">
+      <button nbButton ghost shape="round" (click)="close(false)">
+        <nb-icon pack="eva" icon="close-outline"></nb-icon>
+      </button>
+    </div>
+  </nb-card-header>
+  <nb-card-body class="pt-0">
+    <div class="row m-0 mt-3">
+      <div class="col-md-4 ps-0">
+        <div class="top-card">
+          <div
+            class="icon-container w-100 d-flex justify-content-center align-items-center info"
+          >
+            <div class="icon">
+              <nb-icon
+                pack="eva"
+                [status]="'info'"
+                [icon]="'info-outline'"
+              ></nb-icon>
+            </div>
+          </div>
+          <div
+            class="price w-100 d-flex justify-content-center align-items-center"
+          >
+            {{ summary?.TotalDays }}
+          </div>
+          <div
+            class="label w-100 d-flex justify-content-center align-items-center"
+          >
+            {{ getString("totalVacationDays") }}
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 ps-1 pe-1">
+        <div class="top-card">
+          <div
+            class="icon-container w-100 d-flex justify-content-center align-items-center"
+            [ngClass]="
+              summary?.AvailableDaysForReservation
+                ? summary?.AvailableDaysForReservation > 0
+                  ? 'success'
+                  : 'danger'
+                : 'basic'
+            "
+          >
+            <div class="icon">
+              <nb-icon
+                pack="eva"
+                [status]="
+                  summary?.AvailableDaysForReservation
+                    ? summary?.AvailableDaysForReservation > 0
+                      ? 'success'
+                      : 'danger'
+                    : 'basic'
+                "
+                [icon]="
+                  summary?.AvailableDaysForReservation
+                    ? summary?.AvailableDaysForReservation > 0
+                      ? 'unlock-outline'
+                      : 'lock-outline'
+                    : 'minus-outline'
+                "
+              ></nb-icon>
+            </div>
+          </div>
+          <div
+            class="price w-100 d-flex justify-content-center align-items-center"
+          >
+            {{ summary?.AvailableDaysForReservation }}
+          </div>
+          <div
+            class="label w-100 d-flex justify-content-center align-items-center"
+          >
+            {{ getString("availableDaysForReservation") }}
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 pe-0">
+        <div class="top-card">
+          <div
+            class="icon-container w-100 d-flex justify-content-center align-items-center"
+            [ngClass]="
+              daysCorrected
+                ? selectedDaysValid
+                  ? 'success'
+                  : 'danger'
+                : 'basic'
+            "
+          >
+            <div class="icon">
+              <nb-icon
+                pack="eva"
+                [status]="
+                  daysCorrected
+                    ? selectedDaysValid
+                      ? 'success'
+                      : 'danger'
+                    : 'basic'
+                "
+                [icon]="
+                  daysCorrected
+                    ? selectedDaysValid
+                      ? 'checkmark-square-outline'
+                      : 'alert-triangle-outline'
+                    : 'minus-outline'
+                "
+              ></nb-icon>
+            </div>
+          </div>
+          <div
+            class="price w-100 d-flex justify-content-center align-items-center"
+          >
+            {{ daysCorrected }}
+          </div>
+          <div
+            class="label w-100 d-flex justify-content-center align-items-center"
+          >
+            {{ getString("daysTaken") }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <form #event="ngForm">
+      <div class="row m-0 mt-3">
+        <div class="col-md-12 p-0">
+          <div class="form-group">
+            <div class="label">
+              {{ getString("range") }}
+              <nb-icon
+                pack="eva"
+                icon="alert-circle-outline"
+                status="danger"
+                size="small"
+                class="ms-1 required-mark"
+                [nbTooltip]="getString('required')"
+              ></nb-icon>
+            </div>
+            <div class="value">
+              <nb-form-field>
+                <input
+                  nbInput
+                  #DateInput
+                  [placeholder]="getString('range')"
+                  fullWidth
+                  autocomplete="off"
+                  name="range"
+                  [(ngModel)]="selectedRange"
+                  [nbDatepicker]="DateDatepicker"
+                />
+                <nb-rangepicker
+                  #DateDatepicker
+                  (rangeChange)="onRangeChange($event)"
+                ></nb-rangepicker>
+                <button nbButton nbSuffix ghost (click)="DateInput.focus()">
+                  <nb-icon pack="eva" icon="calendar-outline"></nb-icon>
+                </button>
+              </nb-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row m-0 mt-3">
+        <div class="col-md-4 ps-0">
+          <div class="form-group">
+            <div class="label">
+              {{ getString("year") }}
+            </div>
+            <div class="value">
+              <input
+                nbInput
+                [disabled]="true"
+                [placeholder]="getString('year')"
+                fullWidth
+                autocomplete="off"
+                name="year"
+                [(ngModel)]="year"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="col-md-8 pe-0">
+          <div class="form-group">
+            <div class="label">
+              {{ getString("daysCorrection") }}
+            </div>
+            <div class="value">
+              <input
+                nbInput
+                type="number"
+                [placeholder]="getString('daysCorrection')"
+                fullWidth
+                autocomplete="off"
+                name="daysCorrected"
+                (input)="onDaysChange()"
+                [(ngModel)]="daysCorrected"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </nb-card-body>
+  <nb-card-footer class="d-flex justify-content-end">
+    <button
+      nbButton
+      ghost
+      shape="round"
+      size="small"
+      class="me-2"
+      (click)="close(false)"
+    >
+      {{ getString("cancel") }}
+    </button>
+    <button
+      nbButton
+      status="primary"
+      shape="round"
+      size="small"
+      [disabled]="!selectedDaysValid || daysCorrected <= 0"
+      (click)="saveVacation()"
+    >
+      {{ getString("save") }}
+    </button>
+  </nb-card-footer>
+</nb-card>

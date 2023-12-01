@@ -1,0 +1,23 @@
+@import "../../../@theme/styles/themes.scss";
+
+::ng-deep sample-employee-vacations {
+  height: 100%;
+}
+
+@include nb-install-component {
+  .top-card {
+    background-color: nb-theme(color-primary-transparent-200);
+    height: 70px;
+    padding-top: 0.6rem;
+
+    .price {
+      font-weight: 600;
+      font-size: 16px;
+      margin-top: 0.5rem;
+    }
+  }
+}
+
+.grid-container {
+  height: calc(100% - 5rem);
+}

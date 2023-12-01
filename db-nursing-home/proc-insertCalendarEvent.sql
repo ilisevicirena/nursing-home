@@ -14,7 +14,8 @@ CREATE PROCEDURE [dbo].[insertCalendarEvent]
 		@PersonId int=NULL,
 		@Recurring bit,
 		@Reminder bit,
-		@EmployeeId int=NULL
+		@EmployeeId int=NULL,
+		@EventTypeId int=NULL
 	)
 AS
 BEGIN
@@ -25,8 +26,8 @@ BEGIN
 SET @Start = CAST(DATEADD(hour, 2, @Start) AS DATE);
 	SET @End= CAST(DATEADD(hour, 2, @End) AS DATE);
     -- Insert statements for procedure here
-	insert into dbo.CalendarEvent ([Start], [End], [Color], [Title], [Description], [PersonId], [Recurring], Reminder, EmployeeId)
-	values (@Start, @End, @Color, @Title, @Description, @PersonId, @Recurring, @Reminder, @EmployeeId);
+	insert into dbo.CalendarEvent ([Start], [End], [Color], [Title], [Description], [PersonId], [Recurring], Reminder, EmployeeId, EventTypeId)
+	values (@Start, @End, @Color, @Title, @Description, @PersonId, @Recurring, @Reminder, @EmployeeId, @EventTypeId);
 
 	select SCOPE_IDENTITY() as [EventId];
 END

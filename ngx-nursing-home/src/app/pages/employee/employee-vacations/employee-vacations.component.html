@@ -1,0 +1,103 @@
+<div class="h-100 w-100">
+  <div class="toolbar d-flex mb-3">
+    <div class="col d-flex align-items-center">
+      <button
+        nbButton
+        ghost
+        status="primary"
+        shape="round"
+        class="me-2"
+        (click)="newVacationClick()"
+      >
+        <nb-icon pack="eva" icon="plus-outline"></nb-icon>
+        {{ getString("newVacation") }}
+      </button>
+    </div>
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col pe-1">
+          <div class="top-card">
+            <div
+              class="label w-100 d-flex justify-content-center align-items-center"
+            >
+              {{ getString("totalVacationDays") }}
+            </div>
+            <div
+              class="price w-100 d-flex justify-content-center align-items-center"
+            >
+              {{ summary?.TotalDays }}
+            </div>
+          </div>
+        </div>
+        <div class="col ps-1 pe-1">
+          <div class="top-card">
+            <div
+              class="label w-100 d-flex justify-content-center align-items-center"
+            >
+              {{ getString("remainingDays") }}
+            </div>
+            <div
+              class="price w-100 d-flex justify-content-center align-items-center"
+            >
+              {{ summary?.RemainingDays }}
+            </div>
+          </div>
+        </div>
+        <div class="col ps-1 pe-1">
+          <div class="top-card">
+            <div
+              class="label w-100 d-flex justify-content-center align-items-center"
+            >
+              {{ getString("totalDaysTaken") }}
+            </div>
+            <div
+              class="price w-100 d-flex justify-content-center align-items-center"
+            >
+              {{ summary?.TotalDaysTaken }}
+            </div>
+          </div>
+        </div>
+        <div class="col ps-1 pe-1">
+          <div class="top-card">
+            <div
+              class="label w-100 d-flex justify-content-center align-items-center"
+            >
+              {{ getString("inProgressDays") }}
+            </div>
+            <div
+              class="price w-100 d-flex justify-content-center align-items-center"
+            >
+              {{ summary?.InProgressDays }}
+            </div>
+          </div>
+        </div>
+        <div class="col ps-1 pe-0">
+          <div class="top-card">
+            <div
+              class="label w-100 d-flex justify-content-center align-items-center"
+            >
+              {{ getString("availableDaysForReservation") }}
+            </div>
+            <div
+              class="price w-100 d-flex justify-content-center align-items-center"
+            >
+              {{ summary?.AvailableDaysForReservation }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="grid-container">
+    <ngx-grid
+      [columns]="columns"
+      [(data)]="data"
+      [addEnabled]="false"
+      [editEnabled]="false"
+      [deleteEnabled]="false"
+      (actionBtnClick)="onButtonItemClicked($event)"
+      [defaultPerPageOption]="10"
+      [selectionEnabled]="false"
+    ></ngx-grid>
+  </div>
+</div>

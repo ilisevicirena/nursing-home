@@ -66,5 +66,6 @@ exec dbo.writeLog @LogType='INSERT', @LogEntity='Person', @Key= @NewIdent;
 		@Description = @Description,
 		@PersonId = @NewIdent,
 		@Recurring = 1,
+		@EventTypeId=1,
 		@Reminder=0;
 END

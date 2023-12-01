@@ -1,0 +1,65 @@
+<nb-card class="event-card">
+  <nb-card-header class="d-flex">
+    <div class="col">
+      {{ getString("changeStatus") }}
+    </div>
+    <div class="w-max">
+      <button nbButton ghost shape="round" (click)="close(false)">
+        <nb-icon pack="eva" icon="close-outline"></nb-icon>
+      </button>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-group">
+          <div class="label">
+            {{ getString("status")
+            }}<nb-icon
+              pack="eva"
+              icon="alert-circle-outline"
+              status="danger"
+              size="small"
+              class="ms-1 required-mark"
+              [nbTooltip]="getString('required')"
+            ></nb-icon>
+          </div>
+          <div class="value">
+            <nb-select
+              fullWidth
+              [placeholder]="getString('select')"
+              name="status"
+              [(ngModel)]="selectedStatus"
+            >
+              <nb-option *ngFor="let s of statuses" [value]="s.Id">{{
+                s.Name
+              }}</nb-option>
+            </nb-select>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nb-card-body>
+  <nb-card-footer class="d-flex justify-content-end">
+    <button
+      nbButton
+      ghost
+      shape="round"
+      size="small"
+      class="me-2"
+      (click)="close(false)"
+    >
+      {{ getString("cancel") }}
+    </button>
+    <button
+      nbButton
+      status="primary"
+      shape="round"
+      size="small"
+      [disabled]="!selectedStatus"
+      (click)="saveStatus()"
+    >
+      {{ getString("save") }}
+    </button>
+  </nb-card-footer>
+</nb-card>

@@ -29,6 +29,8 @@ BEGIN
    exec dbo.insertBirthdayNotifications;
    exec dbo.insertEventReminderNotification;
    exec dbo.insertCalculationNotification;
+    exec dbo.checkVacationForUpdate;
+    
     -- End of actions
 
     -- Insert a new row with the current date
