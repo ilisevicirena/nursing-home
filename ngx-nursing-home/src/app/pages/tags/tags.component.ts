@@ -3,9 +3,11 @@ import { TagsService } from "../../services/rest/tags.service";
 import { Subscription } from "rxjs";
 import { getString } from "../../resources/strings";
 import {
+  GridColorpickerEditor,
   GridColumn,
   GridTextboxEditor,
   TextboxEditor,
+  GridColorpickerColumn,
 } from "shared-components";
 import { gridLayer } from "leaflet";
 import { ToastrService } from "../../services/toastr.service";
@@ -46,8 +48,9 @@ export class TagsComponent implements OnInit, OnDestroy {
     new GridColumn()
       .Title(getString("color"))
       .DataField("Color")
+      .Type(new GridColorpickerColumn())
       .Editor(
-        new GridTextboxEditor()
+        new GridColorpickerEditor()
           .WidthClass("col-md-4")
           .Required(true)
           .Label(getString("color"))
