@@ -634,6 +634,14 @@
         <div class="form-group">
           <div class="label">
             {{ getString("jobPosition") }}
+            <nb-icon
+              pack="eva"
+              icon="alert-circle-outline"
+              status="danger"
+              size="small"
+              class="ms-1 required-mark"
+              [nbTooltip]="getString('required')"
+            ></nb-icon>
           </div>
           <div class="value">
             <nb-select

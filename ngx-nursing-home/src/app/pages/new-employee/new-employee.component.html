@@ -22,7 +22,7 @@
         shape="round"
         size="small"
         (click)="saveNewEmployee(basicDataFrom)"
-        [disabled]="basicDataFrom.form.invalid || employeeData.Id > 0"
+        [disabled]="!validateForm() || employeeData.Id > 0"
       >
         {{ getString("saveNewEmployee") }}
         <nb-icon pack="eva" icon="person-add-outline"></nb-icon>

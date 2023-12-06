@@ -187,4 +187,17 @@ export class EmployeeComponent implements OnInit, OnDestroy {
     view.active = true;
     this.activeView = view.option;
   }
+
+  public validateForm(): boolean {
+    let formIsValid = true;
+    if (!this.newEmployeeData.JobPositionId) formIsValid = false;
+    if (!this.newEmployeeData.FirstName) formIsValid = false;
+    if (!this.newEmployeeData.LastName) formIsValid = false;
+    if (!this.newEmployeeData.JMBG) formIsValid = false;
+    if (!this.newEmployeeData.BirthDate) formIsValid = false;
+    if (!this.newEmployeeData.EmploymentDate) formIsValid = false;
+    if (!this.newEmployeeData.GenderId) formIsValid = false;
+
+    return formIsValid;
+  }
 }

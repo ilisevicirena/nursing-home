@@ -17,7 +17,7 @@ function formatDataObject(
   guardian,
   conditions,
   category,
-  type,
+  accommodationType,
   city
 ) {
   var data = {};
@@ -86,13 +86,13 @@ function formatDataObject(
     });
   }
 
-  if (cat) {
+  if (category) {
     var cat = "Category_" + category.PersonCategoryId;
     data[cat] = { value: 1, type: "bool" };
   }
 
-  if (type) {
-    var typ = "Accommodation_" + type.AccommodationTypeId;
+  if (accommodationType) {
+    var typ = "Accommodation_" + accommodationType.AccommodationTypeId;
     data[typ] = { value: 1, type: "bool" };
   }
 
