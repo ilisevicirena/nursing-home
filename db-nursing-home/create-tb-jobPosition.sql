@@ -2,6 +2,7 @@ CREATE TABLE [dbo].[JobPosition](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[Name] [nvarchar](500) NOT NULL,
 	[Description] [text] NULL,
+	[Icon] [nvarchar](50) NULL,
  CONSTRAINT [PK_JobPosition] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC

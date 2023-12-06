@@ -82,7 +82,7 @@
         class="col-md-3 p-1"
         *ngFor="let person of employeesData | filter : searchTerm"
       >
-        <nb-card class="m-0">
+        <nb-card class="m-0 h-100">
           <nb-card-header
             class="d-flex align-items-center person-card-header position-relative"
             (click)="openPersonDetails(person)"
@@ -94,12 +94,17 @@
               [position]="'center right'"
             ></nb-badge>
             <nb-icon
+              *ngIf="!person.JobPositionIcon"
               pack="eva"
               icon="briefcase-outline"
               status="primary"
               class="me-3"
             >
             </nb-icon>
+            <i
+              *ngIf="person.JobPositionIcon"
+              [class]="person.JobPositionIcon + ' card-font8-icon'"
+            ></i>
             {{ person.FirstName }} {{ person.LastName }}
           </nb-card-header>
           <nb-card-body>

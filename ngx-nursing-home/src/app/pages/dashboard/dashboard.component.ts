@@ -22,7 +22,13 @@ export class DashboardComponent implements OnDestroy, OnInit {
   public activePersonsBarOptions: any;
   public today: Date = new Date();
   public nextEvent: any;
+  public employeesByGender: any;
+  public allTimeEmployees: any;
+  public employees: any[] = [];
+  public employeesByJobPosition: any[] = [];
+  public currentEmployee: any;
 
+  private currentEmployeeIndex: number = 0;
   private subs: Subscription[] = [];
 
   constructor(private summaryService: SummaryService, private router: Router) {}
@@ -41,6 +47,7 @@ export class DashboardComponent implements OnDestroy, OnInit {
     this.subs.push(
       this.summaryService.getDashboardSummary().subscribe((data) => {
         if (data) {
+          console.log(data);
           if (data.Summary.length > 0) {
             this.summary = data.Summary[0];
             this.progressValue = Math.trunc(
@@ -60,6 +67,20 @@ export class DashboardComponent implements OnDestroy, OnInit {
             this.summary.ActivePersons = data.ActivePersons;
             this.setUpEcharts();
           }
+
+          if (data.EmployeesByGender.length > 0)
+            this.employeesByGender = data.EmployeesByGender[0];
+
+          if (data.AllTimeEmployees.length > 0)
+            this.allTimeEmployees = data.AllTimeEmployees[0];
+
+          if (data.Employees.length > 0) {
+            this.employees = data.Employees;
+            this.currentEmployee = this.employees[this.currentEmployeeIndex];
+          }
+
+          if (data.EmployeesByJobPosition.length > 0)
+            this.employeesByJobPosition = data.EmployeesByJobPosition;
 
           this.events = data.Events;
 

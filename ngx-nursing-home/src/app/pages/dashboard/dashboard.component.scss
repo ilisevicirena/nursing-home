@@ -1,125 +1,243 @@
-@import '../../@theme/styles/themes';
+@import "../../@theme/styles/themes";
 
 ::ng-deep ngx-dashboard {
-    height: 100%;
+  height: 100%;
 }
 
 @include nb-install-component {
-    .summary-card {
-        border-radius: 1rem;
-
-        nb-card-body {
-            padding: 0.5rem;
-
-            .col {
-                font-weight: 600;
-                font-size: 20px;
-                display: flex;
-                align-items: center;
-            }
-
-            nb-icon {
-                font-size: 30px;
-            }
-
-            .value {
-                font-size: 14px;
-            }
-        }
-
+  .employee-card {
+    .divider {
+      width: 6px;
+      max-width: 6px;
+      margin-left: 0.5rem;
+      padding: 0;
+      border-radius: 1rem;
+      background-color: nb-theme(color-basic-400);
     }
 
-    .dashboard-event.warning {
-        background-color: nb-theme(color-warning-transparent-200);
+    .circle {
+      height: 100px;
+      width: 100px;
+      border-radius: 50%;
+      border: 1px solid nb-theme(color-basic-500);
+      display: flex;
+      justify-content: center;
+      align-items: center;
 
-        .title {
-            color: nb-theme(color-warning-500);
-        }
+      nb-icon {
+        font-size: 2rem;
+      }
+    }
+  }
+
+  .semi-primary-card {
+    .divider {
+      width: 6px;
+      max-width: 6px;
+      padding: 0;
+      height: 90%;
+      border-radius: 1rem;
+      background-color: nb-theme(color-primary-500);
+      position: absolute;
+      left: 50%;
+      top: 5%;
     }
 
-    .dashboard-event.info {
-        background-color: nb-theme(color-info-transparent-200);
-
-        .title {
-            color: nb-theme(color-info-500);
-        }
+    .label {
+      width: 100%;
+      text-align: center;
     }
 
-    .dashboard-event.danger {
-        background-color: nb-theme(color-danger-transparent-200);
+    .card-value {
+      font-size: 4rem;
+      line-height: 5rem;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      color: nb-theme(color-primary-700);
+    }
+  }
 
-        .title {
-            color: nb-theme(color-danger-500);
-        }
+  .first-box {
+    display: flex;
+    flex-flow: column;
+    overflow: auto;
+    height: 100%;
+    gap: 0.5rem;
+
+    .first-row {
+      flex: 0 1 17.5rem;
+      max-height: 17.5rem;
     }
 
-    .dashboard-event.success {
-        background-color: nb-theme(color-success-transparent-200);
+    .second-row {
+      flex: 1 1 17rem;
+      max-height: 17rem;
+    }
+  }
 
-        .title {
-            color: nb-theme(color-success-500);
-        }
+  .break {
+    flex-basis: 100%;
+    height: 0;
+  }
+
+  .title {
+    font-weight: 600;
+    font-size: 16px;
+  }
+
+  .male-female-chart {
+    .title {
+      text-align: center;
+      padding-bottom: 1rem;
     }
 
-    .events-card {
-        nb-tag.semi-tag {
-            position: absolute;
-            border-left: none;
-            border-top-left-radius: 0;
-            border-bottom-left-radius: 0;
-            left: -10px;
-            top: -5px;
-        }
+    .col {
+      display: flex;
+      align-items: flex-end;
+      padding: 0;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 5px;
 
-        .title {
-            padding-top: 2.5rem;
-            font-weight: 600;
-            font-size: 20px;
-        }
+      div:first-child {
+        height: 4rem;
+        display: flex;
+        align-items: flex-end;
+      }
+
+      .fw-600 {
+        font-size: 18px;
+      }
+
+      .label {
+        font-size: 16px;
+      }
     }
 
-    .events-container {
-        padding: 0rem 1rem;
-        height: calc(100% - 5rem);
-        overflow: auto;
-
-        .dashboard-event {
-            height: max-content;
-            margin-bottom: 0.5rem;
-            border-top-left-radius: 1rem;
-            border-bottom-right-radius: 1rem;
-            padding: 1rem;
-
-            .title {
-                padding-top: 0.5rem;
-                padding-bottom: 0.5rem;
-                font-size: 18px;
-            }
-
-            .date {
-                text-align: end;
-            }
-
-            .description {
-                font-size: 12px;
-            }
-        }
-
-        .line {
-            border-bottom: 1px solid nb-theme(color-primary-500);
-            width: 100%;
-        }
+    i {
+      font-size: 3rem;
     }
+
+    i.large {
+      font-size: 4rem;
+    }
+  }
+
+  .summary-card {
+    border-radius: 1rem;
+
+    nb-card-body {
+      padding: 0.5rem;
+
+      .col {
+        font-weight: 600;
+        font-size: 20px;
+        display: flex;
+        align-items: center;
+      }
+
+      nb-icon {
+        font-size: 30px;
+      }
+
+      .value {
+        font-size: 14px;
+      }
+    }
+  }
+
+  .dashboard-event.warning {
+    background-color: nb-theme(color-warning-transparent-200);
+
+    .title {
+      color: nb-theme(color-warning-500);
+    }
+  }
+
+  .dashboard-event.info {
+    background-color: nb-theme(color-info-transparent-200);
+
+    .title {
+      color: nb-theme(color-info-500);
+    }
+  }
+
+  .dashboard-event.danger {
+    background-color: nb-theme(color-danger-transparent-200);
+
+    .title {
+      color: nb-theme(color-danger-500);
+    }
+  }
+
+  .dashboard-event.success {
+    background-color: nb-theme(color-success-transparent-200);
+
+    .title {
+      color: nb-theme(color-success-500);
+    }
+  }
+
+  .events-card {
+    nb-tag.semi-tag {
+      position: absolute;
+      border-left: none;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+      left: -10px;
+      top: -5px;
+    }
+
+    .title {
+      padding-top: 2.5rem;
+      font-weight: 600;
+      font-size: 20px;
+    }
+  }
+
+  .events-container {
+    padding: 0rem 1rem;
+    height: calc(100% - 5rem);
+    overflow: auto;
+
+    .dashboard-event {
+      height: max-content;
+      margin-bottom: 0.5rem;
+      border-top-left-radius: 1rem;
+      border-bottom-right-radius: 1rem;
+      padding: 1rem;
+
+      .title {
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+        font-size: 18px;
+      }
+
+      .date {
+        text-align: end;
+      }
+
+      .description {
+        font-size: 12px;
+      }
+    }
+
+    .line {
+      border-bottom: 1px solid nb-theme(color-primary-500);
+      width: 100%;
+    }
+  }
 }
 
 .echart-dash {
-    height: 100% !important;
+  height: 100% !important;
 }
 
 ::ng-deep .echart-dash div {
-    top: -20px !important;
+  top: -20px !important;
 }
 
 .round-card {
-    border-radius: 1rem;
+  border-radius: 1rem;
 }

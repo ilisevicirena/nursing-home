@@ -148,24 +148,6 @@
             </div>
           </div>
         </div>
-        <div class="row form-row">
-          <div class="col-md-12">
-            <div class="form-group">
-              <div class="label">{{ getString("address") }}</div>
-              <div class="value">
-                <input
-                  nbInput
-                  fullWidth
-                  [placeholder]="getString('address')"
-                  name="address"
-                  autocomplete="off"
-                  [(ngModel)]="newPersonData.Address"
-                  [disabled]="!person.Active"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
         <div class="group-title mt-3">
           {{ getString("stayData") }}
           <div class="line"></div>

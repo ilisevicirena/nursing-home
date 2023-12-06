@@ -1,26 +1,25 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700&display=swap');
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,600,700&display=swap");
 
 // themes - our custom or/and out of the box themes
-@import 'themes';
+@import "themes";
 
 // framework component themes (styles tied to theme variables)
-@import '@nebular/theme/styles/globals';
-@import '@nebular/auth/styles/globals';
+@import "@nebular/theme/styles/globals";
+@import "@nebular/auth/styles/globals";
 
-@import 'bootstrap/scss/functions';
-@import 'bootstrap/scss/variables';
-@import 'bootstrap/scss/mixins';
-@import 'bootstrap/scss/grid';
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/mixins";
+@import "bootstrap/scss/grid";
 
 // loading progress bar theme
-@import './pace.theme';
+@import "./pace.theme";
 
-@import './layout';
-@import './overrides';
+@import "./layout";
+@import "./overrides";
 
 // install the framework and custom global styles
 @include nb-install() {
-
   // framework global styles
   @include nb-theme-global();
   @include nb-auth-global();
@@ -31,10 +30,27 @@
 
   @include nb-overrides();
 
+  .card-font8-icon {
+    font-size: 1.5rem;
+    margin-right: 1rem;
+    color: nb-theme(color-primary-500);
+  }
+
+  .card-font8-icon.large {
+    font-size: 2rem;
+    margin-right: 0;
+    color: nb-theme(color-primary-500);
+  }
+
   .grey-card {
     border-radius: 0.5rem;
     padding: 1rem;
     background-color: nb-theme(color-basic-200);
+  }
+
+  .semi-primary-card {
+    padding: 1rem;
+    background-color: nb-theme(color-primary-transparent-200);
   }
 
   .card-background-color {
@@ -69,7 +85,6 @@
   }
 
   .title-container-person {
-
     .window-title-person {
       font-size: 14px;
       color: nb-theme(input-basic-placeholder-text-color);
@@ -119,7 +134,8 @@
   }
 
   .line-divider {
-    border-bottom: nb-theme(card-divider-width) nb-theme(card-divider-style) nb-theme(card-divider-color);
+    border-bottom: nb-theme(card-divider-width) nb-theme(card-divider-style)
+      nb-theme(card-divider-color);
     width: 100%;
     height: max-content;
   }

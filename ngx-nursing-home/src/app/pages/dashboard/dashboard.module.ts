@@ -1,10 +1,22 @@
-import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { NbAlertModule, NbButtonModule, NbCardModule, NbIconModule, NbProgressBarModule, NbSelectModule, NbTabsetModule, NbTagModule, NbUserModule } from '@nebular/theme';
-import { SharedComponentsModule } from 'shared-components';
-import { ThemeModule } from '../../@theme/theme.module';
-import { DashboardComponent } from './dashboard.component';
-import { NgxEchartsModule } from 'ngx-echarts';
+import { NgModule } from "@angular/core";
+import { FormsModule } from "@angular/forms";
+import {
+  NbAlertModule,
+  NbButtonModule,
+  NbCardModule,
+  NbIconModule,
+  NbPopoverModule,
+  NbProgressBarModule,
+  NbSelectModule,
+  NbTabsetModule,
+  NbTagModule,
+  NbTooltipModule,
+  NbUserModule,
+} from "@nebular/theme";
+import { SharedComponentsModule } from "shared-components";
+import { ThemeModule } from "../../@theme/theme.module";
+import { DashboardComponent } from "./dashboard.component";
+import { NgxEchartsModule } from "ngx-echarts";
 
 @NgModule({
   imports: [
@@ -15,23 +27,19 @@ import { NgxEchartsModule } from 'ngx-echarts';
     NbButtonModule,
     NbTabsetModule,
     NbSelectModule,
+    NbTooltipModule,
+    NbPopoverModule,
     SharedComponentsModule,
     NbIconModule,
     NbProgressBarModule,
     NgxEchartsModule.forRoot({
-      echarts: () => import('echarts')
+      echarts: () => import("echarts"),
     }),
     NbTagModule,
-    NbAlertModule
+    NbAlertModule,
   ],
-  declarations: [
-    DashboardComponent,
-  ],
-  providers: [
-
-  ],
-  exports: [
-
-  ]
+  declarations: [DashboardComponent],
+  providers: [],
+  exports: [],
 })
-export class DashboardModule { }
+export class DashboardModule {}

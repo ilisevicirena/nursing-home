@@ -15,7 +15,16 @@
     </button>
     <nb-card class="grey-card m-0 h-100" id="top-panel-card">
       <div class="circle grey-card">
-        <nb-icon pack="eva" icon="briefcase-outline" status="primary"></nb-icon>
+        <nb-icon
+          *ngIf="!employee.JobPositionIcon"
+          pack="eva"
+          icon="briefcase-outline"
+          status="primary"
+        ></nb-icon>
+        <i
+          *ngIf="employee.JobPositionIcon"
+          [class]="employee.JobPositionIcon + ' card-font8-icon large'"
+        ></i>
       </div>
       <div class="row">
         <div class="col-md-6">

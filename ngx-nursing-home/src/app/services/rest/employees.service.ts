@@ -75,6 +75,7 @@ export interface IEmployee extends IBaseSaveModel {
   BirthCityId?: number;
   BirthMunicipalityId?: number;
   BirthCountryId?: number;
+  JobPositionIcon?: string;
 }
 
 export function getIEmployeeFromJSON(json: any): IEmployee {
@@ -116,5 +117,6 @@ export function getIEmployeeFromJSON(json: any): IEmployee {
     DaysOfVacation: json.DaysOfVacation,
     SchoolName: json.SchoolName,
     SchoolQualificationName: json.SchoolQualificationName,
+    JobPositionIcon: json.JobPositionIcon,
   };
 }

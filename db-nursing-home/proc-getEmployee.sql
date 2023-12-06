@@ -36,6 +36,7 @@ BEGIN
         [BirthCountry]=ct.[Name],
 		[JobPositionId]=e.JobPositionId,
 		[JobPositionName]=jp.[Name],
+		[JobPositionIcon]=jp.[Icon],
 		[EmploymentTypeId]=e.EmploymentTypeId,
 		[EmploymentTypeName]=et.[Name],
 		[YearsOfExperiance]=e.YearsOfExperiance,

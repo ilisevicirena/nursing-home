@@ -24,6 +24,8 @@
 .sidepanel {
   display: flex;
   flex-flow: column;
+  overflow: hidden;
+  height: 100%;
 }
 
 .discount-picker-card {

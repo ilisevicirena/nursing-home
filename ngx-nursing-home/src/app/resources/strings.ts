@@ -533,7 +533,7 @@ const strings: IKeyValue[] = [
   { key: "inProgressDays", value: "Rezervirano dana" },
   {
     key: "availableDaysForReservation",
-    value: "Dostupno za rezervaciju",
+    value: "Dostupno dana",
   },
   { key: "year", value: "Godina" },
   { key: "fromDate", value: "Od" },
@@ -549,6 +549,12 @@ const strings: IKeyValue[] = [
     value: "Želite li stornirati/otkazati godišnji odmor?",
   },
   { key: "totalDaysTaken", value: "Iskorišteno dana" },
+  { key: "employeesByGender", value: "Udio zaposlenika po spolu" },
+  { key: "currentEmployees", value: "Trenutno zaposlenika" },
+  { key: "totalEmployees", value: "Ukupno zaposlenika" },
+  { key: "employeesByJobPosition", value: "Udio zaposlenika po radnom mjestu" },
+  { key: "numberOfEmployees", value: "broj zaposlenika" },
+  { key: "goToProfile", value: "profil" },
 ];
 
 const map = new Map(strings.map((obj) => [obj.key, obj.value]));

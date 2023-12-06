@@ -83,4 +83,42 @@ BEGIN
     LEFT JOIN Person p ON (p.StartDate <= EOMONTH(L6M.[Month]) AND (p.EndDate IS NULL OR p.EndDate >= L6M.[Month]))
     GROUP BY CONVERT(CHAR(7), L6M.[Month], 120)
     ORDER BY [YearMonth];
+
+	--employees by gender
+	select
+	(select COUNT(e.Id) from dbo.Employee as e left join dbo.Gender as g on e.GenderId=g.Id where e.Active=1 and g.Tag='M') as MaleEmployees,
+	(select COUNT(e.Id) from dbo.Employee as e left join dbo.Gender as g on e.GenderId=g.Id where e.Active=1 and g.Tag='Ž') as FemaleEmployees;
+
+	--all time employees, current employees
+	select
+	(select COUNT(Id)from dbo.Employee)  as AllTimeEmployees,
+	(select COUNT(Id)from dbo.Employee where Active=1)  as CurrentEmployees;
+
+	--employees cards data
+	select 
+	e.Id,
+	FirstName,
+	LastName,
+	JMBG,
+	Mobile,
+	Email,
+	BirthDate,
+	JobPositionId,
+	EmploymentDate,
+	[JobPositionName]=jp.[Name],
+	[JobPositionIcon]=jp.[Icon],
+	GenderId,
+	[GenderTag]=g.Tag
+	from dbo.Employee as e
+	left join dbo.JobPosition as jp on e.JobPositionId=jp.Id
+	left join dbo.Gender as g on e.GenderId=g.Id
+	where Active=1 order by JobPositionId;
+
+	--employees by job position
+	select COUNT(e.Id) as NumberOfEmployees, 
+	jp.[Name] as JobPositionName,
+	e.JobPositionId as JobPositionId,
+	jp.Icon as JobPositionIcon
+	from dbo.Employee as e 
+	left join dbo.JobPosition as jp on e.JobPositionId=jp.Id group by jp.[Name], JobPositionId, jp.Icon;
 END
