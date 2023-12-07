@@ -8,6 +8,7 @@ import {
   GridLookupColumn,
   GridSelectEditor,
   GridTextboxEditor,
+  GridAutocompleteEditor,
 } from "shared-components";
 import { CountriesService } from "../../services/rest/countries.service";
 import { MunicipalitiesService } from "../../services/rest/municipalities.service";
@@ -61,11 +62,15 @@ export class CitiesComponent implements OnInit, OnDestroy {
       .DataField("CountryId")
       .Type(new GridLookupColumn().LookupColumn("CountryName"))
       .Editor(
-        new GridSelectEditor()
+        new GridAutocompleteEditor()
           .DisplayExpression("Name")
           .KeyExpression("Id")
           .ServerDataSource(true)
           .ServerEndpoint(this._countriesService.apiRoute)
+          .DisplayArrow(true)
+          .AttributesToShow(["Name"])
+          .AttributesToShowInTag(["Name"])
+          .AttributesToFilter(["Name"])
           .WidthClass("col-md-5")
           .Required(true)
           .Label(getString("country"))
@@ -75,11 +80,15 @@ export class CitiesComponent implements OnInit, OnDestroy {
       .DataField("MunicipalityId")
       .Type(new GridLookupColumn().LookupColumn("MunicipalityName"))
       .Editor(
-        new GridSelectEditor()
+        new GridAutocompleteEditor()
           .DisplayExpression("Name")
           .KeyExpression("Id")
           .ServerDataSource(true)
           .ServerEndpoint(this._municipalitiesService.apiRoute)
+          .DisplayArrow(true)
+          .AttributesToShow(["Name"])
+          .AttributesToShowInTag(["Name"])
+          .AttributesToFilter(["Name"])
           .WidthClass("col-md-5")
           .Label(getString("municipality"))
       ),
@@ -109,6 +118,14 @@ export class CitiesComponent implements OnInit, OnDestroy {
   }
 
   public createConfirm(event: any) {
+    event.newData.CountryId =
+      event.newData.CountryId.length > 0 ? event.newData.CountryId[0] : null;
+
+    event.newData.MunicipalityId =
+      event.newData.MunicipalityId.length > 0
+        ? event.newData.MunicipalityId[0]
+        : null;
+
     this._subs.push(
       this._citiesService.add(event.newData).subscribe(
         () => {
@@ -124,6 +141,14 @@ export class CitiesComponent implements OnInit, OnDestroy {
   }
 
   public editConfirm(event: any) {
+    event.newData.CountryId =
+      event.newData.CountryId.length > 0 ? event.newData.CountryId[0] : null;
+
+    event.newData.MunicipalityId =
+      event.newData.MunicipalityId.length > 0
+        ? event.newData.MunicipalityId[0]
+        : null;
+
     this._subs.push(
       this._citiesService.update(event.newData).subscribe(
         () => {

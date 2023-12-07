@@ -10,6 +10,7 @@ SELECT
 		[MunicipalityId]=MunicipalityId,
 		[MunicipalityName]=m.[Name],
 		[CountryId]=c.CountryId,
+		[PostalCode]=c.PostalCode,
 		[CountryName]=ct.[Name]
 	FROM [dbo].[City] as c
 	left join dbo.Municipality as m on c.MunicipalityId=m.Id

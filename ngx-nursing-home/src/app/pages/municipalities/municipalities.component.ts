@@ -5,6 +5,7 @@ import { CountriesService } from "../../services/rest/countries.service";
 import { MunicipalitiesService } from "../../services/rest/municipalities.service";
 import { ToastrService } from "../../services/toastr.service";
 import {
+  GridAutocompleteEditor,
   GridColumn,
   GridLookupColumn,
   GridSelectEditor,
@@ -51,11 +52,15 @@ export class MunicipalitiesComponent implements OnInit, OnDestroy {
       .DataField("CountryId")
       .Type(new GridLookupColumn().LookupColumn("CountryName"))
       .Editor(
-        new GridSelectEditor()
+        new GridAutocompleteEditor()
           .DisplayExpression("Name")
           .KeyExpression("Id")
           .ServerDataSource(true)
           .ServerEndpoint(this._countriesService.apiRoute)
+          .DisplayArrow(true)
+          .AttributesToShow(["Name"])
+          .AttributesToShowInTag(["Name"])
+          .AttributesToFilter(["Name"])
           .WidthClass("col-md-12")
           .Required(true)
           .Label(getString("country"))
@@ -86,6 +91,9 @@ export class MunicipalitiesComponent implements OnInit, OnDestroy {
   }
 
   public createConfirm(event: any) {
+    event.newData.CountryId =
+      event.newData.CountryId.length > 0 ? event.newData.CountryId[0] : null;
+
     this._subs.push(
       this._municipalitiesService.add(event.newData).subscribe(
         () => {
@@ -101,6 +109,9 @@ export class MunicipalitiesComponent implements OnInit, OnDestroy {
   }
 
   public editConfirm(event: any) {
+    event.newData.CountryId =
+      event.newData.CountryId.length > 0 ? event.newData.CountryId[0] : null;
+
     this._subs.push(
       this._municipalitiesService.update(event.newData).subscribe(
         () => {
