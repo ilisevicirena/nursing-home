@@ -64,6 +64,8 @@ export class EmployeeVacationsComponent implements OnInit, OnDestroy {
         new GridTagColumn()
           .LookupColumn("StatusName")
           .ColorColumn("StatusColor")
+          .IconColumn("StatusIcon")
+          .IsEvaIcon(true)
       )
       .Filter(
         new GridSelectFilter()
