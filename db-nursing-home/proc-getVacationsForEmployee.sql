@@ -23,5 +23,5 @@ BEGIN
         vs.Icon AS StatusIcon
     FROM dbo.EmployeeVacationRelation evr
     INNER JOIN dbo.VacationStatus vs ON evr.StatusId = vs.Id
-    WHERE evr.EmployeeId = @EmployeeId AND evr.[Year] = @Year;
+    WHERE evr.EmployeeId = @EmployeeId AND evr.[Year] = @Year order by evr.CreationDate desc;
 END;
