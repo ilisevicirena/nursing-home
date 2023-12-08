@@ -139,37 +139,6 @@
     width: 100%;
     height: max-content;
   }
-
-  .ngx-tag {
-    border-style: nb-theme(tag-border-style);
-    border-width: nb-theme(tag-border-width);
-    border-radius: nb-theme(tag-border-radius);
-    display: inline-flex;
-    align-items: center;
-    font-family: nb-theme(tag-text-font-family);
-    text-transform: nb-theme(tag-text-transform);
-    cursor: default;
-    font-size: nb-theme(tag-medium-text-font-size);
-    font-weight: nb-theme(tag-medium-text-font-weight);
-    line-height: nb-theme(tag-medium-text-line-height);
-    padding: nb-theme(tag-medium-padding);
-    background-color: nb-theme(tag-outline-primary-background-color);
-    border-color: nb-theme(tag-outline-primary-border-color);
-    color: nb-theme(tag-outline-primary-text-color);
-    width: max-content;
-
-    i {
-      margin-right: 0.5rem;
-      color: nb-theme(tag-outline-primary-text-color);
-      font-size: nb-theme(tag-medium-text-font-size);
-    }
-  }
-
-  .ngx-tag:hover {
-    background-color: nb-theme(tag-outline-primary-hover-background-color);
-    border-color: nb-theme(tag-outline-primary-hover-border-color);
-    cursor: pointer;
-  }
 }
 
 .row {

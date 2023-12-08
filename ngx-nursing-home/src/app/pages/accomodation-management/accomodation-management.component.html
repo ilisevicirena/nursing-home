@@ -1,60 +1,109 @@
-<sample-no-data *ngIf="mainSource.length==0" [title]="getString('noData')"></sample-no-data>
-<div class="row h-100" *ngIf="mainSource.length>0">
-    <div class="col-md-3 p-0 h-100" *ngIf="showSidepanel">
-        <nb-card class="h-100">
-            <nb-card-header>
-                Osobe bez sobe
-            </nb-card-header>
-            <nb-card-body id="no-room" cdkDropList [cdkDropListData]="noRoomPersons" (cdkDropListDropped)="drop($event)"
-                [cdkDropListConnectedTo]="getConnectedTo()">
-                <div class="row m-0" *ngFor="let person of noRoomPersons">
-                    <div class="ngx-tag mb-2" cdkDrag [cdkDragData]="person">
-                        <i class="fas fa-female" *ngIf="person.GenderTag=='Ž'"></i>
-                        <i class="fas fa-male" *ngIf="person.GenderTag=='M'"></i>
-                        {{person.FirstName}} {{person.LastName}}
-                    </div>
-                </div>
-            </nb-card-body>
-        </nb-card>
-    </div>
-    <div class="col pe-0 pb-0 h-100 floors" style="position: relative;">
-        <button nbButton status="basic" shape="round" class="toggle-btn" (click)="toggleSidepanel()">
-            <nb-icon pack="eva" [icon]="showSidepanel ? 'chevron-left-outline' : 'chevron-right-outline'"
-                status="primary"></nb-icon>
-        </button>
-        <div class="h-100 overflow-auto">
-            <div class="row w-100" *ngFor="let floor of mainSource">
-                <nb-card class="m-0">
-                    <nb-card-header>
-                        {{floor?.Name}}
-                    </nb-card-header>
-                    <nb-card-body class="p-2">
-                        <div class="row m-0">
-                            <div class="col-md-4 p-1" *ngFor="let room of floor?.Rooms">
-                                <div class="room" cdkDropList [cdkDropListEnterPredicate]="checkCanDropInList"
-                                    [id]="'drop-room-'+room.Id" [cdkDropListConnectedTo]="getConnectedTo()"
-                                    [cdkDropListData]="[room]" (cdkDropListDropped)="drop($event)">
-                                    <div class="room-name">{{room.Name}}</div>
-                                    <div class="room-persons">
-                                        <div class="ngx-tag" *ngFor="let person of room.People" cdkDrag
-                                            [cdkDragData]="person">
-                                            <i class="fas fa-female" *ngIf="person.GenderTag=='Ž'"></i>
-                                            <i class="fas fa-male" *ngIf="person.GenderTag=='M'"></i>
-                                            {{person.FirstName}} {{person.LastName}}
-                                        </div>
-                                    </div>
-                                    <div class="room-capacity"
-                                        [ngClass]="room.Capacity==0 ? '' : room.Capacity==room.TakenSpace ? 'text-danger':'text-success'">
-                                        <nb-icon pack="eva" icon="people-outline"
-                                            [status]="room.Capacity==0 ? 'primary' : room.Capacity==room.TakenSpace ? 'danger':'success'"></nb-icon>
-                                        {{room.TakenSpace}}/{{room.Capacity}}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </nb-card-body>
-                </nb-card>
-            </div>
+<sample-no-data
+  *ngIf="mainSource.length == 0"
+  [title]="getString('noData')"
+></sample-no-data>
+<div class="row h-100" *ngIf="mainSource.length > 0">
+  <div class="col-md-3 p-0 h-100" *ngIf="showSidepanel">
+    <nb-card class="h-100">
+      <nb-card-header> Osobe bez sobe </nb-card-header>
+      <nb-card-body
+        id="no-room"
+        cdkDropList
+        [cdkDropListData]="noRoomPersons"
+        (cdkDropListDropped)="drop($event)"
+        [cdkDropListConnectedTo]="getConnectedTo()"
+      >
+        <div class="row m-0" *ngFor="let person of noRoomPersons">
+          <ngx-tag
+            cdkDrag
+            [cdkDragData]="person"
+            [icon]="person.GenderTag == 'Ž' ? 'fas fa-female' : 'fas fa-male'"
+            [text]="person.FirstName + ' ' + person.LastName"
+            shape="round"
+            class="mb-2"
+          ></ngx-tag>
         </div>
+      </nb-card-body>
+    </nb-card>
+  </div>
+  <div class="col pe-0 pb-0 h-100 floors" style="position: relative">
+    <button
+      nbButton
+      status="basic"
+      shape="round"
+      class="toggle-btn"
+      (click)="toggleSidepanel()"
+    >
+      <nb-icon
+        pack="eva"
+        [icon]="
+          showSidepanel ? 'chevron-left-outline' : 'chevron-right-outline'
+        "
+        status="primary"
+      ></nb-icon>
+    </button>
+    <div class="h-100 overflow-auto">
+      <div class="row w-100" *ngFor="let floor of mainSource">
+        <nb-card class="m-0">
+          <nb-card-header>
+            {{ floor?.Name }}
+          </nb-card-header>
+          <nb-card-body class="p-2">
+            <div class="row m-0">
+              <div class="col-md-4 p-1" *ngFor="let room of floor?.Rooms">
+                <div
+                  class="room"
+                  cdkDropList
+                  [cdkDropListEnterPredicate]="checkCanDropInList"
+                  [id]="'drop-room-' + room.Id"
+                  [cdkDropListConnectedTo]="getConnectedTo()"
+                  [cdkDropListData]="[room]"
+                  (cdkDropListDropped)="drop($event)"
+                >
+                  <div class="room-name">{{ room.Name }}</div>
+                  <div class="room-persons">
+                    <ngx-tag
+                      *ngFor="let person of room.People"
+                      cdkDrag
+                      shape="round"
+                      [cdkDragData]="person"
+                      [icon]="
+                        person.GenderTag == 'Ž'
+                          ? 'fas fa-female'
+                          : 'fas fa-male'
+                      "
+                      [text]="person.FirstName + ' ' + person.LastName"
+                    ></ngx-tag>
+                  </div>
+                  <div
+                    class="room-capacity"
+                    [ngClass]="
+                      room.Capacity == 0
+                        ? ''
+                        : room.Capacity == room.TakenSpace
+                        ? 'text-danger'
+                        : 'text-success'
+                    "
+                  >
+                    <nb-icon
+                      pack="eva"
+                      icon="people-outline"
+                      [status]="
+                        room.Capacity == 0
+                          ? 'primary'
+                          : room.Capacity == room.TakenSpace
+                          ? 'danger'
+                          : 'success'
+                      "
+                    ></nb-icon>
+                    {{ room.TakenSpace }}/{{ room.Capacity }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </nb-card-body>
+        </nb-card>
+      </div>
     </div>
+  </div>
 </div>
