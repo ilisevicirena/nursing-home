@@ -555,6 +555,10 @@ const strings: IKeyValue[] = [
   { key: "employeesByJobPosition", value: "Udio zaposlenika po radnom mjestu" },
   { key: "numberOfEmployees", value: "broj zaposlenika" },
   { key: "goToProfile", value: "profil" },
+  {
+    key: "categoriesTemplate",
+    value: "Preuzimanje kategorija u template obliku",
+  },
 ];
 
 const map = new Map(strings.map((obj) => [obj.key, obj.value]));

@@ -1,6 +1,21 @@
 <nb-card class="h-100">
-  <nb-card-header>
-    {{ getString("categories") }}
+  <nb-card-header class="row">
+    <div class="col p-0">
+      {{ getString("categories") }}
+    </div>
+    <div class="col p-0 d-flex justify-content-end">
+      <button
+        nbButton
+        ghost
+        status="primary"
+        size="small"
+        shape="round"
+        (click)="generateTemplate()"
+      >
+        {{ getString("categoriesTemplate") }}
+        <nb-icon pack="eva" icon="download-outline"></nb-icon>
+      </button>
+    </div>
   </nb-card-header>
   <nb-card-body>
     <ngx-grid

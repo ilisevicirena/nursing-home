@@ -8,7 +8,9 @@ import {
   GridSelectEditor,
   GridTextboxEditor,
   GridAutocompleteEditor,
+  fileDownload,
 } from "shared-components";
+import { ToastrService } from "../../services/toastr.service";
 
 @Component({
   selector: "sample-categories",
@@ -20,7 +22,10 @@ export class CategoriesComponent implements OnInit, OnDestroy {
 
   private _subs: Subscription[] = [];
 
-  constructor(private _categoriesService: PersonCategoriesService) {}
+  constructor(
+    private _categoriesService: PersonCategoriesService,
+    private _toastrService: ToastrService
+  ) {}
 
   public data: any[] = [];
   public columns: GridColumn[] = [
@@ -61,6 +66,21 @@ export class CategoriesComponent implements OnInit, OnDestroy {
           console.error(err);
         }
       )
+    );
+  }
+
+  public generateTemplate() {
+    this._toastrService.showToastWithCustumIcon(
+      "info",
+      getString("downloadStartSoon"),
+      "",
+      "download-outline"
+    );
+
+    this._subs.push(
+      this._categoriesService.getTemplate().subscribe((data) => {
+        if (data) fileDownload(data.base64, data.filename);
+      })
     );
   }
 }

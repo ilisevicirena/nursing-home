@@ -24,4 +24,8 @@ export class PersonCategoriesService extends BaseRestApiService {
   public getForPerson(personId: number): Observable<any> {
     return this.http.get(this.apiRoute + "/getForPerson?PersonId=" + personId);
   }
+
+  public getTemplate(): Observable<any> {
+    return this.http.get(this.apiRoute + "/generateTemplate");
+  }
 }
