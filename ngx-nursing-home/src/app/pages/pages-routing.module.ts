@@ -23,6 +23,7 @@ import { MunicipalitiesComponent } from "./municipalities/municipalities.compone
 import { EmployeesComponent } from "./employees/employees.component";
 import { NewEmployeeComponent } from "./new-employee/new-employee.component";
 import { EmployeeComponent } from "./employee/employee.component";
+import { CategoriesComponent } from "./categories/categories.component";
 
 const routes: Routes = [
   {
@@ -121,6 +122,10 @@ const routes: Routes = [
       {
         path: "employee/:id",
         component: EmployeeComponent,
+      },
+      {
+        path: "categories",
+        component: CategoriesComponent,
       },
     ],
   },

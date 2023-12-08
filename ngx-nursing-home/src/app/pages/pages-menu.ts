@@ -112,6 +112,10 @@ export const MENU_ITEMS: any[] = [
         title: getString("municipalities"),
         link: "/pages/municipalities",
       },
+      {
+        title: getString("categories"),
+        link: "/pages/categories",
+      },
     ],
   },
 ];

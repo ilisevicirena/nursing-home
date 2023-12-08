@@ -90,6 +90,7 @@ import { EmployeeComponent } from "./employee/employee.component";
 import { EmployeeVacationsComponent } from "./employee/employee-vacations/employee-vacations.component";
 import { NewVacationComponent } from './employee/new-vacation/new-vacation.component';
 import { ChangeVacationStatusComponent } from './employee/change-vacation-status/change-vacation-status.component';
+import { CategoriesComponent } from './categories/categories.component';
 
 @NgModule({
   imports: [
@@ -187,6 +188,7 @@ import { ChangeVacationStatusComponent } from './employee/change-vacation-status
     EmployeeVacationsComponent,
     NewVacationComponent,
     ChangeVacationStatusComponent,
+    CategoriesComponent,
   ],
 })
 export class PagesModule {}

@@ -27,7 +27,7 @@ BEGIN
 	EXEC dbo.insertCalendarEvent
 		@Start = @FromDate,
 		@End = @ToDate,
-		@Color = 'info', 
+		@Color = 'warning', 
 		@Title = @Title,
 		@Description = @Description,
 		@EmployeeId = @EmployeeId,
