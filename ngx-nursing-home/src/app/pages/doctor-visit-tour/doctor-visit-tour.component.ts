@@ -1,18 +1,17 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { getString } from '../../resources/strings';
-import { Subscription } from 'rxjs';
-import { PersonsService } from '../../services/rest/persons.service';
-import { TagsService } from '../../services/rest/tags.service';
-import { ToastrService } from '../../services/toastr.service';
-import { NotesService } from '../../services/rest/notes.service';
+import { Component, OnDestroy, OnInit } from "@angular/core";
+import { getString } from "../../resources/strings";
+import { Subscription } from "rxjs";
+import { PersonsService } from "../../services/rest/persons.service";
+import { TagsService } from "../../services/rest/tags.service";
+import { ToastrService } from "../../services/toastr.service";
+import { NotesService } from "../../services/rest/notes.service";
 
 @Component({
-  selector: 'sample-doctor-visit-tour',
-  templateUrl: './doctor-visit-tour.component.html',
-  styleUrls: ['./doctor-visit-tour.component.scss']
+  selector: "sample-doctor-visit-tour",
+  templateUrl: "./doctor-visit-tour.component.html",
+  styleUrls: ["./doctor-visit-tour.component.scss"],
 })
 export class DoctorVisitTourComponent implements OnInit, OnDestroy {
-
   public getString = getString;
   public persons: any[] = [];
   public currentPersonIndex: number = 1;
@@ -21,13 +20,28 @@ export class DoctorVisitTourComponent implements OnInit, OnDestroy {
   public visitDate: Date = new Date();
   public percentage: number = 0;
   public statuses: any[] = [
-    { Id: 0, Name: getString('notProvided'), Icon: 'close-circle-outline', Status: 'danger' },
-    { Id: 1, Name: getString('provided'), Icon: 'checkmark-circle-2-outline', Status: 'success' },
-    { Id: 2, Name: getString('inProgress'), Icon: 'loader-outline', Status: 'warning' }
+    {
+      Id: 0,
+      Name: getString("notProvided"),
+      Icon: "close-circle-outline",
+      Status: "danger",
+    },
+    {
+      Id: 1,
+      Name: getString("provided"),
+      Icon: "checkmark-circle-2-outline",
+      Status: "success",
+    },
+    {
+      Id: 2,
+      Name: getString("inProgress"),
+      Icon: "loader-outline",
+      Status: "warning",
+    },
   ];
 
   private subs: Subscription[] = [];
-  private doctorVisitTagId: number = 5;
+  private doctorVisitTagId: number = 1;
   private tags: any[] = [];
 
   constructor(
@@ -35,10 +49,10 @@ export class DoctorVisitTourComponent implements OnInit, OnDestroy {
     private tagsService: TagsService,
     private toastrService: ToastrService,
     private notesService: NotesService
-  ) { }
+  ) {}
 
   ngOnDestroy(): void {
-    this.subs.forEach(element => {
+    this.subs.forEach((element) => {
       element.unsubscribe();
     });
   }
@@ -49,7 +63,7 @@ export class DoctorVisitTourComponent implements OnInit, OnDestroy {
 
   private getTags(): void {
     this.subs.push(
-      this.tagsService.getData().subscribe(data => {
+      this.tagsService.getData().subscribe((data) => {
         this.tags = data;
         this.getPersons();
       })
@@ -58,21 +72,22 @@ export class DoctorVisitTourComponent implements OnInit, OnDestroy {
 
   private getPersons(): void {
     this.subs.push(
-      this.personsService.getData(true).subscribe(data => {
+      this.personsService.getData(true).subscribe((data) => {
         this.persons = data;
-        this.persons.map(x => {
+        this.persons.map((x) => {
           x.Status = this.statuses[0];
           x.Note = {
             Id: 0,
-            Title: getString('doctorVisit') + this.visitDate.toLocaleDateString(),
+            Title:
+              getString("doctorVisit") + this.visitDate.toLocaleDateString(),
             Text: "",
             PersonFirstName: x.FirstName,
             PersonLastName: x.LastName,
-            Tags: [this.tags.find(x => x.Id == this.doctorVisitTagId)],
+            Tags: [this.tags.find((x) => x.Id == this.doctorVisitTagId)],
             Documents: [],
             CreationDate: this.visitDate,
             LastModified: this.visitDate,
-            PersonId: x.Id
+            PersonId: x.Id,
           };
 
           return x;
@@ -81,7 +96,7 @@ export class DoctorVisitTourComponent implements OnInit, OnDestroy {
         if (this.persons.length > 0) {
           this.currentPersonIndex = 0;
           this.currentPersonId = this.persons[0].Id;
-          this.persons[0].Status = this.statuses.find(x => x.Id == 2);
+          this.persons[0].Status = this.statuses.find((x) => x.Id == 2);
           this.currentNote = this.persons[0].Note;
         }
       })
@@ -89,9 +104,9 @@ export class DoctorVisitTourComponent implements OnInit, OnDestroy {
   }
 
   public onPersonNoteSaved(ev: any): void {
-    this.toastrService.showToast('success', getString('saveSuccess'));
+    this.toastrService.showToast("success", getString("saveSuccess"));
     this.subs.push(
-      this.notesService.getNoteDetails(ev).subscribe(data => {
+      this.notesService.getNoteDetails(ev).subscribe((data) => {
         this.persons[this.currentPersonIndex].Note = data;
         this.currentNote = data;
         this.calculatePercentage();
@@ -100,34 +115,44 @@ export class DoctorVisitTourComponent implements OnInit, OnDestroy {
   }
 
   private calculatePercentage(): void {
-    var saved = this.persons.filter(x => x.Note.Id > 0);
+    var saved = this.persons.filter((x) => x.Note.Id > 0);
     this.percentage = (saved.length / this.persons.length) * 100;
   }
 
   public goToPerson(p: any): void {
-    this.persons[this.currentPersonIndex].Status = this.statuses.find(x => x.Id == this.persons[this.currentPersonIndex].Note.Id > 0 ? 1 : 0);
+    this.persons[this.currentPersonIndex].Status = this.statuses.find((x) =>
+      x.Id == this.persons[this.currentPersonIndex].Note.Id > 0 ? 1 : 0
+    );
 
-    this.currentPersonIndex = this.persons.findIndex(x => x.Id == p.Id);
+    this.currentPersonIndex = this.persons.findIndex((x) => x.Id == p.Id);
     this.currentPersonId = p.Id;
-    p.Status = this.statuses.find(x => x.Id == 2);
+    p.Status = this.statuses.find((x) => x.Id == 2);
     this.currentNote = p.Note;
   }
 
   public onBackClick(): void {
-    this.persons[this.currentPersonIndex].Status = this.statuses.find(x => x.Id == this.persons[this.currentPersonIndex].Note.Id > 0 ? 1 : 0);
+    this.persons[this.currentPersonIndex].Status = this.statuses.find((x) =>
+      x.Id == this.persons[this.currentPersonIndex].Note.Id > 0 ? 1 : 0
+    );
 
     this.currentPersonIndex -= 1;
     this.currentPersonId = this.persons[this.currentPersonIndex].Id;
-    this.persons[this.currentPersonIndex].Status = this.statuses.find(x => x.Id == 2);
+    this.persons[this.currentPersonIndex].Status = this.statuses.find(
+      (x) => x.Id == 2
+    );
     this.currentNote = this.persons[this.currentPersonIndex].Note;
   }
 
   public onNextClick(): void {
-    this.persons[this.currentPersonIndex].Status = this.statuses.find(x => x.Id == this.persons[this.currentPersonIndex].Note.Id > 0 ? 1 : 0);
+    this.persons[this.currentPersonIndex].Status = this.statuses.find((x) =>
+      x.Id == this.persons[this.currentPersonIndex].Note.Id > 0 ? 1 : 0
+    );
 
     this.currentPersonIndex += 1;
     this.currentPersonId = this.persons[this.currentPersonIndex].Id;
-    this.persons[this.currentPersonIndex].Status = this.statuses.find(x => x.Id == 2);
+    this.persons[this.currentPersonIndex].Status = this.statuses.find(
+      (x) => x.Id == 2
+    );
     this.currentNote = this.persons[this.currentPersonIndex].Note;
   }
 }

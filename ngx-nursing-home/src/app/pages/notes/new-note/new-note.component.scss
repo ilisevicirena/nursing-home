@@ -1,1 +1,27 @@
-@import '../notes.component.scss';
+@import "../notes.component.scss";
+
+.note-container {
+  height: calc(100% - 2.5rem);
+
+  .note-content {
+    display: flex;
+    flex-flow: column;
+    overflow: hidden;
+
+    .title {
+      margin-top: 0;
+      padding-top: 1rem;
+      flex: 0 1 max-content;
+    }
+
+    .note-editor {
+      flex: 1 1 auto;
+      padding-top: 1rem;
+    }
+
+    .tags {
+      padding-top: 1rem;
+      flex: 0 1 max-content;
+    }
+  }
+}

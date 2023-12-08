@@ -18,8 +18,8 @@
       {{ selectedNote.LastModified | date : "MMM dd, yyyy HH:mm" }}
     </div>
   </div>
-  <div class="row w-100 m-0" style="height: calc(100% - 25px)">
-    <div class="col-md-11 h-100">
+  <div class="row w-100 m-0 note-container">
+    <div class="col-md-11 note-content">
       <div class="title">
         <input
           nbInput
@@ -28,15 +28,14 @@
           [placeholder]="getString('title')"
         />
       </div>
-      <div class="p-0 mt-2">
-        <div
-          [ngxSummernote]="config"
-          [(ngModel)]="selectedNote.Text"
-          nbInput
-        ></div>
+      <div class="note-editor">
+        <ngx-text-editor
+          [(text)]="selectedNote.Text"
+          [placeholder]="getString('typeText')"
+        ></ngx-text-editor>
       </div>
 
-      <div class="tags mt-3">
+      <div class="tags">
         <nb-tag-list *ngIf="selectedNote.Tags.length > 0">
           <nb-tag
             size="small"
