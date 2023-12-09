@@ -1,70 +1,115 @@
 <div class="h-100 w-100 d-flex">
-    <div class="col-md-9 pe-2">
-        <div class="row p-0 mb-2">
-            <div class="col p-0">
-                <button nbButton status="basic" shape="round" [disabled]="currentPersonIndex==0" class="me-2"
-                    (click)="onBackClick()">
-                    <nb-icon pack="eva" icon="chevron-left"></nb-icon>
-                    {{getString('back')}}
-                </button>
-                <button nbButton status="basic" shape="round" [disabled]="currentPersonIndex+1==persons.length"
-                    (click)="onNextClick()">
-                    {{getString('next')}}
-                    <nb-icon pack="eva" icon="chevron-right"></nb-icon>
-                </button>
-            </div>
-            <div class="col p-0 d-flex align-items-center">
-                <nb-progress-bar style="width: 100%;" [(value)]="percentage" status="primary"
-                    [nbTooltip]="getString('completed')" [displayValue]="true"></nb-progress-bar>
-            </div>
-            <div class="col p-0 d-flex justify-content-end">
-                <nb-form-field>
-                    <input nbInput #endDateInput [placeholder]="getString('eventEndDate')" fullWidth
-                        [(ngModel)]="visitDate" autocomplete="off" name="endDate" [nbDatepicker]="endDateDatepicker">
-                    <nb-datepicker #endDateDatepicker></nb-datepicker>
-                    <button nbButton nbSuffix ghost (click)="endDateInput.focus()">
-                        <nb-icon pack="eva" icon="calendar-outline"></nb-icon>
-                    </button>
-                </nb-form-field>
-            </div>
-        </div>
-        <div class="row note-container">
-            <nb-card class="m-0 h-100" *ngIf="currentNote">
-                <nb-card-body class="h-100 w-100">
-                    <sample-new-note [(personId)]="currentPersonId" [(selectedNote)]="currentNote"
-                        (saved)="onPersonNoteSaved($event)"></sample-new-note>
-                </nb-card-body>
-            </nb-card>
-        </div>
+  <div class="col-md-9 pe-2">
+    <div class="row p-0 mb-2">
+      <div class="col p-0 d-flex align-items-center">
+        <button
+          nbButton
+          shape="round"
+          status="primary"
+          class="me-2"
+          (click)="completeDoctorVisit()"
+        >
+          {{ getString("complete") }}
+        </button>
+        <button nbButton shape="round" ghost (click)="cancelDoctorVisit()">
+          {{ getString("cancel") }}
+        </button>
+      </div>
+      <div class="col pe-0 d-flex align-items-center">
+        <nb-progress-bar
+          style="width: 100%"
+          [(value)]="percentage"
+          status="primary"
+          [nbTooltip]="getString('completed')"
+          [displayValue]="true"
+        ></nb-progress-bar>
+      </div>
     </div>
-    <div class="col-md-3 h-100 pe-0">
-        <nb-card class="h-100 m-0">
-            <nb-card-body>
-                <div class="row mb-2" *ngFor="let p of persons">
-                    <nb-card class="m-0 person-card" (click)="goToPerson(p)">
-                        <nb-card-body class="p-2">
-                            <div class="row">
-                                <div class="w-max p-0 d-flex align-items-center">
-                                    <nb-icon pack="eva" icon="person-outline"></nb-icon>
-                                </div>
-                                <div class="col">
-                                    <div class="row label align-items-center">
-                                        <nb-icon class="w-max person-icon ps-0 pe-1" pack="eva" [icon]="p.Status.Icon"
-                                            size="small" [status]="p.Status.Status"></nb-icon>
-                                        {{p.Status.Name}}
-                                    </div>
-                                    <div class="row fw-600">
-                                        {{p.FirstName}} {{p.LastName}} ({{p.JMBG}})
-                                    </div>
-                                </div>
-                                <div class="w-max position-relative" *ngIf="p.Status.Id==2">
-                                    <nb-badge status="primary" position="center end" [dotMode]="true"></nb-badge>
-                                </div>
-                            </div>
-                        </nb-card-body>
-                    </nb-card>
+    <div class="row note-container">
+      <nb-card
+        class="m-0 h-100"
+        *ngIf="currentNote"
+        [nbSpinner]="loading"
+        nbSpinnerSize="large"
+        nbSpinnerStatus="primary"
+      >
+        <nb-card-body class="h-100 w-100">
+          <sample-new-note
+            [(personId)]="currentPersonId"
+            [(selectedNote)]="currentNote"
+            (saved)="onPersonNoteSaved($event)"
+          ></sample-new-note>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>
+  <div class="col-md-3 h-100 pe-0">
+    <nb-card class="h-100 m-0">
+      <nb-card-body>
+        <div class="persons-container">
+          <div class="row mb-2" *ngFor="let p of persons">
+            <nb-card class="m-0 person-card" (click)="goToPerson(p)">
+              <nb-card-body class="p-2">
+                <div class="row">
+                  <div class="w-max p-0 d-flex align-items-center">
+                    <nb-icon pack="eva" icon="person-outline"></nb-icon>
+                  </div>
+                  <div class="col">
+                    <div class="row label align-items-center">
+                      <nb-icon
+                        class="w-max person-icon ps-0 pe-1"
+                        pack="eva"
+                        [icon]="p.Status.Icon"
+                        size="small"
+                        [status]="p.Status.Status"
+                      ></nb-icon>
+                      {{ p.Status.Name }}
+                    </div>
+                    <div class="row fw-600">
+                      {{ p.FirstName }} {{ p.LastName }} ({{ p.JMBG }})
+                    </div>
+                  </div>
+                  <div class="w-max position-relative" *ngIf="p.Status.Id == 2">
+                    <nb-badge
+                      status="primary"
+                      position="center end"
+                      [dotMode]="true"
+                    ></nb-badge>
+                  </div>
                 </div>
-            </nb-card-body>
-        </nb-card>
-    </div>
+              </nb-card-body>
+            </nb-card>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col p-0">
+            <button
+              nbButton
+              status="basic"
+              shape="round"
+              size="small"
+              [disabled]="currentPersonIndex == 0"
+              (click)="onBackClick()"
+            >
+              <nb-icon pack="eva" icon="chevron-left"></nb-icon>
+              {{ getString("back") }}
+            </button>
+          </div>
+          <div class="col p-0 d-flex justify-content-end">
+            <button
+              nbButton
+              status="basic"
+              shape="round"
+              size="small"
+              [disabled]="currentPersonIndex + 1 == persons.length"
+              (click)="onNextClick()"
+            >
+              {{ getString("next") }}
+              <nb-icon pack="eva" icon="chevron-right"></nb-icon>
+            </button>
+          </div>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </div>
 </div>

@@ -50,6 +50,9 @@ create-tb-calendarEventType.sql
 create-tb-calendarEvent.sql
 create-tb-vacationStatus.sql
 create-tb-employeeVacationRelation.sql
+create-tb-doctorVisitTour.sql
+create-tb-doctorVisitTourEmployeeRelation.sql
+create-tb-doctorVisitTourPersonRelation.sql
 insert-tb-documentType.sql
 insert-tb-healthCondition.sql
 insert-tb-floor.sql
@@ -226,3 +229,10 @@ proc-changeVacationStatus.sql
 proc-checkVacationForUpdate.sql
 proc-getRemainingVacationDays.sql
 proc-getVacationsForEmployee.sql
+proc-getDoctors.sql
+proc-getEmployeesBasic.sql
+proc-insertDoctorVisitTour.sql
+proc-getDoctorVisitTourDetails.sql
+proc-deleteDoctorVisitTour.sql
+proc-completeDoctorVisitTour.sql
+proc-insertDoctorVisitTourForPerson.sql

@@ -139,4 +139,107 @@ router.get("/EmployeeDetails", async (request, response) => {
   }
 });
 
+router.get("/employeesBasic", async (request, response) => {
+  try {
+    const pool = await db;
+    const result = await pool.request().query("EXEC [dbo].[getEmployeesBasic]");
+    response.json(result.recordset);
+  } catch (err) {
+    response.status(500);
+    response.send(err.message);
+  }
+});
+
+router.post("/newDoctorVisit", async (request, response) => {
+  try {
+    var objectToSave = request.body;
+    const pool = await db;
+    const result = await pool
+      .request()
+      .input("date", objectToSave.VisitDate)
+      .input("doctors", objectToSave.Doctors)
+      .input("nurses", objectToSave.Nurses)
+      .query(
+        "EXEC [dbo].[insertDoctorVisitTour] @visitDate=@date, @doctors=@doctors, @nurses=@nurses"
+      );
+    if (result != null) response.json(result.recordset);
+    else response.send(getError(8004));
+  } catch (err) {
+    response.status(500);
+    response.send(err.message);
+  }
+});
+
+router.post("/deleteDoctorVisit", async (request, response) => {
+  try {
+    var objectToSave = request.body;
+    const pool = await db;
+    const result = await pool
+      .request()
+      .input("id", objectToSave.Id)
+      .query("EXEC [dbo].[deleteDoctorVisitTour] @Id=@id");
+    if (result != null) response.send({ error: false });
+    else response.send(getError(8004));
+  } catch (err) {
+    response.status(500);
+    response.send(err.message);
+  }
+});
+
+router.post("/completeDoctorVisit", async (request, response) => {
+  try {
+    var objectToSave = request.body;
+    const pool = await db;
+    const result = await pool
+      .request()
+      .input("id", objectToSave.Id)
+      .query("EXEC [dbo].[completeDoctorVisitTour] @Id=@id");
+    if (result != null) response.send({ error: false });
+    else response.send(getError(8004));
+  } catch (err) {
+    response.status(500);
+    response.send(err.message);
+  }
+});
+
+router.get("/getVisitTourDetails", async (request, response) => {
+  try {
+    const pool = await db;
+    const result = await pool
+      .request()
+      .input("id", request.query.id)
+      .query("EXEC [dbo].[getDoctorVisitTourDetails] @Id=@id");
+    if (result.recordsets.length == 3)
+      response.json({
+        Tour: result.recordsets[0],
+        Doctors: result.recordsets[1],
+        Nurses: result.recordsets[2],
+      });
+    else response.send(getError(60001));
+  } catch (err) {
+    response.status(500);
+    response.send(err.message);
+  }
+});
+
+router.post("/insertDoctorVisitForPerson", async (request, response) => {
+  try {
+    var objectToSave = request.body;
+    const pool = await db;
+    const result = await pool
+      .request()
+      .input("id", objectToSave.Id)
+      .input("person", objectToSave.PersonId)
+      .input("note", objectToSave.NoteId)
+      .query(
+        "EXEC [dbo].[insertDoctorVisitTourForPerson] @id=@id, @noteId=@note, @personId=@person"
+      );
+    if (result != null) response.send({ error: false });
+    else response.send(getError(8004));
+  } catch (err) {
+    response.status(500);
+    response.send(err.message);
+  }
+});
+
 module.exports = router;

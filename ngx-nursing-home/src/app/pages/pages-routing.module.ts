@@ -92,7 +92,7 @@ const routes: Routes = [
         component: CalendarComponent,
       },
       {
-        path: "doctor-visit-tour",
+        path: "doctor-visit-tour/:id",
         component: DoctorVisitTourComponent,
       },
       {

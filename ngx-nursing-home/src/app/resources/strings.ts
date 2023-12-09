@@ -559,6 +559,28 @@ const strings: IKeyValue[] = [
     key: "categoriesTemplate",
     value: "Preuzimanje kategorija u template obliku",
   },
+  { key: "newDoctorVisit", value: "Novi liječnički obilazak" },
+  { key: "visitDate", value: "Datum posjete" },
+  { key: "selectDoctor", value: "Odaberi liječnika ili više njih" },
+  {
+    key: "selectNurse",
+    value: "Odaberi medicinskog tehničara/njegovatelja u pratnji",
+  },
+  {
+    key: "visitTourDescription",
+    value:
+      "Pokretanjem liječničkog obilaska pojavit će se na ekranu svi korisnici doma. Molimo da za svakog korisnika kojega je obišao liječnik unsete glavne zaključke posjete. Nakon unosa spremite bilješku za svaku osobu. Liječnički obilazak nije nužno unijeti za sve korisnike, nego samo za koje je posjeta važila. Nakon dovršetka unosa ne zaboravite kliknuti na gumb Završi kako bi se posjeta uspješno spremila!",
+  },
+  { key: "info", value: "Dodatne upute" },
+  { key: "visitTourStarted", value: "Pokrenut je liječnički obilazak." },
+  { key: "startingVisitTour", value: "Liječnički obilazak se pokreće" },
+  { key: "complete", value: "Završi" },
+  { key: "contributors", value: "Sudionici" },
+  { key: "remarks", value: "Zabilješke" },
+  {
+    key: "doctorVisitTourCompleted",
+    value: "Liječnički obilazak uspješno je završen.",
+  },
 ];
 
 const map = new Map(strings.map((obj) => [obj.key, obj.value]));

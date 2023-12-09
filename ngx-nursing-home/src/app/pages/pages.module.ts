@@ -91,6 +91,7 @@ import { EmployeeVacationsComponent } from "./employee/employee-vacations/employ
 import { NewVacationComponent } from './employee/new-vacation/new-vacation.component';
 import { ChangeVacationStatusComponent } from './employee/change-vacation-status/change-vacation-status.component';
 import { CategoriesComponent } from './categories/categories.component';
+import { StartDoctorVisitTourComponent } from './start-doctor-visit-tour/start-doctor-visit-tour.component';
 
 @NgModule({
   imports: [
@@ -189,6 +190,7 @@ import { CategoriesComponent } from './categories/categories.component';
     NewVacationComponent,
     ChangeVacationStatusComponent,
     CategoriesComponent,
+    StartDoctorVisitTourComponent,
   ],
 })
 export class PagesModule {}

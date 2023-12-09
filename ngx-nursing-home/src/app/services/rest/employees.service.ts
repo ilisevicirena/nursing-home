@@ -40,6 +40,38 @@ export class EmployeesService extends BaseRestApiService {
     var obj = JSON.parse(JSON.stringify(model));
     return this.http.post(this.apiRoute + "/add", obj);
   }
+
+  public getEmployeesBasic(): Observable<any> {
+    return this.http.get(this.apiRoute + "/employeesBasic");
+  }
+
+  public newDoctorVisit(model: any): Observable<any> {
+    return this.http.post(this.apiRoute + "/newDoctorVisit", model);
+  }
+
+  public getVisitTourDetails(id: number): Observable<any> {
+    return this.http.get(this.apiRoute + "/getVisitTourDetails?id=" + id);
+  }
+
+  public deleteDoctorVisit(id: number): Observable<any> {
+    return this.http.post(this.apiRoute + "/deleteDoctorVisit", { Id: id });
+  }
+
+  public completeDoctorVisit(id: number): Observable<any> {
+    return this.http.post(this.apiRoute + "/completeDoctorVisit", { Id: id });
+  }
+
+  public insertDoctorVisitForPerson(
+    id: number,
+    personId: number,
+    noteId: number
+  ): Observable<any> {
+    return this.http.post(this.apiRoute + "/insertDoctorVisitForPerson", {
+      Id: id,
+      NoteId: noteId,
+      PersonId: personId,
+    });
+  }
 }
 
 export interface IEmployee extends IBaseSaveModel {

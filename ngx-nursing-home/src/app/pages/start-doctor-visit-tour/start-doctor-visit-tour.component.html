@@ -1,0 +1,183 @@
+<nb-card
+  class="event-card"
+  [nbSpinner]="loading"
+  nbSpinnerSize="large"
+  nbSpinnerStatus="primary"
+  [nbSpinnerMessage]="getString('startingVisitTour')"
+>
+  <nb-card-header class="d-flex">
+    <div class="col">
+      <div class="row m-0 p-0 align-items-center">
+        {{ getString("newDoctorVisit") }}<br />
+      </div>
+    </div>
+    <div class="w-max">
+      <button nbButton ghost shape="round" (click)="close(false)">
+        <nb-icon pack="eva" icon="close-outline"></nb-icon>
+      </button>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <form #event="ngForm">
+      <div class="row m-0">
+        <div class="col-md-6 p-0">
+          <div class="form-group">
+            <div class="label">
+              {{ getString("visitDate") }}
+              <nb-icon
+                pack="eva"
+                icon="alert-circle-outline"
+                status="danger"
+                size="small"
+                class="ms-1 required-mark"
+                [nbTooltip]="getString('required')"
+              ></nb-icon>
+            </div>
+            <div class="value">
+              <nb-form-field>
+                <input
+                  nbInput
+                  #endDateInput
+                  [placeholder]="getString('visitDate')"
+                  fullWidth
+                  [(ngModel)]="visitDate"
+                  autocomplete="off"
+                  name="date"
+                  required
+                  [nbDatepicker]="endDateDatepicker"
+                />
+                <nb-datepicker #endDateDatepicker></nb-datepicker>
+                <button nbButton nbSuffix ghost (click)="endDateInput.focus()">
+                  <nb-icon pack="eva" icon="calendar-outline"></nb-icon>
+                </button>
+              </nb-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row m-0 pt-2">
+        <div class="col-md-12 pe-1 ps-0">
+          <div class="form-group">
+            <div class="label">
+              {{ getString("selectDoctor") }}
+              <nb-icon
+                pack="eva"
+                icon="alert-circle-outline"
+                status="danger"
+                size="small"
+                class="ms-1 required-mark"
+                [nbTooltip]="getString('required')"
+              ></nb-icon>
+            </div>
+            <div class="value">
+              <ngx-tags-autocomplete
+                required
+                [(source)]="doctors"
+                [attributesToShow]="['FirstName', 'LastName']"
+                [attributesToShowInTag]="['FirstName', 'LastName']"
+                [attributesToFilter]="['FirstName', 'LastName']"
+                [multiple]="true"
+                [keyAttribute]="'Id'"
+                [(selectedKeys)]="selectedDoctors"
+                [displayArrow]="true"
+              ></ngx-tags-autocomplete>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row m-0 pt-2">
+        <div class="col-md-12 pe-1 ps-0">
+          <div class="form-group">
+            <div class="label">
+              {{ getString("selectNurse") }}
+              <nb-icon
+                pack="eva"
+                icon="alert-circle-outline"
+                status="danger"
+                size="small"
+                class="ms-1 required-mark"
+                [nbTooltip]="getString('required')"
+              ></nb-icon>
+            </div>
+            <div class="value">
+              <ngx-tags-autocomplete
+                required
+                [(source)]="nurses"
+                [attributesToShow]="['FirstName', 'LastName']"
+                [attributesToShowInTag]="['FirstName', 'LastName']"
+                [attributesToFilter]="['FirstName', 'LastName']"
+                [multiple]="true"
+                [keyAttribute]="'Id'"
+                [(selectedKeys)]="selectedNurses"
+                [displayArrow]="true"
+              ></ngx-tags-autocomplete>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row m-0 pt-2">
+        <div class="col-md-12 pe-1 ps-0">
+          <div class="form-group">
+            <div class="label">
+              {{ getString("info") }}
+              <nb-icon
+                pack="eva"
+                icon="info-outline"
+                status="info"
+                size="small"
+                class="ms-1 required-mark"
+              ></nb-icon>
+            </div>
+            <div class="value">
+              <nb-alert
+                class="mb-0"
+                [outline]="'info'"
+                [ngClass]="'alert-status-info'"
+              >
+                <div class="row m-0 w-100">
+                  <div style="width: 35px">
+                    <nb-tag
+                      [status]="'info'"
+                      filled
+                      text=""
+                      class="p-0"
+                      [style.min-height]="'100%'"
+                      [style.width]="'5px'"
+                    ></nb-tag>
+                  </div>
+                  <div class="col p-0">
+                    {{ getString("visitTourDescription") }}
+                  </div>
+                </div>
+              </nb-alert>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </nb-card-body>
+  <nb-card-footer class="d-flex justify-content-end">
+    <button
+      nbButton
+      ghost
+      shape="round"
+      size="small"
+      class="me-2"
+      (click)="close(false)"
+    >
+      {{ getString("cancel") }}
+    </button>
+    <button
+      (click)="startDoctorVisitTour()"
+      nbButton
+      status="primary"
+      shape="round"
+      size="small"
+      [disabled]="
+        !visitDate || selectedDoctors.length == 0 || selectedNurses.length == 0
+      "
+    >
+      {{ getString("start") }}
+    </button>
+  </nb-card-footer>
+</nb-card>
