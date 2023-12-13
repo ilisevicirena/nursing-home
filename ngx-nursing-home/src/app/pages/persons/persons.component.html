@@ -8,11 +8,7 @@
     </button>
   </nb-button-group>
 </div>
-<sample-no-data
-  *ngIf="personsData.length == 0"
-  [title]="getString('noData')"
-></sample-no-data>
-<div class="content-container" *ngIf="personsData.length > 0">
+<div class="content-container">
   <nb-card *ngIf="currentView == 'grid'" class="h-100">
     <nb-card-header class="d-flex align-items-center">
       {{ unactivePersonsString }}
@@ -78,6 +74,10 @@
       </div>
     </div>
     <div class="row m-0" id="cards">
+      <sample-no-data
+        *ngIf="personsData.length == 0"
+        [title]="getString('noData')"
+      ></sample-no-data>
       <div
         class="col-md-3 p-1"
         *ngFor="let person of personsData | filter : searchTerm"

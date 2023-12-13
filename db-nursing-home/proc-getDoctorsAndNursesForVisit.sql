@@ -22,4 +22,3 @@ BEGIN
 	left join dbo.Employee e on dver.EmployeeId=e.Id
 	where dver.DoctorVIsitTourId=@Id and (JobPositionId=2 or JobPositionId=3);
 END
-GO
