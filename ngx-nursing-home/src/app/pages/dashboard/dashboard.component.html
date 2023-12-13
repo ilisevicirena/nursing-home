@@ -2,98 +2,94 @@
   <div class="row h-100">
     <div class="col-md-8 ps-0 first-box">
       <div class="row first-row">
-        <div class="col-md-4 h-100 ps-0 overflow-auto">
-          <div class="row">
-            <nb-card class="m-0 summary-card">
-              <nb-card-body>
-                <div class="row mb-2">
-                  <div class="w-max">
-                    <nb-icon
-                      pack="eva"
-                      icon="people-outline"
-                      status="primary"
-                      size="large"
-                    ></nb-icon>
-                  </div>
-                  <div class="col">
-                    {{ summary?.TakenSpace }} / {{ summary?.Capacity }}
-                  </div>
-                </div>
-                <div class="row">
-                  <nb-progress-bar
-                    [value]="progressValue"
+        <div class="col-md-4 summary-container">
+          <nb-card class="m-0 summary-card border-bottom-none">
+            <nb-card-body>
+              <div class="row mb-2">
+                <div class="w-max">
+                  <nb-icon
+                    pack="eva"
+                    icon="people-outline"
                     status="primary"
-                    [displayValue]="true"
-                  ></nb-progress-bar>
+                    size="large"
+                  ></nb-icon>
                 </div>
-              </nb-card-body>
-            </nb-card>
-          </div>
-
-          <div class="row mt-2">
-            <nb-card class="m-0 summary-card">
-              <nb-card-body>
-                <div class="row label mb-2 ps-2">
-                  {{ getString("oldestPerson") }}
+                <div class="col">
+                  {{ summary?.TakenSpace }} / {{ summary?.Capacity }}
                 </div>
-                <div class="row">
-                  <div class="w-max">
-                    <nb-icon
-                      pack="eva"
-                      icon="person-outline"
-                      status="primary"
-                    ></nb-icon>
+              </div>
+              <div class="row mb-2">
+                <nb-progress-bar
+                  [value]="progressValue"
+                  status="primary"
+                  [displayValue]="true"
+                ></nb-progress-bar>
+              </div>
+            </nb-card-body>
+          </nb-card>
+          <nb-card class="m-0 summary-card border-bottom-none border-top-none">
+            <div class="circle top-right"></div>
+            <div class="circle top-left"></div>
+            <div class="circle bottom-right"></div>
+            <div class="circle bottom-left"></div>
+            <nb-card-body>
+              <div class="row label mt-2 ps-2">
+                {{ getString("oldestPerson") }}
+              </div>
+              <div class="row mb-2">
+                <div class="w-max">
+                  <nb-icon
+                    pack="eva"
+                    icon="person-outline"
+                    status="primary"
+                  ></nb-icon>
+                </div>
+                <div class="col d-block" *ngIf="oldestPerson">
+                  <div class="value">
+                    {{ oldestPerson?.FirstName }} {{ oldestPerson?.LastName }}
                   </div>
-                  <div class="col d-block" *ngIf="oldestPerson">
-                    <div class="value">
-                      {{ oldestPerson?.FirstName }} {{ oldestPerson?.LastName }}
-                    </div>
-                    <div class="value">
-                      {{ oldestPerson?.BirthDate | date : "dd.MM.yyyy." }} ({{
-                        oldestPerson?.Years
-                      }})
-                    </div>
-                  </div>
-                </div>
-              </nb-card-body>
-            </nb-card>
-          </div>
-
-          <div class="row mt-2">
-            <nb-card class="m-0 summary-card">
-              <nb-card-body>
-                <div class="row label mb-2 ps-2">
-                  {{ getString("longestPerson") }}
-                </div>
-                <div class="row">
-                  <div class="w-max d-flex align-items-center">
-                    <nb-icon
-                      pack="eva"
-                      icon="person-done-outline"
-                      status="primary"
-                    ></nb-icon>
-                  </div>
-                  <div class="col d-block" *ngIf="longestPerson">
-                    <div class="value">
-                      {{ longestPerson?.FirstName }}
-                      {{ longestPerson?.LastName }}
-                    </div>
-                    <div class="value">
-                      {{ longestPerson?.StartDate | date : "dd.MM.yyyy." }}
-                    </div>
-                    <div class="value">
-                      {{ longestPerson?.PassedTime?.years }}
-                      {{ getString("longestPersonYears") }},
-                      {{ longestPerson?.PassedTime?.months }}
-                      {{ getString("longestPersonMonths") }},
-                      {{ longestPerson?.PassedTime?.days }}
-                      {{ getString("longestPersonDays") }}
-                    </div>
+                  <div class="value">
+                    {{ oldestPerson?.BirthDate | date : "dd.MM.yyyy." }} ({{
+                      oldestPerson?.Years
+                    }})
                   </div>
                 </div>
-              </nb-card-body>
-            </nb-card>
-          </div>
+              </div>
+            </nb-card-body>
+          </nb-card>
+          <nb-card class="m-0 summary-card border-top-none">
+            <nb-card-body>
+              <div class="row label ps-2">
+                {{ getString("longestPerson") }}
+              </div>
+              <div class="row">
+                <div class="w-max d-flex align-items-center">
+                  <nb-icon
+                    pack="eva"
+                    icon="person-done-outline"
+                    status="primary"
+                  ></nb-icon>
+                </div>
+                <div class="col d-block" *ngIf="longestPerson">
+                  <div class="value">
+                    {{ longestPerson?.FirstName }}
+                    {{ longestPerson?.LastName }}
+                  </div>
+                  <div class="value">
+                    {{ longestPerson?.StartDate | date : "dd.MM.yyyy." }}
+                  </div>
+                  <div class="value">
+                    {{ longestPerson?.PassedTime?.years }}
+                    {{ getString("longestPersonYears") }},
+                    {{ longestPerson?.PassedTime?.months }}
+                    {{ getString("longestPersonMonths") }},
+                    {{ longestPerson?.PassedTime?.days }}
+                    {{ getString("longestPersonDays") }}
+                  </div>
+                </div>
+              </div>
+            </nb-card-body>
+          </nb-card>
         </div>
 
         <div class="col-md-4 h-100 ps-0">
@@ -173,34 +169,6 @@
                   <div class="break"></div>
                   <div class="label">
                     {{ getString("male") }}
-                  </div>
-                </div>
-              </div>
-            </nb-card-body>
-          </nb-card>
-        </div>
-
-        <div class="col-md-4 h-100 ps-0">
-          <nb-card class="mb-0 h-100 round-card">
-            <nb-card-body>
-              <div class="semi-primary-card h-100 w-100 position-relative">
-                <div class="row h-100">
-                  <div class="w-50">
-                    <div class="label">
-                      {{ getString("currentEmployees") }}
-                    </div>
-                    <div class="card-value">
-                      {{ allTimeEmployees?.CurrentEmployees }}
-                    </div>
-                  </div>
-                  <div class="divider"></div>
-                  <div class="w-50">
-                    <div class="label">
-                      {{ getString("totalEmployees") }}
-                    </div>
-                    <div class="card-value">
-                      {{ allTimeEmployees?.AllTimeEmployees }}
-                    </div>
                   </div>
                 </div>
               </div>
