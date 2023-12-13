@@ -47,7 +47,6 @@ export class DashboardComponent implements OnDestroy, OnInit {
     this.subs.push(
       this.summaryService.getDashboardSummary().subscribe((data) => {
         if (data) {
-          console.log(data);
           if (data.Summary.length > 0) {
             this.summary = data.Summary[0];
             this.progressValue = Math.trunc(

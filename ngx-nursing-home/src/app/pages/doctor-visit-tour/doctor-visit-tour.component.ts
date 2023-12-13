@@ -7,6 +7,7 @@ import { ToastrService } from "../../services/toastr.service";
 import { NotesService } from "../../services/rest/notes.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { EmployeesService } from "../../services/rest/employees.service";
+declare const echarts: any;
 
 @Component({
   selector: "sample-doctor-visit-tour",
@@ -224,37 +225,39 @@ export class DoctorVisitTourComponent implements OnInit, OnDestroy {
   public completeDoctorVisit() {
     this.loading = true;
     this.subs.push(
-      this.employeesService.completeDoctorVisit(this.tourId).subscribe(() => {
-        this.persons.forEach((person, index) => {
-          if (person.Note.Id > 0) {
-            this.subs.push(
-              this.employeesService
-                .insertDoctorVisitForPerson(
-                  this.tourId,
-                  person.Id,
-                  person.Note.Id
-                )
-                .subscribe(() => {
-                  if (index == this.persons.length - 1) {
-                    this.loading = false;
-                    this.toastrService.showToast(
-                      "success",
-                      getString("doctorVisitTourCompleted")
-                    );
-                    this.router.navigateByUrl("/pages/dashboard");
-                  }
-                })
-            );
-          } else if (index == this.persons.length - 1) {
-            this.loading = false;
-            this.toastrService.showToast(
-              "success",
-              getString("doctorVisitTourCompleted")
-            );
-            this.router.navigateByUrl("/pages/dashboard");
-          }
-        });
-      })
+      this.employeesService
+        .completeDoctorVisit(this.tourId, this.persons.length)
+        .subscribe(() => {
+          this.persons.forEach((person, index) => {
+            if (person.Note.Id > 0) {
+              this.subs.push(
+                this.employeesService
+                  .insertDoctorVisitForPerson(
+                    this.tourId,
+                    person.Id,
+                    person.Note.Id
+                  )
+                  .subscribe(() => {
+                    if (index == this.persons.length - 1) {
+                      this.loading = false;
+                      this.toastrService.showToast(
+                        "success",
+                        getString("doctorVisitTourCompleted")
+                      );
+                      this.router.navigateByUrl("/pages/dashboard");
+                    }
+                  })
+              );
+            } else if (index == this.persons.length - 1) {
+              this.loading = false;
+              this.toastrService.showToast(
+                "success",
+                getString("doctorVisitTourCompleted")
+              );
+              this.router.navigateByUrl("/pages/dashboard");
+            }
+          });
+        })
     );
   }
 }

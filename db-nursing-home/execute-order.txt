@@ -236,3 +236,8 @@ proc-getDoctorVisitTourDetails.sql
 proc-deleteDoctorVisitTour.sql
 proc-completeDoctorVisitTour.sql
 proc-insertDoctorVisitTourForPerson.sql
+proc-getCompletedDoctorVisitsWithDetails.sql
+proc-getDoctorsAndNursesForVisit.sql
+proc-getPersonsForVisit.sql
+proc-getSummaryForVisit.sql
+proc-getNotesForDoctorVisitTour.sql

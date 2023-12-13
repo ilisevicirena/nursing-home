@@ -403,7 +403,6 @@ export class PersonCalculationComponent implements OnInit, OnDestroy {
 
   public recalculateSelectedClick(): void {
     var selected = this.table.getSelectedRows();
-    console.log(selected);
     if (selected.length == 1) {
       this.subs.push(
         this.dialogService

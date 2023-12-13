@@ -57,8 +57,11 @@ export class EmployeesService extends BaseRestApiService {
     return this.http.post(this.apiRoute + "/deleteDoctorVisit", { Id: id });
   }
 
-  public completeDoctorVisit(id: number): Observable<any> {
-    return this.http.post(this.apiRoute + "/completeDoctorVisit", { Id: id });
+  public completeDoctorVisit(id: number, total: number): Observable<any> {
+    return this.http.post(this.apiRoute + "/completeDoctorVisit", {
+      Id: id,
+      Total: total,
+    });
   }
 
   public insertDoctorVisitForPerson(

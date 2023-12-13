@@ -87,6 +87,11 @@ export const MENU_ITEMS: any[] = [
     link: "/pages/calculation",
   },
   {
+    title: getString("doctorVisits"),
+    icon: "activity-outline",
+    link: "/pages/doctor-visits",
+  },
+  {
     title: getString("fastActions"),
     icon: "grid-outline",
     link: undefined,

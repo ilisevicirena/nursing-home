@@ -193,7 +193,10 @@ router.post("/completeDoctorVisit", async (request, response) => {
     const result = await pool
       .request()
       .input("id", objectToSave.Id)
-      .query("EXEC [dbo].[completeDoctorVisitTour] @Id=@id");
+      .input("total", objectToSave.Total)
+      .query(
+        "EXEC [dbo].[completeDoctorVisitTour] @Id=@id, @TotalPersons=@total"
+      );
     if (result != null) response.send({ error: false });
     else response.send(getError(8004));
   } catch (err) {

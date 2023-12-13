@@ -88,10 +88,12 @@ import { NewEmployeeComponent } from "./new-employee/new-employee.component";
 import { EmployeeBasicDataComponent } from "./employee-basic-data/employee-basic-data.component";
 import { EmployeeComponent } from "./employee/employee.component";
 import { EmployeeVacationsComponent } from "./employee/employee-vacations/employee-vacations.component";
-import { NewVacationComponent } from './employee/new-vacation/new-vacation.component';
-import { ChangeVacationStatusComponent } from './employee/change-vacation-status/change-vacation-status.component';
-import { CategoriesComponent } from './categories/categories.component';
-import { StartDoctorVisitTourComponent } from './start-doctor-visit-tour/start-doctor-visit-tour.component';
+import { NewVacationComponent } from "./employee/new-vacation/new-vacation.component";
+import { ChangeVacationStatusComponent } from "./employee/change-vacation-status/change-vacation-status.component";
+import { CategoriesComponent } from "./categories/categories.component";
+import { StartDoctorVisitTourComponent } from "./start-doctor-visit-tour/start-doctor-visit-tour.component";
+import { DoctorVisitsComponent } from "./doctor-visits/doctor-visits.component";
+import { DoctorVisitDetailsComponent } from "./doctor-visits/doctor-visit-details/doctor-visit-details.component";
 
 @NgModule({
   imports: [
@@ -191,6 +193,8 @@ import { StartDoctorVisitTourComponent } from './start-doctor-visit-tour/start-d
     ChangeVacationStatusComponent,
     CategoriesComponent,
     StartDoctorVisitTourComponent,
+    DoctorVisitsComponent,
+    DoctorVisitDetailsComponent,
   ],
 })
 export class PagesModule {}

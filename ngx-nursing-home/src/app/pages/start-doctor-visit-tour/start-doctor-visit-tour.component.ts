@@ -45,7 +45,6 @@ export class StartDoctorVisitTourComponent implements OnInit, OnDestroy {
   private getEmployees() {
     this.subs.push(
       this.employeesService.getEmployeesBasic().subscribe((data) => {
-        console.log(data);
         this.doctors = data.filter(
           (x) => x.JobPositionId == this.doctorJobPositionId
         );

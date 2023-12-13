@@ -1,6 +1,7 @@
 CREATE PROCEDURE [dbo].[completeDoctorVisitTour]
-	@id int
+		@id int,
+	@TotalPersons int
 AS
 BEGIN
-   update dbo.DoctorVisitTour set Completed=1 where Id=@id;        
+    update dbo.DoctorVisitTour set Completed=1, TotalPersons=@TotalPersons where Id=@id;        
 END

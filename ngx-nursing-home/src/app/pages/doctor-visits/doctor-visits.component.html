@@ -1,0 +1,22 @@
+<nb-card class="h-100 m-0">
+  <nb-card-header>
+    {{ getString("doctorVisits") }}
+  </nb-card-header>
+  <nb-card-body>
+    <div class="h-100">
+      <ngx-grid
+        [columns]="columns"
+        [(data)]="visits"
+        [addEnabled]="false"
+        [loadingEnabled]="false"
+        [editEnabled]="false"
+        [deleteEnabled]="false"
+        [selectionEnabled]="true"
+        [selectRowByClick]="true"
+        [selectionMultiple]="false"
+        [defaultPerPageOption]="10"
+        (selectionChanged)="onSelectionChange($event)"
+      ></ngx-grid>
+    </div>
+  </nb-card-body>
+</nb-card>

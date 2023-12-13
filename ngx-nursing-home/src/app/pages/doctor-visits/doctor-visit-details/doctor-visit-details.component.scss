@@ -1,0 +1,152 @@
+@import "../../../@theme/styles/themes.scss";
+
+::ng-deep sample-doctor-visit-details {
+  height: 100%;
+}
+
+::ng-deep .cdk-overlay-pane.doctor-visit-details {
+  height: 100%;
+  width: 100%;
+
+  nb-dialog-container {
+    height: 100%;
+    width: 100%;
+  }
+}
+
+.tabset {
+  width: 55px;
+}
+
+.doctor-visit-details-container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+
+  .container {
+    width: 50%;
+    padding: 0.5rem;
+    height: 100%;
+  }
+}
+
+.title {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+::ng-deep .cdk-overlay-backdrop.doctor-visit-details-backdrop {
+  background: nb-theme(overlay-backdrop-background-color);
+}
+
+.tab-content {
+  .card-value-secondary {
+    font-size: 25px;
+    padding-top: 0.5rem;
+    font-weight: 600;
+  }
+}
+
+.h-90 {
+  height: 90%;
+}
+
+.h-10 {
+  height: 10%;
+}
+
+@include nb-install-component {
+  .echart {
+    width: 250px;
+    height: 275px;
+  }
+  .bg-basic {
+    background-color: nb-theme(layout-background-color);
+  }
+
+  .border-basic {
+    border-top: 1px solid nb-theme(color-basic-500);
+  }
+
+  .divider {
+    width: 4px;
+    background: nb-theme(color-primary-500);
+    border-radius: 1rem;
+    height: 3rem;
+    padding: 0;
+    position: absolute;
+    left: 49%;
+    top: 0;
+  }
+
+  nb-accordion-item-header {
+    border: 1px solid nb-theme(color-basic-400);
+  }
+
+  .col-md-6.fw-600 {
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .note-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: nb-theme(color-basic-600);
+  }
+
+  .grey-card.profile {
+    .circle {
+      height: 50px;
+      width: 50px;
+      border-radius: 50%;
+      background-color: nb-theme(color-basic-400);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      i {
+        color: nb-theme(color-primary-500);
+        font-size: 1rem;
+      }
+    }
+  }
+
+  .tabs-container {
+    height: 100%;
+    padding: 5rem 0;
+
+    .tab {
+      border-bottom: 15px solid transparent;
+      border-top: 16px solid transparent;
+      border-right: 50px solid nb-theme(card-background-color);
+      height: 85px;
+      position: relative;
+
+      i {
+        position: absolute;
+        left: 22px;
+        top: 16px;
+        font-size: 20px;
+        color: nb-theme(color-basic-500);
+      }
+    }
+
+    .tab:hover {
+      cursor: pointer;
+
+      i {
+        color: nb-theme(color-primary-500);
+      }
+    }
+
+    .tab.active {
+      border-right-color: nb-theme(color-basic-400);
+      i {
+        color: nb-theme(color-primary-500);
+      }
+    }
+  }
+}

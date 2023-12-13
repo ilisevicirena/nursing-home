@@ -2,6 +2,7 @@ CREATE TABLE [dbo].[DoctorVisitTour](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[Date] [datetime] NOT NULL,
 	[Completed] [bit] NOT NULL,
+	[TotalPersons] [int] NULL,
  CONSTRAINT [PK_DoctorVisitTour] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC

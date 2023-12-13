@@ -153,7 +153,6 @@ export class EmployeeBasicDataComponent implements OnInit, OnDestroy {
   }
 
   public citiesOnSelectionChanged(e: AutocompleteSelectionModel) {
-    console.log(e);
     this.employeeData.BirthCityId = e.selectedItemKey;
   }
 

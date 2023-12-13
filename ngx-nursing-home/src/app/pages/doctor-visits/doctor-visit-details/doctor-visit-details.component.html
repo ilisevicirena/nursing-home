@@ -1,0 +1,408 @@
+<div class="doctor-visit-details-container">
+  <div class="row container">
+    <div class="p-0 tabset">
+      <div class="tabs-container">
+        <div
+          class="tab"
+          *ngFor="let t of tabs"
+          [ngClass]="t.active ? 'active' : ''"
+          (click)="toggleTab(t)"
+          [nbTooltip]="t.tooltip"
+        >
+          <i [class]="t.icon"></i>
+        </div>
+      </div>
+    </div>
+    <div class="col p-0 h-100">
+      <nb-card class="h-100">
+        <nb-card-header>
+          <div class="row">
+            <div class="col p-0 d-flex align-items-center">
+              <div class="row">
+                <div class="widow-header-template w-100">
+                  <div class="d-flex title-container-person">
+                    <nb-icon
+                      pack="eva"
+                      icon="calendar-outline"
+                      status="basic"
+                    ></nb-icon>
+                    <div class="window-title-person fw-600">
+                      {{ tour?.Date | date : "dd.MM.yyyy." }}
+                    </div>
+                  </div>
+                  <div class="d-flex title-container-person-details">
+                    <div class="window-title-person">
+                      {{ getString("doctorVisitShort") }}
+                    </div>
+                    <div class="title-id">#{{ id }}</div>
+                  </div>
+                  <div class="d-flex mt-2">
+                    <ngx-tag
+                      color="success"
+                      [text]="getString('completed')"
+                      [appearance]="'filled'"
+                      shape="round"
+                      [isEvaIcon]="true"
+                      icon="checkmark-circle-outline"
+                    ></ngx-tag>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col p-0 d-flex justify-content-end">
+              <button nbButton ghost shape="round" style="height: max-content">
+                <nb-icon
+                  pack="eva"
+                  icon="close-outline"
+                  (click)="close(false)"
+                ></nb-icon>
+              </button>
+            </div>
+          </div>
+        </nb-card-header>
+        <nb-card-body [ngClass]="selectedTab == 3 ? 'p-0' : ''">
+          <div class="h-100 tab-content" *ngIf="selectedTab == 1">
+            <div class="row">
+              <div class="col-md-4">
+                <div class="grey-card h-100">
+                  <div class="label w-100 d-flex justify-content-center">
+                    {{ getString("numberOfDoctors") }}
+                  </div>
+                  <div
+                    class="card-value-secondary w-100 d-flex justify-content-center"
+                  >
+                    {{ tour?.NumberOfDoctors }}
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="grey-card h-100">
+                  <div class="label w-100 d-flex justify-content-center">
+                    {{ getString("numberOfNurses") }}
+                  </div>
+                  <div
+                    class="card-value-secondary w-100 d-flex justify-content-center"
+                  >
+                    {{ tour?.NumberOfNurses }}
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="grey-card h-100">
+                  <div class="label w-100 d-flex justify-content-center">
+                    {{ getString("numberOfVisitedPersons") }}
+                  </div>
+                  <div
+                    class="card-value-secondary w-100 d-flex justify-content-center"
+                  >
+                    {{ tour?.Persons }}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="group-title mt-2">
+              {{ getString("doctors") }}
+              <div class="line"></div>
+            </div>
+            <div class="row">
+              <div class="col-md-4" *ngFor="let d of doctors">
+                <div class="grey-card profile">
+                  <div class="w-100 d-flex justify-content-center">
+                    <div class="circle">
+                      <i class="icon-large" [class]="d.Icon"></i>
+                    </div>
+                  </div>
+                  <div class="fw-600 w-100 d-flex justify-content-center mt-3">
+                    {{ d.FirstName }} {{ d.LastName }}
+                  </div>
+                  <div class="label w-100 d-flex justify-content-center">
+                    {{ d.JobPositionName }}
+                  </div>
+                  <div
+                    class="label w-100 d-flex justify-content-center mt-2 mb-2"
+                  >
+                    {{ d.JMBG }}
+                  </div>
+                  <div class="w-100 d-flex justify-content-center">
+                    <button
+                      nbButton
+                      ghost
+                      shape="round"
+                      status="primary"
+                      size="small"
+                      (click)="goToProfile(d.EmployeeId)"
+                    >
+                      {{ getString("goToProfile") }}
+                      <nb-icon
+                        pack="eva"
+                        icon="external-link-outline"
+                      ></nb-icon>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="group-title mt-2">
+              {{ getString("nurses") }}
+              <div class="line"></div>
+            </div>
+            <div class="row">
+              <div class="col-md-4" *ngFor="let d of nurses">
+                <div class="grey-card profile">
+                  <div class="w-100 d-flex justify-content-center">
+                    <div class="circle">
+                      <i [class]="d.Icon"></i>
+                    </div>
+                  </div>
+                  <div class="fw-600 w-100 d-flex justify-content-center mt-3">
+                    {{ d.FirstName }} {{ d.LastName }}
+                  </div>
+                  <div class="label w-100 d-flex justify-content-center">
+                    {{ d.JobPositionName }}
+                  </div>
+                  <div
+                    class="label w-100 d-flex justify-content-center mt-2 mb-2"
+                  >
+                    {{ d.JMBG }}
+                  </div>
+                  <div class="w-100 d-flex justify-content-center">
+                    <button
+                      nbButton
+                      ghost
+                      shape="round"
+                      status="primary"
+                      size="small"
+                      (click)="goToProfile(d.EmployeeId)"
+                    >
+                      {{ getString("goToProfile") }}
+                      <nb-icon
+                        pack="eva"
+                        icon="external-link-outline"
+                      ></nb-icon>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="selectedTab == 2" class="h-100 overflow-auto">
+            <nb-accordion [multi]="false">
+              <nb-accordion-item
+                class="mb-2"
+                *ngFor="let p of persons"
+                (collapsedChange)="collapsedChange($event, p)"
+              >
+                <nb-accordion-item-header>
+                  <div>
+                    <div>{{ p.FirstName }} {{ p.LastName }}</div>
+                    <div class="label">{{ p.JMBG }}</div>
+                  </div>
+                  <nb-tag
+                    class="ms-3"
+                    [status]="p.Active ? 'success' : 'danger'"
+                    [text]="
+                      p.Active ? getString('active') : getString('unactive')
+                    "
+                    size="small"
+                    appearance="outline"
+                  ></nb-tag>
+                </nb-accordion-item-header>
+                <nb-accordion-item-body>
+                  <div class="col-md-12">
+                    <div class="note-title">
+                      {{ currentNote?.Title }}
+                    </div>
+                    <div class="content" [innerHTML]="currentNote?.Text"></div>
+                    <div class="tags mt-3">
+                      <nb-tag-list *ngIf="currentNote?.Tags?.length > 0">
+                        <nb-tag
+                          size="small"
+                          *ngFor="let t of currentNote?.Tags"
+                          [text]="t.Name"
+                          [style.background-color]="hexToRgbA(t.Color)"
+                          [appearance]="'outline'"
+                          [style.color]="t.Color"
+                          [style.border-color]="t.Color"
+                        ></nb-tag>
+                      </nb-tag-list>
+                    </div>
+                    <div class="mt-3">
+                      <button
+                        nbButton
+                        size="small"
+                        ghost
+                        shape="round"
+                        status="primary"
+                        (click)="openDocumentsDialog()"
+                        [nbTooltip]="getString('documentsManagement')"
+                      >
+                        {{ currentNote?.Documents?.length }}
+                        <nb-icon pack="eva" icon="attach-outline"></nb-icon>
+                      </button>
+                    </div>
+                  </div>
+                </nb-accordion-item-body>
+              </nb-accordion-item>
+            </nb-accordion>
+          </div>
+
+          <div *ngIf="selectedTab == 3" class="h-100">
+            <div class="row h-90">
+              <div class="col-md-7 h-100 overflow-auto">
+                <div class="group-title mt-2">
+                  {{ getString("basicStatistics") }}
+                  <div class="line"></div>
+                </div>
+                <div class="row mt-3">
+                  <div class="col-md-12">
+                    <div class="grey-card">
+                      <div class="row w-100">
+                        <div class="fw-600 w-100 d-flex justify-content-end">
+                          {{ getString("visitPassedTime") }}
+                        </div>
+                      </div>
+                      <div class="row mt-3 position-relative">
+                        <div class="col-md-6 fw-600">
+                          {{ summary?.TimePassed?.MonthsDifference }}
+                          <span
+                            *ngIf="
+                              !summary?.TimePassed?.MonthsDifference &&
+                              summary?.TimePassed?.MonthsDifference != 0
+                            "
+                            >-</span
+                          >
+                        </div>
+                        <div class="divider"></div>
+                        <div class="col-md-6 fw-600">
+                          {{ summary?.TimePassed?.DaysDifference }}
+                          <span
+                            *ngIf="
+                              !summary?.TimePassed?.DaysDifference &&
+                              summary?.TimePassed?.DaysDifference != 0
+                            "
+                            >-</span
+                          >
+                        </div>
+                      </div>
+                      <div class="row mt-3">
+                        <div class="col-md-6 d-flex justify-content-center">
+                          <div class="label">
+                            {{ getString("visitMonths") }}
+                          </div>
+                        </div>
+                        <div class="col-md-6 d-flex justify-content-center">
+                          <div class="label">{{ getString("visitDays") }}</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row mt-3">
+                  <div class="col-md-12">
+                    <div class="grey-card">
+                      <div class="row w-100">
+                        <div class="fw-600 w-100 d-flex justify-content-end">
+                          {{ getString("visited") }}
+                        </div>
+                      </div>
+                      <div class="row mt-3 position-relative">
+                        <div class="col-md-6 fw-600">
+                          {{ summary?.Visited?.TotalPersons }}
+                          <span *ngIf="!summary?.Visited?.TotalPersons">-</span>
+                        </div>
+                        <div class="divider"></div>
+                        <div class="col-md-6 fw-600">
+                          {{ summary?.Visited?.VisitedPersons }}
+                          <span *ngIf="!summary?.Visited?.VisitedPersons"
+                            >-</span
+                          >
+                        </div>
+                      </div>
+                      <div class="row mt-3">
+                        <div class="col-md-6 d-flex justify-content-center">
+                          <div class="label">
+                            {{ getString("totalPersons") }}
+                          </div>
+                        </div>
+                        <div class="col-md-6 d-flex justify-content-center">
+                          <div class="label">
+                            {{ getString("visitedPersons") }}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-5 bg-basic h-100 overflow-auto">
+                <div class="group-title mt-2">
+                  {{ getString("doctorStatistics") }}
+                  <div class="line"></div>
+                </div>
+                <div class="row mt-3" *ngFor="let d of summary?.DoctorStats">
+                  <div class="col-md-12">
+                    <nb-card class="round-card m-0">
+                      <nb-card-body>
+                        <div class="row">
+                          <div class="col-md-10 p-0">
+                            <div class="fw-600">
+                              {{ d.FirstName }} {{ d.LastName }}
+                            </div>
+                            <div class="label mb-2">
+                              {{ getString("totalVisits") }}
+                            </div>
+                            <ngx-tag
+                              icon="fas fa-calculator"
+                              [text]="d.NumberOfCompletedVisits"
+                            ></ngx-tag>
+                          </div>
+                          <div
+                            class="col-md-2 d-flex justify-content-center align-items-center"
+                          >
+                            <button
+                              nbButton
+                              ghost
+                              shape="round"
+                              status="primary"
+                              size="small"
+                              (click)="goToProfile(d.DoctorId)"
+                            >
+                              {{ getString("goToProfile") }}
+                              <nb-icon
+                                pack="eva"
+                                icon="external-link-outline"
+                              ></nb-icon>
+                            </button>
+                          </div>
+                        </div>
+                      </nb-card-body>
+                    </nb-card>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row h-10 bg-basic border-basic">
+              <div class="row d-flex h-100 w-100 align-items-center">
+                <button
+                  nbButton
+                  ghost
+                  status="primary"
+                  size="small"
+                  shape="round"
+                  style="width: max-content"
+                  (click)="downloadAllNotes()"
+                >
+                  {{ getString("downloadAllNotes") }}
+                  <nb-icon pack="eva" icon="download-outline"></nb-icon>
+                </button>
+                <sample-note-export></sample-note-export>
+              </div>
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>
+</div>
