@@ -1,99 +1,115 @@
 @import "../../@theme/styles/themes.scss";
 
 ::ng-deep sample-accomodation-management {
-    height: 100%;
+  height: 100%;
 }
 
 .floors {
-    .row {
-        margin-bottom: 0.5rem !important;
-        margin-left: 0;
-        margin-right: 0;
-        margin-bottom: 0;
-    }
+  .row {
+    margin-bottom: 0.5rem !important;
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+  }
 
-    .row:last-child {
-        margin-bottom: 0;
-        margin-left: 0;
-        margin-right: 0;
-        margin-bottom: 0;
-    }
+  .row:last-child {
+    margin-bottom: 0;
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+  }
 }
 
 .toggle-btn {
-    position: absolute;
-    top: 45%;
-    left: -1.2rem;
-    z-index: 600;
+  position: absolute;
+  top: 45%;
+  left: -1.2rem;
+  z-index: 600;
 }
 
 @include nb-install-component() {
-    nb-card {
-        border-radius: 1rem;
+  nb-card {
+    border-radius: 1rem;
 
-        nb-card-header {
-            border: none;
-            font-size: 18px;
-            padding: 0.7rem;
+    nb-card-header {
+      border: none;
+      font-size: 18px;
+      padding: 0.7rem;
+    }
+  }
+
+  .rooms-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  .room {
+    position: absolute;
+    padding: 0.1rem;
+  }
+
+  .room-inside {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 1rem;
+    background-color: nb-theme(color-primary-transparent-200);
+
+    .room-name {
+      color: nb-theme(color-primary-600);
+      opacity: 0.6;
+      font-weight: 600;
+      font-size: 18px;
+      top: 0.7rem;
+      left: 1rem;
+      position: absolute;
+    }
+
+    .room-persons {
+      position: absolute;
+      top: 2rem;
+      padding: 0.5rem;
+      height: calc(100% - 2rem - 2rem);
+      overflow: auto;
+      width: 100%;
+
+      ngx-tag {
+        ::ng-deep .ngx-tag {
+          width: 100%;
+          margin-bottom: 0.5rem;
         }
+      }
+
+      ngx-tag:last-child {
+        margin-bottom: 0;
+      }
     }
 
-    .room {
-        height: 10rem;
-        padding: 0rem;
-        display: flex;
-        position: relative;
-        border-radius: 1rem;
-        margin-right: 5px;
-        background-color: nb-theme(color-primary-transparent-200);
-
-        .room-name {
-            color: nb-theme(color-primary-600);
-            opacity: 0.6;
-            font-weight: 600;
-            font-size: 18px;
-            top: 0.7rem;
-            left: 1rem;
-            position: absolute;
-        }
-
-        .room-persons {
-            position: absolute;
-            top: 2rem;
-            padding: 0.5rem;
-            height: calc(100% - 2rem - 2rem);
-            overflow: auto;
-
-            .ngx-tag {
-                margin-bottom: 0.5rem;
-            }
-
-            .ngx-tag:last-child {
-                margin-bottom: 0;
-            }
-        }
-
-        .room-capacity {
-            color: nb-theme(color-primary-500);
-            font-size: 16px;
-            font-weight: 600;
-            position: absolute;
-            bottom: 5px;
-            right: 5px;
-        }
+    .room-capacity {
+      color: nb-theme(color-primary-500);
+      font-size: 16px;
+      font-weight: 600;
+      position: absolute;
+      bottom: 5px;
+      right: 5px;
     }
+  }
 
-    ::-webkit-scrollbar {
-        width: nb-theme(scrollbar-width);
-        height: nb-theme(scrollbar-width);
-    }
+  ::-webkit-scrollbar {
+    width: nb-theme(scrollbar-width);
+    height: nb-theme(scrollbar-width);
+  }
 
-    ::-webkit-scrollbar-thumb {
-        background: nb-theme(scrollbar-color);
-        border-radius: 10px;
-    }
+  ::-webkit-scrollbar-thumb {
+    background: nb-theme(scrollbar-color);
+    border-radius: 10px;
+  }
 
-    ::-webkit-scrollbar-thumb:hover {
-        background: nb-theme(color-basic-500);
-    }
+  ::-webkit-scrollbar-thumb:hover {
+    background: nb-theme(color-basic-500);
+  }
 }

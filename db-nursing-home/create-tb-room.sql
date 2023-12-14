@@ -3,6 +3,10 @@ CREATE TABLE [dbo].[Room](
 	[Name] [varchar](50) NOT NULL,
 	[Capacity] [int] NOT NULL,
 	[FloorId] [int] NOT NULL,
+	[Width] [int] NULL,
+	[Height] [int] NULL,
+	[TopPosition] [int] NULL,
+	[LeftPosition] [int] NULL,
  CONSTRAINT [PK_Room] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC

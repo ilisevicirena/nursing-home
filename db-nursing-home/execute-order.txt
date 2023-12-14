@@ -56,6 +56,7 @@ create-tb-doctorVisitTourPersonRelation.sql
 insert-tb-documentType.sql
 insert-tb-healthCondition.sql
 insert-tb-floor.sql
+insert-tb-room.sql
 insert-tb-gender.sql
 insert-tb-LogEntity.sql
 insert-tb-LogType.sql

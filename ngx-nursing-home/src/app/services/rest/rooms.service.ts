@@ -1,15 +1,14 @@
-import { Injectable } from '@angular/core';
-import { BaseRestApiService, IBaseSaveModel } from '../base-rest-api.service';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Injectable } from "@angular/core";
+import { BaseRestApiService, IBaseSaveModel } from "../base-rest-api.service";
+import { HttpClient } from "@angular/common/http";
+import { Observable } from "rxjs";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class RoomsService extends BaseRestApiService {
-
   constructor(http: HttpClient) {
-    super(http, 'api/rooms');
+    super(http, "api/rooms");
   }
 
   public getData(capacity: boolean = false): Observable<any> {
@@ -33,4 +32,8 @@ export interface IRoom extends IBaseSaveModel {
   Name?: string;
   Capacity?: number;
   FloorId?: number;
+  Width?: number;
+  Height?: number;
+  Top?: number;
+  Left?: number;
 }

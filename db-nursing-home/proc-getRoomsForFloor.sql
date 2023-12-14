@@ -19,6 +19,10 @@ BEGIN
 	[Capacity]=room.Capacity, 
 	[FloorId]=room.FloorId, 
 	[FloorName]=floor.Name,
+	[Width]=room.Width,
+	[Height]=room.Height,
+	[Top]=room.TopPosition,
+	[Left]=room.LeftPosition,
 	[People]=isnull(t2.Number, 0)
 FROM [dbo].[Room] as room
 left join (select  count(prr.RoomId) as Number, prr.RoomId

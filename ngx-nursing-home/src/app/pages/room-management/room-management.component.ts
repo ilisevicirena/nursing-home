@@ -100,6 +100,46 @@ export class RoomManagementComponent implements OnInit, OnDestroy {
           .ServerDataSource(true)
           .ServerEndpoint(this.floorsService.apiRoute)
       ),
+    new GridColumn()
+      .Title(getString("width"))
+      .DataField("Width")
+      .Visible(false)
+      .Editor(
+        new GridTextboxEditor()
+          .LettersDisabled(true)
+          .WidthClass("col-md-3")
+          .Label(getString("width"))
+      ),
+    new GridColumn()
+      .Title(getString("height"))
+      .DataField("Height")
+      .Visible(false)
+      .Editor(
+        new GridTextboxEditor()
+          .LettersDisabled(true)
+          .WidthClass("col-md-3")
+          .Label(getString("height"))
+      ),
+    new GridColumn()
+      .Title(getString("top"))
+      .DataField("Top")
+      .Visible(false)
+      .Editor(
+        new GridTextboxEditor()
+          .LettersDisabled(true)
+          .WidthClass("col-md-3")
+          .Label(getString("top"))
+      ),
+    new GridColumn()
+      .Title(getString("left"))
+      .DataField("Left")
+      .Visible(false)
+      .Editor(
+        new GridTextboxEditor()
+          .LettersDisabled(true)
+          .WidthClass("col-md-3")
+          .Label(getString("left"))
+      ),
   ];
 
   public exportSettingsFloors: ExportDocSettings = {
@@ -206,6 +246,10 @@ export class RoomManagementComponent implements OnInit, OnDestroy {
       Name: event.newData.Name,
       Capacity: event.newData.Capacity,
       FloorId: event.newData.FloorId,
+      Width: event.newData.Width,
+      Height: event.newData.Height,
+      Top: event.newData.Top,
+      Left: event.newData.Left,
     };
 
     this.subscriptions.push(
@@ -252,6 +296,10 @@ export class RoomManagementComponent implements OnInit, OnDestroy {
       Name: event.newData.Name,
       Capacity: event.newData.Capacity,
       FloorId: event.newData.FloorId,
+      Width: event.newData.Width,
+      Height: event.newData.Height,
+      Top: event.newData.Top,
+      Left: event.newData.Left,
     };
 
     this.subscriptions.push(
@@ -328,6 +376,7 @@ export class RoomManagementComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.roomsService.getData().subscribe(
         (data) => {
+          console.log(data);
           this.roomsData = data;
           this.roomsLoading = false;
         },

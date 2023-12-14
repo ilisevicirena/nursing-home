@@ -28,6 +28,7 @@ import { InterceptorService } from "./services/interceptor.service";
 import { ConfigLoader, ConfigService } from "./services/config.service";
 import { DialogComponent } from "./shared/dialog/dialog/dialog.component";
 import { NgxEchartsModule } from "ngx-echarts";
+
 registerLocaleData(hr);
 
 @NgModule({

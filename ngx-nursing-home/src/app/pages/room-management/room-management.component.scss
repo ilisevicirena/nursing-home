@@ -1,39 +1,61 @@
 @import "../../@theme/styles/themes.scss";
 
 ::ng-deep sample-room-management {
-    height: 100%;
+  height: 100%;
 }
 
 .floor-tag:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 @include nb-install-component() {
-    .room {
-        //  border: 1px solid nb-theme(input-basic-border-color);
-        height: 10rem;
-        padding: 1rem;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        position: relative;
-        border-radius: 1rem;
-        background-color: nb-theme(color-primary-transparent-200);
+  .management-container {
+    height: 100%;
+    display: flex;
+    flex-flow: column;
 
-        .room-name {
-            color: nb-theme(color-primary-600);
-            opacity: 0.6;
-            font-weight: 600;
-            font-size: 18px;
-        }
-
-        .room-capacity {
-            color: nb-theme(color-primary-600);
-            font-size: 16px;
-            font-weight: 600;
-            position: absolute;
-            bottom: 5px;
-            right: 5px;
-        }
+    .first-row {
+      flex: 0 1 max-content;
     }
+  }
+
+  .rooms-container {
+    margin-top: 1rem;
+    position: relative;
+    width: 100%;
+    flex: 1 1 auto;
+    overflow: auto;
+  }
+
+  .room {
+    position: absolute;
+    padding: 0.1rem;
+  }
+
+  .room-inside {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 1rem;
+    background-color: nb-theme(color-primary-transparent-200);
+
+    .room-name {
+      color: nb-theme(color-primary-600);
+      opacity: 0.6;
+      font-weight: 600;
+      font-size: 18px;
+    }
+
+    .room-capacity {
+      color: nb-theme(color-primary-600);
+      font-size: 16px;
+      font-weight: 600;
+      position: absolute;
+      bottom: 5px;
+      right: 5px;
+    }
+  }
 }

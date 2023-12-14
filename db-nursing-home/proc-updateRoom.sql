@@ -9,7 +9,11 @@ CREATE PROCEDURE [dbo].[updateRoom]
 	@Id int,
 	@Name varchar(50),
 	@Capacity int,
-	@FloorId int
+	@FloorId int,
+	@Width int=NULL,
+	@Height int=NULL,
+	@Left int=NULL,
+	@Top int=NULL
 	)
 AS
 BEGIN
@@ -22,7 +26,11 @@ BEGIN
 	SET
 		Name = @Name,
 		Capacity = @Capacity,
-		FloorId = @FloorId
+		FloorId = @FloorId,
+		Width=@Width,
+		Height=@Height,
+		TopPosition=@Top,
+		LeftPosition=@Left
 	WHERE Id = @Id
 
 		exec dbo.writeLog @LogType='UPDATE', @LogEntity='Room', @Key= @Id;

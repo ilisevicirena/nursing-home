@@ -8,7 +8,11 @@ CREATE PROCEDURE [dbo].[insertRoom]
 	(
 	@Name varchar(50),
 	@Capacity int,
-	@FloorId int = NULL
+	@FloorId int = NULL,
+	@Width int=NULL,
+	@Height int=NULL,
+	@Left int=NULL,
+	@Top int=NULL
 	)
 AS
 BEGIN
@@ -17,8 +21,8 @@ BEGIN
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
-	INSERT INTO dbo.Room(Name, Capacity, FloorId)
-	VALUES(@Name, @Capacity, @FloorId);
+	INSERT INTO dbo.Room(Name, Capacity, FloorId, Width, Height, TopPosition, LeftPosition)
+	VALUES(@Name, @Capacity, @FloorId, @Width, @Height, @Top, @Left);
 
 	DECLARE @NewIdent Int
 SET @NewIdent = SCOPE_IDENTITY();

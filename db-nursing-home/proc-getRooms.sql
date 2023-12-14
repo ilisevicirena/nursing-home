@@ -10,7 +10,7 @@ CREATE PROCEDURE [dbo].[getRooms]
 	)
 AS
 BEGIN
-	-- SET NOCOUNT ON added to prevent extra result sets from
+-- SET NOCOUNT ON added to prevent extra result sets from
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
@@ -22,7 +22,11 @@ BEGIN
 	[Name]=room.Name, 
 	[Capacity]=room.Capacity, 
 	[FloorId]=room.FloorId, 
-	[FloorName]=floor.Name
+	[FloorName]=floor.Name,
+	[Width]=room.Width,
+	[Height]=room.Height,
+	[Top]=room.TopPosition,
+	[Left]=room.LeftPosition
 FROM [dbo].[Room] as room
 INNER JOIN [dbo].[Floor] as floor 
 ON room.FloorId=floor.Id WHERE room.Capacity>0;
@@ -33,7 +37,11 @@ ELSE BEGIN
 	[Name]=room.Name, 
 	[Capacity]=room.Capacity, 
 	[FloorId]=room.FloorId, 
-	[FloorName]=floor.Name
+	[FloorName]=floor.Name,
+	[Width]=room.Width,
+	[Height]=room.Height,
+	[Top]=room.TopPosition,
+	[Left]=room.LeftPosition
 FROM [dbo].[Room] as room
 INNER JOIN [dbo].[Floor] as floor 
 ON room.FloorId=floor.Id;

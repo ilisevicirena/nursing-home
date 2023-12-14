@@ -602,6 +602,10 @@ const strings: IKeyValue[] = [
   { key: "doctorStatistics", value: "Statistika liječnika" },
   { key: "totalVisits", value: "Ukupan broj posjeta" },
   { key: "downloadAllNotes", value: "Preuzmi podatke o posjeti" },
+  { key: "width", value: "Širina elementa" },
+  { key: "height", value: "Visina elementa" },
+  { key: "top", value: "Gornja pozicija" },
+  { key: "left", value: "Lijeva pozicija" },
 ];
 
 const map = new Map(strings.map((obj) => [obj.key, obj.value]));

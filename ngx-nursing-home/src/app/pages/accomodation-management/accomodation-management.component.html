@@ -43,13 +43,77 @@
       ></nb-icon>
     </button>
     <div class="h-100 overflow-auto">
-      <div class="row w-100" *ngFor="let floor of mainSource">
-        <nb-card class="m-0">
+      <div
+        class="row"
+        style="height: calc(100% - 1rem)"
+        *ngFor="let floor of mainSource"
+      >
+        <nb-card class="m-0 h-100">
           <nb-card-header>
             {{ floor?.Name }}
           </nb-card-header>
-          <nb-card-body class="p-2">
-            <div class="row m-0">
+          <nb-card-body>
+            <div class="rooms-container">
+              <div
+                class="room"
+                *ngFor="let r of floor?.Rooms"
+                [style.height]="r.Height + 'px'"
+                [style.width]="r.Width + 'px'"
+                [style.top]="r.Top + 'px'"
+                [style.left]="r.Left + 'px'"
+              >
+                <div
+                  class="room-inside"
+                  cdkDropList
+                  [cdkDropListEnterPredicate]="checkCanDropInList"
+                  [id]="'drop-room-' + r.Id"
+                  [cdkDropListConnectedTo]="getConnectedTo()"
+                  [cdkDropListData]="[r]"
+                  (cdkDropListDropped)="drop($event)"
+                >
+                  <div class="room-name">{{ r.Name }}</div>
+                  <div class="room-persons">
+                    <ngx-tag
+                      *ngFor="let person of r.People"
+                      cdkDrag
+                      shape="round"
+                      [cdkDragData]="person"
+                      [icon]="
+                        person.GenderTag == 'Ž'
+                          ? 'fas fa-female'
+                          : 'fas fa-male'
+                      "
+                      [text]="person.FirstName + ' ' + person.LastName"
+                    ></ngx-tag>
+                  </div>
+                  <div
+                    class="room-capacity"
+                    [ngClass]="
+                      r.Capacity == 0
+                        ? ''
+                        : r.Capacity == r.TakenSpace
+                        ? 'text-danger'
+                        : 'text-success'
+                    "
+                  >
+                    <nb-icon
+                      pack="eva"
+                      icon="people-outline"
+                      [status]="
+                        r.Capacity == 0
+                          ? 'primary'
+                          : r.Capacity == r.TakenSpace
+                          ? 'danger'
+                          : 'success'
+                      "
+                    ></nb-icon>
+                    {{ r.TakenSpace }}/{{ r.Capacity }}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!--
               <div class="col-md-4 p-1" *ngFor="let room of floor?.Rooms">
                 <div
                   class="room"
@@ -100,7 +164,7 @@
                   </div>
                 </div>
               </div>
-            </div>
+              -->
           </nb-card-body>
         </nb-card>
       </div>

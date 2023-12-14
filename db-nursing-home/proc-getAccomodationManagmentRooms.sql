@@ -29,6 +29,10 @@ WHERE t2.Number > 0; -- Filter for floors that have at least one room with capac
 	SELECT
     [Id] = r.Id,
     [Name] = r.[Name],
+	[Width]=r.Width,
+	[Height]=r.Height,
+	[Top]=r.TopPosition,
+	[Left]=r.LeftPosition,
     [Capacity] = r.Capacity,
     [FloorId] = r.FloorId,
     [FloorName] = f.[Name],
