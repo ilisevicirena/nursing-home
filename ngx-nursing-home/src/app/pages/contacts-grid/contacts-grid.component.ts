@@ -10,6 +10,7 @@ import {
   GridToggleEditor,
   GridCheckboxColumn,
   GridSelectFilter,
+  GridAutocompleteEditor,
 } from "shared-components";
 import { getString } from "../../resources/strings";
 import { Subscription } from "rxjs";
@@ -108,9 +109,14 @@ export class ContactsGridComponent implements OnInit, OnDestroy {
       .Visible(this.detailed)
       .Type(new GridLookupColumn().LookupColumn("ResidanceCityName"))
       .Editor(
-        new GridSelectEditor()
+        new GridAutocompleteEditor()
           .DisplayExpression("Name")
           .KeyExpression("Id")
+          .AttributesToFilter(["Name"])
+          .AttributesToShow(["Name"])
+          .AttributesToShowInTag(["Name"])
+          .DisplayArrow(true)
+          .Multiple(false)
           .ServerDataSource(true)
           .ServerEndpoint(this.citiesService.apiRoute)
           .WidthClass("col-md-4")
@@ -216,6 +222,7 @@ export class ContactsGridComponent implements OnInit, OnDestroy {
 
   public onCreateConfirm(event: any) {
     event.newData.PersonId = this.personId;
+    event.newData.ResidanceCityId = event.newData.ResidanceCityId[0];
     this.subscriptions.push(
       this.contactsService.add(event.newData).subscribe((data) => {
         if (data.ContactId) {
@@ -228,6 +235,7 @@ export class ContactsGridComponent implements OnInit, OnDestroy {
 
   public contactsEdit(event: any) {
     event.newData.PersonId = this.personId;
+    event.newData.ResidanceCityId = event.newData.ResidanceCityId[0];
     this.subscriptions.push(
       this.contactsService.update(event.newData).subscribe(() => {
         this.getContacts();

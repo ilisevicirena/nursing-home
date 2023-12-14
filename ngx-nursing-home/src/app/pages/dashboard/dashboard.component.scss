@@ -242,6 +242,14 @@
     }
   }
 
+  .dashboard-event.primary {
+    background-color: nb-theme(color-primary-transparent-200);
+
+    .title {
+      color: nb-theme(color-primary-500);
+    }
+  }
+
   .dashboard-event.danger {
     background-color: nb-theme(color-danger-transparent-200);
 

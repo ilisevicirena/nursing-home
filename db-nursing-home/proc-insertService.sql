@@ -9,7 +9,7 @@ CREATE PROCEDURE [dbo].[insertService]
 		@Name varchar(50),
 		@Description varchar(2000) = NULL,
 		@MeasureUnitId int,
-		@CostPerUnit int,
+		@CostPerUnit float,
 		@DefaultNumberOfUnits int = NULL,
 		@PriceUnitId int = NULL
 	)

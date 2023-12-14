@@ -53,6 +53,7 @@ create-tb-employeeVacationRelation.sql
 create-tb-doctorVisitTour.sql
 create-tb-doctorVisitTourEmployeeRelation.sql
 create-tb-doctorVisitTourPersonRelation.sql
+create-tb-personOfferRelation.sql
 insert-tb-documentType.sql
 insert-tb-healthCondition.sql
 insert-tb-floor.sql
@@ -75,6 +76,7 @@ insert-tb-jobPosition.sql
 insert-tb-pageLink.sql
 insert-tb-vacationStatus.sql
 insert-tb-calendarEventType.sql
+insert-tb-calculationStatus.sql
 proc-addTagToNote.sql
 proc-calculationPaid.sql
 proc-calculationRealPrice.sql

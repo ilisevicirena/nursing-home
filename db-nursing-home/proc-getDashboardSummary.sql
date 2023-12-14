@@ -22,15 +22,39 @@ BEGIN
 	(select COUNT(Id) from dbo.Person) as AllTimePersons;
 	
 	-- events for current month
-	select 
-	Id,
-	[Start],
-	[End],
-	[Title],
-	[Description],
-	[Color]
-	from dbo.CalendarEvent
-	where  MONTH([Start])=MONTH(GETDATE()) order by [Start];
+	SELECT 
+    Id,
+    CASE 
+        WHEN Recurring = 1 THEN 
+            DATEFROMPARTS(YEAR(GETDATE()), MONTH([Start]), DAY([Start]))
+        ELSE 
+            [Start] 
+    END AS [Start],
+    CASE 
+        WHEN Recurring = 1 THEN 
+            DATEFROMPARTS(YEAR(GETDATE()), MONTH([End]), DAY([End]))
+        ELSE 
+            [End] 
+    END AS [End],
+    [Title],
+    [Description],
+    [Color]
+FROM 
+    dbo.CalendarEvent
+WHERE  
+    MONTH([Start]) = MONTH(GETDATE())
+    AND (
+        Recurring = 1 -- Include recurring events
+        OR Recurring IS NULL -- Include non-recurring events (assuming NULL means non-recurring)
+    )
+ORDER BY 
+    CASE 
+        WHEN Recurring = 1 THEN 
+            DATEFROMPARTS(YEAR(GETDATE()), MONTH([Start]), DAY([Start]))
+        ELSE 
+            [Start] 
+    END;
+
 
 	-- oldest person data
 	select top 1 
@@ -122,8 +146,7 @@ BEGIN
 	from dbo.Employee as e 
 	left join dbo.JobPosition as jp on e.JobPositionId=jp.Id group by jp.[Name], JobPositionId, jp.Icon;
 
-		-- person with longest last visit
-	 WITH LastVisit AS (
+	WITH LastVisit AS (
         SELECT
             p.Id AS PersonId,
             MAX(dvt.[Date]) AS LastVisitDate
@@ -141,10 +164,10 @@ BEGIN
         p.Id AS PersonId,
         p.FirstName,
         p.LastName,
-        DATEDIFF(MONTH, lv.LastVisitDate, GETDATE()) AS MonthsSinceLastVisit,
-        DATEDIFF(DAY, lv.LastVisitDate, GETDATE()) AS DaysSinceLastVisit,
+        COALESCE(DATEDIFF(MONTH, lv.LastVisitDate, GETDATE()), DATEDIFF(MONTH, p.StartDate, GETDATE())) AS MonthsSinceLastVisit,
+        COALESCE(DATEDIFF(DAY, lv.LastVisitDate, GETDATE()), DATEDIFF(DAY, p.StartDate, GETDATE())) / 30 AS DaysSinceLastVisit,
         CASE
-            WHEN DATEDIFF(MONTH, lv.LastVisitDate, GETDATE()) > 1 THEN 'danger'
+            WHEN DATEDIFF(MONTH, lv.LastVisitDate, GETDATE()) > 0 THEN 'danger'
             ELSE 'success'
         END AS VisitStatus
     FROM

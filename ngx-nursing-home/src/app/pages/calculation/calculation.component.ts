@@ -12,15 +12,8 @@ import { CalculationApiService } from "../../services/rest/calculation-api.servi
 import { DialogService } from "../../shared/dialog/dialog.service";
 import { ToastrService } from "../../services/toastr.service";
 import { ScheduleMonth } from "shared-components/lib/models/schedule.model";
+import { getMonthNames, getYearsInRange } from "../../resources/functions";
 import {
-  getMonthNames,
-  getYearsInRange,
-  sortFloats,
-} from "../../resources/functions";
-import {
-  ButtonsType,
-  DateType,
-  DatepickerFilter,
   GRID_BUTTON_TYPE,
   GridButtonType,
   GridButtonsColumn,
@@ -31,10 +24,6 @@ import {
   GridSelectFilter,
   GridTagColumn,
   IGridCellButtonClick,
-  SelectFilter,
-  SmartTableColumn,
-  SmartTableComponent,
-  TagType,
 } from "shared-components";
 import { DEFAULT_THEME, NbThemeService } from "@nebular/theme";
 import { StartCalculationComponent } from "./start-calculation/start-calculation.component";
@@ -68,7 +57,7 @@ export class CalculationComponent implements OnInit, OnDestroy {
     new GridColumn()
       .Title(getString("calculationDate"))
       .DataField("CalculationDate")
-      .Type(new GridDateColumn().Format("dd.MM.yyyy. HH:mm"))
+      .Type(new GridDateColumn().Format("dd.MM.yyyy"))
       .Filter(new GridDateboxFilter()),
     new GridColumn()
       .Title(getString("status"))
@@ -77,12 +66,12 @@ export class CalculationComponent implements OnInit, OnDestroy {
       .Type(
         new GridTagColumn()
           .ColorColumn("StatusColor")
-          .LookupColumn("StatusStringKey")
+          .LookupColumn("StatusName")
       )
       .Filter(
         new GridSelectFilter()
           .KeyExpression("Id")
-          .DisplayExpression("StringKey")
+          .DisplayExpression("Name")
           .ServerDataSource(true)
           .ServerEndpoint(
             this.calculationService.apiRoute + "/getCalculationStatuses"

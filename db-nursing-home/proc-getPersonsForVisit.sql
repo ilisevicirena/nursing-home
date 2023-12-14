@@ -11,7 +11,8 @@ BEGIN
 	LastName,
 	JMBG,
 	DoctorVisitTourId,
-	NoteId
+	NoteId,
+	Active
 	from
 	dbo.DoctorVisitTourPersonRelation dvpr 
 	left join dbo.Person p on dvpr.PersonId=p.Id

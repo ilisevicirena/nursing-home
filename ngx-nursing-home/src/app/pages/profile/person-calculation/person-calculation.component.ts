@@ -56,13 +56,13 @@ export class PersonCalculationComponent implements OnInit, OnDestroy {
       .Width("136px")
       .Type(
         new GridTagColumn()
-          .LookupColumn("StatusStringKey")
+          .LookupColumn("StatusName")
           .ColorColumn("StatusColor")
       )
       .Filter(
         new GridSelectFilter()
           .KeyExpression("Id")
-          .DisplayExpression("StringKey")
+          .DisplayExpression("Name")
           .ServerDataSource(true)
           .ServerEndpoint(
             this.calculationService.apiRoute + "/getCalculationStatuses"
