@@ -27,6 +27,7 @@ export class DashboardComponent implements OnDestroy, OnInit {
   public employees: any[] = [];
   public employeesByJobPosition: any[] = [];
   public currentEmployee: any;
+  public personWithLongestLastVisit: any;
 
   private currentEmployeeIndex: number = 0;
   private subs: Subscription[] = [];
@@ -46,6 +47,7 @@ export class DashboardComponent implements OnDestroy, OnInit {
   private getSummary(): void {
     this.subs.push(
       this.summaryService.getDashboardSummary().subscribe((data) => {
+        console.log(data);
         if (data) {
           if (data.Summary.length > 0) {
             this.summary = data.Summary[0];
@@ -77,6 +79,10 @@ export class DashboardComponent implements OnDestroy, OnInit {
             this.employees = data.Employees;
             this.currentEmployee = this.employees[this.currentEmployeeIndex];
           }
+
+          if (data.PersonWithLongestLastVisit.length > 0)
+            this.personWithLongestLastVisit =
+              data.PersonWithLongestLastVisit[0];
 
           if (data.EmployeesByJobPosition.length > 0)
             this.employeesByJobPosition = data.EmployeesByJobPosition;

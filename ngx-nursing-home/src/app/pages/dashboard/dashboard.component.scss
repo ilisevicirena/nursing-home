@@ -25,6 +25,32 @@
 }
 
 @include nb-install-component {
+  .col.bordered {
+    border-right: 2px solid nb-theme(color-basic-600);
+  }
+
+  .col.card-value {
+    font-size: 20px;
+  }
+
+  .bg-color-success {
+    background-color: nb-theme(color-success-transparent-300);
+
+    i {
+      color: nb-theme(color-success-500);
+      font-size: 2.5rem;
+    }
+  }
+
+  .bg-color-danger {
+    background-color: nb-theme(color-danger-transparent-300);
+
+    i {
+      color: nb-theme(color-danger-500);
+      font-size: 2.5rem;
+    }
+  }
+
   .employee-card {
     .divider {
       width: 6px;

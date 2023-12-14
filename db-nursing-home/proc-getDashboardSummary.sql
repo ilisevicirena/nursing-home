@@ -121,4 +121,36 @@ BEGIN
 	jp.Icon as JobPositionIcon
 	from dbo.Employee as e 
 	left join dbo.JobPosition as jp on e.JobPositionId=jp.Id group by jp.[Name], JobPositionId, jp.Icon;
+
+		-- person with longest last visit
+	 WITH LastVisit AS (
+        SELECT
+            p.Id AS PersonId,
+            MAX(dvt.[Date]) AS LastVisitDate
+        FROM
+            dbo.Person AS p
+        LEFT JOIN
+            dbo.DoctorVisitTourPersonRelation dvtp ON p.Id = dvtp.PersonId
+        LEFT JOIN
+            dbo.DoctorVisitTour dvt ON dvtp.DoctorVisitTourId = dvt.Id
+        GROUP BY
+            p.Id
+    )
+
+    SELECT TOP 1
+        p.Id AS PersonId,
+        p.FirstName,
+        p.LastName,
+        DATEDIFF(MONTH, lv.LastVisitDate, GETDATE()) AS MonthsSinceLastVisit,
+        DATEDIFF(DAY, lv.LastVisitDate, GETDATE()) AS DaysSinceLastVisit,
+        CASE
+            WHEN DATEDIFF(MONTH, lv.LastVisitDate, GETDATE()) > 1 THEN 'danger'
+            ELSE 'success'
+        END AS VisitStatus
+    FROM
+        dbo.Person AS p
+    LEFT JOIN
+        LastVisit lv ON p.Id = lv.PersonId
+    ORDER BY
+        DATEDIFF(DAY, lv.LastVisitDate, GETDATE()) DESC;
 END

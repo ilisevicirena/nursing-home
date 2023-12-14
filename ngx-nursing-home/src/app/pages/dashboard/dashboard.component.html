@@ -176,7 +176,7 @@
           </nb-card>
         </div>
 
-        <div class="col-md-4 h-100 ps-0 pe-0">
+        <div class="col-md-4 h-100 ps-0">
           <nb-card class="mb-0 h-100 round-card">
             <nb-card-body>
               <div class="title">
@@ -207,6 +207,59 @@
                     {{ e.NumberOfEmployees }}
                   </div>
                 </ng-template>
+              </div>
+            </nb-card-body>
+          </nb-card>
+        </div>
+
+        <div class="col-md-4 h-100 ps-0 pe-0">
+          <nb-card class="mb-0 h-100 round-card">
+            <nb-card-body>
+              <div class="title">
+                {{ getString("personWithLongestLastVisit") }}
+              </div>
+              <div
+                class="row mt-2"
+                style="height: calc(100% - 2rem)"
+                [ngClass]="
+                  'bg-color-' + personWithLongestLastVisit?.VisitStatus
+                "
+              >
+                <div
+                  class="col-md-4 d-flex justify-content-center align-items-center"
+                >
+                  <i class="fas fa-first-aid"></i>
+                </div>
+                <div class="col-md-8 d-flex align-items-center">
+                  <div>
+                    <div class="label">{{ getString("patient") }}</div>
+                    <div class="card-value">
+                      {{ personWithLongestLastVisit?.FirstName }}
+                      {{ personWithLongestLastVisit?.LastName }}
+                    </div>
+                    <div class="label mt-3">
+                      {{ getString("timeSinceLastVisit") }}
+                    </div>
+                    <div class="row mt-2">
+                      <div
+                        class="col card-value bordered d-flex justify-content-center"
+                      >
+                        {{ personWithLongestLastVisit?.MonthsSinceLastVisit }}
+                      </div>
+                      <div class="col card-value d-flex justify-content-center">
+                        {{ personWithLongestLastVisit?.DaysSinceLastVisit }}
+                      </div>
+                    </div>
+                    <div class="row mt-2">
+                      <div class="col label d-flex justify-content-center">
+                        {{ getString("visitMonths") }}
+                      </div>
+                      <div class="col label d-flex justify-content-center">
+                        {{ getString("visitDays") }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </nb-card-body>
           </nb-card>
