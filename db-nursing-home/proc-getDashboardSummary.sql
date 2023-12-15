@@ -45,7 +45,7 @@ WHERE
     MONTH([Start]) = MONTH(GETDATE())
     AND (
         Recurring = 1 -- Include recurring events
-        OR Recurring IS NULL -- Include non-recurring events (assuming NULL means non-recurring)
+        OR Recurring = 0
     )
 ORDER BY 
     CASE 
