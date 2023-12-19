@@ -55,6 +55,7 @@ export class AddEditPackageComponent
   public calculationMeasureUnits: any[] = [];
   public blockEdit: boolean = false;
   public packagePrice: string = "0.00";
+  public gridSelectedItem: [] = [];
   public package: IPackage = {
     Id: 0,
     Name: undefined,
@@ -84,28 +85,17 @@ export class AddEditPackageComponent
       .Type(new GridLookupColumn().LookupColumn("MeasureUnitName"))
       .Filter(false),
   ];
-  public packageServiceSelectGridColumns: SelectGridColumn[] = [
-    { name: "name", title: getString("name"), attributeName: "Name" },
-    {
-      name: "mesureUnitTag",
-      title: getString("measureUnit"),
-      attributeName: "MeasureUnitTag",
-    },
-    {
-      name: "costPerUnit",
-      title: getString("costPerUnit"),
-      attributeName: "CostPerUnit",
-    },
-    {
-      name: "defaultNumberOfUnits",
-      title: getString("defaultNumberOfUnits"),
-      attributeName: "DefaultNumberOfUnits",
-    },
+  public packageServiceSelectGridColumns: GridColumn[] = [
+    new GridColumn().Title(getString("name")).DataField("Name"),
+    new GridColumn()
+      .Title(getString("measureUnit"))
+      .DataField("MeasureUnitTag"),
+    new GridColumn().Title(getString("costPerUnit")).DataField("CostPerUnit"),
+    new GridColumn()
+      .Title(getString("defaultNumberOfUnits"))
+      .DataField("DefaultNumberOfUnits"),
   ];
 
-  @ViewChild("packageServicesGrid") servicesGrid: SmartTableComponent;
-  @ViewChild("servicesSelectGridControl")
-  servicesSelectGridControl: SelectGridComponent;
   @ViewChild("headerTemplate") headerTemplate!: TemplateRef<any>;
 
   constructor(
@@ -293,8 +283,7 @@ export class AddEditPackageComponent
       this.packageServices = this.packageServiceUnfiltered.filter(
         (x) => !x.IsDeleted
       );
-      this.servicesGrid.refreshSource(true);
-      this.servicesSelectGridControl.selected = undefined;
+      this.gridSelectedItem = [];
       this.selectedService = { Quantity: 0 };
     } else this.toastrService.showToast("warning", getString("alreadyAdded"));
 

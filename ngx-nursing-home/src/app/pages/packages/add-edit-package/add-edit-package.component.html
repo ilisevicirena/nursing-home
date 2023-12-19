@@ -387,11 +387,12 @@
         <div class="row m-0 p-3">
           <div class="col-md-8 p-0">
             <ngx-select-grid
-              #servicesSelectGridControl
+              [(selected)]="gridSelectedItem"
               [columns]="packageServiceSelectGridColumns"
               [placeholder]="getString('service')"
               [attributesForLabel]="['Name']"
               [(source)]="servicesData"
+              [searchEnabled]="true"
               [valueAttr]="'Id'"
               [disabled]="blockEdit"
               (onSelectionChanged)="onServiceSelectionChanged($event)"

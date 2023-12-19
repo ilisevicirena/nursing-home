@@ -5,12 +5,11 @@ import { NgForm } from "@angular/forms";
 import { Subscription } from "rxjs";
 import { ToastrService } from "../../services/toastr.service";
 import { RoomsService } from "../../services/rest/rooms.service";
-import { SelectGridColumn } from "shared-components/lib/models/select-grid.model";
 import { DialogService } from "../../shared/dialog/dialog.service";
 import { DocumentsService } from "../../services/rest/documents.service";
 import { UploadDocumentComponent } from "../documents/upload-document/upload-document.component";
 import { NbMenuItem } from "@nebular/theme";
-import { fileDownload, previewFile } from "shared-components";
+import { GridColumn, fileDownload, previewFile } from "shared-components";
 import { AccommodationPdfRequestService } from "../../services/rest/accommodation-pdf-request.service";
 
 @Component({
@@ -32,6 +31,7 @@ export class NewPersonComponent implements OnInit, OnDestroy {
   public loading: boolean = false;
   public documents: any[] = [];
   public rooms: any[] = [];
+  public gridSelectedItem: [] = [];
   public newPersonData: IPerson = {
     Id: 0,
     FirstName: "",
@@ -57,21 +57,15 @@ export class NewPersonComponent implements OnInit, OnDestroy {
     Email: "",
     DoctorName: "",
   };
-  public roomsColumns: SelectGridColumn[] = [
-    { name: "name", title: getString("room"), attributeName: "Name" },
-    { name: "floor", title: getString("floor"), attributeName: "FloorName" },
-    {
-      name: "capacity",
-      title: getString("capacity"),
-      attributeName: "Capacity",
-    },
-    {
-      name: "freeSpace",
-      title: getString("freeSpace"),
-      attributeName: "FreeSpace",
-    },
-    { name: "gender", title: getString("gender"), attributeName: "GenderName" },
+
+  public roomsColumns: GridColumn[] = [
+    new GridColumn().Title(getString("room")).DataField("Name"),
+    new GridColumn().Title(getString("floor")).DataField("FloorName"),
+    new GridColumn().Title(getString("capacity")).DataField("Capacity"),
+    new GridColumn().Title(getString("freeSpace")).DataField("FreeSpace"),
+    new GridColumn().Title(getString("gender")).DataField("GenderName"),
   ];
+
   public selectedRoom: any = { FloorName: "", IsValid: true };
 
   private subscriptions: Subscription[] = [];

@@ -168,10 +168,12 @@
                     </div>
                     <div class="value">
                       <ngx-select-grid
+                        [(selected)]="gridSelectedItem"
                         [columns]="roomsColumns"
                         [(source)]="rooms"
                         (onSelectionChanged)="onRoomSelectionChanged($event)"
                         [valueAttr]="'Id'"
+                        [searchEnabled]="true"
                         [multiple]="false"
                         [attributesForLabel]="['Name']"
                       ></ngx-select-grid>

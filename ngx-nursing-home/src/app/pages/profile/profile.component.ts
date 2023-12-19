@@ -18,11 +18,9 @@ import {
   GridCheckboxColumn,
   GridColumn,
   GridDateColumn,
-  SelectGridComponent,
 } from "shared-components";
 import { DialogService } from "../../shared/dialog/dialog.service";
 import { RoomsService } from "../../services/rest/rooms.service";
-import { SelectGridColumn } from "shared-components/lib/models/select-grid.model";
 import { AccommodationPdfRequestService } from "../../services/rest/accommodation-pdf-request.service";
 
 @Component({
@@ -58,6 +56,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   public allRooms: any[] = [];
   public personHistory: any[] = [];
   public roomHistory: any[] = [];
+  public gridSelectedItem: [] = [];
   public roomHistoryColumns: GridColumn[] = [
     new GridColumn().Title(getString("id")).DataField("RoomId").Filter(false),
     new GridColumn()
@@ -97,23 +96,13 @@ export class ProfileComponent implements OnInit, OnDestroy {
     { option: "calculation", string: "personCalculation", active: false },
   ];
 
-  public roomsColumns: SelectGridColumn[] = [
-    { name: "name", title: getString("room"), attributeName: "Name" },
-    { name: "floor", title: getString("floor"), attributeName: "FloorName" },
-    {
-      name: "capacity",
-      title: getString("capacity"),
-      attributeName: "Capacity",
-    },
-    {
-      name: "freeSpace",
-      title: getString("freeSpace"),
-      attributeName: "FreeSpace",
-    },
-    { name: "gender", title: getString("gender"), attributeName: "GenderName" },
+  public roomsColumns: GridColumn[] = [
+    new GridColumn().Title(getString("room")).DataField("Name"),
+    new GridColumn().Title(getString("floor")).DataField("FloorName"),
+    new GridColumn().Title(getString("capacity")).DataField("Capacity"),
+    new GridColumn().Title(getString("freeSpace")).DataField("FreeSpace"),
+    new GridColumn().Title(getString("gender")).DataField("GenderName"),
   ];
-
-  @ViewChildren("roomSelectGrid") roomsGrid;
 
   ngOnInit(): void {
     this.loading = true;
@@ -286,6 +275,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   }
 
   public onRoomSelectionChanged(event: any) {
+    console.log(event);
     if (event.selectedItems.length == 1) {
       this.selectedRoom = event.selectedItems[0];
       if (
@@ -303,8 +293,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
         .changeRoom(this.newPersonData.Id, this.selectedRoom.Id)
         .subscribe(() => {
           this.toastrService.showToast("success", getString("saveSuccess"), "");
-          var grid = this.roomsGrid.first as SelectGridComponent;
-          grid.selected = undefined;
+          this.gridSelectedItem = [];
           this.selectedRoom = { FloorName: "", IsValid: true };
           this.getPersonDetails(this.personId);
           this.getAvaliableRooms();
