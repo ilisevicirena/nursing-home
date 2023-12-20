@@ -28,7 +28,7 @@ import { StartCalculationComponent } from "../../calculation/start-calculation/s
   styleUrls: ["./person-calculation.component.scss"],
 })
 export class PersonCalculationComponent implements OnInit, OnDestroy {
-  private subs: Subscription[] = [];
+  private _subs: Subscription[] = [];
 
   public getString = getString;
   public calculations: any[] = [];
@@ -65,7 +65,7 @@ export class PersonCalculationComponent implements OnInit, OnDestroy {
           .DisplayExpression("Name")
           .ServerDataSource(true)
           .ServerEndpoint(
-            this.calculationService.apiRoute + "/getCalculationStatuses"
+            this._calculationService.apiRoute + "/getCalculationStatuses"
           )
       ),
     new GridColumn()
@@ -95,9 +95,9 @@ export class PersonCalculationComponent implements OnInit, OnDestroy {
   ];
 
   constructor(
-    private calculationService: CalculationApiService,
-    private dialogService: DialogService,
-    private toastrService: ToastrService
+    private _calculationService: CalculationApiService,
+    private _dialogService: DialogService,
+    private _toastrService: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -105,8 +105,8 @@ export class PersonCalculationComponent implements OnInit, OnDestroy {
   }
 
   private getCalculations(): void {
-    this.subs.push(
-      this.calculationService
+    this._subs.push(
+      this._calculationService
         .getCalculationsForPerson(this.personId)
         .subscribe((data) => {
           this.calculations = data;
@@ -170,8 +170,8 @@ export class PersonCalculationComponent implements OnInit, OnDestroy {
         })
     );
 
-    this.subs.push(
-      this.calculationService
+    this._subs.push(
+      this._calculationService
         .getCalculationsSummaryForPerson(this.personId)
         .subscribe((data) => {
           this.summary = data;
@@ -180,7 +180,7 @@ export class PersonCalculationComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subs.forEach((element) => {
+    this._subs.forEach((element) => {
       element.unsubscribe();
     });
   }
@@ -206,8 +206,8 @@ export class PersonCalculationComponent implements OnInit, OnDestroy {
   }
 
   private openRealPriceDialog(calculation: any): void {
-    this.subs.push(
-      this.dialogService
+    this._subs.push(
+      this._dialogService
         .open(RealPriceModalComponent, {
           autoFocus: false,
           closeOnBackdropClick: false,
@@ -224,8 +224,8 @@ export class PersonCalculationComponent implements OnInit, OnDestroy {
   }
 
   private openPaidPriceDialog(calculation: any): void {
-    this.subs.push(
-      this.dialogService
+    this._subs.push(
+      this._dialogService
         .open(PaidCalculationModalComponent, {
           autoFocus: false,
           closeOnBackdropClick: false,
@@ -244,8 +244,8 @@ export class PersonCalculationComponent implements OnInit, OnDestroy {
   }
 
   private openDocumentsDialog(calculation: any): void {
-    this.subs.push(
-      this.dialogService
+    this._subs.push(
+      this._dialogService
         .open(CalculationDocumentsComponent, {
           autoFocus: false,
           closeOnBackdropClick: false,
@@ -262,14 +262,14 @@ export class PersonCalculationComponent implements OnInit, OnDestroy {
   }
 
   private async cancelCalculation(id: number): Promise<void> {
-    const rez = await this.dialogService.openYesNoDialog(
+    const rez = await this._dialogService.openYesNoDialog(
       getString("areYouSure"),
       getString("wantToCancelCalculation")
     );
     if (rez) {
-      this.subs.push(
-        this.calculationService.cancelCalculation({ Id: id }).subscribe(() => {
-          this.toastrService.showToast("success", getString("saveSuccess"));
+      this._subs.push(
+        this._calculationService.cancelCalculation({ Id: id }).subscribe(() => {
+          this._toastrService.showToast("success", getString("saveSuccess"));
           this.getCalculations();
         })
       );
@@ -279,22 +279,22 @@ export class PersonCalculationComponent implements OnInit, OnDestroy {
   public async markRealPriceClick(): Promise<void> {
     var selected = this.table.getSelectedRows();
     if (selected.length > 0) {
-      const rez = await this.dialogService.openYesNoDialog(
+      const rez = await this._dialogService.openYesNoDialog(
         getString("areYouSure"),
         getString("wantToMarkRealPrice")
       );
       if (rez) {
         for (let index = 0; index < selected.length; index++) {
           const element = selected[index];
-          this.subs.push(
-            this.calculationService
+          this._subs.push(
+            this._calculationService
               .calculationRealPriceSave({
                 Id: element.Id,
                 RealPrice: element.SystemPrice.replace(",", ""),
               })
               .subscribe(() => {
                 if (index == selected.length - 1) {
-                  this.toastrService.showToast(
+                  this._toastrService.showToast(
                     "success",
                     getString("saveSuccess")
                   );
@@ -305,13 +305,13 @@ export class PersonCalculationComponent implements OnInit, OnDestroy {
         }
       }
     } else
-      this.toastrService.showToast("warning", getString("nothingSelected"));
+      this._toastrService.showToast("warning", getString("nothingSelected"));
   }
 
   public async markPaidPriceClick(): Promise<void> {
     var selected = this.table.getSelectedRows();
     if (selected.length > 0) {
-      const rez = await this.dialogService.openYesNoDialog(
+      const rez = await this._dialogService.openYesNoDialog(
         getString("areYouSure"),
         getString("wantToMarkPaid")
       );
@@ -319,8 +319,8 @@ export class PersonCalculationComponent implements OnInit, OnDestroy {
         for (let index = 0; index < selected.length; index++) {
           const element = selected[index];
           if (!element.RealPrice) {
-            this.subs.push(
-              this.calculationService
+            this._subs.push(
+              this._calculationService
                 .calculationRealPriceSave({
                   Id: element.Id,
                   RealPrice: element.SystemPrice.replace(",", ""),
@@ -329,8 +329,8 @@ export class PersonCalculationComponent implements OnInit, OnDestroy {
             );
           }
 
-          this.subs.push(
-            this.calculationService
+          this._subs.push(
+            this._calculationService
               .calculationPaid({
                 Id: element.Id,
                 PaidPrice: element.RealPrice
@@ -340,7 +340,7 @@ export class PersonCalculationComponent implements OnInit, OnDestroy {
               })
               .subscribe(() => {
                 if (index == selected.length - 1) {
-                  this.toastrService.showToast(
+                  this._toastrService.showToast(
                     "success",
                     getString("saveSuccess")
                   );
@@ -351,25 +351,25 @@ export class PersonCalculationComponent implements OnInit, OnDestroy {
         }
       }
     } else
-      this.toastrService.showToast("warning", getString("nothingSelected"));
+      this._toastrService.showToast("warning", getString("nothingSelected"));
   }
 
   public async cancelCalculationClick(): Promise<void> {
     var selected = this.table.getSelectedRows();
     if (selected.length > 0) {
-      const rez = await this.dialogService.openYesNoDialog(
+      const rez = await this._dialogService.openYesNoDialog(
         getString("areYouSure"),
         getString("wantToCancelSelected")
       );
       if (rez) {
         for (let index = 0; index < selected.length; index++) {
           const element = selected[index];
-          this.subs.push(
-            this.calculationService
+          this._subs.push(
+            this._calculationService
               .cancelCalculation({ Id: element.Id })
               .subscribe(() => {
                 if (index == selected.length - 1) {
-                  this.toastrService.showToast(
+                  this._toastrService.showToast(
                     "success",
                     getString("saveSuccess")
                   );
@@ -380,12 +380,12 @@ export class PersonCalculationComponent implements OnInit, OnDestroy {
         }
       }
     } else
-      this.toastrService.showToast("warning", getString("nothingSelected"));
+      this._toastrService.showToast("warning", getString("nothingSelected"));
   }
 
   public newCalculationClick(): void {
-    this.subs.push(
-      this.dialogService
+    this._subs.push(
+      this._dialogService
         .open(StartCalculationComponent, {
           autoFocus: false,
           closeOnEsc: false,
@@ -404,8 +404,8 @@ export class PersonCalculationComponent implements OnInit, OnDestroy {
   public recalculateSelectedClick(): void {
     var selected = this.table.getSelectedRows();
     if (selected.length == 1) {
-      this.subs.push(
-        this.dialogService
+      this._subs.push(
+        this._dialogService
           .open(StartCalculationComponent, {
             autoFocus: false,
             closeOnBackdropClick: false,
@@ -424,6 +424,6 @@ export class PersonCalculationComponent implements OnInit, OnDestroy {
           })
       );
     } else
-      this.toastrService.showToast("warning", getString("nothingSelected"));
+      this._toastrService.showToast("warning", getString("nothingSelected"));
   }
 }

@@ -1,43 +1,71 @@
 <nb-card class="discount-picker-card">
-    <nb-card-header class="d-flex">
-        <div class="col">
-            {{getString('addDiscount')}}
-            <div class="discounts-selected" *ngIf="selectedDiscounts.length>0">{{getString('selected')}}:
-                {{selectedDiscounts.length}} <button nbButton shape="round" size="tiny" ghost
-                    (click)="clearAll()">{{getString('clearAll')}}
-                    <nb-icon pack="eva" icon="close-outline"></nb-icon>
-                </button></div>
-        </div>
-        <div class="w-max">
-            <button nbButton ghost shape="round" (click)="close(false)">
-                <nb-icon pack="eva" icon="close-outline"></nb-icon>
-            </button>
-        </div>
-    </nb-card-header>
-    <nb-card-body>
-        <div class="row m-0 w-100">
-            <div class="col-md-4 p-1" *ngFor="let discount of discounts">
-                <div class="discount-card" [ngClass]="discount.selected ? 'selected':''"
-                    (click)="toggleDiscount(discount)">
-                    <div class="checkbox">
-                        <nb-checkbox *ngIf="!discount.selected" [checked]="false" status="basic"
-                            size="small"></nb-checkbox>
-                        <nb-checkbox *ngIf="discount.selected" [checked]="true" status="basic"
-                            size="small"></nb-checkbox>
-                    </div>
-                    <div class="name">{{discount.Name}}</div>
-                    <div class="name-subtitle">{{getString('quantity')}}: {{discount.Quantity}}<span
-                            *ngIf="discount.PercentCalculation">%</span></div>
-                </div>
-            </div>
-        </div>
-    </nb-card-body>
-    <nb-card-footer class="d-flex justify-content-end">
-        <button nbButton ghost shape="round" size="small" class="me-2" (click)="close(false)">
-            {{getString('cancel')}}
+  <nb-card-header class="d-flex">
+    <div class="col">
+      {{ getString("addDiscount") }}
+      <div class="discounts-selected" *ngIf="selectedDiscounts.length > 0">
+        {{ getString("selected") }}: {{ selectedDiscounts.length }}
+        <button nbButton shape="round" size="tiny" ghost (click)="clearAll()">
+          {{ getString("clearAll") }}
+          <nb-icon pack="eva" icon="close-outline"></nb-icon>
         </button>
-        <button nbButton status="primary" shape="round" size="small" (click)="close(true)">
-            {{getString('save')}}
-        </button>
-    </nb-card-footer>
+      </div>
+    </div>
+    <div class="w-max">
+      <button nbButton ghost shape="round" (click)="close(false)">
+        <nb-icon pack="eva" icon="close-outline"></nb-icon>
+      </button>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="row m-0 w-100">
+      <div class="col-md-4 p-1" *ngFor="let discount of discounts">
+        <div
+          class="discount-card"
+          [ngClass]="discount.selected ? 'selected' : ''"
+          (click)="toggleDiscount(discount)"
+        >
+          <div class="checkbox">
+            <nb-checkbox
+              *ngIf="!discount.selected"
+              [checked]="false"
+              status="basic"
+              size="small"
+            ></nb-checkbox>
+            <nb-checkbox
+              *ngIf="discount.selected"
+              [checked]="true"
+              status="basic"
+              size="small"
+            ></nb-checkbox>
+          </div>
+          <div class="name">{{ discount.Name }}</div>
+          <div class="name-subtitle">
+            {{ getString("quantity") }}: {{ discount.Quantity
+            }}<span *ngIf="discount.PercentCalculation">%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nb-card-body>
+  <nb-card-footer class="d-flex justify-content-end">
+    <button
+      nbButton
+      ghost
+      shape="round"
+      size="small"
+      class="me-2"
+      (click)="close(false)"
+    >
+      {{ getString("cancel") }}
+    </button>
+    <button
+      nbButton
+      status="primary"
+      shape="round"
+      size="small"
+      (click)="close(true)"
+    >
+      {{ getString("save") }}
+    </button>
+  </nb-card-footer>
 </nb-card>

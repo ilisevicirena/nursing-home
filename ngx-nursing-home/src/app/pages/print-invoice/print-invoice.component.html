@@ -1,189 +1,390 @@
-<button nbButton ghost status="primary" shape="round" size="small" (click)="downloadAsPDF()">
-    PDF
-    <nb-icon pack="eva" icon="download-outline"></nb-icon>
+<button
+  nbButton
+  ghost
+  status="primary"
+  shape="round"
+  size="small"
+  (click)="downloadAsPDF()"
+>
+  PDF
+  <nb-icon pack="eva" icon="download-outline"></nb-icon>
 </button>
 
-<div class="w-100" id="pdfTable" style="visibility: hidden; position: absolute;" #pdfTable>
-    <table style="border: none; margin: 0;">
-        <tr style="height: 200px;">
-            <td style="width: 25%; background-color: #33B9BF; border:none; text-align:center; margin-top: 40px;">
-                <img #logo height="70px" width="65px" style="margin:0">
-                <div>{{brand.Name}}</div>
+<div
+  class="w-100"
+  id="pdfTable"
+  style="visibility: hidden; position: absolute"
+  #pdfTable
+>
+  <table style="border: none; margin: 0">
+    <tr style="height: 200px">
+      <td
+        style="
+          width: 25%;
+          background-color: #33b9bf;
+          border: none;
+          text-align: center;
+          margin-top: 40px;
+        "
+      >
+        <img #logo height="70px" width="65px" style="margin: 0" />
+        <div>{{ brand.Name }}</div>
+      </td>
+      <td
+        style="
+          width: 75%;
+          border: none;
+          text-align: right;
+          margin-right: 80px;
+          margin-top: 50px;
+          font-size: 30px;
+          font-weight: bold;
+        "
+      >
+        {{ getString("offerPrint") }}<br />
+        <span style="font-size: 14px; font-weight: lighter"
+          >{{ getString("offerDate") }}:
+          {{ offerDate | date : "dd.MM.yyyy." }}</span
+        ><br />
+        <span style="font-size: 14px; font-weight: lighter; margin-top: 0"
+          >{{ getString("offerFor") }}: {{ offerMeasureUnitName }}</span
+        >
+      </td>
+    </tr>
+  </table>
+  <table style="border: none; margin: 0" #headerTable>
+    <tr style="height: 60px; color: #8f9bb3">
+      <td style="width: 10%; border: none; background-color: #edf1f7"></td>
+      <td
+        style="
+          width: 30%;
+          border: none;
+          margin-top: 30px;
+          background-color: #edf1f7;
+        "
+      >
+        {{ getString("name") }}
+      </td>
+      <td
+        style="
+          width: 10%;
+          border: none;
+          margin-top: 30px;
+          background-color: #edf1f7;
+        "
+      >
+        {{ getString("quantity") }}
+      </td>
+      <td
+        style="
+          width: 20%;
+          border: none;
+          margin-top: 30px;
+          background-color: #edf1f7;
+        "
+      >
+        {{ getString("costPerUnit") }}
+      </td>
+      <td
+        style="
+          width: 15%;
+          border: none;
+          margin-top: 30px;
+          background-color: #edf1f7;
+        "
+      >
+        {{ getString("measureUnit") }}
+      </td>
+      <td
+        style="
+          width: 15%;
+          border: none;
+          margin-top: 30px;
+          background-color: #edf1f7;
+        "
+      >
+        {{ getString("sum") }}
+      </td>
+    </tr>
+  </table>
+  <div #packagesDiv>
+    <div *ngIf="selectedPackages.length > 0">
+      <table *ngFor="let p of selectedPackages" style="border: none; margin: 0">
+        <tr style="font-size: 14px">
+          <td style="width: 10%; border: none; background-color: #edf1f7"></td>
+          <td
+            style="
+              width: 30%;
+              border: none;
+              background-color: #edf1f7;
+              border-bottom: 1px solid #8f9bb3;
+            "
+          >
+            {{ p.Name }}<br />
+            <span style="font-size: 10px; color: #8f9bb3">{{
+              getString("services")
+            }}</span>
+          </td>
+          <td
+            style="
+              width: 10%;
+              border: none;
+              background-color: #edf1f7;
+              border-bottom: 1px solid #8f9bb3;
+            "
+          >
+            {{ p.Quantity }}
+          </td>
+          <td
+            style="
+              width: 20%;
+              border: none;
+              background-color: #edf1f7;
+              border-bottom: 1px solid #8f9bb3;
+            "
+          >
+            {{ p.PriceRounded }}
+          </td>
+          <td
+            style="
+              width: 15%;
+              border: none;
+              background-color: #edf1f7;
+              border-bottom: 1px solid #8f9bb3;
+            "
+          >
+            {{ p.MeasureUnitTag }}
+          </td>
+          <td
+            style="
+              width: 15%;
+              border: none;
+              background-color: #edf1f7;
+              border-bottom: 1px solid #8f9bb3;
+            "
+          >
+            {{ p.PriceRounded }}
+          </td>
+        </tr>
+        <tr *ngFor="let s of p.Services" style="font-size: 12px">
+          <td style="width: 10%; border: none; background-color: #edf1f7"></td>
+          <td
+            style="
+              width: 30%;
+              border: none;
+              background-color: #edf1f7;
+              margin-left: 10px;
+            "
+          >
+            {{ s.ServiceName }}
+          </td>
+          <td style="width: 10%; border: none; background-color: #edf1f7">
+            {{ s.Quantity }}
+          </td>
+          <td style="width: 20%; border: none; background-color: #edf1f7">
+            {{ s.CostPerUnit }}
+          </td>
+          <td style="width: 15%; border: none; background-color: #edf1f7">
+            {{ s.MeasureUnitTag }}
+          </td>
+          <td style="width: 15%; border: none; background-color: #edf1f7">
+            {{ s.PriceRounded }}
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <div #servicesDiv>
+    <div *ngIf="selectedServices.length > 0">
+      <table style="margin: 0">
+        <tr style="font-size: 14px" *ngFor="let s of selectedServices">
+          <td style="width: 10%; border: none; background-color: #edf1f7"></td>
+          <td
+            style="
+              width: 30%;
+              border: none;
+              background-color: #edf1f7;
+              border-bottom: 1px solid #8f9bb3;
+            "
+          >
+            {{ s.Name }}<br />
+            <span style="font-size: 10px; color: #8f9bb3">{{
+              getString("serviceSingle")
+            }}</span>
+          </td>
+          <td
+            style="
+              width: 10%;
+              border: none;
+              background-color: #edf1f7;
+              border-bottom: 1px solid #8f9bb3;
+            "
+          >
+            {{ s.Quantity }}
+          </td>
+          <td
+            style="
+              width: 20%;
+              border: none;
+              background-color: #edf1f7;
+              border-bottom: 1px solid #8f9bb3;
+            "
+          >
+            {{ s.CostPerUnit }}
+          </td>
+          <td
+            style="
+              width: 15%;
+              border: none;
+              background-color: #edf1f7;
+              border-bottom: 1px solid #8f9bb3;
+            "
+          >
+            {{ s.MeasureUnitTag }}
+          </td>
+          <td
+            style="
+              width: 15%;
+              border: none;
+              background-color: #edf1f7;
+              border-bottom: 1px solid #8f9bb3;
+            "
+          >
+            {{ s.PriceRounded }}
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <table style="border: none; margin: 0">
+    <tr [style]="'height:' + freeSpace">
+      <td style="width: 10%; border: none; background-color: #edf1f7"></td>
+      <td style="width: 30%; border: none; background-color: #edf1f7"></td>
+      <td style="width: 10%; border: none; background-color: #edf1f7"></td>
+      <td style="width: 20%; border: none; background-color: #edf1f7"></td>
+      <td style="width: 15%; border: none; background-color: #edf1f7"></td>
+      <td style="width: 15%; border: none; background-color: #edf1f7"></td>
+    </tr>
+  </table>
+
+  <table style="border: none; margin-bottom: 0">
+    <tr style="height: 300px">
+      <td
+        style="
+          width: 25%;
+          background-color: #33b9bf;
+          border: none;
+          margin-top: 30px;
+        "
+      >
+        <table>
+          <tr style="height: 20px">
+            <td style="width: 2%; border: none"></td>
+            <td style="border: none">
+              <img #marker height="15px" width="12px" />
+            </td>
+            <td style="font-size: 12px; border: none">
+              {{ brand.Address }}, {{ brand.City }}, {{ brand.PostalCode }}
+            </td>
+          </tr>
+          <tr style="height: 20px">
+            <td style="width: 2%; border: none"></td>
+            <td style="border: none">
+              <img #envelope height="12px" width="15px" />
+            </td>
+            <td style="font-size: 12px; border: none">
+              {{ brand.Email }}
+            </td>
+          </tr>
+          <tr style="height: 20px">
+            <td style="width: 2%; border: none"></td>
+            <td style="border: none">
+              <img #phone height="15px" width="15px" />
+            </td>
+            <td style="font-size: 12px; border: none">
+              {{ brand.Telephone }}
+            </td>
+          </tr>
+          <tr style="height: 20px">
+            <td style="width: 2%; border: none"></td>
+            <td style="border: none">
+              <img #mobile height="15px" width="15px" />
+            </td>
+            <td style="font-size: 12px; border: none">
+              {{ brand.Mobile }}
+            </td>
+          </tr>
+        </table>
+      </td>
+      <td style="width: 75%; border: none">
+        <table>
+          <tr style="height: 20px">
+            <td style="border: none; font-size: 12px; width: 25%">
+              {{ getString("thankYou") }}
+            </td>
+            <td style="border: none; width: 25%"></td>
+            <td style="border: none; width: 25%"></td>
+            <td style="border: none; width: 25%"></td>
+          </tr>
+          <tr style="height: 20px">
+            <td style="border: none; width: 25%"></td>
+            <td style="border: none; width: 25%"></td>
+            <td
+              style="
+                border: none;
+                width: 25%;
+                font-size: 12px;
+                border-bottom: 1px solid black;
+              "
+            >
+              {{ getString("discounts") }}:
             </td>
             <td
-                style="width: 75%; border:none; text-align: right; margin-right: 80px; margin-top:50px; font-size: 30px; font-weight: bold;">
-                {{getString('offerPrint')}}<br>
-                <span style="font-size: 14px; font-weight: lighter;">{{getString('offerDate')}}: {{offerDate |
-                    date:'dd.MM.yyyy.'}}</span><br>
-                <span style="font-size: 14px; font-weight: lighter; margin-top: 0;">{{getString('offerFor')}}:
-                    {{offerMeasureUnitName}}</span>
+              style="border: none; width: 25%; border-bottom: 1px solid black"
+            >
+              <span *ngIf="selectedDiscounts.length == 0">-</span>
             </td>
-        </tr>
-    </table>
-    <table style="border: none; margin: 0;" #headerTable>
-        <tr style="height: 60px; color:#8f9bb3">
-            <td style="width: 10%; border: none; background-color: #edf1f7;">
+          </tr>
+          <tr *ngFor="let d of selectedDiscounts" style="height: 15px">
+            <td style="border: none; width: 25%"></td>
+            <td style="border: none; width: 25%"></td>
+            <td style="border: none; width: 25%"></td>
+            <td style="border: none; width: 25%; font-size: 12px">
+              {{ d.Quantity }} <span *ngIf="d.PercentCalculation">%</span>
             </td>
-            <td style="width: 30%; border: none; margin-top: 30px; background-color: #edf1f7;">{{getString('name')}}
+          </tr>
+          <tr style="height: 20px">
+            <td style="border: none; width: 25%"></td>
+            <td style="border: none; width: 25%"></td>
+            <td style="border: none; width: 25%"></td>
+            <td style="border: none; width: 25%"></td>
+          </tr>
+          <tr style="height: 20px">
+            <td style="border: none; width: 25%"></td>
+            <td style="border: none; width: 25%"></td>
+            <td
+              style="
+                border: none;
+                width: 25%;
+                font-size: 14px;
+                border-bottom: 1px solid black;
+              "
+            >
+              {{ getString("sum") }}:
             </td>
-            <td style="width: 10%; border: none; margin-top: 30px; background-color: #edf1f7;">{{getString('quantity')}}
+            <td
+              style="
+                border: none;
+                width: 25%;
+                border-bottom: 1px solid black;
+                font-size: 18px;
+              "
+            >
+              {{ offerPrice }}
             </td>
-            <td style="width: 20%; border: none; margin-top: 30px; background-color: #edf1f7;">
-                {{getString('costPerUnit')}}</td>
-            <td style="width: 15%; border: none; margin-top: 30px; background-color: #edf1f7;">
-                {{getString('measureUnit')}}</td>
-            <td style="width: 15%; border: none; margin-top: 30px; background-color: #edf1f7;">{{getString('sum')}}</td>
-        </tr>
-    </table>
-    <div #packagesDiv>
-        <div *ngIf="selectedPackages.length>0">
-            <table *ngFor="let p of selectedPackages" style="border: none; margin: 0;">
-                <tr style="font-size: 14px;">
-                    <td style="width: 10%; border: none; background-color: #edf1f7;"></td>
-                    <td style="width: 30%; border: none; background-color: #edf1f7; border-bottom: 1px solid #8f9bb3;">
-                        {{p.Name}}<br>
-                        <span style="font-size: 10px; color: #8f9bb3;">{{getString('services')}}</span>
-                    </td>
-                    <td style="width: 10%; border: none; background-color: #edf1f7; border-bottom: 1px solid #8f9bb3;">
-                        {{p.Quantity}}</td>
-                    <td style="width: 20%; border: none; background-color: #edf1f7; border-bottom: 1px solid #8f9bb3;">
-                        {{p.PriceRounded}}</td>
-                    <td style="width: 15%; border: none; background-color: #edf1f7; border-bottom: 1px solid #8f9bb3;">
-                        {{p.MeasureUnitTag}}</td>
-                    <td style="width: 15%; border: none; background-color: #edf1f7; border-bottom: 1px solid #8f9bb3;">
-                        {{p.PriceRounded}}</td>
-
-                </tr>
-                <tr *ngFor="let s of p.Services" style="font-size: 12px;">
-                    <td style="width: 10%; border: none; background-color: #edf1f7;"></td>
-                    <td style="width: 30%; border: none; background-color: #edf1f7; margin-left:10px;">{{s.ServiceName}}
-                    </td>
-                    <td style="width: 10%; border: none; background-color: #edf1f7;">{{s.Quantity}}</td>
-                    <td style="width: 20%; border: none; background-color: #edf1f7;">{{s.CostPerUnit}}</td>
-                    <td style="width: 15%; border: none; background-color: #edf1f7;">{{s.MeasureUnitTag}}</td>
-                    <td style="width: 15%; border: none; background-color: #edf1f7;">{{s.PriceRounded}}</td>
-                </tr>
-            </table>
-        </div>
-    </div>
-    <div #servicesDiv>
-        <div *ngIf="selectedServices.length>0">
-            <table style="margin:0;">
-                <tr style="font-size: 14px;" *ngFor="let s of selectedServices">
-                    <td style="width: 10%; border: none; background-color: #edf1f7;"></td>
-                    <td style="width: 30%; border: none; background-color: #edf1f7; border-bottom: 1px solid #8f9bb3;">
-                        {{s.Name}}<br>
-                        <span style="font-size: 10px; color: #8f9bb3;">{{getString('serviceSingle')}}</span>
-                    </td>
-                    <td style="width: 10%; border: none; background-color: #edf1f7; border-bottom: 1px solid #8f9bb3;">
-                        {{s.Quantity}}</td>
-                    <td style="width: 20%; border: none; background-color: #edf1f7; border-bottom: 1px solid #8f9bb3;">
-                        {{s.CostPerUnit}}</td>
-                    <td style="width: 15%; border: none; background-color: #edf1f7; border-bottom: 1px solid #8f9bb3;">
-                        {{s.MeasureUnitTag}}</td>
-                    <td style="width: 15%; border: none; background-color: #edf1f7; border-bottom: 1px solid #8f9bb3;">
-                        {{s.PriceRounded}}</td>
-
-                </tr>
-            </table>
-        </div>
-    </div>
-    <table style="border: none; margin: 0;">
-        <tr [style]="'height:'+freeSpace">
-            <td style="width: 10%; border:none; background-color: #edf1f7;"></td>
-            <td style="width: 30%; border:none; background-color: #edf1f7;"></td>
-            <td style="width: 10%; border:none; background-color: #edf1f7;"></td>
-            <td style="width: 20%; border:none; background-color: #edf1f7;"></td>
-            <td style="width: 15%; border:none; background-color: #edf1f7;"></td>
-            <td style="width: 15%; border:none; background-color: #edf1f7;"></td>
-        </tr>
-    </table>
-
-    <table style="border: none; margin-bottom: 0;">
-        <tr style="height: 300px;">
-            <td style="width: 25%; background-color: #33B9BF; border:none; margin-top: 30px;">
-                <table>
-                    <tr style="height: 20px;">
-                        <td style="width: 2%; border:none;"></td>
-                        <td style="border:none;">
-                            <img #marker height="15px" width="12px">
-                        </td>
-                        <td style="font-size: 12px; border:none;">
-                            {{brand.Address}}, {{brand.City}}, {{brand.PostalCode}}
-                        </td>
-                    </tr>
-                    <tr style="height: 20px;">
-                        <td style="width: 2%; border:none;"></td>
-                        <td style="border:none;">
-                            <img #envelope height="12px" width="15px">
-                        </td>
-                        <td style="font-size: 12px; border:none;">
-                            {{brand.Email}}
-                        </td>
-                    </tr>
-                    <tr style="height: 20px;">
-                        <td style="width: 2%; border:none;"></td>
-                        <td style="border:none;">
-                            <img #phone height="15px" width="15px">
-                        </td>
-                        <td style="font-size: 12px; border:none;">
-                            {{brand.Telephone}}
-                        </td>
-                    </tr>
-                    <tr style="height: 20px;">
-                        <td style="width: 2%; border:none;"></td>
-                        <td style="border:none;">
-                            <img #mobile height="15px" width="15px">
-                        </td>
-                        <td style="font-size: 12px; border:none;">
-                            {{brand.Mobile}}
-                        </td>
-                    </tr>
-                </table>
-            </td>
-            <td style="width: 75%; border:none;">
-                <table>
-                    <tr style="height: 20px;">
-                        <td style="border: none; font-size: 12px; width: 25%;">{{getString('thankYou')}}</td>
-                        <td style="border:none; width: 25%;"></td>
-                        <td style="border:none; width: 25%;"></td>
-                        <td style="border:none; width: 25%;"></td>
-                    </tr>
-                    <tr style="height: 20px;">
-                        <td style="border:none; width: 25%;"></td>
-                        <td style="border:none; width: 25%;"></td>
-                        <td style="border:none; width: 25%; font-size: 12px; border-bottom: 1px solid black;">
-                            {{getString('discounts')}}:</td>
-                        <td style="border:none; width: 25%; border-bottom: 1px solid black;"><span
-                                *ngIf="selectedDiscounts.length==0">-</span></td>
-                    </tr>
-                    <tr *ngFor="let d of selectedDiscounts" style="height: 15px;">
-                        <td style="border:none; width: 25%;"></td>
-                        <td style="border:none; width: 25%;"></td>
-                        <td style="border:none; width: 25%;">
-                        </td>
-                        <td style="border:none; width: 25%; font-size: 12px;">{{d.Quantity}} <span
-                                *ngIf="d.PercentCalculation">%</span>
-                        </td>
-                    </tr>
-                    <tr style="height: 20px;">
-                        <td style="border:none; width: 25%;"></td>
-                        <td style="border:none; width: 25%;"></td>
-                        <td style="border:none; width: 25%; ">
-                        </td>
-                        <td style="border:none; width: 25%;">
-                        </td>
-                    </tr>
-                    <tr style="height: 20px;">
-                        <td style="border:none; width: 25%;"></td>
-                        <td style="border:none; width: 25%;"></td>
-                        <td style="border:none; width: 25%; font-size: 14px; border-bottom: 1px solid black;">
-                            {{getString('sum')}}:</td>
-                        <td style="border:none; width: 25%; border-bottom: 1px solid black; font-size: 18px;">
-                            {{offerPrice}}</td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-    </table>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
 </div>

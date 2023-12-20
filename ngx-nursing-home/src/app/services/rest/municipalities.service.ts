@@ -10,20 +10,20 @@ export class MunicipalitiesService extends BaseRestApiService {
     super(http, "api/municipalities");
   }
 
-  private municipalities: any[] = undefined;
+  private _municipalities: any[] = undefined;
 
   public get(): Promise<any> {
     return new Promise<any>((resolve, reject) => {
-      if (this.municipalities === undefined) {
+      if (this._municipalities === undefined) {
         this.http.get(this.apiRoute + "/").subscribe(
           (result: any) => {
-            this.municipalities = result;
-            return resolve(this.municipalities);
+            this._municipalities = result;
+            return resolve(this._municipalities);
           },
           () => reject()
         );
       } else {
-        return resolve(this.municipalities);
+        return resolve(this._municipalities);
       }
     });
   }

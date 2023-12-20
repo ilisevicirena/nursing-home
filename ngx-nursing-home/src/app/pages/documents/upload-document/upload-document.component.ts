@@ -1,18 +1,20 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { NbDialogRef } from '@nebular/theme';
-import { Subscription } from 'rxjs';
-import { getString } from '../../../resources/strings';
-import { DocumentsService, IDocument } from '../../../services/rest/documents.service';
-import { ToastrService } from '../../../services/toastr.service';
+import { Component, OnDestroy, OnInit } from "@angular/core";
+import { NbDialogRef } from "@nebular/theme";
+import { Subscription } from "rxjs";
+import { getString } from "../../../resources/strings";
+import {
+  DocumentsService,
+  IDocument,
+} from "../../../services/rest/documents.service";
+import { ToastrService } from "../../../services/toastr.service";
 
 @Component({
-  selector: 'sample-upload-document',
-  templateUrl: './upload-document.component.html',
-  styleUrls: ['./upload-document.component.scss']
+  selector: "sample-upload-document",
+  templateUrl: "./upload-document.component.html",
+  styleUrls: ["./upload-document.component.scss"],
 })
 export class UploadDocumentComponent implements OnInit, OnDestroy {
-
-  private subs: Subscription[] = [];
+  private _subs: Subscription[] = [];
 
   public documentTypes: any[] = [];
   public getString = getString;
@@ -25,35 +27,35 @@ export class UploadDocumentComponent implements OnInit, OnDestroy {
     Name: undefined,
     Extension: undefined,
     FileType: undefined,
-    Base64: undefined
+    Base64: undefined,
   };
 
   constructor(
-    private ref: NbDialogRef<UploadDocumentComponent>,
-    private documentsService: DocumentsService,
-    private toastrService: ToastrService
-  ) { }
+    private _ref: NbDialogRef<UploadDocumentComponent>,
+    private _documentsService: DocumentsService,
+    private _toastrService: ToastrService
+  ) {}
 
   ngOnInit(): void {
     this.getDocumentTypes();
   }
 
   ngOnDestroy(): void {
-    this.subs.forEach(element => {
+    this._subs.forEach((element) => {
       element.unsubscribe();
     });
   }
 
   private getDocumentTypes(): void {
-    this.subs.push(
-      this.documentsService.getDocumentTypes().subscribe(data => {
+    this._subs.push(
+      this._documentsService.getDocumentTypes().subscribe((data) => {
         this.documentTypes = data;
       })
     );
   }
 
   public close(result: any): void {
-    this.ref.close(result);
+    this._ref.close(result);
   }
 
   public onFileUploaded(files: File[]): void {
@@ -61,11 +63,11 @@ export class UploadDocumentComponent implements OnInit, OnDestroy {
       const reader = new FileReader();
       reader.readAsDataURL(files[0]);
       reader.onloadend = () => {
-        var base64 = reader.result.toString().split(',');
+        var base64 = reader.result.toString().split(",");
         this.documentData.Base64 = base64[1];
-        this.documentData.Name = files[0].name.split('.')[0];
+        this.documentData.Name = files[0].name.split(".")[0];
         this.documentData.FileType = base64[0];
-        this.documentData.Extension = files[0].name.split('.')[1];
+        this.documentData.Extension = files[0].name.split(".")[1];
       };
     } else {
       this.documentData.Name = undefined;
@@ -80,13 +82,12 @@ export class UploadDocumentComponent implements OnInit, OnDestroy {
     this.documentData.DocumentTypeId = this.selectedType;
 
     if (!this.notesMode) {
-      this.subs.push(
-        this.documentsService.add(this.documentData).subscribe(() => {
-          this.toastrService.showToast('success', getString('saveSuccess'));
+      this._subs.push(
+        this._documentsService.add(this.documentData).subscribe(() => {
+          this._toastrService.showToast("success", getString("saveSuccess"));
           this.close(true);
         })
       );
     } else this.close({ saved: true, document: this.documentData });
   }
-
 }

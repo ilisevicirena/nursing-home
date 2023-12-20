@@ -1,23 +1,37 @@
 <nb-card class="h-100">
-    <nb-card-header>
-        {{getString('manageNotifications')}}
-    </nb-card-header>
-    <nb-card-body>
-        <div class="row m-0 pb-2" *ngFor="let type of types">
-            <div class="w-max d-flex align-items-center">
-                <nb-toggle [(checked)]="type.Enabled" (checkedChange)="onEnabledChange(type)"></nb-toggle>
-            </div>
-            <div class="w-max d-flex">
-                <div class="d-flex align-items-center me-2">{{getString('reminder')}}</div>
-                <div>
-                    <input nbInput style="width: 100px;" type="number" [(ngModel)]="type.DaysReminder"
-                        [disabled]="!type.Enabled" (focusout)="onDaysReminderChange(type)" name="daysReminder">
-                </div>
-                <div class="d-flex align-items-center ms-2">{{getString('daysBefore')}}</div>
-            </div>
-            <div class="col d-flex align-items-center fw-600">
-                {{getString(type.StringKey)}}
-            </div>
+  <nb-card-header>
+    {{ getString("manageNotifications") }}
+  </nb-card-header>
+  <nb-card-body>
+    <div class="row m-0 pb-2" *ngFor="let type of types">
+      <div class="w-max d-flex align-items-center">
+        <nb-toggle
+          [(checked)]="type.Enabled"
+          (checkedChange)="onEnabledChange(type)"
+        ></nb-toggle>
+      </div>
+      <div class="w-max d-flex">
+        <div class="d-flex align-items-center me-2">
+          {{ getString("reminder") }}
         </div>
-    </nb-card-body>
+        <div>
+          <input
+            nbInput
+            style="width: 100px"
+            type="number"
+            [(ngModel)]="type.DaysReminder"
+            [disabled]="!type.Enabled"
+            (focusout)="onDaysReminderChange(type)"
+            name="daysReminder"
+          />
+        </div>
+        <div class="d-flex align-items-center ms-2">
+          {{ getString("daysBefore") }}
+        </div>
+      </div>
+      <div class="col d-flex align-items-center fw-600">
+        {{ getString(type.StringKey) }}
+      </div>
+    </div>
+  </nb-card-body>
 </nb-card>

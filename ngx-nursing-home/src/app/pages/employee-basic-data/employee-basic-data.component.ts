@@ -25,33 +25,34 @@ import { EmploymentTypesService } from "../../services/rest/employment-types.ser
 })
 export class EmployeeBasicDataComponent implements OnInit, OnDestroy {
   constructor(
-    private gendersService: GendersService,
-    private citiesService: CitiesService,
-    private countriesService: CountriesService,
-    private municipalitiesService: MunicipalitiesService,
-    private qualificationsService: QualificationsService,
-    private jobPostionsService: JobPositionsService,
-    private employmentTypesService: EmploymentTypesService
+    private _gendersService: GendersService,
+    private _citiesService: CitiesService,
+    private _countriesService: CountriesService,
+    private _municipalitiesService: MunicipalitiesService,
+    private _qualificationsService: QualificationsService,
+    private _jobPostionsService: JobPositionsService,
+    private _employmentTypesService: EmploymentTypesService
   ) {}
 
-  modelValue: IEmployee;
+  private _subs: Subscription[] = [];
+  private _employeeData: IEmployee;
 
   @Output()
   employeeDataChange: EventEmitter<any> = new EventEmitter<any>();
 
   @Input()
   get employeeData(): IEmployee {
-    return this.modelValue;
+    return this._employeeData;
   }
 
   set employeeData(val: IEmployee) {
-    this.modelValue = val;
+    this._employeeData = val;
 
     this.getCountries();
     this.getMunicipalities();
     this.getCities();
 
-    this.employeeDataChange.emit(this.modelValue);
+    this.employeeDataChange.emit(this._employeeData);
   }
 
   @Input() formModeAddNew: boolean = false;
@@ -69,8 +70,6 @@ export class EmployeeBasicDataComponent implements OnInit, OnDestroy {
   public jobPositons: any[] = [];
   public employmentTypes: any[] = [];
 
-  private subscriptions: Subscription[] = [];
-
   ngOnInit(): void {
     this.getGenders();
     this.getCountries();
@@ -82,44 +81,45 @@ export class EmployeeBasicDataComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscriptions.forEach((element) => {
+    this._subs.forEach((element) => {
       element.unsubscribe();
     });
   }
+
   private getGenders(): void {
-    this.subscriptions.push(
-      this.gendersService.getData().subscribe((data) => {
+    this._subs.push(
+      this._gendersService.getData().subscribe((data) => {
         this.genders = data;
       })
     );
   }
 
   private getQualifications(): void {
-    this.subscriptions.push(
-      this.qualificationsService.getData().subscribe((data) => {
+    this._subs.push(
+      this._qualificationsService.getData().subscribe((data) => {
         this.qualifications = data;
       })
     );
   }
 
   private getJobPositions(): void {
-    this.subscriptions.push(
-      this.jobPostionsService.getData().subscribe((data) => {
+    this._subs.push(
+      this._jobPostionsService.getData().subscribe((data) => {
         this.jobPositons = data;
       })
     );
   }
 
   private getEmploymentTypes(): void {
-    this.subscriptions.push(
-      this.employmentTypesService.getData().subscribe((data) => {
+    this._subs.push(
+      this._employmentTypesService.getData().subscribe((data) => {
         this.employmentTypes = data;
       })
     );
   }
 
   private getCountries(): void {
-    this.countriesService.get().then((data) => {
+    this._countriesService.get().then((data) => {
       this.countries = data;
       if (this.employeeData.BirthCountryId > 0)
         this.selectedCountryKeys = [this.employeeData.BirthCountryId];
@@ -127,7 +127,7 @@ export class EmployeeBasicDataComponent implements OnInit, OnDestroy {
   }
 
   private getMunicipalities(): void {
-    this.municipalitiesService.get().then((data) => {
+    this._municipalitiesService.get().then((data) => {
       this.municipalities = data;
       if (this.employeeData.BirthMunicipalityId > 0)
         this.selectedMunicipalityKeys = [this.employeeData.BirthMunicipalityId];
@@ -135,7 +135,7 @@ export class EmployeeBasicDataComponent implements OnInit, OnDestroy {
   }
 
   private getCities(): void {
-    this.citiesService.get().then((data) => {
+    this._citiesService.get().then((data) => {
       this.cities = data;
       if (this.employeeData.ResidanceCityId > 0)
         this.selectedResidanceKeys = [this.employeeData.ResidanceCityId];

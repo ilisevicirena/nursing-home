@@ -1,27 +1,26 @@
 @import "../../../@theme/styles/themes.scss";
 
 @include nb-install-component {
-    .discount-picker-card {
-        border-radius: 1rem;
-        width: 1000px;
-        height: 600px;
+  .discount-picker-card {
+    border-radius: 1rem;
+    width: 1000px;
+    height: 600px;
 
-        nb-card-header {
-            padding: 1rem;
-            padding-bottom: 0.5rem;
-            border: none;
+    nb-card-header {
+      padding: 1rem;
+      padding-bottom: 0.5rem;
+      border: none;
 
-            .col {
-                font-size: 20px;
-            }
+      .col {
+        font-size: 20px;
+      }
 
-            .discounts-selected {
-                font-size: 12px;
-                color: nb-theme(color-basic-600);
-                font-weight: 600;
-                margin-right: 0.5rem;
-            }
-        }
-
+      .discounts-selected {
+        font-size: 12px;
+        color: nb-theme(color-basic-600);
+        font-weight: 600;
+        margin-right: 0.5rem;
+      }
     }
+  }
 }

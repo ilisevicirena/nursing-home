@@ -7,9 +7,9 @@ import { IDiscount } from "./rest/discounts.service";
   providedIn: "root",
 })
 export class CalculationService {
-  private MonthDayNumber: number = 30;
-  private YearDayNumber: number = 365;
-  private YearMonthNumber: number = 12;
+  private readonly _MonthDayNumber: number = 30;
+  private readonly _YearDayNumber: number = 365;
+  private readonly _YearMonthNumber: number = 12;
 
   constructor() {}
 
@@ -38,33 +38,33 @@ export class CalculationService {
         case ECalculationMeasureUnit.DAY:
           groups[ECalculationMeasureUnit.MONTH]?.map(
             (x) =>
-              (x.Price = this.calculateServicePrice(x) / this.MonthDayNumber)
+              (x.Price = this.calculateServicePrice(x) / this._MonthDayNumber)
           );
           groups[ECalculationMeasureUnit.YEAR]?.map(
             (x) =>
-              (x.Price = this.calculateServicePrice(x) / this.YearDayNumber)
+              (x.Price = this.calculateServicePrice(x) / this._YearDayNumber)
           );
           break;
 
         case ECalculationMeasureUnit.MONTH:
           groups[ECalculationMeasureUnit.DAY]?.map(
             (x) =>
-              (x.Price = this.calculateServicePrice(x) * this.MonthDayNumber)
+              (x.Price = this.calculateServicePrice(x) * this._MonthDayNumber)
           );
           groups[ECalculationMeasureUnit.YEAR]?.map(
             (x) =>
-              (x.Price = this.calculateServicePrice(x) / this.YearMonthNumber)
+              (x.Price = this.calculateServicePrice(x) / this._YearMonthNumber)
           );
           break;
 
         case ECalculationMeasureUnit.YEAR:
           groups[ECalculationMeasureUnit.DAY]?.map(
             (x) =>
-              (x.Price = this.calculateServicePrice(x) * this.YearDayNumber)
+              (x.Price = this.calculateServicePrice(x) * this._YearDayNumber)
           );
           groups[ECalculationMeasureUnit.MONTH]?.map(
             (x) =>
-              (x.Price = this.calculateServicePrice(x) * this.YearMonthNumber)
+              (x.Price = this.calculateServicePrice(x) * this._YearMonthNumber)
           );
           break;
       }
@@ -166,11 +166,11 @@ export class CalculationService {
       case ECalculationMeasureUnit.DAY:
         switch (service.MeasureUnitCode) {
           case ECalculationMeasureUnit.MONTH:
-            result.price = result.price / this.MonthDayNumber;
+            result.price = result.price / this._MonthDayNumber;
             break;
 
           case ECalculationMeasureUnit.YEAR:
-            result.price = result.price / this.YearDayNumber;
+            result.price = result.price / this._YearDayNumber;
             break;
         }
         break;
@@ -178,11 +178,11 @@ export class CalculationService {
       case ECalculationMeasureUnit.MONTH:
         switch (service.MeasureUnitCode) {
           case ECalculationMeasureUnit.DAY:
-            result.price = result.price * this.MonthDayNumber;
+            result.price = result.price * this._MonthDayNumber;
             break;
 
           case ECalculationMeasureUnit.YEAR:
-            result.price = result.price / this.YearMonthNumber;
+            result.price = result.price / this._YearMonthNumber;
             break;
         }
         break;
@@ -190,11 +190,11 @@ export class CalculationService {
       case ECalculationMeasureUnit.YEAR:
         switch (service.MeasureUnitCode) {
           case ECalculationMeasureUnit.DAY:
-            result.price = result.price * this.YearDayNumber;
+            result.price = result.price * this._YearDayNumber;
             break;
 
           case ECalculationMeasureUnit.MONTH:
-            result.price = result.price + this.YearMonthNumber;
+            result.price = result.price + this._YearMonthNumber;
             break;
         }
         break;

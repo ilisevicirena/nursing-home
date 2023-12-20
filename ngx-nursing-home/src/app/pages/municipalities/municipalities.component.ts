@@ -8,7 +8,6 @@ import {
   GridAutocompleteEditor,
   GridColumn,
   GridLookupColumn,
-  GridSelectEditor,
   GridTextboxEditor,
 } from "shared-components";
 
@@ -18,16 +17,15 @@ import {
   styleUrls: ["./municipalities.component.scss"],
 })
 export class MunicipalitiesComponent implements OnInit, OnDestroy {
-  public getString = getString;
-
   private _subs: Subscription[] = [];
 
   constructor(
     private _countriesService: CountriesService,
     private _municipalitiesService: MunicipalitiesService,
-    private toastrService: ToastrService
+    private _toastrService: ToastrService
   ) {}
 
+  public getString = getString;
   public data: any[] = [];
   public columns: GridColumn[] = [
     new GridColumn()
@@ -77,7 +75,7 @@ export class MunicipalitiesComponent implements OnInit, OnDestroy {
     });
   }
 
-  public getData() {
+  public getData(): void {
     this._subs.push(
       this._municipalitiesService.getData().subscribe(
         (data) => {
@@ -90,52 +88,52 @@ export class MunicipalitiesComponent implements OnInit, OnDestroy {
     );
   }
 
-  public createConfirm(event: any) {
+  public createConfirm(event: any): void {
     event.newData.CountryId =
       event.newData.CountryId.length > 0 ? event.newData.CountryId[0] : null;
 
     this._subs.push(
       this._municipalitiesService.add(event.newData).subscribe(
         () => {
-          this.toastrService.showToast("success", getString("saveSuccess"));
+          this._toastrService.showToast("success", getString("saveSuccess"));
           this.getData();
         },
         (err) => {
           console.error(err);
-          this.toastrService.showToast("danger", getString("saveError"));
+          this._toastrService.showToast("danger", getString("saveError"));
         }
       )
     );
   }
 
-  public editConfirm(event: any) {
+  public editConfirm(event: any): void {
     event.newData.CountryId =
       event.newData.CountryId.length > 0 ? event.newData.CountryId[0] : null;
 
     this._subs.push(
       this._municipalitiesService.update(event.newData).subscribe(
         () => {
-          this.toastrService.showToast("success", getString("saveSuccess"));
+          this._toastrService.showToast("success", getString("saveSuccess"));
           this.getData();
         },
         (err) => {
           console.error(err);
-          this.toastrService.showToast("danger", getString("saveError"));
+          this._toastrService.showToast("danger", getString("saveError"));
         }
       )
     );
   }
 
-  public deleteConfirm(event: any) {
+  public deleteConfirm(event: any): void {
     this._subs.push(
       this._municipalitiesService.delete(event.data).subscribe(
         () => {
-          this.toastrService.showToast("success", getString("saveSuccess"));
+          this._toastrService.showToast("success", getString("saveSuccess"));
           this.getData();
         },
         (err) => {
           console.error(err);
-          this.toastrService.showToast("danger", getString("saveError"));
+          this._toastrService.showToast("danger", getString("saveError"));
         }
       )
     );

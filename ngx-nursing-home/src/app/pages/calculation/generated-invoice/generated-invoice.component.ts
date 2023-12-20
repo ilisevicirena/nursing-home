@@ -1,28 +1,35 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  OnInit,
+  ViewChild,
+} from "@angular/core";
 declare var require: any;
 import * as pdfMake from "pdfmake/build/pdfmake";
 import * as pdfFonts from "pdfmake/build/vfs_fonts";
-import { environment } from '../../../../environments/environment';
-import { getString } from '../../../resources/strings';
-import { getBase64ImageFromUrl } from '../../../resources/functions';
+import { environment } from "../../../../environments/environment";
+import { getString } from "../../../resources/strings";
+import { getBase64ImageFromUrl } from "../../../resources/functions";
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 const htmlToPdfmake = require("html-to-pdfmake");
 
 @Component({
-  selector: 'sample-generated-invoice',
-  templateUrl: './generated-invoice.component.html',
-  styleUrls: ['./generated-invoice.component.scss']
+  selector: "sample-generated-invoice",
+  templateUrl: "./generated-invoice.component.html",
+  styleUrls: ["./generated-invoice.component.scss"],
 })
 export class GeneratedInvoiceComponent implements OnInit, AfterViewInit {
+  constructor() {}
 
-  constructor() { }
-
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
   ngAfterViewInit(): void {
-    getBase64ImageFromUrl('../../../assets/images/logo.png').then(result => {
-      this.logoImg.nativeElement.src = result;
-    }).catch(err => console.error(err));
+    getBase64ImageFromUrl("../../../assets/images/logo.png")
+      .then((result) => {
+        this.logoImg.nativeElement.src = result;
+      })
+      .catch((err) => console.error(err));
   }
 
   public calculation: any = {};
@@ -34,11 +41,15 @@ export class GeneratedInvoiceComponent implements OnInit, AfterViewInit {
   public getString = getString;
   public brand = environment.brand;
 
-  @ViewChild('logo') logoImg: ElementRef;
-  @ViewChild('pdfTable') pdfTable: ElementRef;
+  @ViewChild("logo") logoImg: ElementRef;
+  @ViewChild("pdfTable") pdfTable: ElementRef;
 
   //PDF genrate function
-  public createPdf(calculation: any, month: string, year: number): Promise<any> {
+  public createPdf(
+    calculation: any,
+    month: string,
+    year: number
+  ): Promise<any> {
     this.calculation = calculation;
     this.selectedPackages = calculation.Packages;
     this.selectedServices = calculation.Services;
@@ -59,7 +70,6 @@ export class GeneratedInvoiceComponent implements OnInit, AfterViewInit {
         document.getBase64((data) => {
           resolve(data);
         });
-
       }, 500);
     });
 

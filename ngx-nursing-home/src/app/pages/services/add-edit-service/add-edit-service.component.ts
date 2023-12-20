@@ -1,21 +1,32 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { NbWindowRef } from '@nebular/theme';
-import { IService, ServicesService } from '../../../services/rest/services.service';
-import { getString } from '../../../resources/strings';
-import { MeasureUnitsService } from '../../../services/rest/measure-units.service';
-import { PriceUnitsService } from '../../../services/rest/price-units.service';
-import { Subscription } from 'rxjs';
-import { NgForm } from '@angular/forms';
-import { ToastrService } from '../../../services/toastr.service';
-import { CalculationService } from '../../../services/calculation.service';
+import {
+  AfterViewInit,
+  Component,
+  OnDestroy,
+  OnInit,
+  TemplateRef,
+  ViewChild,
+} from "@angular/core";
+import { NbWindowRef } from "@nebular/theme";
+import {
+  IService,
+  ServicesService,
+} from "../../../services/rest/services.service";
+import { getString } from "../../../resources/strings";
+import { MeasureUnitsService } from "../../../services/rest/measure-units.service";
+import { PriceUnitsService } from "../../../services/rest/price-units.service";
+import { Subscription } from "rxjs";
+import { NgForm } from "@angular/forms";
+import { ToastrService } from "../../../services/toastr.service";
+import { CalculationService } from "../../../services/calculation.service";
 
 @Component({
-  selector: 'sample-add-edit-service',
-  templateUrl: './add-edit-service.component.html',
-  styleUrls: ['./add-edit-service.component.scss']
+  selector: "sample-add-edit-service",
+  templateUrl: "./add-edit-service.component.html",
+  styleUrls: ["./add-edit-service.component.scss"],
 })
-export class AddEditServiceComponent implements OnInit, OnDestroy, AfterViewInit {
-
+export class AddEditServiceComponent
+  implements OnInit, OnDestroy, AfterViewInit
+{
   public isNew: boolean = true;
   public getString = getString;
   public measureUnitsData: any[] = [];
@@ -32,21 +43,21 @@ export class AddEditServiceComponent implements OnInit, OnDestroy, AfterViewInit
     Name: undefined,
     PriceUnitId: undefined,
     PriceUnitName: undefined,
-    PriceUnitTag: undefined
+    PriceUnitTag: undefined,
   };
 
-  private subs: Subscription[] = [];
+  private _subs: Subscription[] = [];
 
   @ViewChild("headerTemplate") headerTemplate!: TemplateRef<any>;
 
   constructor(
-    public ref: NbWindowRef,
-    private measureUnitService: MeasureUnitsService,
-    private priceUnitService: PriceUnitsService,
-    private servicesService: ServicesService,
-    private toastrService: ToastrService,
-    private calculationService: CalculationService
-  ) { }
+    public _ref: NbWindowRef,
+    private _measureUnitService: MeasureUnitsService,
+    private _priceUnitService: PriceUnitsService,
+    private _servicesService: ServicesService,
+    private _toastrService: ToastrService,
+    private _calculationService: CalculationService
+  ) {}
 
   ngOnInit(): void {
     this.getMeasureUnits();
@@ -61,11 +72,13 @@ export class AddEditServiceComponent implements OnInit, OnDestroy, AfterViewInit
       window.parentElement.classList.remove("h-100");
       window.parentElement.classList.remove("w-100");
       window.parentElement.parentElement.classList.remove("h-100");
-      const cdkOverlayContainer = window.parentElement.parentElement.parentElement.parentElement;
-      if (cdkOverlayContainer.children.length > 0) cdkOverlayContainer.children[0].classList.remove("d-block");
+      const cdkOverlayContainer =
+        window.parentElement.parentElement.parentElement.parentElement;
+      if (cdkOverlayContainer.children.length > 0)
+        cdkOverlayContainer.children[0].classList.remove("d-block");
     }
 
-    this.subs.forEach(element => {
+    this._subs.forEach((element) => {
       element.unsubscribe();
     });
   }
@@ -79,30 +92,38 @@ export class AddEditServiceComponent implements OnInit, OnDestroy, AfterViewInit
       window.parentElement.classList.add("w-100");
       window.parentElement.parentElement.classList.add("h-100");
       window.parentElement.parentElement.style.width = "70%";
-      const cdkOverlayContainer = window.parentElement.parentElement.parentElement.parentElement;
-      if (cdkOverlayContainer.children.length > 0) cdkOverlayContainer.children[0].classList.add("d-block");
+      const cdkOverlayContainer =
+        window.parentElement.parentElement.parentElement.parentElement;
+      if (cdkOverlayContainer.children.length > 0)
+        cdkOverlayContainer.children[0].classList.add("d-block");
     }
 
-    this.ref.config.titleTemplate = this.headerTemplate;
+    this._ref.config.titleTemplate = this.headerTemplate;
   }
 
   private getMeasureUnits(): void {
-    this.subs.push(
-      this.measureUnitService.getData().subscribe(data => {
-        this.measureUnitsData = data;
-      }, err => {
-        console.error(err);
-      })
+    this._subs.push(
+      this._measureUnitService.getData().subscribe(
+        (data) => {
+          this.measureUnitsData = data;
+        },
+        (err) => {
+          console.error(err);
+        }
+      )
     );
   }
 
   private getPriceUnits(): void {
-    this.subs.push(
-      this.priceUnitService.getData().subscribe(data => {
-        this.priceUnitsData = data;
-      }, err => {
-        console.error(err);
-      })
+    this._subs.push(
+      this._priceUnitService.getData().subscribe(
+        (data) => {
+          this.priceUnitsData = data;
+        },
+        (err) => {
+          console.error(err);
+        }
+      )
     );
   }
 
@@ -112,33 +133,43 @@ export class AddEditServiceComponent implements OnInit, OnDestroy, AfterViewInit
     form.form.markAsPristine();
   }
 
-  public close(result: boolean) {
-    this.ref.close(result);
+  public close(result: boolean): void {
+    this._ref.close(result);
   }
 
   private saveNewService(): void {
-    this.subs.push(
-      this.servicesService.add(this.service).subscribe(data => {
-        if (data.ServiceId) {
-          this.toastrService.showToast('success', getString('saveSuccess'));
-          this.close(true);
+    this._subs.push(
+      this._servicesService.add(this.service).subscribe(
+        (data) => {
+          if (data.ServiceId) {
+            this._toastrService.showToast("success", getString("saveSuccess"));
+            this.close(true);
+          }
+        },
+        (err) => {
+          console.error(err);
         }
-      }, err => {
-        console.error(err);
-      }));
+      )
+    );
   }
 
   private editService(): void {
-    this.subs.push(
-      this.servicesService.update(this.service).subscribe(() => {
-        this.toastrService.showToast('success', getString('saveSuccess'));
-        this.close(true);
-      }, err => {
-        console.error(err);
-      }));
+    this._subs.push(
+      this._servicesService.update(this.service).subscribe(
+        () => {
+          this._toastrService.showToast("success", getString("saveSuccess"));
+          this.close(true);
+        },
+        (err) => {
+          console.error(err);
+        }
+      )
+    );
   }
 
   public onPriceChange(): void {
-    this.service.CostPerUnit = this.calculationService.roundToTwoDecimals(this.service.CostPerUnit) as any;
+    this.service.CostPerUnit = this._calculationService.roundToTwoDecimals(
+      this.service.CostPerUnit
+    ) as any;
   }
 }

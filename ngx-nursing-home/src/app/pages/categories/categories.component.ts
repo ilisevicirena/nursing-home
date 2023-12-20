@@ -2,14 +2,7 @@ import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Subscription } from "rxjs";
 import { getString } from "../../resources/strings";
 import { PersonCategoriesService } from "../../services/rest/person-categories.service";
-import {
-  GridColumn,
-  GridLookupColumn,
-  GridSelectEditor,
-  GridTextboxEditor,
-  GridAutocompleteEditor,
-  fileDownload,
-} from "shared-components";
+import { GridColumn, fileDownload } from "shared-components";
 import { ToastrService } from "../../services/toastr.service";
 
 @Component({
@@ -56,7 +49,7 @@ export class CategoriesComponent implements OnInit, OnDestroy {
     });
   }
 
-  public getData() {
+  public getData(): void {
     this._subs.push(
       this._categoriesService.getData().subscribe(
         (data) => {
@@ -69,7 +62,7 @@ export class CategoriesComponent implements OnInit, OnDestroy {
     );
   }
 
-  public generateTemplate() {
+  public generateTemplate(): void {
     this._toastrService.showToastWithCustumIcon(
       "info",
       getString("downloadStartSoon"),

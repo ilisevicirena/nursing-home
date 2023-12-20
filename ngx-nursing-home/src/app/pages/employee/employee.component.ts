@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
+import { ActivatedRoute } from "@angular/router";
 import {
   EmployeesService,
   getIEmployeeFromJSON,
@@ -18,15 +18,14 @@ import { VacationsService } from "../../services/rest/vacations.service";
 })
 export class EmployeeComponent implements OnInit, OnDestroy {
   constructor(
-    private activatedRoute: ActivatedRoute,
-    private employeesService: EmployeesService,
-    private toastrService: ToastrService,
-    private dialogService: DialogService,
-    private vacationsService: VacationsService,
-    private router: Router
+    private _activatedRoute: ActivatedRoute,
+    private _employeesService: EmployeesService,
+    private _toastrService: ToastrService,
+    private _dialogService: DialogService,
+    private _vacationsService: VacationsService
   ) {}
 
-  private subscriptions: Subscription[] = [];
+  private _subs: Subscription[] = [];
 
   public employeeId: number = 0;
   public getString = getString;
@@ -47,8 +46,8 @@ export class EmployeeComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loading = true;
-    this.subscriptions.push(
-      this.activatedRoute.paramMap.subscribe((params) => {
+    this._subs.push(
+      this._activatedRoute.paramMap.subscribe((params) => {
         this.employeeId = params.get("id") as any;
         this.getEmployeeDetails(this.employeeId);
         this.getSummary();
@@ -57,14 +56,14 @@ export class EmployeeComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscriptions.forEach((element) => {
+    this._subs.forEach((element) => {
       element.unsubscribe();
     });
   }
 
-  private getSummary() {
-    this.subscriptions.push(
-      this.vacationsService
+  private getSummary(): void {
+    this._subs.push(
+      this._vacationsService
         .getRemainingVacationDays(this.employeeId)
         .subscribe((data) => {
           this.summary = data;
@@ -75,37 +74,43 @@ export class EmployeeComponent implements OnInit, OnDestroy {
   // ------------------------------------------------- BASIC DATA ---------------------------------------------------------------------
 
   public saveBasicData(): void {
-    this.subscriptions.push(
-      this.employeesService.update(this.newEmployeeData).subscribe(
+    this._subs.push(
+      this._employeesService.update(this.newEmployeeData).subscribe(
         () => {
           this.getEmployeeDetails(this.employeeId);
-          this.toastrService.showToast("success", getString("saveSuccess"), "");
+          this._toastrService.showToast(
+            "success",
+            getString("saveSuccess"),
+            ""
+          );
         },
         (err) => {
           console.error(err);
-          this.toastrService.showToast("danger", getString("saveError"), "");
+          this._toastrService.showToast("danger", getString("saveError"), "");
         }
       )
     );
   }
 
-  public cancelEditBasicData() {
+  public cancelEditBasicData(): void {
     this.newEmployeeData = getIEmployeeFromJSON(
       JSON.parse(JSON.stringify(this.employee))
     );
   }
 
   private getEmployeeDetails(employeeId: number): void {
-    this.subscriptions.push(
-      this.employeesService.getEmployeeDetails(employeeId).subscribe((data) => {
-        if (data.length > 0) {
-          this.employee = getIEmployeeFromJSON(data[0]);
-          this.newEmployeeData = getIEmployeeFromJSON(data[0]);
-          this.passedTime = this.calculatePassedTime();
-        }
+    this._subs.push(
+      this._employeesService
+        .getEmployeeDetails(employeeId)
+        .subscribe((data) => {
+          if (data.length > 0) {
+            this.employee = getIEmployeeFromJSON(data[0]);
+            this.newEmployeeData = getIEmployeeFromJSON(data[0]);
+            this.passedTime = this.calculatePassedTime();
+          }
 
-        this.loading = false;
-      })
+          this.loading = false;
+        })
     );
   }
 
@@ -113,21 +118,21 @@ export class EmployeeComponent implements OnInit, OnDestroy {
     var endDate: string = new Date().toLocaleDateString();
     if (this.employee.EndDate != undefined)
       endDate = this.employee.EndDate.toLocaleDateString();
-    const rezDialog = await this.dialogService.openYesNoDialog(
+    const rezDialog = await this._dialogService.openYesNoDialog(
       getString("areYouSure"),
       getString("questionDeactivateemployee") + endDate
     );
 
     if (rezDialog) {
-      this.subscriptions.push(
-        this.employeesService
+      this._subs.push(
+        this._employeesService
           .deactivateEmployee(
             this.employeeId,
             this.employee.EmploymentEndDate ?? null
           )
           .subscribe(
             () => {
-              this.toastrService.showToast(
+              this._toastrService.showToast(
                 "success",
                 getString("saveSuccess"),
                 ""
@@ -135,7 +140,7 @@ export class EmployeeComponent implements OnInit, OnDestroy {
               this.getEmployeeDetails(this.employeeId);
             },
             (err) => {
-              this.toastrService.showToast(
+              this._toastrService.showToast(
                 "danger",
                 getString("saveError"),
                 ""
@@ -147,7 +152,7 @@ export class EmployeeComponent implements OnInit, OnDestroy {
     }
   }
 
-  public calculatePassedTime() {
+  public calculatePassedTime(): any {
     var today: Date = this.employee.Active
       ? new Date()
       : this.employee.EmploymentEndDate;
@@ -178,7 +183,7 @@ export class EmployeeComponent implements OnInit, OnDestroy {
     return { years: years, months: months, days: days };
   }
 
-  public togglePanel() {
+  public togglePanel(): void {
     this.showPanel = !this.showPanel;
   }
 

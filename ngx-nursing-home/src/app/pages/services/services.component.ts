@@ -5,11 +5,7 @@ import { getString } from "../../resources/strings";
 import {
   GridColumn,
   GridLookupColumn,
-  GridSelectEditor,
   GridSelectFilter,
-  LookupType,
-  SelectFilter,
-  SmartTableColumn,
 } from "shared-components";
 import { MeasureUnitsService } from "../../services/rest/measure-units.service";
 import { PriceUnitsService } from "../../services/rest/price-units.service";
@@ -42,7 +38,7 @@ export class ServicesComponent implements OnInit, OnDestroy {
           .KeyExpression("Id")
           .DisplayExpression("Tag")
           .ServerDataSource(true)
-          .ServerEndpoint(this.measureUnitsService.apiRoute)
+          .ServerEndpoint(this._measureUnitsService.apiRoute)
       ),
     new GridColumn()
       .Title(getString("priceUnit"))
@@ -53,7 +49,7 @@ export class ServicesComponent implements OnInit, OnDestroy {
           .KeyExpression("Id")
           .DisplayExpression("Tag")
           .ServerDataSource(true)
-          .ServerEndpoint(this.priceUnitsService.apiRoute)
+          .ServerEndpoint(this._priceUnitsService.apiRoute)
       ),
   ];
   public exportSettings: ExportDocSettings = {
@@ -66,15 +62,15 @@ export class ServicesComponent implements OnInit, OnDestroy {
     noValueText: getString("noBtnText").toLowerCase(),
   };
 
-  private subscriptions: Subscription[] = [];
+  private _subs: Subscription[] = [];
 
   constructor(
-    private servicesService: ServicesService,
-    private measureUnitsService: MeasureUnitsService,
-    private priceUnitsService: PriceUnitsService,
-    private dialogService: DialogService,
-    private toastrService: ToastrService,
-    private windowService: NbWindowService
+    private _servicesService: ServicesService,
+    private _measureUnitsService: MeasureUnitsService,
+    private _priceUnitsService: PriceUnitsService,
+    private _dialogService: DialogService,
+    private _toastrService: ToastrService,
+    private _windowService: NbWindowService
   ) {}
 
   ngOnInit(): void {
@@ -82,14 +78,14 @@ export class ServicesComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscriptions.forEach((element) => {
+    this._subs.forEach((element) => {
       element.unsubscribe();
     });
   }
 
   private getServices(): void {
-    this.subscriptions.push(
-      this.servicesService.getData().subscribe(
+    this._subs.push(
+      this._servicesService.getData().subscribe(
         (data) => {
           this.servicesData = data;
         },
@@ -101,8 +97,8 @@ export class ServicesComponent implements OnInit, OnDestroy {
   }
 
   public onCreateStarted(): void {
-    this.subscriptions.push(
-      this.windowService
+    this._subs.push(
+      this._windowService
         .open(AddEditServiceComponent, {
           context: { isNew: true },
           buttons: {
@@ -124,8 +120,8 @@ export class ServicesComponent implements OnInit, OnDestroy {
   }
 
   public onEditStarted(event: any): void {
-    this.subscriptions.push(
-      this.windowService
+    this._subs.push(
+      this._windowService
         .open(AddEditServiceComponent, {
           context: {
             isNew: false,
@@ -150,16 +146,16 @@ export class ServicesComponent implements OnInit, OnDestroy {
   }
 
   public async onDeleteStarted(event: any): Promise<void> {
-    const result = await this.dialogService.openYesNoDialog(
+    const result = await this._dialogService.openYesNoDialog(
       getString("areYouSure"),
       getString("deactivateService")
     );
 
     if (result) {
-      this.subscriptions.push(
-        this.servicesService.delete(event.data).subscribe(
+      this._subs.push(
+        this._servicesService.delete(event.data).subscribe(
           () => {
-            this.toastrService.showToast("success", getString("saveSuccess"));
+            this._toastrService.showToast("success", getString("saveSuccess"));
             this.getServices();
           },
           (err) => {

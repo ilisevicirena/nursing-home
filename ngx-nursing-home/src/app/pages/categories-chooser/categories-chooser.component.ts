@@ -25,14 +25,14 @@ export class CategoriesChooserComponent implements OnInit, OnDestroy {
 
   @Input() personId: number = 0;
 
-  private subs: Subscription[] = [];
-  private personConditions: any[] = [];
+  private _subs: Subscription[] = [];
+  private _personConditions: any[] = [];
 
   constructor(
-    private healthConditionsService: HealthConditionsService,
-    private personCategoriesService: PersonCategoriesService,
-    private accommodationTypesService: AccommodationTypesService,
-    private toastrService: ToastrService
+    private _healthConditionsService: HealthConditionsService,
+    private _personCategoriesService: PersonCategoriesService,
+    private _accommodationTypesService: AccommodationTypesService,
+    private _toastrService: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -48,25 +48,25 @@ export class CategoriesChooserComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subs.forEach((element) => {
+    this._subs.forEach((element) => {
       element.unsubscribe();
     });
   }
 
-  private getHealthConditions() {
-    this.subs.push(
-      this.healthConditionsService.getData().subscribe((data) => {
+  private getHealthConditions(): void {
+    this._subs.push(
+      this._healthConditionsService.getData().subscribe((data) => {
         this.healthConditions = data;
       })
     );
   }
 
-  private getConditionsForPerson() {
-    this.subs.push(
-      this.healthConditionsService
+  private getConditionsForPerson(): void {
+    this._subs.push(
+      this._healthConditionsService
         .getForPerson(this.personId)
         .subscribe((data) => {
-          this.personConditions = data;
+          this._personConditions = data;
           this.selectedConditions = data.map((x) => x.HealthConditionId);
           if (this.selectedConditions.includes(this.categoryOtherId)) {
             this.showConditionDescription = true;
@@ -78,9 +78,9 @@ export class CategoriesChooserComponent implements OnInit, OnDestroy {
     );
   }
 
-  private getCategoryForPerson() {
-    this.subs.push(
-      this.personCategoriesService
+  private getCategoryForPerson(): void {
+    this._subs.push(
+      this._personCategoriesService
         .getForPerson(this.personId)
         .subscribe((data) => {
           if (data.length > 0) this.selectedCategory = data[0].PersonCategoryId;
@@ -88,9 +88,9 @@ export class CategoriesChooserComponent implements OnInit, OnDestroy {
     );
   }
 
-  private getAccommodationForPerson() {
-    this.subs.push(
-      this.accommodationTypesService
+  private getAccommodationForPerson(): void {
+    this._subs.push(
+      this._accommodationTypesService
         .getForPerson(this.personId)
         .subscribe((data) => {
           if (data.length > 0) this.selectedType = data[0].AccommodationTypeId;
@@ -98,23 +98,23 @@ export class CategoriesChooserComponent implements OnInit, OnDestroy {
     );
   }
 
-  private getCategories() {
-    this.subs.push(
-      this.personCategoriesService.getData().subscribe((data) => {
+  private getCategories(): void {
+    this._subs.push(
+      this._personCategoriesService.getData().subscribe((data) => {
         this.categories = data;
       })
     );
   }
 
-  private getTypes() {
-    this.subs.push(
-      this.accommodationTypesService.getData().subscribe((data) => {
+  private getTypes(): void {
+    this._subs.push(
+      this._accommodationTypesService.getData().subscribe((data) => {
         this.types = data;
       })
     );
   }
 
-  public onConditionCheckedChange(ev, condition) {
+  public onConditionCheckedChange(ev: any, condition: any): void {
     if (ev) this.selectedConditions.push(condition.Id);
     else
       this.selectedConditions.splice(
@@ -127,22 +127,22 @@ export class CategoriesChooserComponent implements OnInit, OnDestroy {
     );
   }
 
-  public saveHealthConditions() {
-    var forDelete = this.personConditions.filter(
+  public saveHealthConditions(): void {
+    var forDelete = this._personConditions.filter(
       (x) => !this.selectedConditions.includes(x.HealthConditionId)
     );
 
     if (forDelete.length > 0) {
       forDelete.forEach((element) => {
-        this.subs.push(
-          this.healthConditionsService.delete({ Id: element.Id }).subscribe()
+        this._subs.push(
+          this._healthConditionsService.delete({ Id: element.Id }).subscribe()
         );
       });
     }
 
     this.selectedConditions.forEach((element, index) => {
-      this.subs.push(
-        this.healthConditionsService
+      this._subs.push(
+        this._healthConditionsService
           .insertForPerson(
             this.personId,
             element,
@@ -151,31 +151,34 @@ export class CategoriesChooserComponent implements OnInit, OnDestroy {
           .subscribe(() => {
             if (index == this.selectedConditions.length - 1) {
               this.getConditionsForPerson();
-              this.toastrService.showToast("success", getString("saveSuccess"));
+              this._toastrService.showToast(
+                "success",
+                getString("saveSuccess")
+              );
             }
           })
       );
     });
   }
 
-  public saveCategory() {
-    this.subs.push(
-      this.personCategoriesService
+  public saveCategory(): void {
+    this._subs.push(
+      this._personCategoriesService
         .insertForPerson(this.personId, this.selectedCategory)
         .subscribe(() => {
           this.getCategoryForPerson();
-          this.toastrService.showToast("success", getString("saveSuccess"));
+          this._toastrService.showToast("success", getString("saveSuccess"));
         })
     );
   }
 
-  public saveAccommodationType() {
-    this.subs.push(
-      this.accommodationTypesService
+  public saveAccommodationType(): void {
+    this._subs.push(
+      this._accommodationTypesService
         .insertForPerson(this.personId, this.selectedType)
         .subscribe(() => {
           this.getAccommodationForPerson();
-          this.toastrService.showToast("success", getString("saveSuccess"));
+          this._toastrService.showToast("success", getString("saveSuccess"));
         })
     );
   }

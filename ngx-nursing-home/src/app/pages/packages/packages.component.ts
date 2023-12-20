@@ -5,21 +5,16 @@ import { PriceUnitsService } from "../../services/rest/price-units.service";
 import { ToastrService } from "../../services/toastr.service";
 import { DialogService } from "../../shared/dialog/dialog.service";
 import {
-  CheckboxType,
   GridCheckboxColumn,
   GridColumn,
   GridLookupColumn,
   GridSelectFilter,
-  LookupType,
-  SelectFilter,
-  SmartTableColumn,
 } from "shared-components";
 import { AddEditPackageComponent } from "./add-edit-package/add-edit-package.component";
 import { NbWindowService, NbWindowState } from "@nebular/theme";
 import { getString } from "../../resources/strings";
 import { MeasureUnitsService } from "../../services/rest/measure-units.service";
 import { ExportDocSettings } from "shared-components/lib/models/smart-table.model";
-import { sortFloats } from "../../resources/functions";
 
 @Component({
   selector: "sample-packages",
@@ -27,7 +22,7 @@ import { sortFloats } from "../../resources/functions";
   styleUrls: ["./packages.component.scss"],
 })
 export class PackagesComponent implements OnInit, OnDestroy {
-  private subs: Subscription[] = [];
+  private _subs: Subscription[] = [];
 
   public packagesData: any[] = [];
   public getString = getString;
@@ -47,7 +42,7 @@ export class PackagesComponent implements OnInit, OnDestroy {
           .KeyExpression("Id")
           .DisplayExpression("Tag")
           .ServerDataSource(true)
-          .ServerEndpoint(this.priceUnitsService.apiRoute)
+          .ServerEndpoint(this._priceUnitsService.apiRoute)
       ),
     new GridColumn()
       .Title(getString("measureUnit"))
@@ -59,7 +54,7 @@ export class PackagesComponent implements OnInit, OnDestroy {
           .DisplayExpression("Tag")
           .ServerDataSource(true)
           .ServerEndpoint(
-            this.measureUnitsService.apiRoute + "/getCalculationMeasureUnits"
+            this._measureUnitsService.apiRoute + "/getCalculationMeasureUnits"
           )
       ),
     new GridColumn()
@@ -78,12 +73,12 @@ export class PackagesComponent implements OnInit, OnDestroy {
   };
 
   constructor(
-    private packagesService: PackagesService,
-    private priceUnitsService: PriceUnitsService,
-    private measureUnitsService: MeasureUnitsService,
-    private toastrService: ToastrService,
-    private dialogService: DialogService,
-    private windowService: NbWindowService
+    private _packagesService: PackagesService,
+    private _priceUnitsService: PriceUnitsService,
+    private _measureUnitsService: MeasureUnitsService,
+    private _toastrService: ToastrService,
+    private _dialogService: DialogService,
+    private _windowService: NbWindowService
   ) {}
 
   ngOnInit(): void {
@@ -91,22 +86,22 @@ export class PackagesComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subs.forEach((element) => {
+    this._subs.forEach((element) => {
       element.unsubscribe();
     });
   }
 
   private getPackages(): void {
-    this.subs.push(
-      this.packagesService.getData().subscribe((data) => {
+    this._subs.push(
+      this._packagesService.getData().subscribe((data) => {
         this.packagesData = data;
       })
     );
   }
 
   public onCreateStarted(): void {
-    this.subs.push(
-      this.windowService
+    this._subs.push(
+      this._windowService
         .open(AddEditPackageComponent, {
           context: { isNew: true },
           buttons: {
@@ -128,8 +123,8 @@ export class PackagesComponent implements OnInit, OnDestroy {
   }
 
   public onEditStarted(event: any): void {
-    this.subs.push(
-      this.windowService
+    this._subs.push(
+      this._windowService
         .open(AddEditPackageComponent, {
           context: {
             isNew: false,
@@ -154,16 +149,16 @@ export class PackagesComponent implements OnInit, OnDestroy {
   }
 
   public async onDeleteStarted(event: any): Promise<void> {
-    const result = await this.dialogService.openYesNoDialog(
+    const result = await this._dialogService.openYesNoDialog(
       getString("areYouSure"),
       getString("deactivatePackage")
     );
 
     if (result) {
-      this.subs.push(
-        this.packagesService.delete(event.data).subscribe(
+      this._subs.push(
+        this._packagesService.delete(event.data).subscribe(
           () => {
-            this.toastrService.showToast("success", getString("saveSuccess"));
+            this._toastrService.showToast("success", getString("saveSuccess"));
             this.getPackages();
           },
           (err) => {

@@ -1,28 +1,27 @@
-import { Component, OnInit } from '@angular/core';
-import { NbDialogRef } from '@nebular/theme';
-import { DialogService } from '../dialog.service';
-import { getString } from '../../../resources/strings';
+import { Component, OnInit } from "@angular/core";
+import { NbDialogRef } from "@nebular/theme";
+import { DialogService } from "../dialog.service";
+import { getString } from "../../../resources/strings";
 
 @Component({
-  selector: 'sample-dialog',
-  templateUrl: './dialog.component.html',
-  styleUrls: ['./dialog.component.scss']
+  selector: "sample-dialog",
+  templateUrl: "./dialog.component.html",
+  styleUrls: ["./dialog.component.scss"],
 })
 export class DialogComponent implements OnInit {
-
   constructor(
     public dialogRef: NbDialogRef<DialogComponent>,
-    private dialogService: DialogService
-  ) { }
+    private _dialogService: DialogService
+  ) {}
 
   public dialogTitle: string;
   public dialogBody: string;
   public getString = getString;
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
   public close(result: boolean): void {
     this.dialogRef.close(result);
-    this.dialogService.ngOnDestroy();
+    this._dialogService.ngOnDestroy();
   }
 }

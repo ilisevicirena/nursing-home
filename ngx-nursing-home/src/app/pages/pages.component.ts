@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 
 import { MENU_ITEMS } from "./pages-menu";
-import { NbMenuItem, NbMenuService } from "@nebular/theme";
+import { NbMenuService } from "@nebular/theme";
 import { DialogService } from "../shared/dialog/dialog.service";
 import { Subscription } from "rxjs";
 import { filter, map } from "rxjs/operators";
@@ -35,7 +35,7 @@ export class PagesComponent {
           map(({ item }) => item)
         )
         .subscribe((item: any) => {
-          if (item.click) item.click(dialogService);
+          if (item.click) item.click(this.dialogService);
         })
     );
   }

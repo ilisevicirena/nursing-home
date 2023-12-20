@@ -18,18 +18,8 @@ import { PriceUnitsService } from "../../../services/rest/price-units.service";
 import { Subscription } from "rxjs";
 import { getString } from "../../../resources/strings";
 import { NgForm } from "@angular/forms";
-import {
-  GridColumn,
-  GridLookupColumn,
-  LookupType,
-  SelectGridComponent,
-  SmartTableColumn,
-  SmartTableComponent,
-} from "shared-components";
-import {
-  SelectGridColumn,
-  SelectGridSelectionModel,
-} from "shared-components/lib/models/select-grid.model";
+import { GridColumn, GridLookupColumn } from "shared-components";
+import { SelectGridSelectionModel } from "shared-components/lib/models/select-grid.model";
 import {
   CalculationService,
   ECalculationMeasureUnit,
@@ -43,8 +33,8 @@ import {
 export class AddEditPackageComponent
   implements OnInit, OnDestroy, AfterViewInit
 {
-  private subs: Subscription[] = [];
-  private packageServiceUnfiltered: any[] = [];
+  private _subs: Subscription[] = [];
+  private _packageServiceUnfiltered: any[] = [];
 
   public getString = getString;
   public isNew: boolean = true;
@@ -99,13 +89,13 @@ export class AddEditPackageComponent
   @ViewChild("headerTemplate") headerTemplate!: TemplateRef<any>;
 
   constructor(
-    private ref: NbWindowRef,
-    private packagesService: PackagesService,
-    private toastrService: ToastrService,
-    private servicesService: ServicesService,
-    private measureUnitService: MeasureUnitsService,
-    private priceUnitsService: PriceUnitsService,
-    private calculationService: CalculationService
+    private _ref: NbWindowRef,
+    private _packagesService: PackagesService,
+    private _toastrService: ToastrService,
+    private _servicesService: ServicesService,
+    private _measureUnitService: MeasureUnitsService,
+    private _priceUnitsService: PriceUnitsService,
+    private _calculationService: CalculationService
   ) {}
 
   ngOnInit(): void {
@@ -129,7 +119,7 @@ export class AddEditPackageComponent
         cdkOverlayContainer.children[0].classList.remove("d-block");
     }
 
-    this.subs.forEach((element) => {
+    this._subs.forEach((element) => {
       element.unsubscribe();
     });
   }
@@ -149,12 +139,12 @@ export class AddEditPackageComponent
         cdkOverlayContainer.children[0].classList.add("d-block");
     }
 
-    this.ref.config.titleTemplate = this.headerTemplate;
+    this._ref.config.titleTemplate = this.headerTemplate;
   }
 
   private getPriceUnits(): void {
-    this.subs.push(
-      this.priceUnitsService.getData().subscribe(
+    this._subs.push(
+      this._priceUnitsService.getData().subscribe(
         (data) => {
           this.priceUnits = data;
         },
@@ -166,8 +156,8 @@ export class AddEditPackageComponent
   }
 
   private getCalculationMeasureUnits(): void {
-    this.subs.push(
-      this.measureUnitService.getCalculationMeasureUnits().subscribe(
+    this._subs.push(
+      this._measureUnitService.getCalculationMeasureUnits().subscribe(
         (data) => {
           this.calculationMeasureUnits = data;
         },
@@ -179,8 +169,8 @@ export class AddEditPackageComponent
   }
 
   private getServices(): void {
-    this.subs.push(
-      this.servicesService.getData().subscribe(
+    this._subs.push(
+      this._servicesService.getData().subscribe(
         (data) => {
           this.servicesData = data;
         },
@@ -193,11 +183,11 @@ export class AddEditPackageComponent
 
   private getServicesForPackage(): void {
     if (!this.isNew) {
-      this.subs.push(
-        this.servicesService.getServicesForPackage(this.package.Id).subscribe(
+      this._subs.push(
+        this._servicesService.getServicesForPackage(this.package.Id).subscribe(
           (data) => {
             this.packageServices = data;
-            this.packageServiceUnfiltered = data;
+            this._packageServiceUnfiltered = data;
             this.calculatePackagePrice();
           },
           (err) => {
@@ -209,7 +199,7 @@ export class AddEditPackageComponent
   }
 
   public calculatePackagePrice(): void {
-    this.packagePrice = this.calculationService.calculatePackagePrice(
+    this.packagePrice = this._calculationService.calculatePackagePrice(
       this.package,
       this.packageServices,
       this.package.MeasureUnitCode as ECalculationMeasureUnit
@@ -217,7 +207,7 @@ export class AddEditPackageComponent
   }
 
   public close(result: boolean): void {
-    this.ref.close(result);
+    this._ref.close(result);
   }
 
   public onSaveClick(form: NgForm): void {
@@ -227,12 +217,12 @@ export class AddEditPackageComponent
   }
 
   private saveNewPackage(data: any): void {
-    data.Services = this.packageServiceUnfiltered;
-    this.subs.push(
-      this.packagesService.add(data).subscribe(
+    data.Services = this._packageServiceUnfiltered;
+    this._subs.push(
+      this._packagesService.add(data).subscribe(
         (data) => {
           if (data.PackageId) {
-            this.toastrService.showToast("success", getString("saveSuccess"));
+            this._toastrService.showToast("success", getString("saveSuccess"));
             this.close(true);
           }
         },
@@ -244,11 +234,11 @@ export class AddEditPackageComponent
   }
 
   private editPackage(data: any): void {
-    data.Services = this.packageServiceUnfiltered;
-    this.subs.push(
-      this.packagesService.update(data).subscribe(
+    data.Services = this._packageServiceUnfiltered;
+    this._subs.push(
+      this._packagesService.update(data).subscribe(
         () => {
-          this.toastrService.showToast("success", getString("saveSuccess"));
+          this._toastrService.showToast("success", getString("saveSuccess"));
           this.close(true);
         },
         (err) => {
@@ -279,28 +269,28 @@ export class AddEditPackageComponent
       )
     ) {
       this.selectedService.IsNew = true;
-      this.packageServiceUnfiltered.push(this.selectedService);
-      this.packageServices = this.packageServiceUnfiltered.filter(
+      this._packageServiceUnfiltered.push(this.selectedService);
+      this.packageServices = this._packageServiceUnfiltered.filter(
         (x) => !x.IsDeleted
       );
       this.gridSelectedItem = [];
       this.selectedService = { Quantity: 0 };
-    } else this.toastrService.showToast("warning", getString("alreadyAdded"));
+    } else this._toastrService.showToast("warning", getString("alreadyAdded"));
 
     this.calculatePackagePrice();
   }
 
   public onServiceDeleteConfirm(event: any): void {
-    var item = this.packageServiceUnfiltered.find(
+    var item = this._packageServiceUnfiltered.find(
       (x) => x.ServiceId == event.data.ServiceId
     );
     if (event.data.IsNew)
-      this.packageServiceUnfiltered.splice(
-        this.packageServiceUnfiltered.indexOf(item),
+      this._packageServiceUnfiltered.splice(
+        this._packageServiceUnfiltered.indexOf(item),
         1
       );
     else item.IsDeleted = true;
-    this.packageServices = this.packageServiceUnfiltered.filter(
+    this.packageServices = this._packageServiceUnfiltered.filter(
       (x) => !x.IsDeleted
     );
     this.calculatePackagePrice();
@@ -324,7 +314,7 @@ export class AddEditPackageComponent
 
   public onPriceChange(): void {
     this.package.DefaultPackagePrice =
-      this.calculationService.roundToTwoDecimals(
+      this._calculationService.roundToTwoDecimals(
         this.package.DefaultPackagePrice
       ) as any;
   }

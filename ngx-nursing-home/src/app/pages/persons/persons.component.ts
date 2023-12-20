@@ -96,18 +96,18 @@ export class PersonsComponent implements OnInit, OnDestroy {
           .DisplayExpression("Tag")
           .KeyExpression("Id")
           .ServerDataSource(true)
-          .ServerEndpoint(this.gendersService.apiRoute)
+          .ServerEndpoint(this._gendersService.apiRoute)
       ),
   ];
 
-  private subscriptions: Subscription[] = [];
+  private _subs: Subscription[] = [];
 
   @ViewChild("contentTemplate") contentTemplate: TemplateRef<any>;
 
   constructor(
-    private personsService: PersonsService,
-    private windowService: NbWindowService,
-    private gendersService: GendersService
+    private _personsService: PersonsService,
+    private _windowService: NbWindowService,
+    private _gendersService: GendersService
   ) {}
 
   ngOnInit(): void {
@@ -115,14 +115,14 @@ export class PersonsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscriptions.forEach((element) => {
+    this._subs.forEach((element) => {
       element.unsubscribe();
     });
   }
 
-  private getData() {
-    this.subscriptions.push(
-      this.personsService.getData(!this.showDeactivated).subscribe(
+  private getData(): void {
+    this._subs.push(
+      this._personsService.getData(!this.showDeactivated).subscribe(
         (data) => {
           this.personsData = data;
         },
@@ -137,12 +137,12 @@ export class PersonsComponent implements OnInit, OnDestroy {
     this.getData();
   }
 
-  public viewChange(event: string[]) {
+  public viewChange(event: string[]): void {
     if (event.length > 0) this.currentView = event[0];
   }
 
-  public openPersonDetails(person: any) {
-    this.windowService
+  public openPersonDetails(person: any): void {
+    this._windowService
       .open(PersonPopupWindowComponent, {
         context: { person: person, personId: person.Id },
         buttons: {
@@ -162,7 +162,7 @@ export class PersonsComponent implements OnInit, OnDestroy {
       });
   }
 
-  public gridSelectionChanged(event: any) {
+  public gridSelectionChanged(event: any): void {
     if (event.selectedRows.length == 1)
       this.openPersonDetails(event.selectedRows[0]);
   }

@@ -1,63 +1,62 @@
 @import "../../../@theme/styles/themes.scss";
 
 @include nb-install-component {
-    .event-card {
-        border-radius: 1rem;
-        width: 500px;
-        height: 700px;
+  .event-card {
+    border-radius: 1rem;
+    width: 500px;
+    height: 700px;
 
-        nb-card-header {
-            padding: 1rem;
-            padding-bottom: 0.5rem;
-            border: none;
+    nb-card-header {
+      padding: 1rem;
+      padding-bottom: 0.5rem;
+      border: none;
 
-            .col {
-                font-size: 20px;
+      .col {
+        font-size: 20px;
 
-                div nb-icon {
-                    font-size: 25px;
-                }
-            }
-
+        div nb-icon {
+          font-size: 25px;
         }
-
-        .colors-container {
-            display: flex;
-            gap: 0.5rem;
-
-            .color {
-                height: 2rem;
-                width: 2rem;
-                border-radius: 50%;
-            }
-
-            .color:hover {
-                cursor: pointer;
-            }
-
-            .color.selected {
-                border: 5px solid nb-theme(color-primary-500);
-            }
-
-            .color.success {
-                background-color: nb-theme(color-success-500);
-            }
-
-            .color.info {
-                background-color: nb-theme(color-info-500);
-            }
-
-            .color.danger {
-                background-color: nb-theme(color-danger-500);
-            }
-
-            .color.primary {
-                background-color: nb-theme(color-primary-500);
-            }
-
-            .color.warning {
-                background-color: nb-theme(color-warning-500);
-            }
-        }
+      }
     }
+
+    .colors-container {
+      display: flex;
+      gap: 0.5rem;
+
+      .color {
+        height: 2rem;
+        width: 2rem;
+        border-radius: 50%;
+      }
+
+      .color:hover {
+        cursor: pointer;
+      }
+
+      .color.selected {
+        border: 5px solid nb-theme(color-primary-500);
+      }
+
+      .color.success {
+        background-color: nb-theme(color-success-500);
+      }
+
+      .color.info {
+        background-color: nb-theme(color-info-500);
+      }
+
+      .color.danger {
+        background-color: nb-theme(color-danger-500);
+      }
+
+      .color.primary {
+        background-color: nb-theme(color-primary-500);
+      }
+
+      .color.warning {
+        background-color: nb-theme(color-warning-500);
+      }
+    }
+  }
 }

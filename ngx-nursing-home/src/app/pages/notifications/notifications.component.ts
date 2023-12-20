@@ -1,17 +1,16 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { getString } from '../../resources/strings';
-import { Subscription } from 'rxjs';
-import { NotificationsService } from '../../services/rest/notifications.service';
-import { Router } from '@angular/router';
-import { ToastrService } from '../../services/toastr.service';
+import { Component, OnDestroy, OnInit } from "@angular/core";
+import { getString } from "../../resources/strings";
+import { Subscription } from "rxjs";
+import { NotificationsService } from "../../services/rest/notifications.service";
+import { Router } from "@angular/router";
+import { ToastrService } from "../../services/toastr.service";
 
 @Component({
-  selector: 'sample-notifications',
-  templateUrl: './notifications.component.html',
-  styleUrls: ['./notifications.component.scss']
+  selector: "sample-notifications",
+  templateUrl: "./notifications.component.html",
+  styleUrls: ["./notifications.component.scss"],
 })
 export class NotificationsComponent implements OnInit, OnDestroy {
-
   public getString = getString;
   public notificationTypes: any[] = [];
   public searchTerm: string = "";
@@ -19,15 +18,15 @@ export class NotificationsComponent implements OnInit, OnDestroy {
   public allNotifications: any[] = [];
   public showAll: boolean = true;
   public showAllActive: boolean = true;
-  public selected: number = this.notifications.filter(x => x.Selected).length;
+  public selected: number = this.notifications.filter((x) => x.Selected).length;
 
-  private subs: Subscription[] = [];
+  private _subs: Subscription[] = [];
 
   constructor(
-    private notificationsService: NotificationsService,
-    private router: Router,
-    private toastrService: ToastrService
-  ) { }
+    private _notificationsService: NotificationsService,
+    private _router: Router,
+    private _toastrService: ToastrService
+  ) {}
 
   ngOnInit(): void {
     this.getNotificationTypes();
@@ -35,22 +34,22 @@ export class NotificationsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subs.forEach(element => {
+    this._subs.forEach((element) => {
       element.unsubscribe();
     });
   }
 
   private getNotificationTypes(): void {
-    this.subs.push(
-      this.notificationsService.getNotificationTypes().subscribe(data => {
+    this._subs.push(
+      this._notificationsService.getNotificationTypes().subscribe((data) => {
         this.notificationTypes = data;
       })
     );
   }
 
   private getNotifications(): void {
-    this.subs.push(
-      this.notificationsService.getData().subscribe(data => {
+    this._subs.push(
+      this._notificationsService.getData().subscribe((data) => {
         this.notifications = data;
         this.allNotifications = data;
       })
@@ -62,28 +61,30 @@ export class NotificationsComponent implements OnInit, OnDestroy {
       if (event[0] == 1) {
         this.showAllActive = true;
         this.notifications = this.allNotifications;
-      }
-      else {
+      } else {
         this.showAllActive = false;
-        this.notifications = this.allNotifications.filter(x => !x.Read);
+        this.notifications = this.allNotifications.filter((x) => !x.Read);
       }
     }
   }
 
   private getNotificationsForType(type: any): void {
-    this.subs.push(
-      this.notificationsService.getNotificationsForType(type.Id).subscribe(data => {
-        this.allNotifications = data;
-        if (this.showAllActive) this.notifications = data;
-        else this.notifications = this.allNotifications.filter(x => !x.Read);
-      })
+    this._subs.push(
+      this._notificationsService
+        .getNotificationsForType(type.Id)
+        .subscribe((data) => {
+          this.allNotifications = data;
+          if (this.showAllActive) this.notifications = data;
+          else
+            this.notifications = this.allNotifications.filter((x) => !x.Read);
+        })
     );
   }
 
   public filterChange(nt: any): void {
-    this.notificationTypes.map(x => x.Selected = false);
+    this.notificationTypes.map((x) => (x.Selected = false));
 
-    if (nt == 'all') {
+    if (nt == "all") {
       this.showAll = true;
       this.getNotifications();
     } else {
@@ -94,65 +95,68 @@ export class NotificationsComponent implements OnInit, OnDestroy {
   }
 
   public onCheckedChange(): void {
-    this.selected = this.notifications.filter(x => x.Selected).length;
+    this.selected = this.notifications.filter((x) => x.Selected).length;
   }
 
   public selectAll(): void {
-    this.notifications.map(x => {
+    this.notifications.map((x) => {
       if (!x.Read) x.Selected = true;
       return x;
     });
 
-    this.selected = this.notifications.filter(x => x.Selected).length;
+    this.selected = this.notifications.filter((x) => x.Selected).length;
   }
 
   public clearAll(): void {
-    this.notifications.map(x => x.Selected = false);
-    this.selected = this.notifications.filter(x => x.Selected).length;
+    this.notifications.map((x) => (x.Selected = false));
+    this.selected = this.notifications.filter((x) => x.Selected).length;
   }
 
   public markSelectedAsRead(): void {
-    var selectedNotifications = this.notifications.filter(x => x.Selected);
+    var selectedNotifications = this.notifications.filter((x) => x.Selected);
 
     for (let index = 0; index < selectedNotifications.length; index++) {
       const element = selectedNotifications[index];
-      this.subs.push(
-        this.notificationsService.markNotificationAsRead(element.Id).subscribe(() => {
-          this.toastrService.showToast('success', getString("saveSuccess"));
-          if (index == selectedNotifications.length - 1) this.refreshNotifications();
-        })
+      this._subs.push(
+        this._notificationsService
+          .markNotificationAsRead(element.Id)
+          .subscribe(() => {
+            this._toastrService.showToast("success", getString("saveSuccess"));
+            if (index == selectedNotifications.length - 1)
+              this.refreshNotifications();
+          })
       );
     }
   }
 
   private refreshNotifications(): void {
-    var selectedType = this.notificationTypes.find(x => x.Selected);
-    this.filterChange(selectedType ?? 'all');
+    var selectedType = this.notificationTypes.find((x) => x.Selected);
+    this.filterChange(selectedType ?? "all");
   }
 
   public markAllAsRead(): void {
-    this.subs.push(
-      this.notificationsService.markAllNotificationsAsRead().subscribe(() => {
+    this._subs.push(
+      this._notificationsService.markAllNotificationsAsRead().subscribe(() => {
         this.refreshNotifications();
-        this.toastrService.showToast('success', getString("saveSuccess"));
+        this._toastrService.showToast("success", getString("saveSuccess"));
       })
     );
   }
 
   public manageNotifications(): void {
-    this.router.navigateByUrl('/pages/notifications-settings');
+    this._router.navigateByUrl("/pages/notifications-settings");
   }
 
   public markAsRead(n: any): void {
-    this.subs.push(
-      this.notificationsService.markNotificationAsRead(n.Id).subscribe(() => {
+    this._subs.push(
+      this._notificationsService.markNotificationAsRead(n.Id).subscribe(() => {
         this.refreshNotifications();
-        this.toastrService.showToast('success', getString("saveSuccess"));
+        this._toastrService.showToast("success", getString("saveSuccess"));
       })
     );
   }
 
   public goToNotification(n: any): void {
-    this.router.navigateByUrl(n.GoToLink);
+    this._router.navigateByUrl(n.GoToLink);
   }
 }

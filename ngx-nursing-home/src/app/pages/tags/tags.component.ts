@@ -6,10 +6,8 @@ import {
   GridColorpickerEditor,
   GridColumn,
   GridTextboxEditor,
-  TextboxEditor,
   GridColorpickerColumn,
 } from "shared-components";
-import { gridLayer } from "leaflet";
 import { ToastrService } from "../../services/toastr.service";
 
 @Component({
@@ -20,7 +18,7 @@ import { ToastrService } from "../../services/toastr.service";
 export class TagsComponent implements OnInit, OnDestroy {
   constructor(
     private _tagsService: TagsService,
-    private toastrService: ToastrService
+    private _toastrService: ToastrService
   ) {}
 
   private _subs: Subscription[] = [];
@@ -67,7 +65,7 @@ export class TagsComponent implements OnInit, OnDestroy {
     });
   }
 
-  public getData() {
+  public getData(): void {
     this._subs.push(
       this._tagsService.getData().subscribe(
         (data) => {
@@ -80,46 +78,46 @@ export class TagsComponent implements OnInit, OnDestroy {
     );
   }
 
-  public createConfirm(event: any) {
+  public createConfirm(event: any): void {
     this._subs.push(
       this._tagsService.add(event.newData).subscribe(
         () => {
-          this.toastrService.showToast("success", getString("saveSuccess"));
+          this._toastrService.showToast("success", getString("saveSuccess"));
           this.getData();
         },
         (err) => {
           console.error(err);
-          this.toastrService.showToast("danger", getString("saveError"));
+          this._toastrService.showToast("danger", getString("saveError"));
         }
       )
     );
   }
 
-  public editConfirm(event: any) {
+  public editConfirm(event: any): void {
     this._subs.push(
       this._tagsService.update(event.newData).subscribe(
         () => {
-          this.toastrService.showToast("success", getString("saveSuccess"));
+          this._toastrService.showToast("success", getString("saveSuccess"));
           this.getData();
         },
         (err) => {
           console.error(err);
-          this.toastrService.showToast("danger", getString("saveError"));
+          this._toastrService.showToast("danger", getString("saveError"));
         }
       )
     );
   }
 
-  public deleteConfirm(event: any) {
+  public deleteConfirm(event: any): void {
     this._subs.push(
       this._tagsService.delete(event.data).subscribe(
         () => {
-          this.toastrService.showToast("success", getString("saveSuccess"));
+          this._toastrService.showToast("success", getString("saveSuccess"));
           this.getData();
         },
         (err) => {
           console.error(err);
-          this.toastrService.showToast("danger", getString("saveError"));
+          this._toastrService.showToast("danger", getString("saveError"));
         }
       )
     );

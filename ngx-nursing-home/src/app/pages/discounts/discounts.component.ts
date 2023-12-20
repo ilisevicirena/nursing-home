@@ -3,13 +3,9 @@ import { Subscription } from "rxjs";
 import { DiscountsService } from "../../services/rest/discounts.service";
 import { getString } from "../../resources/strings";
 import {
-  CheckboxType,
   GridCheckboxColumn,
   GridColumn,
-  GridSelectEditor,
   GridSelectFilter,
-  SelectFilter,
-  SmartTableColumn,
 } from "shared-components";
 import { NbWindowService, NbWindowState } from "@nebular/theme";
 import { AddEditDiscountComponent } from "./add-edit-discount/add-edit-discount.component";
@@ -23,8 +19,8 @@ import { ExportDocSettings } from "shared-components/lib/models/smart-table.mode
   styleUrls: ["./discounts.component.scss"],
 })
 export class DiscountsComponent implements OnInit, OnDestroy {
-  private subs: Subscription[] = [];
-  private percentCalculationFilter = [
+  private _subs: Subscription[] = [];
+  private _percentCalculationFilter: any[] = [
     { value: true, label: getString("yes") },
     { value: false, label: getString("no") },
   ];
@@ -44,7 +40,7 @@ export class DiscountsComponent implements OnInit, OnDestroy {
         new GridSelectFilter()
           .KeyExpression("value")
           .DisplayExpression("label")
-          .DataSource(this.percentCalculationFilter)
+          .DataSource(this._percentCalculationFilter)
       ),
   ];
   public exportSettings: ExportDocSettings = {
@@ -58,10 +54,10 @@ export class DiscountsComponent implements OnInit, OnDestroy {
   };
 
   constructor(
-    private discountsService: DiscountsService,
-    private windowService: NbWindowService,
-    private dialogService: DialogService,
-    private toastrService: ToastrService
+    private _discountsService: DiscountsService,
+    private _windowService: NbWindowService,
+    private _dialogService: DialogService,
+    private _toastrService: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -69,14 +65,14 @@ export class DiscountsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subs.forEach((element) => {
+    this._subs.forEach((element) => {
       element.unsubscribe();
     });
   }
 
   private getDiscounts(): void {
-    this.subs.push(
-      this.discountsService.getData().subscribe(
+    this._subs.push(
+      this._discountsService.getData().subscribe(
         (data) => {
           this.discountsData = data;
         },
@@ -88,8 +84,8 @@ export class DiscountsComponent implements OnInit, OnDestroy {
   }
 
   public onCreateStarted(): void {
-    this.subs.push(
-      this.windowService
+    this._subs.push(
+      this._windowService
         .open(AddEditDiscountComponent, {
           context: { isNew: true },
           buttons: {
@@ -111,16 +107,16 @@ export class DiscountsComponent implements OnInit, OnDestroy {
   }
 
   public async onDeleteStarted(event: any): Promise<void> {
-    const result = await this.dialogService.openYesNoDialog(
+    const result = await this._dialogService.openYesNoDialog(
       getString("areYouSure"),
       getString("deactivateDiscount")
     );
 
     if (result) {
-      this.subs.push(
-        this.discountsService.delete(event.data).subscribe(
+      this._subs.push(
+        this._discountsService.delete(event.data).subscribe(
           () => {
-            this.toastrService.showToast(
+            this._toastrService.showToast(
               "success",
               getString("saveSuccess"),
               ""

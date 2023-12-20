@@ -1,241 +1,337 @@
 <nb-card class="calculation-card">
-    <nb-card-body>
-        <div class="row m-0 title-container">
-            <div class="w-max">{{getString('calculationSummary')}}
-                <nb-tag status="primary" appearance="outline" [text]="percent"></nb-tag>
+  <nb-card-body>
+    <div class="row m-0 title-container">
+      <div class="w-max">
+        {{ getString("calculationSummary") }}
+        <nb-tag status="primary" appearance="outline" [text]="percent"></nb-tag>
+      </div>
+      <div class="col d-flex justify-content-end">
+        <button nbButton ghost shape="round" (click)="close()">
+          <nb-icon pack="eva" icon="close-outline"></nb-icon>
+        </button>
+      </div>
+    </div>
+    <div class="row m-0 mt-3">
+      <div class="col-md-4 ps-0">
+        <div class="top-card">
+          <div
+            class="icon-container w-100 d-flex justify-content-center align-items-center"
+            [ngClass]="
+              summary?.TotalCalculatedPriceDiff
+                ? summary?.TotalCalculatedPriceDiff?.startsWith('+')
+                  ? 'success'
+                  : 'danger'
+                : 'basic'
+            "
+          >
+            <div class="icon">
+              <nb-icon
+                pack="eva"
+                [status]="
+                  summary?.TotalCalculatedPriceDiff
+                    ? summary?.TotalCalculatedPriceDiff?.startsWith('+')
+                      ? 'success'
+                      : 'danger'
+                    : 'basic'
+                "
+                [icon]="
+                  summary?.TotalCalculatedPriceDiff
+                    ? summary?.TotalCalculatedPriceDiff?.startsWith('+')
+                      ? 'trending-up-outline'
+                      : 'trending-down-outline'
+                    : 'minus-outline'
+                "
+              ></nb-icon>
             </div>
-            <div class="col d-flex justify-content-end">
-                <button nbButton ghost shape="round" (click)="close()">
-                    <nb-icon pack="eva" icon="close-outline"></nb-icon>
-                </button>
-            </div>
+          </div>
+          <div
+            class="price w-100 d-flex justify-content-center align-items-center"
+          >
+            {{ summary?.TotalCalculatedPrice }}
+            <span *ngIf="!summary?.TotalCalculatedPrice">0 </span> KM
+          </div>
+          <div
+            class="label w-100 d-flex justify-content-center align-items-center"
+          >
+            {{ getString("calculatedSum") }}
+          </div>
         </div>
-        <div class="row m-0 mt-3">
-            <div class="col-md-4 ps-0">
-                <div class="top-card">
-                    <div class="icon-container w-100 d-flex justify-content-center align-items-center"
-                        [ngClass]="summary?.TotalCalculatedPriceDiff ? summary?.TotalCalculatedPriceDiff?.startsWith('+')?'success':'danger' :'basic'">
-                        <div class="icon">
-                            <nb-icon pack="eva"
-                                [status]="summary?.TotalCalculatedPriceDiff ? summary?.TotalCalculatedPriceDiff?.startsWith('+')?'success':'danger' :'basic'"
-                                [icon]="summary?.TotalCalculatedPriceDiff ? summary?.TotalCalculatedPriceDiff?.startsWith('+')?'trending-up-outline':'trending-down-outline':'minus-outline'"></nb-icon>
-                        </div>
-                    </div>
-                    <div class="price w-100 d-flex justify-content-center align-items-center">
-                        {{summary?.TotalCalculatedPrice}} <span *ngIf="!summary?.TotalCalculatedPrice">0 </span> KM
-                    </div>
-                    <div class="label w-100 d-flex justify-content-center align-items-center">
-                        {{getString('calculatedSum')}}
-                    </div>
-                </div>
+      </div>
+      <div class="col-md-4 ps-1 pe-1">
+        <div class="top-card">
+          <div
+            class="icon-container w-100 d-flex justify-content-center align-items-center"
+            [ngClass]="
+              summary?.TotalRealPriceDiff
+                ? summary?.TotalRealPriceDiff?.startsWith('+')
+                  ? 'success'
+                  : 'danger'
+                : 'basic'
+            "
+          >
+            <div class="icon">
+              <nb-icon
+                pack="eva"
+                [status]="
+                  summary?.TotalRealPriceDiff
+                    ? summary?.TotalRealPriceDiff?.startsWith('+')
+                      ? 'success'
+                      : 'danger'
+                    : 'basic'
+                "
+                [icon]="
+                  summary?.TotalRealPriceDiff
+                    ? summary?.TotalRealPriceDiff?.startsWith('+')
+                      ? 'trending-up-outline'
+                      : 'trending-down-outline'
+                    : 'minus-outline'
+                "
+              ></nb-icon>
             </div>
-            <div class="col-md-4 ps-1 pe-1">
-                <div class="top-card">
-                    <div class="icon-container w-100 d-flex justify-content-center align-items-center"
-                        [ngClass]="summary?.TotalRealPriceDiff ? summary?.TotalRealPriceDiff?.startsWith('+')?'success':'danger' :'basic'">
-                        <div class="icon">
-                            <nb-icon pack="eva"
-                                [status]="summary?.TotalRealPriceDiff ? summary?.TotalRealPriceDiff?.startsWith('+')?'success':'danger' :'basic'"
-                                [icon]="summary?.TotalRealPriceDiff ? summary?.TotalRealPriceDiff?.startsWith('+')?'trending-up-outline':'trending-down-outline':'minus-outline'"></nb-icon>
-                        </div>
-                    </div>
-                    <div class="price w-100 d-flex justify-content-center align-items-center">
-                        {{summary?.TotalRealPrice}} <span *ngIf="!summary?.TotalRealPrice">0 </span> KM
-                    </div>
-                    <div class="label w-100 d-flex justify-content-center align-items-center">
-                        {{getString('calculatedSumReal')}}
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 pe-0">
-                <div class="top-card">
-                    <div class="icon-container w-100 d-flex justify-content-center align-items-center"
-                        [ngClass]="summary?.TotalPaidPriceDiff ? summary?.TotalPaidPriceDiff?.startsWith('+')?'success':'danger' :'basic'">
-                        <div class="icon">
-                            <nb-icon pack="eva"
-                                [status]="summary?.TotalPaidPriceDiff ? summary?.TotalPaidPriceDiff?.startsWith('+')?'success':'danger' :'basic'"
-                                [icon]="summary?.TotalPaidPriceDiff ? summary?.TotalPaidPriceDiff?.startsWith('+')?'trending-up-outline':'trending-down-outline':'minus-outline'"></nb-icon>
-                        </div>
-                    </div>
-                    <div class="price w-100 d-flex justify-content-center align-items-center">
-                        {{summary?.TotalPaidPrice}} <span *ngIf="!summary?.TotalPaidPrice">0 </span> KM
-                    </div>
-                    <div class="label w-100 d-flex justify-content-center align-items-center">
-                        {{getString('calculatedSumPaid')}}
-                    </div>
-                </div>
-            </div>
+          </div>
+          <div
+            class="price w-100 d-flex justify-content-center align-items-center"
+          >
+            {{ summary?.TotalRealPrice }}
+            <span *ngIf="!summary?.TotalRealPrice">0 </span> KM
+          </div>
+          <div
+            class="label w-100 d-flex justify-content-center align-items-center"
+          >
+            {{ getString("calculatedSumReal") }}
+          </div>
         </div>
-        <div class="row m-0 mt-2 calculation-stepper">
-            <div class="row m-0 p-0 solid-border">
-                <div class="col-4 p-0">
-                    <div class="row dotted-border title">
-                        {{getString('basicData')}}
-                    </div>
-                </div>
+      </div>
+      <div class="col-md-4 pe-0">
+        <div class="top-card">
+          <div
+            class="icon-container w-100 d-flex justify-content-center align-items-center"
+            [ngClass]="
+              summary?.TotalPaidPriceDiff
+                ? summary?.TotalPaidPriceDiff?.startsWith('+')
+                  ? 'success'
+                  : 'danger'
+                : 'basic'
+            "
+          >
+            <div class="icon">
+              <nb-icon
+                pack="eva"
+                [status]="
+                  summary?.TotalPaidPriceDiff
+                    ? summary?.TotalPaidPriceDiff?.startsWith('+')
+                      ? 'success'
+                      : 'danger'
+                    : 'basic'
+                "
+                [icon]="
+                  summary?.TotalPaidPriceDiff
+                    ? summary?.TotalPaidPriceDiff?.startsWith('+')
+                      ? 'trending-up-outline'
+                      : 'trending-down-outline'
+                    : 'minus-outline'
+                "
+              ></nb-icon>
             </div>
-            <div class="row m-0 p-0">
-                <div class="col-4 p-0">
-                    <div class="row dotted-border subtitle">
-                        {{month}}, {{year}}
-                        <div class="circle"></div>
-                    </div>
-                </div>
-                <div class="col-8 p-0">
-                    <div class="row m-0 p-2 text">
-                        <div class="row">{{getString('calculationFor')}} {{month}}. {{getString('month')}} {{year}}.
-                        </div>
-                        <div class="row">{{getString('period')}}: {{dates?.DateFrom | date: 'dd.MM.yyyy.'}} -
-                            {{dates?.DateTo | date:'dd.MM.yyyy.'}}</div>
-                        <div class="row">
-                            {{getString('calculationDate')}}: {{dates?.CreationDate | date: 'dd.MM.yyyy. HH:mm'}}
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row m-0 p-0 solid-border">
-                <div class="col-4 p-0">
-                    <div class="row dotted-border title">
-                        {{getString('calculationNumber')}}
-                    </div>
-                </div>
-            </div>
-            <div class="row m-0 p-0">
-                <div class="col-4 p-0">
-                    <div class="row dotted-border subtitle">
-                        {{percent}}
-                        <div class="circle"></div>
-                    </div>
-                </div>
-                <div class="col-8 p-0">
-                    <div class="row m-0  p-2 text">
-                        <div class="row">
-                            {{getString('numberOfPersons')}}: {{summary?.Persons}}
-                        </div>
-                        <div class="row">
-                            {{getString('calculationCreatedFor')}}: {{summary?.CalculatedForPersons}} ({{percent}})
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row m-0 p-0 solid-border">
-                <div class="col-4 p-0">
-                    <div class="row dotted-border title">
-                        {{getString('calculationSystemPrice')}}
-                    </div>
-                </div>
-            </div>
-            <div class="row m-0 p-0">
-                <div class="col-4 p-0">
-                    <div class="row dotted-border subtitle">
-                        {{summary?.TotalCalculatedPrice}} KM
-                        <div class="circle"></div>
-                    </div>
-                </div>
-                <div class="col-8 p-0">
-                    <div class="row m-0  p-2 text">
-                        <div class="row">
-                            {{getString('calculatedSum')}}: {{summary?.TotalCalculatedPrice}} KM
-                        </div>
-                        <div class="row">
-                            {{summary?.TotalCalculatedPriceDiff}}
-                            <span *ngIf="!summary?.TotalCalculatedPriceDiff">0</span>
-                            % {{getString('lastMonth')}}
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row m-0 p-0 solid-border">
-                <div class="col-4 p-0">
-                    <div class="row dotted-border title">
-                        {{getString('calculationRealPrice')}}
-                    </div>
-                </div>
-            </div>
-            <div class="row m-0 p-0">
-                <div class="col-4 p-0">
-                    <div class="row dotted-border subtitle">
-                        {{summary?.TotalRealPrice}} <span class="w-max" *ngIf="!summary?.TotalRealPrice">0 </span> KM
-                        <div class="circle"></div>
-                    </div>
-                </div>
-                <div class="col-8 p-0">
-                    <div class="row m-0  p-2 text">
-                        <div class="row">
-                            {{getString('calculatedSumReal')}}: {{summary?.TotalRealPrice}} <span class="w-max"
-                                *ngIf="!summary?.TotalRealPrice">0 </span> KM
-                        </div>
-                        <div class="row">
-                            {{summary?.TotalRealPriceDiff}}
-                            <span *ngIf="!summary?.TotalRealPriceDiff">0</span>
-                            % {{getString('lastMonth')}}
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row m-0 p-0 solid-border">
-                <div class="col-4 p-0">
-                    <div class="row dotted-border title">
-                        {{getString('calculationPaidPrice')}}
-                    </div>
-                </div>
-            </div>
-            <div class="row m-0 p-0">
-                <div class="col-4 p-0">
-                    <div class="row dotted-border subtitle">
-                        {{summary?.TotalPaidPrice}} <span class="w-max" *ngIf="!summary?.TotalPaidPrice">0 </span> KM
-                        <div class="circle"></div>
-                    </div>
-                </div>
-                <div class="col-8 p-0">
-                    <div class="row m-0  p-2 text">
-                        <div class="row">
-                            {{getString('calculatedSumPaid')}}: {{summary?.TotalPaidPrice}} <span class="w-max"
-                                *ngIf="!summary?.TotalPaidPrice">0
-                            </span> KM
-                        </div>
-                        <div class="row">
-                            {{summary?.TotalPaidPriceDiff}}
-                            <span *ngIf="!summary?.TotalPaidPriceDiff">0</span>
-                            % {{getString('lastMonth')}}
-                        </div>
-                        <div class="row">
-                            {{getString('calculationPaid')}}: {{summary?.NumberOfPaidCalculations}},
-                            {{getString('calculationNotPaid').toLowerCase()}}: {{summary?.NumberOfNotPaidCalculations}}
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row m-0 p-0 solid-border">
-                <div class="col-4 p-0">
-                    <div class="row dotted-border title">
-                        {{getString('calculationCancelled')}}
-                    </div>
-                </div>
-            </div>
-            <div class="row m-0 p-0">
-                <div class="col-4 p-0">
-                    <div class="row dotted-border subtitle">
-                        {{summary?.NumberOfCancelledCalculations}}
-                        <div class="circle"></div>
-                    </div>
-                </div>
-                <div class="col-8 p-0">
-                    <div class="row m-0  p-2 text">
-                        <div class="row">
-                            {{getString('numberOfCancelledCalculations')}}: {{summary?.NumberOfCancelledCalculations}}
-                        </div>
-                        <div class="row">
-                            {{getString('cancelledCalculationsDescription')}}
-                        </div>
-                    </div>
-                </div>
-            </div>
+          </div>
+          <div
+            class="price w-100 d-flex justify-content-center align-items-center"
+          >
+            {{ summary?.TotalPaidPrice }}
+            <span *ngIf="!summary?.TotalPaidPrice">0 </span> KM
+          </div>
+          <div
+            class="label w-100 d-flex justify-content-center align-items-center"
+          >
+            {{ getString("calculatedSumPaid") }}
+          </div>
         </div>
-    </nb-card-body>
+      </div>
+    </div>
+    <div class="row m-0 mt-2 calculation-stepper">
+      <div class="row m-0 p-0 solid-border">
+        <div class="col-4 p-0">
+          <div class="row dotted-border title">
+            {{ getString("basicData") }}
+          </div>
+        </div>
+      </div>
+      <div class="row m-0 p-0">
+        <div class="col-4 p-0">
+          <div class="row dotted-border subtitle">
+            {{ month }}, {{ year }}
+            <div class="circle"></div>
+          </div>
+        </div>
+        <div class="col-8 p-0">
+          <div class="row m-0 p-2 text">
+            <div class="row">
+              {{ getString("calculationFor") }} {{ month }}.
+              {{ getString("month") }} {{ year }}.
+            </div>
+            <div class="row">
+              {{ getString("period") }}:
+              {{ dates?.DateFrom | date : "dd.MM.yyyy." }} -
+              {{ dates?.DateTo | date : "dd.MM.yyyy." }}
+            </div>
+            <div class="row">
+              {{ getString("calculationDate") }}:
+              {{ dates?.CreationDate | date : "dd.MM.yyyy. HH:mm" }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row m-0 p-0 solid-border">
+        <div class="col-4 p-0">
+          <div class="row dotted-border title">
+            {{ getString("calculationNumber") }}
+          </div>
+        </div>
+      </div>
+      <div class="row m-0 p-0">
+        <div class="col-4 p-0">
+          <div class="row dotted-border subtitle">
+            {{ percent }}
+            <div class="circle"></div>
+          </div>
+        </div>
+        <div class="col-8 p-0">
+          <div class="row m-0 p-2 text">
+            <div class="row">
+              {{ getString("numberOfPersons") }}: {{ summary?.Persons }}
+            </div>
+            <div class="row">
+              {{ getString("calculationCreatedFor") }}:
+              {{ summary?.CalculatedForPersons }} ({{ percent }})
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row m-0 p-0 solid-border">
+        <div class="col-4 p-0">
+          <div class="row dotted-border title">
+            {{ getString("calculationSystemPrice") }}
+          </div>
+        </div>
+      </div>
+      <div class="row m-0 p-0">
+        <div class="col-4 p-0">
+          <div class="row dotted-border subtitle">
+            {{ summary?.TotalCalculatedPrice }} KM
+            <div class="circle"></div>
+          </div>
+        </div>
+        <div class="col-8 p-0">
+          <div class="row m-0 p-2 text">
+            <div class="row">
+              {{ getString("calculatedSum") }}:
+              {{ summary?.TotalCalculatedPrice }} KM
+            </div>
+            <div class="row">
+              {{ summary?.TotalCalculatedPriceDiff }}
+              <span *ngIf="!summary?.TotalCalculatedPriceDiff">0</span>
+              % {{ getString("lastMonth") }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row m-0 p-0 solid-border">
+        <div class="col-4 p-0">
+          <div class="row dotted-border title">
+            {{ getString("calculationRealPrice") }}
+          </div>
+        </div>
+      </div>
+      <div class="row m-0 p-0">
+        <div class="col-4 p-0">
+          <div class="row dotted-border subtitle">
+            {{ summary?.TotalRealPrice }}
+            <span class="w-max" *ngIf="!summary?.TotalRealPrice">0 </span> KM
+            <div class="circle"></div>
+          </div>
+        </div>
+        <div class="col-8 p-0">
+          <div class="row m-0 p-2 text">
+            <div class="row">
+              {{ getString("calculatedSumReal") }}:
+              {{ summary?.TotalRealPrice }}
+              <span class="w-max" *ngIf="!summary?.TotalRealPrice">0 </span> KM
+            </div>
+            <div class="row">
+              {{ summary?.TotalRealPriceDiff }}
+              <span *ngIf="!summary?.TotalRealPriceDiff">0</span>
+              % {{ getString("lastMonth") }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row m-0 p-0 solid-border">
+        <div class="col-4 p-0">
+          <div class="row dotted-border title">
+            {{ getString("calculationPaidPrice") }}
+          </div>
+        </div>
+      </div>
+      <div class="row m-0 p-0">
+        <div class="col-4 p-0">
+          <div class="row dotted-border subtitle">
+            {{ summary?.TotalPaidPrice }}
+            <span class="w-max" *ngIf="!summary?.TotalPaidPrice">0 </span> KM
+            <div class="circle"></div>
+          </div>
+        </div>
+        <div class="col-8 p-0">
+          <div class="row m-0 p-2 text">
+            <div class="row">
+              {{ getString("calculatedSumPaid") }}:
+              {{ summary?.TotalPaidPrice }}
+              <span class="w-max" *ngIf="!summary?.TotalPaidPrice">0 </span> KM
+            </div>
+            <div class="row">
+              {{ summary?.TotalPaidPriceDiff }}
+              <span *ngIf="!summary?.TotalPaidPriceDiff">0</span>
+              % {{ getString("lastMonth") }}
+            </div>
+            <div class="row">
+              {{ getString("calculationPaid") }}:
+              {{ summary?.NumberOfPaidCalculations }},
+              {{ getString("calculationNotPaid").toLowerCase() }}:
+              {{ summary?.NumberOfNotPaidCalculations }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row m-0 p-0 solid-border">
+        <div class="col-4 p-0">
+          <div class="row dotted-border title">
+            {{ getString("calculationCancelled") }}
+          </div>
+        </div>
+      </div>
+      <div class="row m-0 p-0">
+        <div class="col-4 p-0">
+          <div class="row dotted-border subtitle">
+            {{ summary?.NumberOfCancelledCalculations }}
+            <div class="circle"></div>
+          </div>
+        </div>
+        <div class="col-8 p-0">
+          <div class="row m-0 p-2 text">
+            <div class="row">
+              {{ getString("numberOfCancelledCalculations") }}:
+              {{ summary?.NumberOfCancelledCalculations }}
+            </div>
+            <div class="row">
+              {{ getString("cancelledCalculationsDescription") }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nb-card-body>
 </nb-card>

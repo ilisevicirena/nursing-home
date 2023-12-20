@@ -7,7 +7,6 @@ import { ToastrService } from "../../services/toastr.service";
 import { NotesService } from "../../services/rest/notes.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { EmployeesService } from "../../services/rest/employees.service";
-declare const echarts: any;
 
 @Component({
   selector: "sample-doctor-visit-tour",
@@ -47,32 +46,32 @@ export class DoctorVisitTourComponent implements OnInit, OnDestroy {
     },
   ];
 
-  private subs: Subscription[] = [];
-  private doctorVisitTagId: number = 1;
-  private tags: any[] = [];
-  private tourId: number = 0;
+  private _subs: Subscription[] = [];
+  private readonly _doctorVisitTagId: number = 1;
+  private _tags: any[] = [];
+  private _tourId: number = 0;
 
   constructor(
-    private personsService: PersonsService,
-    private tagsService: TagsService,
-    private toastrService: ToastrService,
-    private notesService: NotesService,
-    private activatedRoute: ActivatedRoute,
-    private employeesService: EmployeesService,
-    private router: Router
+    private _personsService: PersonsService,
+    private _tagsService: TagsService,
+    private _toastrService: ToastrService,
+    private _notesService: NotesService,
+    private _activatedRoute: ActivatedRoute,
+    private _employeesService: EmployeesService,
+    private _router: Router
   ) {}
 
   ngOnDestroy(): void {
-    this.subs.forEach((element) => {
+    this._subs.forEach((element) => {
       element.unsubscribe();
     });
   }
 
   ngOnInit(): void {
-    this.subs.push(
-      this.activatedRoute.paramMap.subscribe((params) => {
-        this.tourId = params.get("id") as any;
-        this.getVisitTourDetails(this.tourId);
+    this._subs.push(
+      this._activatedRoute.paramMap.subscribe((params) => {
+        this._tourId = params.get("id") as any;
+        this.getVisitTourDetails(this._tourId);
       })
     );
 
@@ -80,8 +79,8 @@ export class DoctorVisitTourComponent implements OnInit, OnDestroy {
   }
 
   private getVisitTourDetails(id: number): void {
-    this.subs.push(
-      this.employeesService.getVisitTourDetails(id).subscribe((data) => {
+    this._subs.push(
+      this._employeesService.getVisitTourDetails(id).subscribe((data) => {
         this.tourData = data.Tour[0];
         this.doctors = data.Doctors;
         this.nurses = data.Nurses;
@@ -91,17 +90,17 @@ export class DoctorVisitTourComponent implements OnInit, OnDestroy {
   }
 
   private getTags(): void {
-    this.subs.push(
-      this.tagsService.getData().subscribe((data) => {
-        this.tags = data;
+    this._subs.push(
+      this._tagsService.getData().subscribe((data) => {
+        this._tags = data;
         this.getPersons();
       })
     );
   }
 
   private getPersons(): void {
-    this.subs.push(
-      this.personsService.getData(true).subscribe((data) => {
+    this._subs.push(
+      this._personsService.getData(true).subscribe((data) => {
         this.persons = data;
         var text = "<strong>" + getString("contributors") + "</strong>: ";
         this.doctors.forEach((element) => {
@@ -139,7 +138,7 @@ export class DoctorVisitTourComponent implements OnInit, OnDestroy {
             Text: text,
             PersonFirstName: x.FirstName,
             PersonLastName: x.LastName,
-            Tags: [this.tags.find((x) => x.Id == this.doctorVisitTagId)],
+            Tags: [this._tags.find((x) => x.Id == this._doctorVisitTagId)],
             Documents: [],
             CreationDate: this.visitDate,
             LastModified: this.visitDate,
@@ -160,9 +159,9 @@ export class DoctorVisitTourComponent implements OnInit, OnDestroy {
   }
 
   public onPersonNoteSaved(ev: any): void {
-    this.toastrService.showToast("success", getString("saveSuccess"));
-    this.subs.push(
-      this.notesService.getNoteDetails(ev).subscribe((data) => {
+    this._toastrService.showToast("success", getString("saveSuccess"));
+    this._subs.push(
+      this._notesService.getNoteDetails(ev).subscribe((data) => {
         this.persons[this.currentPersonIndex].Note = data;
         this.currentNote = data;
         this.calculatePercentage();
@@ -213,48 +212,50 @@ export class DoctorVisitTourComponent implements OnInit, OnDestroy {
     this.currentNote = this.persons[this.currentPersonIndex].Note;
   }
 
-  public cancelDoctorVisit() {
-    this.subs.push(
-      this.employeesService.deleteDoctorVisit(this.tourId).subscribe((data) => {
-        this.toastrService.showToast("success", getString("saveSuccess"));
-        this.router.navigateByUrl("/pages/dashboard");
-      })
+  public cancelDoctorVisit(): void {
+    this._subs.push(
+      this._employeesService
+        .deleteDoctorVisit(this._tourId)
+        .subscribe((data) => {
+          this._toastrService.showToast("success", getString("saveSuccess"));
+          this._router.navigateByUrl("/pages/dashboard");
+        })
     );
   }
 
-  public completeDoctorVisit() {
+  public completeDoctorVisit(): void {
     this.loading = true;
-    this.subs.push(
-      this.employeesService
-        .completeDoctorVisit(this.tourId, this.persons.length)
+    this._subs.push(
+      this._employeesService
+        .completeDoctorVisit(this._tourId, this.persons.length)
         .subscribe(() => {
           this.persons.forEach((person, index) => {
             if (person.Note.Id > 0) {
-              this.subs.push(
-                this.employeesService
+              this._subs.push(
+                this._employeesService
                   .insertDoctorVisitForPerson(
-                    this.tourId,
+                    this._tourId,
                     person.Id,
                     person.Note.Id
                   )
                   .subscribe(() => {
                     if (index == this.persons.length - 1) {
                       this.loading = false;
-                      this.toastrService.showToast(
+                      this._toastrService.showToast(
                         "success",
                         getString("doctorVisitTourCompleted")
                       );
-                      this.router.navigateByUrl("/pages/dashboard");
+                      this._router.navigateByUrl("/pages/dashboard");
                     }
                   })
               );
             } else if (index == this.persons.length - 1) {
               this.loading = false;
-              this.toastrService.showToast(
+              this._toastrService.showToast(
                 "success",
                 getString("doctorVisitTourCompleted")
               );
-              this.router.navigateByUrl("/pages/dashboard");
+              this._router.navigateByUrl("/pages/dashboard");
             }
           });
         })

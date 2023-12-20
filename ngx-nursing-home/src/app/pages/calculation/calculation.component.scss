@@ -1,100 +1,99 @@
+@import "../../@theme/styles/themes";
+
 ::ng-deep sample-calculation {
-    height: 100%;
+  height: 100%;
 }
 
 .calculation-card {
-    nb-card-header {
-        border: none;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
+  nb-card-header {
+    border: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 
-        nb-select {
-            width: 150px;
-        }
+    nb-select {
+      width: 150px;
     }
+  }
 }
 
 ::ng-deep ngx-smart-table-tag {
-    nb-tag {
-        border: none;
-        border-radius: 0;
-    }
+  nb-tag {
+    border: none;
+    border-radius: 0;
+  }
 }
 
-@import '../../@theme/styles/themes';
-
 @include nb-install-component() {
+  nb-card-body {
+    overflow: hidden;
+  }
+
+  .chart-card {
+    margin: 0;
+    border-radius: 1rem;
+
+    nb-card-header {
+      border: none;
+      font-size: 16px;
+      padding-bottom: 0;
+    }
 
     nb-card-body {
-        overflow: hidden;
+      padding: 0.5rem 1rem;
     }
 
-    .chart-card {
-        margin: 0;
-        border-radius: 1rem;
+    hr {
+      margin: 0.5rem 0;
+    }
+  }
 
-        nb-card-header {
-            border: none;
-            font-size: 16px;
-            padding-bottom: 0;
-        }
+  .echart {
+    position: absolute;
+    right: -25px;
+    height: calc(100% - 0rem);
+    width: 60%;
+  }
 
-        nb-card-body {
-            padding: 0.5rem 1rem;
-        }
+  .value {
+    margin: 0;
+    font-size: 20px;
+  }
 
-        hr {
-            margin: 0.5rem 0;
-        }
+  .details {
+    color: nb-theme(text-hint-color);
+  }
+
+  .summary-card {
+    border-bottom: 1px solid nb-theme(card-border-color);
+    padding: 0.5rem;
+
+    nb-badge {
+      top: 0.5rem !important;
     }
 
-    .echart {
-        position: absolute;
-        right: -25px;
-        height: calc(100% - 0rem);
-        width: 60%;
+    nb-badge.status-basic {
+      background-color: nb-theme(color-basic-500);
     }
 
-    .value {
-        margin: 0;
-        font-size: 20px;
+    .indicator {
+      font-size: 12px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 5px;
     }
 
-    .details {
-        color: nb-theme(text-hint-color);
+    .indicator.success {
+      color: nb-theme(color-success-500);
     }
 
-    .summary-card {
-        border-bottom: 1px solid nb-theme(card-border-color);
-        padding: 0.5rem;
-
-        nb-badge {
-            top: 0.5rem !important;
-        }
-
-        nb-badge.status-basic {
-            background-color: nb-theme(color-basic-500);
-        }
-
-        .indicator {
-            font-size: 12px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .indicator.success {
-            color: nb-theme(color-success-500);
-        }
-
-        .indicator.danger {
-            color: nb-theme(color-danger-500);
-        }
-
-        .indicator.basic {
-            color: nb-theme(color-basic-500);
-        }
+    .indicator.danger {
+      color: nb-theme(color-danger-500);
     }
+
+    .indicator.basic {
+      color: nb-theme(color-basic-500);
+    }
+  }
 }

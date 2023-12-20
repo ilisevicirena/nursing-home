@@ -19,12 +19,12 @@ import { AccommodationPdfRequestService } from "../../services/rest/accommodatio
 })
 export class NewPersonComponent implements OnInit, OnDestroy {
   constructor(
-    private personsService: PersonsService,
-    private toastrService: ToastrService,
-    private roomsService: RoomsService,
-    private dialogService: DialogService,
-    private documentsService: DocumentsService,
-    private requestGeneratorService: AccommodationPdfRequestService
+    private _personsService: PersonsService,
+    private _toastrService: ToastrService,
+    private _roomsService: RoomsService,
+    private _dialogService: DialogService,
+    private _documentsService: DocumentsService,
+    private _requestGeneratorService: AccommodationPdfRequestService
   ) {}
 
   public getString = getString;
@@ -68,55 +68,55 @@ export class NewPersonComponent implements OnInit, OnDestroy {
 
   public selectedRoom: any = { FloorName: "", IsValid: true };
 
-  private subscriptions: Subscription[] = [];
+  private _subs: Subscription[] = [];
 
   ngOnInit(): void {
     this.getAvaliableRooms();
   }
 
   ngOnDestroy(): void {
-    this.subscriptions.forEach((element) => {
+    this._subs.forEach((element) => {
       element.unsubscribe();
     });
   }
 
   public saveNewPerson(form: NgForm): void {
     this.loading = true;
-    this.subscriptions.push(
-      this.personsService.add(this.newPersonData).subscribe(
+    this._subs.push(
+      this._personsService.add(this.newPersonData).subscribe(
         (data) => {
           if (data.PersonId) {
             this.loading = false;
             this.newPersonData.Id = data.PersonId;
             form.form.markAsPristine();
-            this.toastrService.showToast(
+            this._toastrService.showToast(
               "success",
               getString("saveSuccess"),
               ""
             );
           } else {
             this.loading = false;
-            this.toastrService.showToast("danger", getString("saveError"), "");
+            this._toastrService.showToast("danger", getString("saveError"), "");
           }
         },
         (err) => {
           console.error(err);
           this.loading = false;
-          this.toastrService.showToast("danger", getString("saveError"), "");
+          this._toastrService.showToast("danger", getString("saveError"), "");
         }
       )
     );
   }
 
   private getAvaliableRooms(): void {
-    this.subscriptions.push(
-      this.roomsService.getAvaliableRooms().subscribe((data) => {
+    this._subs.push(
+      this._roomsService.getAvaliableRooms().subscribe((data) => {
         this.rooms = data;
       })
     );
   }
 
-  public onRoomSelectionChanged(event: any) {
+  public onRoomSelectionChanged(event: any): void {
     if (event.selectedItems.length == 1) {
       this.selectedRoom = event.selectedItems[0];
       if (
@@ -129,22 +129,26 @@ export class NewPersonComponent implements OnInit, OnDestroy {
   }
 
   public savePersonRoom(): void {
-    this.subscriptions.push(
-      this.personsService
+    this._subs.push(
+      this._personsService
         .changeRoom(this.newPersonData.Id, this.selectedRoom.Id)
         .subscribe(() => {
-          this.toastrService.showToast("success", getString("saveSuccess"), "");
+          this._toastrService.showToast(
+            "success",
+            getString("saveSuccess"),
+            ""
+          );
         })
     );
   }
 
-  public openOfferDialog(dialog: TemplateRef<any>) {
-    this.dialogService.open(dialog, { autoFocus: false });
+  public openOfferDialog(dialog: TemplateRef<any>): void {
+    this._dialogService.open(dialog, { autoFocus: false });
   }
 
   public openAddDocumentModal(): void {
-    this.subscriptions.push(
-      this.dialogService
+    this._subs.push(
+      this._dialogService
         .open(UploadDocumentComponent, {
           closeOnBackdropClick: false,
           closeOnEsc: false,
@@ -160,8 +164,8 @@ export class NewPersonComponent implements OnInit, OnDestroy {
   }
 
   private getDocumentsForPerson(): void {
-    this.subscriptions.push(
-      this.documentsService
+    this._subs.push(
+      this._documentsService
         .getDocumentsForPerson(this.newPersonData.Id)
         .subscribe((data) => {
           this.documents = data;
@@ -172,52 +176,62 @@ export class NewPersonComponent implements OnInit, OnDestroy {
   public async onFileMenuItemClick(item: NbMenuItem): Promise<any> {
     switch (item.data.code) {
       case "download":
-        this.subscriptions.push(
-          this.documentsService.getDocumentContent(item.data.file.id).subscribe(
-            (data) => {
-              if (data) {
-                this.toastrService.showToastWithCustumIcon(
-                  "info",
-                  getString("downloadStartSoon"),
-                  "",
-                  "download-outline"
-                );
-                fileDownload(
-                  data.content,
-                  data.document.Name + "." + data.document.Extension
+        this._subs.push(
+          this._documentsService
+            .getDocumentContent(item.data.file.id)
+            .subscribe(
+              (data) => {
+                if (data) {
+                  this._toastrService.showToastWithCustumIcon(
+                    "info",
+                    getString("downloadStartSoon"),
+                    "",
+                    "download-outline"
+                  );
+                  fileDownload(
+                    data.content,
+                    data.document.Name + "." + data.document.Extension
+                  );
+                }
+              },
+              () => {
+                this._toastrService.showToast(
+                  "danger",
+                  getString("fileNotFound")
                 );
               }
-            },
-            (err) => {
-              this.toastrService.showToast("danger", getString("fileNotFound"));
-            }
-          )
+            )
         );
         break;
 
       case "preview":
-        this.subscriptions.push(
-          this.documentsService.getDocumentContent(item.data.file.id).subscribe(
-            (data) => {
-              if (data)
-                previewFile(
-                  data.content,
-                  data.document.Extension,
-                  data.document.Name + "." + data.document.Extesion
+        this._subs.push(
+          this._documentsService
+            .getDocumentContent(item.data.file.id)
+            .subscribe(
+              (data) => {
+                if (data)
+                  previewFile(
+                    data.content,
+                    data.document.Extension,
+                    data.document.Name + "." + data.document.Extesion
+                  );
+              },
+              () => {
+                this._toastrService.showToast(
+                  "danger",
+                  getString("fileNotFound")
                 );
-            },
-            (err) => {
-              this.toastrService.showToast("danger", getString("fileNotFound"));
-            }
-          )
+              }
+            )
         );
         break;
     }
   }
 
-  public generateAccommodationRequest() {
-    this.subscriptions.push(
-      this.requestGeneratorService
+  public generateAccommodationRequest(): void {
+    this._subs.push(
+      this._requestGeneratorService
         .generateRequest(this.newPersonData.Id)
         .subscribe(() => {
           this.getDocumentsForPerson();

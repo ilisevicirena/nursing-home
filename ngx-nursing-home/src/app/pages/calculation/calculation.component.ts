@@ -39,8 +39,8 @@ declare const echarts: any;
   styleUrls: ["./calculation.component.scss"],
 })
 export class CalculationComponent implements OnInit, OnDestroy {
-  private subs: Subscription[] = [];
-  private value = 0;
+  private _subs: Subscription[] = [];
+  private _value = 0;
 
   public options: any;
   public summary: any;
@@ -74,7 +74,7 @@ export class CalculationComponent implements OnInit, OnDestroy {
           .DisplayExpression("Name")
           .ServerDataSource(true)
           .ServerEndpoint(
-            this.calculationService.apiRoute + "/getCalculationStatuses"
+            this._calculationService.apiRoute + "/getCalculationStatuses"
           )
       ),
     new GridColumn()
@@ -116,28 +116,28 @@ export class CalculationComponent implements OnInit, OnDestroy {
   @ViewChild(GridComponent) table: GridComponent;
 
   constructor(
-    @Inject(LOCALE_ID) private locale: string,
-    private calculationService: CalculationApiService,
-    private dialogService: DialogService,
-    private toastrService: ToastrService,
-    private theme: NbThemeService
+    @Inject(LOCALE_ID) private _locale: string,
+    private _calculationService: CalculationApiService,
+    private _dialogService: DialogService,
+    private _toastrService: ToastrService,
+    private _theme: NbThemeService
   ) {}
 
   ngOnInit(): void {
-    this.months = getMonthNames(this.locale);
+    this.months = getMonthNames(this._locale);
     this.years = getYearsInRange();
     this.refreshData();
   }
 
   ngOnDestroy(): void {
-    this.subs.forEach((element) => {
+    this._subs.forEach((element) => {
       element.unsubscribe();
     });
   }
 
   private getCalculations(): void {
-    this.subs.push(
-      this.calculationService
+    this._subs.push(
+      this._calculationService
         .getCalculations(this.month + 1, this.year)
         .subscribe((data) => {
           this.calculations = data;
@@ -208,13 +208,13 @@ export class CalculationComponent implements OnInit, OnDestroy {
   }
 
   private getCalculationSummary(): void {
-    this.subs.push(
-      this.calculationService
+    this._subs.push(
+      this._calculationService
         .getCalculationSummary(this.month + 1, this.year)
         .subscribe((data) => {
           if (data.Summary) {
             this.summary = data.Summary;
-            this.value = Math.trunc(
+            this._value = Math.trunc(
               (this.summary.CalculatedForPersons / this.summary.Persons) * 100
             );
             this.configureChart();
@@ -224,7 +224,7 @@ export class CalculationComponent implements OnInit, OnDestroy {
   }
 
   public calculationSummaryDetailsClick(): void {
-    this.dialogService.open(CalculationSummaryComponent, {
+    this._dialogService.open(CalculationSummaryComponent, {
       autoFocus: false,
       context: {
         month: this.month + 1,
@@ -234,8 +234,8 @@ export class CalculationComponent implements OnInit, OnDestroy {
   }
 
   public newCalculationClick(): void {
-    this.subs.push(
-      this.dialogService
+    this._subs.push(
+      this._dialogService
         .open(StartCalculationComponent, {
           autoFocus: false,
           closeOnEsc: false,
@@ -250,8 +250,8 @@ export class CalculationComponent implements OnInit, OnDestroy {
   public recalculateSelectedClick(): void {
     var selected = this.table.getSelectedRows().map((x) => x.PersonId);
     if (selected.length > 0) {
-      this.subs.push(
-        this.dialogService
+      this._subs.push(
+        this._dialogService
           .open(StartCalculationComponent, {
             autoFocus: false,
             closeOnBackdropClick: false,
@@ -269,28 +269,28 @@ export class CalculationComponent implements OnInit, OnDestroy {
           })
       );
     } else
-      this.toastrService.showToast("warning", getString("nothingSelected"));
+      this._toastrService.showToast("warning", getString("nothingSelected"));
   }
 
   public async markRealPriceClick(): Promise<void> {
     var selected = this.table.getSelectedRows();
     if (selected.length > 0) {
-      const rez = await this.dialogService.openYesNoDialog(
+      const rez = await this._dialogService.openYesNoDialog(
         getString("areYouSure"),
         getString("wantToMarkRealPrice")
       );
       if (rez) {
         for (let index = 0; index < selected.length; index++) {
           const element = selected[index];
-          this.subs.push(
-            this.calculationService
+          this._subs.push(
+            this._calculationService
               .calculationRealPriceSave({
                 Id: element.Id,
                 RealPrice: element.SystemPrice.replace(",", ""),
               })
               .subscribe(() => {
                 if (index == selected.length - 1) {
-                  this.toastrService.showToast(
+                  this._toastrService.showToast(
                     "success",
                     getString("saveSuccess")
                   );
@@ -301,13 +301,13 @@ export class CalculationComponent implements OnInit, OnDestroy {
         }
       }
     } else
-      this.toastrService.showToast("warning", getString("nothingSelected"));
+      this._toastrService.showToast("warning", getString("nothingSelected"));
   }
 
   public async markPaidPriceClick(): Promise<void> {
     var selected = this.table.getSelectedRows();
     if (selected.length > 0) {
-      const rez = await this.dialogService.openYesNoDialog(
+      const rez = await this._dialogService.openYesNoDialog(
         getString("areYouSure"),
         getString("wantToMarkPaid")
       );
@@ -315,8 +315,8 @@ export class CalculationComponent implements OnInit, OnDestroy {
         for (let index = 0; index < selected.length; index++) {
           const element = selected[index];
           if (!element.RealPrice) {
-            this.subs.push(
-              this.calculationService
+            this._subs.push(
+              this._calculationService
                 .calculationRealPriceSave({
                   Id: element.Id,
                   RealPrice: element.SystemPrice.replace(",", ""),
@@ -325,8 +325,8 @@ export class CalculationComponent implements OnInit, OnDestroy {
             );
           }
 
-          this.subs.push(
-            this.calculationService
+          this._subs.push(
+            this._calculationService
               .calculationPaid({
                 Id: element.Id,
                 PaidPrice: element.RealPrice
@@ -336,7 +336,7 @@ export class CalculationComponent implements OnInit, OnDestroy {
               })
               .subscribe(() => {
                 if (index == selected.length - 1) {
-                  this.toastrService.showToast(
+                  this._toastrService.showToast(
                     "success",
                     getString("saveSuccess")
                   );
@@ -347,25 +347,25 @@ export class CalculationComponent implements OnInit, OnDestroy {
         }
       }
     } else
-      this.toastrService.showToast("warning", getString("nothingSelected"));
+      this._toastrService.showToast("warning", getString("nothingSelected"));
   }
 
   public async cancelCalculationClick(): Promise<void> {
     var selected = this.table.getSelectedRows();
     if (selected.length > 0) {
-      const rez = await this.dialogService.openYesNoDialog(
+      const rez = await this._dialogService.openYesNoDialog(
         getString("areYouSure"),
         getString("wantToCancelSelected")
       );
       if (rez) {
         for (let index = 0; index < selected.length; index++) {
           const element = selected[index];
-          this.subs.push(
-            this.calculationService
+          this._subs.push(
+            this._calculationService
               .cancelCalculation({ Id: element.Id })
               .subscribe(() => {
                 if (index == selected.length - 1) {
-                  this.toastrService.showToast(
+                  this._toastrService.showToast(
                     "success",
                     getString("saveSuccess")
                   );
@@ -376,7 +376,7 @@ export class CalculationComponent implements OnInit, OnDestroy {
         }
       }
     } else
-      this.toastrService.showToast("warning", getString("nothingSelected"));
+      this._toastrService.showToast("warning", getString("nothingSelected"));
   }
 
   public onButtonItemClicked(event: IGridCellButtonClick): void {
@@ -400,8 +400,8 @@ export class CalculationComponent implements OnInit, OnDestroy {
   }
 
   private openRealPriceDialog(calculation: any): void {
-    this.subs.push(
-      this.dialogService
+    this._subs.push(
+      this._dialogService
         .open(RealPriceModalComponent, {
           autoFocus: false,
           closeOnBackdropClick: false,
@@ -418,8 +418,8 @@ export class CalculationComponent implements OnInit, OnDestroy {
   }
 
   private openPaidPriceDialog(calculation: any): void {
-    this.subs.push(
-      this.dialogService
+    this._subs.push(
+      this._dialogService
         .open(PaidCalculationModalComponent, {
           autoFocus: false,
           closeOnBackdropClick: false,
@@ -438,8 +438,8 @@ export class CalculationComponent implements OnInit, OnDestroy {
   }
 
   private openDocumentsDialog(calculation: any): void {
-    this.subs.push(
-      this.dialogService
+    this._subs.push(
+      this._dialogService
         .open(CalculationDocumentsComponent, {
           autoFocus: false,
           closeOnBackdropClick: false,
@@ -456,14 +456,14 @@ export class CalculationComponent implements OnInit, OnDestroy {
   }
 
   private async cancelCalculation(id: number): Promise<void> {
-    const rez = await this.dialogService.openYesNoDialog(
+    const rez = await this._dialogService.openYesNoDialog(
       getString("areYouSure"),
       getString("wantToCancelCalculation")
     );
     if (rez) {
-      this.subs.push(
-        this.calculationService.cancelCalculation({ Id: id }).subscribe(() => {
-          this.toastrService.showToast("success", getString("saveSuccess"));
+      this._subs.push(
+        this._calculationService.cancelCalculation({ Id: id }).subscribe(() => {
+          this._toastrService.showToast("success", getString("saveSuccess"));
           this.refreshData();
         })
       );
@@ -471,8 +471,8 @@ export class CalculationComponent implements OnInit, OnDestroy {
   }
 
   private configureChart(): void {
-    this.subs.push(
-      this.theme
+    this._subs.push(
+      this._theme
         .getJsTheme()
         .pipe()
         .subscribe((config) => {
@@ -493,7 +493,7 @@ export class CalculationComponent implements OnInit, OnDestroy {
                   radius: ["80%", "90%"],
                   data: [
                     {
-                      value: this.value,
+                      value: this._value,
                       name: getString("chartCalculated"),
                       label: {
                         position: "center",
@@ -525,7 +525,7 @@ export class CalculationComponent implements OnInit, OnDestroy {
                       emphasis: { scale: false },
                     },
                     {
-                      value: 100 - this.value,
+                      value: 100 - this._value,
                       name: " ",
                       tooltip: {
                         show: false,
@@ -548,7 +548,7 @@ export class CalculationComponent implements OnInit, OnDestroy {
                   radius: ["80%", "90%"],
                   data: [
                     {
-                      value: this.value,
+                      value: this._value,
                       name: " ",
                       label: {
                         position: "inner",
@@ -574,7 +574,7 @@ export class CalculationComponent implements OnInit, OnDestroy {
                       emphasis: { scale: false },
                     },
                     {
-                      value: 100 - this.value,
+                      value: 100 - this._value,
                       name: " ",
                       tooltip: {
                         show: false,

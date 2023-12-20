@@ -1,18 +1,14 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { Observable } from "rxjs";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class BaseRestApiService {
+  public apiRoute = "";
 
-  public apiRoute = '';
-
-  constructor(
-    protected http: HttpClient,
-    apiRoute: string
-  ) {
+  constructor(protected http: HttpClient, apiRoute: string) {
     this.apiRoute = apiRoute;
   }
 
@@ -21,15 +17,15 @@ export class BaseRestApiService {
   }
 
   public add(model: IBaseSaveModel): Observable<any> {
-    return this.http.post(this.apiRoute + '/add', model);
+    return this.http.post(this.apiRoute + "/add", model);
   }
 
   public delete(model: IBaseSaveModel): Observable<any> {
-    return this.http.delete(this.apiRoute + '/delete', { body: model });
+    return this.http.delete(this.apiRoute + "/delete", { body: model });
   }
 
   public update(model: IBaseSaveModel): Observable<any> {
-    return this.http.post(this.apiRoute + '/update', model);
+    return this.http.post(this.apiRoute + "/update", model);
   }
 }
 

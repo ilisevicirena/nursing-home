@@ -1,35 +1,34 @@
-import { HttpClient, HttpBackend } from '@angular/common/http';
-import { Inject, Injectable } from '@angular/core';
-import { NB_AUTH_OPTIONS } from '@nebular/auth';
-import { environment } from '../../environments/environment';
+import { HttpClient, HttpBackend } from "@angular/common/http";
+import { Inject, Injectable } from "@angular/core";
+import { NB_AUTH_OPTIONS } from "@nebular/auth";
+import { environment } from "../../environments/environment";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class ConfigService {
-  private AppConfig: IAppWebConfig;
-  private http: HttpClient;
+  private _AppConfig: IAppWebConfig;
+  private _http: HttpClient;
 
   constructor(
-    httpBackend: HttpBackend,
-    protected httpApiClient: HttpClient,
+    private _httpBackend: HttpBackend,
+    protected _httpApiClient: HttpClient,
     @Inject(NB_AUTH_OPTIONS)
     protected options = {}
   ) {
-    this.http = new HttpClient(httpBackend);
+    this._http = new HttpClient(this._httpBackend);
   }
 
-  GetAppConfig(): IAppWebConfig {
-    return this.AppConfig;
+  public getAppConfig(): IAppWebConfig {
+    return this._AppConfig;
   }
 
-  load(url: string) {
+  public load(url: string): Promise<void> {
     return new Promise<void>((resolve) => {
-      this.http.get<IAppWebConfig>(url)
-        .subscribe((config: IAppWebConfig) => {
-          this.AppConfig = config;
-          resolve();
-        });
+      this._http.get<IAppWebConfig>(url).subscribe((config: IAppWebConfig) => {
+        this._AppConfig = config;
+        resolve();
+      });
     });
   }
 }

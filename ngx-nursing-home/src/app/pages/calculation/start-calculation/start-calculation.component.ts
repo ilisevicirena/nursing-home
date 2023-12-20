@@ -28,9 +28,9 @@ import { environment } from "../../../../environments/environment";
   styleUrls: ["./start-calculation.component.scss"],
 })
 export class StartCalculationComponent implements OnInit, OnDestroy {
-  private subs: Subscription[] = [];
-  private persons: any[] = [];
-  private personIndex: number = 0;
+  private _subs: Subscription[] = [];
+  private _persons: any[] = [];
+  private _personIndex: number = 0;
 
   public getString = getString;
   public month: number = new Date().getMonth();
@@ -48,49 +48,49 @@ export class StartCalculationComponent implements OnInit, OnDestroy {
   @ViewChild(GeneratedInvoiceComponent) invoice: GeneratedInvoiceComponent;
 
   constructor(
-    @Inject(LOCALE_ID) private locale: string,
-    private ref: NbDialogRef<StartCalculationComponent>,
-    private personsService: PersonsService,
-    private servicesManagementService: ServicesManagementService,
-    private calculationService: CalculationService,
-    private calcService: CalculationApiService,
-    private toastrService: ToastrService
+    @Inject(LOCALE_ID) private _locale: string,
+    private _ref: NbDialogRef<StartCalculationComponent>,
+    private _personsService: PersonsService,
+    private _servicesManagementService: ServicesManagementService,
+    private _calculationService: CalculationService,
+    private _calcService: CalculationApiService,
+    private _toastrService: ToastrService
   ) {}
 
   ngOnInit(): void {
-    this.months = getMonthNames(this.locale);
+    this.months = getMonthNames(this._locale);
     this.years = getYearsInRange();
   }
 
   ngOnDestroy(): void {
-    this.subs.forEach((element) => {
+    this._subs.forEach((element) => {
       element.unsubscribe();
     });
   }
 
   public close(result: boolean): void {
-    this.ref.close(result);
+    this._ref.close(result);
   }
 
-  public startCalculation() {
+  public startCalculation(): void {
     this.calculationInProgress = true;
     // get active persons first
-    this.subs.push(
-      this.personsService.getData(true).subscribe((data) => {
+    this._subs.push(
+      this._personsService.getData(true).subscribe((data) => {
         if (this.personsIds.length > 0)
-          this.persons = data.filter((x) => this.personsIds.includes(x.Id));
-        else this.persons = data;
-        this.personIndex = 0;
-        this.startPersonCalculation(this.personIndex);
+          this._persons = data.filter((x) => this.personsIds.includes(x.Id));
+        else this._persons = data;
+        this._personIndex = 0;
+        this.startPersonCalculation(this._personIndex);
       })
     );
   }
 
   private startPersonCalculation(personIndex: number): void {
-    const person = this.persons[personIndex];
-    this.subs.push(
+    const person = this._persons[personIndex];
+    this._subs.push(
       // get packages and services for person
-      this.servicesManagementService
+      this._servicesManagementService
         .getPackagesAndServicesForPerson(person.Id)
         .subscribe((data) => {
           // if person doesn't have saved packages or services skip it
@@ -98,12 +98,12 @@ export class StartCalculationComponent implements OnInit, OnDestroy {
             person.ServicesManagement = data;
 
             // calculate price foreach package
-            person.ServicesManagement.Packages.forEach((pack) => {
+            person.ServicesManagement.Packages.forEach((pack: any) => {
               var services = person.ServicesManagement.PackagesServices.filter(
-                (x) => x.PackageId == pack.Id
+                (x: any) => x.PackageId == pack.Id
               );
               var result: ICalculationResult =
-                this.calculationService.calculatePackagePrice(
+                this._calculationService.calculatePackagePrice(
                   pack,
                   services,
                   pack.MeasureUnitCode
@@ -117,7 +117,7 @@ export class StartCalculationComponent implements OnInit, OnDestroy {
             // calculate price foreach additional service
             person.ServicesManagement.Services.forEach((service) => {
               var result: ICalculationResult =
-                this.calculationService.calculateServicePriceByMeasureUnit(
+                this._calculationService.calculateServicePriceByMeasureUnit(
                   service,
                   person.ServicesManagement.OfferMeasureUnit[0]?.MeasureUnitCode
                 );
@@ -129,7 +129,7 @@ export class StartCalculationComponent implements OnInit, OnDestroy {
 
             // calculate offer price
             var result: ICalculationResult =
-              this.calculationService.calculateOfferPrice(
+              this._calculationService.calculateOfferPrice(
                 person.ServicesManagement.Packages,
                 person.ServicesManagement.Services,
                 person.ServicesManagement.Discounts
@@ -143,7 +143,7 @@ export class StartCalculationComponent implements OnInit, OnDestroy {
     );
   }
 
-  private saveCalculation(person: any, index: number) {
+  private saveCalculation(person: any, index: number): void {
     var firstDay = new Date(this.year, this.month, 1);
     var lastDay = new Date(this.year, this.month + 1, 0);
 
@@ -168,8 +168,8 @@ export class StartCalculationComponent implements OnInit, OnDestroy {
     };
 
     // check calculation exists
-    this.subs.push(
-      this.calcService
+    this._subs.push(
+      this._calcService
         .checkCalculationExists({
           PersonId: person.Id,
           Month: this.month + 1,
@@ -187,10 +187,14 @@ export class StartCalculationComponent implements OnInit, OnDestroy {
     );
   }
 
-  private saveCalculationToDb(objectToSave, person, index): void {
-    this.subs.push(
+  private saveCalculationToDb(
+    objectToSave: any,
+    person: any,
+    index: number
+  ): void {
+    this._subs.push(
       // save calculation
-      this.calcService.add(objectToSave).subscribe((data) => {
+      this._calcService.add(objectToSave).subscribe((data) => {
         person.CalculationId = data.CalculationId;
         var monthName = this.months.find((x) => x.key == this.month).name;
 
@@ -208,8 +212,8 @@ export class StartCalculationComponent implements OnInit, OnDestroy {
               Base64: data,
             };
 
-            this.subs.push(
-              this.calcService.saveDocument(documentModel).subscribe(() => {
+            this._subs.push(
+              this._calcService.saveDocument(documentModel).subscribe(() => {
                 this.countinueToNextPerson(index);
               })
             );
@@ -221,14 +225,14 @@ export class StartCalculationComponent implements OnInit, OnDestroy {
   private countinueToNextPerson(index: number): void {
     // continue to next person
     this.calculationPercent = Math.trunc(
-      ((index + 1) / this.persons.length) * 100
+      ((index + 1) / this._persons.length) * 100
     );
-    this.personIndex++;
+    this._personIndex++;
 
-    if (this.personIndex > this.persons.length - 1) {
-      this.toastrService.showToast("success", getString("calculationSuccess"));
+    if (this._personIndex > this._persons.length - 1) {
+      this._toastrService.showToast("success", getString("calculationSuccess"));
       this.calculationInProgress = false;
       this.close(true);
-    } else this.startPersonCalculation(this.personIndex);
+    } else this.startPersonCalculation(this._personIndex);
   }
 }

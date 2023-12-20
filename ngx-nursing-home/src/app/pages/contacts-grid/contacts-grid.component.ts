@@ -2,11 +2,8 @@ import { Component, Input, OnDestroy, OnInit } from "@angular/core";
 import {
   GridColumn,
   GridTextboxEditor,
-  SmartTableColumn,
   TABLE_MODE,
-  TextboxEditor,
   GridLookupColumn,
-  GridSelectEditor,
   GridToggleEditor,
   GridCheckboxColumn,
   GridSelectFilter,
@@ -27,18 +24,18 @@ import { CitiesService } from "../../services/rest/cities.service";
 })
 export class ContactsGridComponent implements OnInit, OnDestroy {
   constructor(
-    private contactsService: ContactsService,
-    private toastrService: ToastrService,
-    private personsService: PersonsService,
-    private citiesService: CitiesService
+    private _contactsService: ContactsService,
+    private _toastrService: ToastrService,
+    private _personsService: PersonsService,
+    private _citiesService: CitiesService
   ) {}
 
   @Input() elementHeight: number = 300;
   @Input() personId: number = 0;
   @Input() detailed: boolean = false;
 
-  private subscriptions: Subscription[] = [];
-  private activeFilter = [
+  private _subs: Subscription[] = [];
+  private _activeFilter: any[] = [
     { value: true, label: getString("yes") },
     { value: false, label: getString("no") },
   ];
@@ -118,7 +115,7 @@ export class ContactsGridComponent implements OnInit, OnDestroy {
           .DisplayArrow(true)
           .Multiple(false)
           .ServerDataSource(true)
-          .ServerEndpoint(this.citiesService.apiRoute)
+          .ServerEndpoint(this._citiesService.apiRoute)
           .WidthClass("col-md-4")
           .Label(getString("residanceCity"))
       ),
@@ -149,7 +146,7 @@ export class ContactsGridComponent implements OnInit, OnDestroy {
         new GridSelectFilter()
           .DisplayExpression("label")
           .KeyExpression("value")
-          .DataSource(this.activeFilter)
+          .DataSource(this._activeFilter)
       )
       .Editor(
         new GridToggleEditor()
@@ -164,7 +161,7 @@ export class ContactsGridComponent implements OnInit, OnDestroy {
         new GridSelectFilter()
           .DisplayExpression("label")
           .KeyExpression("value")
-          .DataSource(this.activeFilter)
+          .DataSource(this._activeFilter)
       )
       .Editor(
         new GridToggleEditor()
@@ -189,14 +186,14 @@ export class ContactsGridComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscriptions.forEach((element) => {
+    this._subs.forEach((element) => {
       element.unsubscribe();
     });
   }
 
   public getContacts(): void {
-    this.subscriptions.push(
-      this.contactsService.getDataForPerson(this.personId).subscribe(
+    this._subs.push(
+      this._contactsService.getDataForPerson(this.personId).subscribe(
         (data) => {
           this.contactsData = data;
         },
@@ -208,8 +205,8 @@ export class ContactsGridComponent implements OnInit, OnDestroy {
   }
 
   private getPersonDetails(): void {
-    this.subscriptions.push(
-      this.personsService.getPersonDetails(this.personId).subscribe((data) => {
+    this._subs.push(
+      this._personsService.getPersonDetails(this.personId).subscribe((data) => {
         if (data.length > 0)
           this.exportSettings.subtitle =
             getString("contactsForPerson") +
@@ -220,35 +217,39 @@ export class ContactsGridComponent implements OnInit, OnDestroy {
     );
   }
 
-  public onCreateConfirm(event: any) {
+  public onCreateConfirm(event: any): void {
     event.newData.PersonId = this.personId;
     event.newData.ResidanceCityId = event.newData.ResidanceCityId[0];
-    this.subscriptions.push(
-      this.contactsService.add(event.newData).subscribe((data) => {
+    this._subs.push(
+      this._contactsService.add(event.newData).subscribe((data) => {
         if (data.ContactId) {
           this.getContacts();
-          this.toastrService.showToast("success", getString("saveSuccess"), "");
+          this._toastrService.showToast(
+            "success",
+            getString("saveSuccess"),
+            ""
+          );
         }
       })
     );
   }
 
-  public contactsEdit(event: any) {
+  public contactsEdit(event: any): void {
     event.newData.PersonId = this.personId;
     event.newData.ResidanceCityId = event.newData.ResidanceCityId[0];
-    this.subscriptions.push(
-      this.contactsService.update(event.newData).subscribe(() => {
+    this._subs.push(
+      this._contactsService.update(event.newData).subscribe(() => {
         this.getContacts();
-        this.toastrService.showToast("success", getString("saveSuccess"), "");
+        this._toastrService.showToast("success", getString("saveSuccess"), "");
       })
     );
   }
 
-  public contactsDelete(event: any) {
-    this.subscriptions.push(
-      this.contactsService.delete({ Id: event.data.Id }).subscribe(() => {
+  public contactsDelete(event: any): void {
+    this._subs.push(
+      this._contactsService.delete({ Id: event.data.Id }).subscribe(() => {
         this.getContacts();
-        this.toastrService.showToast("success", getString("saveSuccess"), "");
+        this._toastrService.showToast("success", getString("saveSuccess"), "");
       })
     );
   }

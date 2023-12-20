@@ -1,25 +1,30 @@
-import { Injectable, OnDestroy, Optional, TemplateRef, Type } from '@angular/core';
-import { NbDialogConfig, NbDialogRef, NbDialogService } from '@nebular/theme';
-import { Location } from '@angular/common';
-import { DialogComponent } from './dialog/dialog.component';
+import {
+  Injectable,
+  OnDestroy,
+  Optional,
+  TemplateRef,
+  Type,
+} from "@angular/core";
+import { NbDialogConfig, NbDialogRef, NbDialogService } from "@nebular/theme";
+import { Location } from "@angular/common";
+import { DialogComponent } from "./dialog/dialog.component";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class DialogService implements OnDestroy {
-
-  private dialogRefs: NbDialogRef<any>[] = [];
+  private _dialogRefs: NbDialogRef<any>[] = [];
 
   constructor(
-    @Optional() private dialogService: NbDialogService,
-    private location: Location,
+    @Optional() private _dialogService: NbDialogService,
+    private _location: Location
   ) {
-    this.location.onUrlChange(x => this.ngOnDestroy());
+    this._location.onUrlChange((x) => this.ngOnDestroy());
   }
 
   ngOnDestroy(): void {
-    while (this.dialogRefs.length) {
-      this.close(this.dialogRefs.pop());
+    while (this._dialogRefs.length) {
+      this.close(this._dialogRefs.pop());
     }
   }
 
@@ -28,12 +33,18 @@ export class DialogService implements OnDestroy {
   }
 
   public getActive(): NbDialogRef<any> {
-    return this.dialogRefs.length ? this.dialogRefs[this.dialogRefs.length - 1] : new NbDialogRef<any>(null);
+    return this._dialogRefs.length
+      ? this._dialogRefs[this._dialogRefs.length - 1]
+      : new NbDialogRef<any>(null);
   }
 
-  public open<T>(content: Type<T> | TemplateRef<T>, userConfig?: Partial<NbDialogConfig<Partial<T> | string>>, onClose?: Function): NbDialogRef<T> {
-    const dialogRef = this.dialogService.open(content, userConfig);
-    this.dialogRefs.push(dialogRef);
+  public open<T>(
+    content: Type<T> | TemplateRef<T>,
+    userConfig?: Partial<NbDialogConfig<Partial<T> | string>>,
+    onClose?: Function
+  ): NbDialogRef<T> {
+    const dialogRef = this._dialogService.open(content, userConfig);
+    this._dialogRefs.push(dialogRef);
 
     return dialogRef;
   }
@@ -42,15 +53,13 @@ export class DialogService implements OnDestroy {
     const dialogRef = this.open(DialogComponent, {
       context: {
         dialogTitle: title,
-        dialogBody: body
+        dialogBody: body,
       },
-      autoFocus: false
+      autoFocus: false,
     });
 
-    return dialogRef.onClose
-      .toPromise()
-      .then(result => {
-        return Promise.resolve(result);
-      });
+    return dialogRef.onClose.toPromise().then((result) => {
+      return Promise.resolve(result);
+    });
   }
 }

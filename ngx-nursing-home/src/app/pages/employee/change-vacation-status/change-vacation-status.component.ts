@@ -11,7 +11,7 @@ import { ToastrService } from "../../../services/toastr.service";
   styleUrls: ["./change-vacation-status.component.scss"],
 })
 export class ChangeVacationStatusComponent implements OnInit, OnDestroy {
-  private subs: Subscription[] = [];
+  private _subs: Subscription[] = [];
 
   public selectedId: number = 0;
   public statuses: any[] = [];
@@ -19,9 +19,9 @@ export class ChangeVacationStatusComponent implements OnInit, OnDestroy {
   public getString = getString;
 
   constructor(
-    private ref: NbDialogRef<ChangeVacationStatusComponent>,
-    private vacationsService: VacationsService,
-    private toastrService: ToastrService
+    private _ref: NbDialogRef<ChangeVacationStatusComponent>,
+    private _vacationsService: VacationsService,
+    private _toastrService: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -29,33 +29,35 @@ export class ChangeVacationStatusComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subs.forEach((element) => {
+    this._subs.forEach((element) => {
       element.unsubscribe();
     });
   }
 
   public close(result: boolean): void {
-    this.ref.close(result);
+    this._ref.close(result);
   }
 
-  private getStatuses() {
-    this.subs.push(
-      this.vacationsService.getData().subscribe((data) => {
+  private getStatuses(): void {
+    this._subs.push(
+      this._vacationsService.getData().subscribe((data) => {
         this.statuses = data;
       })
     );
   }
 
-  public saveStatus() {
+  public saveStatus(): void {
     this.changeStatus(this.selectedId, this.selectedStatus);
   }
 
-  private changeStatus(id, statusId) {
-    this.subs.push(
-      this.vacationsService.changeVacationStatus(id, statusId).subscribe(() => {
-        this.toastrService.showToast("success", getString("saveSuccess"));
-        this.close(true);
-      })
+  private changeStatus(id: number, statusId: number): void {
+    this._subs.push(
+      this._vacationsService
+        .changeVacationStatus(id, statusId)
+        .subscribe(() => {
+          this._toastrService.showToast("success", getString("saveSuccess"));
+          this.close(true);
+        })
     );
   }
 }

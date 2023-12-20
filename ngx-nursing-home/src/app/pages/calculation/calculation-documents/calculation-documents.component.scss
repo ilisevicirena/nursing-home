@@ -1,18 +1,14 @@
-@import "../../../@theme/styles/themes.scss";
+.discount-picker-card {
+  border-radius: 1rem;
+  width: 800px;
+  height: 500px;
 
-@include nb-install-component {
-    .discount-picker-card {
-        border-radius: 1rem;
-        width: 800px;
-        height: 500px;
+  nb-card-header {
+    padding: 1rem;
+    padding-bottom: 0.5rem;
 
-        nb-card-header {
-            padding: 1rem;
-            padding-bottom: 0.5rem;
-
-            .col {
-                font-size: 20px;
-            }
-        }
+    .col {
+      font-size: 20px;
     }
+  }
 }

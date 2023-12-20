@@ -1,23 +1,29 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { getString } from '../../../resources/strings';
-import { Subscription } from 'rxjs';
-import { NotesService } from '../../../services/rest/notes.service';
-import { DialogService } from '../../../shared/dialog/dialog.service';
-import { NoteTagsComponent } from '../note-tags/note-tags.component';
-import { NoteDocumentsComponent } from '../note-documents/note-documents.component';
-import { hexToRgbA } from '../../../resources/functions';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+} from "@angular/core";
+import { getString } from "../../../resources/strings";
+import { Subscription } from "rxjs";
+import { NotesService } from "../../../services/rest/notes.service";
+import { DialogService } from "../../../shared/dialog/dialog.service";
+import { NoteTagsComponent } from "../note-tags/note-tags.component";
+import { NoteDocumentsComponent } from "../note-documents/note-documents.component";
+import { hexToRgbA } from "../../../resources/functions";
 
 @Component({
-  selector: 'sample-new-note',
-  templateUrl: './new-note.component.html',
-  styleUrls: ['./new-note.component.scss']
+  selector: "sample-new-note",
+  templateUrl: "./new-note.component.html",
+  styleUrls: ["./new-note.component.scss"],
 })
 export class NewNoteComponent implements OnInit, OnDestroy {
-
   constructor(
-    private notesService: NotesService,
-    private dialogService: DialogService
-  ) { }
+    private _notesService: NotesService,
+    private _dialogService: DialogService
+  ) {}
 
   @Input() selectedNote: any;
   @Input() personId: number;
@@ -27,44 +33,62 @@ export class NewNoteComponent implements OnInit, OnDestroy {
 
   public getString = getString;
   public hexToRgbA = hexToRgbA;
-  public config = {
-    placeholder: getString('typeText'),
-    height: '350px',
+  public config: any = {
+    placeholder: getString("typeText"),
+    height: "350px",
     toolbar: [
-      ['misc', ['codeview', 'undo', 'redo']],
-      ['font', ['bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript', 'clear']],
-      ['fontsize', ['fontsize', 'color']],
-      ['para', ['style', 'ul', 'ol', 'paragraph', 'height']],
-      ['insert', ['table', 'link', 'hr']]
+      ["misc", ["codeview", "undo", "redo"]],
+      [
+        "font",
+        [
+          "bold",
+          "italic",
+          "underline",
+          "strikethrough",
+          "superscript",
+          "subscript",
+          "clear",
+        ],
+      ],
+      ["fontsize", ["fontsize", "color"]],
+      ["para", ["style", "ul", "ol", "paragraph", "height"]],
+      ["insert", ["table", "link", "hr"]],
     ],
-    fontNames: ['Open Sans']
+    fontNames: ["Open Sans"],
   };
 
-  private subs: Subscription[] = [];
+  private _subs: Subscription[] = [];
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
   ngOnDestroy(): void {
-    this.subs.forEach(element => {
+    this._subs.forEach((element) => {
       element.unsubscribe();
     });
   }
 
   public saveNote(): void {
     if (this.selectedNote.Id == 0) {
-      this.selectedNote.Tags = this.selectedNote.Tags.map(x => x.Id);
-      this.subs.push(
-        this.notesService.add(this.selectedNote).subscribe(data => {
+      this.selectedNote.Tags = this.selectedNote.Tags.map((x) => x.Id);
+      this._subs.push(
+        this._notesService.add(this.selectedNote).subscribe((data) => {
           if (data.NoteId) {
             //save documents if any
             if (this.selectedNote.Documents.length > 0) {
-              for (let index = 0; index < this.selectedNote.Documents.length; index++) {
+              for (
+                let index = 0;
+                index < this.selectedNote.Documents.length;
+                index++
+              ) {
                 const element = this.selectedNote.Documents[index];
                 element.NoteId = data.NoteId;
-                this.subs.push(
-                  this.notesService.addDocumentToNote(element).subscribe(() => {
-                    if (index == this.selectedNote.Documents.length - 1) this.saved.emit(data.NoteId);
-                  })
+                this._subs.push(
+                  this._notesService
+                    .addDocumentToNote(element)
+                    .subscribe(() => {
+                      if (index == this.selectedNote.Documents.length - 1)
+                        this.saved.emit(data.NoteId);
+                    })
                 );
               }
             } else this.saved.emit(data.NoteId);
@@ -72,8 +96,8 @@ export class NewNoteComponent implements OnInit, OnDestroy {
         })
       );
     } else {
-      this.subs.push(
-        this.notesService.update(this.selectedNote).subscribe(() => {
+      this._subs.push(
+        this._notesService.update(this.selectedNote).subscribe(() => {
           this.saved.emit(this.selectedNote.Id);
         })
       );
@@ -85,29 +109,27 @@ export class NewNoteComponent implements OnInit, OnDestroy {
   }
 
   public openTagsDialog(): void {
-    this.subs.push(
-      this.dialogService.open(
-        NoteTagsComponent,
-        {
+    this._subs.push(
+      this._dialogService
+        .open(NoteTagsComponent, {
           closeOnBackdropClick: false,
           closeOnEsc: false,
           autoFocus: false,
           context: {
             noteId: 0,
-            selectedTags: this.selectedNote.Tags
-          }
-        }
-      ).onClose.subscribe(result => {
-        if (result.changes) this.selectedNote.Tags = result.selectedTags;
-      })
+            selectedTags: this.selectedNote.Tags,
+          },
+        })
+        .onClose.subscribe((result) => {
+          if (result.changes) this.selectedNote.Tags = result.selectedTags;
+        })
     );
   }
 
   public openDocumentsDialog(): void {
-    this.subs.push(
-      this.dialogService.open(
-        NoteDocumentsComponent,
-        {
+    this._subs.push(
+      this._dialogService
+        .open(NoteDocumentsComponent, {
           closeOnBackdropClick: false,
           closeOnEsc: false,
           autoFocus: false,
@@ -115,12 +137,12 @@ export class NewNoteComponent implements OnInit, OnDestroy {
             noteId: this.selectedNote.Id,
             showUploadBtn: true,
             personId: this.personId,
-            documents: this.selectedNote.Documents
-          }
-        }
-      ).onClose.subscribe(result => {
-        if (result.changes) this.selectedNote.Documents = result.documents;
-      })
+            documents: this.selectedNote.Documents,
+          },
+        })
+        .onClose.subscribe((result) => {
+          if (result.changes) this.selectedNote.Documents = result.documents;
+        })
     );
   }
 }

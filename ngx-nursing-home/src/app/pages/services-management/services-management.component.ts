@@ -43,23 +43,23 @@ export class ServicesManagementComponent implements OnInit, OnDestroy {
   public selectedDiscounts: any[] = [];
   public isChanged: boolean = false;
 
-  private subs: Subscription[] = [];
-  private gotPackages: boolean = false;
-  private gotServices: boolean = false;
-  private packagesOriginal: any[] = [];
-  private servicesOriginal: any[] = [];
-  private discountsOriginal: any[] = [];
-  private measureUnitId: number = 0;
+  private _subs: Subscription[] = [];
+  private _gotPackages: boolean = false;
+  private _gotServices: boolean = false;
+  private _packagesOriginal: any[] = [];
+  private _servicesOriginal: any[] = [];
+  private _discountsOriginal: any[] = [];
+  private _measureUnitId: number = 0;
 
   constructor(
-    private packagesService: PackagesService,
-    private servicesService: ServicesService,
-    private windowService: NbWindowService,
-    private calculationService: CalculationService,
-    private measureUnitsService: MeasureUnitsService,
-    private dialogService: DialogService,
-    private servicesManagementService: ServicesManagementService,
-    private toastrService: ToastrService
+    private _packagesService: PackagesService,
+    private _servicesService: ServicesService,
+    private _windowService: NbWindowService,
+    private _calculationService: CalculationService,
+    private _measureUnitsService: MeasureUnitsService,
+    private _dialogService: DialogService,
+    private _servicesManagementService: ServicesManagementService,
+    private _toastrService: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -68,7 +68,7 @@ export class ServicesManagementComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subs.forEach((element) => {
+    this._subs.forEach((element) => {
       element.unsubscribe();
     });
   }
@@ -76,10 +76,10 @@ export class ServicesManagementComponent implements OnInit, OnDestroy {
   public onTabChange(event: NbTabComponent): void {
     switch (parseInt(event.tabId)) {
       case 1:
-        if (!this.gotPackages) this.getPackages();
+        if (!this._gotPackages) this.getPackages();
         break;
       case 2:
-        if (!this.gotServices) this.getServices();
+        if (!this._gotServices) this.getServices();
         break;
     }
   }
@@ -94,8 +94,8 @@ export class ServicesManagementComponent implements OnInit, OnDestroy {
   }
 
   public openPackageDetails(pac: any): void {
-    this.subs.push(
-      this.windowService
+    this._subs.push(
+      this._windowService
         .open(AddEditPackageComponent, {
           context: {
             isNew: false,
@@ -121,8 +121,8 @@ export class ServicesManagementComponent implements OnInit, OnDestroy {
   }
 
   public openServiceDetails(service: any): void {
-    this.subs.push(
-      this.windowService
+    this._subs.push(
+      this._windowService
         .open(AddEditServiceComponent, {
           context: {
             isNew: false,
@@ -149,15 +149,15 @@ export class ServicesManagementComponent implements OnInit, OnDestroy {
 
   public onItemsDrop(event: CdkDragDrop<any[]>): void {
     if (Object.keys(event.item.data).includes("PackagePriceCalculated")) {
-      var pack = this.packagesOriginal.find((x) => x.Id == event.item.data.Id);
+      var pack = this._packagesOriginal.find((x) => x.Id == event.item.data.Id);
 
       if (!pack) {
-        this.subs.push(
-          this.servicesService
+        this._subs.push(
+          this._servicesService
             .getServicesForPackage(event.item.data.Id)
             .subscribe((data) => {
               var calculationResult: ICalculationResult =
-                this.calculationService.calculatePackagePrice(
+                this._calculationService.calculatePackagePrice(
                   event.item.data,
                   data,
                   event.item.data.MeasureUnitCode
@@ -171,10 +171,12 @@ export class ServicesManagementComponent implements OnInit, OnDestroy {
 
         event.item.data.Quantity = 1;
         event.item.data.IsNew = true;
-        this.packagesOriginal.push(event.item.data);
+        this._packagesOriginal.push(event.item.data);
       } else if (pack.IsDeleted) pack.IsDeleted = false;
 
-      this.selectedPackages = this.packagesOriginal.filter((x) => !x.IsDeleted);
+      this.selectedPackages = this._packagesOriginal.filter(
+        (x) => !x.IsDeleted
+      );
       this.calculateOfferPrice();
     } else {
       if (!this.selectedServices.find((x) => x.Id == event.item.data.Id)) {
@@ -182,15 +184,15 @@ export class ServicesManagementComponent implements OnInit, OnDestroy {
         if (event.item.data.DefaultNumberOfUnits)
           event.item.data.Quantity = event.item.data.DefaultNumberOfUnits;
         var calculation: ICalculationResult =
-          this.calculationService.calculateServicePriceByMeasureUnit(
+          this._calculationService.calculateServicePriceByMeasureUnit(
             event.item.data,
             this.calculationMeasureUnit as ECalculationMeasureUnit
           );
         event.item.data.PriceRounded = calculation.priceRounded;
         event.item.data.Price = calculation.price;
         event.item.data.IsNew = true;
-        this.servicesOriginal.push(event.item.data);
-        this.selectedServices = this.servicesOriginal.filter(
+        this._servicesOriginal.push(event.item.data);
+        this.selectedServices = this._servicesOriginal.filter(
           (x) => !x.IsDeleted
         );
         this.calculateOfferPrice();
@@ -200,7 +202,7 @@ export class ServicesManagementComponent implements OnInit, OnDestroy {
     this.detectChanges();
   }
 
-  public checkCanDropInList(item: CdkDrag, dropList: CdkDropList) {
+  public checkCanDropInList(item: CdkDrag, dropList: CdkDropList): boolean {
     var canDrop: boolean = true;
 
     if (Object.keys(item.data).includes("PackagePriceCalculated")) {
@@ -212,8 +214,8 @@ export class ServicesManagementComponent implements OnInit, OnDestroy {
   }
 
   public onClearAllClick(): void {
-    this.packagesOriginal.map((x) => (x.IsDeleted = true));
-    this.servicesOriginal.map((x) => (x.IsDeleted = true));
+    this._packagesOriginal.map((x) => (x.IsDeleted = true));
+    this._servicesOriginal.map((x) => (x.IsDeleted = true));
     this.selectedPackages = [];
     this.selectedServices = [];
     this.selectedDiscounts = [];
@@ -227,7 +229,7 @@ export class ServicesManagementComponent implements OnInit, OnDestroy {
   public decreaseQuantityClick(item: any): void {
     if (item.Quantity > 1) item.Quantity -= 1;
     var calculation: ICalculationResult =
-      this.calculationService.calculateServicePriceByMeasureUnit(
+      this._calculationService.calculateServicePriceByMeasureUnit(
         item,
         this.calculationMeasureUnit as ECalculationMeasureUnit
       );
@@ -242,7 +244,7 @@ export class ServicesManagementComponent implements OnInit, OnDestroy {
   public increaseQuantityClick(item: any): void {
     item.Quantity += 1;
     var calculation: ICalculationResult =
-      this.calculationService.calculateServicePriceByMeasureUnit(
+      this._calculationService.calculateServicePriceByMeasureUnit(
         item,
         this.calculationMeasureUnit as ECalculationMeasureUnit
       );
@@ -255,29 +257,29 @@ export class ServicesManagementComponent implements OnInit, OnDestroy {
   }
 
   public removePackageItem(pack: any): void {
-    var item = this.packagesOriginal.find((x) => x.Id == pack.Id);
+    var item = this._packagesOriginal.find((x) => x.Id == pack.Id);
     if (pack.IsNew)
-      this.packagesOriginal.splice(this.packagesOriginal.indexOf(item), 1);
+      this._packagesOriginal.splice(this._packagesOriginal.indexOf(item), 1);
     else item.IsDeleted = true;
-    this.selectedPackages = this.packagesOriginal.filter((x) => !x.IsDeleted);
+    this.selectedPackages = this._packagesOriginal.filter((x) => !x.IsDeleted);
 
     this.calculateOfferPrice();
     this.detectChanges();
   }
 
   public removeServiceItem(pack: any): void {
-    var item = this.servicesOriginal.find((x) => x.Id == pack.Id);
+    var item = this._servicesOriginal.find((x) => x.Id == pack.Id);
     if (pack.IsNew)
-      this.servicesOriginal.splice(this.servicesOriginal.indexOf(item), 1);
+      this._servicesOriginal.splice(this._servicesOriginal.indexOf(item), 1);
     else item.IsDeleted = true;
-    this.selectedServices = this.servicesOriginal.filter((x) => !x.IsDeleted);
+    this.selectedServices = this._servicesOriginal.filter((x) => !x.IsDeleted);
 
     this.calculateOfferPrice();
     this.detectChanges();
   }
 
   private calculateOfferPrice(): void {
-    this.offerPrice = this.calculationService.calculateOfferPrice(
+    this.offerPrice = this._calculationService.calculateOfferPrice(
       this.selectedPackages,
       this.selectedServices,
       this.selectedDiscounts
@@ -285,8 +287,8 @@ export class ServicesManagementComponent implements OnInit, OnDestroy {
   }
 
   public onAddDiscountClick(): void {
-    this.subs.push(
-      this.dialogService
+    this._subs.push(
+      this._dialogService
         .open(DiscountsPickerComponent, {
           closeOnBackdropClick: false,
           closeOnEsc: false,
@@ -299,18 +301,20 @@ export class ServicesManagementComponent implements OnInit, OnDestroy {
         })
         .onClose.subscribe((result) => {
           if (result.saved) {
-            this.discountsOriginal.map((x) => (x.IsDeleted = true));
+            this._discountsOriginal.map((x) => (x.IsDeleted = true));
 
             result.discounts.forEach((element) => {
-              var item = this.discountsOriginal.find((x) => x.Id == element.Id);
+              var item = this._discountsOriginal.find(
+                (x) => x.Id == element.Id
+              );
               if (item) item.IsDeleted = false;
               else {
                 element.IsNew = true;
-                this.discountsOriginal.push(element);
+                this._discountsOriginal.push(element);
               }
             });
 
-            this.selectedDiscounts = this.discountsOriginal.filter(
+            this.selectedDiscounts = this._discountsOriginal.filter(
               (x) => !x.IsDeleted
             );
             this.calculateOfferPrice();
@@ -321,11 +325,13 @@ export class ServicesManagementComponent implements OnInit, OnDestroy {
   }
 
   public onDiscountRemoved(discount: any): void {
-    var item = this.discountsOriginal.find((x) => x.Id == discount.Id);
+    var item = this._discountsOriginal.find((x) => x.Id == discount.Id);
     if (discount.IsNew)
-      this.discountsOriginal.splice(this.discountsOriginal.indexOf(item), 1);
+      this._discountsOriginal.splice(this._discountsOriginal.indexOf(item), 1);
     else item.IsDeleted = true;
-    this.selectedDiscounts = this.discountsOriginal.filter((x) => !x.IsDeleted);
+    this.selectedDiscounts = this._discountsOriginal.filter(
+      (x) => !x.IsDeleted
+    );
 
     this.calculateOfferPrice();
     this.detectChanges();
@@ -334,7 +340,7 @@ export class ServicesManagementComponent implements OnInit, OnDestroy {
   public async onSaveClick(): Promise<any> {
     // additional person check
     if (this.personId > 0) {
-      const rez = await this.dialogService.openYesNoDialog(
+      const rez = await this._dialogService.openYesNoDialog(
         getString("areYouSure"),
         getString("wantToSaveOffer")
       );
@@ -342,15 +348,15 @@ export class ServicesManagementComponent implements OnInit, OnDestroy {
       if (rez) {
         var model: IServicesManagement = {
           PersonId: this.personId,
-          Services: this.servicesOriginal,
-          Packages: this.packagesOriginal,
-          Discounts: this.discountsOriginal,
-          MeasureUnitId: this.measureUnitId,
+          Services: this._servicesOriginal,
+          Packages: this._packagesOriginal,
+          Discounts: this._discountsOriginal,
+          MeasureUnitId: this._measureUnitId,
         };
 
-        this.subs.push(
-          this.servicesManagementService.update(model).subscribe(() => {
-            this.toastrService.showToast("success", getString("saveSuccess"));
+        this._subs.push(
+          this._servicesManagementService.update(model).subscribe(() => {
+            this._toastrService.showToast("success", getString("saveSuccess"));
             this.getPackagesAndServicesForPerson();
           })
         );
@@ -359,13 +365,13 @@ export class ServicesManagementComponent implements OnInit, OnDestroy {
   }
 
   private getPackages(): void {
-    this.subs.push(
-      this.packagesService.getData().subscribe((data) => {
+    this._subs.push(
+      this._packagesService.getData().subscribe((data) => {
         this.packagesData = data;
         this.packagesData.map(
           (x) => (x.OfferMeasureUnit = this.calculationMeasureUnit)
         );
-        this.gotPackages = true;
+        this._gotPackages = true;
       })
     );
   }
@@ -375,8 +381,8 @@ export class ServicesManagementComponent implements OnInit, OnDestroy {
   }
 
   private getMeasureUnits(): void {
-    this.subs.push(
-      this.measureUnitsService
+    this._subs.push(
+      this._measureUnitsService
         .getCalculationMeasureUnits()
         .subscribe((data) => {
           this.calculationMeasureUnits = data;
@@ -385,29 +391,29 @@ export class ServicesManagementComponent implements OnInit, OnDestroy {
   }
 
   private getServices(): void {
-    this.subs.push(
-      this.servicesService.getData().subscribe((data) => {
+    this._subs.push(
+      this._servicesService.getData().subscribe((data) => {
         this.servicesData = data;
-        this.gotServices = true;
+        this._gotServices = true;
       })
     );
   }
 
   private getPackagesAndServicesForPerson(): void {
-    this.subs.push(
-      this.servicesManagementService
+    this._subs.push(
+      this._servicesManagementService
         .getPackagesAndServicesForPerson(this.personId)
         .subscribe((data) => {
           // select measure unit
           if (data.OfferMeasureUnit.length > 0) {
             this.calculationMeasureUnit =
               data.OfferMeasureUnit[0].MeasureUnitCode;
-            this.measureUnitId = data.OfferMeasureUnit[0].MeasureUnitId;
+            this._measureUnitId = data.OfferMeasureUnit[0].MeasureUnitId;
           } else {
             var measureUnit = this.calculationMeasureUnits.find(
               (x) => x.Code == this.calculationMeasureUnit
             );
-            if (measureUnit) this.measureUnitId = measureUnit.Id;
+            if (measureUnit) this._measureUnitId = measureUnit.Id;
           }
 
           // format packages
@@ -416,7 +422,7 @@ export class ServicesManagementComponent implements OnInit, OnDestroy {
               (x) => x.PackageId == pack.Id
             );
             var calculationResult: ICalculationResult =
-              this.calculationService.calculatePackagePrice(
+              this._calculationService.calculatePackagePrice(
                 pack,
                 serv,
                 pack.MeasureUnitCode
@@ -427,12 +433,12 @@ export class ServicesManagementComponent implements OnInit, OnDestroy {
           });
 
           this.selectedPackages = data.Packages;
-          this.packagesOriginal = this.selectedPackages;
+          this._packagesOriginal = this.selectedPackages;
 
           // format services
           data.Services.forEach((service) => {
             var calculation: ICalculationResult =
-              this.calculationService.calculateServicePriceByMeasureUnit(
+              this._calculationService.calculateServicePriceByMeasureUnit(
                 service,
                 this.calculationMeasureUnit as ECalculationMeasureUnit
               );
@@ -441,9 +447,9 @@ export class ServicesManagementComponent implements OnInit, OnDestroy {
           });
 
           this.selectedServices = data.Services;
-          this.servicesOriginal = this.selectedServices;
+          this._servicesOriginal = this.selectedServices;
           this.selectedDiscounts = data.Discounts;
-          this.discountsOriginal = this.selectedDiscounts;
+          this._discountsOriginal = this.selectedDiscounts;
           this.calculateOfferPrice();
         })
     );
@@ -452,6 +458,6 @@ export class ServicesManagementComponent implements OnInit, OnDestroy {
   public measureUnitSelectedChange(event: any): void {
     this.onClearAllClick();
     var measureUnit = this.calculationMeasureUnits.find((x) => x.Code == event);
-    if (measureUnit) this.measureUnitId = measureUnit.Id;
+    if (measureUnit) this._measureUnitId = measureUnit.Id;
   }
 }

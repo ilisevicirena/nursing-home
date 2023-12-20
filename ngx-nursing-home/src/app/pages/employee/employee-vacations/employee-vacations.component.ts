@@ -32,7 +32,7 @@ import { ChangeVacationStatusComponent } from "../change-vacation-status/change-
   styleUrls: ["./employee-vacations.component.scss"],
 })
 export class EmployeeVacationsComponent implements OnInit, OnDestroy {
-  private subs: Subscription[] = [];
+  private _subs: Subscription[] = [];
 
   public getString = getString;
   public data: any[] = [];
@@ -72,7 +72,7 @@ export class EmployeeVacationsComponent implements OnInit, OnDestroy {
           .KeyExpression("Id")
           .DisplayExpression("Name")
           .ServerDataSource(true)
-          .ServerEndpoint(this.vacationsService.apiRoute)
+          .ServerEndpoint(this._vacationsService.apiRoute)
       ),
     new GridColumn()
       .Title(getString("actions"))
@@ -84,18 +84,24 @@ export class EmployeeVacationsComponent implements OnInit, OnDestroy {
   ];
 
   constructor(
-    private vacationsService: VacationsService,
-    private dialogService: DialogService,
-    private toastrService: ToastrService
+    private _vacationsService: VacationsService,
+    private _dialogService: DialogService,
+    private _toastrService: ToastrService
   ) {}
 
   ngOnInit(): void {
     this.getData();
   }
 
+  ngOnDestroy(): void {
+    this._subs.forEach((element) => {
+      element.unsubscribe();
+    });
+  }
+
   private getData(): void {
-    this.subs.push(
-      this.vacationsService
+    this._subs.push(
+      this._vacationsService
         .getVacationsForPerson(this.employeeId)
         .subscribe((data) => {
           this.data = data;
@@ -125,8 +131,8 @@ export class EmployeeVacationsComponent implements OnInit, OnDestroy {
         })
     );
 
-    this.subs.push(
-      this.vacationsService
+    this._subs.push(
+      this._vacationsService
         .getRemainingVacationDays(this.employeeId)
         .subscribe((data) => {
           this.summary = data;
@@ -134,17 +140,11 @@ export class EmployeeVacationsComponent implements OnInit, OnDestroy {
     );
   }
 
-  ngOnDestroy(): void {
-    this.subs.forEach((element) => {
-      element.unsubscribe();
-    });
-  }
-
   public onButtonItemClicked(event: IGridCellButtonClick): void {
     switch (event.button.getId()) {
       case "changeStatus":
-        this.subs.push(
-          this.dialogService
+        this._subs.push(
+          this._dialogService
             .open(ChangeVacationStatusComponent, {
               autoFocus: false,
               closeOnEsc: false,
@@ -165,31 +165,31 @@ export class EmployeeVacationsComponent implements OnInit, OnDestroy {
   }
 
   public openStatusModal(ref: TemplateRef<any>): void {
-    this.dialogService.open(ref);
+    this._dialogService.open(ref);
   }
 
   private async cancelVacation(id: number): Promise<void> {
-    const rez = await this.dialogService.openYesNoDialog(
+    const rez = await this._dialogService.openYesNoDialog(
       getString("areYouSure"),
       getString("wantToCancelVacation")
     );
-    if (rez) {
-      this.changeStatus(id, 3);
-    }
+    if (rez) this.changeStatus(id, 3);
   }
 
-  private changeStatus(id, statusId) {
-    this.subs.push(
-      this.vacationsService.changeVacationStatus(id, statusId).subscribe(() => {
-        this.toastrService.showToast("success", getString("saveSuccess"));
-        this.getData();
-      })
+  private changeStatus(id: number, statusId: number): void {
+    this._subs.push(
+      this._vacationsService
+        .changeVacationStatus(id, statusId)
+        .subscribe(() => {
+          this._toastrService.showToast("success", getString("saveSuccess"));
+          this.getData();
+        })
     );
   }
 
   public newVacationClick(): void {
-    this.subs.push(
-      this.dialogService
+    this._subs.push(
+      this._dialogService
         .open(NewVacationComponent, {
           autoFocus: false,
           closeOnEsc: false,

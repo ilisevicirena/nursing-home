@@ -14,7 +14,7 @@ import { ToastrService } from "../../../services/toastr.service";
   styleUrls: ["./new-vacation.component.scss"],
 })
 export class NewVacationComponent implements OnInit, OnDestroy {
-  private subs: Subscription[] = [];
+  private _subs: Subscription[] = [];
 
   public getString = getString;
   public year: number = new Date().getFullYear();
@@ -25,24 +25,24 @@ export class NewVacationComponent implements OnInit, OnDestroy {
   public daysCorrected: number;
 
   constructor(
-    private ref: NbDialogRef<NewVacationComponent>,
-    private vacationsService: VacationsService,
-    private toastrService: ToastrService
+    private _ref: NbDialogRef<NewVacationComponent>,
+    private _vacationsService: VacationsService,
+    private _toastrService: ToastrService
   ) {}
 
   ngOnInit(): void {}
 
   ngOnDestroy(): void {
-    this.subs.forEach((element) => {
+    this._subs.forEach((element) => {
       element.unsubscribe();
     });
   }
 
   public close(result: boolean): void {
-    this.ref.close(result);
+    this._ref.close(result);
   }
 
-  public saveVacation() {
+  public saveVacation(): void {
     var model: IVacation = {
       EmployeeId: this.employeeId,
       Year: this.year,
@@ -53,15 +53,15 @@ export class NewVacationComponent implements OnInit, OnDestroy {
       StatusId: 0,
     };
 
-    this.subs.push(
-      this.vacationsService.add(model).subscribe(() => {
-        this.toastrService.showToast("success", getString("saveSuccess"));
+    this._subs.push(
+      this._vacationsService.add(model).subscribe(() => {
+        this._toastrService.showToast("success", getString("saveSuccess"));
         this.close(true);
       })
     );
   }
 
-  public onRangeChange(ev: any) {
+  public onRangeChange(ev: any): void {
     if (ev.start && ev.end) {
       this.daysCorrected = this.dateDiff(ev.start, ev.end);
 
@@ -72,11 +72,11 @@ export class NewVacationComponent implements OnInit, OnDestroy {
     } else this.selectedDaysValid = false;
   }
 
-  private dateDiff(first, second) {
+  private dateDiff(first: any, second: any): number {
     return Math.round((second - first) / (1000 * 60 * 60 * 24)) + 1;
   }
 
-  public onDaysChange() {
+  public onDaysChange(): void {
     this.selectedDaysValid =
       this.daysCorrected > 0
         ? this.daysCorrected < this.summary.AvailableDaysForReservation

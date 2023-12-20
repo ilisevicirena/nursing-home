@@ -6,7 +6,6 @@ import { Subscription } from "rxjs";
 import {
   GridColumn,
   GridLookupColumn,
-  GridSelectEditor,
   GridTextboxEditor,
   GridAutocompleteEditor,
 } from "shared-components";
@@ -20,6 +19,7 @@ import { MunicipalitiesService } from "../../services/rest/municipalities.servic
 })
 export class CitiesComponent implements OnInit, OnDestroy {
   public getString = getString;
+  public data: any[] = [];
 
   private _subs: Subscription[] = [];
 
@@ -27,10 +27,9 @@ export class CitiesComponent implements OnInit, OnDestroy {
     private _citiesService: CitiesService,
     private _countriesService: CountriesService,
     private _municipalitiesService: MunicipalitiesService,
-    private toastrService: ToastrService
+    private _toastrService: ToastrService
   ) {}
 
-  public data: any[] = [];
   public columns: GridColumn[] = [
     new GridColumn()
       .Title(getString("id"))
@@ -104,7 +103,7 @@ export class CitiesComponent implements OnInit, OnDestroy {
     });
   }
 
-  public getData() {
+  public getData(): void {
     this._subs.push(
       this._citiesService.getData().subscribe(
         (data) => {
@@ -117,7 +116,7 @@ export class CitiesComponent implements OnInit, OnDestroy {
     );
   }
 
-  public createConfirm(event: any) {
+  public createConfirm(event: any): void {
     event.newData.CountryId =
       event.newData.CountryId.length > 0 ? event.newData.CountryId[0] : null;
 
@@ -129,18 +128,18 @@ export class CitiesComponent implements OnInit, OnDestroy {
     this._subs.push(
       this._citiesService.add(event.newData).subscribe(
         () => {
-          this.toastrService.showToast("success", getString("saveSuccess"));
+          this._toastrService.showToast("success", getString("saveSuccess"));
           this.getData();
         },
         (err) => {
           console.error(err);
-          this.toastrService.showToast("danger", getString("saveError"));
+          this._toastrService.showToast("danger", getString("saveError"));
         }
       )
     );
   }
 
-  public editConfirm(event: any) {
+  public editConfirm(event: any): void {
     event.newData.CountryId =
       event.newData.CountryId.length > 0 ? event.newData.CountryId[0] : null;
 
@@ -152,27 +151,27 @@ export class CitiesComponent implements OnInit, OnDestroy {
     this._subs.push(
       this._citiesService.update(event.newData).subscribe(
         () => {
-          this.toastrService.showToast("success", getString("saveSuccess"));
+          this._toastrService.showToast("success", getString("saveSuccess"));
           this.getData();
         },
         (err) => {
           console.error(err);
-          this.toastrService.showToast("danger", getString("saveError"));
+          this._toastrService.showToast("danger", getString("saveError"));
         }
       )
     );
   }
 
-  public deleteConfirm(event: any) {
+  public deleteConfirm(event: any): void {
     this._subs.push(
       this._citiesService.delete(event.data).subscribe(
         () => {
-          this.toastrService.showToast("success", getString("saveSuccess"));
+          this._toastrService.showToast("success", getString("saveSuccess"));
           this.getData();
         },
         (err) => {
           console.error(err);
-          this.toastrService.showToast("danger", getString("saveError"));
+          this._toastrService.showToast("danger", getString("saveError"));
         }
       )
     );

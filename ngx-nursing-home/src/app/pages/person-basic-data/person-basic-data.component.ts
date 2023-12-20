@@ -22,25 +22,26 @@ import { AutocompleteSelectionModel } from "shared-components";
 })
 export class PersonBasicDataComponent implements OnInit, OnDestroy {
   constructor(
-    private gendersService: GendersService,
-    private citiesService: CitiesService,
-    private countriesService: CountriesService,
-    private municipalitiesService: MunicipalitiesService
+    private _gendersService: GendersService,
+    private _citiesService: CitiesService,
+    private _countriesService: CountriesService,
+    private _municipalitiesService: MunicipalitiesService
   ) {}
 
-  modelValue: IPerson;
+  private _subs: Subscription[] = [];
+  private _personData: IPerson;
 
   @Output()
   newPersonDataChange: EventEmitter<any> = new EventEmitter<any>();
 
   @Input()
   get newPersonData(): IPerson {
-    return this.modelValue;
+    return this._personData;
   }
 
   set newPersonData(val: IPerson) {
-    this.modelValue = val;
-    this.newPersonDataChange.emit(this.modelValue);
+    this._personData = val;
+    this.newPersonDataChange.emit(this._personData);
     if (this.newPersonData.BirthCountryId > 0)
       this.selectedCountryKeys = [this.newPersonData.BirthCountryId];
     if (this.newPersonData.BirthCityId > 0)
@@ -63,8 +64,6 @@ export class PersonBasicDataComponent implements OnInit, OnDestroy {
   public selectedCityKeys = [];
   public selectedResidanceKeys = [];
 
-  private subscriptions: Subscription[] = [];
-
   ngOnInit(): void {
     this.getGenders();
     this.getCountries();
@@ -73,48 +72,48 @@ export class PersonBasicDataComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscriptions.forEach((element) => {
+    this._subs.forEach((element) => {
       element.unsubscribe();
     });
   }
   private getGenders(): void {
-    this.subscriptions.push(
-      this.gendersService.getData().subscribe((data) => {
+    this._subs.push(
+      this._gendersService.getData().subscribe((data) => {
         this.genders = data;
       })
     );
   }
   private getCountries(): void {
-    this.countriesService.get().then((data) => {
+    this._countriesService.get().then((data) => {
       this.countries = data;
     });
   }
 
   private getMunicipalities(): void {
-    this.municipalitiesService.get().then((data) => {
+    this._municipalitiesService.get().then((data) => {
       this.municipalities = data;
     });
   }
 
   private getCities(): void {
-    this.citiesService.get().then((data) => {
+    this._citiesService.get().then((data) => {
       this.cities = data;
     });
   }
 
-  public countriesOnSelectionChanged(e: AutocompleteSelectionModel) {
+  public countriesOnSelectionChanged(e: AutocompleteSelectionModel): void {
     this.newPersonData.BirthCountryId = e.selectedItemKey;
   }
 
-  public municipalitiesOnSelectionChanged(e: AutocompleteSelectionModel) {
+  public municipalitiesOnSelectionChanged(e: AutocompleteSelectionModel): void {
     this.newPersonData.BirthMunicipalityId = e.selectedItemKey;
   }
 
-  public citiesOnSelectionChanged(e: AutocompleteSelectionModel) {
+  public citiesOnSelectionChanged(e: AutocompleteSelectionModel): void {
     this.newPersonData.BirthCityId = e.selectedItemKey;
   }
 
-  public residanceOnSelectionChanged(e: AutocompleteSelectionModel) {
+  public residanceOnSelectionChanged(e: AutocompleteSelectionModel): void {
     this.newPersonData.ResidanceCityId = e.selectedItemKey;
   }
 

@@ -15,7 +15,6 @@ import {
   NbSpinnerModule,
   NbTabsetModule,
   NbTagModule,
-  NbToastrModule,
   NbTooltipModule,
   NbWindowModule,
   NbToggleModule,

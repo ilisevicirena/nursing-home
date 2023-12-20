@@ -1,77 +1,120 @@
 <nb-card class="event-card" *ngIf="!calculationInProgress">
-    <nb-card-header class="d-flex">
-        <div class="col">
-            <div class="row m-0 p-0 align-items-center">
-                {{getString('newCalculation')}}<br>
+  <nb-card-header class="d-flex">
+    <div class="col">
+      <div class="row m-0 p-0 align-items-center">
+        {{ getString("newCalculation") }}<br />
+      </div>
+      <div class="row m-0 p-0" *ngIf="!profileMode">
+        <span class="p-0 label mt-1">{{
+          getString("startingCalculation")
+        }}</span>
+      </div>
+    </div>
+    <div class="w-max">
+      <button nbButton ghost shape="round" (click)="close(false)">
+        <nb-icon pack="eva" icon="close-outline"></nb-icon>
+      </button>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <form #event="ngForm">
+      <div class="row m-0">
+        <div class="col-md-12 p-0">
+          <div class="form-group">
+            <div class="label">{{ getString("calculationFor") }}</div>
+            <div class="value d-flex w-100">
+              <div class="col-md-6 pe-1">
+                <nb-select
+                  [(selected)]="month"
+                  fullWidth
+                  [disabled]="disableInputs"
+                >
+                  <nb-option *ngFor="let m of months" [value]="m.key">{{
+                    m.name
+                  }}</nb-option>
+                </nb-select>
+              </div>
+              <div class="col-md-6 ps-1">
+                <nb-select
+                  [(selected)]="year"
+                  fullWidth
+                  [disabled]="disableInputs"
+                >
+                  <nb-option *ngFor="let y of years" [value]="y">{{
+                    y
+                  }}</nb-option>
+                </nb-select>
+              </div>
             </div>
-            <div class="row m-0 p-0" *ngIf="!profileMode">
-                <span class="p-0 label mt-1">{{getString('startingCalculation')}}</span>
-            </div>
+          </div>
         </div>
-        <div class="w-max">
-            <button nbButton ghost shape="round" (click)="close(false)">
-                <nb-icon pack="eva" icon="close-outline"></nb-icon>
-            </button>
+      </div>
+      <div class="row m-0 pt-2">
+        <div class="col-md-6 pe-1 ps-0">
+          <div class="form-group">
+            <div class="label">
+              {{ getString("daysForPayment") }}
+            </div>
+            <div class="value">
+              <input
+                type="number"
+                nbInput
+                fullWidth
+                [(ngModel)]="paymentDeadline"
+                name="paymentDeadline"
+              />
+            </div>
+          </div>
         </div>
-    </nb-card-header>
-    <nb-card-body>
-        <form #event="ngForm">
-            <div class="row m-0">
-                <div class="col-md-12 p-0">
-                    <div class="form-group">
-                        <div class="label">{{getString("calculationFor")}}</div>
-                        <div class="value d-flex w-100">
-                            <div class="col-md-6 pe-1">
-                                <nb-select [(selected)]="month" fullWidth [disabled]="disableInputs">
-                                    <nb-option *ngFor="let m of months" [value]="m.key">{{m.name}}</nb-option>
-                                </nb-select>
-                            </div>
-                            <div class="col-md-6 ps-1">
-                                <nb-select [(selected)]="year" fullWidth [disabled]="disableInputs">
-                                    <nb-option *ngFor="let y of years" [value]="y">{{y}}</nb-option>
-                                </nb-select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+      </div>
+      <div class="row m-0 pt-2" *ngIf="!profileMode">
+        <div class="col-md-12 p-0">
+          <div class="form-group">
+            <div class="value">
+              <nb-radio-group
+                [(value)]="recalculate"
+                [disabled]="disableInputs"
+              >
+                <nb-radio [value]="1">{{
+                  getString("recalculateForExisting")
+                }}</nb-radio>
+                <nb-radio [value]="2">{{ getString("skipExisting") }}</nb-radio>
+              </nb-radio-group>
             </div>
-            <div class="row m-0 pt-2">
-                <div class="col-md-6 pe-1 ps-0">
-                    <div class="form-group">
-                        <div class="label">
-                            {{getString('daysForPayment')}}
-                        </div>
-                        <div class="value">
-                            <input type="number" nbInput fullWidth [(ngModel)]="paymentDeadline" name="paymentDeadline">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row m-0 pt-2" *ngIf="!profileMode">
-                <div class="col-md-12 p-0">
-                    <div class="form-group">
-                        <div class="value">
-                            <nb-radio-group [(value)]="recalculate" [disabled]="disableInputs">
-                                <nb-radio [value]="1">{{getString('recalculateForExisting')}}</nb-radio>
-                                <nb-radio [value]="2">{{getString('skipExisting')}}</nb-radio>
-                            </nb-radio-group>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </nb-card-body>
-    <nb-card-footer class="d-flex justify-content-end">
-        <button nbButton ghost shape="round" size="small" class="me-2" (click)="close(false)">
-            {{getString('cancel')}}
-        </button>
-        <button nbButton status="primary" shape="round" size="small" [disabled]="!month || !year || !paymentDeadline"
-            (click)="startCalculation()">
-            {{getString('start')}}
-        </button>
-    </nb-card-footer>
+          </div>
+        </div>
+      </div>
+    </form>
+  </nb-card-body>
+  <nb-card-footer class="d-flex justify-content-end">
+    <button
+      nbButton
+      ghost
+      shape="round"
+      size="small"
+      class="me-2"
+      (click)="close(false)"
+    >
+      {{ getString("cancel") }}
+    </button>
+    <button
+      nbButton
+      status="primary"
+      shape="round"
+      size="small"
+      [disabled]="!month || !year || !paymentDeadline"
+      (click)="startCalculation()"
+    >
+      {{ getString("start") }}
+    </button>
+  </nb-card-footer>
 </nb-card>
-<ngx-progressbar-spinner *ngIf="calculationInProgress" [loading]="calculationInProgress"
-    [message]="getString('calculationInProgress')" [(value)]="calculationPercent" [progressbarSize]="'col-md-6'"
-    [displayValue]="true"></ngx-progressbar-spinner>
+<ngx-progressbar-spinner
+  *ngIf="calculationInProgress"
+  [loading]="calculationInProgress"
+  [message]="getString('calculationInProgress')"
+  [(value)]="calculationPercent"
+  [progressbarSize]="'col-md-6'"
+  [displayValue]="true"
+></ngx-progressbar-spinner>
 <sample-generated-invoice></sample-generated-invoice>

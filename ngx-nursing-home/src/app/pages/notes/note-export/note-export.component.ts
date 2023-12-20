@@ -4,7 +4,6 @@ import {
   OnDestroy,
   OnInit,
   ViewChild,
-  ViewChildren,
 } from "@angular/core";
 declare var require: any;
 import * as pdfMake from "pdfmake/build/pdfmake";
@@ -26,18 +25,18 @@ export class NoteExportComponent implements OnInit, OnDestroy {
 
   @ViewChild("pdfTable") pdfTable: ElementRef;
 
-  constructor(private toastrService: ToastrService) {}
+  constructor(private _toastrService: ToastrService) {}
 
   ngOnInit(): void {}
 
   ngOnDestroy(): void {}
 
   //PDF genrate button click function
-  public downloadAsPDF(notes: any[]) {
+  public downloadAsPDF(notes: any[]): void {
     if (notes.length == 0)
-      this.toastrService.showToast("warning", getString("nothingToPrint"));
+      this._toastrService.showToast("warning", getString("nothingToPrint"));
     else {
-      this.toastrService.showToastWithCustumIcon(
+      this._toastrService.showToastWithCustumIcon(
         "info",
         getString("downloadStartSoon"),
         "",

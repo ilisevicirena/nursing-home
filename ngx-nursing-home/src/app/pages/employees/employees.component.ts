@@ -53,7 +53,7 @@ export class EmployeesComponent implements OnInit, OnDestroy {
     yesValueText: getString("yesBtnText").toLowerCase(),
     noValueText: getString("noBtnText").toLowerCase(),
   };
-  private activeFilter = [
+  private activeFilter: any[] = [
     { value: true, label: getString("active") },
     { value: false, label: getString("unactive") },
   ];
@@ -95,18 +95,18 @@ export class EmployeesComponent implements OnInit, OnDestroy {
           .DisplayExpression("Name")
           .KeyExpression("Id")
           .ServerDataSource(true)
-          .ServerEndpoint(this.jobPositionsService.apiRoute)
+          .ServerEndpoint(this._jobPositionsService.apiRoute)
       ),
   ];
 
-  private subscriptions: Subscription[] = [];
+  private _subs: Subscription[] = [];
 
   @ViewChild("contentTemplate") contentTemplate: TemplateRef<any>;
 
   constructor(
-    private employeesService: EmployeesService,
-    private jobPositionsService: JobPositionsService,
-    private router: Router
+    private _employeesService: EmployeesService,
+    private _jobPositionsService: JobPositionsService,
+    private _router: Router
   ) {}
 
   ngOnInit(): void {
@@ -114,14 +114,14 @@ export class EmployeesComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscriptions.forEach((element) => {
+    this._subs.forEach((element) => {
       element.unsubscribe();
     });
   }
 
-  private getData() {
-    this.subscriptions.push(
-      this.employeesService.getData(!this.showDeactivated).subscribe(
+  private getData(): void {
+    this._subs.push(
+      this._employeesService.getData(!this.showDeactivated).subscribe(
         (data) => {
           this.employeesData = data;
         },
@@ -136,16 +136,16 @@ export class EmployeesComponent implements OnInit, OnDestroy {
     this.getData();
   }
 
-  public viewChange(event: string[]) {
+  public viewChange(event: string[]): void {
     if (event.length > 0) this.currentView = event[0];
   }
 
-  public gridSelectionChanged(event: any) {
+  public gridSelectionChanged(event: any): void {
     if (event.selectedRows.length == 1)
-      this.router.navigateByUrl("/pages/employee/" + event.selectedRows[0].Id);
+      this._router.navigateByUrl("/pages/employee/" + event.selectedRows[0].Id);
   }
 
-  public openPersonDetails(data) {
-    this.router.navigateByUrl("/pages/employee/" + data.Id);
+  public openPersonDetails(data: any): void {
+    this._router.navigateByUrl("/pages/employee/" + data.Id);
   }
 }

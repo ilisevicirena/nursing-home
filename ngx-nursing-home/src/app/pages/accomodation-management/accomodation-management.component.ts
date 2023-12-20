@@ -1,36 +1,35 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { RoomsService } from '../../services/rest/rooms.service';
-import { Subscription } from 'rxjs';
-import { CdkDrag, CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
-import { PersonsService } from '../../services/rest/persons.service';
-import { getString } from '../../resources/strings';
+import { Component, OnDestroy, OnInit } from "@angular/core";
+import { RoomsService } from "../../services/rest/rooms.service";
+import { Subscription } from "rxjs";
+import { CdkDrag, CdkDragDrop, CdkDropList } from "@angular/cdk/drag-drop";
+import { PersonsService } from "../../services/rest/persons.service";
+import { getString } from "../../resources/strings";
 
 @Component({
-  selector: 'sample-accomodation-management',
-  templateUrl: './accomodation-management.component.html',
-  styleUrls: ['./accomodation-management.component.scss']
+  selector: "sample-accomodation-management",
+  templateUrl: "./accomodation-management.component.html",
+  styleUrls: ["./accomodation-management.component.scss"],
 })
 export class AccomodationManagementComponent implements OnInit, OnDestroy {
-
   constructor(
-    private roomsService: RoomsService,
-    private personsService: PersonsService
-  ) { }
+    private _roomsService: RoomsService,
+    private _personsService: PersonsService
+  ) {}
 
   public noRoomPersons: any[] = [];
   public mainSource: any[] = [];
   public getString = getString;
   public showSidepanel: boolean = true;
 
-  private subscriptions: Subscription[] = [];
-  private originalSource: any;
+  private _subs: Subscription[] = [];
+  private _originalSource: any;
 
   ngOnInit(): void {
     this.getAccomodationManagement();
   }
 
   ngOnDestroy(): void {
-    this.subscriptions.forEach(element => {
+    this._subs.forEach((element: Subscription) => {
       element.unsubscribe();
     });
   }
@@ -38,23 +37,24 @@ export class AccomodationManagementComponent implements OnInit, OnDestroy {
   private getAccomodationManagement(): void {
     this.mainSource = [];
 
-    this.subscriptions.push(
-      this.roomsService.getAccomodationManagement().subscribe(data => {
+    this._subs.push(
+      this._roomsService.getAccomodationManagement().subscribe((data: any) => {
         if (data) {
-          this.originalSource = data;
-          this.noRoomPersons = data.Persons.filter(x => !x.RoomId);
+          this._originalSource = data;
+          this.noRoomPersons = data.Persons.filter((x: any) => !x.RoomId);
 
-          data.Floors.forEach(floor => {
+          data.Floors.forEach((floor: any) => {
             var newFloor = floor;
-            newFloor.Rooms = data.Rooms.filter(x => x.FloorId == floor.Id);
-            newFloor.Rooms.forEach(room => {
-              room.People = data.Persons.filter(x => x.RoomId == room.Id);
+            newFloor.Rooms = data.Rooms.filter((x) => x.FloorId == floor.Id);
+            newFloor.Rooms.forEach((room) => {
+              room.People = data.Persons.filter((x) => x.RoomId == room.Id);
             });
 
             this.mainSource.push(newFloor);
           });
         }
-      }));
+      })
+    );
   }
 
   public drop(event: CdkDragDrop<any[]>): void {
@@ -64,25 +64,33 @@ export class AccomodationManagementComponent implements OnInit, OnDestroy {
 
       if (personId && roomId) {
         // just save and reload
-        this.subscriptions.push(
-          this.personsService.changeRoom(personId, roomId).subscribe(() => {
+        this._subs.push(
+          this._personsService.changeRoom(personId, roomId).subscribe(() => {
             this.getAccomodationManagement();
-          }));
+          })
+        );
       } else if (personId) {
         // just save and reload
-        this.subscriptions.push(
-          this.personsService.deactivateRoom(personId).subscribe(() => {
+        this._subs.push(
+          this._personsService.deactivateRoom(personId).subscribe(() => {
             this.getAccomodationManagement();
-          }));
+          })
+        );
       }
     }
   }
 
-  public checkCanDropInList(item: CdkDrag, dropList: CdkDropList) {
+  public checkCanDropInList(item: CdkDrag, dropList: CdkDropList): boolean {
     var dropContainer = dropList.data[0];
     var canDrop: boolean = false;
     //check room capacity higher then 0, room has free space and person gender is same as other persons in room
-    if (dropContainer.Capacity > 0 && dropContainer.FreeSpace > 0 && (dropContainer.RoomGenderId == null || dropContainer.RoomGenderId == item.data.GenderId)) canDrop = true;
+    if (
+      dropContainer.Capacity > 0 &&
+      dropContainer.FreeSpace > 0 &&
+      (dropContainer.RoomGenderId == null ||
+        dropContainer.RoomGenderId == item.data.GenderId)
+    )
+      canDrop = true;
 
     return canDrop;
   }
@@ -90,13 +98,13 @@ export class AccomodationManagementComponent implements OnInit, OnDestroy {
   public getConnectedTo(): string[] {
     var arr = [];
 
-    if (this.originalSource) {
-      arr = this.originalSource.Rooms.map(x => {
-        return 'drop-room-' + x.Id;
+    if (this._originalSource) {
+      arr = this._originalSource.Rooms.map((x) => {
+        return "drop-room-" + x.Id;
       });
     }
 
-    arr.push('no-room');
+    arr.push("no-room");
 
     return arr;
   }
@@ -104,5 +112,4 @@ export class AccomodationManagementComponent implements OnInit, OnDestroy {
   public toggleSidepanel(): void {
     this.showSidepanel = !this.showSidepanel;
   }
-
 }

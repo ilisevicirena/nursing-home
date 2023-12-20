@@ -20,16 +20,16 @@ export class StartDoctorVisitTourComponent implements OnInit, OnDestroy {
   public selectedDoctors: number[] = [];
   public selectedNurses: number[] = [];
 
-  private subs: Subscription[] = [];
-  private doctorJobPositionId: number = 5;
-  private nurseJobPositionId: number = 2;
-  private caretakerJobPositionId: number = 3;
+  private _subs: Subscription[] = [];
+  private readonly _doctorJobPositionId: number = 5;
+  private readonly _nurseJobPositionId: number = 2;
+  private readonly _caretakerJobPositionId: number = 3;
 
   constructor(
-    private ref: NbDialogRef<StartDoctorVisitTourComponent>,
-    private employeesService: EmployeesService,
-    private router: Router,
-    private toastrService: ToastrService
+    private _ref: NbDialogRef<StartDoctorVisitTourComponent>,
+    private _employeesService: EmployeesService,
+    private _router: Router,
+    private _toastrService: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -37,31 +37,31 @@ export class StartDoctorVisitTourComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subs.forEach((element) => {
+    this._subs.forEach((element) => {
       element.unsubscribe();
     });
   }
 
-  private getEmployees() {
-    this.subs.push(
-      this.employeesService.getEmployeesBasic().subscribe((data) => {
+  private getEmployees(): void {
+    this._subs.push(
+      this._employeesService.getEmployeesBasic().subscribe((data) => {
         this.doctors = data.filter(
-          (x) => x.JobPositionId == this.doctorJobPositionId
+          (x) => x.JobPositionId == this._doctorJobPositionId
         );
         this.nurses = data.filter(
           (x) =>
-            x.JobPositionId == this.nurseJobPositionId ||
-            x.JobPositionId == this.caretakerJobPositionId
+            x.JobPositionId == this._nurseJobPositionId ||
+            x.JobPositionId == this._caretakerJobPositionId
         );
       })
     );
   }
 
   public close(result: boolean): void {
-    this.ref.close(result);
+    this._ref.close(result);
   }
 
-  public startDoctorVisitTour() {
+  public startDoctorVisitTour(): void {
     this.loading = true;
     var objToSave = {
       VisitDate: this.visitDate.toISOString(),
@@ -69,13 +69,13 @@ export class StartDoctorVisitTourComponent implements OnInit, OnDestroy {
       Nurses: this.selectedNurses.toString(),
     };
 
-    this.subs.push(
-      this.employeesService.newDoctorVisit(objToSave).subscribe((data) => {
+    this._subs.push(
+      this._employeesService.newDoctorVisit(objToSave).subscribe((data) => {
         if (data.length > 0) {
-          this.toastrService.showToast("info", getString("visitTourStarted"));
+          this._toastrService.showToast("info", getString("visitTourStarted"));
           this.loading = false;
           this.close(true);
-          this.router.navigateByUrl(
+          this._router.navigateByUrl(
             "/pages/doctor-visit-tour/" + data[0].DoctorVisitTourId
           );
         }

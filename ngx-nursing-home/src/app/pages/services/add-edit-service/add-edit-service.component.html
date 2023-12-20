@@ -1,154 +1,307 @@
 <ng-template #headerTemplate>
-    <div class="widow-header-template w-100">
-        <div class="d-flex title-container-person">
-            <nb-icon pack="eva" [icon]="isNew ? 'plus-outline':'edit-outline'" status="basic"></nb-icon>
-            <div class="window-title-person">{{getString("servicesManagement")}}</div>
-        </div>
-        <div class="d-flex title-container-person-details">
-            <div class="window-title-person">{{isNew ? getString('addNew') : getString('editData')}}</div>
-        </div>
-        <div class="close-button">
-            <button nbButton ghost shape="round" status="basic" (click)="close(false)">
-                <nb-icon pack="eva" icon="close-outline"></nb-icon>
-            </button>
-        </div>
+  <div class="widow-header-template w-100">
+    <div class="d-flex title-container-person">
+      <nb-icon
+        pack="eva"
+        [icon]="isNew ? 'plus-outline' : 'edit-outline'"
+        status="basic"
+      ></nb-icon>
+      <div class="window-title-person">
+        {{ getString("servicesManagement") }}
+      </div>
     </div>
+    <div class="d-flex title-container-person-details">
+      <div class="window-title-person">
+        {{ isNew ? getString("addNew") : getString("editData") }}
+      </div>
+    </div>
+    <div class="close-button">
+      <button
+        nbButton
+        ghost
+        shape="round"
+        status="basic"
+        (click)="close(false)"
+      >
+        <nb-icon pack="eva" icon="close-outline"></nb-icon>
+      </button>
+    </div>
+  </div>
 </ng-template>
 
 <div class="d-flex h-100 w-100 content-container">
-    <div class="person-details-body d-flex h-100 w-100">
-        <div class="col-md-12 left-content">
-            <div class="left-content-form">
-                <form #serviceForm="ngForm">
-                    <div class="row m-0 mt-2 p-2">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <div class="label">{{getString("id")}}</div>
-                                <div class="value">
-                                    <input nbInput [(ngModel)]="service.Id" fullWidth name="id" disabled
-                                        [placeholder]="getString('id')">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-8">
-                            <div class="form-group">
-                                <div class="label">{{getString("name")}} <nb-icon pack="eva" icon="alert-circle-outline"
-                                        status="danger" size="small" class="ms-1 required-mark"
-                                        [nbTooltip]="getString('required')"></nb-icon></div>
-                                <div class="value">
-                                    <input nbInput [(ngModel)]="service.Name" fullWidth name="nameService"
-                                        [disabled]="blockEdit" [placeholder]="getString('name')" required
-                                        #name1="ngModel" autocomplete="off"
-                                        [status]="name1.dirty ? (name1.invalid ? 'danger' : 'success'): 'basic'">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row m-0 mt-2 p-2">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <div class="label">{{getString("description")}}</div>
-                                <div class="value">
-                                    <textarea nbInput rows="5" [placeholder]="getString('description')" fullWidth
-                                        [disabled]="blockEdit" [(ngModel)]="service.Description"
-                                        name="description"></textarea>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row m-0 mt-2 p-2">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <div class="label">{{getString("measureUnit")}} <nb-icon pack="eva"
-                                        icon="alert-circle-outline" status="danger" size="small"
-                                        class="ms-1 required-mark" [nbTooltip]="getString('required')"></nb-icon></div>
-                                <div class="value">
-                                    <nb-select [(ngModel)]="service.MeasureUnitId" fullWidth name="measureUnit"
-                                        [placeholder]="getString('measureUnit')" required #measureUnit1="ngModel"
-                                        autocomplete="off" [disabled]="blockEdit"
-                                        [status]="measureUnit1.dirty ? (measureUnit1.invalid ? 'danger' : 'success'): 'basic'">
-                                        <nb-option *ngFor="let unit of measureUnitsData" [value]="unit.Id">
-                                            {{unit.Tag}}
-                                        </nb-option>
-                                    </nb-select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <div class="label">{{getString("costPerUnit")}} <nb-icon pack="eva"
-                                        icon="alert-circle-outline" status="danger" size="small"
-                                        class="ms-1 required-mark" [nbTooltip]="getString('required')"></nb-icon></div>
-                                <div class="value">
-                                    <input nbInput [(ngModel)]="service.CostPerUnit" fullWidth name="costPerUnit"
-                                        type="number" [placeholder]="getString('costPerUnit')" required
-                                        [disabled]="blockEdit" #costPerUnit1="ngModel" autocomplete="off"
-                                        (focusout)="onPriceChange()"
-                                        [status]="costPerUnit1.dirty ? (costPerUnit1.invalid ? 'danger' : 'success'): 'basic'">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <div class="label">{{getString("priceUnit")}} <nb-icon pack="eva"
-                                        icon="alert-circle-outline" status="danger" size="small"
-                                        class="ms-1 required-mark" [nbTooltip]="getString('required')"></nb-icon></div>
-                                <div class="value">
-                                    <nb-select [(ngModel)]="service.PriceUnitId" fullWidth name="priceUnit"
-                                        [placeholder]="getString('priceUnit')" required #priceUnit1="ngModel"
-                                        autocomplete="off" [disabled]="blockEdit"
-                                        [status]="priceUnit1.dirty ? (priceUnit1.invalid ? 'danger' : 'success'): 'basic'">
-                                        <nb-option *ngFor="let unit of priceUnitsData" [value]="unit.Id">
-                                            {{unit.Tag}}
-                                        </nb-option>
-                                    </nb-select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row m-0 mt-2 p-2">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <div class="label">{{getString("defaultNumberOfUnits")}} </div>
-                                <div class="value">
-                                    <input nbInput [(ngModel)]="service.DefaultNumberOfUnits" fullWidth
-                                        name="defaultNumberOfUnits" type="number" [disabled]="blockEdit"
-                                        [placeholder]="getString('defaultNumberOfUnits')"
-                                        #defaultNumberOfUnits1="ngModel" autocomplete="off">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-1">
-                            <button nbButton ghost class="mt-4" shape="round" status="info"
-                                [nbPopover]="numberOfUnitsPopover" nbPopoverTrigger="click">
-                                <nb-icon pack="eva" icon="info-outline"></nb-icon>
-                            </button>
-                        </div>
-                    </div>
-                </form>
-                <div class="left-content-footer d-flex justify-content-end">
-                    <button nbButton ghost shape="round" size="small" (click)="close(false)"
-                        class="me-2">{{getString("cancel")}}</button>
-                    <button nbButton status="primary" size="small" shape="round"
-                        [disabled]="serviceForm.form.invalid || blockEdit"
-                        (click)="onSaveClick(serviceForm)">{{getString("save")}}</button>
+  <div class="person-details-body d-flex h-100 w-100">
+    <div class="col-md-12 left-content">
+      <div class="left-content-form">
+        <form #serviceForm="ngForm">
+          <div class="row m-0 mt-2 p-2">
+            <div class="col-md-4">
+              <div class="form-group">
+                <div class="label">{{ getString("id") }}</div>
+                <div class="value">
+                  <input
+                    nbInput
+                    [(ngModel)]="service.Id"
+                    fullWidth
+                    name="id"
+                    disabled
+                    [placeholder]="getString('id')"
+                  />
                 </div>
+              </div>
             </div>
+            <div class="col-md-8">
+              <div class="form-group">
+                <div class="label">
+                  {{ getString("name") }}
+                  <nb-icon
+                    pack="eva"
+                    icon="alert-circle-outline"
+                    status="danger"
+                    size="small"
+                    class="ms-1 required-mark"
+                    [nbTooltip]="getString('required')"
+                  ></nb-icon>
+                </div>
+                <div class="value">
+                  <input
+                    nbInput
+                    [(ngModel)]="service.Name"
+                    fullWidth
+                    name="nameService"
+                    [disabled]="blockEdit"
+                    [placeholder]="getString('name')"
+                    required
+                    #name1="ngModel"
+                    autocomplete="off"
+                    [status]="
+                      name1.dirty
+                        ? name1.invalid
+                          ? 'danger'
+                          : 'success'
+                        : 'basic'
+                    "
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row m-0 mt-2 p-2">
+            <div class="col-md-12">
+              <div class="form-group">
+                <div class="label">{{ getString("description") }}</div>
+                <div class="value">
+                  <textarea
+                    nbInput
+                    rows="5"
+                    [placeholder]="getString('description')"
+                    fullWidth
+                    [disabled]="blockEdit"
+                    [(ngModel)]="service.Description"
+                    name="description"
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row m-0 mt-2 p-2">
+            <div class="col-md-4">
+              <div class="form-group">
+                <div class="label">
+                  {{ getString("measureUnit") }}
+                  <nb-icon
+                    pack="eva"
+                    icon="alert-circle-outline"
+                    status="danger"
+                    size="small"
+                    class="ms-1 required-mark"
+                    [nbTooltip]="getString('required')"
+                  ></nb-icon>
+                </div>
+                <div class="value">
+                  <nb-select
+                    [(ngModel)]="service.MeasureUnitId"
+                    fullWidth
+                    name="measureUnit"
+                    [placeholder]="getString('measureUnit')"
+                    required
+                    #measureUnit1="ngModel"
+                    autocomplete="off"
+                    [disabled]="blockEdit"
+                    [status]="
+                      measureUnit1.dirty
+                        ? measureUnit1.invalid
+                          ? 'danger'
+                          : 'success'
+                        : 'basic'
+                    "
+                  >
+                    <nb-option
+                      *ngFor="let unit of measureUnitsData"
+                      [value]="unit.Id"
+                    >
+                      {{ unit.Tag }}
+                    </nb-option>
+                  </nb-select>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <div class="label">
+                  {{ getString("costPerUnit") }}
+                  <nb-icon
+                    pack="eva"
+                    icon="alert-circle-outline"
+                    status="danger"
+                    size="small"
+                    class="ms-1 required-mark"
+                    [nbTooltip]="getString('required')"
+                  ></nb-icon>
+                </div>
+                <div class="value">
+                  <input
+                    nbInput
+                    [(ngModel)]="service.CostPerUnit"
+                    fullWidth
+                    name="costPerUnit"
+                    type="number"
+                    [placeholder]="getString('costPerUnit')"
+                    required
+                    [disabled]="blockEdit"
+                    #costPerUnit1="ngModel"
+                    autocomplete="off"
+                    (focusout)="onPriceChange()"
+                    [status]="
+                      costPerUnit1.dirty
+                        ? costPerUnit1.invalid
+                          ? 'danger'
+                          : 'success'
+                        : 'basic'
+                    "
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <div class="label">
+                  {{ getString("priceUnit") }}
+                  <nb-icon
+                    pack="eva"
+                    icon="alert-circle-outline"
+                    status="danger"
+                    size="small"
+                    class="ms-1 required-mark"
+                    [nbTooltip]="getString('required')"
+                  ></nb-icon>
+                </div>
+                <div class="value">
+                  <nb-select
+                    [(ngModel)]="service.PriceUnitId"
+                    fullWidth
+                    name="priceUnit"
+                    [placeholder]="getString('priceUnit')"
+                    required
+                    #priceUnit1="ngModel"
+                    autocomplete="off"
+                    [disabled]="blockEdit"
+                    [status]="
+                      priceUnit1.dirty
+                        ? priceUnit1.invalid
+                          ? 'danger'
+                          : 'success'
+                        : 'basic'
+                    "
+                  >
+                    <nb-option
+                      *ngFor="let unit of priceUnitsData"
+                      [value]="unit.Id"
+                    >
+                      {{ unit.Tag }}
+                    </nb-option>
+                  </nb-select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row m-0 mt-2 p-2">
+            <div class="col-md-4">
+              <div class="form-group">
+                <div class="label">{{ getString("defaultNumberOfUnits") }}</div>
+                <div class="value">
+                  <input
+                    nbInput
+                    [(ngModel)]="service.DefaultNumberOfUnits"
+                    fullWidth
+                    name="defaultNumberOfUnits"
+                    type="number"
+                    [disabled]="blockEdit"
+                    [placeholder]="getString('defaultNumberOfUnits')"
+                    #defaultNumberOfUnits1="ngModel"
+                    autocomplete="off"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="col-md-1">
+              <button
+                nbButton
+                ghost
+                class="mt-4"
+                shape="round"
+                status="info"
+                [nbPopover]="numberOfUnitsPopover"
+                nbPopoverTrigger="click"
+              >
+                <nb-icon pack="eva" icon="info-outline"></nb-icon>
+              </button>
+            </div>
+          </div>
+        </form>
+        <div class="left-content-footer d-flex justify-content-end">
+          <button
+            nbButton
+            ghost
+            shape="round"
+            size="small"
+            (click)="close(false)"
+            class="me-2"
+          >
+            {{ getString("cancel") }}
+          </button>
+          <button
+            nbButton
+            status="primary"
+            size="small"
+            shape="round"
+            [disabled]="serviceForm.form.invalid || blockEdit"
+            (click)="onSaveClick(serviceForm)"
+          >
+            {{ getString("save") }}
+          </button>
         </div>
+      </div>
     </div>
+  </div>
 </div>
 
 <ng-template #numberOfUnitsPopover>
-    <nb-card class="m-0" style="width: 300px;">
-        <nb-card-body>
-            <div class="row m-0">
-                <div>
-                    <nb-icon pack="eva" icon="info-outline" status="info" class="info-icon-status"></nb-icon>
-                </div>
-                <div>
-                    <div class="p-2">{{getString("defaultNumberOfUnitsInfo")}}</div>
-                </div>
-            </div>
-        </nb-card-body>
-    </nb-card>
+  <nb-card class="m-0" style="width: 300px">
+    <nb-card-body>
+      <div class="row m-0">
+        <div>
+          <nb-icon
+            pack="eva"
+            icon="info-outline"
+            status="info"
+            class="info-icon-status"
+          ></nb-icon>
+        </div>
+        <div>
+          <div class="p-2">{{ getString("defaultNumberOfUnitsInfo") }}</div>
+        </div>
+      </div>
+    </nb-card-body>
+  </nb-card>
 </ng-template>

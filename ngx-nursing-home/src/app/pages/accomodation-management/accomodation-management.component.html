@@ -5,7 +5,7 @@
 <div class="row h-100" *ngIf="mainSource.length > 0">
   <div class="col-md-3 p-0 h-100" *ngIf="showSidepanel">
     <nb-card class="h-100">
-      <nb-card-header> Osobe bez sobe </nb-card-header>
+      <nb-card-header> {{ getString("peopleWithoutRoom") }} </nb-card-header>
       <nb-card-body
         id="no-room"
         cdkDropList
@@ -112,59 +112,6 @@
                 </div>
               </div>
             </div>
-
-            <!--
-              <div class="col-md-4 p-1" *ngFor="let room of floor?.Rooms">
-                <div
-                  class="room"
-                  cdkDropList
-                  [cdkDropListEnterPredicate]="checkCanDropInList"
-                  [id]="'drop-room-' + room.Id"
-                  [cdkDropListConnectedTo]="getConnectedTo()"
-                  [cdkDropListData]="[room]"
-                  (cdkDropListDropped)="drop($event)"
-                >
-                  <div class="room-name">{{ room.Name }}</div>
-                  <div class="room-persons">
-                    <ngx-tag
-                      *ngFor="let person of room.People"
-                      cdkDrag
-                      shape="round"
-                      [cdkDragData]="person"
-                      [icon]="
-                        person.GenderTag == 'Ž'
-                          ? 'fas fa-female'
-                          : 'fas fa-male'
-                      "
-                      [text]="person.FirstName + ' ' + person.LastName"
-                    ></ngx-tag>
-                  </div>
-                  <div
-                    class="room-capacity"
-                    [ngClass]="
-                      room.Capacity == 0
-                        ? ''
-                        : room.Capacity == room.TakenSpace
-                        ? 'text-danger'
-                        : 'text-success'
-                    "
-                  >
-                    <nb-icon
-                      pack="eva"
-                      icon="people-outline"
-                      [status]="
-                        room.Capacity == 0
-                          ? 'primary'
-                          : room.Capacity == room.TakenSpace
-                          ? 'danger'
-                          : 'success'
-                      "
-                    ></nb-icon>
-                    {{ room.TakenSpace }}/{{ room.Capacity }}
-                  </div>
-                </div>
-              </div>
-              -->
           </nb-card-body>
         </nb-card>
       </div>

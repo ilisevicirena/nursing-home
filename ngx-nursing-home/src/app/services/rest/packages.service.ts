@@ -1,16 +1,14 @@
-import { Injectable } from '@angular/core';
-import { BaseRestApiService, IBaseSaveModel } from '../base-rest-api.service';
-import { HttpClient } from '@angular/common/http';
+import { Injectable } from "@angular/core";
+import { BaseRestApiService, IBaseSaveModel } from "../base-rest-api.service";
+import { HttpClient } from "@angular/common/http";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class PackagesService extends BaseRestApiService {
-
   constructor(http: HttpClient) {
-    super(http, 'api/packages');
+    super(http, "api/packages");
   }
-
 }
 
 export interface IPackage extends IBaseSaveModel {

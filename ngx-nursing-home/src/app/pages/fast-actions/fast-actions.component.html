@@ -1,37 +1,55 @@
 <nb-card>
-    <nb-card-body>
-        <div class="fast-button" (click)="startDoctorVisit()">
-            <div class="icon">
-                <div class="icon-container success">
-                    <nb-icon status="success" pack="eva" icon="activity-outline"></nb-icon>
-                </div>
-            </div>
-            <div class="col">
-                <div class="title">
-                    {{getString('doctorVisitAction')}}
-                </div>
-                <div class="subtitle">
-                    {{getString('startDoctorVisit')}}
-                </div>
-            </div>
-            <nb-icon class="go-icon" pack="eva" icon="arrow-forward-outline" status="success"></nb-icon>
+  <nb-card-body>
+    <div class="fast-button" (click)="startDoctorVisit()">
+      <div class="icon">
+        <div class="icon-container success">
+          <nb-icon
+            status="success"
+            pack="eva"
+            icon="activity-outline"
+          ></nb-icon>
         </div>
+      </div>
+      <div class="col">
+        <div class="title">
+          {{ getString("doctorVisitAction") }}
+        </div>
+        <div class="subtitle">
+          {{ getString("startDoctorVisit") }}
+        </div>
+      </div>
+      <nb-icon
+        class="go-icon"
+        pack="eva"
+        icon="arrow-forward-outline"
+        status="success"
+      ></nb-icon>
+    </div>
 
-        <div class="fast-button mt-2" (click)="startCalculation()">
-            <div class="icon">
-                <div class="icon-container warning">
-                    <nb-icon status="warning" pack="eva" icon="play-circle-outline"></nb-icon>
-                </div>
-            </div>
-            <div class="col">
-                <div class="title">
-                    {{getString('startCalculationAction')}}
-                </div>
-                <div class="subtitle">
-                    {{getString('startCalculation')}}
-                </div>
-            </div>
-            <nb-icon class="go-icon" pack="eva" icon="arrow-forward-outline" status="warning"></nb-icon>
+    <div class="fast-button mt-2" (click)="startCalculation()">
+      <div class="icon">
+        <div class="icon-container warning">
+          <nb-icon
+            status="warning"
+            pack="eva"
+            icon="play-circle-outline"
+          ></nb-icon>
         </div>
-    </nb-card-body>
+      </div>
+      <div class="col">
+        <div class="title">
+          {{ getString("startCalculationAction") }}
+        </div>
+        <div class="subtitle">
+          {{ getString("startCalculation") }}
+        </div>
+      </div>
+      <nb-icon
+        class="go-icon"
+        pack="eva"
+        icon="arrow-forward-outline"
+        status="warning"
+      ></nb-icon>
+    </div>
+  </nb-card-body>
 </nb-card>

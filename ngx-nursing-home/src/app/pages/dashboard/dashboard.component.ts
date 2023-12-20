@@ -29,13 +29,16 @@ export class DashboardComponent implements OnDestroy, OnInit {
   public currentEmployee: any;
   public personWithLongestLastVisit: any;
 
-  private currentEmployeeIndex: number = 0;
-  private subs: Subscription[] = [];
+  private _currentEmployeeIndex: number = 0;
+  private _subs: Subscription[] = [];
 
-  constructor(private summaryService: SummaryService, private router: Router) {}
+  constructor(
+    private _summaryService: SummaryService,
+    private _router: Router
+  ) {}
 
   ngOnDestroy() {
-    this.subs.forEach((element) => {
+    this._subs.forEach((element) => {
       element.unsubscribe();
     });
   }
@@ -45,9 +48,8 @@ export class DashboardComponent implements OnDestroy, OnInit {
   }
 
   private getSummary(): void {
-    this.subs.push(
-      this.summaryService.getDashboardSummary().subscribe((data) => {
-        console.log(data);
+    this._subs.push(
+      this._summaryService.getDashboardSummary().subscribe((data) => {
         if (data) {
           if (data.Summary.length > 0) {
             this.summary = data.Summary[0];
@@ -77,7 +79,7 @@ export class DashboardComponent implements OnDestroy, OnInit {
 
           if (data.Employees.length > 0) {
             this.employees = data.Employees;
-            this.currentEmployee = this.employees[this.currentEmployeeIndex];
+            this.currentEmployee = this.employees[this._currentEmployeeIndex];
           }
 
           if (data.PersonWithLongestLastVisit.length > 0)
@@ -106,7 +108,7 @@ export class DashboardComponent implements OnDestroy, OnInit {
     );
   }
 
-  public calculatePassedTime() {
+  public calculatePassedTime(): any {
     var date: Date = new Date(this.longestPerson.StartDate);
     var today = new Date();
     var year = today.getFullYear();
@@ -209,6 +211,6 @@ export class DashboardComponent implements OnDestroy, OnInit {
   }
 
   public goToEvents(): void {
-    this.router.navigateByUrl("pages/calendar");
+    this._router.navigateByUrl("pages/calendar");
   }
 }

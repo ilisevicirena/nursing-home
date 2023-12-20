@@ -1,10 +1,4 @@
-import {
-  Component,
-  OnDestroy,
-  OnInit,
-  TemplateRef,
-  ViewChildren,
-} from "@angular/core";
+import { Component, OnDestroy, OnInit, TemplateRef } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import {
@@ -30,16 +24,16 @@ import { AccommodationPdfRequestService } from "../../services/rest/accommodatio
 })
 export class ProfileComponent implements OnInit, OnDestroy {
   constructor(
-    private activatedRoute: ActivatedRoute,
-    private personsService: PersonsService,
-    private toastrService: ToastrService,
-    private dialogService: DialogService,
-    private roomsService: RoomsService,
-    private router: Router,
-    private requestGeneratorService: AccommodationPdfRequestService
+    private _activatedRoute: ActivatedRoute,
+    private _personsService: PersonsService,
+    private _toastrService: ToastrService,
+    private _dialogService: DialogService,
+    private _roomsService: RoomsService,
+    private _router: Router,
+    private _requestGeneratorService: AccommodationPdfRequestService
   ) {}
 
-  private subscriptions: Subscription[] = [];
+  private _subs: Subscription[] = [];
 
   public personId: number = 0;
   public getString = getString;
@@ -104,10 +98,23 @@ export class ProfileComponent implements OnInit, OnDestroy {
     new GridColumn().Title(getString("gender")).DataField("GenderName"),
   ];
 
+  public historyColumns: GridColumn[] = [
+    new GridColumn().Title(getString("id")).DataField("Id"),
+    new GridColumn()
+      .Title(getString("transactionDate"))
+      .DataField("CreationDate")
+      .Type(new GridDateColumn().Format("dd.MM.yyyy. HH:mm")),
+    new GridColumn().Title(getString("firstName")).DataField("FirstName"),
+    new GridColumn().Title(getString("lastName")).DataField("LastName"),
+    new GridColumn().Title(getString("jmbg")).DataField("Jmbg"),
+    new GridColumn().Title(getString("logType")).DataField("LogType"),
+    new GridColumn().Title(getString("logType")).DataField("LogTypePretty"),
+  ];
+
   ngOnInit(): void {
     this.loading = true;
-    this.subscriptions.push(
-      this.activatedRoute.paramMap.subscribe((params) => {
+    this._subs.push(
+      this._activatedRoute.paramMap.subscribe((params) => {
         this.personId = params.get("id") as any;
         this.getPersonDetails(this.personId);
       })
@@ -115,7 +122,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscriptions.forEach((element) => {
+    this._subs.forEach((element) => {
       element.unsubscribe();
     });
   }
@@ -139,9 +146,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
   }
 
   // ------------------------------------------------- BASIC DATA ---------------------------------------------------------------------
+
   public getHistory(): void {
-    this.subscriptions.push(
-      this.personsService.getHistory(this.personId).subscribe(
+    this._subs.push(
+      this._personsService.getHistory(this.personId).subscribe(
         (data) => {
           this.personHistory = data;
         },
@@ -153,22 +161,26 @@ export class ProfileComponent implements OnInit, OnDestroy {
   }
 
   public saveBasicData(form: NgForm): void {
-    this.subscriptions.push(
-      this.personsService.updateDetailed(this.newPersonData).subscribe(
+    this._subs.push(
+      this._personsService.updateDetailed(this.newPersonData).subscribe(
         () => {
           this.getPersonDetails(this.personId);
           form.form.markAsPristine();
-          this.toastrService.showToast("success", getString("saveSuccess"), "");
+          this._toastrService.showToast(
+            "success",
+            getString("saveSuccess"),
+            ""
+          );
         },
         (err) => {
           console.error(err);
-          this.toastrService.showToast("danger", getString("saveError"), "");
+          this._toastrService.showToast("danger", getString("saveError"), "");
         }
       )
     );
   }
 
-  public cancelEditBasicData(form: NgForm) {
+  public cancelEditBasicData(form: NgForm): void {
     this.newPersonData = getIPersonFromJSON(
       JSON.parse(JSON.stringify(this.person))
     );
@@ -176,8 +188,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
   }
 
   private getPersonDetails(personId: number): void {
-    this.subscriptions.push(
-      this.personsService.getPersonDetailed(personId).subscribe((data) => {
+    this._subs.push(
+      this._personsService.getPersonDetailed(personId).subscribe((data) => {
         if (data.length > 0) {
           this.person = getIPersonFromJSON(data[0]);
           this.newPersonData = getIPersonFromJSON(data[0]);
@@ -196,18 +208,18 @@ export class ProfileComponent implements OnInit, OnDestroy {
     var endDate: string = new Date().toLocaleDateString();
     if (this.person.EndDate != undefined)
       endDate = this.person.EndDate.toLocaleDateString();
-    const rezDialog = await this.dialogService.openYesNoDialog(
+    const rezDialog = await this._dialogService.openYesNoDialog(
       getString("areYouSure"),
       getString("questionDeactivatePerson") + endDate
     );
 
     if (rezDialog) {
-      this.subscriptions.push(
-        this.personsService
+      this._subs.push(
+        this._personsService
           .deactivatePerson(this.personId, this.person.EndDate ?? null)
           .subscribe(
             () => {
-              this.toastrService.showToast(
+              this._toastrService.showToast(
                 "success",
                 getString("saveSuccess"),
                 ""
@@ -215,7 +227,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
               this.getPersonDetails(this.personId);
             },
             (err) => {
-              this.toastrService.showToast(
+              this._toastrService.showToast(
                 "danger",
                 getString("saveError"),
                 ""
@@ -227,7 +239,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     }
   }
 
-  public calculatePassedTime() {
+  public calculatePassedTime(): any {
     var today: Date = this.person.Active ? new Date() : this.person.EndDate;
     var date: Date = this.person.StartDate;
     var today = new Date();
@@ -259,22 +271,22 @@ export class ProfileComponent implements OnInit, OnDestroy {
   //------------------------------------------ DORMATORY DATA ------------------------------------------------------------
 
   private getAvaliableRooms(): void {
-    this.subscriptions.push(
-      this.roomsService.getAvaliableRooms().subscribe((data) => {
+    this._subs.push(
+      this._roomsService.getAvaliableRooms().subscribe((data) => {
         this.rooms = data;
       })
     );
   }
 
   private getAllRooms(): void {
-    this.subscriptions.push(
-      this.roomsService.getData().subscribe((data) => {
+    this._subs.push(
+      this._roomsService.getData().subscribe((data) => {
         this.allRooms = data;
       })
     );
   }
 
-  public onRoomSelectionChanged(event: any) {
+  public onRoomSelectionChanged(event: any): void {
     console.log(event);
     if (event.selectedItems.length == 1) {
       this.selectedRoom = event.selectedItems[0];
@@ -288,11 +300,15 @@ export class ProfileComponent implements OnInit, OnDestroy {
   }
 
   public savePersonRoom(): void {
-    this.subscriptions.push(
-      this.personsService
+    this._subs.push(
+      this._personsService
         .changeRoom(this.newPersonData.Id, this.selectedRoom.Id)
         .subscribe(() => {
-          this.toastrService.showToast("success", getString("saveSuccess"), "");
+          this._toastrService.showToast(
+            "success",
+            getString("saveSuccess"),
+            ""
+          );
           this.gridSelectedItem = [];
           this.selectedRoom = { FloorName: "", IsValid: true };
           this.getPersonDetails(this.personId);
@@ -303,40 +319,27 @@ export class ProfileComponent implements OnInit, OnDestroy {
   }
 
   public goToExternalRoomManagement(): void {
-    this.router.navigateByUrl("/pages/accomodation-management");
+    this._router.navigateByUrl("/pages/accomodation-management");
   }
 
   public getRoomHistory(): void {
-    this.subscriptions.push(
-      this.personsService.getRoomHistory(this.personId).subscribe((data) => {
+    this._subs.push(
+      this._personsService.getRoomHistory(this.personId).subscribe((data) => {
         this.roomHistory = data;
       })
     );
   }
 
   public openPersonHistory(ref: TemplateRef<any>): void {
-    this.dialogService.open(ref);
+    this._dialogService.open(ref);
   }
 
-  public historyColumns: GridColumn[] = [
-    new GridColumn().Title(getString("id")).DataField("Id"),
-    new GridColumn()
-      .Title(getString("transactionDate"))
-      .DataField("CreationDate")
-      .Type(new GridDateColumn().Format("dd.MM.yyyy. HH:mm")),
-    new GridColumn().Title(getString("firstName")).DataField("FirstName"),
-    new GridColumn().Title(getString("lastName")).DataField("LastName"),
-    new GridColumn().Title(getString("jmbg")).DataField("Jmbg"),
-    new GridColumn().Title(getString("logType")).DataField("LogType"),
-    new GridColumn().Title(getString("logType")).DataField("LogTypePretty"),
-  ];
-
-  public generateAccommodationRequest() {
-    this.subscriptions.push(
-      this.requestGeneratorService
+  public generateAccommodationRequest(): void {
+    this._subs.push(
+      this._requestGeneratorService
         .generateRequest(this.newPersonData.Id)
-        .subscribe((data) => {
-          this.toastrService.showToastWithCustumIcon(
+        .subscribe(() => {
+          this._toastrService.showToastWithCustumIcon(
             "info",
             "",
             getString("requestGenerated"),

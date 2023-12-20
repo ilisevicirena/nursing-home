@@ -1,23 +1,18 @@
-@import "../../../@theme/styles/themes.scss";
+.event-card {
+  border-radius: 1rem;
+  width: 500px;
 
-@include nb-install-component {
-    .event-card {
-        border-radius: 1rem;
-        width: 500px;
+  nb-card-header {
+    padding: 1rem;
+    padding-bottom: 0.5rem;
+    border: none;
 
-        nb-card-header {
-            padding: 1rem;
-            padding-bottom: 0.5rem;
-            border: none;
+    .col {
+      font-size: 20px;
 
-            .col {
-                font-size: 20px;
-
-                div nb-icon {
-                    font-size: 25px;
-                }
-            }
-
-        }
+      div nb-icon {
+        font-size: 25px;
+      }
     }
+  }
 }

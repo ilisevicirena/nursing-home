@@ -1,114 +1,208 @@
 <div class="h-100 d-flex w-100">
-    <div class="col-md-2 h-100 pe-2 pt-2">
-        <div class="row m-0">
-            <button nbButton [status]="showAll ? 'primary' : 'basic'" class="w-100 justify-content-start"
-                (click)="filterChange('all')">
-                <nb-icon pack="eva" icon="inbox-outline"></nb-icon>
-                {{getString("notifications")}}
-            </button>
-        </div>
-        <hr>
-        <div class="row m-0 filters-pane">
-            <div class="filters-title">
-                {{getString('filters')}}
-            </div>
-            <div class="row m-0 p-0" *ngFor="let nt of notificationTypes">
-                <button nbButton class="w-100 justify-content-start" [status]="nt.Selected ? 'primary' : 'basic'"
-                    (click)="filterChange(nt)">
-                    {{getString(nt.StringKey)}}
-                </button>
-            </div>
-        </div>
-        <hr>
-        <div class="row m-0 p-0">
-            <button nbButton ghost status="primary" shape="round" size="small" class="w-100 justify-content-start"
-                (click)="manageNotifications()">
-                {{getString('manageNotifications')}}
-                <nb-icon pack="eva" icon="settings-outline"></nb-icon>
-            </button>
-        </div>
-        <div class="row m-0 p-0">
-            <button nbButton ghost status="primary" shape="round" size="small" class="w-100 justify-content-start"
-                (click)="markAllAsRead()">
-                {{getString('markAllAsRead')}}
-                <nb-icon pack="eva" icon="done-all-outline"></nb-icon>
-            </button>
-        </div>
-        <hr>
-        <div class="row m-0 p-0 mt-2" *ngIf="selected>0">
-            <div class="filters-title">{{getString('selected')}}: {{selected}}</div>
-        </div>
-        <div class="row m-0 p-0" *ngIf="selected>0">
-            <button nbButton shape="round" size="small" ghost (click)="clearAll()"
-                class="w-max">{{getString('clearAll')}}
+  <div class="col-md-2 h-100 pe-2 pt-2">
+    <div class="row m-0">
+      <button
+        nbButton
+        [status]="showAll ? 'primary' : 'basic'"
+        class="w-100 justify-content-start"
+        (click)="filterChange('all')"
+      >
+        <nb-icon pack="eva" icon="inbox-outline"></nb-icon>
+        {{ getString("notifications") }}
+      </button>
+    </div>
+    <hr />
+    <div class="row m-0 filters-pane">
+      <div class="filters-title">
+        {{ getString("filters") }}
+      </div>
+      <div class="row m-0 p-0" *ngFor="let nt of notificationTypes">
+        <button
+          nbButton
+          class="w-100 justify-content-start"
+          [status]="nt.Selected ? 'primary' : 'basic'"
+          (click)="filterChange(nt)"
+        >
+          {{ getString(nt.StringKey) }}
+        </button>
+      </div>
+    </div>
+    <hr />
+    <div class="row m-0 p-0">
+      <button
+        nbButton
+        ghost
+        status="primary"
+        shape="round"
+        size="small"
+        class="w-100 justify-content-start"
+        (click)="manageNotifications()"
+      >
+        {{ getString("manageNotifications") }}
+        <nb-icon pack="eva" icon="settings-outline"></nb-icon>
+      </button>
+    </div>
+    <div class="row m-0 p-0">
+      <button
+        nbButton
+        ghost
+        status="primary"
+        shape="round"
+        size="small"
+        class="w-100 justify-content-start"
+        (click)="markAllAsRead()"
+      >
+        {{ getString("markAllAsRead") }}
+        <nb-icon pack="eva" icon="done-all-outline"></nb-icon>
+      </button>
+    </div>
+    <hr />
+    <div class="row m-0 p-0 mt-2" *ngIf="selected > 0">
+      <div class="filters-title">
+        {{ getString("selected") }}: {{ selected }}
+      </div>
+    </div>
+    <div class="row m-0 p-0" *ngIf="selected > 0">
+      <button
+        nbButton
+        shape="round"
+        size="small"
+        ghost
+        (click)="clearAll()"
+        class="w-max"
+      >
+        {{ getString("clearAll") }}
+        <nb-icon pack="eva" icon="close-outline"></nb-icon>
+      </button>
+    </div>
+    <div class="row m-0 p-0">
+      <button
+        nbButton
+        shape="round"
+        size="small"
+        ghost
+        class="w-max"
+        (click)="selectAll()"
+      >
+        {{ getString("selectAll") }}
+        <nb-icon pack="eva" icon="checkmark-outline"></nb-icon>
+      </button>
+    </div>
+    <div class="row m-0 p-0" *ngIf="selected > 0">
+      <button
+        nbButton
+        shape="round"
+        status="primary"
+        size="small"
+        ghost
+        class="w-100 justify-content-start"
+        (click)="markSelectedAsRead()"
+      >
+        {{ getString("markSelectedAsRead") }}
+        <nb-icon pack="eva" icon="checkmark-outline"></nb-icon>
+      </button>
+    </div>
+  </div>
+  <div class="col-md-10 h-100">
+    <nb-card class="h-100">
+      <nb-card-body class="p-3 pt-2">
+        <div class="row m-0 p-0 w-100 pb-3">
+          <div class="w-max d-flex align-items-center p-0">
+            <nb-button-group
+              class="p-0"
+              size="small"
+              (valueChange)="onViewChange($event)"
+            >
+              <button nbButtonToggle [(pressed)]="showAllActive" [value]="1">
+                {{ getString("all") }}
+              </button>
+              <button nbButtonToggle [(pressed)]="!showAllActive" [value]="2">
+                {{ getString("unread") }}
+              </button>
+            </nb-button-group>
+          </div>
+          <div class="col-md-6">
+            <nb-form-field>
+              <input
+                nbInput
+                shape="round"
+                fullWidth
+                [placeholder]="getString('search')"
+                [(ngModel)]="searchTerm"
+              />
+              <nb-icon pack="eva" icon="search-outline" nbPrefix></nb-icon>
+              <button
+                nbButton
+                nbSuffix
+                ghost
+                shape="round"
+                status="basic"
+                *ngIf="searchTerm.length > 0"
+                (click)="searchTerm = ''"
+              >
                 <nb-icon pack="eva" icon="close-outline"></nb-icon>
-            </button>
+              </button>
+            </nb-form-field>
+          </div>
         </div>
-        <div class="row m-0 p-0">
-            <button nbButton shape="round" size="small" ghost class="w-max"
-                (click)="selectAll()">{{getString('selectAll')}}
-                <nb-icon pack="eva" icon="checkmark-outline"></nb-icon>
-            </button>
-        </div>
-        <div class="row m-0 p-0" *ngIf="selected>0">
-            <button nbButton shape="round" status="primary" size="small" ghost class="w-100 justify-content-start"
-                (click)="markSelectedAsRead()">{{getString('markSelectedAsRead')}}
-                <nb-icon pack="eva" icon="checkmark-outline"></nb-icon>
-            </button>
-        </div>
-    </div>
-    <div class="col-md-10 h-100">
-        <nb-card class="h-100">
-            <nb-card-body class="p-3 pt-2">
-                <div class="row m-0 p-0 w-100 pb-3">
-                    <div class="w-max d-flex align-items-center p-0">
-                        <nb-button-group class="p-0" size="small" (valueChange)="onViewChange($event)">
-                            <button nbButtonToggle [(pressed)]="showAllActive" [value]="1">{{getString('all')}}</button>
-                            <button nbButtonToggle [(pressed)]="!showAllActive"
-                                [value]="2">{{getString('unread')}}</button>
-                        </nb-button-group>
-                    </div>
-                    <div class="col-md-6">
-                        <nb-form-field>
-                            <input nbInput shape="round" fullWidth [placeholder]="getString('search')"
-                                [(ngModel)]="searchTerm">
-                            <nb-icon pack="eva" icon="search-outline" nbPrefix></nb-icon>
-                            <button nbButton nbSuffix ghost shape="round" status="basic" *ngIf="searchTerm.length>0"
-                                (click)="searchTerm='';">
-                                <nb-icon pack="eva" icon="close-outline"></nb-icon>
-                            </button>
-                        </nb-form-field>
-                    </div>
+        <div class="notifications-container">
+          <div
+            class="row m-0 p-0 w-100"
+            *ngFor="let n of notifications | filter : searchTerm"
+          >
+            <nb-card class="mb-2">
+              <nb-card-header class="d-flex p-3">
+                <div class="w-max d-flex align-items-center">
+                  <nb-checkbox
+                    *ngIf="!n.Read"
+                    class="read-chx"
+                    [(checked)]="n.Selected"
+                    (checkedChange)="onCheckedChange()"
+                  ></nb-checkbox>
+                  <nb-icon
+                    pack="eva"
+                    status="success"
+                    icon="checkmark-circle-outline"
+                    *ngIf="n.Read"
+                  ></nb-icon>
                 </div>
-                <div class="notifications-container">
-                    <div class="row m-0 p-0 w-100" *ngFor="let n of notifications | filter: searchTerm">
-                        <nb-card class="mb-2">
-                            <nb-card-header class="d-flex p-3">
-                                <div class="w-max d-flex align-items-center">
-                                    <nb-checkbox *ngIf="!n.Read" class="read-chx" [(checked)]="n.Selected"
-                                        (checkedChange)="onCheckedChange()"></nb-checkbox>
-                                    <nb-icon pack="eva" status="success" icon="checkmark-circle-outline"
-                                        *ngIf="n.Read"></nb-icon>
-                                </div>
-                                <div class="col ps-3">
-                                    <div>{{n.Text}}</div>
-                                    <div class="label">{{n.CreationDate | date: 'EEEE dd.MMMM yyyy. HH:mm'}}h</div>
-                                </div>
-                                <div class="w-max d-flex align-items-center p-0">
-                                    <button nbButton *ngIf="!n.Read" status="primary" shape="round" ghost size="small"
-                                        [nbTooltip]="getString('markAsRead')" (click)="markAsRead(n)">
-                                        <nb-icon pack="eva" icon="checkmark-outline"></nb-icon>
-                                    </button>
-                                    <button nbButton *ngIf="n.LinkId" status="primary" shape="round" ghost size="small"
-                                        [nbTooltip]="getString('goToNotification')" (click)="goToNotification(n)">
-                                        <nb-icon pack="eva" icon="external-link-outline"></nb-icon>
-                                    </button>
-                                </div>
-                            </nb-card-header>
-                        </nb-card>
-                    </div>
+                <div class="col ps-3">
+                  <div>{{ n.Text }}</div>
+                  <div class="label">
+                    {{ n.CreationDate | date : "EEEE dd.MMMM yyyy. HH:mm" }}h
+                  </div>
                 </div>
-            </nb-card-body>
-        </nb-card>
-    </div>
+                <div class="w-max d-flex align-items-center p-0">
+                  <button
+                    nbButton
+                    *ngIf="!n.Read"
+                    status="primary"
+                    shape="round"
+                    ghost
+                    size="small"
+                    [nbTooltip]="getString('markAsRead')"
+                    (click)="markAsRead(n)"
+                  >
+                    <nb-icon pack="eva" icon="checkmark-outline"></nb-icon>
+                  </button>
+                  <button
+                    nbButton
+                    *ngIf="n.LinkId"
+                    status="primary"
+                    shape="round"
+                    ghost
+                    size="small"
+                    [nbTooltip]="getString('goToNotification')"
+                    (click)="goToNotification(n)"
+                  >
+                    <nb-icon pack="eva" icon="external-link-outline"></nb-icon>
+                  </button>
+                </div>
+              </nb-card-header>
+            </nb-card>
+          </div>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </div>
 </div>

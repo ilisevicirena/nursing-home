@@ -15,8 +15,8 @@ import { NgForm } from "@angular/forms";
 })
 export class NewEmployeeComponent implements OnInit, OnDestroy {
   constructor(
-    private employeesService: EmployeesService,
-    private toastrService: ToastrService
+    private _employeesService: EmployeesService,
+    private _toastrService: ToastrService
   ) {}
 
   public getString = getString;
@@ -49,39 +49,39 @@ export class NewEmployeeComponent implements OnInit, OnDestroy {
     SchoolQualificationName: "",
   };
 
-  private subscriptions: Subscription[] = [];
+  private _subs: Subscription[] = [];
 
   ngOnInit(): void {}
 
   ngOnDestroy(): void {
-    this.subscriptions.forEach((element) => {
+    this._subs.forEach((element) => {
       element.unsubscribe();
     });
   }
 
   public saveNewEmployee(form: NgForm): void {
     this.loading = true;
-    this.subscriptions.push(
-      this.employeesService.add(this.employeeData).subscribe(
+    this._subs.push(
+      this._employeesService.add(this.employeeData).subscribe(
         (data) => {
           if (data.EmployeeId) {
             this.loading = false;
             this.employeeData.Id = data.EmployeeId;
             form.form.markAsPristine();
-            this.toastrService.showToast(
+            this._toastrService.showToast(
               "success",
               getString("saveSuccess"),
               ""
             );
           } else {
             this.loading = false;
-            this.toastrService.showToast("danger", getString("saveError"), "");
+            this._toastrService.showToast("danger", getString("saveError"), "");
           }
         },
         (err) => {
           console.error(err);
           this.loading = false;
-          this.toastrService.showToast("danger", getString("saveError"), "");
+          this._toastrService.showToast("danger", getString("saveError"), "");
         }
       )
     );

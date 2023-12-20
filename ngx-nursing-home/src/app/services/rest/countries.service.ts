@@ -10,20 +10,20 @@ export class CountriesService extends BaseRestApiService {
     super(http, "api/countries");
   }
 
-  private countries: any[] = undefined;
+  private _countries: any[] = undefined;
 
   public get(): Promise<any> {
     return new Promise<any>((resolve, reject) => {
-      if (this.countries === undefined) {
+      if (this._countries === undefined) {
         this.http.get(this.apiRoute + "/").subscribe(
           (result: any) => {
-            this.countries = result;
-            return resolve(this.countries);
+            this._countries = result;
+            return resolve(this._countries);
           },
           () => reject()
         );
       } else {
-        return resolve(this.countries);
+        return resolve(this._countries);
       }
     });
   }

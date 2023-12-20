@@ -8,7 +8,6 @@ import { NotesService } from "../../../services/rest/notes.service";
 import { hexToRgbA } from "../../../resources/functions";
 import { DialogService } from "../../../shared/dialog/dialog.service";
 import { NoteDocumentsComponent } from "../../notes/note-documents/note-documents.component";
-import { ToastrService } from "../../../services/toastr.service";
 import { NoteExportComponent } from "../../notes/note-export/note-export.component";
 
 @Component({
@@ -17,7 +16,7 @@ import { NoteExportComponent } from "../../notes/note-export/note-export.compone
   styleUrls: ["./doctor-visit-details.component.scss"],
 })
 export class DoctorVisitDetailsComponent implements OnInit, OnDestroy {
-  private subs: Subscription[] = [];
+  private _subs: Subscription[] = [];
 
   public getString = getString;
   public hexToRgbA = hexToRgbA;
@@ -54,26 +53,26 @@ export class DoctorVisitDetailsComponent implements OnInit, OnDestroy {
   @ViewChild(NoteExportComponent) noteExport: NoteExportComponent;
 
   constructor(
-    private ref: NbDialogRef<DoctorVisitDetailsComponent>,
-    private doctorVisitsService: DoctorVisitsService,
-    private router: Router,
-    private notesService: NotesService,
-    private dialogService: DialogService,
-    private toastrService: ToastrService
+    private _ref: NbDialogRef<DoctorVisitDetailsComponent>,
+    private _doctorVisitsService: DoctorVisitsService,
+    private _router: Router,
+    private _notesService: NotesService,
+    private _dialogService: DialogService
   ) {}
+
   ngOnInit(): void {
     this.getDoctorsAndNurses();
   }
 
   ngOnDestroy(): void {
-    this.subs.forEach((element) => {
+    this._subs.forEach((element) => {
       element.unsubscribe();
     });
   }
 
   private getDoctorsAndNurses(): void {
-    this.subs.push(
-      this.doctorVisitsService
+    this._subs.push(
+      this._doctorVisitsService
         .getDoctorsAndNurses(this.id)
         .subscribe((data) => {
           if (data) {
@@ -85,26 +84,26 @@ export class DoctorVisitDetailsComponent implements OnInit, OnDestroy {
   }
 
   private getPersons(): void {
-    this.subs.push(
-      this.doctorVisitsService.getPersons(this.id).subscribe((data) => {
+    this._subs.push(
+      this._doctorVisitsService.getPersons(this.id).subscribe((data) => {
         if (data) this.persons = data;
       })
     );
   }
 
   private getSummary(): void {
-    this.subs.push(
-      this.doctorVisitsService.getSummary(this.id).subscribe((data) => {
+    this._subs.push(
+      this._doctorVisitsService.getSummary(this.id).subscribe((data) => {
         this.summary = data;
       })
     );
   }
 
   public close(res: boolean): void {
-    this.ref.close(res);
+    this._ref.close(res);
   }
 
-  public toggleTab(t): void {
+  public toggleTab(t: any): void {
     this.tabs.map((x) => (x.active = false));
     t.active = true;
     this.selectedTab = t.id;
@@ -114,24 +113,24 @@ export class DoctorVisitDetailsComponent implements OnInit, OnDestroy {
   }
 
   public goToProfile(id: number): void {
-    this.router.navigateByUrl("/pages/employee/" + id);
+    this._router.navigateByUrl("/pages/employee/" + id);
   }
 
-  public collapsedChange(event: any, p: any) {
+  public collapsedChange(event: any, p: any): void {
     if (!event) this.getNote(p.NoteId);
   }
 
   private getNote(noteId: number): void {
-    this.subs.push(
-      this.notesService.getNoteDetails(noteId).subscribe((data) => {
+    this._subs.push(
+      this._notesService.getNoteDetails(noteId).subscribe((data) => {
         this.currentNote = data;
       })
     );
   }
 
   public openDocumentsDialog(): void {
-    this.subs.push(
-      this.dialogService
+    this._subs.push(
+      this._dialogService
         .open(NoteDocumentsComponent, {
           closeOnBackdropClick: false,
           closeOnEsc: false,
@@ -151,8 +150,8 @@ export class DoctorVisitDetailsComponent implements OnInit, OnDestroy {
   }
 
   public downloadAllNotes(): void {
-    this.subs.push(
-      this.doctorVisitsService
+    this._subs.push(
+      this._doctorVisitsService
         .getNotesForDoctorVisitTour(this.id)
         .subscribe((data) => {
           this.noteExport.downloadAsPDF(data);

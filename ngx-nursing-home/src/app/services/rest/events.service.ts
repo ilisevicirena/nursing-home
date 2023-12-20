@@ -1,15 +1,14 @@
-import { Injectable } from '@angular/core';
-import { BaseRestApiService, IBaseSaveModel } from '../base-rest-api.service';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Injectable } from "@angular/core";
+import { BaseRestApiService, IBaseSaveModel } from "../base-rest-api.service";
+import { HttpClient } from "@angular/common/http";
+import { Observable } from "rxjs";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class EventsService extends BaseRestApiService {
-
   constructor(http: HttpClient) {
-    super(http, 'api/events');
+    super(http, "api/events");
   }
 
   public getEvents(month: number, year: number): Observable<any> {

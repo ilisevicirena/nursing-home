@@ -1,27 +1,35 @@
 <nb-card class="discount-picker-card">
-    <nb-card-header class="d-flex">
-        <div class="col">
-            {{getString('tagsManagement')}}
-            <div class="discounts-selected" *ngIf="selectedTags.length>0">{{getString('selected')}}:
-                {{selectedTags.length}} <button nbButton shape="round" size="tiny" ghost
-                    (click)="clearAll()">{{getString('clearAll')}}
-                    <nb-icon pack="eva" icon="close-outline"></nb-icon>
-                </button></div>
-        </div>
-        <div class="w-max">
-            <button nbButton ghost shape="round" (click)="close(false)">
-                <nb-icon pack="eva" icon="close-outline"></nb-icon>
-            </button>
-        </div>
-    </nb-card-header>
-    <nb-card-body>
-        <div class="row m-0 w-100">
-            <nb-tag-list class="p-0">
-                <nb-tag *ngFor="let t of tags" [text]="t.Name" (click)="toggleSelected(t)"
-                    [style.background-color]="!t.selected ? hexToRgbA(t.Color) : t.Color" status="primary"
-                    [style.color]="!t.selected ? t.Color : ''" [style.border-color]="t.Color"
-                    [appearance]="t.selected ? 'filled': 'outline'"></nb-tag>
-            </nb-tag-list>
-        </div>
-    </nb-card-body>
+  <nb-card-header class="d-flex">
+    <div class="col">
+      {{ getString("tagsManagement") }}
+      <div class="discounts-selected" *ngIf="selectedTags.length > 0">
+        {{ getString("selected") }}: {{ selectedTags.length }}
+        <button nbButton shape="round" size="tiny" ghost (click)="clearAll()">
+          {{ getString("clearAll") }}
+          <nb-icon pack="eva" icon="close-outline"></nb-icon>
+        </button>
+      </div>
+    </div>
+    <div class="w-max">
+      <button nbButton ghost shape="round" (click)="close()">
+        <nb-icon pack="eva" icon="close-outline"></nb-icon>
+      </button>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="row m-0 w-100">
+      <nb-tag-list class="p-0">
+        <nb-tag
+          *ngFor="let t of tags"
+          [text]="t.Name"
+          (click)="toggleSelected(t)"
+          [style.background-color]="!t.selected ? hexToRgbA(t.Color) : t.Color"
+          status="primary"
+          [style.color]="!t.selected ? t.Color : ''"
+          [style.border-color]="t.Color"
+          [appearance]="t.selected ? 'filled' : 'outline'"
+        ></nb-tag>
+      </nb-tag-list>
+    </div>
+  </nb-card-body>
 </nb-card>

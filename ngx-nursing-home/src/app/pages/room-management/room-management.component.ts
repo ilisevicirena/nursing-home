@@ -1,12 +1,7 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { getString } from "../../resources/strings";
 import {
-  SelectEditor,
-  SmartTableColumn,
   TABLE_MODE,
-  TextboxEditor,
-  SelectFilter,
-  LookupType,
   GridColumn,
   GridTextboxEditor,
   GridNumberBoxEditor,
@@ -88,7 +83,7 @@ export class RoomManagementComponent implements OnInit, OnDestroy {
           .DisplayExpression("Name")
           .KeyExpression("Id")
           .ServerDataSource(true)
-          .ServerEndpoint(this.floorsService.apiRoute)
+          .ServerEndpoint(this._floorsService.apiRoute)
           .WidthClass("col-md-8")
           .Label(getString("floor"))
           .Required(true)
@@ -98,7 +93,7 @@ export class RoomManagementComponent implements OnInit, OnDestroy {
           .DisplayExpression("Name")
           .KeyExpression("Id")
           .ServerDataSource(true)
-          .ServerEndpoint(this.floorsService.apiRoute)
+          .ServerEndpoint(this._floorsService.apiRoute)
       ),
     new GridColumn()
       .Title(getString("width"))
@@ -161,12 +156,12 @@ export class RoomManagementComponent implements OnInit, OnDestroy {
     noValueText: getString("noBtnText").toLowerCase(),
   };
 
-  private subscriptions: Subscription[] = [];
+  private _subs: Subscription[] = [];
 
   constructor(
-    private floorsService: FloorsService,
-    private roomsService: RoomsService,
-    private toastrService: ToastrService
+    private _floorsService: FloorsService,
+    private _roomsService: RoomsService,
+    private _toastrService: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -174,7 +169,7 @@ export class RoomManagementComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscriptions.forEach((element) => {
+    this._subs.forEach((element) => {
       element.unsubscribe();
     });
   }
@@ -186,20 +181,23 @@ export class RoomManagementComponent implements OnInit, OnDestroy {
   public onCreateFloorConfirm(event: any): void {
     var model: IFloor = { Name: event.newData.Name };
 
-    this.subscriptions.push(
-      this.floorsService.add(model).subscribe(
+    this._subs.push(
+      this._floorsService.add(model).subscribe(
         (data) => {
           if (data) {
             if (data.FloorId) {
-              this.toastrService.showToast("success", getString("saveSuccess"));
+              this._toastrService.showToast(
+                "success",
+                getString("saveSuccess")
+              );
               this.getFloors();
             } else
-              this.toastrService.showToast("danger", getString("saveError"));
+              this._toastrService.showToast("danger", getString("saveError"));
           }
         },
         (err) => {
           console.error(err);
-          this.toastrService.showToast("danger", getString("saveError"));
+          this._toastrService.showToast("danger", getString("saveError"));
         }
       )
     );
@@ -207,15 +205,15 @@ export class RoomManagementComponent implements OnInit, OnDestroy {
 
   public onDeleteFloorConfirm(event: any): void {
     var model: IFloor = { Id: event.data.Id };
-    this.subscriptions.push(
-      this.floorsService.delete(model).subscribe(
+    this._subs.push(
+      this._floorsService.delete(model).subscribe(
         () => {
-          this.toastrService.showToast("success", getString("saveSuccess"));
+          this._toastrService.showToast("success", getString("saveSuccess"));
           this.getFloors();
         },
         (err) => {
           console.error(err);
-          this.toastrService.showToast("danger", getString("saveError"));
+          this._toastrService.showToast("danger", getString("saveError"));
         }
       )
     );
@@ -227,15 +225,15 @@ export class RoomManagementComponent implements OnInit, OnDestroy {
       Name: event.newData.Name,
     };
 
-    this.subscriptions.push(
-      this.floorsService.update(model).subscribe(
+    this._subs.push(
+      this._floorsService.update(model).subscribe(
         () => {
-          this.toastrService.showToast("success", getString("saveSuccess"));
+          this._toastrService.showToast("success", getString("saveSuccess"));
           this.getFloors();
         },
         (err) => {
           console.error(err);
-          this.toastrService.showToast("danger", getString("saveError"));
+          this._toastrService.showToast("danger", getString("saveError"));
         }
       )
     );
@@ -252,21 +250,24 @@ export class RoomManagementComponent implements OnInit, OnDestroy {
       Left: event.newData.Left,
     };
 
-    this.subscriptions.push(
-      this.roomsService.add(model).subscribe(
+    this._subs.push(
+      this._roomsService.add(model).subscribe(
         (data) => {
           if (data) {
             if (data.RoomId) {
-              this.toastrService.showToast("success", getString("saveSuccess"));
+              this._toastrService.showToast(
+                "success",
+                getString("saveSuccess")
+              );
               this.getRooms();
               this.refreshFloorRooms();
             } else
-              this.toastrService.showToast("danger", getString("saveError"));
+              this._toastrService.showToast("danger", getString("saveError"));
           }
         },
         (err) => {
           console.error(err);
-          this.toastrService.showToast("danger", getString("saveError"));
+          this._toastrService.showToast("danger", getString("saveError"));
         }
       )
     );
@@ -275,16 +276,16 @@ export class RoomManagementComponent implements OnInit, OnDestroy {
   public onDeleteRoomConfirm(event: any): void {
     var model: IRoom = { Id: event.data.Id };
 
-    this.subscriptions.push(
-      this.roomsService.delete(model).subscribe(
+    this._subs.push(
+      this._roomsService.delete(model).subscribe(
         () => {
-          this.toastrService.showToast("success", getString("saveSuccess"));
+          this._toastrService.showToast("success", getString("saveSuccess"));
           this.getRooms();
           this.refreshFloorRooms();
         },
         (err) => {
           console.error(err);
-          this.toastrService.showToast("danger", getString("saveError"));
+          this._toastrService.showToast("danger", getString("saveError"));
         }
       )
     );
@@ -302,26 +303,26 @@ export class RoomManagementComponent implements OnInit, OnDestroy {
       Left: event.newData.Left,
     };
 
-    this.subscriptions.push(
-      this.roomsService.update(model).subscribe(
+    this._subs.push(
+      this._roomsService.update(model).subscribe(
         () => {
-          this.toastrService.showToast("success", getString("saveSuccess"));
+          this._toastrService.showToast("success", getString("saveSuccess"));
           this.getRooms();
           this.refreshFloorRooms();
         },
         (err) => {
           console.error(err);
-          this.toastrService.showToast("danger", getString("saveError"));
+          this._toastrService.showToast("danger", getString("saveError"));
         }
       )
     );
   }
 
-  public onTagClick(floor: any, firstLoad: boolean = false) {
+  public onTagClick(floor: any, firstLoad: boolean = false): void {
     if (!firstLoad) this.floorsData.forEach((x) => (x.selected = false));
     floor.selected = true;
-    this.subscriptions.push(
-      this.roomsService.getRoomsForFloor(floor.Id).subscribe((data) => {
+    this._subs.push(
+      this._roomsService.getRoomsForFloor(floor.Id).subscribe((data) => {
         this.selectedFloorRooms = data;
       })
     );
@@ -343,8 +344,8 @@ export class RoomManagementComponent implements OnInit, OnDestroy {
 
   private getFloors(): void {
     this.floorsLoading = true;
-    this.subscriptions.push(
-      this.floorsService.getData().subscribe(
+    this._subs.push(
+      this._floorsService.getData().subscribe(
         (data) => {
           this.floorsData = data;
           if (this.floorsData.length > 0)
@@ -361,8 +362,8 @@ export class RoomManagementComponent implements OnInit, OnDestroy {
   private refreshFloorRooms(): void {
     var selectedFloor = this.floorsData.find((x) => x.selected);
     if (selectedFloor) {
-      this.subscriptions.push(
-        this.roomsService
+      this._subs.push(
+        this._roomsService
           .getRoomsForFloor(selectedFloor.Id)
           .subscribe((data) => {
             this.selectedFloorRooms = data;
@@ -373,8 +374,8 @@ export class RoomManagementComponent implements OnInit, OnDestroy {
 
   private getRooms(): void {
     this.roomsLoading = true;
-    this.subscriptions.push(
-      this.roomsService.getData().subscribe(
+    this._subs.push(
+      this._roomsService.getData().subscribe(
         (data) => {
           console.log(data);
           this.roomsData = data;
