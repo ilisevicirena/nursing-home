@@ -6,7 +6,7 @@ import { TagsService } from "../../services/rest/tags.service";
 import { ToastrService } from "../../services/toastr.service";
 import { NotesService } from "../../services/rest/notes.service";
 import { ActivatedRoute, Router } from "@angular/router";
-import { EmployeesService } from "../../services/rest/employees.service";
+import { DoctorVisitsService } from "../../services/rest/doctor-visits.service";
 
 @Component({
   selector: "sample-doctor-visit-tour",
@@ -57,7 +57,7 @@ export class DoctorVisitTourComponent implements OnInit, OnDestroy {
     private _toastrService: ToastrService,
     private _notesService: NotesService,
     private _activatedRoute: ActivatedRoute,
-    private _employeesService: EmployeesService,
+    private _doctorVisitService: DoctorVisitsService,
     private _router: Router
   ) {}
 
@@ -80,7 +80,7 @@ export class DoctorVisitTourComponent implements OnInit, OnDestroy {
 
   private getVisitTourDetails(id: number): void {
     this._subs.push(
-      this._employeesService.getVisitTourDetails(id).subscribe((data) => {
+      this._doctorVisitService.getVisitTourDetails(id).subscribe((data) => {
         this.tourData = data.Tour[0];
         this.doctors = data.Doctors;
         this.nurses = data.Nurses;
@@ -214,25 +214,23 @@ export class DoctorVisitTourComponent implements OnInit, OnDestroy {
 
   public cancelDoctorVisit(): void {
     this._subs.push(
-      this._employeesService
-        .deleteDoctorVisit(this._tourId)
-        .subscribe((data) => {
-          this._toastrService.showToast("success", getString("saveSuccess"));
-          this._router.navigateByUrl("/pages/dashboard");
-        })
+      this._doctorVisitService.delete({ Id: this._tourId }).subscribe(() => {
+        this._toastrService.showToast("success", getString("saveSuccess"));
+        this._router.navigateByUrl("/pages/dashboard");
+      })
     );
   }
 
   public completeDoctorVisit(): void {
     this.loading = true;
     this._subs.push(
-      this._employeesService
+      this._doctorVisitService
         .completeDoctorVisit(this._tourId, this.persons.length)
         .subscribe(() => {
           this.persons.forEach((person, index) => {
             if (person.Note.Id > 0) {
               this._subs.push(
-                this._employeesService
+                this._doctorVisitService
                   .insertDoctorVisitForPerson(
                     this._tourId,
                     person.Id,

@@ -5,6 +5,7 @@ import { Subscription } from "rxjs";
 import { EmployeesService } from "../../services/rest/employees.service";
 import { Router } from "@angular/router";
 import { ToastrService } from "../../services/toastr.service";
+import { DoctorVisitsService } from "../../services/rest/doctor-visits.service";
 
 @Component({
   selector: "sample-start-doctor-visit-tour",
@@ -29,7 +30,8 @@ export class StartDoctorVisitTourComponent implements OnInit, OnDestroy {
     private _ref: NbDialogRef<StartDoctorVisitTourComponent>,
     private _employeesService: EmployeesService,
     private _router: Router,
-    private _toastrService: ToastrService
+    private _toastrService: ToastrService,
+    private _doctorVisitService: DoctorVisitsService
   ) {}
 
   ngOnInit(): void {
@@ -64,13 +66,14 @@ export class StartDoctorVisitTourComponent implements OnInit, OnDestroy {
   public startDoctorVisitTour(): void {
     this.loading = true;
     var objToSave = {
+      Id: 0,
       VisitDate: this.visitDate.toISOString(),
       Doctors: this.selectedDoctors.toString(),
       Nurses: this.selectedNurses.toString(),
     };
 
     this._subs.push(
-      this._employeesService.newDoctorVisit(objToSave).subscribe((data) => {
+      this._doctorVisitService.add(objToSave).subscribe((data) => {
         if (data.length > 0) {
           this._toastrService.showToast("info", getString("visitTourStarted"));
           this.loading = false;

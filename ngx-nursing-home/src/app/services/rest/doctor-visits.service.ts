@@ -28,4 +28,27 @@ export class DoctorVisitsService extends BaseRestApiService {
       this.apiRoute + "/getNotesForDoctorVisitTour?id=" + id
     );
   }
+
+  public getVisitTourDetails(id: number): Observable<any> {
+    return this.http.get(this.apiRoute + "/getVisitTourDetails?id=" + id);
+  }
+
+  public completeDoctorVisit(id: number, total: number): Observable<any> {
+    return this.http.post(this.apiRoute + "/completeDoctorVisit", {
+      Id: id,
+      Total: total,
+    });
+  }
+
+  public insertDoctorVisitForPerson(
+    id: number,
+    personId: number,
+    noteId: number
+  ): Observable<any> {
+    return this.http.post(this.apiRoute + "/insertDoctorVisitForPerson", {
+      Id: id,
+      NoteId: noteId,
+      PersonId: personId,
+    });
+  }
 }
