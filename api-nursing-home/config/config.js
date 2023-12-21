@@ -7,4 +7,15 @@ const CONFIG = {
 
 const FILES_FOLDER = "files";
 const TEMPLATES_FOLDER = "templates";
-module.exports = { CONFIG, FILES_FOLDER, TEMPLATES_FOLDER };
+const ACCOMMODATION_REQUEST_FILENAME = "zahtjev-za-smjestaj";
+const ACCOMMODATION_REQUEST_TEMPLATE = "zahtjev-za-smjestaj.pdf";
+const FONT_FILENAME = "Roboto-Medium.ttf";
+
+module.exports = {
+  CONFIG,
+  FILES_FOLDER,
+  TEMPLATES_FOLDER,
+  ACCOMMODATION_REQUEST_FILENAME,
+  ACCOMMODATION_REQUEST_TEMPLATE,
+  FONT_FILENAME,
+};
