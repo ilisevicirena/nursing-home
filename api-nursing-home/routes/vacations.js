@@ -54,7 +54,7 @@ router.post("/add", async (request, response) => {
         "EXEC [dbo].[insertVacationForEmployee] @EmployeeId=@emp, @Year=@year, @FromDate=@from, @ToDate=@to, @DaysTotal=@total, @DaysTaken=@taken"
       );
     if (result != null) response.json(result.recordset[0]);
-    else response.send(getError(8001));
+    else response.send(getError(170001));
   } catch (err) {
     response.status(500);
     response.send(err.message);
@@ -73,7 +73,7 @@ router.post("/changeVacationStatus", async (request, response) => {
         "EXEC [dbo].[changeVacationStatus] @VacationId=@id, @StatusId=@status"
       );
     if (result != null) response.json(result.recordset);
-    else response.send(getError(8003));
+    else response.send(getError(170004));
   } catch (err) {
     response.status(500);
     response.send(err.message);

@@ -11,6 +11,7 @@ const { DocumentFile } = require("../models/Document");
 const { FILES_FOLDER } = require("../config/config");
 const fs = require("fs");
 const { resolve } = require("path");
+const { getAbsolutePathToFilesFolder } = require("../resources/functions");
 
 router.post("/calculationPaid", async (request, response) => {
   try {
@@ -294,11 +295,7 @@ router.post("/add", async (request, response) => {
 router.post("/insertDocumentForCalculation", async (request, response) => {
   try {
     var objectToSave = Object.assign(new DocumentFile(), request.body);
-    var folderPath = "./" + FILES_FOLDER;
-    // if folder doesn't exist create it first
-    if (!fs.existsSync(folderPath)) fs.mkdirSync(folderPath);
-    //get full path to new folder
-    const absolutePath = resolve(folderPath) + "\\";
+    const absolutePath = getAbsolutePathToFilesFolder();
     const pool = await db;
     const result = await pool
       .request()
@@ -350,17 +347,13 @@ router.post("/checkCalculationExists", async (request, response) => {
           // delete files from file system
           for (let index = 0; index < result.recordsets[1].length; index++) {
             const element = result.recordsets[1][index];
-            fs.unlink(element.Path, function (err) {
+            fs.unlink(element.Path, function () {
               if (index == result.recordsets[1].length - 1)
                 response.json({ result: result.recordset[0].SelectedId });
             });
           }
-        } else {
-          response.json({ result: result.recordset[0].SelectedId });
-        }
-      } else {
-        response.json({ result: result.recordset[0].SelectedId });
-      }
+        } else response.json({ result: result.recordset[0].SelectedId });
+      } else response.json({ result: result.recordset[0].SelectedId });
     } else response.send(getError(50005));
   } catch (err) {
     response.status(500);

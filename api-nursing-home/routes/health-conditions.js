@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { db } = require("../config/framework");
+const { getError } = require("../resources/error-codes");
 
 router.get("/", async (request, response) => {
   try {
@@ -28,7 +29,7 @@ router.post("/insertForPerson", async (request, response) => {
         "EXEC [dbo].[insertHealthConditionForPerson] @HealthConditionId=@condition, @PersonId=@person, @Description=@desc"
       );
     if (result != null) response.json(result.recordset[0]);
-    else response.send(getError(1001));
+    else response.send(getError(120004));
   } catch (err) {
     response.status(500);
     response.send(err.message);
@@ -58,7 +59,7 @@ router.delete("/delete", async (request, response) => {
       .input("id", objectToSave.Id)
       .query("EXEC [dbo].[deleteHealthConditionsForPerson] @Id=@id");
     if (result != null) response.json(result.recordset);
-    else response.send(getError(1002));
+    else response.send(getError(120002));
   } catch (err) {
     response.status(500);
     response.send(err.message);

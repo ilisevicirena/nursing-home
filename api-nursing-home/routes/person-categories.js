@@ -2,11 +2,12 @@ const express = require("express");
 const router = express.Router();
 const { db } = require("../config/framework");
 const { resolve } = require("path");
-const { PDFDocument } = require("pdf-lib");
-const fs = require("fs");
-const util = require("util");
-const fontkit = require("@pdf-lib/fontkit");
-const { TEMPLATES_FOLDER } = require("../config/config");
+const {
+  TEMPLATES_FOLDER,
+  CATEGORIES_TEMPLATE,
+  CATEGORIES_FILENAME,
+} = require("../config/config");
+const { fillPdfForm, bytesToBase64 } = require("../resources/functions");
 
 router.get("/", async (request, response) => {
   try {
@@ -33,7 +34,7 @@ router.post("/insertForPerson", async (request, response) => {
         "EXEC [dbo].[insertCategoryForPerson] @CategoryId=@category, @PersonId=@person"
       );
     if (result != null) response.json(result.recordset[0]);
-    else response.send(getError(1001));
+    else response.send(getError(150001));
   } catch (err) {
     response.status(500);
     response.send(err.message);
@@ -56,10 +57,6 @@ router.get("/getForPerson", async (request, response) => {
 
 router.get("/generateTemplate", async (request, response) => {
   try {
-    const inputFile = resolve(
-      "./" + TEMPLATES_FOLDER + "/popis-kategorija-template.pdf"
-    );
-    const font = resolve("./" + TEMPLATES_FOLDER + "/Roboto-Medium.ttf");
     const pool = await db;
     const result = await pool
       .request()
@@ -68,45 +65,12 @@ router.get("/generateTemplate", async (request, response) => {
     if (result.recordset) {
       var data = formatDataObject(result.recordset);
 
-      var outputFileName =
-        "popis-kateogorija-" + new Date().toISOString() + ".pdf";
-      const readFile = util.promisify(fs.readFile);
-      function getStuff() {
-        return readFile(inputFile);
-      }
-      const file = await getStuff();
-      const pdfDoc = await PDFDocument.load(file);
-      const fontBytes = await new Promise((resolve) =>
-        fs.readFile(font, (err, data) => {
-          if (err) resolve(null);
-          else resolve(data);
-        })
+      const inputFile = resolve(
+        "./" + TEMPLATES_FOLDER + "/" + CATEGORIES_TEMPLATE
       );
-
-      let customFont;
-      if (fontBytes) {
-        pdfDoc.registerFontkit(fontkit);
-        await pdfDoc.embedFont(fontBytes);
-        customFont = await pdfDoc.embedFont(fontBytes);
-      }
-
-      const form = pdfDoc.getForm();
-      const rawUpdateFieldAppearances = form.updateFieldAppearances.bind(form);
-      form.updateFieldAppearances = function () {
-        return rawUpdateFieldAppearances(customFont);
-      };
-
-      Object.keys(data).forEach((element) => {
-        if (data[element].type === "text") {
-          var field = form.getTextField(element);
-          field.setText(data[element].value);
-        } else if (data[element].type === "bool") {
-          var field = form.getCheckBox(element);
-          if (data[element].value == 1) field.check();
-        }
-      });
-
-      const pdfBytes = await pdfDoc.save();
+      const outputFileName =
+        CATEGORIES_FILENAME + "-" + new Date().toISOString() + ".pdf";
+      const pdfBytes = await fillPdfForm(data, inputFile);
       const base64Result = bytesToBase64(pdfBytes);
 
       response.send({
@@ -119,13 +83,6 @@ router.get("/generateTemplate", async (request, response) => {
     response.send(err.message);
   }
 });
-
-function bytesToBase64(bytes) {
-  const buffer = Buffer.from(bytes);
-  const base64String = buffer.toString("base64");
-
-  return base64String;
-}
 
 function formatDataObject(response) {
   var data = {};

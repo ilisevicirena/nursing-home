@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { db } = require("../config/framework");
 const { JobPosition } = require("../models/JobPosition");
+const { getError } = require("../resources/error-codes");
 
 router.get("/", async (request, response) => {
   try {
@@ -24,7 +25,7 @@ router.post("/add", async (request, response) => {
       .input("desc", objectToSave.Description)
       .query("EXEC [dbo].[insertJobPosition] @Name=@name, @Description=@desc");
     if (result != null) response.json(result.recordset[0]);
-    else response.send(getError(2001));
+    else response.send(getError(130001));
   } catch (err) {
     response.status(500);
     response.send(err.message);
@@ -40,7 +41,7 @@ router.delete("/delete", async (request, response) => {
       .input("id", objectToSave.Id)
       .query("EXEC [dbo].[deleteJobPosition] @Id=@id");
     if (result != null) response.json(result.recordset);
-    else response.send(getError(2002));
+    else response.send(getError(130002));
   } catch (err) {
     response.status(500);
     response.send(err.message);
@@ -60,7 +61,7 @@ router.post("/update", async (request, response) => {
         "EXEC [dbo].[updateJobPosition] @Id=@id, @Name=@name, @Description=@desc"
       );
     if (result != null) response.json(result.recordset);
-    else response.send(getError(2003));
+    else response.send(getError(130003));
   } catch (err) {
     response.status(500);
     response.send(err.message);

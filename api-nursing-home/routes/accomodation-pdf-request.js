@@ -4,16 +4,15 @@ const { db } = require("../config/framework");
 const { getError } = require("../resources/error-codes");
 const {
   TEMPLATES_FOLDER,
-  FILES_FOLDER,
   ACCOMMODATION_REQUEST_FILENAME,
   ACCOMMODATION_REQUEST_TEMPLATE,
-  FONT_FILENAME,
 } = require("../config/config");
 const { resolve } = require("path");
-const { PDFDocument } = require("pdf-lib");
 const fs = require("fs");
-const util = require("util");
-const fontkit = require("@pdf-lib/fontkit");
+const {
+  getAbsolutePathToFilesFolder,
+  fillPdfForm,
+} = require("../resources/functions");
 
 const HealthConditionOtherId = 8;
 
@@ -47,9 +46,7 @@ router.post("/generateRequest", async (request, response) => {
       const pdfBytes = await fillPdfForm(data, inputFile);
 
       // save file to db and to filesystem
-      const folderPath = "./" + FILES_FOLDER;
-      if (!fs.existsSync(folderPath)) fs.mkdirSync(folderPath);
-      const absolutePath = resolve(folderPath) + "\\";
+      const absolutePath = getAbsolutePathToFilesFolder();
 
       const res = await pool
         .request()
@@ -79,55 +76,6 @@ router.post("/generateRequest", async (request, response) => {
 });
 
 // ---------------------------------------------------------------- HELPER FUNCTIONS ----------------------------------------------------------------
-
-function readInputFile(inputFile) {
-  const readFile = util.promisify(fs.readFile);
-  return readFile(inputFile);
-}
-
-function getFileBytes(file) {
-  return new Promise((resolve) =>
-    fs.readFile(file, (err, data) => {
-      if (err) resolve(null);
-      else resolve(data);
-    })
-  );
-}
-
-async function getCustomFont(pdfDoc) {
-  const font = resolve("./" + TEMPLATES_FOLDER + "/" + FONT_FILENAME);
-  const fontBytes = await getFileBytes(font);
-  pdfDoc.registerFontkit(fontkit);
-  await pdfDoc.embedFont(fontBytes);
-
-  return await pdfDoc.embedFont(fontBytes);
-}
-
-async function fillPdfForm(data, inputFile) {
-  const file = await readInputFile(inputFile);
-  const pdfDoc = await PDFDocument.load(file);
-  const customFont = await getCustomFont(pdfDoc);
-  const form = pdfDoc.getForm();
-  const rawUpdateFieldAppearances = form.updateFieldAppearances.bind(form);
-
-  form.updateFieldAppearances = function () {
-    return rawUpdateFieldAppearances(customFont);
-  };
-
-  Object.keys(data).forEach((element) => {
-    if (form.getFieldMaybe(element)) {
-      if (data[element].type === "text") {
-        var field = form.getTextField(element);
-        field.setText(data[element].value);
-      } else if (data[element].type === "bool") {
-        var field = form.getCheckBox(element);
-        if (data[element].value == 1) field.check();
-      }
-    }
-  });
-
-  return await pdfDoc.save();
-}
 
 function formatDataObject(
   person,

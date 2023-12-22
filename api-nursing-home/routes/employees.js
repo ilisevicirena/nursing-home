@@ -54,7 +54,7 @@ router.post("/add", async (request, response) => {
         "EXEC [dbo].[insertEmployee] @FirstName=@firstName, @LastName=@lastName, @JMBG=@jmbg, @BirthDate=@birthDate, @GenderId=@genderId, @FatherName=@fatherFirstName,@BirthCityId=@birthCityId, @BirthMunicipalityId=@birthMunicipalityId, @BirthCountryId=@birthCountryId, @ResidanceCityId=@residanceCityId,@ResidanceStreetName=@residanceStreetName, @ResidanceHouseNumber=@residanceHouseNumber, @Telephone=@tel, @Mobile=@mob, @Email=@email, @EmploymentDate=@empDate, @BankName=@bank, @BankAccountNumber=@bankAcc, @JobPositionId=@jp, @EmploymentTypeId=@et, @YearsOfExperiance=@years, @EmploymentEndDate=@empEnd, @DaysOfVacation=@daysVcc, @SchoolName=@school, @SchoolQualificationName=@schoolQ, @QualificationId=@qualification"
       );
     if (result != null) response.json(result.recordset[0]);
-    else response.send(getError(8001));
+    else response.send(getError(100001));
   } catch (err) {
     response.status(500);
     response.send(err.message);
@@ -98,7 +98,7 @@ router.post("/update", async (request, response) => {
         "EXEC [dbo].[updateEmployee] @Id=@id, @FirstName=@firstName, @LastName=@lastName, @JMBG=@jmbg, @BirthDate=@birthDate, @GenderId=@genderId, @FatherName=@fatherFirstName,@BirthCityId=@birthCityId, @BirthMunicipalityId=@birthMunicipalityId, @BirthCountryId=@birthCountryId, @ResidanceCityId=@residanceCityId,@ResidanceStreetName=@residanceStreetName, @ResidanceHouseNumber=@residanceHouseNumber, @Telephone=@tel, @Mobile=@mob, @Email=@email, @EmploymentDate=@empDate, @BankName=@bank, @BankAccountNumber=@bankAcc, @JobPositionId=@jp, @EmploymentTypeId=@et, @YearsOfExperiance=@years, @EmploymentEndDate=@empEnd, @DaysOfVacation=@daysVcc, @SchoolName=@school, @SchoolQualificationName=@schoolQ, @QualificationId=@qualification"
       );
     if (result != null) response.json(result.recordset);
-    else response.send(getError(8003));
+    else response.send(getError(100003));
   } catch (err) {
     response.status(500);
     response.send(err.message);
@@ -118,7 +118,7 @@ router.post("/changeStatusEmployee", async (request, response) => {
         "EXEC [dbo].[changeStatusEmployee] @Id=@id, @Status=@status, @Date=@endDate"
       );
     if (result != null) response.json(result.recordset);
-    else response.send(getError(8004));
+    else response.send(getError(100004));
   } catch (err) {
     response.status(500);
     response.send(err.message);

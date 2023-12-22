@@ -25,7 +25,7 @@ router.post("/add", async (request, response) => {
       .input("name", objectToSave.Name)
       .query("EXEC [dbo].[insertEmploymentType] @Name=@name");
     if (result != null) response.json(result.recordset[0]);
-    else response.send(getError(2001));
+    else response.send(getError(110001));
   } catch (err) {
     response.status(500);
     response.send(err.message);
@@ -41,7 +41,7 @@ router.delete("/delete", async (request, response) => {
       .input("id", objectToSave.Id)
       .query("EXEC [dbo].[deleteEmploymentType] @Id=@id");
     if (result != null) response.json(result.recordset);
-    else response.send(getError(2002));
+    else response.send(getError(110002));
   } catch (err) {
     response.status(500);
     response.send(err.message);
@@ -58,7 +58,7 @@ router.post("/update", async (request, response) => {
       .input("name", objectToSave.Name)
       .query("EXEC [dbo].[updateEmploymentType] @Id=@id, @Name=@name");
     if (result != null) response.json(result.recordset);
-    else response.send(getError(2003));
+    else response.send(getError(110003));
   } catch (err) {
     response.status(500);
     response.send(err.message);

@@ -26,7 +26,7 @@ router.post("/add", async (request, response) => {
         "EXEC [dbo].[insertMunicipality] @Name=@name, @CountryId=@country"
       );
     if (result != null) response.json(result.recordset[0]);
-    else response.send(getError(2001));
+    else response.send(getError(140001));
   } catch (err) {
     response.status(500);
     response.send(err.message);
@@ -42,7 +42,7 @@ router.delete("/delete", async (request, response) => {
       .input("id", objectToSave.Id)
       .query("EXEC [dbo].[deleteMunicipality] @Id=@id");
     if (result != null) response.json(result.recordset);
-    else response.send(getError(2002));
+    else response.send(getError(140002));
   } catch (err) {
     response.status(500);
     response.send(err.message);
@@ -62,7 +62,7 @@ router.post("/update", async (request, response) => {
         "EXEC [dbo].[updateMunicipality] @Id=@id, @Name=@name, @CountryId=@country"
       );
     if (result != null) response.json(result.recordset);
-    else response.send(getError(2003));
+    else response.send(getError(140003));
   } catch (err) {
     response.status(500);
     response.send(err.message);

@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { db } = require("../config/framework");
 const { City } = require("../models/City");
+const { getError } = require("../resources/error-codes");
 
 router.get("/", async (request, response) => {
   try {
@@ -28,7 +29,7 @@ router.post("/add", async (request, response) => {
         "EXEC [dbo].[insertCity] @Name=@name, @PostalCode=@postal, @CountryId=@country, @MunicipalityId=@municipality"
       );
     if (result != null) response.json(result.recordset[0]);
-    else response.send(getError(2001));
+    else response.send(getError(80001));
   } catch (err) {
     response.status(500);
     response.send(err.message);
@@ -44,7 +45,7 @@ router.delete("/delete", async (request, response) => {
       .input("id", objectToSave.Id)
       .query("EXEC [dbo].[deleteCity] @Id=@id");
     if (result != null) response.json(result.recordset);
-    else response.send(getError(2002));
+    else response.send(getError(80002));
   } catch (err) {
     response.status(500);
     response.send(err.message);
@@ -66,7 +67,7 @@ router.post("/update", async (request, response) => {
         "EXEC [dbo].[updateCity] @Id=@id, @Name=@name, @PostalCode=@postal, @CountryId=@country, @MunicipalityId=@municipality"
       );
     if (result != null) response.json(result.recordset);
-    else response.send(getError(2003));
+    else response.send(getError(80003));
   } catch (err) {
     response.status(500);
     response.send(err.message);

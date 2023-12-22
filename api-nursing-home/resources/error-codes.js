@@ -149,7 +149,7 @@ var errors = [
     "Error while fetching calculation summary from database. Invalid number of datasets."
   ),
 
-  // calculation error codes starting with 60000
+  // summary error codes starting with 60000
   new CodeMessage(
     60001,
     "Error while fetching dashboard summary from database. Invalid number of datasets."
@@ -160,6 +160,111 @@ var errors = [
     70001,
     "Error while fetching dashboard summary from database. Invalid number of datasets."
   ),
+
+  // cities error codes starting with 80000
+  new CodeMessage(80001, "Error while iserting new city into database."),
+  new CodeMessage(80002, "Error while deleting city from database."),
+  new CodeMessage(80003, "Error while updating city in database."),
+
+  // doctor visits error codes starting with 90000
+  new CodeMessage(
+    90001,
+    "Error while fetching doctors and nurses from database. Invalid number of datasets."
+  ),
+  new CodeMessage(
+    90002,
+    "Error while fetching doctor visit summary from database. Invalid number of datasets."
+  ),
+  new CodeMessage(
+    90003,
+    "Error while iserting new doctor visit into database."
+  ),
+  new CodeMessage(90004, "Error while deleting doctor visit from database."),
+  new CodeMessage(90005, "Error while completing doctor visit in database."),
+  new CodeMessage(
+    90006,
+    "Error while fetching doctors visit tour details from database. Invalid number of datasets."
+  ),
+  new CodeMessage(
+    90007,
+    "Error while inserting doctor visit for person in database."
+  ),
+
+  // employees error codes starting with 100000
+  new CodeMessage(100001, "Error while iserting new employee into database."),
+  new CodeMessage(100002, "Error while deleting employee from database."),
+  new CodeMessage(100003, "Error while updating employee in database."),
+  new CodeMessage(
+    100004,
+    "Error while changing status of employee in database."
+  ),
+
+  // employment types codes starting with 110000
+  new CodeMessage(
+    110001,
+    "Error while iserting new employment type into database."
+  ),
+  new CodeMessage(
+    110002,
+    "Error while deleting employment type from database."
+  ),
+  new CodeMessage(110003, "Error while updating employment type in database."),
+
+  // health conditions codes starting with 120000
+  new CodeMessage(
+    120001,
+    "Error while iserting new health condition into database."
+  ),
+  new CodeMessage(
+    120002,
+    "Error while deleting health condition from database."
+  ),
+  new CodeMessage(120003, "Error while updating health condition in database."),
+  new CodeMessage(
+    120004,
+    "Error while inserting health condition for person in database."
+  ),
+
+  // job positions error codes starting with 130000
+  new CodeMessage(
+    130001,
+    "Error while iserting new job position into database."
+  ),
+  new CodeMessage(130002, "Error while deleting job position from database."),
+  new CodeMessage(130003, "Error while updating job position in database."),
+
+  // municipalities error codes starting with 140000
+  new CodeMessage(
+    140001,
+    "Error while iserting new municipality into database."
+  ),
+  new CodeMessage(140002, "Error while deleting municipality from database."),
+  new CodeMessage(140003, "Error while updating municipality in database."),
+
+  // person categories codes starting with 150000
+  new CodeMessage(
+    150001,
+    "Error while iserting new person category for person into database."
+  ),
+  new CodeMessage(
+    150002,
+    "Error while deleting person category from database."
+  ),
+  new CodeMessage(150003, "Error while updating person category in database."),
+
+  // qualifications error codes starting with 160000
+  new CodeMessage(
+    160001,
+    "Error while iserting qualification position into database."
+  ),
+  new CodeMessage(160002, "Error while deleting qualification from database."),
+  new CodeMessage(160003, "Error while updating qualification in database."),
+
+  // vacations error codes starting with 170000
+  new CodeMessage(170001, "Error while iserting new vacation into database."),
+  new CodeMessage(170002, "Error while deleting vacation from database."),
+  new CodeMessage(170003, "Error while updating vacation in database."),
+  new CodeMessage(170004, "Error while changing vacation status in database."),
 ];
 
 module.exports = {

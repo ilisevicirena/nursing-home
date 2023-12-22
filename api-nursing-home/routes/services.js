@@ -19,7 +19,6 @@ router.post("/add", async (request, response) => {
   try {
     var objectToSave = Object.assign(new Service(), request.body);
     const pool = await db;
-    console.log(objectToSave);
     const result = await pool
       .request()
       .input("name", objectToSave.Name)

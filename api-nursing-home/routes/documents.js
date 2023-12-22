@@ -6,6 +6,7 @@ const { FILES_FOLDER } = require("../config/config");
 const fs = require("fs");
 const { resolve } = require("path");
 const { DocumentFile } = require("../models/Document");
+const { getAbsolutePathToFilesFolder } = require("../resources/functions");
 
 router.get("/getDocumentContent", async (request, response) => {
   try {
@@ -32,11 +33,7 @@ router.get("/getDocumentContent", async (request, response) => {
 router.post("/add", async (request, response) => {
   try {
     var objectToSave = Object.assign(new DocumentFile(), request.body);
-    var folderPath = "./" + FILES_FOLDER;
-    // if folder doesn't exist create it first
-    if (!fs.existsSync(folderPath)) fs.mkdirSync(folderPath);
-    //get full path to new folder
-    const absolutePath = resolve(folderPath) + "\\";
+    const absolutePath = getAbsolutePathToFilesFolder();
     const pool = await db;
     const result = await pool
       .request()
