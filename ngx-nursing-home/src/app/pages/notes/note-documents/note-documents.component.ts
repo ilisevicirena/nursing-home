@@ -8,7 +8,6 @@ import { UploadDocumentComponent } from "../../documents/upload-document/upload-
 import { DocumentsService } from "../../../services/rest/documents.service";
 import { ToastrService } from "../../../services/toastr.service";
 import { fileDownload, makeId, previewFile } from "shared-components";
-import { BufferOptions } from "pdfmake/interfaces";
 
 @Component({
   selector: "sample-note-documents",

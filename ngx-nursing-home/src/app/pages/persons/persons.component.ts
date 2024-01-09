@@ -16,11 +16,11 @@ import {
   GridSelectFilter,
   GridLookupColumn,
   GridNumberColumn,
+  IGridExportDocumentSettings,
 } from "shared-components";
 import { NbWindowService, NbWindowState } from "@nebular/theme";
 import { PersonPopupWindowComponent } from "../person-popup-window/person-popup-window.component";
 import { GendersService } from "../../services/rest/genders.service";
-import { ExportDocSettings } from "shared-components/lib/models/smart-table.model";
 
 @Component({
   selector: "sample-persons",
@@ -40,7 +40,7 @@ export class PersonsComponent implements OnInit, OnDestroy {
     { label: getString("startDate"), field: "StartDate", type: "date" },
     { label: getString("active"), field: "Active", type: "checkbox" },
   ];
-  public exportSettings: ExportDocSettings = {
+  public exportSettings: IGridExportDocumentSettings = {
     title: getString("persons"),
     subtitle: undefined,
     showOrdinalNumbers: true,

@@ -8,7 +8,6 @@ import { ToastrService } from "../../services/toastr.service";
 import { DialogService } from "../../shared/dialog/dialog.service";
 import { Subscription } from "rxjs";
 import { getString } from "../../resources/strings";
-import { NgForm } from "@angular/forms";
 import { VacationsService } from "../../services/rest/vacations.service";
 
 @Component({

@@ -6,7 +6,6 @@ import {
   ViewChild,
 } from "@angular/core";
 import { getString } from "../../resources/strings";
-import { ExportDocSettings } from "shared-components/lib/models/smart-table.model";
 import {
   GridCheckboxColumn,
   GridColumn,
@@ -15,6 +14,7 @@ import {
   GridLookupColumn,
   GridNumberColumn,
   GridSelectFilter,
+  IGridExportDocumentSettings,
 } from "shared-components";
 import { Subscription } from "rxjs";
 import { JobPositionsService } from "../../services/rest/job-positions.service";
@@ -44,7 +44,7 @@ export class EmployeesComponent implements OnInit, OnDestroy {
     { label: getString("jobPosition"), field: "JobPositionName", type: "" },
     { label: getString("active"), field: "Active", type: "checkbox" },
   ];
-  public exportSettings: ExportDocSettings = {
+  public exportSettings: IGridExportDocumentSettings = {
     title: getString("employees"),
     subtitle: undefined,
     showOrdinalNumbers: true,

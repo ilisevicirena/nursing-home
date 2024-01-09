@@ -24,7 +24,7 @@ router.get("/getDoctorsAndNurses", async (request, response) => {
       .input("id", request.query.id)
       .query("EXEC [dbo].[getDoctorsAndNursesForVisit] @Id=@id");
 
-    if (response.recordsets.length == 2) {
+    if (result.recordsets.length == 2) {
       response.json({
         doctors: result.recordsets[0],
         nurses: result.recordsets[1],
@@ -57,7 +57,7 @@ router.get("/getSummary", async (request, response) => {
       .request()
       .input("id", request.query.id)
       .query("EXEC [dbo].[getSummaryForVisit] @Id=@id");
-    if (response.recordsets.length == 3) {
+    if (result.recordsets.length == 3) {
       response.json({
         Visited: result.recordsets[0][0],
         TimePassed: result.recordsets[1][0],

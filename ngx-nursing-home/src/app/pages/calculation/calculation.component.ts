@@ -23,7 +23,8 @@ import {
   GridDateboxFilter,
   GridSelectFilter,
   GridTagColumn,
-  IGridCellButtonClick,
+  IGridCellButton,
+  IGridExportDocumentSettings,
 } from "shared-components";
 import { DEFAULT_THEME, NbThemeService } from "@nebular/theme";
 import { StartCalculationComponent } from "./start-calculation/start-calculation.component";
@@ -31,7 +32,7 @@ import { CalculationSummaryComponent } from "./calculation-summary/calculation-s
 import { RealPriceModalComponent } from "./real-price-modal/real-price-modal.component";
 import { PaidCalculationModalComponent } from "./paid-calculation-modal/paid-calculation-modal.component";
 import { CalculationDocumentsComponent } from "./calculation-documents/calculation-documents.component";
-import { ExportDocSettings } from "shared-components/lib/models/smart-table.model";
+
 declare const echarts: any;
 @Component({
   selector: "sample-calculation",
@@ -102,7 +103,7 @@ export class CalculationComponent implements OnInit, OnDestroy {
       .Filter(false)
       .Export(false),
   ];
-  public exportSettings: ExportDocSettings = {
+  public exportSettings: IGridExportDocumentSettings = {
     title: getString("calculationPage"),
     subtitle:
       getString("calculationFor") + ": " + (this.month + 1) + ". " + this.year,
@@ -379,7 +380,7 @@ export class CalculationComponent implements OnInit, OnDestroy {
       this._toastrService.showToast("warning", getString("nothingSelected"));
   }
 
-  public onButtonItemClicked(event: IGridCellButtonClick): void {
+  public onButtonItemClicked(event: IGridCellButton): void {
     switch (event.button.getId()) {
       case "realPrice":
         this.openRealPriceDialog(event.row);

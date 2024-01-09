@@ -6,12 +6,12 @@ import {
   GridCheckboxColumn,
   GridColumn,
   GridSelectFilter,
+  IGridExportDocumentSettings,
 } from "shared-components";
 import { NbWindowService, NbWindowState } from "@nebular/theme";
 import { AddEditDiscountComponent } from "./add-edit-discount/add-edit-discount.component";
 import { DialogService } from "../../shared/dialog/dialog.service";
 import { ToastrService } from "../../services/toastr.service";
-import { ExportDocSettings } from "shared-components/lib/models/smart-table.model";
 
 @Component({
   selector: "sample-discounts",
@@ -43,7 +43,7 @@ export class DiscountsComponent implements OnInit, OnDestroy {
           .DataSource(this._percentCalculationFilter)
       ),
   ];
-  public exportSettings: ExportDocSettings = {
+  public exportSettings: IGridExportDocumentSettings = {
     title: getString("discounts"),
     subtitle: undefined,
     showOrdinalNumbers: true,

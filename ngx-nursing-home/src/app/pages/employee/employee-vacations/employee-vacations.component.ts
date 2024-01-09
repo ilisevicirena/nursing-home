@@ -18,7 +18,7 @@ import {
   GridDateboxFilter,
   GridSelectFilter,
   GridTagColumn,
-  IGridCellButtonClick,
+  IGridCellButton,
 } from "shared-components";
 import { VacationsService } from "../../../services/rest/vacations.service";
 import { DialogService } from "../../../shared/dialog/dialog.service";
@@ -140,7 +140,7 @@ export class EmployeeVacationsComponent implements OnInit, OnDestroy {
     );
   }
 
-  public onButtonItemClicked(event: IGridCellButtonClick): void {
+  public onButtonItemClicked(event: IGridCellButton): void {
     switch (event.button.getId()) {
       case "changeStatus":
         this._subs.push(

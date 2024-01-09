@@ -2,18 +2,18 @@ import { Component, Input, OnDestroy, OnInit } from "@angular/core";
 import {
   GridColumn,
   GridTextboxEditor,
-  TABLE_MODE,
   GridLookupColumn,
   GridToggleEditor,
   GridCheckboxColumn,
   GridSelectFilter,
   GridAutocompleteEditor,
+  GRID_MODE,
+  IGridExportDocumentSettings,
 } from "shared-components";
 import { getString } from "../../resources/strings";
 import { Subscription } from "rxjs";
 import { ContactsService } from "../../services/rest/contacts.service";
 import { ToastrService } from "../../services/toastr.service";
-import { ExportDocSettings } from "shared-components/lib/models/smart-table.model";
 import { PersonsService } from "../../services/rest/persons.service";
 import { CitiesService } from "../../services/rest/cities.service";
 
@@ -40,7 +40,7 @@ export class ContactsGridComponent implements OnInit, OnDestroy {
     { value: false, label: getString("no") },
   ];
 
-  public gridMode: TABLE_MODE = TABLE_MODE.POPUP;
+  public gridMode: GRID_MODE = GRID_MODE.POPUP;
   public contactsData: any[] = [];
   public contactsColumns: GridColumn[] = [
     new GridColumn()
@@ -170,7 +170,7 @@ export class ContactsGridComponent implements OnInit, OnDestroy {
       ),
   ];
 
-  public exportSettings: ExportDocSettings = {
+  public exportSettings: IGridExportDocumentSettings = {
     title: getString("contacts"),
     subtitle: undefined,
     showOrdinalNumbers: true,

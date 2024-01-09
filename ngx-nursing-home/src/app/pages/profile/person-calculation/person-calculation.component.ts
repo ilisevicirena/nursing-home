@@ -13,7 +13,7 @@ import {
   GridDateboxFilter,
   GridSelectFilter,
   GridTagColumn,
-  IGridCellButtonClick,
+  IGridCellButton,
 } from "shared-components";
 import { DialogService } from "../../../shared/dialog/dialog.service";
 import { ToastrService } from "../../../services/toastr.service";
@@ -185,7 +185,7 @@ export class PersonCalculationComponent implements OnInit, OnDestroy {
     });
   }
 
-  public onButtonItemClicked(event: IGridCellButtonClick): void {
+  public onButtonItemClicked(event: IGridCellButton): void {
     switch (event.button.getId()) {
       case "realPrice":
         this.openRealPriceDialog(event.row);

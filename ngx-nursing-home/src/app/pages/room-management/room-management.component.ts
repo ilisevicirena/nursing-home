@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { getString } from "../../resources/strings";
 import {
-  TABLE_MODE,
   GridColumn,
   GridTextboxEditor,
   GridNumberBoxEditor,
@@ -9,12 +8,13 @@ import {
   GridSelectEditor,
   GridSelectFilter,
   GridNumberBoxFilter,
+  GRID_MODE,
+  IGridExportDocumentSettings,
 } from "shared-components";
 import { FloorsService, IFloor } from "../../services/rest/floors.service";
 import { IRoom, RoomsService } from "../../services/rest/rooms.service";
 import { Subscription } from "rxjs";
 import { ToastrService } from "../../services/toastr.service";
-import { ExportDocSettings } from "shared-components/lib/models/smart-table.model";
 
 @Component({
   selector: "sample-room-management",
@@ -27,7 +27,7 @@ export class RoomManagementComponent implements OnInit, OnDestroy {
   public noRoomsTitle: string = getString("noRoomsForSelectedFloor");
   public floorsData: any[] = [];
   public roomsData: any[] = [];
-  public tableMode: TABLE_MODE = TABLE_MODE.POPUP;
+  public tableMode: GRID_MODE = GRID_MODE.POPUP;
   public floorsLoading: boolean = false;
   public roomsLoading: boolean = false;
   public selectedFloorRooms: any[] = [];
@@ -137,7 +137,7 @@ export class RoomManagementComponent implements OnInit, OnDestroy {
       ),
   ];
 
-  public exportSettingsFloors: ExportDocSettings = {
+  public exportSettingsFloors: IGridExportDocumentSettings = {
     title: getString("floors"),
     subtitle: undefined,
     showOrdinalNumbers: true,
@@ -146,7 +146,7 @@ export class RoomManagementComponent implements OnInit, OnDestroy {
     yesValueText: getString("yesBtnText").toLowerCase(),
     noValueText: getString("noBtnText").toLowerCase(),
   };
-  public exportSettingsRooms: ExportDocSettings = {
+  public exportSettingsRooms: IGridExportDocumentSettings = {
     title: getString("rooms"),
     subtitle: undefined,
     showOrdinalNumbers: true,

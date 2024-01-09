@@ -9,12 +9,12 @@ import {
   GridColumn,
   GridLookupColumn,
   GridSelectFilter,
+  IGridExportDocumentSettings,
 } from "shared-components";
 import { AddEditPackageComponent } from "./add-edit-package/add-edit-package.component";
 import { NbWindowService, NbWindowState } from "@nebular/theme";
 import { getString } from "../../resources/strings";
 import { MeasureUnitsService } from "../../services/rest/measure-units.service";
-import { ExportDocSettings } from "shared-components/lib/models/smart-table.model";
 
 @Component({
   selector: "sample-packages",
@@ -62,7 +62,7 @@ export class PackagesComponent implements OnInit, OnDestroy {
       .DataField("PackagePriceCalculated")
       .Type(new GridCheckboxColumn()),
   ];
-  public exportSettings: ExportDocSettings = {
+  public exportSettings: IGridExportDocumentSettings = {
     title: getString("packages"),
     subtitle: undefined,
     showOrdinalNumbers: true,

@@ -6,6 +6,7 @@ import {
   GridColumn,
   GridLookupColumn,
   GridSelectFilter,
+  IGridExportDocumentSettings,
 } from "shared-components";
 import { MeasureUnitsService } from "../../services/rest/measure-units.service";
 import { PriceUnitsService } from "../../services/rest/price-units.service";
@@ -13,8 +14,6 @@ import { DialogService } from "../../shared/dialog/dialog.service";
 import { ToastrService } from "../../services/toastr.service";
 import { AddEditServiceComponent } from "./add-edit-service/add-edit-service.component";
 import { NbWindowService, NbWindowState } from "@nebular/theme";
-import { ExportDocSettings } from "shared-components/lib/models/smart-table.model";
-import { sortFloats } from "../../resources/functions";
 
 @Component({
   selector: "sample-services",
@@ -52,7 +51,7 @@ export class ServicesComponent implements OnInit, OnDestroy {
           .ServerEndpoint(this._priceUnitsService.apiRoute)
       ),
   ];
-  public exportSettings: ExportDocSettings = {
+  public exportSettings: IGridExportDocumentSettings = {
     title: getString("services"),
     subtitle: undefined,
     showOrdinalNumbers: true,
