@@ -21,7 +21,6 @@ import {
 } from "@nebular/theme";
 
 import { CommonModule, registerLocaleData } from "@angular/common";
-import { Ng2SmartTableModule } from "ng2-smart-table";
 import { SharedComponentsModule } from "shared-components";
 import hr from "@angular/common/locales/hr";
 import { InterceptorService } from "./services/interceptor.service";
@@ -49,7 +48,6 @@ registerLocaleData(hr);
     SharedComponentsModule,
     CommonModule,
     NbLayoutModule,
-    Ng2SmartTableModule,
     NbCardModule,
     NbDialogModule,
     NbIconModule,
