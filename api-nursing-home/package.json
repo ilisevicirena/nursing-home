@@ -15,12 +15,12 @@
     "fill-pdf": "^1.1.0",
     "fs": "^0.0.1-security",
     "msnodesqlv8": "^3.1.0",
-    "mssql": "^6.2.1",
     "pdf-lib": "^1.17.1",
     "pdffiller": "^0.0.11",
     "pdftk": "^0.0.0-rc.0"
   },
   "devDependencies": {
+    "mssql": "^10.0.1",
     "nodemon": "^3.0.2"
   },
   "keywords": [],
