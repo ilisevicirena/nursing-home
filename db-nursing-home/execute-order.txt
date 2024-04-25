@@ -54,6 +54,11 @@ create-tb-doctorVisitTour.sql
 create-tb-doctorVisitTourEmployeeRelation.sql
 create-tb-doctorVisitTourPersonRelation.sql
 create-tb-personOfferRelation.sql
+create-tb-furnitureStatus.sql
+create-tb-furniture.sql
+create-tb-furnitureFurnitureStatusRelation.sql
+create-tb-furnitureInventory.sql
+create-tb-furnitureFurnitureInventoryRelation.sql
 insert-tb-documentType.sql
 insert-tb-healthCondition.sql
 insert-tb-floor.sql
@@ -77,6 +82,7 @@ insert-tb-pageLink.sql
 insert-tb-vacationStatus.sql
 insert-tb-calendarEventType.sql
 insert-tb-calculationStatus.sql
+insert-tb-furnitureStatus.sql
 proc-addTagToNote.sql
 proc-calculationPaid.sql
 proc-calculationRealPrice.sql
@@ -244,3 +250,7 @@ proc-getDoctorsAndNursesForVisit.sql
 proc-getPersonsForVisit.sql
 proc-getSummaryForVisit.sql
 proc-getNotesForDoctorVisitTour.sql
+proc-getFurnitureStatuses.sql
+proc-deactivateFurnitureStatus.sql
+proc-insertFurnitureStatus.sql
+proc-updateFurnitureStatus.sql

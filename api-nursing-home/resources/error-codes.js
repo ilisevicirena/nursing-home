@@ -265,6 +265,17 @@ var errors = [
   new CodeMessage(170002, "Error while deleting vacation from database."),
   new CodeMessage(170003, "Error while updating vacation in database."),
   new CodeMessage(170004, "Error while changing vacation status in database."),
+
+  // furniture statuses error codes starting with 180000
+  new CodeMessage(
+    180001,
+    "Error while inserting new furniture status into database."
+  ),
+  new CodeMessage(180002, "Error while updating furniture status in database."),
+  new CodeMessage(
+    180003,
+    "Error while deleting furniture status from database."
+  ),
 ];
 
 module.exports = {

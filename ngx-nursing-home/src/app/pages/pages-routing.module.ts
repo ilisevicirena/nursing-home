@@ -25,6 +25,7 @@ import { NewEmployeeComponent } from "./new-employee/new-employee.component";
 import { EmployeeComponent } from "./employee/employee.component";
 import { CategoriesComponent } from "./categories/categories.component";
 import { DoctorVisitsComponent } from "./doctor-visits/doctor-visits.component";
+import { FurnitureStatusesComponent } from "./furniture-statuses/furniture-statuses.component";
 
 const routes: Routes = [
   {
@@ -131,6 +132,10 @@ const routes: Routes = [
       {
         path: "doctor-visits",
         component: DoctorVisitsComponent,
+      },
+      {
+        path: "furniture-statuses",
+        component: FurnitureStatusesComponent,
       },
     ],
   },

@@ -93,6 +93,7 @@ import { CategoriesComponent } from "./categories/categories.component";
 import { StartDoctorVisitTourComponent } from "./start-doctor-visit-tour/start-doctor-visit-tour.component";
 import { DoctorVisitsComponent } from "./doctor-visits/doctor-visits.component";
 import { DoctorVisitDetailsComponent } from "./doctor-visits/doctor-visit-details/doctor-visit-details.component";
+import { FurnitureStatusesComponent } from './furniture-statuses/furniture-statuses.component';
 
 @NgModule({
   imports: [
@@ -194,6 +195,7 @@ import { DoctorVisitDetailsComponent } from "./doctor-visits/doctor-visit-detail
     StartDoctorVisitTourComponent,
     DoctorVisitsComponent,
     DoctorVisitDetailsComponent,
+    FurnitureStatusesComponent,
   ],
 })
 export class PagesModule {}

@@ -613,6 +613,7 @@ const strings: IKeyValue[] = [
   { key: "timeSinceLastVisit", value: "Vrijeme od zadnje posjete" },
   { key: "patient", value: "Pacijent" },
   { key: "peopleWithoutRoom", value: "Osobe bez sobe" },
+  { key: "furnitureStatuses", value: "Statusi namještaja" },
 ];
 
 const map = new Map(strings.map((obj) => [obj.key, obj.value]));

@@ -121,6 +121,10 @@ export const MENU_ITEMS: any[] = [
         title: getString("categories"),
         link: "/pages/categories",
       },
+      {
+        title: getString("furnitureStatuses"),
+        link: "/pages/furniture-statuses",
+      },
     ],
   },
 ];
