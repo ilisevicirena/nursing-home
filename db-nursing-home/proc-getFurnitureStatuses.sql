@@ -16,8 +16,8 @@ BEGIN
 	SELECT 
 	[Id]=Id,
 	[Name]=[Name],
-	[Color]=Color
+	[Color]=Color,
+	[Icon]=Icon
 	FROM dbo.FurnitureStatus WHERE Active=1;
 
 END
-

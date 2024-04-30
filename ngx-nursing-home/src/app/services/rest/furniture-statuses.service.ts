@@ -14,4 +14,5 @@ export class FurnitureStatusesService extends BaseRestApiService {
 export interface IFurnitureStatus extends IBaseSaveModel {
   Name: string;
   Color: string;
+  Icon: string;
 }

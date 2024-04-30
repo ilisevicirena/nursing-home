@@ -7,7 +7,8 @@ CREATE PROCEDURE [dbo].[insertFurnitureStatus]
 	-- Add the parameters for the stored procedure here
 	(
 		@Name varchar(50),
-		@Color varchar(50) = NULL
+		@Color varchar(10) = NULL,
+		@Icon varchar(50) = NULL
 	)
 AS
 BEGIN
@@ -16,7 +17,7 @@ BEGIN
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
-	INSERT INTO dbo.FurnitureStatus ([Name], Color, Active) VALUES (@Name, @Color, 1);
+	INSERT INTO dbo.FurnitureStatus ([Name], Color, Icon, Active) VALUES (@Name, @Color, @Icon, 1);
 
 	SELECT SCOPE_IDENTITY() AS [FurnitureStatusId];
 END

@@ -1,7 +1,7 @@
 # Define your database name and the folder containing SQL scripts
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 
-$databaseName = "ENV05_NURSING_HOME"
+$databaseName = "ENV09_NURSING_HOME"
 $scriptFolderPath = "C:\nursing-home\db-nursing-home"
 $executeOrderFile = "$scriptFolderPath\execute-order.txt"
 

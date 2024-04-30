@@ -48,18 +48,23 @@ export class FurnitureStatusesComponent implements OnInit, OnDestroy {
       .Editor(
         new GridSelectEditor()
           .DataSource([
-            { id: "success", name: "success" },
-            { id: "danger", name: "danger" },
-            { id: "warning", name: "warning" },
-            { id: "info", name: "info" },
-            { id: "primary", name: "primary" },
-            { id: "basic", name: "basic" },
+            { name: "success" },
+            { name: "danger" },
+            { name: "warning" },
+            { name: "info" },
+            { name: "primary" },
+            { name: "basic" },
           ])
           .DisplayExpression("name")
           .KeyExpression("name")
           .WidthClass("col-md-4")
-          .Required(true)
           .Label(getString("color"))
+      ),
+    new GridColumn()
+      .Title(getString("icon"))
+      .DataField("Icon")
+      .Editor(
+        new GridTextboxEditor().WidthClass("col-md-8").Label(getString("icon"))
       ),
   ];
 

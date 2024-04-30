@@ -7,7 +7,8 @@ CREATE PROCEDURE [dbo].[updateFurnitureStatus]
 	(
 		@Id int,
 		@Name varchar(50),
-		@Color varchar(50)
+		@Color varchar(10),
+		@Icon varchar(50)
 	)
 AS
 BEGIN
@@ -18,7 +19,8 @@ BEGIN
     -- Insert statements for procedure here
 	UPDATE dbo.FurnitureStatus
 	SET [Name]=@Name,
-	[Color]=@Color
+	[Color]=@Color,
+	[Icon]=@Icon
 	WHERE Id=@Id;
 
 END

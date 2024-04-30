@@ -1,0 +1,28 @@
+<div class="main-content">
+  <div class="statuses-container">
+    <div class="status-card" *ngFor="let status of statuses">
+      <nb-badge
+        [status]="status.Color"
+        [dotMode]="true"
+        position="top left"
+      ></nb-badge>
+      <span class="status-name">{{ status.Name }}</span>
+      <div class="status-card-info">
+        <div class="status-icon">
+          <nb-icon [status]="status.Color" [icon]="status.Icon"></nb-icon>
+        </div>
+        <span class="furniture-count">{{ status.Furniture }}</span>
+      </div>
+    </div>
+  </div>
+  <nb-card>
+    <nb-card-body>
+      <ngx-grid
+        [columns]="columns"
+        [(data)]="furniture"
+        [selectionEnabled]="false"
+        gridMode="popup"
+      ></ngx-grid>
+    </nb-card-body>
+  </nb-card>
+</div>

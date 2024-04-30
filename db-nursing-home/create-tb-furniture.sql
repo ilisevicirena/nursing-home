@@ -1,10 +1,10 @@
 CREATE TABLE [dbo].[Furniture](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[Name] [nchar](50) NOT NULL,
-	[InventoryCode] [nchar](50) NULL,
+	[Name] [varchar](150) NOT NULL,
+	[InventoryCode] [varchar](50) NULL,
 	[CreationDate] [datetime] NOT NULL,
 	[RoomId] [int] NULL,
-	[Description] [nchar](2000) NULL,
+	[Description] [varchar](2000) NULL,
  CONSTRAINT [PK_Furniture] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC

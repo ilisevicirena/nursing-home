@@ -40,8 +40,11 @@ router.post("/add", async (request, response) => {
     const result = await pool
       .request()
       .input("name", objectToSave.Name)
+      .input("icon", objectToSave.Icon)
       .input("color", objectToSave.Color)
-      .query("EXEC [dbo].[insertFurnitureStatus] @Name=@name, @Color=@color");
+      .query(
+        "EXEC [dbo].[insertFurnitureStatus] @Name=@name, @Color=@color, @Icon=@icon"
+      );
     if (result != null) response.json(result.recordset[0]);
     else response.send(getError(180001));
   } catch (err) {
@@ -58,9 +61,10 @@ router.post("/update", async (request, response) => {
       .request()
       .input("name", objectToSave.Name)
       .input("color", objectToSave.Color)
+      .input("icon", objectToSave.Icon)
       .input("id", objectToSave.Id)
       .query(
-        "EXEC [dbo].[updateFurnitureStatus] @Id=@id, @Name=@name, @Color=@color"
+        "EXEC [dbo].[updateFurnitureStatus] @Id=@id, @Name=@name, @Color=@color, @Icon=@icon"
       );
     if (result != null) response.json(result.recordset);
     else response.send(getError(180002));

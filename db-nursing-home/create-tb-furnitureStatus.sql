@@ -1,9 +1,9 @@
 CREATE TABLE [dbo].[FurnitureStatus](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[Name] [nchar](50) NOT NULL,
-	[Color] [nchar](10) NULL,
+	[Name] [varchar](50) NOT NULL,
+	[Color] [varchar](10) NULL,
 	[Active] [bit] NOT NULL,
-	[Icon] [nchar](50) NULL,
+	[Icon] [varchar](50) NULL,
  CONSTRAINT [PK_FurnitureStatus] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
