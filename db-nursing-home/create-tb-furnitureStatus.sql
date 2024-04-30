@@ -3,6 +3,7 @@ CREATE TABLE [dbo].[FurnitureStatus](
 	[Name] [nchar](50) NOT NULL,
 	[Color] [nchar](10) NULL,
 	[Active] [bit] NOT NULL,
+	[Icon] [nchar](50) NULL,
  CONSTRAINT [PK_FurnitureStatus] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC

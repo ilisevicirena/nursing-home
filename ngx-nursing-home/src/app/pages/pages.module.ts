@@ -94,6 +94,7 @@ import { StartDoctorVisitTourComponent } from "./start-doctor-visit-tour/start-d
 import { DoctorVisitsComponent } from "./doctor-visits/doctor-visits.component";
 import { DoctorVisitDetailsComponent } from "./doctor-visits/doctor-visit-details/doctor-visit-details.component";
 import { FurnitureStatusesComponent } from './furniture-statuses/furniture-statuses.component';
+import { FurnitureComponent } from './furniture/furniture.component';
 
 @NgModule({
   imports: [
@@ -196,6 +197,7 @@ import { FurnitureStatusesComponent } from './furniture-statuses/furniture-statu
     DoctorVisitsComponent,
     DoctorVisitDetailsComponent,
     FurnitureStatusesComponent,
+    FurnitureComponent,
   ],
 })
 export class PagesModule {}

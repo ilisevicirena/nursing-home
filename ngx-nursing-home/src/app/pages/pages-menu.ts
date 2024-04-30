@@ -52,6 +52,10 @@ export const MENU_ITEMS: any[] = [
         title: getString("accomodationManagementRoom"),
         link: "/pages/accomodation-management",
       },
+      {
+        title: getString("furnitureManagement"),
+        link: "/pages/furniture",
+      },
     ],
   },
   {
