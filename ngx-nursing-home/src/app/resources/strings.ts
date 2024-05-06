@@ -619,6 +619,11 @@ const strings: IKeyValue[] = [
   { key: "inventoryCode", value: "Inventurni broj" },
   { key: "latestStatus", value: "Zadnji status" },
   { key: "latestStatusDate", value: "Datum statusa" },
+  { key: "newStatusDate", value: "Datum novog statusa" },
+  { key: "newStatus", value: "Novi status" },
+  { key: "statusChange", value: "Promjena statusa" },
+  { key: "viewStatuses", value: "Pregledaj statuse" },
+  { key: "removeFromRoom", value: "Obriši iz sobe" },
 ];
 
 const map = new Map(strings.map((obj) => [obj.key, obj.value]));

@@ -21,7 +21,13 @@
         [columns]="columns"
         [(data)]="furniture"
         [selectionEnabled]="false"
+        [editEnabled]="false"
+        [deleteEnabled]="false"
         gridMode="popup"
+        (createConfirm)="createConfirm($event)"
+        (editConfirm)="editConfirm($event)"
+        (deleteConfirm)="deleteConfirm($event)"
+        (actionBtnClick)="onButtonItemClicked($event)"
       ></ngx-grid>
     </nb-card-body>
   </nb-card>

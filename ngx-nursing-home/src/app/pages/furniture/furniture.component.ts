@@ -12,10 +12,17 @@ import {
   GridTagColumn,
   GridTextboxEditor,
   GridTextAreaEditor,
+  GridButtonsColumn,
+  GridButtonType,
+  GRID_BUTTON_TYPE,
+  IGridCellButton,
 } from "shared-components";
 import { getString } from "../../resources/strings";
 import { FurnitureStatusesService } from "../../services/rest/furniture-statuses.service";
 import { RoomsService } from "../../services/rest/rooms.service";
+import { ToastrService } from "../../services/toastr.service";
+import { DialogService } from "../../shared/dialog/dialog.service";
+import { ChangeFurnitureStatusComponent } from "./change-furniture-status/change-furniture-status.component";
 
 @Component({
   selector: "sample-furniture",
@@ -52,7 +59,7 @@ export class FurnitureComponent implements OnInit, OnDestroy {
       .Filter(new GridDateboxFilter().Format("dd.MM.yyyy"))
       .Addable(false)
       .Editable(false)
-      .Editor(new GridDateboxEditor().Show(false)),
+      .Editor(new GridTextboxEditor().Show(false)),
     new GridColumn()
       .Title(getString("inventoryCode"))
       .DataField("InventoryCode")
@@ -116,12 +123,50 @@ export class FurnitureComponent implements OnInit, OnDestroy {
           .Rows(4)
           .Label(getString("description"))
       ),
+    new GridColumn()
+      .DataField("Buttons")
+      .Title(getString("actions"))
+      .Editable(false)
+      .Editor(new GridTextboxEditor().Show(false))
+      .Filter(false)
+      .Export(false)
+      .Sortable(false)
+      .GroupingEnabled(false)
+      .Type(
+        new GridButtonsColumn().Buttons([
+          new GridButtonType()
+            .Type(GRID_BUTTON_TYPE.EDIT)
+            .Icon("edit-outline")
+            .Tooltip(getString("gridEditTooltip")),
+          new GridButtonType()
+            .Type(GRID_BUTTON_TYPE.DELETE)
+            .Icon("trash-outline")
+            .Tooltip(getString("gridDeleteTooltip")),
+          new GridButtonType()
+            .Type(GRID_BUTTON_TYPE.OTHER)
+            .Id("changeStatus")
+            .Icon("swap-outline")
+            .Tooltip(getString("changeStatus")),
+          new GridButtonType()
+            .Type(GRID_BUTTON_TYPE.OTHER)
+            .Id("viewStatuses")
+            .Icon("file-text-outline")
+            .Tooltip(getString("viewStatuses")),
+          new GridButtonType()
+            .Type(GRID_BUTTON_TYPE.OTHER)
+            .Id("removeFromRoom")
+            .Icon("close-square-outline")
+            .Tooltip(getString("removeFromRoom")),
+        ])
+      ),
   ];
 
   constructor(
     private _furnitureService: FurnitureService,
     private _furnitureStatusService: FurnitureStatusesService,
-    private _roomsService: RoomsService
+    private _roomsService: RoomsService,
+    private _toastrService: ToastrService,
+    private _dialogService: DialogService
   ) {}
 
   ngOnInit(): void {
@@ -146,6 +191,87 @@ export class FurnitureComponent implements OnInit, OnDestroy {
       this._furnitureService.getData().subscribe((x) => {
         this.furniture = x;
       })
+    );
+  }
+
+  public createConfirm(event: any): void {
+    this._subs.push(
+      this._furnitureService.add(event.newData).subscribe(
+        () => {
+          this._toastrService.showToast("success", getString("saveSuccess"));
+          this.getFurniture();
+          this.getFurnitureCountByStatus();
+        },
+        (err) => {
+          console.error(err);
+          this._toastrService.showToast("danger", getString("saveError"));
+        }
+      )
+    );
+  }
+
+  public editConfirm(event: any): void {
+    this._subs.push(
+      this._furnitureService.update(event.newData).subscribe(
+        () => {
+          this._toastrService.showToast("success", getString("saveSuccess"));
+          this.getFurniture();
+          this.getFurnitureCountByStatus();
+        },
+        (err) => {
+          console.error(err);
+          this._toastrService.showToast("danger", getString("saveError"));
+        }
+      )
+    );
+  }
+
+  public deleteConfirm(event: any): void {
+    this._subs.push(
+      this._furnitureService.delete(event.data).subscribe(
+        () => {
+          this._toastrService.showToast("success", getString("saveSuccess"));
+          this.getFurniture();
+          this.getFurnitureCountByStatus();
+        },
+        (err) => {
+          console.error(err);
+          this._toastrService.showToast("danger", getString("saveError"));
+        }
+      )
+    );
+  }
+
+  public onButtonItemClicked(event: IGridCellButton): void {
+    console.log(event.button);
+    switch (event.button.getId()) {
+      case "changeStatus":
+        this.changeFurnitureStatus(event.row);
+        break;
+      case "viewStatuses":
+        break;
+      case "removeFromRoom":
+        break;
+    }
+  }
+
+  private changeFurnitureStatus(row: any) {
+    this._subs.push(
+      this._dialogService
+        .open(ChangeFurnitureStatusComponent, {
+          closeOnBackdropClick: false,
+          closeOnEsc: false,
+          autoFocus: false,
+          context: {
+            rowData: row,
+          },
+        })
+        .onClose.subscribe((result) => {
+          if (result) {
+            this.getFurniture();
+            this.getFurnitureCountByStatus();
+          }
+        })
     );
   }
 }

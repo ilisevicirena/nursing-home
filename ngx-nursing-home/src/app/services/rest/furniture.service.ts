@@ -14,4 +14,23 @@ export class FurnitureService extends BaseRestApiService {
   public getFurnitureCountByStatus(): Observable<any> {
     return this.http.get(this.apiRoute + "/getFurnitureCountByStatus");
   }
+
+  public changeFurnitureStatus(
+    id: number,
+    statusId: number,
+    date: Date
+  ): Observable<any> {
+    return this.http.post(this.apiRoute + "/changeFurnitureStatus", {
+      Id: id,
+      StatusId: statusId,
+      Date: date,
+    });
+  }
+}
+
+export interface IFurniture extends IBaseSaveModel {
+  Name: string;
+  InventoryCode: string;
+  Description: string;
+  RoomId: number;
 }

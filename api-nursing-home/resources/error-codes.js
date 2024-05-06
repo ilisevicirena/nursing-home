@@ -276,6 +276,12 @@ var errors = [
     180003,
     "Error while deleting furniture status from database."
   ),
+
+  // furniture error codes starting with 190000
+  new CodeMessage(190001, "Error while inserting new furniture into database."),
+  new CodeMessage(190002, "Error while updating furniture in database."),
+  new CodeMessage(190003, "Error while deleting furniture from database."),
+  new CodeMessage(190004, "Error while changing furniture status in database."),
 ];
 
 module.exports = {

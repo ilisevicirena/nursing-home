@@ -11,12 +11,12 @@ BEGIN
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
-    SELECT 
+ SELECT 
     fs.Id, 
     fs.[Name], 
     fs.Color, 
     fs.Icon, 
-    COUNT(f.FurnitureId) AS Furniture 
+    COUNT(DISTINCT f.FurnitureId) AS Furniture 
 FROM 
     dbo.FurnitureStatus fs 
 LEFT JOIN (
@@ -40,7 +40,8 @@ LEFT JOIN
 ON 
     fs.Id = f.FurnitureStatusId 
     AND latestStatus.FurnitureId = f.FurnitureId
-WHERE fs.Active=1
+WHERE 
+    fs.Active=1
 GROUP BY 
     fs.Id, 
     fs.Name, 
