@@ -628,6 +628,10 @@ const strings: IKeyValue[] = [
   { key: "rowId", value: "Šifra reda" },
   { key: "statusStartDate", value: "Datum od" },
   { key: "statusEndDate", value: "Datum do" },
+  {
+    key: "removeFurnitureFromRoomQuestion",
+    value: "Želite li maknuti odabrani namještaj iz sobe?",
+  },
 ];
 
 const map = new Map(strings.map((obj) => [obj.key, obj.value]));

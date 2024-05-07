@@ -38,6 +38,12 @@ export class FurnitureService extends BaseRestApiService {
       body: model,
     });
   }
+
+  public removeFurnitureFromRoom(id: number): Observable<any> {
+    return this.http.post(this.apiRoute + "/removeFurnitureFromRoom", {
+      Id: id,
+    });
+  }
 }
 
 export interface IFurniture extends IBaseSaveModel {

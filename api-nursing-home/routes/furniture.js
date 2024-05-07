@@ -136,4 +136,20 @@ router.delete("/deleteFurnitureStatus", async (request, response) => {
   }
 });
 
+router.post("/removeFurnitureFromRoom", async (request, response) => {
+  try {
+    var objectToSave = Object.assign(new FurnitureStatusChange(), request.body);
+    const pool = await db;
+    const result = await pool
+      .request()
+      .input("id", objectToSave.Id)
+      .query("EXEC [dbo].[removeFurnitureFromRoom] @Id=@id");
+    if (result != null) response.json(result.recordset);
+    else response.send(getError(190006));
+  } catch (err) {
+    response.status(500);
+    response.send(err.message);
+  }
+});
+
 module.exports = router;

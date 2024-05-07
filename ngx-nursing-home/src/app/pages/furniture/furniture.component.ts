@@ -252,6 +252,7 @@ export class FurnitureComponent implements OnInit, OnDestroy {
         this.viewFurnitureStatuses(event.row);
         break;
       case "removeFromRoom":
+        this.removeFurnitureFromRoom(event.row);
         break;
     }
   }
@@ -292,5 +293,27 @@ export class FurnitureComponent implements OnInit, OnDestroy {
           }
         })
     );
+  }
+
+  private async removeFurnitureFromRoom(row: any) {
+    const rez = await this._dialogService.openYesNoDialog(
+      getString("areYouSure"),
+      getString("removeFurnitureFromRoomQuestion")
+    );
+
+    if (rez) {
+      this._subs.push(
+        this._furnitureService.removeFurnitureFromRoom(row.Id).subscribe(
+          () => {
+            this._toastrService.showToast("success", getString("saveSuccess"));
+            this.getFurniture();
+          },
+          (err) => {
+            console.error(err);
+            this._toastrService.showToast("danger", getString("saveError"));
+          }
+        )
+      );
+    }
   }
 }
