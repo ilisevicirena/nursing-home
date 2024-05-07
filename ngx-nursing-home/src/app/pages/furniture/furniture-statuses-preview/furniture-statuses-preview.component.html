@@ -1,0 +1,34 @@
+<nb-card class="discount-picker-card">
+  <nb-card-header class="d-flex">
+    <div class="col">
+      <div class="row m-0 p-0 align-items-center">
+        {{ getString("furnitureStatusesPreview") }} - {{ rowData.Name }}
+      </div>
+      <div class="row m-0 p-0">
+        <span class="label mt-1">#{{ rowData.InventoryCode }}</span>
+      </div>
+    </div>
+    <div class="w-max">
+      <button nbButton ghost shape="round" (click)="close()">
+        <nb-icon pack="eva" icon="close-outline"></nb-icon>
+      </button>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <ngx-grid
+      [columns]="columns"
+      [(data)]="dataSource"
+      [selectionEnabled]="false"
+      [editEnabled]="false"
+      [addEnabled]="true"
+      [deleteEnabled]="true"
+      [exportPdfEnabled]="true"
+      [entriesPerPageEnabled]="true"
+      [defaultPerPageOption]="25"
+      [exportExcelEnabled]="true"
+      [refreshEnabled]="true"
+      (createConfirm)="onCreateConfirm($event)"
+      (deleteConfirm)="onDeleteConfirm($event)"
+    ></ngx-grid>
+  </nb-card-body>
+</nb-card>

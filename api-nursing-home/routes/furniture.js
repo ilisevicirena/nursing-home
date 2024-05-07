@@ -106,4 +106,34 @@ router.post("/changeFurnitureStatus", async (request, response) => {
   }
 });
 
+router.get("/getFurnitureStatuses", async (request, response) => {
+  try {
+    const pool = await db;
+    const result = await pool
+      .request()
+      .input("id", request.query.FurnitureId)
+      .query("EXEC [dbo].[getFurnitureStatusesById] @Id=@id");
+    response.json(result.recordset);
+  } catch (err) {
+    response.status(500);
+    response.send(err.message);
+  }
+});
+
+router.delete("/deleteFurnitureStatus", async (request, response) => {
+  try {
+    var objectToSave = request.body;
+    const pool = await db;
+    const result = await pool
+      .request()
+      .input("id", objectToSave.Id)
+      .query("EXEC [dbo].[deleteFurnitureStatusById] @Id=@id");
+    if (result != null) response.json(result.recordset);
+    else response.send(getError(190005));
+  } catch (err) {
+    response.status(500);
+    response.send(err.message);
+  }
+});
+
 module.exports = router;

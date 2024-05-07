@@ -26,6 +26,18 @@ export class FurnitureService extends BaseRestApiService {
       Date: date,
     });
   }
+
+  public getFurnitureStatuses(id: number): Observable<any> {
+    return this.http.get(
+      this.apiRoute + "/getFurnitureStatuses?FurnitureId=" + id
+    );
+  }
+
+  public deleteFurnitureStatus(model: IBaseSaveModel): Observable<any> {
+    return this.http.delete(this.apiRoute + "/deleteFurnitureStatus", {
+      body: model,
+    });
+  }
 }
 
 export interface IFurniture extends IBaseSaveModel {

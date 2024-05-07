@@ -260,3 +260,5 @@ proc-insertFurniture.sql
 proc-updateFurniture.sql
 proc-deleteFurniture.sql
 proc-changeFurnitureStatus.sql
+proc-getFurnitureStatusesById.sql
+proc-deleteFurnitureStatusById.sql

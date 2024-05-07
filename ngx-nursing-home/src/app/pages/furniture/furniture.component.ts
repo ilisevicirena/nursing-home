@@ -23,6 +23,7 @@ import { RoomsService } from "../../services/rest/rooms.service";
 import { ToastrService } from "../../services/toastr.service";
 import { DialogService } from "../../shared/dialog/dialog.service";
 import { ChangeFurnitureStatusComponent } from "./change-furniture-status/change-furniture-status.component";
+import { FurnitureStatusesPreviewComponent } from "./furniture-statuses-preview/furniture-statuses-preview.component";
 
 @Component({
   selector: "sample-furniture",
@@ -243,12 +244,12 @@ export class FurnitureComponent implements OnInit, OnDestroy {
   }
 
   public onButtonItemClicked(event: IGridCellButton): void {
-    console.log(event.button);
     switch (event.button.getId()) {
       case "changeStatus":
         this.changeFurnitureStatus(event.row);
         break;
       case "viewStatuses":
+        this.viewFurnitureStatuses(event.row);
         break;
       case "removeFromRoom":
         break;
@@ -265,6 +266,24 @@ export class FurnitureComponent implements OnInit, OnDestroy {
           context: {
             rowData: row,
           },
+        })
+        .onClose.subscribe((result) => {
+          if (result) {
+            this.getFurniture();
+            this.getFurnitureCountByStatus();
+          }
+        })
+    );
+  }
+
+  private viewFurnitureStatuses(row: any) {
+    this._subs.push(
+      this._dialogService
+        .open(FurnitureStatusesPreviewComponent, {
+          closeOnBackdropClick: false,
+          closeOnEsc: false,
+          autoFocus: false,
+          context: { rowData: row },
         })
         .onClose.subscribe((result) => {
           if (result) {

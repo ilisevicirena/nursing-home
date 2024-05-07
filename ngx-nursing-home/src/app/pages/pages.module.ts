@@ -96,6 +96,7 @@ import { DoctorVisitDetailsComponent } from "./doctor-visits/doctor-visit-detail
 import { FurnitureStatusesComponent } from './furniture-statuses/furniture-statuses.component';
 import { FurnitureComponent } from './furniture/furniture.component';
 import { ChangeFurnitureStatusComponent } from './furniture/change-furniture-status/change-furniture-status.component';
+import { FurnitureStatusesPreviewComponent } from './furniture/furniture-statuses-preview/furniture-statuses-preview.component';
 
 @NgModule({
   imports: [
@@ -200,6 +201,7 @@ import { ChangeFurnitureStatusComponent } from './furniture/change-furniture-sta
     FurnitureStatusesComponent,
     FurnitureComponent,
     ChangeFurnitureStatusComponent,
+    FurnitureStatusesPreviewComponent,
   ],
 })
 export class PagesModule {}

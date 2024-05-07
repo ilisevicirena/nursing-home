@@ -282,6 +282,7 @@ var errors = [
   new CodeMessage(190002, "Error while updating furniture in database."),
   new CodeMessage(190003, "Error while deleting furniture from database."),
   new CodeMessage(190004, "Error while changing furniture status in database."),
+  new CodeMessage(190005, "Error while deleting furniture status in database."),
 ];
 
 module.exports = {
