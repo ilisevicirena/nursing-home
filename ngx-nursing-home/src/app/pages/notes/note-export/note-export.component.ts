@@ -6,7 +6,7 @@ import {
   ViewChild,
 } from "@angular/core";
 declare var require: any;
-import * as pdfMake from "pdfmake/build/pdfmake";
+import * as pdfMake from "pdfmake/build/pdfMake";
 import * as pdfFonts from "pdfmake/build/vfs_fonts";
 import { ToastrService } from "../../../services/toastr.service";
 import { getString } from "../../../resources/strings";

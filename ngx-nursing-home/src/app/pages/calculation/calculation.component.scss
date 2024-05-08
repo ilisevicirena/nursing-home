@@ -17,13 +17,6 @@
   }
 }
 
-::ng-deep ngx-smart-table-tag {
-  nb-tag {
-    border: none;
-    border-radius: 0;
-  }
-}
-
 @include nb-install-component() {
   nb-card-body {
     overflow: hidden;

@@ -82,11 +82,11 @@
         class="col-md-3 p-1"
         *ngFor="let person of employeesData | filter : searchTerm"
       >
-        <nb-card class="m-0 h-100">
-          <nb-card-header
-            class="d-flex align-items-center person-card-header position-relative"
-            (click)="openPersonDetails(person)"
-          >
+        <nb-card
+          class="m-0 h-100 person-card"
+          (click)="openPersonDetails(person)"
+        >
+          <nb-card-header class="d-flex align-items-center position-relative">
             <nb-badge
               [dotMode]="true"
               [status]="person.Active ? 'success' : 'danger'"

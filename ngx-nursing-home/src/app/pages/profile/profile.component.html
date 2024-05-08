@@ -235,6 +235,7 @@
                             <nb-icon
                               pack="eva"
                               icon="calendar-outline"
+                              status="primary"
                             ></nb-icon>
                           </button>
                         </nb-form-field>
@@ -266,6 +267,7 @@
                             <nb-icon
                               pack="eva"
                               icon="calendar-outline"
+                              status="primary"
                             ></nb-icon>
                           </button>
                         </nb-form-field>
@@ -297,6 +299,7 @@
                             <nb-icon
                               pack="eva"
                               icon="calendar-outline"
+                              status="primary"
                             ></nb-icon>
                           </button>
                         </nb-form-field>
@@ -550,10 +553,13 @@
 </div>
 
 <ng-template #personHistoryModal let-ref="dialogRef">
-  <nb-card class="discount-picker-card">
+  <nb-card class="basic-tile-card giant">
     <nb-card-header class="d-flex">
       <div class="col">
         {{ getString("history") }}
+        <div class="label mt-2">
+          {{ person.FirstName }} {{ person.LastName }} #{{ person.Id }}
+        </div>
       </div>
       <div class="w-max">
         <button nbButton ghost shape="round" (click)="ref.close()">
@@ -575,6 +581,11 @@
         [refreshEnabled]="true"
         [selectionEnabled]="false"
         [filtersEnabled]="true"
+        [exportPdfTooltip]="getString('exportPdfTooltip')"
+        [exportExcelTooltip]="getString('exportExcelTooltip')"
+        [entriesPerPageTooltip]="getString('entriesPerPageTooltip')"
+        [refreshTooltip]="getString('refreshTooltip')"
+        [exportSettings]="exportHistorySettings"
         [(data)]="personHistory"
       ></ngx-grid>
     </nb-card-body>

@@ -1,8 +1,7 @@
 @import "../../../@theme/styles/themes.scss";
 
 @include nb-install-component {
-  .event-card {
-    border-radius: 1rem;
+  .basic-tile-card {
     width: 650px;
     overflow: hidden;
 
@@ -37,20 +36,6 @@
 
       .icon-container.basic .icon {
         background-color: nb-theme(color-basic-transparent-200);
-      }
-    }
-
-    nb-card-header {
-      padding: 1rem;
-      padding-bottom: 0.5rem;
-      border: none;
-
-      .col {
-        font-size: 20px;
-
-        div nb-icon {
-          font-size: 25px;
-        }
       }
     }
   }

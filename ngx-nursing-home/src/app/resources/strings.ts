@@ -632,6 +632,11 @@ const strings: IKeyValue[] = [
     key: "removeFurnitureFromRoomQuestion",
     value: "Želite li maknuti odabrani namještaj iz sobe?",
   },
+  { key: "exportPdfTooltip", value: "Izvezi podatke u PDF" },
+  { key: "exportExcelTooltip", value: "Izvezi podatke u Excel" },
+  { key: "entriesPerPageTooltip", value: "Broj redaka po stranici" },
+  { key: "refreshTooltip", value: "Poništi filtriranje i sortiranje" },
+  { key: "addTooltip", value: "Novi podatak" },
 ];
 
 const map = new Map(strings.map((obj) => [obj.key, obj.value]));

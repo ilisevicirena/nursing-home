@@ -11,7 +11,9 @@ import { ToastrService } from "../../services/toastr.service";
 import {
   GridCheckboxColumn,
   GridColumn,
+  GridDateboxFilter,
   GridDateColumn,
+  IGridExportDocumentSettings,
 } from "shared-components";
 import { DialogService } from "../../shared/dialog/dialog.service";
 import { RoomsService } from "../../services/rest/rooms.service";
@@ -103,13 +105,24 @@ export class ProfileComponent implements OnInit, OnDestroy {
     new GridColumn()
       .Title(getString("transactionDate"))
       .DataField("CreationDate")
-      .Type(new GridDateColumn().Format("dd.MM.yyyy. HH:mm")),
+      .Type(new GridDateColumn().Format("dd.MM.yyyy. HH:mm"))
+      .Filter(new GridDateboxFilter().Format("dd.MM.yyyy")),
     new GridColumn().Title(getString("firstName")).DataField("FirstName"),
     new GridColumn().Title(getString("lastName")).DataField("LastName"),
     new GridColumn().Title(getString("jmbg")).DataField("Jmbg"),
     new GridColumn().Title(getString("logType")).DataField("LogType"),
     new GridColumn().Title(getString("logType")).DataField("LogTypePretty"),
   ];
+
+  public exportHistorySettings: IGridExportDocumentSettings = {
+    title: getString("history"),
+    subtitle: undefined,
+    showOrdinalNumbers: true,
+    ordNumColumnName: getString("smTableOrdNumber"),
+    docName: "history",
+    yesValueText: getString("yesBtnText").toLowerCase(),
+    noValueText: getString("noBtnText").toLowerCase(),
+  };
 
   ngOnInit(): void {
     this.loading = true;

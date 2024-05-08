@@ -41,6 +41,7 @@ export class ContactsGridComponent implements OnInit, OnDestroy {
   ];
 
   public gridMode: GRID_MODE = GRID_MODE.POPUP;
+  public getString = getString;
   public contactsData: any[] = [];
   public contactsColumns: GridColumn[] = [
     new GridColumn()

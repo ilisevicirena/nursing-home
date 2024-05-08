@@ -1,8 +1,8 @@
-<nb-card class="discount-picker-card">
+<nb-card class="basic-tile-card">
   <nb-card-header class="d-flex">
     <div class="col">
       {{ getString("addDiscount") }}
-      <div class="discounts-selected" *ngIf="selectedDiscounts.length > 0">
+      <div class="selected-item" *ngIf="selectedDiscounts.length > 0">
         {{ getString("selected") }}: {{ selectedDiscounts.length }}
         <button nbButton shape="round" size="tiny" ghost (click)="clearAll()">
           {{ getString("clearAll") }}

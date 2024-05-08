@@ -31,11 +31,6 @@
   }
 }
 
-.title {
-  font-size: 16px;
-  font-weight: 600;
-}
-
 ::ng-deep .cdk-overlay-backdrop.doctor-visit-details-backdrop {
   background: nb-theme(overlay-backdrop-background-color);
 }
@@ -48,25 +43,10 @@
   }
 }
 
-.h-90 {
-  height: 90%;
-}
-
-.h-10 {
-  height: 10%;
-}
-
 @include nb-install-component {
   .echart {
     width: 250px;
     height: 275px;
-  }
-  .bg-basic {
-    background-color: nb-theme(layout-background-color);
-  }
-
-  .border-basic {
-    border-top: 1px solid nb-theme(color-basic-500);
   }
 
   .divider {

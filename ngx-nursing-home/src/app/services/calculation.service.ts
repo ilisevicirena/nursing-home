@@ -37,40 +37,40 @@ export class CalculationService {
       switch (measureUnit) {
         case ECalculationMeasureUnit.DAY:
           groups[ECalculationMeasureUnit.MONTH]?.map(
-            (x) =>
+            (x: IService) =>
               (x.Price = this.calculateServicePrice(x) / this._MonthDayNumber)
           );
           groups[ECalculationMeasureUnit.YEAR]?.map(
-            (x) =>
+            (x: IService) =>
               (x.Price = this.calculateServicePrice(x) / this._YearDayNumber)
           );
           break;
 
         case ECalculationMeasureUnit.MONTH:
           groups[ECalculationMeasureUnit.DAY]?.map(
-            (x) =>
+            (x: IService) =>
               (x.Price = this.calculateServicePrice(x) * this._MonthDayNumber)
           );
           groups[ECalculationMeasureUnit.YEAR]?.map(
-            (x) =>
+            (x: IService) =>
               (x.Price = this.calculateServicePrice(x) / this._YearMonthNumber)
           );
           break;
 
         case ECalculationMeasureUnit.YEAR:
           groups[ECalculationMeasureUnit.DAY]?.map(
-            (x) =>
+            (x: IService) =>
               (x.Price = this.calculateServicePrice(x) * this._YearDayNumber)
           );
           groups[ECalculationMeasureUnit.MONTH]?.map(
-            (x) =>
+            (x: IService) =>
               (x.Price = this.calculateServicePrice(x) * this._YearMonthNumber)
           );
           break;
       }
 
       groups[measureUnit]?.map(
-        (x) => (x.Price = this.calculateServicePrice(x))
+        (x: IService) => (x.Price = this.calculateServicePrice(x))
       );
       groups["unit"]?.map((x) => (x.Price = this.calculateServicePrice(x)));
 

@@ -139,6 +139,27 @@
     width: 100%;
     height: max-content;
   }
+
+  .subtitle {
+    font-size: 12px;
+    font-weight: 500;
+    color: nb-theme(color-basic-600);
+    line-height: 12px;
+    margin-top: 5px;
+  }
+
+  .title {
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  .bg-basic {
+    background-color: nb-theme(layout-background-color);
+  }
+
+  .border-basic {
+    border-top: 1px solid nb-theme(color-basic-500);
+  }
 }
 
 .row {
@@ -264,4 +285,69 @@ nb-tag {
 
 .card-round {
   border-radius: 1rem;
+}
+
+.basic-tile-card {
+  border-radius: 1rem;
+  width: 800px;
+  height: 500px;
+
+  nb-tag:hover {
+    cursor: pointer;
+  }
+
+  nb-card-header {
+    padding: 1rem;
+    padding-bottom: 0.5rem;
+
+    .col {
+      font-size: 20px;
+
+      .label {
+        font-size: 20px;
+        padding: 0;
+      }
+
+      div nb-icon {
+        font-size: 25px;
+      }
+    }
+  }
+
+  .selected-item {
+    font-size: 12px;
+    color: nb-theme(color-basic-600);
+    font-weight: 600;
+    margin-right: 0.5rem;
+  }
+}
+
+.basic-tile-card.skinny {
+  width: 500px;
+}
+
+.basic-tile-card.tall {
+  width: 1000px;
+  height: 600px;
+}
+
+.basic-tile-card.giant {
+  width: 1300px;
+  height: 800px;
+}
+
+.border-top-none {
+  border-top: none;
+}
+
+.border-bottom-none {
+  border-bottom: none;
+}
+
+.h-90 {
+  height: 90%;
+}
+
+.h-10 {
+  height: 10%;
 }
