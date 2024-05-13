@@ -15,21 +15,23 @@
       </div>
     </div>
   </div>
-  <nb-card>
-    <nb-card-body>
-      <ngx-grid
-        [columns]="columns"
-        [(data)]="furniture"
-        [selectionEnabled]="false"
-        [editEnabled]="false"
-        [deleteEnabled]="false"
-        [defaultPerPageOption]="10"
-        gridMode="popup"
-        (createConfirm)="createConfirm($event)"
-        (editConfirm)="editConfirm($event)"
-        (deleteConfirm)="deleteConfirm($event)"
-        (actionBtnClick)="onButtonItemClicked($event)"
-      ></ngx-grid>
-    </nb-card-body>
-  </nb-card>
+  <div class="furniture-container">
+    <nb-card class="h-100 m-0">
+      <nb-card-body>
+        <ngx-grid
+          [columns]="columns"
+          [(data)]="furniture"
+          [selectionEnabled]="false"
+          [editEnabled]="false"
+          [deleteEnabled]="false"
+          [defaultPerPageOption]="10"
+          gridMode="popup"
+          (createConfirm)="createConfirm($event)"
+          (editConfirm)="editConfirm($event)"
+          (deleteConfirm)="deleteConfirm($event)"
+          (actionBtnClick)="onButtonItemClicked($event)"
+        ></ngx-grid>
+      </nb-card-body>
+    </nb-card>
+  </div>
 </div>

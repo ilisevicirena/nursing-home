@@ -263,3 +263,4 @@ proc-changeFurnitureStatus.sql
 proc-getFurnitureStatusesById.sql
 proc-deleteFurnitureStatusById.sql
 proc-removeFurnitureFromRoom.sql
+insert-test-db-data.sql
