@@ -375,11 +375,16 @@
 </div>
 
 <ng-template #offerDialog let-ref="dialogRef">
-  <nb-card class="offer-dialog-card">
-    <nb-card-header class="d-flex justify-content-end p-2">
-      <button nbButton ghost shape="round" size="small" (click)="ref.close()">
-        <nb-icon pack="eva" icon="close-outline"></nb-icon>
-      </button>
+  <nb-card class="basic-tile-card giant">
+    <nb-card-header class="d-flex">
+      <div class="col">
+        {{ getString("createOffer") }}
+      </div>
+      <div class="w-max">
+        <button nbButton ghost shape="round" size="small" (click)="ref.close()">
+          <nb-icon pack="eva" icon="close-outline"></nb-icon>
+        </button>
+      </div>
     </nb-card-header>
     <nb-card-body>
       <sample-services-management

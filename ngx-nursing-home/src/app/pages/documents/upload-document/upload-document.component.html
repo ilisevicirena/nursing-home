@@ -28,7 +28,17 @@
           <div class="row m-0">
             <div class="col-md-12">
               <div class="form-group">
-                <div class="label">{{ getString("documentType") }}</div>
+                <div class="label">
+                  {{ getString("documentType") }}
+                  <nb-icon
+                    pack="eva"
+                    icon="alert-circle-outline"
+                    status="danger"
+                    size="small"
+                    class="ms-1 required-mark"
+                    [nbTooltip]="getString('required')"
+                  ></nb-icon>
+                </div>
                 <div class="value">
                   <nb-select
                     fullWidth
@@ -46,7 +56,17 @@
           <div class="row m-0 mt-2">
             <div class="col-md-12">
               <div class="form-group">
-                <div class="label">{{ getString("name") }}</div>
+                <div class="label">
+                  {{ getString("name") }}
+                  <nb-icon
+                    pack="eva"
+                    icon="alert-circle-outline"
+                    status="danger"
+                    size="small"
+                    class="ms-1 required-mark"
+                    [nbTooltip]="getString('required')"
+                  ></nb-icon>
+                </div>
                 <div class="value">
                   <input
                     nbInput
@@ -100,7 +120,11 @@
                       ghost
                       (click)="birthDateInput.focus()"
                     >
-                      <nb-icon pack="eva" icon="calendar-outline"></nb-icon>
+                      <nb-icon
+                        pack="eva"
+                        icon="calendar-outline"
+                        status="primary"
+                      ></nb-icon>
                     </button>
                   </nb-form-field>
                 </div>
@@ -126,7 +150,11 @@
               shape="round"
               size="small"
               (click)="onSaveClick()"
-              [disabled]="documentForm.form.invalid || !documentData.Base64"
+              [disabled]="
+                documentForm.form.invalid ||
+                !documentData.Base64 ||
+                !selectedType
+              "
             >
               {{ getString("save") }}
             </button>

@@ -208,7 +208,7 @@ router.post("/add", async (request, response) => {
             .request()
             .input("name", p.Name)
             .input("desc", p.Description)
-            .input("price", p.DefaultPackagePrice.replace(",", ""))
+            .input("price", p.DefaultPackagePrice?.replace(",", ""))
             .input("calculated", p.PackagePriceCalculated)
             .input("defUnit", p.DefaultPackagePriceUnitId)
             .input("measure", p.MeasureUnitId)

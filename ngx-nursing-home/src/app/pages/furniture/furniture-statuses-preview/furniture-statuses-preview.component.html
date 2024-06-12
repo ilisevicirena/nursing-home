@@ -29,6 +29,12 @@
       [refreshEnabled]="true"
       (createConfirm)="onCreateConfirm($event)"
       (deleteConfirm)="onDeleteConfirm($event)"
+      [exportSettings]="exportSettings"
+      [exportPdfTooltip]="getString('exportPdfTooltip')"
+      [exportExcelTooltip]="getString('exportExcelTooltip')"
+      [entriesPerPageTooltip]="getString('entriesPerPageTooltip')"
+      [refreshTooltip]="getString('refreshTooltip')"
+      [addTooltip]="getString('addTooltip')"
     ></ngx-grid>
   </nb-card-body>
 </nb-card>

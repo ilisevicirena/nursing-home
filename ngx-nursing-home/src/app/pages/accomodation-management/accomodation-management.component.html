@@ -48,12 +48,12 @@
         style="height: calc(100% - 1rem)"
         *ngFor="let floor of mainSource"
       >
-        <nb-card class="m-0 h-100">
+        <nb-card class="m-0 h-100 pb-2">
           <nb-card-header>
             {{ floor?.Name }}
           </nb-card-header>
           <nb-card-body>
-            <div class="rooms-container">
+            <div class="ground-plan-container">
               <div
                 class="room"
                 *ngFor="let r of floor?.Rooms"

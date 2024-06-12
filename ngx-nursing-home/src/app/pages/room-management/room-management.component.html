@@ -18,6 +18,12 @@
                 (editConfirm)="onEditFloorConfirm($event)"
                 (deleteConfirm)="onDeleteFloorConfirm($event)"
                 [selectionEnabled]="false"
+                [exportPdfTooltip]="getString('exportPdfTooltip')"
+                [exportExcelTooltip]="getString('exportExcelTooltip')"
+                [entriesPerPageTooltip]="getString('entriesPerPageTooltip')"
+                [refreshTooltip]="getString('refreshTooltip')"
+                [addTooltip]="getString('addTooltip')"
+                [defaultPerPageOption]="10"
               >
               </ngx-grid>
             </div>
@@ -38,6 +44,12 @@
                 (createConfirm)="onCreateRoomConfirm($event)"
                 (editConfirm)="onEditRoomConfirm($event)"
                 (deleteConfirm)="onDeleteRoomConfirm($event)"
+                [defaultPerPageOption]="10"
+                [exportPdfTooltip]="getString('exportPdfTooltip')"
+                [exportExcelTooltip]="getString('exportExcelTooltip')"
+                [entriesPerPageTooltip]="getString('entriesPerPageTooltip')"
+                [refreshTooltip]="getString('refreshTooltip')"
+                [addTooltip]="getString('addTooltip')"
               ></ngx-grid>
             </div>
           </nb-tab>
@@ -60,7 +72,7 @@
             ></nb-tag>
           </nb-tag-list>
         </div>
-        <div class="row rooms-container">
+        <div class="row ground-plan-container">
           <div
             class="room"
             *ngFor="let r of selectedFloorRooms"

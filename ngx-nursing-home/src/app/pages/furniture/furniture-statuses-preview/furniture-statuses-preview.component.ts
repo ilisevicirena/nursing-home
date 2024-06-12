@@ -14,6 +14,7 @@ import {
   GridSelectFilter,
   GridTagColumn,
   GridTextboxEditor,
+  IGridExportDocumentSettings,
 } from "shared-components";
 import { FurnitureStatusesService } from "../../../services/rest/furniture-statuses.service";
 
@@ -26,6 +27,15 @@ export class FurnitureStatusesPreviewComponent implements OnInit, OnDestroy {
   public getString = getString;
   public rowData: any;
   public dataSource: any[] = [];
+  public exportSettings: IGridExportDocumentSettings = {
+    title: getString("furnitureStatusesPreview"),
+    subtitle: undefined,
+    showOrdinalNumbers: true,
+    ordNumColumnName: getString("smTableOrdNumber"),
+    docName: "furniture-statuses-preview",
+    yesValueText: getString("yesBtnText").toLowerCase(),
+    noValueText: getString("noBtnText").toLowerCase(),
+  };
   public columns: GridColumn[] = [
     new GridColumn()
       .Title(getString("rowId"))

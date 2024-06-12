@@ -124,6 +124,16 @@ export class ProfileComponent implements OnInit, OnDestroy {
     noValueText: getString("noBtnText").toLowerCase(),
   };
 
+  public roomHistoryExportSettings: IGridExportDocumentSettings = {
+    title: getString("roomHistory"),
+    subtitle: undefined,
+    showOrdinalNumbers: true,
+    ordNumColumnName: getString("smTableOrdNumber"),
+    docName: "room-history",
+    yesValueText: getString("yesBtnText").toLowerCase(),
+    noValueText: getString("noBtnText").toLowerCase(),
+  };
+
   ngOnInit(): void {
     this.loading = true;
     this._subs.push(

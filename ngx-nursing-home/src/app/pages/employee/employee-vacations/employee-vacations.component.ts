@@ -19,6 +19,7 @@ import {
   GridSelectFilter,
   GridTagColumn,
   IGridCellButton,
+  IGridExportDocumentSettings,
 } from "shared-components";
 import { VacationsService } from "../../../services/rest/vacations.service";
 import { DialogService } from "../../../shared/dialog/dialog.service";
@@ -37,6 +38,15 @@ export class EmployeeVacationsComponent implements OnInit, OnDestroy {
   public getString = getString;
   public data: any[] = [];
   public summary: any;
+  public exportSettings: IGridExportDocumentSettings = {
+    title: getString("vacation"),
+    subtitle: undefined,
+    showOrdinalNumbers: true,
+    ordNumColumnName: getString("smTableOrdNumber"),
+    docName: "person-vacation",
+    yesValueText: getString("yesBtnText").toLowerCase(),
+    noValueText: getString("noBtnText").toLowerCase(),
+  };
 
   @Input() employeeId: number;
 

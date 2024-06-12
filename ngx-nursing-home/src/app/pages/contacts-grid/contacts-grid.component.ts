@@ -32,7 +32,7 @@ export class ContactsGridComponent implements OnInit, OnDestroy {
 
   @Input() elementHeight: number = 300;
   @Input() personId: number = 0;
-  @Input() detailed: boolean = false;
+  @Input() detailed: boolean = true;
 
   private _subs: Subscription[] = [];
   private _activeFilter: any[] = [

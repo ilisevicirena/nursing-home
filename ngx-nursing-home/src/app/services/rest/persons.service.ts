@@ -15,6 +15,19 @@ export class PersonsService extends BaseRestApiService {
     return this.http.get(this.apiRoute + "?active=" + active);
   }
 
+  public getActivePersonsByMonthYear(
+    month: number,
+    year: number
+  ): Observable<any> {
+    return this.http.get(
+      this.apiRoute +
+        "/getActivePersonsByMonthYear?Month=" +
+        month +
+        "&Year=" +
+        year
+    );
+  }
+
   public getPersonDetails(id: number): Observable<any> {
     return this.http.get(this.apiRoute + "/personDetails?id=" + id);
   }

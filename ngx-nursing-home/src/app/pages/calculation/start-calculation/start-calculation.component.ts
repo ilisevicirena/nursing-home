@@ -76,18 +76,22 @@ export class StartCalculationComponent implements OnInit, OnDestroy {
     this.calculationInProgress = true;
     // get active persons first
     this._subs.push(
-      this._personsService.getData(true).subscribe((data) => {
-        if (this.personsIds.length > 0)
-          this._persons = data.filter((x) => this.personsIds.includes(x.Id));
-        else this._persons = data;
-        this._personIndex = 0;
-        this.startPersonCalculation(this._personIndex);
-      })
+      this._personsService
+        .getActivePersonsByMonthYear(this.month, this.year)
+        .subscribe((data) => {
+          console.log(data);
+          if (this.personsIds.length > 0)
+            this._persons = data.filter((x) => this.personsIds.includes(x.Id));
+          else this._persons = data;
+          this._personIndex = 0;
+          this.startPersonCalculation(this._personIndex);
+        })
     );
   }
 
   private startPersonCalculation(personIndex: number): void {
     const person = this._persons[personIndex];
+
     this._subs.push(
       // get packages and services for person
       this._servicesManagementService

@@ -14,13 +14,26 @@ BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
+
 DECLARE @PreviousMonth INT, @PreviousYear INT;
+DECLARE @CreationDate DATETIME;
 
 SET @PreviousMonth = @Month - 1;
 SET @PreviousYear = @Year;
 
+-- Get the CreationDate of the calculation for the given month and year
+SELECT TOP 1 @CreationDate = DateFrom
+FROM dbo.Calculation 
+WHERE [Month] = @Month AND [Year] = @Year;
+
+PRINT 'CreationDate: ' + CONVERT(VARCHAR, @CreationDate, 120);
+
 SELECT 
-    (SELECT COUNT(*) FROM dbo.Person WHERE Active = 1) AS Persons,
+    (SELECT COUNT(*)
+     FROM dbo.Person p
+     WHERE p.StartDate <= @CreationDate
+       AND (p.EndDate IS NULL OR p.EndDate > @CreationDate)
+    ) AS Persons,
     COUNT(PersonId) as CalculatedForPersons,
     FORMAT(SUM(CASE WHEN StatusId <> 3 THEN SystemPrice ELSE 0 END),'N2') as TotalCalculatedPrice,
     FORMAT(SUM(CASE WHEN StatusId <> 3 THEN RealPrice ELSE 0 END),'N2') as TotalRealPrice,
@@ -121,9 +134,8 @@ SELECT
 FROM dbo.Calculation as c	
 WHERE [Month] = @Month AND [Year] = @Year;
 
-
-select top 1 CreationDate, DateFrom, DateTo
-from dbo.Calculation 
-where [Month]=@Month and [Year]=@Year;
+SELECT TOP 1 CreationDate, DateFrom, DateTo
+FROM dbo.Calculation 
+WHERE [Month] = @Month AND [Year] = @Year;
 
 END

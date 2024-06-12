@@ -25,6 +25,7 @@ export class RoomManagementComponent implements OnInit, OnDestroy {
   public floorsTitle: string = getString("floors");
   public roomsTitle: string = getString("rooms");
   public noRoomsTitle: string = getString("noRoomsForSelectedFloor");
+  public getString = getString;
   public floorsData: any[] = [];
   public roomsData: any[] = [];
   public tableMode: GRID_MODE = GRID_MODE.POPUP;

@@ -95,7 +95,7 @@ function formatDataObject(
 
   Object.keys(person).forEach(function (key) {
     if (key == "Id") return;
-    else if (key == "JMBG") {
+    else if (key == "JMBG" && person[key]) {
       var jmbgParsed = person[key].split("");
       for (let index = 0; index < jmbgParsed.length; index++) {
         const element = jmbgParsed[index];
@@ -117,7 +117,7 @@ function formatDataObject(
 
   if (payPerson) {
     Object.keys(payPerson).forEach(function (key) {
-      if (key == "Jmbg") {
+      if (key == "Jmbg" && payPerson[key]) {
         var jmbgParsed = payPerson[key].split("");
         for (let index = 0; index < jmbgParsed.length; index++) {
           const element = jmbgParsed[index];
@@ -130,7 +130,7 @@ function formatDataObject(
 
   if (guardian) {
     Object.keys(guardian).forEach(function (key) {
-      if (key == "Jmbg") {
+      if (key == "Jmbg" && guardian[key]) {
         var jmbgParsed = guardian[key].split("");
         for (let index = 0; index < jmbgParsed.length; index++) {
           const element = jmbgParsed[index];

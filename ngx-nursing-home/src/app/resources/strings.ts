@@ -637,6 +637,9 @@ const strings: IKeyValue[] = [
   { key: "entriesPerPageTooltip", value: "Broj redaka po stranici" },
   { key: "refreshTooltip", value: "Poništi filtriranje i sortiranje" },
   { key: "addTooltip", value: "Novi podatak" },
+  { key: "dataShown", value: "Prikazano" },
+  { key: "gridEditTooltip", value: "Uredi" },
+  { key: "gridDeleteTooltip", value: "Obriši" },
 ];
 
 const map = new Map(strings.map((obj) => [obj.key, obj.value]));

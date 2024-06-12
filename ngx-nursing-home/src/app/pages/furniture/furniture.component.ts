@@ -16,6 +16,7 @@ import {
   GridButtonType,
   GRID_BUTTON_TYPE,
   IGridCellButton,
+  IGridExportDocumentSettings,
 } from "shared-components";
 import { getString } from "../../resources/strings";
 import { FurnitureStatusesService } from "../../services/rest/furniture-statuses.service";
@@ -35,6 +36,17 @@ export class FurnitureComponent implements OnInit, OnDestroy {
 
   public statuses: any[] = [];
   public furniture: any[] = [];
+  public getString = getString;
+  public exportSettings: IGridExportDocumentSettings = {
+    title: getString("furniture"),
+    subtitle: undefined,
+    showOrdinalNumbers: true,
+    ordNumColumnName: getString("smTableOrdNumber"),
+    docName: "furniture",
+    yesValueText: getString("yesBtnText").toLowerCase(),
+    noValueText: getString("noBtnText").toLowerCase(),
+  };
+
   public columns: GridColumn[] = [
     new GridColumn()
       .Title(getString("id"))

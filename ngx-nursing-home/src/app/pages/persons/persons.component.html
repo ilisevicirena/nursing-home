@@ -136,5 +136,14 @@
         </nb-card>
       </div>
     </div>
+    <div class="cards-statusbar">
+      <ng-container *ngIf="personsData | filter : searchTerm as filtered">
+        <div>
+          {{ getString("dataShown") }}: {{ filtered.length }}/{{
+            personsData.length
+          }}
+        </div>
+      </ng-container>
+    </div>
   </div>
 </div>
