@@ -197,6 +197,12 @@ export class DoctorVisitTourComponent implements OnInit, OnDestroy {
       (x) => x.Id == 2
     );
     this.currentNote = this.persons[this.currentPersonIndex].Note;
+
+    setTimeout(() => {
+      document.querySelector(".person-card.active").scrollIntoView({
+        behavior: "smooth",
+      });
+    }, 100);
   }
 
   public onNextClick(): void {
@@ -210,6 +216,12 @@ export class DoctorVisitTourComponent implements OnInit, OnDestroy {
       (x) => x.Id == 2
     );
     this.currentNote = this.persons[this.currentPersonIndex].Note;
+
+    setTimeout(() => {
+      document.querySelector(".person-card.active").scrollIntoView({
+        behavior: "smooth",
+      });
+    }, 100);
   }
 
   public cancelDoctorVisit(): void {

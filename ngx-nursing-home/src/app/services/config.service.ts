@@ -31,6 +31,25 @@ export class ConfigService {
       });
     });
   }
+
+  public loadConfig(url: string): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      this._http.get<IAppWebConfig>(url).subscribe(
+        (config: IAppWebConfig) => {
+          this._AppConfig = config;
+          resolve();
+        },
+        (error) => {
+          console.error("Error loading config:", error);
+          reject(error);
+        }
+      );
+    });
+  }
+
+  public isConfigured(): boolean {
+    return !!this._AppConfig;
+  }
 }
 
 export interface IAppWebConfig {
@@ -38,5 +57,5 @@ export interface IAppWebConfig {
 }
 
 export function ConfigLoader(configService: ConfigService) {
-  return () => configService.load(environment.configFile);
+  return () => configService.load(environment.configFile).then();
 }

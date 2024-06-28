@@ -39,12 +39,8 @@ export class FurnitureComponent implements OnInit, OnDestroy {
   public getString = getString;
   public exportSettings: IGridExportDocumentSettings = {
     title: getString("furniture"),
-    subtitle: undefined,
     showOrdinalNumbers: true,
-    ordNumColumnName: getString("smTableOrdNumber"),
     docName: "furniture",
-    yesValueText: getString("yesBtnText").toLowerCase(),
-    noValueText: getString("noBtnText").toLowerCase(),
   };
 
   public columns: GridColumn[] = [

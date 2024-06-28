@@ -173,12 +173,8 @@ export class ContactsGridComponent implements OnInit, OnDestroy {
 
   public exportSettings: IGridExportDocumentSettings = {
     title: getString("contacts"),
-    subtitle: undefined,
     showOrdinalNumbers: true,
-    ordNumColumnName: getString("smTableOrdNumber"),
     docName: "contacts-for-person",
-    yesValueText: getString("yesBtnText").toLowerCase(),
-    noValueText: getString("noBtnText").toLowerCase(),
   };
 
   ngOnInit(): void {

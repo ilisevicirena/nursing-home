@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { BaseRestApiService, IBaseSaveModel } from "../base-rest-api.service";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
+import { map } from "rxjs/operators";
 
 @Injectable({
   providedIn: "root",
@@ -24,7 +25,12 @@ export class CalculationApiService extends BaseRestApiService {
   }
 
   public getCalculationStatuses(): Observable<any> {
-    return this.http.get(this.apiRoute + "/getCalculationStatuses");
+    return this.http.get(this.apiRoute + "/getCalculationStatuses").pipe(
+      map((data) => {
+        console.log(data);
+        return data;
+      })
+    );
   }
 
   public getCalculationsForPerson(id: number): Observable<any> {

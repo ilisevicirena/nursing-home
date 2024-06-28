@@ -3,6 +3,6 @@ INSERT INTO [dbo].[CalculationStatus]
            ,[StringKey]
            ,[Color])
      VALUES
-           (N'Plaćeno','calculationPaid', 'success'),
-		    (N'Nije plaćeno','calculationNotPaid', 'danger'),
-			 (N'Storniran','calculationCancelled', 'warning');
+            (N'Plaćeno','calculationPaid', 'success'),
+	      (N'Nije plaćeno','calculationNotPaid', 'danger'),
+		(N'Storniran','calculationCancelled', 'warning');

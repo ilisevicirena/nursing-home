@@ -108,10 +108,7 @@ export class CalculationComponent implements OnInit, OnDestroy {
     subtitle:
       getString("calculationFor") + ": " + (this.month + 1) + ". " + this.year,
     showOrdinalNumbers: true,
-    ordNumColumnName: getString("smTableOrdNumber"),
     docName: "calculation",
-    yesValueText: getString("yesBtnText").toLowerCase(),
-    noValueText: getString("noBtnText").toLowerCase(),
   };
 
   @ViewChild(GridComponent) table: GridComponent;

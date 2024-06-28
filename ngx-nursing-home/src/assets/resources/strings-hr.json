@@ -1,0 +1,717 @@
+[
+  { "key": "dashboard", "value": "Početna" },
+  { "key": "roomManagement", "value": "Upravljanje sobama" },
+  { "key": "floors", "value": "Katevi" },
+  { "key": "rooms", "value": "Sobe" },
+  { "key": "id", "value": "Šifra" },
+  { "key": "name", "value": "Naziv" },
+  { "key": "capacity", "value": "Kapacitet" },
+  { "key": "floor", "value": "Kat" },
+  { "key": "saveSuccess", "value": "Uspješno spremljeno!" },
+  { "key": "saveError", "value": "Pogreška prilikom spremanja!" },
+  {
+    "key": "noRoomsForSelectedFloor",
+    "value": "Nema spremljenih soba za odabrani kat!"
+  },
+  { "key": "persons", "value": "Osobe" },
+  { "key": "basicData", "value": "Osnovni podaci" },
+  { "key": "firstName", "value": "Ime" },
+  { "key": "lastName", "value": "Prezime" },
+  { "key": "jmbg", "value": "JMBG" },
+  { "key": "birthDate", "value": "Datum rođenja" },
+  { "key": "stayData", "value": "Podaci o boravku" },
+  { "key": "startDate", "value": "Datum dolaska" },
+  { "key": "endDate", "value": "Datum odlaska" },
+  { "key": "creationDate", "value": "Datum unosa" },
+  { "key": "currentStatus", "value": "Trenutni status osobe" },
+  { "key": "active", "value": "Aktivan" },
+  { "key": "unactive", "value": "Neaktivan" },
+  {
+    "key": "activeTooltip",
+    "value": "Osoba je trenutno smještena u ustanovi."
+  },
+  {
+    "key": "unactiveTooltip",
+    "value": "Osoba je bila smještena u ustanovi, ali je njen boravak završio."
+  },
+  { "key": "deactivatePerson", "value": "Deaktiviraj osobu" },
+  { "key": "dormatoryData", "value": "Podaci o smještaju" },
+  { "key": "currentFloor", "value": "Kat na kojemu je osoba smještena" },
+  { "key": "room", "value": "Soba" },
+  {
+    "key": "goToExternalRoomManagement",
+    "value": "Idi na vanjsko upravljanje smještajem"
+  },
+  { "key": "goToAdvancedEdit", "value": "Idi na napredno uređivanje" },
+  { "key": "save", "value": "Spremi" },
+  { "key": "cancel", "value": "Odustani" },
+  { "key": "personData", "value": "Podaci o osobi" },
+  {
+    "key": "activePersonDetails",
+    "value": "Aktivna osoba je osoba koja je trenutno smještena u ustanovi."
+  },
+  {
+    "key": "unactivePersonDetails",
+    "value": "Neaktivna osoba je osoba čiji je boravak u ustanovi završio."
+  },
+  {
+    "key": "changeStatusPersonText1",
+    "value": "Za prebacivanje osobe iz statusa aktivne u neaktivnu potrebno je kliknuti gumb: "
+  },
+  {
+    "key": "changeStatusPersonText2",
+    "value": "Ukoliko ne navedete 'Datum odlaska' spremit će se trenutni datum kao datum odlaska osobe iz ustanove."
+  },
+  { "key": "unactivePersons", "value": "Prikaži neaktivne osobe" },
+  { "key": "areYouSure", "value": "Jeste li sigurni?" },
+  {
+    "key": "questionDeactivatePerson",
+    "value": "Želite li deaktivirati osobu s datumom: "
+  },
+  { "key": "yes", "value": "Da" },
+  { "key": "no", "value": "Ne" },
+  { "key": "search", "value": "Pretraživanje" },
+  { "key": "contacts", "value": "Kontakti" },
+  { "key": "email", "value": "E-mail" },
+  { "key": "telephone", "value": "Telefon" },
+  { "key": "mobile", "value": "Mobitel" },
+  { "key": "noContacts", "value": "Nema spremljenih kontakata!" },
+  { "key": "addPerson", "value": "Unos nove osobe" },
+  { "key": "basicPersonData", "value": "Osnovni podaci o osobi" },
+  {
+    "key": "basicPersonStepText",
+    "value": "Ovdje popunite osnovne podatke o novoj osobi. Nakon unosa, klikom na gumb za dodavanje nove osobe, osoba je dodana u sustav. U daljnim koracima možete (ne morate) popuniti neke dodatne podatke o novom korisniku doma, na primjer: unijeti kontakt osobe, dodijeliti sobu za smještaj, bilješke, dokumente i slično."
+  },
+  { "key": "saveNewPerson", "value": "Spremi novu osobu" },
+  { "key": "back", "value": "Nazad" },
+  { "key": "next", "value": "Dalje" },
+  { "key": "required", "value": "Polje je obavezno!" },
+  { "key": "contactsPersonData", "value": "Kontakt osobe" },
+  {
+    "key": "contactsPersonStepText",
+    "value": "Ovdje popunite podatke o kontakt osobama. Možete navesti više kontakt osoba, te za svaku osobu popuniti neku vrstu kontakta (e-mail, telefonski broj ili mobilni broj). Za svaki kontakt obavezno je unijeti ime i prezime."
+  },
+  { "key": "accomodation", "value": "Smještaj" },
+  { "key": "documents", "value": "Dokumenti" },
+  { "key": "notes", "value": "Bilješke" },
+  { "key": "services", "value": "Paket usluga" },
+  {
+    "key": "savePersonFirst",
+    "value": "Za unos prvo spremite osnovne podatke o osobi!"
+  },
+  {
+    "key": "accomodationPersonStepText",
+    "value": "Ovdje popunite podatke o smještaju nove osobe. Osobu možete smjestiti samo u sobu u kojoj ima slobodnog mjesta. U jednoj sobi mogu biti smještene samo osobe istoga spola (obratite pažnju ukoliko već imate osobu u odabranoj sobi!). Podatke možete uređivati i sa portala za upravljanje smještajem."
+  },
+  { "key": "address", "value": "Adresa" },
+  { "key": "gender", "value": "Spol" },
+  { "key": "freeSpace", "value": "Slobodno" },
+  {
+    "key": "roomSelectionInvalid",
+    "value": "Ne možete u istoj sobi imati dodjeljene osobe različitih spolova. U tablici pod stupcem 'Spol' naveden je spol osoba koje su trenutno smještene u sobu."
+  },
+  { "key": "placePerson", "value": "Smjesti osobu" },
+  { "key": "accomodationManagement", "value": "Upravljanje smještajem" },
+  { "key": "searchPersons", "value": "Detaljno pregledavanje osoba" },
+  {
+    "key": "typeSearchTerm",
+    "value": "Za pretraživanje po unesenom pojmu pritisnite ENTER"
+  },
+  { "key": "searchNoResult", "value": "Pretraživanje nije dalo rezultata!" },
+  { "key": "editData", "value": "Uređivanje podataka" },
+  { "key": "passedTime", "value": "Vrijeme provedeno u domu" },
+  { "key": "years", "value": "Godine" },
+  { "key": "months", "value": "Mjeseci" },
+  { "key": "days", "value": "Dani" },
+  { "key": "currentAccomodation", "value": "Podaci o trenutnom smještaju" },
+  { "key": "history", "value": "Povijest promjena" },
+  { "key": "packagesManagement", "value": "Upravljanje paketima usluga" },
+  { "key": "addNew", "value": "Dodavanje podataka" },
+  { "key": "description", "value": "Opis" },
+  { "key": "calculation", "value": "Izračun cijene" },
+  { "key": "priceCalculated", "value": "Cijena paketa temeljena na izračunu" },
+  { "key": "servicesForPackage", "value": "Usluge unutar paketa" },
+  { "key": "quantity", "value": "Količina" },
+  { "key": "costPerUnit", "value": "Jedinična cijena" },
+  { "key": "measureUnit", "value": "Jedinica mjere" },
+  { "key": "add", "value": "Dodaj" },
+  { "key": "service", "value": "Usluga" },
+  { "key": "priceUnit", "value": "Valuta" },
+  { "key": "defaultPackagePrice", "value": "Prilagođena cijena" },
+  {
+    "key": "calculationMeasurement",
+    "value": "Obračunsko razdoblje za izračun"
+  },
+  { "key": "alreadyAdded", "value": "Stavka je već dodana!" },
+  { "key": "servicesManagement", "value": "Upravljanje uslugama" },
+  { "key": "servicesSingle", "value": "Pojedinačne usluge" },
+  { "key": "serviceSingle", "value": "Pojedinačna usluga" },
+  { "key": "packages", "value": "Paketi usluga" },
+  { "key": "discounts", "value": "Popusti" },
+  { "key": "servicesManagementSingle", "value": "Simulacija ponude" },
+  { "key": "defaultPrice", "value": "Fiksna cijena" },
+  { "key": "packagePriceCalculated", "value": "Izračunata cijena" },
+  { "key": "defaultNumberOfUnits", "value": "Fiksna količina jedinica" },
+  {
+    "key": "defaultNumberOfUnitsInfo",
+    "value": "Kada koristite fiksnu količinu jedinica pri dodavanju usluge u paket, koristi se uneseni broj jedinica i obračunava na temelju unesene cijene po jedinici. Količinu nije moguće mijenjati prilikom dodavanja stavke u obračun."
+  },
+  {
+    "key": "deactivateService",
+    "value": "Želite li ukloniti uslugu iz ponude?"
+  },
+  { "key": "sum", "value": "Ukupan iznos" },
+  { "key": "noData", "value": "Nema podataka za prikaz!" },
+  {
+    "key": "deactivatePackage",
+    "value": "Želite li ukloniti paket usluga iz ponude?"
+  },
+  { "key": "accomodationManagementRoom", "value": "Razmještaj po sobama" },
+  { "key": "percentCalculation", "value": "Postotni izračun" },
+  { "key": "discountsManagement", "value": "Upravljanje popustima" },
+  { "key": "deactivateDiscount", "value": "Želite li deaktivirati popust?" },
+  { "key": "notifications", "value": "Obavijesti" },
+  { "key": "markAllAsRead", "value": "Označi sve kao pročitano" },
+  { "key": "showAll", "value": "Sve obavijesti" },
+  { "key": "all", "value": "Sve" },
+  { "key": "events", "value": "Događaji" },
+  { "key": "reminders", "value": "Podsjetnici" },
+  { "key": "settings", "value": "Postavke" },
+  { "key": "personsManagement", "value": "Upravljanje osobama" },
+  { "key": "markAsRead", "value": "Označi kao pročitano" },
+  { "key": "goToNotification", "value": "Idi na obavijest" },
+  { "key": "servicesOnly", "value": "Usluge" },
+  { "key": "packagesOnly", "value": "Paketi" },
+  { "key": "new", "value": "Novo" },
+  { "key": "showDetails", "value": "Prikaži detalje" },
+  { "key": "offerDate", "value": "Datum ponude" },
+  { "key": "offerItems", "value": "Stavke ponude" },
+  {
+    "key": "offerDragAndDrop",
+    "value": "Povucite stavke iz lijevog panela ovdje"
+  },
+  { "key": "clearAll", "value": "Očisti sve" },
+  { "key": "transactionDate", "value": "Datum transakcije" },
+  { "key": "logType", "value": "Vrsta radnje" },
+  { "key": "activeRoom", "value": "Trenutni smještaj" },
+  { "key": "roomStartDate", "value": "Početak boravka" },
+  { "key": "roomEndDate", "value": "Završetak boravka" },
+  { "key": "addDiscount", "value": "Dodaj popust" },
+  { "key": "selected", "value": "Odabrano" },
+  { "key": "markSelectedAsRead", "value": "Označi odabrano kao pročitano" },
+  { "key": "selectAll", "value": "Označi sve" },
+  { "key": "offerPrint", "value": "P O N U D A" },
+  { "key": "thankYou", "value": "Hvala na povjerenju!" },
+  { "key": "nothingToPrint", "value": "Nema podataka za ispis!" },
+  { "key": "offerFor", "value": "Ponuda za" },
+  { "key": "offerPackagesForPerson", "value": "Paket usluga za novu osobu" },
+  {
+    "key": "offerPersonStepText",
+    "value": "Ovdje možete odabrati pakete usluga za novu osobu. Paket i usluge možete dodati i naknadno na portalu za pregled podataka o osobi. Odabrane pakete i usluge možete poslije izmijeniti. Nakon odabira ponude nemojte zaboraviti spremiti podatke!"
+  },
+  { "key": "createOffer", "value": "Kreiraj ponudu" },
+  { "key": "addNewData", "value": "Dodaj novo" },
+  { "key": "fileNotFound", "value": "Datoteka nije pronađena u memoriji!" },
+  { "key": "downloadStartSoon", "value": "Datoteka će se uskoro preuzeti." },
+  { "key": "addDocument", "value": "Novi dokument" },
+  { "key": "documentType", "value": "Vrsta dokumenta" },
+  { "key": "fileType", "value": "Vrsta datoteke" },
+  { "key": "uploadDate", "value": "Datum učitavanja" },
+  { "key": "wantToDelete", "value": "Sigurno želiš obrisati?" },
+  {
+    "key": "wantToSaveOffer",
+    "value": "Sigurno želiš spremiti promjene u paketu usluga?"
+  },
+  { "key": "markNoteAsFavorite", "value": "Dodaj bilješku u favorite" },
+  { "key": "removeNoteFromFavorites", "value": "Ukloni bilješku iz favorita" },
+  { "key": "tagsManagement", "value": "Upravljanje oznakama" },
+  {
+    "key": "documentsManagement",
+    "value": "Upravljanje priloženim dokumentima"
+  },
+  { "key": "deleteData", "value": "Brisanje podataka" },
+  { "key": "documentsPersonData", "value": "Dodavanje dokumenata" },
+  { "key": "select", "value": "Odaberi" },
+  { "key": "notesPersonData", "value": "Bilješke za novu osobu" },
+  { "key": "filters", "value": "Filtri" },
+  { "key": "other", "value": "Ostalo" },
+  { "key": "unread", "value": "Nepročitano" },
+  { "key": "manageNotifications", "value": "Upravljanje obavijestima" },
+  { "key": "reminder", "value": "Podsjetnik" },
+  { "key": "daysBefore", "value": "dana prije za vrstu obavijesti: " },
+  { "key": "smTableOrdNumber", "value": "Redni broj" },
+  { "key": "yesBtnText", "value": "da" },
+  { "key": "noBtnText", "value": "ne" },
+  { "key": "contactsForPerson", "value": "Kontakti osobe: " },
+  { "key": "calendar", "value": "Kalendar" },
+  { "key": "addEvent", "value": "Novi događaj" },
+  { "key": "editEvent", "value": "Uređivanje događaja" },
+  { "key": "eventsManagement", "value": "Upravljanje događajima" },
+  { "key": "oneDayEvent", "value": "Jednodnevni događaj" },
+  { "key": "multipleDayEvent", "value": "Višednevni događaj" },
+  { "key": "eventDate", "value": "Datum" },
+  { "key": "eventStartDate", "value": "Datum početka" },
+  { "key": "eventEndDate", "value": "Datum završetka" },
+  { "key": "color", "value": "Boja" },
+  { "key": "recurringEvent", "value": "Ponavljaj događaj godišnje" },
+  { "key": "eventReminder", "value": "Podsjetnik na događaj" },
+  { "key": "fastActions", "value": "Brze akcije" },
+  { "key": "title", "value": "Naslov" },
+  { "key": "typeText", "value": "Unesite tekst" },
+  { "key": "notProvided", "value": "Nije uneseno" },
+  { "key": "inProgress", "value": "U tijeku" },
+  { "key": "provided", "value": "Uneseno" },
+  { "key": "doctorVisit", "value": "Liječnička posjeta za dan: " },
+  {
+    "key": "startDoctorVisit",
+    "value": "Pokretanje akcije liječničkog obilaska za sve aktivne osobe"
+  },
+  { "key": "delete", "value": "Obriši" },
+  { "key": "completed", "value": "Dovršeno" },
+  { "key": "completed", "value": "Dovršeno" },
+  {
+    "key": "documentsPersonStepText",
+    "value": "Ovdje možeš dodati neke dokumente vezane uz novu osobu (kopije osobnih dokumenata, upute za davanje lijekova, liječničke nalaze i slično). Dodane dokumente možeš kasnije pregledati i uređivati unutar profila osobe. Dokumente ne moraš dodati odmah..."
+  },
+  { "key": "uploadDocument", "value": "Dodaj dokument" },
+  {
+    "key": "startCalculation",
+    "value": "Pokretanje obračuna za sve aktivne osobe"
+  },
+  { "key": "calculationPage", "value": "Obračun" },
+  { "key": "calculationFor", "value": "Obračun za" },
+  { "key": "newCalculation", "value": "Novi obračun" },
+  {
+    "key": "startingCalculation",
+    "value": "Pokretanje obračuna za sve aktivne osobe"
+  },
+  { "key": "daysForPayment", "value": "Rok za uplatu (dani)" },
+  {
+    "key": "recalculateForExisting",
+    "value": "Preračunaj za osobe koje već imaju obračun u odabranom razdoblju"
+  },
+  {
+    "key": "skipExisting",
+    "value": "Kreiraj obračun samo za osobe koje nemaju obračun u odabranom razdoblju"
+  },
+  { "key": "start", "value": "Pokreni" },
+  {
+    "key": "calculationInProgress",
+    "value": "Kalkulacija je u tijeku, molimo pričekajte (može potrajati nekoliko minuta)"
+  },
+  { "key": "invoice", "value": "R A Č U N" },
+  { "key": "invoiceForMonth", "value": "Račun za mjesec" },
+  { "key": "generatedDate", "value": "Generirano dana" },
+  { "key": "invoicePeriod", "value": "Razdoblje: " },
+  {
+    "key": "invoiceGenerated",
+    "value": "Napomena: Ovaj dokument automatski je generiran iz sustava i može se razlikovati od stvarnog stanja!"
+  },
+  { "key": "calculationDate", "value": "Datum obračuna" },
+  { "key": "status", "value": "Status" },
+  { "key": "systemPrice", "value": "Izračunati iznos" },
+  { "key": "realPrice", "value": "Stvarni iznos" },
+  { "key": "paidPrice", "value": "Plaćeni iznos" },
+  { "key": "paidDate", "value": "Datum uplate" },
+  { "key": "calculationNotPaid", "value": "Nije plaćeno" },
+  { "key": "calculationPaid", "value": "Plaćeno" },
+  { "key": "calculationCancelled", "value": "Stornirano" },
+  { "key": "calculationSuccess", "value": "Obračun uspješno kreiran" },
+  { "key": "chartCalculated", "value": "Obračunato" },
+  { "key": "calculatedSumReal", "value": "Ukupni stvarni iznos" },
+  { "key": "calculatedSumPaid", "value": "Ukupni plaćeni iznos" },
+  { "key": "calculatedSum", "value": "Ukupni izračunati iznos" },
+  { "key": "summaryDetails", "value": "Otvori detalje" },
+  { "key": "person", "value": "osoba" },
+  { "key": "calculatedFrom", "value": "obračunato od" },
+  { "key": "actions", "value": "Akcije" },
+  { "key": "newCalculation", "value": "Novi obračun" },
+  { "key": "recalculateSelected", "value": "Preračunaj za odabrane" },
+  {
+    "key": "markRealPrice",
+    "value": "Unesi izračunati iznos kao stvarni za odabrane"
+  },
+  { "key": "markPaidPrice", "value": "Provedi plaćanje za odabrane" },
+  { "key": "cancelSelected", "value": "Storniraj plaćanje za odabrane" },
+  { "key": "nothingSelected", "value": "Nema odabranih redaka" },
+  {
+    "key": "wantToMarkRealPrice",
+    "value": "Želite li unijeti izračunati iznos kao stvarni iznos za odabrane obračune?"
+  },
+  {
+    "key": "wantToMarkPaid",
+    "value": "Želite li označiti odabrane obračune kao plaćene? Unijet će se stvarni iznos kao plaćeni, ako stvarni iznos nije unsen iskoristit će se izračunati iznos. Datum plaćanja će biti trenutni datum."
+  },
+  {
+    "key": "wantToCancelSelected",
+    "value": "Želite li stornirati plaćanje obračuna? Stornirani obračuni ne ulaze u računanje ukupnih iznosa."
+  },
+  { "key": "calculationSummary", "value": "Detalji obračuna" },
+  { "key": "month", "value": "mjesec" },
+  { "key": "period", "value": "Razdoblje" },
+  { "key": "calculationNumber", "value": "Broj obračuna" },
+  { "key": "numberOfPersons", "value": "Ukupan broj aktivnih osoba" },
+  { "key": "calculationCreatedFor", "value": "Obračun kreiran za" },
+  { "key": "calculationSystemPrice", "value": "Izračunati iznos" },
+  { "key": "lastMonth", "value": "u odnosu na prošli mjesec" },
+  { "key": "calculationRealPrice", "value": "Stvarni iznos" },
+  { "key": "calculationPaidPrice", "value": "Plaćeni iznos" },
+  { "key": "calculationCancelled", "value": "Stornirani obračuni" },
+  {
+    "key": "cancelledCalculationsDescription",
+    "value": "Stornirani obračuni izuzeti su iz ukupnog izračunatog, stvarnog i plaćenog iznosa."
+  },
+  {
+    "key": "numberOfCancelledCalculations",
+    "value": "Broj storniranih obračuna"
+  },
+  { "key": "enterRealPrice", "value": "Unesi stvarnu cijenu" },
+  { "key": "enterPaidPrice", "value": "Unesi podatke o plaćanju" },
+  { "key": "cancelCalculation", "value": "Storniraj obračun" },
+  {
+    "key": "calculationDocuments",
+    "value": "Pregledaj dokumente vezane uz obračun"
+  },
+  {
+    "key": "wantToCancelCalculation",
+    "value": "Sigurno želiš stornirati obračun? Nakon storniranja obračun više ne ulazi u izračun ukupnog iznosa."
+  },
+  { "key": "realPriceModalTitle", "value": "Unos stvarne cijene" },
+  { "key": "paidPriceModalTitle", "value": "Plaćanje obračuna" },
+  { "key": "personCalculation", "value": "Računi" },
+  { "key": "calculationMonth", "value": "Mjesec" },
+  { "key": "calculationYear", "value": "Godina" },
+  { "key": "doctorVisitAction", "value": "Liječnički obilazak" },
+  { "key": "startCalculationAction", "value": "Brzi obračun" },
+  {
+    "key": "calculationInfoPopover",
+    "value": "Ukoliko paket ima unesenu prilagođenu cijenu, konačna cijena paketa je jednaka prilagođenoj cijeni. Ukoliko paket ima izračunatu cijenu, cijena se računa temeljem usluga koje obuhvaća paket (uporabom cijena i količina usluga)."
+  },
+  { "key": "download", "value": "Preuzimanje" },
+  { "key": "genderChartTitle", "value": "Udio osoba po spolu" },
+  { "key": "male", "value": "Muški" },
+  { "key": "female", "value": "Ženski" },
+  {
+    "key": "activePersonsChartTitle",
+    "value": "Broj aktivnih osoba u mjesecu"
+  },
+  { "key": "oldestPerson", "value": "Najstarija osoba" },
+  { "key": "longestPerson", "value": "Najduži boravak" },
+  { "key": "longestPersonYears", "value": "godina" },
+  { "key": "longestPersonMonths", "value": "mjeseci" },
+  { "key": "longestPersonDays", "value": "dana" },
+  { "key": "forMonth", "value": "za mjesec" },
+  { "key": "allEvents", "value": "Svi događaji" },
+  { "key": "nextEvents", "value": "NADOLAZEĆI DOGAĐAJI" },
+  { "key": "tagsManagement", "value": "Upravljanje oznakama" },
+  { "key": "maidenLastName", "value": "Djevojačko prezime" },
+  { "key": "fatherFirstName", "value": "Ime oca" },
+  { "key": "motherFirstName", "value": "Ime majke" },
+  { "key": "motherMaidenLastName", "value": "Djevojačko prezime majke" },
+  { "key": "birthCountry", "value": "Država rođenja" },
+  { "key": "birthMunicipality", "value": "Općina/grad rođenja" },
+  { "key": "birthCity", "value": "Mjesto rođenja" },
+  { "key": "residanceCity", "value": "Mjesto prebivališta" },
+  { "key": "residanceStreetName", "value": "Ulica" },
+  { "key": "residanceHouseNumber", "value": "Kućni broj" },
+  { "key": "doctorName", "value": "Ime i prezime liječnika" },
+  { "key": "isObligeeToPay", "value": "Obveznik plaćanja" },
+  { "key": "isGuardian", "value": "Skrbnik" },
+  { "key": "categoryChooser", "value": "Izbor kategorije" },
+  {
+    "key": "categoryChooserStepText",
+    "value": "Ovdje izaberite odgovarajuću kategoriju za novu osobu, unesite podatke koji najbolje opisuju zdravstveno stanje osobe te zaberite vrstu smještaja koju osoba zahtjeva."
+  },
+  { "key": "categoryChooserData", "value": "Izbor kategorije za novu osobu" },
+  { "key": "healthCondition", "value": "Zdravstveno stanje" },
+  {
+    "key": "healthConditionInfo",
+    "value": "Odaberite kućice kraj odgovarajućeg odgovora. Moguće je odabrati više opcija."
+  },
+  { "key": "personCategory", "value": "Kategorija korisnika" },
+  {
+    "key": "personCategoryInfo",
+    "value": "Odaberite kućicu kraj odgovarajućeg odgovora. Moguće je odabrati samo jednu opciju."
+  },
+  { "key": "accommodationType", "value": "Vrsta smještaja" },
+  {
+    "key": "accommodationTypeInfo",
+    "value": "Odaberite kućicu kraj odgovarajućeg odgovora. Moguće je odabrati samo jednu opciju."
+  },
+  { "key": "writeOther", "value": "Upisati ostala zdravstvena stanja" },
+  {
+    "key": "generateAccommodationRequest",
+    "value": "Generiraj zahtjev za smještaj"
+  },
+  {
+    "key": "showHistory",
+    "value": "Prikaži povijest promjena"
+  },
+  {
+    "key": "categories",
+    "value": "Kategorije"
+  },
+  {
+    "key": "requestGenerated",
+    "value": "Zahtjev za smještaj uspješno je generiran te dostupan u sekciji Dokumenti korisnika pod tipom Osobni dokument"
+  },
+  { "key": "postalCode", "value": "Poštanski broj" },
+  { "key": "country", "value": "Država" },
+  { "key": "cities", "value": "Gradovi" },
+  { "key": "municipality", "value": "Općina" },
+  { "key": "municipalities", "value": "Općine" },
+  { "key": "employeesManagement", "value": "Upravljanje zaposlenicima" },
+  { "key": "employees", "value": "Zaposlenici" },
+  { "key": "addEmployee", "value": "Unos novog zaposlenika" },
+  { "key": "unactiveEmployees", "value": "Prikaži neaktivne zaposlenike" },
+  { "key": "jobPosition", "value": "Radno mjesto" },
+  { "key": "employmentDate", "value": "Datum zaposlenja" },
+  { "key": "addressAndContact", "value": "Adresa & kontakt" },
+  { "key": "experianceAndEducation", "value": "Obrazovanje i iskustvo" },
+  { "key": "qualification", "value": "Stručna sprema" },
+  { "key": "schoolQualificationName", "value": "Zanimanje" },
+  { "key": "yearsOfExperiance", "value": "Godine iskustva" },
+  { "key": "schoolName", "value": "Naziv školske ustanove" },
+  { "key": "employmentType", "value": "Vrsta zaposlenja" },
+  { "key": "bankName", "value": "Naziv banke u kojoj ima otvoren račun" },
+  { "key": "bankAccountNumber", "value": "Broj bankovnog računa" },
+  { "key": "daysOfVacation", "value": "Broj dana godišnjeg odmora" },
+  { "key": "saveNewEmployee", "value": "Spremi novog zaposlenika" },
+  { "key": "employedTime", "value": "Staž u poduzeću" },
+  {
+    "key": "daysOfVacationLeft",
+    "value": "Neiskorišteni dani godišnjeg odmora"
+  },
+  { "key": "vacation", "value": "Godišnji odmor" },
+  { "key": "employeeLeave", "value": "Odlazak i deaktivacija" },
+  {
+    "key": "activeEmployeeDetails",
+    "value": "Aktivan zaposlenik je zaposlenik koji je trenutno u radnom odnosu."
+  },
+  {
+    "key": "unactiveEmployeeDetails",
+    "value": "Neaktivan zaposlenik je zaposlenik koji više nije u radnom odnosu."
+  },
+  {
+    "key": "changeStatusEmployeeText1",
+    "value": "Za prebacivanje zaposlenika iz aktivnog u neaktivnog potrebno je kliknuti na gumb: "
+  },
+  {
+    "key": "changeStatusEmployeeText2",
+    "value": "Ukoliko ne unsete datum završetka zaposlenja, kao datum završetka uzet će se trenutni datum."
+  },
+  {
+    "key": "deactivateEmployee",
+    "value": "Deaktiviraj zaposlenika"
+  },
+  {
+    "key": "currentStatusEmployee",
+    "value": "Trenutni status zaposlenika"
+  },
+  {
+    "key": "passedTimeEmployee",
+    "value": "Staž u poduzeću"
+  },
+  { "key": "employmentEndDate", "value": "Datum završetka zaposlenja" },
+  {
+    "key": "questionDeactivateemployee",
+    "value": "Želite li deaktivirati zaposlenika s datumom: "
+  },
+  { "key": "employeeLeave", "value": "Odlazak i deaktivacija" },
+  { "key": "remainingDays", "value": "Preostalo dana" },
+  { "key": "totalVacationDays", "value": "Ukupno dana" },
+  { "key": "inProgressDays", "value": "Rezervirano dana" },
+  {
+    "key": "availableDaysForReservation",
+    "value": "Dostupno dana"
+  },
+  { "key": "year", "value": "Godina" },
+  { "key": "fromDate", "value": "Od" },
+  { "key": "toDate", "value": "Do" },
+  { "key": "daysTaken", "value": "Broj dana" },
+  { "key": "newVacation", "value": "Novi godišnji odmor" },
+  { "key": "range", "value": "Razdoblje" },
+  { "key": "daysCorrection", "value": "Korekcija broja dana" },
+  { "key": "cancelVacation", "value": "Storniraj GO" },
+  { "key": "changeStatus", "value": "Promijeni status" },
+  {
+    "key": "wantToCancelVacation",
+    "value": "Želite li stornirati/otkazati godišnji odmor?"
+  },
+  { "key": "totalDaysTaken", "value": "Iskorišteno dana" },
+  { "key": "employeesByGender", "value": "Udio zaposlenika po spolu" },
+  { "key": "currentEmployees", "value": "Trenutno zaposlenika" },
+  { "key": "totalEmployees", "value": "Ukupno zaposlenika" },
+  {
+    "key": "employeesByJobPosition",
+    "value": "Udio zaposlenika po radnom mjestu"
+  },
+  { "key": "numberOfEmployees", "value": "broj zaposlenika" },
+  { "key": "goToProfile", "value": "profil" },
+  {
+    "key": "categoriesTemplate",
+    "value": "Preuzimanje kategorija u template obliku"
+  },
+  { "key": "newDoctorVisit", "value": "Novi liječnički obilazak" },
+  { "key": "visitDate", "value": "Datum posjete" },
+  { "key": "selectDoctor", "value": "Odaberi liječnika ili više njih" },
+  {
+    "key": "selectNurse",
+    "value": "Odaberi medicinskog tehničara/njegovatelja u pratnji"
+  },
+  {
+    "key": "visitTourDescription",
+    "value": "Pokretanjem liječničkog obilaska pojavit će se na ekranu svi korisnici doma. Molimo da za svakog korisnika kojega je obišao liječnik unsete glavne zaključke posjete. Nakon unosa spremite bilješku za svaku osobu. Liječnički obilazak nije nužno unijeti za sve korisnike, nego samo za koje je posjeta važila. Nakon dovršetka unosa ne zaboravite kliknuti na gumb Završi kako bi se posjeta uspješno spremila!"
+  },
+  { "key": "info", "value": "Dodatne upute" },
+  { "key": "visitTourStarted", "value": "Pokrenut je liječnički obilazak." },
+  { "key": "startingVisitTour", "value": "Liječnički obilazak se pokreće" },
+  { "key": "complete", "value": "Završi" },
+  { "key": "contributors", "value": "Sudionici" },
+  { "key": "remarks", "value": "Zabilješke" },
+  {
+    "key": "doctorVisitTourCompleted",
+    "value": "Liječnički obilazak uspješno je završen."
+  },
+  { "key": "doctorVisits", "value": "Vizite" },
+  { "key": "doctors", "value": "Liječnici" },
+  { "key": "nurses", "value": "Medicinski djelatnici" },
+  { "key": "numberOfVisitedPersons", "value": "Broj pregledanih korisnika" },
+  { "key": "doctorVisitDetails", "value": "Detalji liječničke posjete" },
+  { "key": "visitDetails", "value": "Osnovni podaci" },
+  { "key": "visitPersons", "value": "Detalji liječničke posjete po korisniku" },
+  { "key": "visitSummary", "value": "Sažetak i preuzimanja" },
+  { "key": "numberOfDoctors", "value": "Broj liječnika" },
+  { "key": "numberOfNurses", "value": "Broj medicinskog osoblja" },
+  { "key": "doctorVisitShort", "value": "Liječnička posjeta" },
+  { "key": "visitPassedTime", "value": "Proteklo vrijeme od zadnje posjete" },
+  { "key": "visitMonths", "value": "MJESECI" },
+  { "key": "visitDays", "value": "DANI" },
+  { "key": "visited", "value": "Broj posjećenih osoba" },
+  { "key": "totalPersons", "value": "UKUPNO OSOBA" },
+  { "key": "visitedPersons", "value": "POSJEĆENO OSOBA" },
+  { "key": "basicStatistics", "value": "Osnovna statistika" },
+  { "key": "doctorStatistics", "value": "Statistika liječnika" },
+  { "key": "totalVisits", "value": "Ukupan broj posjeta" },
+  { "key": "downloadAllNotes", "value": "Preuzmi podatke o posjeti" },
+  { "key": "width", "value": "Širina elementa" },
+  { "key": "height", "value": "Visina elementa" },
+  { "key": "top", "value": "Gornja pozicija" },
+  { "key": "left", "value": "Lijeva pozicija" },
+  {
+    "key": "personWithLongestLastVisit",
+    "value": "Najduže bez liječničke posjete"
+  },
+  { "key": "timeSinceLastVisit", "value": "Vrijeme od zadnje posjete" },
+  { "key": "patient", "value": "Pacijent" },
+  { "key": "peopleWithoutRoom", "value": "Osobe bez sobe" },
+  { "key": "furnitureStatuses", "value": "Statusi namještaja" },
+  { "key": "furnitureManagement", "value": "Upravljanje namještajem" },
+  { "key": "icon", "value": "Ikona" },
+  { "key": "inventoryCode", "value": "Inventurni broj" },
+  { "key": "latestStatus", "value": "Zadnji status" },
+  { "key": "latestStatusDate", "value": "Datum statusa" },
+  { "key": "newStatusDate", "value": "Datum novog statusa" },
+  { "key": "newStatus", "value": "Novi status" },
+  { "key": "statusChange", "value": "Promjena statusa" },
+  { "key": "viewStatuses", "value": "Pregledaj statuse" },
+  { "key": "removeFromRoom", "value": "Obriši iz sobe" },
+  { "key": "furnitureStatusesPreview", "value": "Pregled statusa" },
+  { "key": "rowId", "value": "Šifra reda" },
+  { "key": "statusStartDate", "value": "Datum od" },
+  { "key": "statusEndDate", "value": "Datum do" },
+  {
+    "key": "removeFurnitureFromRoomQuestion",
+    "value": "Želite li maknuti odabrani namještaj iz sobe?"
+  },
+  { "key": "exportPdfTooltip", "value": "Izvezi podatke u PDF" },
+  { "key": "exportExcelTooltip", "value": "Izvezi podatke u Excel" },
+  { "key": "entriesPerPageTooltip", "value": "Broj redaka po stranici" },
+  { "key": "refreshTooltip", "value": "Poništi filtriranje i sortiranje" },
+  { "key": "addTooltip", "value": "Novi podatak" },
+  { "key": "dataShown", "value": "Prikazano" },
+
+  { "key": "gridDatepickerApplyBtn", "value": "Odaberi" },
+  { "key": "gridDatepickerNow", "value": "Sada" },
+  { "key": "gridDatepickerAmPm", "value": "AM PM" },
+  { "key": "gridDatepickerHours", "value": "Sati" },
+  { "key": "gridDatepickerMinutes", "value": "Minute" },
+  { "key": "gridDatepickerSeconds", "value": "Sekunde" },
+  { "key": "gridSaveBtnText", "value": "Spremi" },
+  { "key": "gridCancelBtnText", "value": "Odustani" },
+  { "key": "gridActions", "value": "Akcije" },
+  { "key": "gridNoData", "value": "Nema podataka za prikaz." },
+  { "key": "gridAddBtn", "value": "Dodaj novo" },
+  { "key": "gridRefreshTooltip", "value": "Resetiranje filtera" },
+  {
+    "key": "gridExcelExportTooltip",
+    "value": "Izvoz podataka iz tablice u Excel dokument"
+  },
+  { "key": "gridLoading", "value": "Učitavanje" },
+  { "key": "gridEntriesPerPageTooltip", "value": "Broj zapisa po stranici" },
+  { "key": "gridTableOrdNumber", "value": "Redni broj" },
+  { "key": "gridSelectedRows", "value": "Odabrano redaka:" },
+  { "key": "gridNewRecord", "value": "Novi zapis" },
+  { "key": "gridEditRecord", "value": "Uređivanje zapisa" },
+  { "key": "gridDeleteConfirmTitle", "value": "Jeste li sigurni?" },
+  {
+    "key": "gridDeleteConfirmText",
+    "value": "Brisanje se ne može poništiti. Želite li nastaviti?"
+  },
+  { "key": "gridFilterShowAll", "value": "Prikaži sve" },
+  { "key": "gridRequiredTooltip", "value": "Obavezno polje" },
+  { "key": "gridSort", "value": "SORTIRANJE" },
+  { "key": "gridSortAsc", "value": "Sortiraj uzlazno" },
+  { "key": "gridSortDesc", "value": "Sortiraj silazno" },
+  { "key": "gridDock", "value": "Zaključaj" },
+  { "key": "gridUndock", "value": "Otključaj" },
+  { "key": "gridOther", "value": "OSTALO" },
+  { "key": "gridEditTooltip", "value": "Uredi" },
+  { "key": "gridDeleteTooltip", "value": "Obriši" },
+  { "key": "gridGrouping", "value": "GRUPIRANJE" },
+  { "key": "gridUngroup", "value": "Razgrupiraj" },
+  { "key": "gridGroup", "value": "Grupiraj" },
+  { "key": "gridGroupCount", "value": "Broj zapisa" },
+  {
+    "key": "gridExportPdfTooltip",
+    "value": "Izvoz podataka iz tablice u PDF dokument"
+  },
+  { "key": "gridTableYes", "value": "da" },
+  { "key": "gridTableNo", "value": "ne" },
+  { "key": "fileDelete", "value": "Obriši" },
+  { "key": "filePreview", "value": "Pregledaj" },
+  { "key": "fileDownload", "value": "Preuzmi" },
+  { "key": "fileSize", "value": "Veličina" },
+  { "key": "fileAuthor", "value": "Autor" },
+  { "key": "fileName", "value": "Naziv" },
+  { "key": "fileExtension", "value": "Vrsta" },
+  { "key": "fileDate", "value": "Stvoreno" },
+  { "key": "filepickerEmpty", "value": "Dovuci ovdje" },
+  { "key": "filepickerButton", "value": "ili odaberi datoteku" },
+  { "key": "filepickerMaxFiles", "value": "Maksmalan broj datoteka: " },
+  { "key": "filepickerAllowedFiles", "value": "Dopuštene vrste datoteka: " },
+  {
+    "key": "filepickerMaxFilesWarning",
+    "value": "Dosegli ste maksimalan broj datoteka "
+  },
+  { "key": "filepickerAccept", "value": "*" },
+  { "key": "psLoading", "value": "Učitavanje..." },
+  { "key": "schedulePreviousMonth", "value": "Prethodni mjesec" },
+  { "key": "scheduleNextMonth", "value": "Sljedeći mjesec" },
+  { "key": "scheduleTodayBtn", "value": "Danas" },
+  { "key": "scheduleTodayBtnTooltip", "value": "Idi na današnji dan" },
+  { "key": "scheduleDay", "value": "Dan" },
+  { "key": "scheduleWeek", "value": "Tjedan" },
+  { "key": "scheduleMonth", "value": "Mjesec" },
+  { "key": "scheduleStart", "value": "Početak" },
+  { "key": "scheduleEnd", "value": "Završetak" },
+  { "key": "scheduleTitle", "value": "Naziv" },
+  { "key": "scheduleDesc", "value": "Opis" },
+  { "key": "scheduleAddNewBtn", "value": "Novi događaj" },
+  { "key": "scheduleAddNewBtnTooltip", "value": "Dodaj novi događaj" },
+  { "key": "sgPlaceholder", "value": "Odaberite" },
+  { "key": "taEmptyPlaceholder", "value": "Odaberite..." },
+  { "key": "taInputPlaceholder", "value": "Pretraživanje" },
+  { "key": "taClearTooltip", "value": "Poništavanje odabira" },
+  { "key": "editorTypeText", "value": "Upiši tekst" }
+]

@@ -48,7 +48,11 @@
       <nb-card-body>
         <div class="persons-container">
           <div class="row mb-2" *ngFor="let p of persons">
-            <nb-card class="m-0 person-card" (click)="goToPerson(p)">
+            <nb-card
+              class="m-0 person-card"
+              [ngClass]="p.Status.Id == 2 ? 'active' : ''"
+              (click)="goToPerson(p)"
+            >
               <nb-card-body class="p-2">
                 <div class="row">
                   <div class="w-max p-0 d-flex align-items-center">

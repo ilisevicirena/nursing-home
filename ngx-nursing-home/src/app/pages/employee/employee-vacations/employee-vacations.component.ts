@@ -40,12 +40,8 @@ export class EmployeeVacationsComponent implements OnInit, OnDestroy {
   public summary: any;
   public exportSettings: IGridExportDocumentSettings = {
     title: getString("vacation"),
-    subtitle: undefined,
     showOrdinalNumbers: true,
-    ordNumColumnName: getString("smTableOrdNumber"),
     docName: "person-vacation",
-    yesValueText: getString("yesBtnText").toLowerCase(),
-    noValueText: getString("noBtnText").toLowerCase(),
   };
 
   @Input() employeeId: number;

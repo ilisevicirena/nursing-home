@@ -1,4 +1,4 @@
-import { NgModule } from "@angular/core";
+import { APP_INITIALIZER, NgModule } from "@angular/core";
 import {
   NbAlertModule,
   NbButtonModule,
@@ -93,10 +93,10 @@ import { CategoriesComponent } from "./categories/categories.component";
 import { StartDoctorVisitTourComponent } from "./start-doctor-visit-tour/start-doctor-visit-tour.component";
 import { DoctorVisitsComponent } from "./doctor-visits/doctor-visits.component";
 import { DoctorVisitDetailsComponent } from "./doctor-visits/doctor-visit-details/doctor-visit-details.component";
-import { FurnitureStatusesComponent } from './furniture-statuses/furniture-statuses.component';
-import { FurnitureComponent } from './furniture/furniture.component';
-import { ChangeFurnitureStatusComponent } from './furniture/change-furniture-status/change-furniture-status.component';
-import { FurnitureStatusesPreviewComponent } from './furniture/furniture-statuses-preview/furniture-statuses-preview.component';
+import { FurnitureStatusesComponent } from "./furniture-statuses/furniture-statuses.component";
+import { FurnitureComponent } from "./furniture/furniture.component";
+import { ChangeFurnitureStatusComponent } from "./furniture/change-furniture-status/change-furniture-status.component";
+import { FurnitureStatusesPreviewComponent } from "./furniture/furniture-statuses-preview/furniture-statuses-preview.component";
 
 @NgModule({
   imports: [

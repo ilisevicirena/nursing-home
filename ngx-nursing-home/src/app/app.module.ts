@@ -21,14 +21,21 @@ import {
 } from "@nebular/theme";
 
 import { CommonModule, registerLocaleData } from "@angular/common";
-import { SharedComponentsModule } from "shared-components";
+import { SharedComponentsModule, TranslationService } from "shared-components";
 import hr from "@angular/common/locales/hr";
 import { InterceptorService } from "./services/interceptor.service";
 import { ConfigLoader, ConfigService } from "./services/config.service";
 import { DialogComponent } from "./shared/dialog/dialog/dialog.component";
 import { NgxEchartsModule } from "ngx-echarts";
+import { environment } from "../environments/environment";
 
 registerLocaleData(hr);
+
+// load translation for shared-components from app file
+export function translationLoader(translationService: TranslationService) {
+  return () =>
+    translationService.loadTranslations(environment.translationFile).then();
+}
 
 @NgModule({
   declarations: [AppComponent, DialogComponent],
@@ -59,14 +66,20 @@ registerLocaleData(hr);
   ],
   bootstrap: [AppComponent],
   providers: [
-    { provide: LOCALE_ID, useValue: "hr" },
+    { provide: LOCALE_ID, useValue: "en" },
+    { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true },
     {
       provide: APP_INITIALIZER,
       useFactory: ConfigLoader,
       deps: [ConfigService],
       multi: true,
     },
-    { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: translationLoader,
+      deps: [TranslationService],
+      multi: true,
+    },
   ],
 })
 export class AppModule {}

@@ -45,12 +45,8 @@ export class DiscountsComponent implements OnInit, OnDestroy {
   ];
   public exportSettings: IGridExportDocumentSettings = {
     title: getString("discounts"),
-    subtitle: undefined,
     showOrdinalNumbers: true,
-    ordNumColumnName: getString("smTableOrdNumber"),
     docName: "discounts",
-    yesValueText: getString("yesBtnText").toLowerCase(),
-    noValueText: getString("noBtnText").toLowerCase(),
   };
 
   constructor(

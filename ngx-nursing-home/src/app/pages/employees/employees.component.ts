@@ -46,12 +46,8 @@ export class EmployeesComponent implements OnInit, OnDestroy {
   ];
   public exportSettings: IGridExportDocumentSettings = {
     title: getString("employees"),
-    subtitle: undefined,
     showOrdinalNumbers: true,
-    ordNumColumnName: getString("smTableOrdNumber"),
     docName: "employees",
-    yesValueText: getString("yesBtnText").toLowerCase(),
-    noValueText: getString("noBtnText").toLowerCase(),
   };
   private activeFilter: any[] = [
     { value: true, label: getString("active") },

@@ -42,12 +42,8 @@ export class PersonsComponent implements OnInit, OnDestroy {
   ];
   public exportSettings: IGridExportDocumentSettings = {
     title: getString("persons"),
-    subtitle: undefined,
     showOrdinalNumbers: true,
-    ordNumColumnName: getString("smTableOrdNumber"),
     docName: "persons",
-    yesValueText: getString("yesBtnText").toLowerCase(),
-    noValueText: getString("noBtnText").toLowerCase(),
   };
   private activeFilter = [
     { value: true, label: getString("active") },

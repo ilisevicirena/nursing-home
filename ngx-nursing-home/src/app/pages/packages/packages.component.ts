@@ -64,12 +64,8 @@ export class PackagesComponent implements OnInit, OnDestroy {
   ];
   public exportSettings: IGridExportDocumentSettings = {
     title: getString("packages"),
-    subtitle: undefined,
     showOrdinalNumbers: true,
-    ordNumColumnName: getString("smTableOrdNumber"),
     docName: "packages",
-    yesValueText: getString("yesBtnText").toLowerCase(),
-    noValueText: getString("noBtnText").toLowerCase(),
   };
 
   constructor(

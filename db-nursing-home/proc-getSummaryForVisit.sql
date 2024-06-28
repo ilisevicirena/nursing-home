@@ -21,7 +21,7 @@ BEGIN
     WHERE Id = @Id;
     SELECT TOP 1 @PreviousVisitDate = [Date]
     FROM dbo.DoctorVisitTour
-    WHERE [Date] < @CurrentVisitDate
+    WHERE [Date] < @CurrentVisitDate AND Completed=1
     ORDER BY [Date] DESC;
     DECLARE @MonthsDifference INT;
     DECLARE @DaysDifference INT;

@@ -53,12 +53,8 @@ export class ServicesComponent implements OnInit, OnDestroy {
   ];
   public exportSettings: IGridExportDocumentSettings = {
     title: getString("services"),
-    subtitle: undefined,
     showOrdinalNumbers: true,
-    ordNumColumnName: getString("smTableOrdNumber"),
     docName: "services",
-    yesValueText: getString("yesBtnText").toLowerCase(),
-    noValueText: getString("noBtnText").toLowerCase(),
   };
 
   private _subs: Subscription[] = [];

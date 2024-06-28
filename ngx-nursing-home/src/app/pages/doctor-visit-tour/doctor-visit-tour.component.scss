@@ -23,6 +23,8 @@
   }
 
   .persons-container {
-    height: calc(100% - 2rem);
+    height: calc(100% - 3rem);
+    overflow: auto;
+    margin-bottom: 0.5rem;
   }
 }
