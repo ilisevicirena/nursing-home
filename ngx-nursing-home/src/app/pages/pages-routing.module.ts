@@ -63,6 +63,10 @@ const routes: Routes = [
         component: AdvancedSearchComponent,
       },
       {
+        path: "advanced-search",
+        component: AdvancedSearchComponent,
+      },
+      {
         path: "profile/:id",
         component: ProfileComponent,
       },
