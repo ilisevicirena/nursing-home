@@ -4,6 +4,7 @@ import { Subscription } from "rxjs";
 import { CdkDrag, CdkDragDrop, CdkDropList } from "@angular/cdk/drag-drop";
 import { PersonsService } from "../../services/rest/persons.service";
 import { getString } from "../../resources/strings";
+import { GeneralSettingsService } from "../../services/rest/general-settings.service";
 
 @Component({
   selector: "sample-accomodation-management",
@@ -13,19 +14,22 @@ import { getString } from "../../resources/strings";
 export class AccomodationManagementComponent implements OnInit, OnDestroy {
   constructor(
     private _roomsService: RoomsService,
-    private _personsService: PersonsService
+    private _personsService: PersonsService,
+    private _generalSettingsService: GeneralSettingsService
   ) {}
 
   public noRoomPersons: any[] = [];
   public mainSource: any[] = [];
   public getString = getString;
   public showSidepanel: boolean = true;
+  public allowDifferentGenders: boolean = false;
 
   private _subs: Subscription[] = [];
   private _originalSource: any;
 
   ngOnInit(): void {
     this.getAccomodationManagement();
+    this.getGenderRestriction();
   }
 
   ngOnDestroy(): void {
@@ -48,12 +52,30 @@ export class AccomodationManagementComponent implements OnInit, OnDestroy {
             newFloor.Rooms = data.Rooms.filter((x) => x.FloorId == floor.Id);
             newFloor.Rooms.forEach((room) => {
               room.People = data.Persons.filter((x) => x.RoomId == room.Id);
+              room.AllowDifferentGenders = this.allowDifferentGenders;
             });
 
             this.mainSource.push(newFloor);
           });
         }
       })
+    );
+  }
+
+  private getGenderRestriction(): void {
+    this._subs.push(
+      this._generalSettingsService
+        .getGeneralSetting("allowDifferentGenderPersonsInRoom")
+        .subscribe((data: any) => {
+          if (data) {
+            this.allowDifferentGenders = parseInt(data.Value) == 1;
+            this.mainSource.forEach((floor) => {
+              floor.Rooms.map(
+                (r) => (r.AllowDifferentGenders = this.allowDifferentGenders)
+              );
+            });
+          }
+        })
     );
   }
 
@@ -84,13 +106,14 @@ export class AccomodationManagementComponent implements OnInit, OnDestroy {
     var dropContainer = dropList.data[0];
     var canDrop: boolean = false;
     //check room capacity higher then 0, room has free space and person gender is same as other persons in room
-    if (
-      dropContainer.Capacity > 0 &&
-      dropContainer.FreeSpace > 0 &&
-      (dropContainer.RoomGenderId == null ||
-        dropContainer.RoomGenderId == item.data.GenderId)
-    )
+    if (dropContainer.Capacity > 0 && dropContainer.FreeSpace > 0)
       canDrop = true;
+
+    if (!dropContainer.AllowDifferentGenders) {
+      canDrop =
+        dropContainer.RoomGenderId == null ||
+        dropContainer.RoomGenderId == item.data.GenderId;
+    }
 
     return canDrop;
   }
@@ -111,5 +134,18 @@ export class AccomodationManagementComponent implements OnInit, OnDestroy {
 
   public toggleSidepanel(): void {
     this.showSidepanel = !this.showSidepanel;
+  }
+
+  public allowDifferenGendersChange() {
+    this._subs.push(
+      this._generalSettingsService
+        .updateGeneralSetting(
+          "allowDifferentGenderPersonsInRoom",
+          this.allowDifferentGenders ? "1" : "0"
+        )
+        .subscribe(() => {
+          this.getGenderRestriction();
+        })
+    );
   }
 }

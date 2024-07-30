@@ -713,5 +713,17 @@
   { "key": "taEmptyPlaceholder", "value": "Odaberite..." },
   { "key": "taInputPlaceholder", "value": "Pretraživanje" },
   { "key": "taClearTooltip", "value": "Poništavanje odabira" },
-  { "key": "editorTypeText", "value": "Upiši tekst" }
+  { "key": "editorTypeText", "value": "Upiši tekst" },
+  {
+    "key": "allowDifferentGenderPersonsInRoom",
+    "value": "Dozvoli boravak osoba različitog spola u istoj sobi"
+  },
+  {
+    "key": "caution",
+    "value": "O P R E Z"
+  },
+  {
+    "key": "allowDifferentGenderPersonsInRoomDescription",
+    "value": "Ova radnja dopušta ili onemogućuje stavljanje osoba različitog spola u istu sobu. Imajte na umu da će svi podaci koji su prethodno spremljeni ostati isti. Na primjer, ako ste imali osobe različitog spola u istoj prostoriji, a nakon toga ste aktivirali ovo ograničenje, ono neće imati učinka na prethodno stanje pa ćete te osobe morati ručno odvojiti. Ograničenje će stupiti na snagu tek nakon ove radnje."
+  }
 ]

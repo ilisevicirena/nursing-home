@@ -11,6 +11,7 @@ import { UploadDocumentComponent } from "../documents/upload-document/upload-doc
 import { NbMenuItem } from "@nebular/theme";
 import { GridColumn, fileDownload, previewFile } from "shared-components";
 import { AccommodationPdfRequestService } from "../../services/rest/accommodation-pdf-request.service";
+import { GeneralSettingsService } from "../../services/rest/general-settings.service";
 
 @Component({
   selector: "sample-new-person",
@@ -24,7 +25,8 @@ export class NewPersonComponent implements OnInit, OnDestroy {
     private _roomsService: RoomsService,
     private _dialogService: DialogService,
     private _documentsService: DocumentsService,
-    private _requestGeneratorService: AccommodationPdfRequestService
+    private _requestGeneratorService: AccommodationPdfRequestService,
+    private _generalSettingsService: GeneralSettingsService
   ) {}
 
   public getString = getString;
@@ -69,9 +71,11 @@ export class NewPersonComponent implements OnInit, OnDestroy {
   public selectedRoom: any = { FloorName: "", IsValid: true };
 
   private _subs: Subscription[] = [];
+  private _allowDifferentGenders: boolean = false;
 
   ngOnInit(): void {
     this.getAvaliableRooms();
+    this.getGenderRestriction();
   }
 
   ngOnDestroy(): void {
@@ -116,10 +120,23 @@ export class NewPersonComponent implements OnInit, OnDestroy {
     );
   }
 
+  private getGenderRestriction(): void {
+    this._subs.push(
+      this._generalSettingsService
+        .getGeneralSetting("allowDifferentGenderPersonsInRoom")
+        .subscribe((data: any) => {
+          if (data) {
+            this._allowDifferentGenders = parseInt(data.Value) == 1;
+          }
+        })
+    );
+  }
+
   public onRoomSelectionChanged(event: any): void {
     if (event.selectedItems.length == 1) {
       this.selectedRoom = event.selectedItems[0];
       if (
+        !this._allowDifferentGenders &&
         event.selectedItems[0].GenderId > 0 &&
         event.selectedItems[0].GenderId != this.newPersonData.GenderId
       ) {

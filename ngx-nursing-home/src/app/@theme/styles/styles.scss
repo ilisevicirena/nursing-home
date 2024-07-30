@@ -395,3 +395,7 @@ nb-stepper.vertical {
     width: 100%;
   }
 }
+
+.menu-sidebar nb-menu .menu-item a {
+  flex-flow: wrap;
+}

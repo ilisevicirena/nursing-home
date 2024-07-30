@@ -17,13 +17,39 @@
           <ngx-tag
             cdkDrag
             [cdkDragData]="person"
-            [icon]="person.GenderTag == 'Ž' ? 'fas fa-female' : 'fas fa-male'"
+            [icon]="person.GenderId == 2 ? 'fas fa-female' : 'fas fa-male'"
             [text]="person.FirstName + ' ' + person.LastName"
             shape="round"
             class="mb-2"
           ></ngx-tag>
         </div>
       </nb-card-body>
+      <nb-card-footer>
+        <div class="form-group">
+          <div class="label d-flex align-items-center">
+            {{ getString("allowDifferentGenderPersonsInRoom") }}
+            <nb-toggle
+              class="ms-2"
+              name="allowDifferenGenders"
+              [(checked)]="allowDifferentGenders"
+              (checkedChange)="allowDifferenGendersChange()"
+            ></nb-toggle>
+            <button
+              nbButton
+              ghost
+              status="info"
+              class="ms-2"
+              size="small"
+              shape="round"
+              [nbPopover]="statusInformationPopover"
+              nbPopoverTrigger="click"
+              nbPopoverPlacement="top"
+            >
+              <nb-icon pack="eva" icon="info-outline"></nb-icon>
+            </button>
+          </div>
+        </div>
+      </nb-card-footer>
     </nb-card>
   </div>
   <div class="col pe-0 pb-0 h-100 floors" style="position: relative">
@@ -79,9 +105,7 @@
                       shape="round"
                       [cdkDragData]="person"
                       [icon]="
-                        person.GenderTag == 'Ž'
-                          ? 'fas fa-female'
-                          : 'fas fa-male'
+                        person.GenderId == 2 ? 'fas fa-female' : 'fas fa-male'
                       "
                       [text]="person.FirstName + ' ' + person.LastName"
                     ></ngx-tag>
@@ -118,3 +142,28 @@
     </div>
   </div>
 </div>
+
+<ng-template #statusInformationPopover>
+  <nb-card class="m-0 card-no-border">
+    <nb-card-body>
+      <div class="row m-0">
+        <div class="col-md-1">
+          <nb-icon
+            pack="eva"
+            icon="info-outline"
+            status="info"
+            class="info-icon-status"
+          ></nb-icon>
+        </div>
+        <div class="col-md-11">
+          <div class="line-divider p-2">
+            {{ getString("caution") }}
+          </div>
+          <div class="p-2" style="width: 300px">
+            {{ getString("allowDifferentGenderPersonsInRoomDescription") }}
+          </div>
+        </div>
+      </div>
+    </nb-card-body>
+  </nb-card>
+</ng-template>

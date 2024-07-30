@@ -11,24 +11,35 @@ BEGIN
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
-	select * from (
-	select 
-	[Id]=r.Id,
-	[Name]=r.[Name],
-	[Capacity]=r.Capacity,
-	[FloorId]=r.FloorId,
-	[FloorName]=f.[Name],
-	[FreeSpace]=r.Capacity- isnull(t2.Number,0),
-	t2.GenderId,
-	t2.GenderName
-	from dbo.Room as r 
-	join dbo.[Floor] as f on r.FloorId=f.Id
-	left join (select  count(prr.RoomId) as Number, g.Id as GenderId, g.[Name] as GenderName, g.Tag as GenderTag, prr.RoomId 
-	from PersonRoomRelation as prr
-		join Person p on prr.PersonId=p.Id	
-		join Gender g on p.GenderId=g.Id 
-		where prr.Active=1 group by g.Id, g.[Name], g.Tag, prr.RoomId) as t2 on t2.RoomId=r.Id
-	where r.Capacity>0) as t 
-	where t.FreeSpace>0;
+	SELECT * FROM (
+    SELECT 
+        [Id] = r.Id,
+        [Name] = r.[Name],
+        [Capacity] = r.Capacity,
+        [FloorId] = r.FloorId,
+        [FloorName] = f.[Name],
+        [FreeSpace] = r.Capacity - ISNULL(t1.Number, 0),
+        [TakenSpace] = ISNULL(t1.Number, 0),
+        t2.GenderId,
+        t2.GenderName
+    FROM dbo.Room AS r 
+    JOIN dbo.[Floor] AS f ON r.FloorId = f.Id
+    LEFT JOIN (
+        SELECT prr.RoomId, COUNT(prr.RoomId) AS Number
+        FROM PersonRoomRelation AS prr
+        WHERE prr.Active = 1
+        GROUP BY prr.RoomId
+    ) AS t1 ON t1.RoomId = r.Id
+    LEFT JOIN (
+        SELECT COUNT(prr.RoomId) AS Number, g.Id AS GenderId, g.[Name] AS GenderName, g.Tag AS GenderTag, prr.RoomId 
+        FROM PersonRoomRelation AS prr
+        JOIN Person p ON prr.PersonId = p.Id    
+        JOIN Gender g ON p.GenderId = g.Id 
+        WHERE prr.Active = 1
+        GROUP BY g.Id, g.[Name], g.Tag, prr.RoomId
+    ) AS t2 ON t2.RoomId = r.Id
+    WHERE r.Capacity > 0
+) AS t 
+WHERE t.FreeSpace > 0;
 	
 END

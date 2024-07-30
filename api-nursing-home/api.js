@@ -49,6 +49,7 @@ const vacations = require("./routes/vacations");
 const doctorVisits = require("./routes/doctor-visits");
 const furnitureStatuses = require("./routes/furniture-statuses");
 const furniture = require("./routes/furniture");
+const generalSettings = require("./routes/general-settings");
 
 // register routes
 router.use("/floors", floors);
@@ -84,6 +85,7 @@ router.use("/vacations", vacations);
 router.use("/doctor-visits", doctorVisits);
 router.use("/furniture-statuses", furnitureStatuses);
 router.use("/furniture", furniture);
+router.use("/general-settings", generalSettings);
 
 // No need to connect the pool
 // Just start the web server

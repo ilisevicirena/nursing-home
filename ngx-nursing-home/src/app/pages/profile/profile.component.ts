@@ -18,6 +18,7 @@ import {
 import { DialogService } from "../../shared/dialog/dialog.service";
 import { RoomsService } from "../../services/rest/rooms.service";
 import { AccommodationPdfRequestService } from "../../services/rest/accommodation-pdf-request.service";
+import { GeneralSettingsService } from "../../services/rest/general-settings.service";
 
 @Component({
   selector: "sample-profile",
@@ -32,10 +33,12 @@ export class ProfileComponent implements OnInit, OnDestroy {
     private _dialogService: DialogService,
     private _roomsService: RoomsService,
     private _router: Router,
-    private _requestGeneratorService: AccommodationPdfRequestService
+    private _requestGeneratorService: AccommodationPdfRequestService,
+    private _generalSettingsService: GeneralSettingsService
   ) {}
 
   private _subs: Subscription[] = [];
+  private _allowDifferentGenders: boolean = false;
 
   public personId: number = 0;
   public getString = getString;
@@ -164,6 +167,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
         this.getAvaliableRooms();
         this.getAllRooms();
         this.getRoomHistory();
+        this.getGenderRestriction();
         break;
     }
   }
@@ -309,11 +313,23 @@ export class ProfileComponent implements OnInit, OnDestroy {
     );
   }
 
+  private getGenderRestriction(): void {
+    this._subs.push(
+      this._generalSettingsService
+        .getGeneralSetting("allowDifferentGenderPersonsInRoom")
+        .subscribe((data: any) => {
+          if (data) {
+            this._allowDifferentGenders = parseInt(data.Value) == 1;
+          }
+        })
+    );
+  }
+
   public onRoomSelectionChanged(event: any): void {
-    console.log(event);
     if (event.selectedItems.length == 1) {
       this.selectedRoom = event.selectedItems[0];
       if (
+        !this._allowDifferentGenders &&
         event.selectedItems[0].GenderId > 0 &&
         event.selectedItems[0].GenderId != this.newPersonData.GenderId
       )

@@ -59,6 +59,7 @@ create-tb-furniture.sql
 create-tb-furnitureFurnitureStatusRelation.sql
 create-tb-furnitureInventory.sql
 create-tb-furnitureFurnitureInventoryRelation.sql
+create-tb-generalSettings.sql
 insert-tb-documentType.sql
 insert-tb-healthCondition.sql
 insert-tb-floor.sql
@@ -83,6 +84,7 @@ insert-tb-vacationStatus.sql
 insert-tb-calendarEventType.sql
 insert-tb-calculationStatus.sql
 insert-tb-furnitureStatus.sql
+insert-tb-generalSettings.sql
 proc-addTagToNote.sql
 proc-calculationPaid.sql
 proc-calculationRealPrice.sql
@@ -265,3 +267,5 @@ proc-deleteFurnitureStatusById.sql
 proc-removeFurnitureFromRoom.sql
 insert-test-db-data.sql
 proc-getActivePersonsByMonthYear.sql
+proc-getGeneralSetting.sql
+proc-updateGeneralSetting.sql

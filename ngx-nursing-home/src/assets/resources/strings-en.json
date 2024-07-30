@@ -676,5 +676,18 @@
   { "key": "taEmptyPlaceholder", "value": "Select..." },
   { "key": "taInputPlaceholder", "value": "Search" },
   { "key": "taClearTooltip", "value": "Clear selection" },
-  { "key": "editorTypeText", "value": "Type text" }
+  { "key": "editorTypeText", "value": "Type text" },
+  { "key": "sgPlaceholder", "value": "Select" },
+  {
+    "key": "allowDifferentGenderPersonsInRoom",
+    "value": "Allow different gender persons in same room"
+  },
+  {
+    "key": "caution",
+    "value": "C A U T I O N"
+  },
+  {
+    "key": "allowDifferentGenderPersonsInRoomDescription",
+    "value": "This action allows or disables placing people of different genders in the same room. Note that any data previously saved will remain the same. For example, if you had people of different genders in the same room, and then activated this restriction, it will have no effect on the previous state, so you will have to manually separate those people. The restriction will take effect only after this action."
+  }
 ]
