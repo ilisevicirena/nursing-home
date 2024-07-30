@@ -7,7 +7,7 @@ import {
 } from "@angular/core";
 import { getString } from "../../resources/strings";
 import { PersonsService } from "../../services/rest/persons.service";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { Subscription } from "rxjs";
 
 @Component({
@@ -33,10 +33,23 @@ export class AdvancedSearchComponent implements OnInit, OnDestroy {
 
   constructor(
     private _personsService: PersonsService,
-    private _router: Router
+    private _router: Router,
+    private _activatedRoute: ActivatedRoute
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this._subs.push(
+      this._activatedRoute.paramMap.subscribe((params) => {
+        var searchTerm = params.get("search");
+        if (searchTerm) {
+          this.searchTerm = searchTerm;
+          setTimeout(() => {
+            this.onSerachKeyPress(new KeyboardEvent(""), true);
+          }, 100);
+        }
+      })
+    );
+  }
 
   ngOnDestroy(): void {
     this._subs.forEach((element) => {
@@ -44,8 +57,11 @@ export class AdvancedSearchComponent implements OnInit, OnDestroy {
     });
   }
 
-  public onSerachKeyPress(event: KeyboardEvent): void {
-    if (event.charCode == 13) {
+  public onSerachKeyPress(
+    event: KeyboardEvent,
+    cameFromUrl: boolean = false
+  ): void {
+    if (event.charCode == 13 || cameFromUrl) {
       // enter key
       if (this.searchTerm.length > 0) {
         this.searchFormField.nativeElement.classList.add("end-position");

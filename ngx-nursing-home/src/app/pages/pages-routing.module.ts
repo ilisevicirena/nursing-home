@@ -59,7 +59,7 @@ const routes: Routes = [
         component: AccomodationManagementComponent,
       },
       {
-        path: "advanced-search",
+        path: "advanced-search/:search",
         component: AdvancedSearchComponent,
       },
       {
