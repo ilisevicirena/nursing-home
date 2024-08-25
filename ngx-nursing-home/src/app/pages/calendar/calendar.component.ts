@@ -6,6 +6,7 @@ import { ScheduleEvent } from "shared-components/lib/models/schedule.model";
 import { ScheduleComponent } from "shared-components";
 import { DialogService } from "../../shared/dialog/dialog.service";
 import { AddEditEventComponent } from "./add-edit-event/add-edit-event.component";
+import { AuthService, UserRole } from "../../services/auth.service";
 
 @Component({
   selector: "sample-calendar",
@@ -21,7 +22,8 @@ export class CalendarComponent implements OnInit, OnDestroy {
 
   constructor(
     private _eventsService: EventsService,
-    private _dialogService: DialogService
+    private _dialogService: DialogService,
+    private _authService: AuthService
   ) {}
 
   @ViewChild(ScheduleComponent) schedule: ScheduleComponent;
@@ -70,35 +72,37 @@ export class CalendarComponent implements OnInit, OnDestroy {
   }
 
   public onEventClicked(event: ScheduleEvent): void {
-    var originalEvent = this._eventsOriginal.find((x) => x.Id == event.id);
+    if (this.checkUserHasPermission()) {
+      var originalEvent = this._eventsOriginal.find((x) => x.Id == event.id);
 
-    this._subs.push(
-      this._dialogService
-        .open(AddEditEventComponent, {
-          autoFocus: false,
-          closeOnBackdropClick: false,
-          closeOnEsc: false,
-          context: {
-            isNew: false,
-            start: event.start,
-            end: event.end,
-            name: event.title,
-            desc: event.description,
-            selectedColor: event.color,
-            recurring: originalEvent.Recurring,
-            showReminder: !(originalEvent.PersonId > 0),
-            reminder: originalEvent.Reminder,
-            id: originalEvent.Id,
-          },
-        })
-        .onClose.subscribe((result) => {
-          if (result)
-            this.getEventsForMonth(
-              this.schedule.getCurrentVisibleMonth(),
-              this.schedule.getCurrentVisibleYear()
-            );
-        })
-    );
+      this._subs.push(
+        this._dialogService
+          .open(AddEditEventComponent, {
+            autoFocus: false,
+            closeOnBackdropClick: false,
+            closeOnEsc: false,
+            context: {
+              isNew: false,
+              start: event.start,
+              end: event.end,
+              name: event.title,
+              desc: event.description,
+              selectedColor: event.color,
+              recurring: originalEvent.Recurring,
+              showReminder: !(originalEvent.PersonId > 0),
+              reminder: originalEvent.Reminder,
+              id: originalEvent.Id,
+            },
+          })
+          .onClose.subscribe((result) => {
+            if (result)
+              this.getEventsForMonth(
+                this.schedule.getCurrentVisibleMonth(),
+                this.schedule.getCurrentVisibleYear()
+              );
+          })
+      );
+    }
   }
 
   public onAddNewClick(): void {
@@ -128,5 +132,10 @@ export class CalendarComponent implements OnInit, OnDestroy {
       this.schedule.getCurrentVisibleMonth(),
       this.schedule.getCurrentVisibleYear()
     );
+  }
+
+  public checkUserHasPermission(): boolean {
+    var isUser = this._authService.checkUserHasRole(UserRole.USER);
+    return !isUser;
   }
 }

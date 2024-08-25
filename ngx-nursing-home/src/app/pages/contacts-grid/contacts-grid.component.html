@@ -10,7 +10,9 @@
   [pagerEnabled]="true"
   [entriesPerPageEnabled]="true"
   [refreshEnabled]="true"
+  [deleteEnabled]="checkUserHasAdminRole()"
   [gridMode]="gridMode"
   [selectionEnabled]="false"
   (createConfirm)="onCreateConfirm($event)"
+  (actionBtnClick)="onActionBtnClick($event)"
 ></ngx-grid>

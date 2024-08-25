@@ -10,8 +10,9 @@ router.get("/", async (request, response) => {
       .request()
       .input("month", request.query.Month)
       .input("year", request.query.Year)
+      .input("userId", request.query.UserId)
       .query(
-        "EXEC [dbo].[getCalendarEventsForMonth] @Month=@month, @Year=@year"
+        "EXEC [dbo].[getCalendarEventsForMonth] @Month=@month, @Year=@year, @UserId=@userId"
       );
     response.json(result.recordset);
   } catch (err) {
@@ -34,7 +35,7 @@ router.post("/add", async (request, response) => {
       .input("rec", objectToSave.Recurring ? 1 : 0)
       .input("rem", objectToSave.Reminder ? 1 : 0)
       .query(
-        "EXEC [dbo].[insertCalendarEvent] @Title=@title, @Description=@desc, @Start=@start, @End=@end, @Color=@color, @PersonId=NULL, @Recurring=@rec, @Reminder=@rem"
+        "EXEC [dbo].[insertCalendarEvent] @Title=@title, @Description=@desc, @Start=@start, @End=@end, @Color=@color, @PersonId=NULL, @Recurring=@rec, @Reminder=@rem, @EventTypeId=3"
       );
     if (result != null) response.json(result.recordset[0]);
     else response.send(getError(40001));
@@ -79,6 +80,20 @@ router.delete("/delete", async (request, response) => {
       .query("EXEC [dbo].[deleteCalendarEvent] @Id=@id");
     if (result != null) response.json(result.recordset);
     else response.send(getError(40003));
+  } catch (err) {
+    response.status(500);
+    response.send(err.message);
+  }
+});
+
+router.get("/getUserDashboardEvents", async (request, response) => {
+  try {
+    const pool = await db;
+    const result = await pool
+      .request()
+      .input("UserId", request.query.UserId)
+      .execute("getUserDashboardEvents");
+    response.json(result.recordset);
   } catch (err) {
     response.status(500);
     response.send(err.message);

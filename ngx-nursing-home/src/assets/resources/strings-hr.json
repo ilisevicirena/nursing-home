@@ -725,5 +725,93 @@
   {
     "key": "allowDifferentGenderPersonsInRoomDescription",
     "value": "Ova radnja dopušta ili onemogućuje stavljanje osoba različitog spola u istu sobu. Imajte na umu da će svi podaci koji su prethodno spremljeni ostati isti. Na primjer, ako ste imali osobe različitog spola u istoj prostoriji, a nakon toga ste aktivirali ovo ograničenje, ono neće imati učinka na prethodno stanje pa ćete te osobe morati ručno odvojiti. Ograničenje će stupiti na snagu tek nakon ove radnje."
+  },
+  {
+    "key": "authorizationFailed",
+    "value": "Autorizacija zahtjeva nije prošla."
+  },
+  {
+    "key": "login",
+    "value": "Prijava"
+  },
+  {
+    "key": "loginUsername",
+    "value": "Email ili korisničko ime"
+  },
+  {
+    "key": "password",
+    "value": "Lozinka"
+  },
+  {
+    "key": "signIn",
+    "value": "Prijavi se"
+  },
+  {
+    "key": "forgotPassword",
+    "value": "Zaboravljena lozinka"
+  },
+  {
+    "key": "errInvalidUsernameOrEmail",
+    "value": "Pogrešno korisničko ime ili e-mail!"
+  },
+  {
+    "key": "errUserNotActive",
+    "value": "Korisnik je deaktiviran!"
+  },
+  {
+    "key": "errUserBlocked",
+    "value": "Korisnik je blokiran!"
+  },
+  {
+    "key": "errInvalidPassword",
+    "value": "Pogrešna lozinka!"
+  },
+  {
+    "key": "errUserNotVerified",
+    "value": "E-mail adresa korisnika nije potvrđena!"
+  },
+  {
+    "key": "verified",
+    "value": "Potvrđen"
+  },
+  {
+    "key": "oldPassword",
+    "value": "Stara lozinka"
+  },
+  {
+    "key": "newPassword",
+    "value": "Nova lozinka"
+  },
+  {
+    "key": "retypePassword",
+    "value": "Ponovljena nova lozinka"
+  },
+  {
+    "key": "resetPassword",
+    "value": "Promjeni lozinku"
+  },
+  {
+    "key": "retypedPasswordInvalid",
+    "value": "Nova lozinka i ponovljena lozinka nisu jednake!"
+  },
+  {
+    "key": "forgotPasswordNotice",
+    "value": "Upišite e-mail adresu vašeg računa za resetiranje lozinke. Ako ste se pristupali sustavu pomoću korisničkog imena kontaktirajte sistem administratora za daljnje upute."
+  },
+  {
+    "key": "sendResetPasswordEmail",
+    "value": "Zatraži novu lozinku"
+  },
+  {
+    "key": "resetPasswordRedirectMessage",
+    "value": "Lozinka je uspješno promijenjena. Uskoro ćete biti preusmjereni na prijavu u sustav s novom lozinkom."
+  },
+  {
+    "key": "resetPasswordEmailTemplate",
+    "value": "Poštovani,<br><br>Zatražili ste promjenu lozinke. Rok za promjenu je: #ExpiryDate. <br>Molimo slijedite link kako bi postavili novu lozinku.<br><br><a style='background-color: MediumTurquoise; color: white; padding: 10px 15px; font-weight: bold; text-decoration: none;' href='#SetNewPasswordAppLink'>POSTAVI NOVU LOZINKU</a><br><br>Ukoliko gumb ne radi, molimo zalijepite sljedeći link u vaš pretraživač: #SetNewPasswordAppLink <br><br>S poštovanjem,<br> #EnvironmentBrand."
+  },
+  {
+    "key": "resetPasswordEmailSubject",
+    "value": "Zahtjev za postavljanje lozinke"
   }
 ]

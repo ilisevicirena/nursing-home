@@ -7,7 +7,8 @@ class DocumentFile {
     extension,
     fileType,
     base64,
-    noteId
+    noteId,
+    userId
   ) {
     this.Id = id;
     this.Name = name;
@@ -17,6 +18,7 @@ class DocumentFile {
     this.FileType = fileType;
     this.Base64 = base64;
     this.NoteId = noteId;
+    this.UserId = userId;
   }
 }
 

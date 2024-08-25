@@ -689,5 +689,173 @@
   {
     "key": "allowDifferentGenderPersonsInRoomDescription",
     "value": "This action allows or disables placing people of different genders in the same room. Note that any data previously saved will remain the same. For example, if you had people of different genders in the same room, and then activated this restriction, it will have no effect on the previous state, so you will have to manually separate those people. The restriction will take effect only after this action."
+  },
+  {
+    "key": "authorizationFailed",
+    "value": "Request authorization failed."
+  },
+  {
+    "key": "login",
+    "value": "Sign in"
+  },
+  {
+    "key": "loginUsername",
+    "value": "Email or username"
+  },
+  {
+    "key": "password",
+    "value": "Password"
+  },
+  {
+    "key": "signIn",
+    "value": "Sign in"
+  },
+  {
+    "key": "forgotPassword",
+    "value": "Forgot password"
+  },
+  {
+    "key": "errInvalidUsernameOrEmail",
+    "value": "Invalid username or e-mail!"
+  },
+  {
+    "key": "errUserNotActive",
+    "value": "User not active!"
+  },
+  {
+    "key": "errUserBlocked",
+    "value": "User is blocked!"
+  },
+  {
+    "key": "errInvalidPassword",
+    "value": "Invalid password!"
+  },
+  {
+    "key": "errUserNotVerified",
+    "value": "User not verified!"
+  },
+  {
+    "key": "verified",
+    "value": "Verified"
+  },
+  {
+    "key": "userProfile",
+    "value": "Profile"
+  },
+  {
+    "key": "changePassword",
+    "value": "Password change"
+  },
+  {
+    "key": "logout",
+    "value": "Sign out"
+  },
+  {
+    "key": "oldPassword",
+    "value": "Old password"
+  },
+  {
+    "key": "newPassword",
+    "value": "New password"
+  },
+  {
+    "key": "retypePassword",
+    "value": "Re-type new password"
+  },
+  {
+    "key": "resetPassword",
+    "value": "Change password"
+  },
+  {
+    "key": "retypedPasswordInvalid",
+    "value": "New password and re-typed passwor are not the same"
+  },
+  {
+    "key": "forgotPasswordNotice",
+    "value": "Enter your account email address to reset your password. If you accessed the system using a username, contact the system administrator for further instructions."
+  },
+  {
+    "key": "sendResetPasswordEmail",
+    "value": "Request new password"
+  },
+  {
+    "key": "resetPasswordRedirectMessage",
+    "value": "Password successfully reset. Soon you will be redirected to login with new password."
+  },
+  {
+    "key": "resetPasswordEmailTemplate",
+    "value": "Dear Sir/Madam,<br><br>You have requested to reset your password. The deadline for password reset is: #ExpiryDate. <br>Please follow the link to set a new password.<br><br><a style='background-color: MediumTurquoise; color: white; padding: 10px 15px; font-weight: bold; text-decoration: none;' href='#SetNewPasswordAppLink'>SET NEW PASSWORD</a><br><br>If button doesn't work, please paste this link into your browser: #SetNewPasswordAppLink <br><br>Sincerely,<br> #EnvironmentBrand."
+  },
+  {
+    "key": "resetPasswordEmailSubject",
+    "value": "Password reset request"
+  },
+  {
+    "key": "forgotPasswordRedirectMessage",
+    "value": "Reset password request successfully submitted. Check your email for further instructions. Soon you will be redirected to login page."
+  },
+  {
+    "key": "setPasswordRedirectMessage",
+    "value": "Password successfully set. Soon you will be redirected to login with new password."
+  },
+  {
+    "key": "setPassword",
+    "value": "Set password"
+  },
+  {
+    "key": "errUserNotFound",
+    "value": "User not found."
+  },
+  {
+    "key": "errInvalidTokenFormat",
+    "value": "Token is invalid."
+  },
+  {
+    "key": "errInvalidToken",
+    "value": "Token is invalid."
+  },
+  {
+    "key": "errTokenExpired",
+    "value": "Token has expired. Request new password."
+  },
+  {
+    "key": "newUser",
+    "value": "New user"
+  },
+  {
+    "key": "user",
+    "value": "User"
+  },
+  {
+    "key": "username",
+    "value": "Username"
+  },
+  {
+    "key": "generateNewPassword",
+    "value": "Generate new password"
+  },
+  {
+    "key": "badgeNew",
+    "value": "New"
+  },
+  {
+    "key": "newUserTitle",
+    "value": "New User"
+  },
+  {
+    "key": "userRights",
+    "value": "User rights"
+  },
+  {
+    "key": "userStatuses",
+    "value": "Statuses"
+  },
+  {
+    "key": "verifyUserEmailTemplate",
+    "value": "Dear Sir/Madam,<br><br> To activet your user account, please, verify your e-mail address. The deadline for verification is: #ExpiryDate. <br>Please follow the link to verify.<br><br><a style='background-color: MediumTurquoise; color: white; padding: 10px 15px; font-weight: bold; text-decoration: none;' href='#SetNewPasswordAppLink'>VERIFY E-MAIL</a><br><br>If button doesn't work, please paste this link into your browser: #SetNewPasswordAppLink <br><br>Sincerely,<br> #EnvironmentBrand."
+  },
+  {
+    "key": "verifyUserEmailSubject",
+    "value": "Verify e-mail address"
   }
 ]

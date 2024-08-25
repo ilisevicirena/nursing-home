@@ -20,6 +20,7 @@ import {
   ServicesManagementService,
 } from "../../services/rest/services-management.service";
 import { ToastrService } from "../../services/toastr.service";
+import { AuthService, UserRole } from "../../services/auth.service";
 
 @Component({
   selector: "sample-services-management",
@@ -59,7 +60,8 @@ export class ServicesManagementComponent implements OnInit, OnDestroy {
     private _measureUnitsService: MeasureUnitsService,
     private _dialogService: DialogService,
     private _servicesManagementService: ServicesManagementService,
-    private _toastrService: ToastrService
+    private _toastrService: ToastrService,
+    private _authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -459,5 +461,9 @@ export class ServicesManagementComponent implements OnInit, OnDestroy {
     this.onClearAllClick();
     var measureUnit = this.calculationMeasureUnits.find((x) => x.Code == event);
     if (measureUnit) this._measureUnitId = measureUnit.Id;
+  }
+
+  public checkUserHasAdminPermission(): boolean {
+    return this._authService.checkUserHasRole(UserRole.ADMIN);
   }
 }

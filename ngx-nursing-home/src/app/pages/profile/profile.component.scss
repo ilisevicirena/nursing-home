@@ -4,11 +4,6 @@
   height: 100%;
 }
 
-.person-icon nb-icon {
-  height: 5rem;
-  font-size: 4rem;
-}
-
 .person-name {
   font-weight: 600;
   font-size: 20px;
@@ -28,7 +23,32 @@
   height: 100%;
 }
 
+.profile-top-container {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  position: relative;
+
+  .grey-card {
+    margin-top: 1rem;
+  }
+}
+
 @include nb-install-component {
+  .person-icon {
+    position: absolute;
+    z-index: 200;
+    width: 4rem;
+    background-color: nb-theme(card-background-color);
+    border-radius: 50%;
+    box-shadow: nb-theme(sidebar-shadow);
+
+    nb-icon {
+      height: 4rem;
+      font-size: 3rem;
+    }
+  }
+
   .person-jmbg {
     font-weight: 600;
     font-size: 16px;

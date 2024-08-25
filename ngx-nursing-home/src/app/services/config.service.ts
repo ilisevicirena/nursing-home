@@ -2,6 +2,7 @@ import { HttpClient, HttpBackend } from "@angular/common/http";
 import { Inject, Injectable } from "@angular/core";
 import { NB_AUTH_OPTIONS } from "@nebular/auth";
 import { environment } from "../../environments/environment";
+import { getDeepFromObject } from "../resources/functions";
 
 @Injectable({
   providedIn: "root",
@@ -9,6 +10,7 @@ import { environment } from "../../environments/environment";
 export class ConfigService {
   private _AppConfig: IAppWebConfig;
   private _http: HttpClient;
+  private _strategy: string = "";
 
   constructor(
     private _httpBackend: HttpBackend,
@@ -17,6 +19,8 @@ export class ConfigService {
     protected options = {}
   ) {
     this._http = new HttpClient(this._httpBackend);
+
+    this._strategy = this.GetConfigValue("forms.requestPassword.strategy");
   }
 
   public getAppConfig(): IAppWebConfig {
@@ -30,6 +34,14 @@ export class ConfigService {
         resolve();
       });
     });
+  }
+
+  GetConfigValue(key: string): any {
+    return getDeepFromObject(this.options, key, null);
+  }
+
+  GetStrategy(): string {
+    return "email";
   }
 
   public loadConfig(url: string): Promise<void> {

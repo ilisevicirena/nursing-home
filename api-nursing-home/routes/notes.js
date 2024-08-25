@@ -147,8 +147,9 @@ router.post("/insertDocumentForNote", async (request, response) => {
       .input("fileType", objectToSave.FileType)
       .input("savePath", absolutePath)
       .input("note", objectToSave.NoteId)
+      .input("userId", objectToSave.UserId)
       .query(
-        "EXEC [dbo].[insertDocumentForNote] @DocumentName=@name, @PersonId=@personId, @DocumentTypeId=@type, @Extension=@extension, @FileType=@fileType, @SavePath=@savePath, @NoteId=@note"
+        "EXEC [dbo].[insertDocumentForNote] @UserId=@userId, @DocumentName=@name, @PersonId=@personId, @DocumentTypeId=@type, @Extension=@extension, @FileType=@fileType, @SavePath=@savePath, @NoteId=@note"
       );
     if (result != null) {
       var documentId = result.recordset[0].Id;
@@ -181,8 +182,9 @@ router.post("/add", async (request, response) => {
       .input("text", objectToSave.Text)
       .input("tags", tagsString)
       .input("personId", objectToSave.PersonId)
+      .input("userId", objectToSave.UserId)
       .query(
-        "EXEC [dbo].[insertNote] @PersonId=@personId, @Title=@title, @Text=@text, @Tags=@tags"
+        "EXEC [dbo].[insertNote] @UserId=@userId, @PersonId=@personId, @Title=@title, @Text=@text, @Tags=@tags"
       );
     if (result != null) response.json(result.recordset[0]);
     else response.send(getError(20005));

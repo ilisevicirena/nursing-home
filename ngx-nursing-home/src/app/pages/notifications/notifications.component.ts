@@ -49,7 +49,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 
   private getNotifications(): void {
     this._subs.push(
-      this._notificationsService.getData().subscribe((data) => {
+      this._notificationsService.getAll().subscribe((data) => {
         this.notifications = data;
         this.allNotifications = data;
       })

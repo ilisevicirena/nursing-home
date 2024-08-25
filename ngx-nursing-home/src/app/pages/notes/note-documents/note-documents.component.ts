@@ -8,6 +8,7 @@ import { UploadDocumentComponent } from "../../documents/upload-document/upload-
 import { DocumentsService } from "../../../services/rest/documents.service";
 import { ToastrService } from "../../../services/toastr.service";
 import { fileDownload, makeId, previewFile } from "shared-components";
+import { AuthService, UserRole } from "../../../services/auth.service";
 
 @Component({
   selector: "sample-note-documents",
@@ -29,7 +30,8 @@ export class NoteDocumentsComponent implements OnInit, OnDestroy {
     private _notesService: NotesService,
     private _dialogService: DialogService,
     private _documentsService: DocumentsService,
-    private _toastrService: ToastrService
+    private _toastrService: ToastrService,
+    private _authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -175,5 +177,10 @@ export class NoteDocumentsComponent implements OnInit, OnDestroy {
           );
         break;
     }
+  }
+
+  public checkUserHasPermission(): boolean {
+    var isUser = this._authService.checkUserHasRole(UserRole.USER);
+    return !isUser;
   }
 }

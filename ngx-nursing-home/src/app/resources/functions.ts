@@ -87,3 +87,9 @@ export function sortFloats(direction: any, a: any, b: any): number {
   if (a > b) return direction;
   return 0;
 }
+
+export function getDeepFromObject(
+  object: {},
+  name: string,
+  defaultValue?: any
+): any {}

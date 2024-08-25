@@ -7,6 +7,7 @@ import {
   IDocument,
 } from "../../../services/rest/documents.service";
 import { ToastrService } from "../../../services/toastr.service";
+import { AuthService } from "../../../services/auth.service";
 
 @Component({
   selector: "sample-upload-document",
@@ -28,12 +29,14 @@ export class UploadDocumentComponent implements OnInit, OnDestroy {
     Extension: undefined,
     FileType: undefined,
     Base64: undefined,
+    UserId: this._authService.getUserId(),
   };
 
   constructor(
     private _ref: NbDialogRef<UploadDocumentComponent>,
     private _documentsService: DocumentsService,
-    private _toastrService: ToastrService
+    private _toastrService: ToastrService,
+    private _authService: AuthService
   ) {}
 
   ngOnInit(): void {

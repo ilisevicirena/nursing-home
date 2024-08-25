@@ -214,6 +214,7 @@ export class StartCalculationComponent implements OnInit, OnDestroy {
               FileType: "data:application/pdf;base64",
               CalculationId: person.CalculationId,
               Base64: data,
+              UserId: null,
             };
 
             this._subs.push(

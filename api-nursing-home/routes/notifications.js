@@ -3,10 +3,13 @@ const router = express.Router();
 const { db } = require("../config/framework");
 const { getError } = require("../resources/error-codes");
 
-router.get("/", async (request, response) => {
+router.get("/getAllNotifications", async (request, response) => {
   try {
     const pool = await db;
-    const result = await pool.request().query("EXEC [dbo].[getNotifications]");
+    const result = await pool
+      .request()
+      .input("UserId", request.query.UserId)
+      .execute("getNotifications");
     response.json(result.recordset);
   } catch (err) {
     response.status(500);
@@ -19,7 +22,8 @@ router.get("/checkNotificationsStatus", async (request, response) => {
     const pool = await db;
     const result = await pool
       .request()
-      .query("EXEC [dbo].[checkNotificationsStatus]");
+      .input("UserId", request.query.UserId)
+      .execute("checkNotificationsStatus");
     response.json(result.recordset);
   } catch (err) {
     response.status(500);
@@ -32,7 +36,8 @@ router.get("/getLatestNotifications", async (request, response) => {
     const pool = await db;
     const result = await pool
       .request()
-      .query("EXEC [dbo].[getLatestNotifications]");
+      .input("UserId", request.query.UserId)
+      .execute("getLatestNotifications");
     response.json(result.recordset);
   } catch (err) {
     response.status(500);
@@ -60,7 +65,8 @@ router.post("/markAllNotificationsAsRead", async (request, response) => {
     const pool = await db;
     const result = await pool
       .request()
-      .query("EXEC [dbo].[markAllNotificationsAsRead]");
+      .input("UserId", request.body.UserId)
+      .execute("markAllNotificationsAsRead");
     if (result != null) response.json(result);
     else response.send(getError(6002));
   } catch (err) {
@@ -74,7 +80,8 @@ router.get("/notificationTypes", async (request, response) => {
     const pool = await db;
     const result = await pool
       .request()
-      .query("EXEC [dbo].[getNotificationTypes]");
+      .input("UserId", request.query.UserId)
+      .execute("getNotificationTypes");
     var res = result.recordset.map((x) => {
       x.Notifications = [];
       x.UnreadNotificationCount = 0;
@@ -92,8 +99,9 @@ router.get("/getNotificationsForType", async (request, response) => {
     const pool = await db;
     const result = await pool
       .request()
-      .input("id", request.query.Id)
-      .query("EXEC [dbo].[getNotificationsForType] @Id=@id");
+      .input("Id", request.query.Id)
+      .input("UserId", request.query.UserId)
+      .execute("getNotificationsForType");
     response.json(result.recordset);
   } catch (err) {
     response.status(500);
@@ -106,7 +114,8 @@ router.get("/getNotificationsSettings", async (request, response) => {
     const pool = await db;
     const result = await pool
       .request()
-      .query("EXEC [dbo].[getNotificationsSettings]");
+      .input("UserId", request.query.UserId)
+      .execute("getNotificationsSettings");
     response.json(result.recordset);
   } catch (err) {
     response.status(500);

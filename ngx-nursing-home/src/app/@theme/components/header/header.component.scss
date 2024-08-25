@@ -7,6 +7,21 @@
   justify-content: space-between;
   width: 100%;
 
+  ::ng-deep .user-picture.initials {
+    background-color: nb-theme(color-primary-transparent-200);
+    color: nb-theme(color-primary-500);
+    font-weight: 600;
+  }
+
+  ::ng-deep nb-user .info-container .user-name {
+    color: nb-theme(color-primary-500);
+    font-weight: 600;
+  }
+
+  ::ng-deep nb-user:hover {
+    cursor: pointer;
+  }
+
   .logo-container {
     display: flex;
     align-items: center;

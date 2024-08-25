@@ -40,6 +40,8 @@ import { CORPORATE_THEME } from "./styles/theme.corporate";
 import { DARK_THEME } from "./styles/theme.dark";
 import { NotificationsPaneComponent } from "./components/header/notifications-pane/notifications-pane.component";
 import { FormsModule } from "@angular/forms";
+import { UserInfoPaneComponent } from "./components/header/user-info-pane/user-info-pane.component";
+import { SharedComponentsModule } from "shared-components";
 
 const NB_MODULES = [
   NbLayoutModule,
@@ -63,6 +65,8 @@ const NB_MODULES = [
   NbInputModule,
   NbFormFieldModule,
   FormsModule,
+  NbUserModule,
+  SharedComponentsModule,
 ];
 const COMPONENTS = [
   HeaderComponent,
@@ -76,7 +80,11 @@ const COMPONENTS = [
 @NgModule({
   imports: [CommonModule, ...NB_MODULES],
   exports: [CommonModule, ...COMPONENTS],
-  declarations: [...COMPONENTS, NotificationsPaneComponent],
+  declarations: [
+    ...COMPONENTS,
+    NotificationsPaneComponent,
+    UserInfoPaneComponent,
+  ],
 })
 export class ThemeModule {
   static forRoot(): ModuleWithProviders<ThemeModule> {

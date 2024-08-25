@@ -21,6 +21,7 @@ import { NgForm } from "@angular/forms";
 import { ContactsService } from "../../services/rest/contacts.service";
 import { GendersService } from "../../services/rest/genders.service";
 import { Router } from "@angular/router";
+import { AuthService, UserRole } from "../../services/auth.service";
 @Component({
   selector: "sample-person-popup-window",
   templateUrl: "./person-popup-window.component.html",
@@ -37,7 +38,8 @@ export class PersonPopupWindowComponent
     private _roomsService: RoomsService,
     private _contactsService: ContactsService,
     private _gendersService: GendersService,
-    private _router: Router
+    private _router: Router,
+    private _authService: AuthService
   ) {}
 
   public getString = getString;
@@ -266,5 +268,10 @@ export class PersonPopupWindowComponent
   public goToAdvancedEdit(): void {
     this._ref.close(false);
     this._router.navigate(["pages/profile", this.personId]);
+  }
+
+  public checkUserHasPermission(): boolean {
+    var isUser = this._authService.checkUserHasRole(UserRole.USER);
+    return !isUser;
   }
 }

@@ -19,6 +19,7 @@ import { DialogService } from "../../shared/dialog/dialog.service";
 import { RoomsService } from "../../services/rest/rooms.service";
 import { AccommodationPdfRequestService } from "../../services/rest/accommodation-pdf-request.service";
 import { GeneralSettingsService } from "../../services/rest/general-settings.service";
+import { AuthService, UserRole } from "../../services/auth.service";
 
 @Component({
   selector: "sample-profile",
@@ -34,7 +35,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
     private _roomsService: RoomsService,
     private _router: Router,
     private _requestGeneratorService: AccommodationPdfRequestService,
-    private _generalSettingsService: GeneralSettingsService
+    private _generalSettingsService: GeneralSettingsService,
+    private _authService: AuthService
   ) {}
 
   private _subs: Subscription[] = [];
@@ -386,5 +388,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
           );
         })
     );
+  }
+
+  public checkUserHasAdminPermission(): boolean {
+    return this._authService.checkUserHasRole(UserRole.ADMIN);
   }
 }

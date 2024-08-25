@@ -76,6 +76,7 @@
               <ngx-file-card
                 [(mode)]="currentView"
                 [formatDate]="true"
+                [canDelete]="checkUserHasAdminPermission()"
                 [useCustomPreview]="true"
                 [useCustomDownload]="true"
                 (fileMenuItemClick)="onFileMenuItemClick($event)"

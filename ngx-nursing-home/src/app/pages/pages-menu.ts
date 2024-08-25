@@ -1,6 +1,25 @@
+import { icon } from "leaflet";
 import { getString } from "../resources/strings";
 import { DialogService } from "../shared/dialog/dialog.service";
 import { FastActionsComponent } from "./fast-actions/fast-actions.component";
+
+export const USER_MENU_ITEMS: any[] = [
+  {
+    title: getString("dashboard"),
+    icon: "home-outline",
+    link: "/pages/dashboard",
+  },
+  {
+    title: getString("persons"),
+    link: "/pages/persons",
+    icon: "people-outline",
+  },
+  {
+    title: getString("calendar"),
+    icon: "calendar-outline",
+    link: "/pages/calendar",
+  },
+];
 
 export const MENU_ITEMS: any[] = [
   {

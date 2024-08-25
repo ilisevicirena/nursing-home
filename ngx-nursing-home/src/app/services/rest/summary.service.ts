@@ -14,4 +14,10 @@ export class SummaryService extends BaseRestApiService {
   public getDashboardSummary(): Observable<any> {
     return this.http.get(this.apiRoute + "/getDashboardSummary");
   }
+
+  public getUserDashboardSummary(user: string): Observable<any> {
+    return this.http.get(
+      this.apiRoute + "/getUserDashboardSummary?UserId=" + user
+    );
+  }
 }

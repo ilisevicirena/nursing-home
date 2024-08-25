@@ -8,6 +8,7 @@ import { DocumentsService } from "../../../services/rest/documents.service";
 import { fileDownload, previewFile } from "shared-components";
 import { DialogService } from "../../../shared/dialog/dialog.service";
 import { UploadDocumentComponent } from "../../documents/upload-document/upload-document.component";
+import { AuthService, UserRole } from "../../../services/auth.service";
 
 @Component({
   selector: "sample-calculation-documents",
@@ -28,7 +29,8 @@ export class CalculationDocumentsComponent implements OnInit, OnDestroy {
     private _calcService: CalculationApiService,
     private _toastrService: ToastrService,
     private _documentsService: DocumentsService,
-    private _dialogService: DialogService
+    private _dialogService: DialogService,
+    private _authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -148,5 +150,9 @@ export class CalculationDocumentsComponent implements OnInit, OnDestroy {
 
         break;
     }
+  }
+
+  public checkUserHasAdminPermission(): boolean {
+    return this._authService.checkUserHasRole(UserRole.ADMIN);
   }
 }

@@ -9,6 +9,10 @@ import {
   GridAutocompleteEditor,
   GRID_MODE,
   IGridExportDocumentSettings,
+  GridButtonsColumn,
+  GridButtonType,
+  IGridCellButton,
+  GridTextboxFilter,
 } from "shared-components";
 import { getString } from "../../resources/strings";
 import { Subscription } from "rxjs";
@@ -16,6 +20,9 @@ import { ContactsService } from "../../services/rest/contacts.service";
 import { ToastrService } from "../../services/toastr.service";
 import { PersonsService } from "../../services/rest/persons.service";
 import { CitiesService } from "../../services/rest/cities.service";
+import { DialogService } from "../../shared/dialog/dialog.service";
+import { UserComponent } from "../user/user.component";
+import { AuthService, UserRole } from "../../services/auth.service";
 
 @Component({
   selector: "sample-contacts-grid",
@@ -27,7 +34,9 @@ export class ContactsGridComponent implements OnInit, OnDestroy {
     private _contactsService: ContactsService,
     private _toastrService: ToastrService,
     private _personsService: PersonsService,
-    private _citiesService: CitiesService
+    private _citiesService: CitiesService,
+    private _dialogService: DialogService,
+    private _authService: AuthService
   ) {}
 
   @Input() elementHeight: number = 300;
@@ -169,6 +178,23 @@ export class ContactsGridComponent implements OnInit, OnDestroy {
           .WidthClass("col-md-2")
           .Label(getString("isGuardian"))
       ),
+    new GridColumn()
+      .Title(getString("generateUser"))
+      .DataField("buttons")
+      .Editable(false)
+      .Addable(false)
+      .Filter(false)
+      .Export(false)
+      .Visible(this.checkUserHasAdminRole())
+      .Sortable(false)
+      .GroupingEnabled(false)
+      .Editor(new GridTextboxEditor().Show(false))
+      .Type(
+        new GridButtonsColumn()
+          .ButtonsFromDataField("buttons")
+          .Editable(false)
+          .Removable(false)
+      ),
   ];
 
   public exportSettings: IGridExportDocumentSettings = {
@@ -192,6 +218,21 @@ export class ContactsGridComponent implements OnInit, OnDestroy {
     this._subs.push(
       this._contactsService.getDataForPerson(this.personId).subscribe(
         (data) => {
+          data = data.map((contact) => {
+            if (contact.UserId) {
+              contact.buttons = [
+                new GridButtonType()
+                  .TooltipDisabled(true)
+                  .Icon("person-outline"),
+              ];
+            } else {
+              contact.buttons = [
+                new GridButtonType().TooltipDisabled(true).Icon("plus-outline"),
+              ];
+            }
+
+            return contact;
+          });
           this.contactsData = data;
         },
         (err) => {
@@ -249,5 +290,35 @@ export class ContactsGridComponent implements OnInit, OnDestroy {
         this._toastrService.showToast("success", getString("saveSuccess"), "");
       })
     );
+  }
+
+  public onActionBtnClick(e: IGridCellButton) {
+    this._subs.push(
+      this._dialogService
+        .open(UserComponent, {
+          closeOnBackdropClick: false,
+          closeOnEsc: false,
+          autoFocus: false,
+          context: {
+            isNew: e.row.UserId == null,
+            user: {
+              Id: e.row.UserId,
+              FirstName: e.row.FirstName,
+              LastName: e.row.LastName,
+              Email: e.row.Email,
+              Username: null,
+              DateRegistered: new Date().toLocaleDateString(),
+            },
+            contactId: e.row.Id,
+          },
+        })
+        .onClose.subscribe((result: boolean) => {
+          if (result) this.getContacts();
+        })
+    );
+  }
+
+  public checkUserHasAdminRole(): boolean {
+    return this._authService.checkUserHasRole(UserRole.ADMIN);
   }
 }

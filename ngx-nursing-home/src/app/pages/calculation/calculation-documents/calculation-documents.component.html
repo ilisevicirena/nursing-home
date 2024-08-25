@@ -28,6 +28,7 @@
           [formatDate]="true"
           [useCustomPreview]="true"
           [useCustomDownload]="true"
+          [canDelete]="checkUserHasAdminPermission()"
           (fileMenuItemClick)="onFileMenuItemClick($event)"
           [fileData]="{
             id: d.DocumentId,

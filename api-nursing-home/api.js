@@ -1,9 +1,12 @@
 const express = require("express");
+const cors = require("cors");
+const bodyParser = require("body-parser");
+const { authenticateToken } = require("./routes/token"); // Import functions from token.js
+const { sendTestEmail } = require("./routes/email");
 
 var app = express();
-var cors = require("cors");
-var bodyParser = require("body-parser");
 var router = express.Router();
+
 app.use(cors());
 app.use(bodyParser.json({ limit: "50mb" }));
 app.use(
@@ -13,9 +16,9 @@ app.use(
     parameterLimit: 50000,
   })
 );
-app.use("/api", router);
 
-// require route handlers.
+// Require route handlers
+const authentication = require("./routes/authentication");
 const floors = require("./routes/floors");
 const rooms = require("./routes/rooms");
 const persons = require("./routes/persons");
@@ -50,8 +53,15 @@ const doctorVisits = require("./routes/doctor-visits");
 const furnitureStatuses = require("./routes/furniture-statuses");
 const furniture = require("./routes/furniture");
 const generalSettings = require("./routes/general-settings");
+const users = require("./routes/users");
 
-// register routes
+// Register the authentication route without global middleware
+app.use("/authentication", authentication);
+
+// Apply authentication middleware globally for /api routes
+app.use("/api", authenticateToken, router);
+
+// Register other routes under /api
 router.use("/floors", floors);
 router.use("/rooms", rooms);
 router.use("/persons", persons);
@@ -86,9 +96,9 @@ router.use("/doctor-visits", doctorVisits);
 router.use("/furniture-statuses", furnitureStatuses);
 router.use("/furniture", furniture);
 router.use("/general-settings", generalSettings);
+router.use("/users", users);
 
-// No need to connect the pool
-// Just start the web server
+// Start the server
 const server = app.listen(process.env.PORT || 8090, () => {
   const host = server.address().address;
   const port = server.address().port;

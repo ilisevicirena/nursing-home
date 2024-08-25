@@ -10,7 +10,8 @@ router.get("/", async (request, response) => {
     const result = await pool
       .request()
       .input("active", request.query.active)
-      .query("EXEC [dbo].[getPersons] @Active=@active");
+      .input("userId", request.query.userId)
+      .query("EXEC [dbo].[getPersons] @Active=@active, @UserId=@userId");
     response.json(result.recordset);
   } catch (err) {
     response.status(500);
@@ -258,7 +259,10 @@ router.get("/searchPersons", async (request, response) => {
     const result = await pool
       .request()
       .input("searchTerm", request.query.searchTerm)
-      .query("EXEC [dbo].[searchPersons] @searchTerm=@searchTerm");
+      .input("userId", request.query.userId)
+      .query(
+        "EXEC [dbo].[searchPersons] @searchTerm=@searchTerm, @UserId=@userId"
+      );
     response.json(result.recordset);
   } catch (err) {
     response.status(500);
@@ -273,6 +277,20 @@ router.get("/getLogForPerson", async (request, response) => {
       .request()
       .input("personId", request.query.PersonId)
       .query("EXEC [dbo].[getLogForPerson] @Id=@personId");
+    response.json(result.recordset);
+  } catch (err) {
+    response.status(500);
+    response.send(err.message);
+  }
+});
+
+router.get("/getPersonsForUserDashboard", async (request, response) => {
+  try {
+    const pool = await db;
+    const result = await pool
+      .request()
+      .input("UserId", request.query.UserId)
+      .execute("getPersonsForUserDashboard");
     response.json(result.recordset);
   } catch (err) {
     response.status(500);

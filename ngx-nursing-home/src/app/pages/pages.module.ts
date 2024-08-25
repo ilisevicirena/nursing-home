@@ -97,6 +97,9 @@ import { FurnitureStatusesComponent } from "./furniture-statuses/furniture-statu
 import { FurnitureComponent } from "./furniture/furniture.component";
 import { ChangeFurnitureStatusComponent } from "./furniture/change-furniture-status/change-furniture-status.component";
 import { FurnitureStatusesPreviewComponent } from "./furniture/furniture-statuses-preview/furniture-statuses-preview.component";
+import { UserComponent } from "./user/user.component";
+import { UsersComponent } from "./users/users.component";
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 @NgModule({
   imports: [
@@ -202,6 +205,9 @@ import { FurnitureStatusesPreviewComponent } from "./furniture/furniture-statuse
     FurnitureComponent,
     ChangeFurnitureStatusComponent,
     FurnitureStatusesPreviewComponent,
+    UserComponent,
+    UsersComponent,
+    PageNotFoundComponent,
   ],
 })
 export class PagesModule {}

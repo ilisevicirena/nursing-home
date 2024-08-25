@@ -1,10 +1,11 @@
 import { Component } from "@angular/core";
 
-import { MENU_ITEMS } from "./pages-menu";
+import { MENU_ITEMS, USER_MENU_ITEMS } from "./pages-menu";
 import { NbMenuService } from "@nebular/theme";
 import { DialogService } from "../shared/dialog/dialog.service";
 import { Subscription } from "rxjs";
 import { filter, map } from "rxjs/operators";
+import { AuthService, UserRole } from "../services/auth.service";
 
 @Component({
   selector: "ngx-pages",
@@ -17,13 +18,14 @@ import { filter, map } from "rxjs/operators";
   `,
 })
 export class PagesComponent {
-  menu = MENU_ITEMS;
+  menu = [];
 
   private _subs: Subscription[] = [];
 
   constructor(
     private menuService: NbMenuService,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    private authService: AuthService
   ) {
     this._subs.push(
       this.menuService
@@ -38,5 +40,9 @@ export class PagesComponent {
           if (item.click) item.click(this.dialogService);
         })
     );
+
+    if (this.authService.checkUserHasRole(UserRole.USER))
+      this.menu = USER_MENU_ITEMS;
+    else this.menu = MENU_ITEMS;
   }
 }

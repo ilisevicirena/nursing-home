@@ -52,6 +52,14 @@
         [dotMode]="true"
       ></nb-badge>
     </button>
+    <nb-user
+      class="ms-2 ngx-user-picture"
+      [nbPopover]="userPopup"
+      nbPopoverTrigger="click"
+      nbPopoverPlacement="bottom"
+      [name]="user?.FirstName + ' ' + user?.LastName"
+    >
+    </nb-user>
   </div>
 </div>
 
@@ -60,4 +68,10 @@
     (closeClick)="onNotificationPaneClose()"
     (destroy)="onNotificationsDestroy($event)"
   ></sample-notifications-pane>
+</ng-template>
+
+<ng-template #userPopup>
+  <sample-user-info-pane
+    (closeClick)="onNotificationPaneClose()"
+  ></sample-user-info-pane>
 </ng-template>

@@ -305,8 +305,9 @@ router.post("/insertDocumentForCalculation", async (request, response) => {
       .input("fileType", objectToSave.FileType)
       .input("savePath", absolutePath)
       .input("calculation", objectToSave.CalculationId)
+      .input("userId", objectToSave.UserId)
       .query(
-        "EXEC [dbo].[insertCalculationDocument] @DocumentName=@name, @PersonId=@personId, @Extension=@extension, @FileType=@fileType, @SavePath=@savePath, @CalculationId=@calculation"
+        "EXEC [dbo].[insertCalculationDocument] @UserId=@userId, @DocumentName=@name, @PersonId=@personId, @Extension=@extension, @FileType=@fileType, @SavePath=@savePath, @CalculationId=@calculation"
       );
     if (result != null) {
       var documentId = result.recordset[0].Id;

@@ -238,6 +238,11 @@ nb-tag.appearance-outline.status-warning.selected {
   color: nb-theme(tag-outline-warning-text-color);
 }
 
+.invalid-message {
+  color: nb-theme(color-danger-500);
+  font-size: 10px;
+}
+
 .card-value {
   font-weight: 600;
 }

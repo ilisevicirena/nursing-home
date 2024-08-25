@@ -1,0 +1,39 @@
+@import "../../@theme/styles/themes.scss";
+
+::ng-deep sample-login {
+  height: 100%;
+}
+
+#login-container {
+  background-image: url("../../../assets/images/background.png");
+  height: 100%;
+  width: 100%;
+  background-color: white;
+}
+
+@include nb-install-component() {
+  .login-card {
+    background-color: nb-theme(color-primary-transparent-200);
+    padding: 5rem 3rem 5rem 3rem;
+    border-radius: 1.5rem;
+    position: relative;
+
+    .logo {
+      height: 35px;
+      width: 35px;
+    }
+
+    .brand-name {
+      font-weight: 700;
+      font-size: 20px;
+    }
+
+    .title {
+      font-weight: 900;
+      font-size: 40px;
+      line-height: 45px;
+      margin: 0;
+      padding: 0;
+    }
+  }
+}

@@ -1,42 +1,64 @@
-import { Component } from '@angular/core';
-import { NbSidebarService } from '@nebular/theme';
-import { environment, SidebarStates } from '../../../../environments/environment';
+import { Component, OnInit, ViewChild } from "@angular/core";
+import {
+  NbSidebarComponent,
+  NbSidebarService,
+  NbTooltipComponent,
+  NbTooltipDirective,
+} from "@nebular/theme";
+import {
+  environment,
+  SidebarStates,
+} from "../../../../environments/environment";
+import { getString } from "../../../resources/strings";
+import { Router } from "@angular/router";
+import { timeStamp } from "console";
 
 @Component({
-  selector: 'ngx-one-column-layout',
-  styleUrls: ['./one-column.layout.scss'],
-  template: `
-    <nb-layout windowMode>
-      <nb-layout-header fixed>
-        <ngx-header></ngx-header>
-      </nb-layout-header>
-
-      <nb-sidebar class="menu-sidebar" tag="menu-sidebar" responsive (mouseleave)="toggleSidebar(true)" (mouseenter)="toggleSidebar(false)">
-        <ng-content select="nb-menu"></ng-content>
-      </nb-sidebar>
-
-      <nb-layout-column style="height: calc(100vh - 3.5rem);
-    overflow: hidden;
-    padding: 1.5rem;">
-        <ng-content select="router-outlet"></ng-content>
-      </nb-layout-column>   
-    </nb-layout>
-  `,
+  selector: "ngx-one-column-layout",
+  styleUrls: ["./one-column.layout.scss"],
+  templateUrl: "./one-column.layout.html",
 })
-export class OneColumnLayoutComponent {
-  constructor(private sidebarService: NbSidebarService) { }
+export class OneColumnLayoutComponent implements OnInit {
+  constructor(
+    private sidebarService: NbSidebarService,
+    private router: Router
+  ) {}
 
-  public toggleSidebar(leave: boolean) {
-    if (environment.sidebarConfig != SidebarStates.EXPANDED) {
-      if (leave) {
-        if (environment.sidebarConfig == SidebarStates.COMPACT) {
-          this.sidebarService.compact("menu-sidebar");
-        } else if (environment.sidebarConfig == SidebarStates.COLLAPSED) {
-          this.sidebarService.collapse("menu-sidebar");
-        }
-      } else {
-        this.sidebarService.expand("menu-sidebar");
-      }
+  public showItems: boolean = false;
+  public getString = getString;
+  public searchTerm: string = "";
+
+  @ViewChild(NbTooltipDirective) tooltip: NbTooltipDirective;
+
+  ngOnInit(): void {
+    this.sidebarService.onToggle().subscribe((data) => {
+      this.showItems = !this.showItems;
+    });
+
+    this.sidebarService.onCompact().subscribe((data) => {
+      this.showItems = false;
+    });
+
+    this.sidebarService.onExpand().subscribe((data) => {
+      this.showItems = true;
+    });
+
+    this.sidebarService.onCollapse().subscribe((data) => {
+      this.showItems = false;
+    });
+  }
+
+  public toggleSidebar() {
+    this.sidebarService.toggle(true, "menu-sidebar");
+    this.tooltip.hide();
+  }
+
+  public onSerachKeyPress(event: KeyboardEvent): void {
+    if (event.charCode == 13) {
+      // enter key
+      this.router.navigateByUrl("/pages/advanced-search/" + this.searchTerm);
+      this.searchTerm = "";
+      this.sidebarService.toggle(true, "menu-sidebar");
     }
   }
 }
