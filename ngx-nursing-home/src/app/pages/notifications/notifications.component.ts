@@ -159,4 +159,20 @@ export class NotificationsComponent implements OnInit, OnDestroy {
   public goToNotification(n: any): void {
     this._router.navigateByUrl(n.GoToLink);
   }
+
+  public toggleFilters() {
+    var leftPanel = document.getElementsByClassName("left-panel");
+    if (leftPanel.length > 0) {
+      if (leftPanel[0].classList.contains("active")) {
+        leftPanel[0].classList.remove("active");
+      } else leftPanel[0].classList.add("active");
+    }
+
+    var rightPanel = document.getElementsByClassName("right-panel");
+    if (rightPanel.length > 0) {
+      if (rightPanel[0].classList.contains("active")) {
+        rightPanel[0].classList.remove("active");
+      } else rightPanel[0].classList.add("active");
+    }
+  }
 }

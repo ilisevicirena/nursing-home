@@ -857,5 +857,61 @@
   {
     "key": "verifyUserEmailSubject",
     "value": "Verify e-mail address"
+  },
+  {
+    "key": "age",
+    "value": "Age"
+  },
+  {
+    "key": "spentTime",
+    "value": "On care"
+  },
+  {
+    "key": "profileYears",
+    "value": "yrs"
+  },
+  {
+    "key": "profileMonths",
+    "value": "months"
+  },
+  {
+    "key": "welcome",
+    "value": "Welcome"
+  },
+  {
+    "key": "arrivalDate",
+    "value": "Arrival date"
+  },
+  {
+    "key": "spentTimeMonths",
+    "value": "Months on care"
+  },
+  {
+    "key": "seeFullProfile",
+    "value": "See full profile"
+  },
+  {
+    "key": "personsCount",
+    "value": "Number of my persons on care"
+  },
+  {
+    "key": "unpaidCalculations",
+    "value": "Number of not paid invoices"
+  },
+  {
+    "key": "forCurrentMonth",
+    "value": "for current month"
+  },
+  {
+    "key": "totalEventsCount",
+    "value": "total events"
+  },
+  {
+    "key": "birthdays",
+    "value": "birthdays"
+  },
+  {
+    "key": "goToAllEvents",
+    "value": "See all events"
   }
 ]

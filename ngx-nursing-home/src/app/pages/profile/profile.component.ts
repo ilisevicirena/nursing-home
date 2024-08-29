@@ -58,6 +58,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
   public personHistory: any[] = [];
   public roomHistory: any[] = [];
   public gridSelectedItem: [] = [];
+  public years: number = 0;
+  public spentTime: number = 0;
   public roomHistoryColumns: GridColumn[] = [
     new GridColumn().Title(getString("id")).DataField("RoomId").Filter(false),
     new GridColumn()
@@ -221,6 +223,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
       this._personsService.getPersonDetailed(personId).subscribe((data) => {
         if (data.length > 0) {
           this.person = getIPersonFromJSON(data[0]);
+          this.years = this.calculateAge(this.person.BirthDate);
+          this.spentTime = this.calculateMonthsFrom(this.person.StartDate);
           this.newPersonData = getIPersonFromJSON(data[0]);
           this.passedTime = this.calculatePassedTime();
           this.getHistory();
@@ -392,5 +396,35 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   public checkUserHasAdminPermission(): boolean {
     return this._authService.checkUserHasRole(UserRole.ADMIN);
+  }
+
+  private calculateAge(birthDate: string): number {
+    const birth = new Date(birthDate);
+    const today = new Date();
+    let age = today.getFullYear() - birth.getFullYear();
+
+    // Check if birthday has occurred this year
+    if (
+      today < new Date(today.getFullYear(), birth.getMonth(), birth.getDate())
+    ) {
+      age--;
+    }
+
+    return age;
+  }
+
+  private calculateMonthsFrom(date: string): number {
+    const startDate = new Date(date);
+    const today = new Date();
+
+    let months = (today.getFullYear() - startDate.getFullYear()) * 12;
+    months += today.getMonth() - startDate.getMonth();
+
+    // Adjust if the day of the month hasn't occurred yet
+    if (today.getDate() < startDate.getDate()) {
+      months--;
+    }
+
+    return months;
   }
 }

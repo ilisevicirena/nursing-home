@@ -1,5 +1,15 @@
-<div class="h-100 d-flex w-100">
-  <div class="col-md-2 h-100 pe-2 pt-2">
+<div class="h-100 d-flex w-100 position-relative">
+  <button
+    nbButton
+    id="filters-toggle-btn"
+    status="basic"
+    shape="round"
+    size="small"
+    (click)="toggleFilters()"
+  >
+    <nb-icon pack="eva" icon="menu-2-outline"></nb-icon>
+  </button>
+  <div class="col-md-2 left-panel">
     <div class="row m-0">
       <button
         nbButton
@@ -103,7 +113,7 @@
       </button>
     </div>
   </div>
-  <div class="col-md-10 h-100">
+  <div class="col-md-10 h-100 right-panel">
     <nb-card class="h-100">
       <nb-card-body class="p-3 pt-2">
         <div class="row m-0 p-0 w-100 pb-3">

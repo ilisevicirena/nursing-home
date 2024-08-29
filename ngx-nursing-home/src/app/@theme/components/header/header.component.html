@@ -11,26 +11,28 @@
       />
     </a>
   </div>
-  <div class="col d-flex justify-content-center align-items-center">
-    <nb-form-field style="width: 30%">
-      <nb-icon
-        nbPrefix
-        pack="eva"
-        icon="search-outline"
-        status="primary"
-      ></nb-icon>
-      <input
-        nbInput
-        fullWidth
-        autocomplete="off"
-        shape="round"
-        fieldSize="small"
-        [placeholder]="getString('searchPersons')"
-        name="search"
-        [(ngModel)]="searchTerm"
-        (keypress)="onSerachKeyPress($event)"
-      />
-    </nb-form-field>
+  <div class="search-container col">
+    <div class="d-flex justify-content-center align-items-center">
+      <nb-form-field style="width: 30%">
+        <nb-icon
+          nbPrefix
+          pack="eva"
+          icon="search-outline"
+          status="primary"
+        ></nb-icon>
+        <input
+          nbInput
+          fullWidth
+          autocomplete="off"
+          shape="round"
+          fieldSize="small"
+          [placeholder]="getString('searchPersons')"
+          name="search"
+          [(ngModel)]="searchTerm"
+          (keypress)="onSerachKeyPress($event)"
+        />
+      </nb-form-field>
+    </div>
   </div>
   <div class="w-max d-flex justify-content-end">
     <button
@@ -58,8 +60,18 @@
       nbPopoverTrigger="click"
       nbPopoverPlacement="bottom"
       [name]="user?.FirstName + ' ' + user?.LastName"
+      [title]="'@' + user?.Username"
     >
     </nb-user>
+    <nb-icon
+      class="user-menu-icon"
+      pack="eva"
+      icon="chevron-down-outline"
+      status="primary"
+      [nbPopover]="userPopup"
+      nbPopoverTrigger="click"
+      nbPopoverPlacement="bottom"
+    ></nb-icon>
   </div>
 </div>
 

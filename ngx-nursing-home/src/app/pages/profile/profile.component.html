@@ -12,18 +12,39 @@
         </div>
         <nb-card class="grey-card h-100 p-0 mb-0">
           <nb-card-body>
-            <nb-badge
-              [text]="
-                person.Active ? getString('active') : getString('unactive')
-              "
-              [status]="person.Active ? 'success' : 'danger'"
-              position="top right"
-            ></nb-badge>
             <div class="person-name d-flex justify-content-center">
               {{ person.FirstName }} {{ person.LastName }}
             </div>
             <div class="person-jmbg d-flex justify-content-center">
               {{ person.JMBG }}
+            </div>
+            <div class="row m-0 person-info-container">
+              <div class="col-md-4">
+                <div class="card-label">{{ getString("age") }}</div>
+                <div class="card-value">
+                  {{ years }}<span>{{ getString("profileYears") }}</span>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="card-label">{{ getString("spentTime") }}</div>
+                <div class="card-value">
+                  {{ spentTime }}<span>{{ getString("profileMonths") }}</span>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="card-label">{{ getString("status") }}</div>
+                <div class="card-value">
+                  <nb-badge
+                    [text]="
+                      person.Active
+                        ? getString('active')
+                        : getString('unactive')
+                    "
+                    [status]="person.Active ? 'success' : 'danger'"
+                    position="bottom left"
+                  ></nb-badge>
+                </div>
+              </div>
             </div>
           </nb-card-body>
         </nb-card>

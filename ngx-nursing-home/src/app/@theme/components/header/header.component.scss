@@ -18,6 +18,19 @@
     font-weight: 600;
   }
 
+  .user-menu-icon {
+    margin-left: 0.5rem;
+    margin-top: 0.5rem;
+  }
+
+  .user-menu-icon:hover {
+    cursor: pointer;
+  }
+
+  ::ng-deep nb-user .info-container .user-title {
+    color: nb-theme(color-basic-600);
+  }
+
   ::ng-deep nb-user:hover {
     cursor: pointer;
   }
@@ -65,18 +78,21 @@
   }
 
   @include media-breakpoint-down(sm) {
-    .control-item {
+    .logo {
       display: none;
     }
 
-    .user-action {
-      border: none;
-      padding: 0;
+    .search-container {
+      display: none;
     }
   }
 
   @include media-breakpoint-down(is) {
-    nb-select {
+    .logo {
+      display: none;
+    }
+
+    .search-container {
       display: none;
     }
   }

@@ -1,4 +1,6 @@
 @import "../../../styles/themes";
+@import "bootstrap/scss/mixins/breakpoints";
+@import "@nebular/theme/styles/global/breakpoints";
 
 .user-info-pane {
   width: 400px;
@@ -88,6 +90,26 @@
       position: absolute;
       top: 0px;
       right: -50px;
+    }
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  .user-info-pane {
+    width: 280px;
+
+    nb-card-body {
+      overflow: hidden;
+    }
+  }
+}
+
+@include media-breakpoint-down(is) {
+  .user-info-pane {
+    width: 280px;
+
+    nb-card-body {
+      overflow: hidden;
     }
   }
 }
