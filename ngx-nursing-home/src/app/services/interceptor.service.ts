@@ -80,7 +80,7 @@ export class InterceptorService implements HttpInterceptor {
               );
               setTimeout(() => {
                 this._router.navigate(["auth/login"]);
-              }, 2000);
+              }, 100);
             } else if (
               error.status === 400 &&
               error.error &&
@@ -106,7 +106,7 @@ export class InterceptorService implements HttpInterceptor {
 
               setTimeout(() => {
                 this._router.navigate(["auth/login"]);
-              }, 1000);
+              }, 100);
             }
           }
         }

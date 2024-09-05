@@ -298,4 +298,18 @@ router.get("/getPersonsForUserDashboard", async (request, response) => {
   }
 });
 
+router.get("/getPersonsForUser", async (request, response) => {
+  try {
+    const pool = await db;
+    const result = await pool
+      .request()
+      .input("UserId", request.query.UserId)
+      .execute("getPersonsForUser");
+    response.json(result.recordset);
+  } catch (err) {
+    response.status(500);
+    response.send(err.message);
+  }
+});
+
 module.exports = router;

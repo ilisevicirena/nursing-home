@@ -54,6 +54,7 @@ const furnitureStatuses = require("./routes/furniture-statuses");
 const furniture = require("./routes/furniture");
 const generalSettings = require("./routes/general-settings");
 const users = require("./routes/users");
+const myProfile = require("./routes/my-profile");
 
 // Register the authentication route without global middleware
 app.use("/authentication", authentication);
@@ -97,6 +98,7 @@ router.use("/furniture-statuses", furnitureStatuses);
 router.use("/furniture", furniture);
 router.use("/general-settings", generalSettings);
 router.use("/users", users);
+router.use("/my-profile", myProfile);
 
 // Start the server
 const server = app.listen(process.env.PORT || 8090, () => {

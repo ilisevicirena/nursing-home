@@ -29,4 +29,5 @@ export interface IContact extends IBaseSaveModel {
   ResidanceHouseNumber?: string;
   IsObligeeToPay?: boolean;
   IsGuardian?: boolean;
+  UserId?: string;
 }

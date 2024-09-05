@@ -224,7 +224,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
         if (data.length > 0) {
           this.person = getIPersonFromJSON(data[0]);
           this.years = this.calculateAge(this.person.BirthDate);
-          this.spentTime = this.calculateMonthsFrom(this.person.StartDate);
+          this.spentTime = this.calculateMonthsFrom(
+            this.person.StartDate,
+            this.person.Active ? new Date() : this.person.EndDate
+          );
           this.newPersonData = getIPersonFromJSON(data[0]);
           this.passedTime = this.calculatePassedTime();
           this.getHistory();
@@ -413,9 +416,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
     return age;
   }
 
-  private calculateMonthsFrom(date: string): number {
+  private calculateMonthsFrom(date: string, endDate): number {
     const startDate = new Date(date);
-    const today = new Date();
+    const today = new Date(endDate);
 
     let months = (today.getFullYear() - startDate.getFullYear()) * 12;
     months += today.getMonth() - startDate.getMonth();

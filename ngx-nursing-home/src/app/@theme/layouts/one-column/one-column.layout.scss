@@ -28,7 +28,34 @@
     margin-left: 3px;
   }
 
+  .menu-sidebar ::ng-deep nb-menu {
+    height: 75%;
+    overflow: auto;
+
+    .menu-items.expanded li {
+      border-left: 1px solid nb-theme(color-basic-default);
+
+      a.active {
+        border: none;
+        background-color: nb-theme(color-basic-default);
+        border-radius: 0.5rem;
+        color: inherit;
+        margin-left: 0.5rem;
+      }
+
+      a.active::after {
+        content: "";
+        background: transparent;
+      }
+    }
+  }
+
   .menu-sidebar ::ng-deep nb-menu .menu-item {
+    a nb-icon:not(.menu-icon) {
+      background-color: nb-theme(color-basic-default);
+      border-radius: 50%;
+    }
+
     border: none;
 
     a.active {

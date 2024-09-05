@@ -30,6 +30,7 @@ import { FurnitureComponent } from "./furniture/furniture.component";
 import { UsersComponent } from "./users/users.component";
 import { PageNotFoundComponent } from "./page-not-found/page-not-found.component";
 import { UserRole } from "../services/auth.service";
+import { MyProfileComponent } from "./my-profile/my-profile.component";
 
 const routes: Routes = [
   {
@@ -216,6 +217,10 @@ const routes: Routes = [
         data: {
           Roles: [UserRole.ADMIN],
         },
+      },
+      {
+        path: "my-profile",
+        component: MyProfileComponent,
       },
     ],
   },

@@ -23,7 +23,8 @@ export class UserInfoPaneComponent implements OnInit, OnDestroy {
     this.user = this._authService.getUser();
   }
 
-  @Output() closeClick: EventEmitter<boolean> = new EventEmitter();
+  @Output() destroy: EventEmitter<boolean> = new EventEmitter();
+
   public user: IUser;
   public getString = getString;
 
@@ -31,9 +32,17 @@ export class UserInfoPaneComponent implements OnInit, OnDestroy {
     this._authService.logout().subscribe(() => {
       this._router.navigateByUrl("/auth/login");
     });
+
+    this.destroy.emit(true);
   }
 
   public changePassword() {
     this._router.navigateByUrl("/auth/reset-password");
+    this.destroy.emit(true);
+  }
+
+  public goToProfile(): void {
+    this._router.navigateByUrl("/pages/my-profile");
+    this.destroy.emit(true);
   }
 }

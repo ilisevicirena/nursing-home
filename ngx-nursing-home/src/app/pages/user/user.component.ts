@@ -53,6 +53,27 @@ export class UserComponent implements OnInit, OnDestroy {
         })
     );
 
+    if (!this.onlyBasicData) {
+      this.items.push(
+        {
+          title: getString("userRights"),
+          link: "",
+          icon: "shield-outline",
+          skipLocationChange: true,
+          selected: false,
+          data: "userRights",
+        },
+        {
+          title: getString("userStatuses"),
+          link: "",
+          icon: "unlock-outline",
+          skipLocationChange: true,
+          selected: false,
+          data: "statuses",
+        }
+      );
+    }
+
     if (this.isNew) {
       this.userBadgeText = getString("badgeNew");
       this.userBadgeStatus = "info";
@@ -89,6 +110,7 @@ export class UserComponent implements OnInit, OnDestroy {
   public isUserBlocked: boolean = false;
   public isUserActive: boolean = false;
   public userVerificationToken: any = null;
+  public onlyBasicData: boolean = false;
 
   private _data;
 
@@ -100,22 +122,6 @@ export class UserComponent implements OnInit, OnDestroy {
       skipLocationChange: true,
       selected: true,
       data: "basicInformation",
-    },
-    {
-      title: getString("userRights"),
-      link: "",
-      icon: "shield-outline",
-      skipLocationChange: true,
-      selected: false,
-      data: "userRights",
-    },
-    {
-      title: getString("userStatuses"),
-      link: "",
-      icon: "unlock-outline",
-      skipLocationChange: true,
-      selected: false,
-      data: "statuses",
     },
   ];
 
@@ -139,6 +145,7 @@ export class UserComponent implements OnInit, OnDestroy {
         this._subs.push(
           this._usersService.add(saveObj as any).subscribe((data: any) => {
             this._userSaved = true;
+            this._toastrService.showToast("success", getString("saveSuccess"));
             this.getUserData();
           })
         );
@@ -146,6 +153,7 @@ export class UserComponent implements OnInit, OnDestroy {
         this._subs.push(
           this._usersService.update(saveObj as any).subscribe((data: any) => {
             this._userSaved = true;
+            this._toastrService.showToast("success", getString("saveSuccess"));
             this.getUserData();
           })
         );

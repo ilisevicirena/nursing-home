@@ -30,6 +30,14 @@ export class PersonsService extends BaseRestApiService {
     );
   }
 
+  public getPersonsForUser(): Observable<any> {
+    return this.http.get(
+      this.apiRoute +
+        "/getPersonsForUser?UserId=" +
+        this._authService.getUserId()
+    );
+  }
+
   public getActivePersonsByMonthYear(
     month: number,
     year: number

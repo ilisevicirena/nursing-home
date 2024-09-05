@@ -70,6 +70,7 @@ router.post("/update", async (request, response) => {
     const result = await pool
       .request()
       .input("id", objectToSave.Id)
+      .input("userId", objectToSave.UserId)
       .input("firstName", objectToSave.FirstName)
       .input("lastName", objectToSave.LastName)
       .input("email", objectToSave.Email)
@@ -82,7 +83,7 @@ router.post("/update", async (request, response) => {
       .input("isObligeeToPay", objectToSave.IsObligeeToPay)
       .input("isGuardian", objectToSave.IsGuardian)
       .query(
-        "EXEC [dbo].[updateContact] @Id=@id, @FirstName=@firstName, @LastName=@lastName, @Email=@email, @Telephone=@telephone, @Mobile=@mobile, @Jmbg=@jmbg, @ResidanceCityId=@residanceCityId, @ResidanceHouseNumber=@residanceHouseNumber, @ResidanceStreetName=@residanceStreetName, @IsObligeeToPay=@isObligeeToPay, @IsGuardian=@isGuardian"
+        "EXEC [dbo].[updateContact] @Id=@id, @UserId=@userId, @FirstName=@firstName, @LastName=@lastName, @Email=@email, @Telephone=@telephone, @Mobile=@mobile, @Jmbg=@jmbg, @ResidanceCityId=@residanceCityId, @ResidanceHouseNumber=@residanceHouseNumber, @ResidanceStreetName=@residanceStreetName, @IsObligeeToPay=@isObligeeToPay, @IsGuardian=@isGuardian"
       );
     if (result != null) response.json(result.recordset);
     else response.send(getError(3003));

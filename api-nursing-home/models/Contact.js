@@ -12,7 +12,8 @@ class Contact {
     residanceStreetName,
     residanceHouseNumber,
     isObligeeToPay,
-    isGuardian
+    isGuardian,
+    userId
   ) {
     this.Id = id;
     this.FirstName = firstName;
@@ -27,6 +28,7 @@ class Contact {
     this.ResidanceHouseNumber = residanceHouseNumber;
     this.IsObligeeToPay = isObligeeToPay;
     this.IsGuardian = isGuardian;
+    this.UserId = userId;
   }
 }
 

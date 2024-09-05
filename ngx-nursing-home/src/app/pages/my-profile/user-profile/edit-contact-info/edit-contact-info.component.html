@@ -1,0 +1,134 @@
+<nb-card class="basic-tile-card skinny">
+  <nb-card-header class="d-flex">
+    <div class="col">
+      <div class="row m-0 p-0 align-items-center">
+        <nb-icon pack="eva" icon="edit-2-outline" class="w-max"></nb-icon>
+        {{ getString("editContactAndAdress") }}<br />
+      </div>
+      <div class="row m-0 p-0">
+        <span class="label mt-1">{{ getString("contactManagement") }}</span>
+      </div>
+    </div>
+    <div class="w-max">
+      <button nbButton ghost shape="round" (click)="close(false)">
+        <nb-icon pack="eva" icon="close-outline"></nb-icon>
+      </button>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <form #event="ngForm">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group">
+            <div class="label">{{ getString("residanceStreetName") }}</div>
+            <div class="value">
+              <input
+                nbInput
+                fullWidth
+                name="residanceStreetName"
+                [(ngModel)]="contactInfo.ResidanceStreetName"
+                [placeholder]="getString('residanceStreetName')"
+                autocomplete="off"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col-md-6">
+          <div class="form-group">
+            <div class="label">{{ getString("residanceHouseNumber") }}</div>
+            <div class="value">
+              <input
+                nbInput
+                fullWidth
+                name="residanceHouseNumber"
+                [(ngModel)]="contactInfo.ResidanceHouseNumber"
+                [placeholder]="getString('residanceHouseNumber')"
+                autocomplete="off"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col-md-12">
+          <div class="form-group">
+            <div class="label">{{ getString("residanceCity") }}</div>
+            <div class="value">
+              <ngx-tags-autocomplete
+                [emptyPlaceholder]="getString('residanceCity')"
+                [(selectedKeys)]="residanceCityId"
+                [keyAttribute]="'Id'"
+                [multiple]="false"
+                [source]="cities"
+                [displayArrow]="true"
+                [attributesToFilter]="['Name']"
+                [attributesToShow]="['Name']"
+                [attributesToShowInTag]="['Name']"
+              >
+              </ngx-tags-autocomplete>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col-md-12">
+          <div class="form-group">
+            <div class="label">{{ getString("telephone") }}</div>
+            <div class="value">
+              <input
+                nbInput
+                fullWidth
+                name="telephone"
+                [(ngModel)]="contactInfo.Telephone"
+                [placeholder]="getString('telephone')"
+                (keypress)="onKeyPress($event)"
+                autocomplete="off"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col-md-12">
+          <div class="form-group">
+            <div class="label">{{ getString("mobile") }}</div>
+            <div class="value">
+              <input
+                nbInput
+                fullWidth
+                name="mobile"
+                [(ngModel)]="contactInfo.Mobile"
+                [placeholder]="getString('mobile')"
+                (keypress)="onKeyPress($event)"
+                autocomplete="off"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </nb-card-body>
+  <nb-card-footer class="d-flex justify-content-end">
+    <button
+      nbButton
+      ghost
+      shape="round"
+      size="small"
+      class="me-2"
+      (click)="close(false)"
+    >
+      {{ getString("cancel") }}
+    </button>
+    <button
+      nbButton
+      status="primary"
+      shape="round"
+      size="small"
+      (click)="saveData()"
+    >
+      {{ getString("save") }}
+    </button>
+  </nb-card-footer>
+</nb-card>

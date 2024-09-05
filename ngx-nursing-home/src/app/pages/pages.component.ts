@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 
-import { MENU_ITEMS, USER_MENU_ITEMS } from "./pages-menu";
+import { ADMIN_MENU_ITEMS, MENU_ITEMS, USER_MENU_ITEMS } from "./pages-menu";
 import { NbMenuService } from "@nebular/theme";
 import { DialogService } from "../shared/dialog/dialog.service";
 import { Subscription } from "rxjs";
@@ -43,6 +43,8 @@ export class PagesComponent {
 
     if (this.authService.checkUserHasRole(UserRole.USER))
       this.menu = USER_MENU_ITEMS;
+    else if (this.authService.checkUserHasRole(UserRole.ADMIN))
+      this.menu = ADMIN_MENU_ITEMS;
     else this.menu = MENU_ITEMS;
   }
 }

@@ -1,0 +1,82 @@
+<nb-card>
+  <nb-card-body>
+    <div class="content-container">
+      <div class="toolbar-container">
+        <div class="col">
+          <div class="title">
+            {{ getString("modules") }}
+          </div>
+        </div>
+        <div class="col">
+          <div class="title">
+            {{ getString("moduleFeatures") }}
+          </div>
+        </div>
+      </div>
+      <div class="menu-container">
+        <div class="col modules-container">
+          <div
+            [ngClass]="item.selected ? 'selected' : ''"
+            class="fast-button"
+            *ngFor="let item of menuItems"
+            (click)="selectModule(item)"
+          >
+            <div class="icon">
+              <div
+                class="icon-container"
+                [style.background-color]="hexToRgba(item.color)"
+              >
+                <nb-icon
+                  [style.color]="item.color"
+                  pack="eva"
+                  [icon]="item.icon"
+                ></nb-icon>
+              </div>
+            </div>
+            <div class="col">
+              <div class="title">
+                {{ item.title }}
+              </div>
+              <div class="subtitle">
+                {{ item.subtitle }}
+              </div>
+            </div>
+            <nb-icon
+              class="go-icon"
+              pack="eva"
+              icon="arrow-forward-outline"
+              [style.color]="item.color"
+            ></nb-icon>
+          </div>
+        </div>
+        <div class="col">
+          <div class="pages-container" *ngIf="selectedModule">
+            <div
+              [nbTooltip]="getString('goToFeature')"
+              [style.background-color]="hexToRgba(selectedModule.color)"
+              (mouseover)="onMouseOver($event)"
+              (mouseout)="onMouseOut($event)"
+              (click)="onPageBtnClick(page)"
+              class="page-button"
+              *ngFor="let page of selectedModule.children"
+            >
+              <div class="page-title">{{ page.title }}</div>
+              <nb-icon
+                *ngIf="page.link"
+                icon="external-link-outline"
+                pack="eva"
+                [style.color]="selectedModule.color"
+              ></nb-icon>
+              <nb-icon
+                *ngIf="!page.link"
+                icon="browser-outline"
+                pack="eva"
+                [style.color]="selectedModule.color"
+              ></nb-icon>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>

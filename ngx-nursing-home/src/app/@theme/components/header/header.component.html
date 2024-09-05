@@ -84,6 +84,6 @@
 
 <ng-template #userPopup>
   <sample-user-info-pane
-    (closeClick)="onNotificationPaneClose()"
+    (destroy)="onUserPaneDestroy()"
   ></sample-user-info-pane>
 </ng-template>

@@ -913,5 +913,97 @@
   {
     "key": "goToAllEvents",
     "value": "See all events"
+  },
+  {
+    "key": "personsManagementSubtitle",
+    "value": "Persons on care management module. Provides features like adding new person, deleting and editing data."
+  },
+  {
+    "key": "employeesManagementSubtitle",
+    "value": "Facility employees management module. Provides features like adding new employee, deleting and editing data. Managing employee vacations, work places and ect."
+  },
+  {
+    "key": "usersManagementSubtitle",
+    "value": "Users management module. Provides features like adding new user, deleting and editing data. Managing user rights and roles."
+  },
+  {
+    "key": "accomodationManagementSubtitle",
+    "value": "Accomodation management module. Provides features for managing facility floor maps and placing persons in rooms."
+  },
+  {
+    "key": "servicesManagementSubtitle",
+    "value": "Services and packages management module. Provides features for adding, deleting and editing services and packages data, managing user offers and discounts."
+  },
+  {
+    "key": "calendarSubtitle",
+    "value": "Calendar, events and reminders management module."
+  },
+  {
+    "key": "calculationSubtitle",
+    "value": "Calculation management module. Provides features for creating calculation and invoices for persons on care and provides insight information about facility income."
+  },
+  {
+    "key": "doctorVisitsSubtitle",
+    "value": "Doctor visits management module. Provides features for entering doctor visit details and offers insight information about person health conditions."
+  },
+  {
+    "key": "codebooksSubtitle",
+    "value": "Codebooks management module. Provides features for editing codebooks data and settings."
+  },
+  {
+    "key": "modules",
+    "value": "Modules"
+  },
+  {
+    "key": "moduleFeatures",
+    "value": "Features"
+  },
+  {
+    "key": "goToFeature",
+    "value": "Go to feature"
+  },
+  {
+    "key": "usersManagement",
+    "value": "Users management"
+  },
+  {
+    "key": "codebooks",
+    "value": "Codebooks"
+  },
+  {
+    "key": "dateRegistered",
+    "value": "Registration date"
+  },
+  {
+    "key": "firstLogin",
+    "value": "First login"
+  },
+  {
+    "key": "lastPasswordChange",
+    "value": "Last password change"
+  },
+  {
+    "key": "lastDataChange",
+    "value": "Last profile update"
+  },
+  {
+    "key": "unreadNotifications",
+    "value": "Unread notifications"
+  },
+  {
+    "key": "contactAndAddressData",
+    "value": "Contact & Address data"
+  },
+  {
+    "key": "myPersons",
+    "value": "My persons on care"
+  },
+  {
+    "key": "editContactAndAdress",
+    "value": "Edit contact and address"
+  },
+  {
+    "key": "contactManagement",
+    "value": "Contacts management"
   }
 ]

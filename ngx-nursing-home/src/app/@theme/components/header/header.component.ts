@@ -1,4 +1,10 @@
-import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
+import {
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+  ViewChildren,
+} from "@angular/core";
 import {
   NbPopoverDirective,
   NbSidebarService,
@@ -24,7 +30,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   private subs: Subscription[] = [];
 
-  @ViewChild(NbPopoverDirective) popover: NbPopoverDirective;
+  @ViewChildren(NbPopoverDirective) popovers: NbPopoverDirective[];
 
   constructor(
     private sidebarService: NbSidebarService,
@@ -75,7 +81,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   public onNotificationPaneClose(): void {
-    this.popover.hide();
+    this.popovers.forEach((element) => {
+      element.hide();
+    });
   }
 
   public onNotificationsDestroy(event: boolean) {
@@ -88,5 +96,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.router.navigateByUrl("/pages/advanced-search/" + this.searchTerm);
       this.searchTerm = "";
     }
+  }
+
+  public onUserPaneDestroy() {
+    this.popovers.forEach((element) => {
+      element.hide();
+    });
   }
 }

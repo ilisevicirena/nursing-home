@@ -99,7 +99,12 @@ import { ChangeFurnitureStatusComponent } from "./furniture/change-furniture-sta
 import { FurnitureStatusesPreviewComponent } from "./furniture/furniture-statuses-preview/furniture-statuses-preview.component";
 import { UserComponent } from "./user/user.component";
 import { UsersComponent } from "./users/users.component";
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { PageNotFoundComponent } from "./page-not-found/page-not-found.component";
+import { ModulesMenuComponent } from "./modules-menu/modules-menu.component";
+import { MyProfileComponent } from "./my-profile/my-profile.component";
+import { UserProfileComponent } from "./my-profile/user-profile/user-profile.component";
+import { AdminProfileComponent } from "./my-profile/admin-profile/admin-profile.component";
+import { EditContactInfoComponent } from "./my-profile/user-profile/edit-contact-info/edit-contact-info.component";
 
 @NgModule({
   imports: [
@@ -208,6 +213,11 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     UserComponent,
     UsersComponent,
     PageNotFoundComponent,
+    ModulesMenuComponent,
+    MyProfileComponent,
+    UserProfileComponent,
+    AdminProfileComponent,
+    EditContactInfoComponent,
   ],
 })
 export class PagesModule {}
