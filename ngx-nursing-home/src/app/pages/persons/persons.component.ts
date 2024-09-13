@@ -21,6 +21,7 @@ import {
 import { NbWindowService, NbWindowState } from "@nebular/theme";
 import { PersonPopupWindowComponent } from "../person-popup-window/person-popup-window.component";
 import { GendersService } from "../../services/rest/genders.service";
+import { AuthService, UserRole } from "../../services/auth.service";
 
 @Component({
   selector: "sample-persons",
@@ -103,7 +104,8 @@ export class PersonsComponent implements OnInit, OnDestroy {
   constructor(
     private _personsService: PersonsService,
     private _windowService: NbWindowService,
-    private _gendersService: GendersService
+    private _gendersService: GendersService,
+    private _authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -161,5 +163,9 @@ export class PersonsComponent implements OnInit, OnDestroy {
   public gridSelectionChanged(event: any): void {
     if (event.selectedRows.length == 1)
       this.openPersonDetails(event.selectedRows[0]);
+  }
+
+  public checkUserHasAdminPermission(): boolean {
+    return this._authService.checkUserHasRole(UserRole.ADMIN);
   }
 }

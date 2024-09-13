@@ -150,4 +150,18 @@ router.get("/employeesBasic", async (request, response) => {
   }
 });
 
+router.get("/getUserEmployeeId", async (request, response) => {
+  try {
+    const pool = await db;
+    const result = await pool
+      .request()
+      .input("userId", request.query.UserId)
+      .query("EXEC [dbo].[getUserEmployeeId] @UserId=@userId");
+    response.json(result.recordset);
+  } catch (err) {
+    response.status(500);
+    response.send(err.message);
+  }
+});
+
 module.exports = router;

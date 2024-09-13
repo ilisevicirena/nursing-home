@@ -52,6 +52,14 @@ router.post("/login", async (req, res) => {
       const roles = rolesPermissionsResult.recordsets[0];
       const permissions = rolesPermissionsResult.recordsets[1];
 
+      // Fetch user persons
+      const personsResult = await pool
+        .request()
+        .input("UserId", UserId)
+        .execute("getPersonsForUser");
+
+      const persons = personsResult.recordset.map((x) => x.Id);
+
       // Log user activity
       await pool
         .request()
@@ -79,6 +87,7 @@ router.post("/login", async (req, res) => {
         Token: token,
         Roles: roles,
         Permissions: permissions,
+        Persons: persons,
       });
     } else if (Message)
       res.status(401).send("NURSNIG_HOME_AUTH_ERR#" + Message);

@@ -32,6 +32,7 @@
           [selectRowByClick]="true"
           [exportSettings]="exportSettings"
           (selectionChanged)="gridSelectionChanged($event)"
+          (actionBtnClick)="onActionBtnClick($event)"
         ></ngx-grid>
       </div>
     </nb-card-body>

@@ -67,6 +67,7 @@ export class AuthService extends BaseRestApiService implements OnDestroy {
                 Permissions: response.Permissions,
               })
             );
+            localStorage.setItem("persons", JSON.stringify(response.Persons));
           }
         })
       );
@@ -82,6 +83,7 @@ export class AuthService extends BaseRestApiService implements OnDestroy {
           localStorage.removeItem("token");
           localStorage.removeItem("user");
           localStorage.removeItem("userRights");
+          localStorage.removeItem("persons");
         })
       );
   }
@@ -92,6 +94,11 @@ export class AuthService extends BaseRestApiService implements OnDestroy {
 
   getToken(): string | null {
     return localStorage.getItem("token");
+  }
+
+  getUserPersons(): number[] | null {
+    const persons = localStorage.getItem("persons");
+    return persons ? (JSON.parse(persons) as number[]) : null;
   }
 
   getUser(): IUser {
@@ -108,8 +115,20 @@ export class AuthService extends BaseRestApiService implements OnDestroy {
         switch (role) {
           case UserRole.ADMIN:
             return userRoleId == 1;
+          case UserRole.MODERATOR:
+            return userRoleId == 2;
           case UserRole.USER:
             return userRoleId == 3;
+          case UserRole.NURSE:
+            return userRoleId == 4;
+          case UserRole.CAREGIVER:
+            return userRoleId == 5;
+          case UserRole.COOK:
+            return userRoleId == 6;
+          case UserRole.OTHER_STUFF:
+            return userRoleId == 7;
+          case UserRole.DOCTOR:
+            return userRoleId == 8;
           default:
             return false;
         }
@@ -187,4 +206,5 @@ export enum UserRole {
   DOCTOR,
   OTHER_STUFF,
   MODERATOR,
+  COOK,
 }

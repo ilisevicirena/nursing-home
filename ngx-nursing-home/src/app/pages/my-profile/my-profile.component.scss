@@ -1,9 +1,5 @@
 @import "../../@theme/styles/themes";
 
-::ng-deep sample-my-profile {
-  height: 100%;
-}
-
 @include nb-install-component() {
   .status-card {
     border-radius: 1rem;

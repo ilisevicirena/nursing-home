@@ -19,6 +19,7 @@ import { NgxEchartsModule } from "ngx-echarts";
 import { DashboardComponent } from "./dashboard.component";
 import { AdminDashboardComponent } from "./admin-dashboard/admin-dashboard.component";
 import { UserDashboardComponent } from "./user-dashboard/user-dashboard.component";
+import { EmployeeDashboardComponent } from './employee-dashboard/employee-dashboard.component';
 
 @NgModule({
   imports: [
@@ -44,6 +45,7 @@ import { UserDashboardComponent } from "./user-dashboard/user-dashboard.componen
     DashboardComponent,
     AdminDashboardComponent,
     UserDashboardComponent,
+    EmployeeDashboardComponent,
   ],
   providers: [],
   exports: [],

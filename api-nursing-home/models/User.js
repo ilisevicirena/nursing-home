@@ -21,12 +21,13 @@ class SetPasswordInfo {
 }
 
 class User {
-  constructor(firstName, lastName, email, username, contactId) {
+  constructor(firstName, lastName, email, username, contactId, employeeId) {
     this.FirstName = firstName;
     this.LastName = lastName;
     this.Email = email;
     this.Username = username;
     this.ContactId = contactId;
+    this.EmployeeId = employeeId;
   }
 }
 

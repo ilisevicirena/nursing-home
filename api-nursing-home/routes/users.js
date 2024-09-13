@@ -38,12 +38,21 @@ router.post("/add", async (request, response) => {
 
     if (Success) {
       var user = result.recordset[0];
-      if (user.Id && objectToSave.ContactId) {
+      if (user.UserId && objectToSave.ContactId) {
         await pool
           .request()
-          .input("UserId", user.Id)
+          .input("UserId", user.UserId)
           .input("ContactId", objectToSave.ContactId)
           .execute("insertUserContactRelation");
+      }
+
+      var user = result.recordset[0];
+      if (user.UserId && objectToSave.EmployeeId) {
+        await pool
+          .request()
+          .input("UserId", user.UserId)
+          .input("EmployeeId", objectToSave.EmployeeId)
+          .execute("insertUserEmployeeRelation");
       }
 
       response.json(user);

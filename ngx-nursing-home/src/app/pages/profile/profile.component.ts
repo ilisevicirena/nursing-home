@@ -41,6 +41,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   private _subs: Subscription[] = [];
   private _allowDifferentGenders: boolean = false;
+  private _persons: number[] = this._authService.getUserPersons();
 
   public personId: number = 0;
   public getString = getString;
@@ -93,10 +94,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
     { option: "contacts", string: "contacts", active: false },
     { option: "stayData", string: "stayData", active: false },
     { option: "dormatoryData", string: "dormatoryData", active: false },
-    { option: "services", string: "services", active: false },
     { option: "documents", string: "documents", active: false },
     { option: "notes", string: "notes", active: false },
-    { option: "calculation", string: "personCalculation", active: false },
   ];
 
   public roomsColumns: GridColumn[] = [
@@ -149,6 +148,17 @@ export class ProfileComponent implements OnInit, OnDestroy {
         this.getPersonDetails(this.personId);
       })
     );
+
+    if (this.checkUserHasPermission()) {
+      this.options.push(
+        {
+          option: "services",
+          string: "services",
+          active: false,
+        },
+        { option: "calculation", string: "personCalculation", active: false }
+      );
+    }
   }
 
   ngOnDestroy(): void {
@@ -429,5 +439,34 @@ export class ProfileComponent implements OnInit, OnDestroy {
     }
 
     return months;
+  }
+
+  public checkUserHasPermission(): boolean {
+    if (this._authService.checkUserHasRole(UserRole.ADMIN)) return true;
+    return this.checkPersonIsUserPerson();
+  }
+
+  public checkPersonIsUserPerson(): boolean {
+    return (
+      this._authService.getUserPersons().find((x) => x == this.personId) != null
+    );
+  }
+
+  public checkUserCanViewPage(): boolean {
+    // admins, nurses, caregivers and doctors can see all persons
+    if (
+      this._authService.checkUserHasRole(UserRole.ADMIN) ||
+      this._authService.checkUserHasRole(UserRole.NURSE) ||
+      this._authService.checkUserHasRole(UserRole.CAREGIVER) ||
+      this._authService.checkUserHasRole(UserRole.DOCTOR)
+    )
+      return true;
+    // user can only see profile of his persons on care
+    else if (
+      this._authService.checkUserHasRole(UserRole.USER) &&
+      this.checkPersonIsUserPerson()
+    )
+      return true;
+    else return false;
   }
 }

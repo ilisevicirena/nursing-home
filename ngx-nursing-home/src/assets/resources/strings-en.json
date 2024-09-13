@@ -1005,5 +1005,9 @@
   {
     "key": "contactManagement",
     "value": "Contacts management"
+  },
+  {
+    "key": "generateUser",
+    "value": "Manage user"
   }
 ]

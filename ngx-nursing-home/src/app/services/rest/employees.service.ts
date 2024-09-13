@@ -19,6 +19,10 @@ export class EmployeesService extends BaseRestApiService {
     return this.http.get(this.apiRoute + "/employeeDetails?id=" + id);
   }
 
+  public getUserEmployeeId(id: string): Observable<any> {
+    return this.http.get(this.apiRoute + "/getUserEmployeeId?UserId=" + id);
+  }
+
   public getEmployeeDetailed(id: number): Observable<any> {
     return this.http.get(this.apiRoute + "/EmployeeDetailed?id=" + id);
   }

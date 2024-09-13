@@ -271,7 +271,9 @@ export class PersonPopupWindowComponent
   }
 
   public checkUserHasPermission(): boolean {
-    var isUser = this._authService.checkUserHasRole(UserRole.USER);
+    var isUser =
+      this._authService.checkUserHasRole(UserRole.USER) ||
+      this._authService.checkUserHasRole(UserRole.NURSE);
     return !isUser;
   }
 }

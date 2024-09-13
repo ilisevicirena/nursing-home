@@ -31,6 +31,7 @@ import { UsersComponent } from "./users/users.component";
 import { PageNotFoundComponent } from "./page-not-found/page-not-found.component";
 import { UserRole } from "../services/auth.service";
 import { MyProfileComponent } from "./my-profile/my-profile.component";
+import { EmployeeVacationsComponent } from "./employee/employee-vacations/employee-vacations.component";
 
 const routes: Routes = [
   {
@@ -60,6 +61,15 @@ const routes: Routes = [
       {
         path: "persons",
         component: PersonsComponent,
+        data: {
+          Roles: [
+            UserRole.ADMIN,
+            UserRole.NURSE,
+            UserRole.CAREGIVER,
+            UserRole.DOCTOR,
+            UserRole.USER,
+          ],
+        },
       },
       {
         path: "new-person",
@@ -131,7 +141,7 @@ const routes: Routes = [
         path: "doctor-visit-tour/:id",
         component: DoctorVisitTourComponent,
         data: {
-          Roles: [UserRole.ADMIN],
+          Roles: [UserRole.ADMIN, UserRole.NURSE],
         },
       },
       {
@@ -194,7 +204,7 @@ const routes: Routes = [
         path: "doctor-visits",
         component: DoctorVisitsComponent,
         data: {
-          Roles: [UserRole.ADMIN],
+          Roles: [UserRole.ADMIN, UserRole.NURSE],
         },
       },
       {
@@ -221,6 +231,19 @@ const routes: Routes = [
       {
         path: "my-profile",
         component: MyProfileComponent,
+      },
+      {
+        path: "employee-vacations",
+        component: EmployeeVacationsComponent,
+        data: {
+          Roles: [
+            UserRole.ADMIN,
+            UserRole.NURSE,
+            UserRole.CAREGIVER,
+            UserRole.COOK,
+            UserRole.OTHER_STUFF,
+          ],
+        },
       },
     ],
   },

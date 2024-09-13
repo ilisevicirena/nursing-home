@@ -23,6 +23,7 @@ import { CitiesService } from "../../services/rest/cities.service";
 import { DialogService } from "../../shared/dialog/dialog.service";
 import { UserComponent } from "../user/user.component";
 import { AuthService, UserRole } from "../../services/auth.service";
+import { ExistingUserComponent } from "./existing-user/existing-user.component";
 
 @Component({
   selector: "sample-contacts-grid",
@@ -320,5 +321,29 @@ export class ContactsGridComponent implements OnInit, OnDestroy {
 
   public checkUserHasAdminRole(): boolean {
     return this._authService.checkUserHasRole(UserRole.ADMIN);
+  }
+
+  public checkUserHasPermission(): boolean {
+    return (
+      this._authService.checkUserHasRole(UserRole.ADMIN) ||
+      this._authService.checkUserHasRole(UserRole.USER)
+    );
+  }
+
+  public addExistingUser(): void {
+    this._subs.push(
+      this._dialogService
+        .open(ExistingUserComponent, {
+          autoFocus: false,
+          closeOnBackdropClick: false,
+          closeOnEsc: false,
+          context: {
+            personId: this.personId,
+          },
+        })
+        .onClose.subscribe((res: boolean) => {
+          if (res) this.getContacts();
+        })
+    );
   }
 }

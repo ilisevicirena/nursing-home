@@ -4,3 +4,6 @@
 <sample-admin-dashboard
   *ngIf="checkUserHasRole(userRoles.ADMIN)"
 ></sample-admin-dashboard>
+<sample-employee-dashboard
+  *ngIf="checkUserHasRole(userRoles.NURSE)"
+></sample-employee-dashboard>

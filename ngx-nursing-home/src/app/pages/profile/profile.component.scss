@@ -1,9 +1,5 @@
 @import "../../@theme/styles/themes.scss";
 
-::ng-deep sample-profile {
-  height: 100%;
-}
-
 .person-name {
   font-weight: 700;
   font-size: 20px;
@@ -41,6 +37,12 @@
     display: flex;
     justify-content: flex-start;
   }
+}
+
+.person-info-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 0.5rem;
 }
 
 @include nb-install-component {

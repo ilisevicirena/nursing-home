@@ -39,8 +39,19 @@ router.post("/add", async (request, response) => {
       .query(
         "EXEC [dbo].[insertContact] @FirstName=@firstName, @LastName=@lastName, @Email=@email, @Telephone=@telephone, @Mobile=@mobile, @PersonId=@personId, @Jmbg=@jmbg, @ResidanceCityId=@residanceCityId, @ResidanceHouseNumber=@residanceHouseNumber, @ResidanceStreetName=@residanceStreetName, @IsObligeeToPay=@isObligeeToPay, @IsGuardian=@isGuardian"
       );
-    if (result != null) response.json(result.recordset[0]);
-    else response.send(getError(3001));
+    if (result != null) {
+      var contactId = result.recordset[0].ContactId;
+
+      if (objectToSave.UserId && contactId) {
+        await pool
+          .request()
+          .input("UserId", objectToSave.UserId)
+          .input("ContactId", contactId)
+          .execute("insertUserContactRelation");
+      }
+
+      response.json(result.recordset[0]);
+    } else response.send(getError(3001));
   } catch (err) {
     response.status(500);
     response.send(err.message);

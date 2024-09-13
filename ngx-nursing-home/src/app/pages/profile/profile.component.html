@@ -1,4 +1,5 @@
-<div class="row m-0 h-100">
+<sample-page-not-found *ngIf="!checkUserCanViewPage()"></sample-page-not-found>
+<div class="row m-0 h-100" *ngIf="checkUserCanViewPage()">
   <div class="col-md-2 p-0 sidepanel" *ngIf="showSidepanel">
     <div class="col-md-12 ps-0 pb-2 pe-2" style="flex: 0 1 auto">
       <div class="profile-top-container">
@@ -18,20 +19,20 @@
             <div class="person-jmbg d-flex justify-content-center">
               {{ person.JMBG }}
             </div>
-            <div class="row m-0 person-info-container">
-              <div class="col-md-4">
+            <div class="person-info-container">
+              <div>
                 <div class="card-label">{{ getString("age") }}</div>
                 <div class="card-value">
                   {{ years }}<span>{{ getString("profileYears") }}</span>
                 </div>
               </div>
-              <div class="col-md-4">
+              <div>
                 <div class="card-label">{{ getString("spentTime") }}</div>
                 <div class="card-value">
                   {{ spentTime }}<span>{{ getString("profileMonths") }}</span>
                 </div>
               </div>
-              <div class="col-md-4">
+              <div>
                 <div class="card-label">{{ getString("status") }}</div>
                 <div class="card-value">
                   <nb-badge

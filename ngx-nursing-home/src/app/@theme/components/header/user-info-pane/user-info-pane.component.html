@@ -29,12 +29,19 @@
     </div>
     <div class="divider"></div>
     <div class="user-actions-container">
-      <button nbButton shape="round" status="primary" (click)="logout()">
+      <button
+        nbButton
+        shape="round"
+        size="small"
+        status="primary"
+        (click)="logout()"
+      >
         {{ getString("logout") }}
         <nb-icon pack="eva" icon="log-out-outline" nbSuffix></nb-icon>
       </button>
       <div class="d-flex align-items-center justify-content-end col">
         <button
+          size="small"
           nbButton
           ghost
           shape="round"
@@ -45,6 +52,7 @@
           <nb-icon pack="eva" icon="external-link-outline"></nb-icon>
         </button>
         <button
+          size="small"
           nbButton
           ghost
           shape="round"

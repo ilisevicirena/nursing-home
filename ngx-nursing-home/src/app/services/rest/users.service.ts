@@ -58,6 +58,7 @@ export class UsersService extends BaseRestApiService {
 
 export interface IUserSaveModel extends IUser {
   ContactId?: number;
+  EmployeeId?: number;
 }
 
 export interface IVerifyUserEmail {

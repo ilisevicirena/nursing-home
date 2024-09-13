@@ -7,6 +7,8 @@ import {
 } from "@angular/core";
 import { getString } from "../../resources/strings";
 import {
+  GridButtonType,
+  GridButtonsColumn,
   GridCheckboxColumn,
   GridColumn,
   GridDateColumn,
@@ -14,12 +16,17 @@ import {
   GridLookupColumn,
   GridNumberColumn,
   GridSelectFilter,
+  GridTextboxEditor,
+  IGridCellButton,
   IGridExportDocumentSettings,
 } from "shared-components";
 import { Subscription } from "rxjs";
 import { JobPositionsService } from "../../services/rest/job-positions.service";
 import { EmployeesService } from "../../services/rest/employees.service";
 import { Router } from "@angular/router";
+import { AuthService, UserRole } from "../../services/auth.service";
+import { DialogService } from "../../shared/dialog/dialog.service";
+import { UserComponent } from "../user/user.component";
 
 @Component({
   selector: "sample-employees",
@@ -93,6 +100,23 @@ export class EmployeesComponent implements OnInit, OnDestroy {
           .ServerDataSource(true)
           .ServerEndpoint(this._jobPositionsService.apiRoute)
       ),
+    new GridColumn()
+      .Title(getString("generateUser"))
+      .DataField("buttons")
+      .Editable(false)
+      .Addable(false)
+      .Filter(false)
+      .Export(false)
+      .Visible(this.checkUserHasAdminRole())
+      .Sortable(false)
+      .GroupingEnabled(false)
+      .Editor(new GridTextboxEditor().Show(false))
+      .Type(
+        new GridButtonsColumn()
+          .ButtonsFromDataField("buttons")
+          .Editable(false)
+          .Removable(false)
+      ),
   ];
 
   private _subs: Subscription[] = [];
@@ -102,7 +126,9 @@ export class EmployeesComponent implements OnInit, OnDestroy {
   constructor(
     private _employeesService: EmployeesService,
     private _jobPositionsService: JobPositionsService,
-    private _router: Router
+    private _router: Router,
+    private _authService: AuthService,
+    private _dialogService: DialogService
   ) {}
 
   ngOnInit(): void {
@@ -119,6 +145,21 @@ export class EmployeesComponent implements OnInit, OnDestroy {
     this._subs.push(
       this._employeesService.getData(!this.showDeactivated).subscribe(
         (data) => {
+          data = data.map((employee) => {
+            if (employee.UserId) {
+              employee.buttons = [
+                new GridButtonType()
+                  .TooltipDisabled(true)
+                  .Icon("person-outline"),
+              ];
+            } else {
+              employee.buttons = [
+                new GridButtonType().TooltipDisabled(true).Icon("plus-outline"),
+              ];
+            }
+
+            return employee;
+          });
           this.employeesData = data;
         },
         (err) => {
@@ -143,5 +184,35 @@ export class EmployeesComponent implements OnInit, OnDestroy {
 
   public openPersonDetails(data: any): void {
     this._router.navigateByUrl("/pages/employee/" + data.Id);
+  }
+
+  public checkUserHasAdminRole(): boolean {
+    return this._authService.checkUserHasRole(UserRole.ADMIN);
+  }
+
+  public onActionBtnClick(e: IGridCellButton) {
+    this._subs.push(
+      this._dialogService
+        .open(UserComponent, {
+          closeOnBackdropClick: false,
+          closeOnEsc: false,
+          autoFocus: false,
+          context: {
+            isNew: e.row.UserId == null,
+            user: {
+              Id: e.row.UserId,
+              FirstName: e.row.FirstName,
+              LastName: e.row.LastName,
+              Email: e.row.Email,
+              Username: null,
+              DateRegistered: new Date().toLocaleDateString(),
+            },
+            employeeId: e.row.Id,
+          },
+        })
+        .onClose.subscribe((result: boolean) => {
+          if (result) this.getData();
+        })
+    );
   }
 }

@@ -103,6 +103,7 @@ export class UserComponent implements OnInit, OnDestroy {
     DateRegistered: new Date().toLocaleDateString(),
   };
   public contactId: number = null;
+  public employeeId: number = null;
   public roles: any[] = [];
   public roleId: number = null;
   public roleDescription: string = null;
@@ -138,6 +139,7 @@ export class UserComponent implements OnInit, OnDestroy {
       Username: this.user.Username,
       DateRegistered: this.user.DateRegistered,
       ContactId: this.contactId,
+      EmployeeId: this.employeeId,
     };
 
     if (this.user.FirstName && this.user.LastName && this.user.Username) {
@@ -146,6 +148,7 @@ export class UserComponent implements OnInit, OnDestroy {
           this._usersService.add(saveObj as any).subscribe((data: any) => {
             this._userSaved = true;
             this._toastrService.showToast("success", getString("saveSuccess"));
+            this.user.Id = data.UserId;
             this.getUserData();
           })
         );

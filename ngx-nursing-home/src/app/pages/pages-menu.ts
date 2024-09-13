@@ -1,9 +1,5 @@
-import { icon } from "leaflet";
 import { getString } from "../resources/strings";
-import { DialogService } from "../shared/dialog/dialog.service";
-import { FastActionsComponent } from "./fast-actions/fast-actions.component";
 import { ModulesMenuComponent } from "./modules-menu/modules-menu.component";
-import { color } from "echarts";
 import { StartCalculationComponent } from "./calculation/start-calculation/start-calculation.component";
 import { StartDoctorVisitTourComponent } from "./start-doctor-visit-tour/start-doctor-visit-tour.component";
 
@@ -82,11 +78,50 @@ export const ADMIN_MENU_ITEMS: any[] = [
     title: getString("allModules"),
     icon: "keypad-outline",
     link: undefined,
-    click: (dialogService: DialogService) => {
-      dialogService.open(ModulesMenuComponent, {
-        autoFocus: false,
-      });
-    },
+    component: ModulesMenuComponent,
+  },
+];
+
+export const NURSE_MENU_ITEMS: any[] = [
+  {
+    title: getString("dashboard"),
+    icon: "home-outline",
+    link: "/pages/dashboard",
+  },
+  {
+    title: getString("personsManagement"),
+    icon: "people-outline",
+    children: [
+      {
+        title: getString("persons"),
+        link: "/pages/persons",
+      },
+      {
+        title: getString("searchPersons"),
+        link: "/pages/advanced-search",
+      },
+    ],
+  },
+  {
+    title: getString("calendar"),
+    icon: "calendar-outline",
+    link: "/pages/calendar",
+  },
+  {
+    title: getString("doctorVisits"),
+    icon: "activity-outline",
+    link: "/pages/doctor-visits",
+  },
+  {
+    title: getString("newDoctorVisit"),
+    icon: "play-circle-outline",
+    link: undefined,
+    component: StartDoctorVisitTourComponent,
+  },
+  {
+    title: getString("vacation"),
+    icon: "smiling-face-outline",
+    link: "/pages/employee-vacations",
   },
 ];
 

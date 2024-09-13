@@ -25,4 +25,10 @@ export class MyProfileService extends BaseRestApiService {
         this._authService.getUserId()
     );
   }
+
+  public getContactInfoForUserId(userId: string): Observable<any> {
+    return this.http.get(
+      this.apiRoute + "/getContactInfoForUser?UserId=" + userId
+    );
+  }
 }

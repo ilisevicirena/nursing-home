@@ -2,10 +2,6 @@
 @import "bootstrap/scss/mixins/breakpoints";
 @import "@nebular/theme/styles/global/breakpoints";
 
-::ng-deep sample-notifications {
-  height: 100%;
-}
-
 .read-chx {
   line-height: 0 !important;
 }

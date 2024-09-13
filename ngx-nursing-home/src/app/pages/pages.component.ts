@@ -1,6 +1,11 @@
 import { Component } from "@angular/core";
 
-import { ADMIN_MENU_ITEMS, MENU_ITEMS, USER_MENU_ITEMS } from "./pages-menu";
+import {
+  ADMIN_MENU_ITEMS,
+  MENU_ITEMS,
+  NURSE_MENU_ITEMS,
+  USER_MENU_ITEMS,
+} from "./pages-menu";
 import { NbMenuService } from "@nebular/theme";
 import { DialogService } from "../shared/dialog/dialog.service";
 import { Subscription } from "rxjs";
@@ -37,7 +42,11 @@ export class PagesComponent {
           map(({ item }) => item)
         )
         .subscribe((item: any) => {
-          if (item.click) item.click(this.dialogService);
+          if (item.component) {
+            this.dialogService.open(item.component, {
+              autoFocus: false,
+            });
+          }
         })
     );
 
@@ -45,6 +54,8 @@ export class PagesComponent {
       this.menu = USER_MENU_ITEMS;
     else if (this.authService.checkUserHasRole(UserRole.ADMIN))
       this.menu = ADMIN_MENU_ITEMS;
+    else if (this.authService.checkUserHasRole(UserRole.NURSE))
+      this.menu = NURSE_MENU_ITEMS;
     else this.menu = MENU_ITEMS;
   }
 }

@@ -1,9 +1,5 @@
 @import "../../../@theme/styles/themes.scss";
 
-::ng-deep sample-employee-vacations {
-  height: 100%;
-}
-
 @include nb-install-component {
   .top-card {
     background-color: nb-theme(color-primary-transparent-200);
@@ -20,4 +16,22 @@
 
 .grid-container {
   height: calc(100% - 5rem);
+}
+
+.employee-view {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+}
+
+.admin-view {
+  border: none;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+
+  nb-card-body {
+    padding: 0;
+    overflow: visible;
+  }
 }
