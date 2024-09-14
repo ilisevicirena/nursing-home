@@ -852,7 +852,7 @@
   },
   {
     "key": "verifyUserEmailTemplate",
-    "value": "Dear Sir/Madam,<br><br> To activet your user account, please, verify your e-mail address. The deadline for verification is: #ExpiryDate. <br>Please follow the link to verify.<br><br><a style='background-color: MediumTurquoise; color: white; padding: 10px 15px; font-weight: bold; text-decoration: none;' href='#SetNewPasswordAppLink'>VERIFY E-MAIL</a><br><br>If button doesn't work, please paste this link into your browser: #SetNewPasswordAppLink <br><br>Sincerely,<br> #EnvironmentBrand."
+    "value": "Dear Sir/Madam,<br><br> To activate your user account, please, verify your e-mail address. The deadline for verification is: #ExpiryDate. <br>Please follow the link to verify.<br><br><a style='background-color: MediumTurquoise; color: white; padding: 10px 15px; font-weight: bold; text-decoration: none;' href='#SetNewPasswordAppLink'>VERIFY E-MAIL</a><br><br>If button doesn't work, please paste this link into your browser: #SetNewPasswordAppLink <br><br>Sincerely,<br> #EnvironmentBrand."
   },
   {
     "key": "verifyUserEmailSubject",
@@ -1009,5 +1009,117 @@
   {
     "key": "generateUser",
     "value": "Manage user"
+  },
+  {
+    "key": "users",
+    "value": "Users"
+  },
+  {
+    "key": "allModules",
+    "value": "All modules"
+  },
+  {
+    "key": "blockUser",
+    "value": "Block"
+  },
+  {
+    "key": "activateUser",
+    "value": "Activate"
+  },
+  {
+    "key": "deactivateUser",
+    "value": "Deactivate"
+  },
+  {
+    "key": "wantToBlockUser",
+    "value": "Do you want to block user?"
+  },
+  {
+    "key": "unblockUser",
+    "value": "Unblock"
+  },
+  {
+    "key": "wantToActivateUser",
+    "value": "Do you want to activate user?"
+  },
+  {
+    "key": "wantToDeactivateUser",
+    "value": "Do you want to deactivate user?"
+  },
+  {
+    "key": "wantToUnblockUser",
+    "value": "Do you want to unblock user?"
+  },
+  {
+    "key": "role",
+    "value": "Role"
+  },
+  {
+    "key": "userActiveState",
+    "value": "Active"
+  },
+  {
+    "key": "userBlockedState",
+    "value": "Blocked"
+  },
+  {
+    "key": "userVerifiedState",
+    "value": "Verified"
+  },
+  {
+    "key": "userInactive",
+    "value": "Deactivated"
+  },
+  {
+    "key": "userRole",
+    "value": "User role"
+  },
+  {
+    "key": "registeredDate",
+    "value": "Registration date"
+  },
+  {
+    "key": "currentUserStatus",
+    "value": "Current status"
+  },
+  {
+    "key": "sendVerificationEmail",
+    "value": "Send verification e-mail"
+  },
+  {
+    "key": "allModules",
+    "value": "All modules"
+  },
+  {
+    "key": "userActive",
+    "value": "Active"
+  },
+  {
+    "key": "userBlocked",
+    "value": "Blocked"
+  },
+  {
+    "key": "emailSent",
+    "value": "E-mail successfully sent"
+  },
+  {
+    "key": "verificationMailSentAt",
+    "value": "Verification e-mail sent at"
+  },
+  {
+    "key": "verificationMailTokenExpiryDate",
+    "value": "Verification token expiration date"
+  },
+  {
+    "key": "userNotVerified",
+    "value": "Not verified"
+  },
+  {
+    "key": "openSidebar",
+    "value": "Open sidebar"
+  },
+  {
+    "key": "closeSidebar",
+    "value": "Close sidebar"
   }
 ]

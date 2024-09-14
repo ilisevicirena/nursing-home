@@ -68,7 +68,7 @@ export function translationLoader(translationService: TranslationService) {
   bootstrap: [AppComponent],
   providers: [
     AuthService,
-    { provide: LOCALE_ID, useValue: "en" },
+    { provide: LOCALE_ID, useValue: "hr" },
     { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true },
     {
       provide: APP_INITIALIZER,
