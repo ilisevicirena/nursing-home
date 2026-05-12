@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { db } = require("../config/framework");
+const { db, authedRequest } = require("../config/framework");
 const { Event } = require("../models/Event");
 
 router.get("/", async (request, response) => {
@@ -49,8 +49,7 @@ router.post("/update", async (request, response) => {
   try {
     var objectToSave = Object.assign(new Event(), request.body);
     const pool = await db;
-    const result = await pool
-      .request()
+    const result = await authedRequest(pool, request.user?.userId)
       .input("id", objectToSave.Id)
       .input("title", objectToSave.Title)
       .input("desc", objectToSave.Description)
@@ -60,7 +59,7 @@ router.post("/update", async (request, response) => {
       .input("rec", objectToSave.Recurring ? 1 : 0)
       .input("rem", objectToSave.Reminder ? 1 : 0)
       .query(
-        "EXEC [dbo].[updateCalendarEvent] @Id=@id, @Title=@title, @Description=@desc, @Start=@start, @End=@end, @Color=@color, @Recurring=@rec, @Reminder=@rem"
+        "EXEC [dbo].[updateCalendarEvent] @Id=@id, @Title=@title, @Description=@desc, @Start=@start, @End=@end, @Color=@color, @Recurring=@rec, @Reminder=@rem, @ActingUserId=@ActingUserId"
       );
     if (result != null) response.json(result.recordset);
     else response.send(getError(40002));
@@ -74,10 +73,9 @@ router.delete("/delete", async (request, response) => {
   try {
     var objectToSave = Object.assign(new Event(), request.body);
     const pool = await db;
-    const result = await pool
-      .request()
+    const result = await authedRequest(pool, request.user?.userId)
       .input("id", objectToSave.Id)
-      .query("EXEC [dbo].[deleteCalendarEvent] @Id=@id");
+      .query("EXEC [dbo].[deleteCalendarEvent] @Id=@id, @ActingUserId=@ActingUserId");
     if (result != null) response.json(result.recordset);
     else response.send(getError(40003));
   } catch (err) {

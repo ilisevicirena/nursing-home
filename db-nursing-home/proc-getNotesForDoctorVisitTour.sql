@@ -1,20 +1,27 @@
- CREATE PROCEDURE [dbo].[getNotesForDoctorVisitTour]
+create PROCEDURE [dbo].[getNotesForDoctorVisitTour]
     @Id INT
 AS
 BEGIN
     SET NOCOUNT ON;
- 
- SELECT 
+
+    SELECT 
         [Id] = n.Id,
         [Title] = n.Title,
         [Text] = n.[Text],
         [CreationDate] = n.CreationDate,
         [LastModified] = n.LastModified,
         [PersonId] = n.PersonId,
-        [PersonFirstName] = p.FirstName,
-        [PersonLastName] = p.LastName       
+        [PersonFirstName] = CASE 
+                                WHEN n.UserId IS NOT NULL THEN u.FirstName 
+                                ELSE p.FirstName 
+                             END,
+        [PersonLastName] = CASE 
+                                WHEN n.UserId IS NOT NULL THEN u.LastName 
+                                ELSE p.LastName 
+                             END
     FROM dbo.Note AS n
     LEFT JOIN dbo.Person AS p ON n.PersonId = p.Id
+    LEFT JOIN dbo.[User] AS u ON n.UserId = u.Id -- Join with User table
     LEFT JOIN dbo.FavoriteNotes AS t1 ON n.Id = t1.NoteId AND t1.NoteId IS NOT NULL
     LEFT JOIN (
         SELECT COUNT(Id) as NoOfDocs, NoteId 
@@ -28,4 +35,4 @@ BEGIN
             WHERE DoctorVisitTourId = @Id
         );
 
-end;
+END;

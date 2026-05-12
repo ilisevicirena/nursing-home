@@ -44,7 +44,8 @@ BEGIN
 		[SchoolName]=e.SchoolName,
 		[SchoolQualificationName]=e.SchoolQualificationName,
 		[QualificationId]=e.QualificationId,
-		[QualificationName]=q.[Name]
+		[QualificationName]=q.[Name],
+		[UserId]=e.UserId
 		from dbo.Employee as e
 left join dbo.Gender as g on e.GenderId=g.Id
 left join dbo.City as c on c.Id=e.BirthCityId

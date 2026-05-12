@@ -27,7 +27,8 @@ CREATE PROCEDURE [dbo].[insertPerson]
 		@Telephone varchar(50)= NULL,
 		@Mobile varchar(50)= NULL,
 		@Email varchar(50)= NULL,
-		@DoctorName varchar(200)= NULL
+		@DoctorName varchar(200)= NULL,
+		@ActingUserId NCHAR(36) = NULL
 	)
 AS
 BEGIN
@@ -68,4 +69,6 @@ exec dbo.writeLog @LogType='INSERT', @LogEntity='Person', @Key= @NewIdent;
 		@Recurring = 1,
 		@EventTypeId=1,
 		@Reminder=0;
+
+	EXEC dbo.logUserActivity 'INSERT_PERSON', 'Person inserted', @ActingUserId;
 END

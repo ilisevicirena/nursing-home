@@ -34,11 +34,11 @@ router.post("/add", async (request, response) => {
       .input("Email", objectToSave.Email)
       .execute("insertUser");
 
-    const { Message, Success } = result.recordset[0];
+    const { Message, UserId: NewUserId } = result.recordset[0];
 
-    if (Success) {
+    if (NewUserId) {
       var user = result.recordset[0];
-      if (user.UserId && objectToSave.ContactId) {
+      if (NewUserId && objectToSave.ContactId) {
         await pool
           .request()
           .input("UserId", user.UserId)
@@ -46,8 +46,7 @@ router.post("/add", async (request, response) => {
           .execute("insertUserContactRelation");
       }
 
-      var user = result.recordset[0];
-      if (user.UserId && objectToSave.EmployeeId) {
+      if (NewUserId && objectToSave.EmployeeId) {
         await pool
           .request()
           .input("UserId", user.UserId)
@@ -126,7 +125,7 @@ router.get("/roles", async (req, res) => {
     const pool = await db;
     const result = await pool
       .request()
-      .input("UserId", request.query.UserId)
+      .input("UserId", req.query.UserId)
       .execute("getUserRolesAndPermissions");
     res.json({
       Roles: result.recordsets[0],
@@ -225,6 +224,23 @@ router.post("/activateDeactivateUser", async (request, response) => {
       .execute("activateDeactivateUser");
     if (result != null) response.json(result.recordset);
     else response.send("errr");
+  } catch (err) {
+    response.status(500);
+    response.send(err.message);
+  }
+});
+
+router.delete("/delete", async (request, response) => {
+  try {
+    const pool = await db;
+    const result = await pool
+      .request()
+      .input("UserId", request.query.UserId)
+      .execute("deleteUser");
+
+    const { Success, Message } = result.recordset[0];
+    if (Success) response.json({ Success, Message });
+    else response.status(404).send("NURSNIG_HOME_AUTH_ERR#" + Message);
   } catch (err) {
     response.status(500);
     response.send(err.message);

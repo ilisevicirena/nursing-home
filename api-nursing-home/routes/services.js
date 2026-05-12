@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { db } = require("../config/framework");
+const { db, authedRequest } = require("../config/framework");
 const { getError } = require("../resources/error-codes");
 const { Service } = require("../models/Service");
 
@@ -19,8 +19,7 @@ router.post("/add", async (request, response) => {
   try {
     var objectToSave = Object.assign(new Service(), request.body);
     const pool = await db;
-    const result = await pool
-      .request()
+    const result = await authedRequest(pool, request.user?.userId)
       .input("name", objectToSave.Name)
       .input("description", objectToSave.Description)
       .input("measure", objectToSave.MeasureUnitId)
@@ -28,7 +27,7 @@ router.post("/add", async (request, response) => {
       .input("default", objectToSave.DefaultNumberOfUnits)
       .input("price", objectToSave.PriceUnitId)
       .query(
-        "EXEC [dbo].[insertService] @Name=@name, @Description=@description, @MeasureUnitId=@measure, @CostPerUnit=@cost, @DefaultNumberOfUnits=@default, @PriceUnitId=@price"
+        "EXEC [dbo].[insertService] @Name=@name, @Description=@description, @MeasureUnitId=@measure, @CostPerUnit=@cost, @DefaultNumberOfUnits=@default, @PriceUnitId=@price, @ActingUserId=@ActingUserId"
       );
     if (result != null) response.json(result.recordset[0]);
     else response.send(getError(10001));
@@ -42,8 +41,7 @@ router.post("/update", async (request, response) => {
   try {
     var objectToSave = Object.assign(new Service(), request.body);
     const pool = await db;
-    const result = await pool
-      .request()
+    const result = await authedRequest(pool, request.user?.userId)
       .input("id", objectToSave.Id)
       .input("name", objectToSave.Name)
       .input("description", objectToSave.Description)
@@ -52,7 +50,7 @@ router.post("/update", async (request, response) => {
       .input("default", objectToSave.DefaultNumberOfUnits)
       .input("price", objectToSave.PriceUnitId)
       .query(
-        "EXEC [dbo].[updateService] @Id=@id, @Name=@name, @Description=@description, @MeasureUnitId=@measure, @CostPerUnit=@cost, @DefaultNumberOfUnits=@default, @PriceUnitId=@price"
+        "EXEC [dbo].[updateService] @Id=@id, @Name=@name, @Description=@description, @MeasureUnitId=@measure, @CostPerUnit=@cost, @DefaultNumberOfUnits=@default, @PriceUnitId=@price, @ActingUserId=@ActingUserId"
       );
     if (result != null) response.json(result.recordset);
     else response.send(getError(10002));
@@ -66,10 +64,9 @@ router.delete("/delete", async (request, response) => {
   try {
     var objectToSave = Object.assign(new Service(), request.body);
     const pool = await db;
-    const result = await pool
-      .request()
+    const result = await authedRequest(pool, request.user?.userId)
       .input("id", objectToSave.Id)
-      .query("EXEC [dbo].[deactivateService] @Id=@id");
+      .query("EXEC [dbo].[deactivateService] @Id=@id, @ActingUserId=@ActingUserId");
     if (result != null) response.json(result.recordset);
     else response.send(getError(10003));
   } catch (err) {

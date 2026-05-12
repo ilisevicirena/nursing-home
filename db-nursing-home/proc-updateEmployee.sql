@@ -27,60 +27,95 @@ CREATE PROCEDURE [dbo].[updateEmployee]
 		@SchoolQualificationName nvarchar(150)=NULL,
 		@BirthCityId int = NULL,
 		@BirthMunicipalityId int= NULL,
-		@BirthCountryId int= NULL
+		@BirthCountryId int= NULL,
+		@UserId UNIQUEIDENTIFIER = NULL,
+		@ActingUserId NCHAR(36) = NULL
 	)
 AS
 BEGIN
-	-- SET NOCOUNT ON added to prevent extra result sets from
-	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
-	SET @BirthDate = CAST(DATEADD(hour, 2, @BirthDate) AS DATE);
-	SET @EmploymentDate= CAST(DATEADD(hour, 2, @EmploymentDate) AS DATE);
 
-    -- Insert statements for procedure here
+	-- Ensure that the date is cast correctly
+	SET @BirthDate = CAST(DATEADD(hour, 2, @BirthDate) AS DATE);
+	SET @EmploymentDate = CAST(DATEADD(hour, 2, @EmploymentDate) AS DATE);
+
+	-- Get current birth date from the employee record
+	DECLARE @CurrentBirthDate datetime;
+	SELECT @CurrentBirthDate = BirthDate FROM dbo.Employee WHERE Id = @Id;
+
+	-- Update the employee data
 	UPDATE dbo.Employee
 	SET
-		FirstName=@FirstName,
-		LastName=@LastName,
-		JMBG=@JMBG,
-		QualificationId=@QualificationId,
-		GenderId=@GenderId,
-		Telephone=@Telephone,
-		Mobile=@Mobile,
-		Email=@Email,
-		ResidanceCityId= @ResidanceCityId,
-		ResidanceStreetName=@ResidanceStreetName,
-		ResidanceHouseNumber=@ResidanceHouseNumber,
-		BirthDate=@BirthDate,
-		EmploymentDate=@EmploymentDate,
-		BankName=@BankName,
-		BankAccountNumber=@BankAccountNumber,
-		JobPositionId=@JobPositionId,
-		EmploymentTypeId= @EmploymentTypeId,
-		FatherName=@FatherName,
-		YearsOfExperiance=@YearsOfExperiance,
-		EmploymentEndDate=@EmploymentEndDate,
-		DaysOfVacation=@DaysOfVacation,
-		SchoolName=@SchoolName,
-		SchoolQualificationName=@SchoolQualificationName,
-		BirthCityId=@BirthCityId,
-		BirthMunicipalityId=@BirthMunicipalityId,
-		BirthCountryId=@BirthCountryId	
-	WHERE Id = @Id
-	
-	exec dbo.removeAllEventsForEmployee @EmployeeId=@Id, @EventTypeId=1;
+		FirstName = @FirstName,
+		LastName = @LastName,
+		JMBG = @JMBG,
+		QualificationId = @QualificationId,
+		GenderId = @GenderId,
+		Telephone = @Telephone,
+		Mobile = @Mobile,
+		Email = @Email,
+		ResidanceCityId = @ResidanceCityId,
+		ResidanceStreetName = @ResidanceStreetName,
+		ResidanceHouseNumber = @ResidanceHouseNumber,
+		BirthDate = @BirthDate,
+		EmploymentDate = @EmploymentDate,
+		BankName = @BankName,
+		BankAccountNumber = @BankAccountNumber,
+		JobPositionId = @JobPositionId,
+		EmploymentTypeId = @EmploymentTypeId,
+		FatherName = @FatherName,
+		YearsOfExperiance = @YearsOfExperiance,
+		EmploymentEndDate = @EmploymentEndDate,
+		DaysOfVacation = @DaysOfVacation,
+		SchoolName = @SchoolName,
+		SchoolQualificationName = @SchoolQualificationName,
+		BirthCityId = @BirthCityId,
+		BirthMunicipalityId = @BirthMunicipalityId,
+		BirthCountryId = @BirthCountryId
+	WHERE Id = @Id;
 
-	DECLARE @Title varchar(200) = 'Rođendan: ' + @FirstName + ' ' + @LastName;
-	DECLARE @Description varchar(max) = 'Rođendan zaposlenika: ' + @FirstName + ' ' + @LastName + ', datum rođenja: ' + CONVERT(varchar(10),  @BirthDate, 104);
+	-- Only update events if the birth date has changed
+	IF @CurrentBirthDate <> @BirthDate
+	BEGIN
+		-- Remove old birthday event
+		EXEC dbo.removeAllEventsForEmployee @EmployeeId = @Id, @EventTypeId = 1;
 
-	EXEC dbo.insertCalendarEvent
-		@Start = @BirthDate,
-		@End = @BirthDate,
-		@Color = 'primary', 
-		@Title = @Title,
-		@Description = @Description,
-		@EmployeeId = @Id,
-		@EventTypeId=1,
-		@Recurring = 1,
-		@Reminder=0;
-END
+		-- Insert new birthday event
+		DECLARE @Title varchar(200) = 'Rođendan: ' + @FirstName + ' ' + @LastName;
+		DECLARE @Description varchar(max) = 'Rođendan zaposlenika: ' + @FirstName + ' ' + @LastName + ', datum rođenja: ' + CONVERT(varchar(10), @BirthDate, 104);
+
+		EXEC dbo.insertCalendarEvent
+			@Start = @BirthDate,
+			@End = @BirthDate,
+			@Color = 'primary', 
+			@Title = @Title,
+			@Description = @Description,
+			@EmployeeId = @Id,
+			@EventTypeId = 1,
+			@Recurring = 1,
+			@Reminder = 0;
+	END;
+
+	-- If UserId is supplied, check if FirstName, LastName, or Email have changed and update the User table
+	IF @UserId IS NOT NULL
+	BEGIN
+		DECLARE @CurrentFirstName nvarchar(50), @CurrentLastName nvarchar(50), @CurrentEmail nvarchar(50);
+
+		SELECT @CurrentFirstName = FirstName, @CurrentLastName = LastName, @CurrentEmail = Email
+		FROM dbo.[User]
+		WHERE Id = @UserId;
+
+		IF @CurrentFirstName <> @FirstName OR @CurrentLastName <> @LastName OR @CurrentEmail <> @Email
+		BEGIN
+			UPDATE dbo.[User]
+			SET FirstName = @FirstName, LastName = @LastName, Email = @Email
+			WHERE Id = @UserId;
+
+			-- Log the activity in the UserActivity table
+			INSERT INTO [dbo].[UserActivity] ([UserId], [ActivityType], [Timestamp], [Description])
+			VALUES (@UserId, 'USER_UPDATE', GETDATE(), 'User data updated and associated employee information updated');
+		END;
+	END;
+
+	EXEC dbo.logUserActivity 'UPDATE_EMPLOYEE', 'Employee updated', @ActingUserId;
+END;

@@ -4,33 +4,37 @@
 -- Description:	gets document for person 
 -- =============================================
 CREATE PROCEDURE [dbo].[getDocumentsForPerson]
-	-- Add the parameters for the stored procedure here
-	(
-		@PersonId int
-	)
+(
+    @PersonId INT
+)
 AS
 BEGIN
-	-- SET NOCOUNT ON added to prevent extra result sets from
-	-- interfering with SELECT statements.
-	SET NOCOUNT ON;
+    SET NOCOUNT ON;
 
-	select 
-	[Id]=d.Id,
-	[Name]=d.[Name],
-	[PersonId]=PersonId,
-	[PersonFirstName]=p.FirstName,
-	[PersonLastName]=p.LastName,
-	[DocumentTypeId]=DocumentTypeId,
-	[DocumentTypeName]=dt.[Name],
-	[Path]=[Path],
-	[StorageName]=StorageName,
-	[CreationDate]=d.CreationDate,
-	[Extension]=Extension,
-	[FileType]=FileType
-	from dbo.Document as d
-	left join dbo.DocumentType as dt on d.DocumentTypeId=dt.Id
-	left join dbo.Person as p on d.PersonId=p.Id
-	where d.PersonId=@PersonId
-	order by CreationDate desc;
+    SELECT 
+        [Id] = d.[Id],
+        [Name] = d.[Name],
+        [PersonId] = d.[PersonId],
+        [PersonFirstName] = CASE 
+                                WHEN d.[UserId] IS NOT NULL THEN u.[FirstName] 
+                                ELSE p.[FirstName] 
+                            END,
+        [PersonLastName] = CASE 
+                               WHEN d.[UserId] IS NOT NULL THEN u.[LastName] 
+                               ELSE p.[LastName] 
+                           END,
+        [DocumentTypeId] = d.[DocumentTypeId],
+        [DocumentTypeName] = dt.[Name],
+        [Path] = d.[Path],
+        [StorageName] = d.[StorageName],
+        [CreationDate] = d.[CreationDate],
+        [Extension] = d.[Extension],
+        [FileType] = d.[FileType]
+    FROM dbo.[Document] AS d
+    LEFT JOIN dbo.[DocumentType] AS dt ON d.[DocumentTypeId] = dt.[Id]
+    LEFT JOIN dbo.[Person] AS p ON d.[PersonId] = p.[Id]
+    LEFT JOIN dbo.[User] AS u ON d.[UserId] = u.[Id]
+    WHERE d.[PersonId] = @PersonId
+    ORDER BY d.[CreationDate] DESC;
 
 END

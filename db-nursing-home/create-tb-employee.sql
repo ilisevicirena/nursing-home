@@ -27,6 +27,7 @@ CREATE TABLE [dbo].[Employee](
 	[BirthMunicipalityId] [int] NULL,
 	[BirthCityId] [int] NULL,
 	[Active] [bit] NOT NULL,
+	[UserId] [char](36) NULL,
  CONSTRAINT [PK_Employee] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
@@ -89,5 +90,7 @@ REFERENCES [dbo].[Qualification] ([Id])
 
 ALTER TABLE [dbo].[Employee] CHECK CONSTRAINT [FK_Employee_Qualification]
  
+ALTER TABLE [dbo].[Employee]  WITH CHECK ADD  CONSTRAINT [FK_Employee_User] FOREIGN KEY([UserId])
+REFERENCES [dbo].[User] ([Id])
 
-
+ALTER TABLE [dbo].[Employee] CHECK CONSTRAINT [FK_Employee_User]

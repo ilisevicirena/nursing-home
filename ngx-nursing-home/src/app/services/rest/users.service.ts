@@ -54,6 +54,10 @@ export class UsersService extends BaseRestApiService {
   public sendVerificationEmail(data: IVerifyUserEmail): Observable<any> {
     return this.http.post(this.apiRoute + "/sendVerificationEmail", data);
   }
+
+  public deleteUser(id: string): Observable<any> {
+    return this.http.delete(this.apiRoute + "/delete?UserId=" + id);
+  }
 }
 
 export interface IUserSaveModel extends IUser {

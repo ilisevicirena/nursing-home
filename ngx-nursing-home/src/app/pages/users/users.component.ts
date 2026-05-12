@@ -147,6 +147,16 @@ export class UsersComponent implements OnInit, OnDestroy {
             );
           }
 
+          x.Actions.push(
+            new GridButtonType()
+              .Ghost(true)
+              .Icon("trash-2-outline")
+              .Shape("round")
+              .Status("danger")
+              .Tooltip(getString("deleteUser"))
+              .Id("deleteUser")
+          );
+
           return x;
         });
 
@@ -211,6 +221,9 @@ export class UsersComponent implements OnInit, OnDestroy {
       case "deactivateUser":
         this.activateDeactivateUser(e.row.Id, false);
         break;
+      case "deleteUser":
+        this.deleteUser(e.row.Id);
+        break;
     }
   }
 
@@ -244,6 +257,22 @@ export class UsersComponent implements OnInit, OnDestroy {
             this._toastrService.showToast("success", getString("saveSuccess"));
             this.getData();
           })
+      );
+    }
+  }
+
+  public async deleteUser(userId: string) {
+    const rez = await this._dialogService.openYesNoDialog(
+      getString("areYouSure"),
+      getString("wantToDeleteUser")
+    );
+
+    if (rez) {
+      this._subs.push(
+        this._usersService.deleteUser(userId).subscribe(() => {
+          this._toastrService.showToast("success", getString("saveSuccess"));
+          this.getData();
+        })
       );
     }
   }

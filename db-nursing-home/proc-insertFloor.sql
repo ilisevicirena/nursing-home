@@ -6,7 +6,8 @@
 CREATE PROCEDURE [dbo].[insertFloor]
 	-- Add the parameters for the stored procedure here
 	(	
-	@Name varchar(50)
+	@Name varchar(50),
+    @ActingUserId NCHAR(36) = NULL
 )
 AS
 BEGIN
@@ -19,4 +20,6 @@ BEGIN
 	VALUES(@Name)
 	
 	SELECT SCOPE_IDENTITY() AS FloorId
+
+	EXEC dbo.logUserActivity 'INSERT_FLOOR', 'Floor inserted', @ActingUserId;
 END

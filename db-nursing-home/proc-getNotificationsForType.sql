@@ -6,7 +6,8 @@
 CREATE PROCEDURE [dbo].[getNotificationsForType]
 	-- Add the parameters for the stored procedure here
 (
-@Id int
+@Id int,
+@UserId UNIQUEIDENTIFIER
 )
 AS
 BEGIN
@@ -28,6 +29,6 @@ BEGIN
 	[GoToLink]=n.GoToLink
 	from dbo.[Notification] as n
 	join dbo.NotificationType as nt on n.NotificationTypeId=nt.Id
-	where NotificationTypeId=@Id
+	where NotificationTypeId=@Id and n.UserId=@UserId
 	order by n.CreationDate desc;
 END

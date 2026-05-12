@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { db } = require("../config/framework");
+const { db, authedRequest } = require("../config/framework");
 const { getError } = require("../resources/error-codes");
 const { DocumentFile } = require("../models/Document");
 const { FILES_FOLDER } = require("../config/config");
@@ -33,10 +33,9 @@ router.delete("/delete", async (request, response) => {
   try {
     var objectToSave = request.body;
     const pool = await db;
-    const result = await pool
-      .request()
+    const result = await authedRequest(pool, request.user?.userId)
       .input("id", objectToSave.Id)
-      .query("EXEC [dbo].[deleteNote] @Id=@id");
+      .query("EXEC [dbo].[deleteNote] @Id=@id, @ActingUserId=@ActingUserId");
     if (result != null) {
       var documents = result.recordset;
       for (let index = 0; index < documents.length; index++) {
@@ -84,12 +83,11 @@ router.delete("/deleteDocumentFromNote", async (request, response) => {
       var documentId = result.recordset[0].Id;
 
       if (documentId) {
-        const del = await pool
-          .request()
+        const del = await authedRequest(pool, request.user?.userId)
           .input("id", objectToSave.DocumentId)
           .input("note", objectToSave.NoteId)
           .query(
-            "EXEC [dbo].[deleteDocumentFromNote] @DocumentId=@id, @NoteId=@note"
+            "EXEC [dbo].[deleteDocumentFromNote] @DocumentId=@id, @NoteId=@note, @ActingUserId=@ActingUserId"
           );
         if (del != null) {
           fs.unlink(result.recordset[0].Path, function (err) {
@@ -138,8 +136,7 @@ router.post("/insertDocumentForNote", async (request, response) => {
     var objectToSave = Object.assign(new DocumentFile(), request.body);
     const absolutePath = getAbsolutePathToFilesFolder();
     const pool = await db;
-    const result = await pool
-      .request()
+    const result = await authedRequest(pool, request.user?.userId)
       .input("personId", objectToSave.PersonId)
       .input("type", objectToSave.DocumentTypeId)
       .input("name", objectToSave.Name)
@@ -149,7 +146,7 @@ router.post("/insertDocumentForNote", async (request, response) => {
       .input("note", objectToSave.NoteId)
       .input("userId", objectToSave.UserId)
       .query(
-        "EXEC [dbo].[insertDocumentForNote] @UserId=@userId, @DocumentName=@name, @PersonId=@personId, @DocumentTypeId=@type, @Extension=@extension, @FileType=@fileType, @SavePath=@savePath, @NoteId=@note"
+        "EXEC [dbo].[insertDocumentForNote] @UserId=@userId, @DocumentName=@name, @PersonId=@personId, @DocumentTypeId=@type, @Extension=@extension, @FileType=@fileType, @SavePath=@savePath, @NoteId=@note, @ActingUserId=@ActingUserId"
       );
     if (result != null) {
       var documentId = result.recordset[0].Id;
@@ -176,15 +173,14 @@ router.post("/add", async (request, response) => {
     var objectToSave = Object.assign(new Note(), request.body);
     var tagsString = objectToSave.Tags.toString();
     const pool = await db;
-    const result = await pool
-      .request()
+    const result = await authedRequest(pool, request.user?.userId)
       .input("title", objectToSave.Title)
       .input("text", objectToSave.Text)
       .input("tags", tagsString)
       .input("personId", objectToSave.PersonId)
       .input("userId", objectToSave.UserId)
       .query(
-        "EXEC [dbo].[insertNote] @UserId=@userId, @PersonId=@personId, @Title=@title, @Text=@text, @Tags=@tags"
+        "EXEC [dbo].[insertNote] @UserId=@userId, @PersonId=@personId, @Title=@title, @Text=@text, @Tags=@tags, @ActingUserId=@ActingUserId"
       );
     if (result != null) response.json(result.recordset[0]);
     else response.send(getError(20005));
@@ -198,12 +194,11 @@ router.post("/update", async (request, response) => {
   try {
     var objectToSave = Object.assign(new Note(), request.body);
     const pool = await db;
-    const result = await pool
-      .request()
+    const result = await authedRequest(pool, request.user?.userId)
       .input("title", objectToSave.Title)
       .input("text", objectToSave.Text)
       .input("id", objectToSave.Id)
-      .query("EXEC [dbo].[updateNote] @Id=@id, @Title=@title, @Text=@text");
+      .query("EXEC [dbo].[updateNote] @Id=@id, @Title=@title, @Text=@text, @ActingUserId=@ActingUserId");
     if (result != null) response.json(result.recordset);
     else response.send(getError(20006));
   } catch (err) {

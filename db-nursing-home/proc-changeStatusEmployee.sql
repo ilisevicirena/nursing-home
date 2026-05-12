@@ -3,7 +3,8 @@ create PROCEDURE [dbo].[changeStatusEmployee]
 	(
 		@Id int,
 		@Status bit, -- 1 for activate, 0 for deactivate
-		@Date datetime = NULL
+		@Date datetime = NULL,
+		@ActingUserId NCHAR(36) = NULL
 	)
 AS
 BEGIN
@@ -32,4 +33,5 @@ BEGIN
         EmploymentEndDate = @EndDate
     WHERE Id = @Id;
 
+	EXEC dbo.logUserActivity 'CHANGE_STATUS_EMPLOYEE', 'Employee status changed', @ActingUserId;
 END

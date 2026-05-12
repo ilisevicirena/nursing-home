@@ -6,7 +6,8 @@
 CREATE PROCEDURE [dbo].[deleteNote] 
 	-- Add the parameters for the stored procedure here
 	(
-		@Id int
+		@Id int,
+		@ActingUserId NCHAR(36) = NULL
 	)
 AS
 BEGIN
@@ -54,4 +55,6 @@ BEGIN
 
     -- Drop the temporary table
     DROP TABLE #NoteDocuments;
+
+    EXEC dbo.logUserActivity 'DELETE_NOTE', 'Note deleted', @ActingUserId;
 END

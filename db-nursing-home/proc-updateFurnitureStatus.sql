@@ -8,7 +8,8 @@ CREATE PROCEDURE [dbo].[updateFurnitureStatus]
 		@Id int,
 		@Name varchar(50),
 		@Color varchar(10),
-		@Icon varchar(50)
+		@Icon varchar(50),
+    @ActingUserId NCHAR(36) = NULL
 	)
 AS
 BEGIN
@@ -23,4 +24,5 @@ BEGIN
 	[Icon]=@Icon
 	WHERE Id=@Id;
 
+	EXEC dbo.logUserActivity 'UPDATE_FURNITURE_STATUS', 'Furniture status type updated', @ActingUserId;
 END

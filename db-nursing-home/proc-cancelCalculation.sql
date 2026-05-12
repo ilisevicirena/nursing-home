@@ -7,7 +7,8 @@
 CREATE PROCEDURE [dbo].[cancelCalculation] 
 	-- Add the parameters for the stored procedure here
 	(
-		@CalculationId int
+		@CalculationId int,
+		@ActingUserId NCHAR(36) = NULL
 	)
 AS
 BEGIN
@@ -20,4 +21,5 @@ BEGIN
 	StatusId=3
 	where Id=@CalculationId;
 
+	EXEC dbo.logUserActivity 'CANCEL_CALCULATION', 'Calculation cancelled', @ActingUserId;
 END

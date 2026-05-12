@@ -12,7 +12,8 @@ CREATE PROCEDURE [dbo].[insertRoom]
 	@Width int=NULL,
 	@Height int=NULL,
 	@Left int=NULL,
-	@Top int=NULL
+	@Top int=NULL,
+    @ActingUserId NCHAR(36) = NULL
 	)
 AS
 BEGIN
@@ -30,4 +31,6 @@ SET @NewIdent = SCOPE_IDENTITY();
 exec dbo.writeLog @LogType='INSERT', @LogEntity='Room', @Key= @NewIdent;
 
 	SELECT SCOPE_IDENTITY() AS RoomId
+
+	EXEC dbo.logUserActivity 'INSERT_ROOM', 'Room inserted', @ActingUserId;
 END

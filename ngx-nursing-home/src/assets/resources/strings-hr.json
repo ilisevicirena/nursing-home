@@ -1075,6 +1075,14 @@
     "value": "Želiš li deblokirati korisnika?"
   },
   {
+    "key": "deleteUser",
+    "value": "Obriši korisnika"
+  },
+  {
+    "key": "wantToDeleteUser",
+    "value": "Želiš li trajno obrisati ovog korisnika? Ova radnja se ne može poništiti."
+  },
+  {
     "key": "role",
     "value": "Uloga"
   },
@@ -1157,5 +1165,21 @@
   {
     "key": "closeSidebar",
     "value": "Zatvori izbornik"
+  },
+  {
+    "key": "error",
+    "value": "Greška"
+  },
+  {
+    "key": "furniture",
+    "value": "Namještaj"
+  },
+  {
+    "key": "logoutAndRedirectShortly",
+    "value": "Uskoro ćete biti odjavljeni."
+  },
+  {
+    "key": "roomHistory",
+    "value": "Historija sobe"
   }
 ]

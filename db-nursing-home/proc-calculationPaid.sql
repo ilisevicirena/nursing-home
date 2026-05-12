@@ -8,7 +8,8 @@ CREATE PROCEDURE [dbo].[calculationPaid]
 	(
 		@CalculationId int,
 		@PaidDate datetime,
-		@PaidPrice float
+		@PaidPrice float,
+		@ActingUserId NCHAR(36) = NULL
 	)
 AS
 BEGIN
@@ -25,4 +26,5 @@ BEGIN
 	StatusId=1
 	WHERE Id=@CalculationId;
 
+	EXEC dbo.logUserActivity 'CALCULATION_PAID', 'Calculation marked as paid', @ActingUserId;
 END

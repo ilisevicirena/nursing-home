@@ -7,24 +7,32 @@ CREATE TABLE [dbo].[Notification](
 	[Text] [varchar](2000) NOT NULL,
 	[LinkId] [int] NULL,
 	[GoToLink] [varchar](500) NULL,
+	[UserId] [char](36) NOT NULL,
  CONSTRAINT [PK_Notification] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
- 
+
 
 ALTER TABLE [dbo].[Notification]  WITH CHECK ADD  CONSTRAINT [FK_Notification_NotificationType] FOREIGN KEY([NotificationTypeId])
 REFERENCES [dbo].[NotificationType] ([Id])
- 
+
 
 ALTER TABLE [dbo].[Notification] CHECK CONSTRAINT [FK_Notification_NotificationType]
- 
+
 
 ALTER TABLE [dbo].[Notification]  WITH CHECK ADD  CONSTRAINT [FK_Notification_PageLink] FOREIGN KEY([LinkId])
 REFERENCES [dbo].[PageLink] ([Id])
- 
+
 
 ALTER TABLE [dbo].[Notification] CHECK CONSTRAINT [FK_Notification_PageLink]
- 
+
+
+ALTER TABLE [dbo].[Notification]  WITH CHECK ADD  CONSTRAINT [FK_Notification_User] FOREIGN KEY([UserId])
+REFERENCES [dbo].[User] ([Id])
+
+
+ALTER TABLE [dbo].[Notification] CHECK CONSTRAINT [FK_Notification_User]
+
 

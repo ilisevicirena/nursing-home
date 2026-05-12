@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { db } = require("../config/framework");
+const { db, authedRequest } = require("../config/framework");
 const { getError } = require("../resources/error-codes");
 const { Employee } = require("../models/Employee");
 
@@ -22,8 +22,7 @@ router.post("/add", async (request, response) => {
   try {
     var objectToSave = Object.assign(new Employee(), request.body);
     const pool = await db;
-    const result = await pool
-      .request()
+    const result = await authedRequest(pool, request.user?.userId)
       .input("firstName", objectToSave.FirstName)
       .input("lastName", objectToSave.LastName)
       .input("jmbg", objectToSave.JMBG)
@@ -51,7 +50,7 @@ router.post("/add", async (request, response) => {
       .input("birthMunicipalityId", objectToSave.BirthMunicipalityId)
       .input("birthCountryId", objectToSave.BirthCountryId)
       .query(
-        "EXEC [dbo].[insertEmployee] @FirstName=@firstName, @LastName=@lastName, @JMBG=@jmbg, @BirthDate=@birthDate, @GenderId=@genderId, @FatherName=@fatherFirstName,@BirthCityId=@birthCityId, @BirthMunicipalityId=@birthMunicipalityId, @BirthCountryId=@birthCountryId, @ResidanceCityId=@residanceCityId,@ResidanceStreetName=@residanceStreetName, @ResidanceHouseNumber=@residanceHouseNumber, @Telephone=@tel, @Mobile=@mob, @Email=@email, @EmploymentDate=@empDate, @BankName=@bank, @BankAccountNumber=@bankAcc, @JobPositionId=@jp, @EmploymentTypeId=@et, @YearsOfExperiance=@years, @EmploymentEndDate=@empEnd, @DaysOfVacation=@daysVcc, @SchoolName=@school, @SchoolQualificationName=@schoolQ, @QualificationId=@qualification"
+        "EXEC [dbo].[insertEmployee] @FirstName=@firstName, @LastName=@lastName, @JMBG=@jmbg, @BirthDate=@birthDate, @GenderId=@genderId, @FatherName=@fatherFirstName,@BirthCityId=@birthCityId, @BirthMunicipalityId=@birthMunicipalityId, @BirthCountryId=@birthCountryId, @ResidanceCityId=@residanceCityId,@ResidanceStreetName=@residanceStreetName, @ResidanceHouseNumber=@residanceHouseNumber, @Telephone=@tel, @Mobile=@mob, @Email=@email, @EmploymentDate=@empDate, @BankName=@bank, @BankAccountNumber=@bankAcc, @JobPositionId=@jp, @EmploymentTypeId=@et, @YearsOfExperiance=@years, @EmploymentEndDate=@empEnd, @DaysOfVacation=@daysVcc, @SchoolName=@school, @SchoolQualificationName=@schoolQ, @QualificationId=@qualification, @ActingUserId=@ActingUserId"
       );
     if (result != null) response.json(result.recordset[0]);
     else response.send(getError(100001));
@@ -65,8 +64,7 @@ router.post("/update", async (request, response) => {
   try {
     var objectToSave = Object.assign(new Employee(), request.body);
     const pool = await db;
-    const result = await pool
-      .request()
+    const result = await authedRequest(pool, request.user?.userId)
       .input("id", objectToSave.Id)
       .input("firstName", objectToSave.FirstName)
       .input("lastName", objectToSave.LastName)
@@ -95,7 +93,7 @@ router.post("/update", async (request, response) => {
       .input("birthCountryId", objectToSave.BirthCountryId)
       .input("qualification", objectToSave.QualificationId)
       .query(
-        "EXEC [dbo].[updateEmployee] @Id=@id, @FirstName=@firstName, @LastName=@lastName, @JMBG=@jmbg, @BirthDate=@birthDate, @GenderId=@genderId, @FatherName=@fatherFirstName,@BirthCityId=@birthCityId, @BirthMunicipalityId=@birthMunicipalityId, @BirthCountryId=@birthCountryId, @ResidanceCityId=@residanceCityId,@ResidanceStreetName=@residanceStreetName, @ResidanceHouseNumber=@residanceHouseNumber, @Telephone=@tel, @Mobile=@mob, @Email=@email, @EmploymentDate=@empDate, @BankName=@bank, @BankAccountNumber=@bankAcc, @JobPositionId=@jp, @EmploymentTypeId=@et, @YearsOfExperiance=@years, @EmploymentEndDate=@empEnd, @DaysOfVacation=@daysVcc, @SchoolName=@school, @SchoolQualificationName=@schoolQ, @QualificationId=@qualification"
+        "EXEC [dbo].[updateEmployee] @Id=@id, @FirstName=@firstName, @LastName=@lastName, @JMBG=@jmbg, @BirthDate=@birthDate, @GenderId=@genderId, @FatherName=@fatherFirstName,@BirthCityId=@birthCityId, @BirthMunicipalityId=@birthMunicipalityId, @BirthCountryId=@birthCountryId, @ResidanceCityId=@residanceCityId,@ResidanceStreetName=@residanceStreetName, @ResidanceHouseNumber=@residanceHouseNumber, @Telephone=@tel, @Mobile=@mob, @Email=@email, @EmploymentDate=@empDate, @BankName=@bank, @BankAccountNumber=@bankAcc, @JobPositionId=@jp, @EmploymentTypeId=@et, @YearsOfExperiance=@years, @EmploymentEndDate=@empEnd, @DaysOfVacation=@daysVcc, @SchoolName=@school, @SchoolQualificationName=@schoolQ, @QualificationId=@qualification, @ActingUserId=@ActingUserId"
       );
     if (result != null) response.json(result.recordset);
     else response.send(getError(100003));
@@ -109,13 +107,12 @@ router.post("/changeStatusEmployee", async (request, response) => {
   try {
     var objectToSave = Object.assign(new Employee(), request.body);
     const pool = await db;
-    const result = await pool
-      .request()
+    const result = await authedRequest(pool, request.user?.userId)
       .input("id", objectToSave.Id)
       .input("status", objectToSave.Active)
       .input("endDate", objectToSave.EndDate)
       .query(
-        "EXEC [dbo].[changeStatusEmployee] @Id=@id, @Status=@status, @Date=@endDate"
+        "EXEC [dbo].[changeStatusEmployee] @Id=@id, @Status=@status, @Date=@endDate, @ActingUserId=@ActingUserId"
       );
     if (result != null) response.json(result.recordset);
     else response.send(getError(100004));

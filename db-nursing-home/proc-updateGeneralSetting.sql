@@ -7,7 +7,8 @@ CREATE PROCEDURE [dbo].[updateGeneralSetting]
 	-- Add the parameters for the stored procedure here
 	(
 		@Tag varchar(50),
-		@Value nchar(2000)
+		@Value nchar(2000),
+		@ActingUserId NCHAR(36) = NULL
 	)
 AS
 BEGIN
@@ -16,4 +17,6 @@ BEGIN
 	SET NOCOUNT ON;
 
 	UPDATE dbo.GeneralSettings set [Value]=@Value where Tag=@Tag;
+
+	EXEC dbo.logUserActivity 'UPDATE_GENERAL_SETTING', 'General setting updated', @ActingUserId;
 END

@@ -12,7 +12,8 @@ CREATE PROCEDURE [dbo].[updateService]
 		@MeasureUnitId int,
 		@CostPerUnit float,
 		@DefaultNumberOfUnits int = NULL,
-		@PriceUnitId int
+		@PriceUnitId int,
+		@ActingUserId NCHAR(36) = NULL
 	)
 AS
 BEGIN
@@ -31,4 +32,5 @@ BEGIN
 	PriceUnitId=@PriceUnitId
 	WHERE Id=@Id;
 
+	EXEC dbo.logUserActivity 'UPDATE_SERVICE', 'Service updated', @ActingUserId;
 END

@@ -1,42 +1,40 @@
--- =============================================
--- Author:		Irena Ilisevic
--- Create date: 30.5.2023.
--- Description:	inserts new document
--- =============================================
-CREATE PROCEDURE [dbo].[insertDocument]
-	-- Add the parameters for the stored procedure here
-	(
-		@PersonId int,
-		@DocumentTypeId int,
-		@Name varchar(50),
-		@Extension varchar(50),
-		@FileType varchar(50),
-		@SavePath varchar(max)
-	)
+create PROCEDURE [dbo].[insertDocument]
+(
+    @PersonId INT,
+    @DocumentTypeId INT,
+    @Name VARCHAR(50),
+    @Extension VARCHAR(50),
+    @FileType VARCHAR(50),
+    @SavePath VARCHAR(MAX),
+    @UserId UNIQUEIDENTIFIER, -- Added parameter for UserId
+    @ActingUserId NCHAR(36) = NULL
+)
 AS
 BEGIN
-	-- SET NOCOUNT ON added to prevent extra result sets from
-	-- interfering with SELECT statements.
-	SET NOCOUNT ON;
+    SET NOCOUNT ON;
 
-    -- Insert statements for procedure here
-	INSERT INTO dbo.Document (PersonId, DocumentTypeId, [Name], Extension, FileType, CreationDate)
-	VALUES (@PersonId, @DocumentTypeId, @Name, @Extension, @FileType, GETDATE());
+    -- Insert the document with the UserId
+    INSERT INTO dbo.[Document] (PersonId, DocumentTypeId, [Name], Extension, FileType, CreationDate, UserId)
+    VALUES (@PersonId, @DocumentTypeId, @Name, @Extension, @FileType, GETDATE(), @UserId);
 
-	declare @storageName varchar(200), @storagePath varchar(max);
-	set @storageName=convert(varchar(max),SCOPE_IDENTITY())+'_'+convert(varchar(max),@PersonId)+'_'+convert(varchar(max),@DocumentTypeId)+'.'+@Extension;
-	set @storagePath=@SavePath+@storageName;
+    DECLARE @storageName VARCHAR(200), @storagePath VARCHAR(MAX);
+    SET @storageName = CONVERT(VARCHAR(MAX), SCOPE_IDENTITY()) + '_' + CONVERT(VARCHAR(MAX), @PersonId) + '_' + CONVERT(VARCHAR(MAX), @DocumentTypeId) + '.' + @Extension;
+    SET @storagePath = @SavePath + @storageName;
 
-	UPDATE dbo.Document 
-	SET StorageName=@storageName,
-	[Path]=@storagePath
-	where Id=SCOPE_IDENTITY();
+    -- Update the document with the storage name and path
+    UPDATE dbo.[Document] 
+    SET StorageName = @storageName,
+        [Path] = @storagePath
+    WHERE Id = SCOPE_IDENTITY();
 
-	SELECT 
-	[Id]=Id,
-	[Path]=[Path],
-	[StorageName]=StorageName
-	from dbo.Document
-	where Id=SCOPE_IDENTITY();
+    -- Return the inserted document details
+    SELECT 
+        [Id] = Id,
+        [Path] = [Path],
+        [StorageName] = StorageName
+    FROM dbo.[Document]
+    WHERE Id = SCOPE_IDENTITY();
+
+    EXEC dbo.logUserActivity 'INSERT_DOCUMENT', 'Document inserted', @ActingUserId;
 
 END

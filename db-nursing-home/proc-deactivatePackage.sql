@@ -6,7 +6,8 @@
 CREATE PROCEDURE [dbo].[deactivatePackage]
 	-- Add the parameters for the stored procedure here
 	(
-		@Id int
+		@Id int,
+		@ActingUserId NCHAR(36) = NULL
 	)
 AS
 BEGIN
@@ -18,4 +19,5 @@ BEGIN
 	set Active=0
 	where Id=@Id;
 
+	EXEC dbo.logUserActivity 'DEACTIVATE_PACKAGE', 'Package deactivated', @ActingUserId;
 END

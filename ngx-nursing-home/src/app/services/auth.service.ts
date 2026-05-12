@@ -108,32 +108,22 @@ export class AuthService extends BaseRestApiService implements OnDestroy {
 
   checkUserHasRole(role: UserRole): boolean {
     const userRights = localStorage.getItem("userRights");
-    var rights = userRights ? (JSON.parse(userRights) as IUserRights) : null;
-    if (rights) {
-      if (rights.Roles.length > 0) {
-        var userRoleId = rights.Roles[0].RoleId;
-        switch (role) {
-          case UserRole.ADMIN:
-            return userRoleId == 1;
-          case UserRole.MODERATOR:
-            return userRoleId == 2;
-          case UserRole.USER:
-            return userRoleId == 3;
-          case UserRole.NURSE:
-            return userRoleId == 4;
-          case UserRole.CAREGIVER:
-            return userRoleId == 5;
-          case UserRole.COOK:
-            return userRoleId == 6;
-          case UserRole.OTHER_STUFF:
-            return userRoleId == 7;
-          case UserRole.DOCTOR:
-            return userRoleId == 8;
-          default:
-            return false;
-        }
-      } else return false;
-    } else return false;
+    const rights = userRights ? (JSON.parse(userRights) as IUserRights) : null;
+    if (!rights || rights.Roles.length === 0) return false;
+
+    const roleIdMap: Record<UserRole, number> = {
+      [UserRole.ADMIN]: 1,
+      [UserRole.MODERATOR]: 2,
+      [UserRole.USER]: 3,
+      [UserRole.NURSE]: 4,
+      [UserRole.CAREGIVER]: 5,
+      [UserRole.COOK]: 6,
+      [UserRole.OTHER_STUFF]: 7,
+      [UserRole.DOCTOR]: 8,
+    };
+
+    const targetRoleId = roleIdMap[role];
+    return rights.Roles.some((r) => r.RoleId === targetRoleId);
   }
 
   getUserId(): string {

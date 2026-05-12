@@ -4,8 +4,6 @@ import { hexToRgbA } from "../../../resources/functions";
 import { Subscription } from "rxjs";
 import { SummaryService } from "../../../services/rest/summary.service";
 import { Router } from "@angular/router";
-import { AuthService } from "../../../services/auth.service";
-
 @Component({
   selector: "sample-admin-dashboard",
   templateUrl: "./admin-dashboard.component.html",
@@ -35,8 +33,7 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
 
   constructor(
     private _summaryService: SummaryService,
-    private _router: Router,
-    private _authService: AuthService
+    private _router: Router
   ) {}
 
   ngOnDestroy() {
@@ -47,8 +44,6 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getSummary();
-
-    console.log(this._authService.getUser());
   }
 
   private getSummary(): void {

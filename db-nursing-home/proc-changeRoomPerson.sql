@@ -7,7 +7,8 @@ CREATE PROCEDURE [dbo].[changeRoomPerson]
 	-- Add the parameters for the stored procedure here
 	(
 		@PersonId int,
-		@RoomId int
+		@RoomId int,
+		@ActingUserId NCHAR(36) = NULL
 	)
 AS
 BEGIN
@@ -25,5 +26,6 @@ BEGIN
     -- Insert new room for the person
     INSERT INTO dbo.PersonRoomRelation (PersonId, RoomId, Active, CreationDate, StartDate, EndDate)
     VALUES (@PersonId, @RoomId, 1, CAST(DATEADD(hour, 2, GETDATE()) AS DATE), CAST(DATEADD(hour, 2, GETDATE()) AS DATE), NULL);
-			
+
+    EXEC dbo.logUserActivity 'CHANGE_ROOM_PERSON', 'Person room changed', @ActingUserId;
 END

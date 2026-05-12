@@ -1051,6 +1051,14 @@
     "value": "Do you want to unblock user?"
   },
   {
+    "key": "deleteUser",
+    "value": "Delete user"
+  },
+  {
+    "key": "wantToDeleteUser",
+    "value": "Do you want to permanently delete this user? This action cannot be undone."
+  },
+  {
     "key": "role",
     "value": "Role"
   },
@@ -1121,5 +1129,29 @@
   {
     "key": "closeSidebar",
     "value": "Close sidebar"
+  },
+  {
+    "key": "edit",
+    "value": "Edit"
+  },
+  {
+    "key": "smTableOrdNumber",
+    "value": "No."
+  },
+  {
+    "key": "error",
+    "value": "Error"
+  },
+  {
+    "key": "furniture",
+    "value": "Furniture"
+  },
+  {
+    "key": "logoutAndRedirectShortly",
+    "value": "You will be logged out shortly."
+  },
+  {
+    "key": "roomHistory",
+    "value": "Room history"
   }
 ]

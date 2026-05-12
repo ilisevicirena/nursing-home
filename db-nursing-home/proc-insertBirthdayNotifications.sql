@@ -1,87 +1,98 @@
--- =============================================
--- Author:		Irena Ilisevic
--- Create date: 16.6.2023.
--- Description:	inserts bithday reminder to notifications
--- =============================================
 CREATE PROCEDURE [dbo].[insertBirthdayNotifications]
-	-- Add the parameters for the stored procedure here	
+    @UserId UNIQUEIDENTIFIER
 AS
 BEGIN
-	-- SET NOCOUNT ON added to prevent extra result sets from
-	-- interfering with SELECT statements.
-	SET NOCOUNT ON;
+    SET NOCOUNT ON;
 
-	DECLARE @CurrentDate DATE = CONVERT(DATE, CAST(DATEADD(hour, 2, GETDATE()) AS DATE));
+    DECLARE @CurrentDate DATE = CONVERT(DATE, CAST(DATEADD(hour, 2, GETDATE()) AS DATE));
+    DECLARE @UserRoleId INT;
 
-	-- person birthdays
-INSERT INTO dbo.[Notification] (NotificationTypeId, CreationDate, ReadDate, [Read], [Text], LinkId, GoToLink)
-SELECT 
-    nt.[Id],
-    CONVERT(DATE, DATEADD(DAY, -nt.[DaysReminder], DATEFROMPARTS(YEAR(@CurrentDate), MONTH(p.BirthDate), DAY(p.BirthDate)))),
-    NULL,
-    0,
-    CONCAT('Rođendan: ',DATEDIFF(YEAR, p.BirthDate, @CurrentDate),'. rođendan osobe ', p.FirstName, ' ', p.LastName, ' je ', DAY(p.BirthDate), '.', MONTH(p.BirthDate), '. (za ', nt.DaysReminder, ' dana)'),
-	 pl.Id,
-    CONCAT(pl.Link, p.Id)
-FROM person p
-CROSS JOIN dbo.NotificationType nt
-INNER JOIN dbo.PageLink pl ON pl.Code = 'profile'
-WHERE nt.Code = 'events' AND nt.[Enabled] = 1
-    AND MONTH(p.BirthDate) = MONTH(DATEADD(DAY, nt.DaysReminder, @CurrentDate))
-    AND DAY(p.BirthDate) = DAY(DATEADD(DAY, nt.DaysReminder, @CurrentDate)) and p.Active=1;
+    -- Determine the role of the user
+    SELECT @UserRoleId = ur.RoleId
+    FROM dbo.UserRoleRelation ur
+    WHERE ur.UserId = @UserId;
 
-	-- employee birthdays
-	INSERT INTO dbo.[Notification] (NotificationTypeId, CreationDate, ReadDate, [Read], [Text], LinkId, GoToLink)
-SELECT 
-    nt.[Id],
-    CONVERT(DATE, DATEADD(DAY, -nt.[DaysReminder], DATEFROMPARTS(YEAR(@CurrentDate), MONTH(p.BirthDate), DAY(p.BirthDate)))),
-    NULL,
-    0,
-    CONCAT('Rođendan: ',DATEDIFF(YEAR, p.BirthDate, @CurrentDate),'. rođendan zaposlenika ', p.FirstName, ' ', p.LastName, ' je ', DAY(p.BirthDate), '.', MONTH(p.BirthDate), '. (za ', nt.DaysReminder, ' dana)'),
-	 pl.Id,
-    CONCAT(pl.Link, p.Id)
-FROM dbo.Employee p
-CROSS JOIN dbo.NotificationType nt
-INNER JOIN dbo.PageLink pl ON pl.Code = 'employee'
-WHERE nt.Code = 'events' AND nt.[Enabled] = 1
-    AND MONTH(p.BirthDate) = MONTH(DATEADD(DAY, nt.DaysReminder, @CurrentDate))
-    AND DAY(p.BirthDate) = DAY(DATEADD(DAY, nt.DaysReminder, @CurrentDate)) and p.Active=1;
+    -- Insert for birthdays with a reminder if notifications are enabled based on the user role
+    IF @UserRoleId IN (1, 4, 5)  -- Roles 1, 4, and 5: Insert for all persons and employees
+    BEGIN
+        -- Insert reminders for all persons
+        IF EXISTS (SELECT 1 FROM dbo.UserNotificationTypeSettings WHERE UserId = @UserId AND [Enabled] = 1 AND NotificationTypeId = 2)
+        BEGIN
+            INSERT INTO dbo.[Notification] (UserId, NotificationTypeId, CreationDate, ReadDate, [Read], [Text])
+            SELECT 
+                @UserId,
+                nt.NotificationTypeId,
+                CONVERT(DATE, DATEADD(DAY, -nt.[DaysReminder], DATEFROMPARTS(YEAR(@CurrentDate), MONTH(p.BirthDate), DAY(p.BirthDate)))),
+                NULL,
+                0,
+                CONCAT('Rođendan: ', DATEDIFF(YEAR, p.BirthDate, @CurrentDate), '. rođendan osobe ', p.FirstName, ' ', p.LastName, ' je ', DAY(p.BirthDate), '.', MONTH(p.BirthDate), '. (za ', nt.DaysReminder, ' dana)')
+            FROM person p
+            INNER JOIN dbo.UserNotificationTypeSettings nt ON nt.[Enabled] = 1 AND nt.NotificationTypeId = 2
+            WHERE MONTH(p.BirthDate) = MONTH(DATEADD(DAY, nt.DaysReminder, @CurrentDate))
+              AND DAY(p.BirthDate) = DAY(DATEADD(DAY, nt.DaysReminder, @CurrentDate))
+              AND p.Active = 1;
+        END;
 
+        -- Insert birthdays on the current date for all persons
+        IF EXISTS (SELECT 1 FROM dbo.UserNotificationTypeSettings WHERE UserId = @UserId AND [Enabled] = 1 AND NotificationTypeId = 1)
+        BEGIN
+            INSERT INTO dbo.[Notification] (UserId, NotificationTypeId, CreationDate, ReadDate, [Read], [Text])
+            SELECT 
+                @UserId,
+                nt.NotificationTypeId,
+                @CurrentDate,
+                NULL,
+                0,
+                CONCAT('Rođendan osobe ', p.FirstName, ' ', p.LastName, ' je danas! (', DATEDIFF(YEAR, p.BirthDate, @CurrentDate), ' godina)')
+            FROM person p
+            INNER JOIN dbo.UserNotificationTypeSettings nt ON nt.[Enabled] = 1 AND nt.NotificationTypeId = 1
+            WHERE MONTH(p.BirthDate) = MONTH(@CurrentDate)
+              AND DAY(p.BirthDate) = DAY(@CurrentDate)
+              AND p.Active = 1;
+        END;
+    END
+    ELSE IF @UserRoleId = 3  -- Role 3: Insert only for persons whose contact is the user
+    BEGIN
+        -- Insert reminders for contacts of the user
+        IF EXISTS (SELECT 1 FROM dbo.UserNotificationTypeSettings WHERE UserId = @UserId AND [Enabled] = 1 AND NotificationTypeId = 2)
+        BEGIN
+            INSERT INTO dbo.[Notification] (UserId, NotificationTypeId, CreationDate, ReadDate, [Read], [Text])
+            SELECT 
+                @UserId,
+                nt.NotificationTypeId,
+                CONVERT(DATE, DATEADD(DAY, -nt.[DaysReminder], DATEFROMPARTS(YEAR(@CurrentDate), MONTH(p.BirthDate), DAY(p.BirthDate)))),
+                NULL,
+                0,
+                CONCAT('Rođendan: ', DATEDIFF(YEAR, p.BirthDate, @CurrentDate), '. rođendan osobe ', p.FirstName, ' ', p.LastName, ' je ', DAY(p.BirthDate), '.', MONTH(p.BirthDate), '. (za ', nt.DaysReminder, ' dana)')
+            FROM person p
+            INNER JOIN dbo.Contact c ON c.PersonId = p.Id
+            INNER JOIN dbo.UserContactRelation ucr ON ucr.ContactId = c.Id
+            INNER JOIN dbo.UserNotificationTypeSettings nt ON nt.UserId = @UserId AND nt.[Enabled] = 1 AND nt.NotificationTypeId = 2
+            WHERE ucr.UserId = @UserId
+              AND MONTH(p.BirthDate) = MONTH(DATEADD(DAY, nt.DaysReminder, @CurrentDate))
+              AND DAY(p.BirthDate) = DAY(DATEADD(DAY, nt.DaysReminder, @CurrentDate))
+              AND p.Active = 1;
+        END;
 
-	-- Insert for birthdays on the current date if 'events' notification type is enabled
-IF EXISTS (SELECT 1 FROM dbo.NotificationType WHERE Code = 'events' AND [Enabled] = 1)
-BEGIN
-    INSERT INTO dbo.[Notification] (NotificationTypeId, CreationDate, ReadDate, [Read], [Text], LinkId, GoToLink)
-    SELECT 
-        nt.[Id],
-        @CurrentDate,
-        NULL,
-        0,
-        CONCAT('Rođendan osobe ', p.FirstName, ' ', p.LastName, ' danas! (', DATEDIFF(YEAR, p.BirthDate, @CurrentDate), ' godina)'),
-		 pl.Id,
-    CONCAT(pl.Link, p.Id)
-    FROM person p
-    INNER JOIN dbo.NotificationType nt ON nt.Code = 'events'
-	INNER JOIN dbo.PageLink pl ON pl.Code = 'profile'
-    WHERE MONTH(p.BirthDate) = MONTH(@CurrentDate)
-        AND DAY(p.BirthDate) = DAY(@CurrentDate) and p.Active=1;
-
-	--employee
-	INSERT INTO dbo.[Notification] (NotificationTypeId, CreationDate, ReadDate, [Read], [Text], LinkId, GoToLink)
-    SELECT 
-        nt.[Id],
-        @CurrentDate,
-        NULL,
-        0,
-        CONCAT('Rođendan zaposlenika ', p.FirstName, ' ', p.LastName, ' danas! (', DATEDIFF(YEAR, p.BirthDate, @CurrentDate), ' godina)'),
-		 pl.Id,
-    CONCAT(pl.Link, p.Id)
-    FROM dbo.Employee p
-    INNER JOIN dbo.NotificationType nt ON nt.Code = 'events'
-	INNER JOIN dbo.PageLink pl ON pl.Code = 'employee'
-    WHERE MONTH(p.BirthDate) = MONTH(@CurrentDate)
-        AND DAY(p.BirthDate) = DAY(@CurrentDate) and p.Active=1;
-END
-
-
+        -- Insert birthdays on the current date for contacts of the user
+        IF EXISTS (SELECT 1 FROM dbo.UserNotificationTypeSettings WHERE UserId = @UserId AND [Enabled] = 1 AND NotificationTypeId = 1)
+        BEGIN
+            INSERT INTO dbo.[Notification] (UserId, NotificationTypeId, CreationDate, ReadDate, [Read], [Text])
+            SELECT 
+                @UserId,
+                nt.NotificationTypeId,
+                @CurrentDate,
+                NULL,
+                0,
+                CONCAT('Rođendan osobe ', p.FirstName, ' ', p.LastName, ' je danas! (', DATEDIFF(YEAR, p.BirthDate, @CurrentDate), ' godina)')
+            FROM person p
+            INNER JOIN dbo.Contact c ON c.PersonId = p.Id
+            INNER JOIN dbo.UserContactRelation ucr ON ucr.ContactId = c.Id
+            INNER JOIN dbo.UserNotificationTypeSettings nt ON nt.UserId = @UserId AND nt.[Enabled] = 1 AND nt.NotificationTypeId = 1
+            WHERE ucr.UserId = @UserId
+              AND MONTH(p.BirthDate) = MONTH(@CurrentDate)
+              AND DAY(p.BirthDate) = DAY(@CurrentDate)
+              AND p.Active = 1;
+        END;
+    END
 END

@@ -5,7 +5,8 @@ CREATE PROCEDURE [dbo].[insertVacationForEmployee]
 	@FromDate datetime,
 	@ToDate datetime,
 	@DaysTaken int,
-	@DaysTotal int
+	@DaysTotal int,
+	@ActingUserId NCHAR(36) = NULL
 )
 AS
 BEGIN
@@ -34,4 +35,6 @@ BEGIN
 		@EventTypeId=2,
 		@Recurring = 0,
 		@Reminder=0;
+
+	EXEC dbo.logUserActivity 'INSERT_VACATION', 'Vacation inserted for employee', @ActingUserId;
 END

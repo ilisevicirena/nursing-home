@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 
-const JWT_SECRET = "nursing_home_jwt_secret"; // Ensure this is securely stored
+const JWT_SECRET = process.env.JWT_SECRET;
 
 function generateToken(userId) {
   return jwt.sign({ userId }, JWT_SECRET, { expiresIn: "1h" });

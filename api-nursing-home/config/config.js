@@ -1,8 +1,25 @@
+require("dotenv").config();
+
 const CONFIG = {
-  driver: "msnodesqlv8",
-  connectionString:
-    "Driver={SQL Server Native Client 11.0};Server=LAPTOP-F98M3C9R;Database=ENV5EN_NURSING_HOME;Trusted_Connection=yes;",
-  connectionTimeout: 30000,
+  server: process.env.DB_SERVER,
+  database: process.env.DB_NAME,
+  options: {
+    encrypt: true,
+    trustServerCertificate: true,
+  },
+  authentication: {
+    type: process.env.DB_AUTH_TYPE || "ntlm",
+    options: {
+      userName: process.env.DB_USERNAME,
+      password: process.env.DB_PASSWORD,
+      domain: process.env.DB_DOMAIN,
+    },
+  },
+  pool: {
+    max: 10,
+    min: 0,
+    idleTimeoutMillis: 30000,
+  },
 };
 
 const FILES_FOLDER = "files";

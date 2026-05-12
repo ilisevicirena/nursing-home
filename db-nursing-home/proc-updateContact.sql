@@ -4,29 +4,87 @@
 -- Description:	updates contact for person
 -- =============================================
 CREATE PROCEDURE [dbo].[updateContact]
-	-- Add the parameters for the stored procedure here
 (
-	@Id int,
-	@FirstName varchar(50),
-	@LastName varchar(50),
-	@Email varchar(50),
-	@Telephone varchar(50),
-	@Mobile varchar(50),
-	@Jmbg varchar(50) =NULL,
-	@ResidanceCityId int= NULL,
-	@ResidanceStreetName varchar(300)= NULL,
-	@ResidanceHouseNumber varchar(50) =NULL,
-	@IsObligeeToPay bit= 0,
-	@IsGuardian bit= 0
+    @Id INT = NULL,
+    @UserId UNIQUEIDENTIFIER = NULL,
+    @FirstName VARCHAR(50),
+    @LastName VARCHAR(50),
+    @Email VARCHAR(50),
+    @Telephone VARCHAR(50),
+    @Mobile VARCHAR(50),
+    @Jmbg VARCHAR(50) = NULL,
+    @ResidanceCityId INT = NULL,
+    @ResidanceStreetName VARCHAR(300) = NULL,
+    @ResidanceHouseNumber VARCHAR(50) = NULL,
+    @IsObligeeToPay BIT = 0,
+    @IsGuardian BIT = 0,
+    @ActingUserId NCHAR(36) = NULL
 )
 AS
 BEGIN
-	-- SET NOCOUNT ON added to prevent extra result sets from
-	-- interfering with SELECT statements.
-	SET NOCOUNT ON;
+    SET NOCOUNT ON;
 
-    -- Insert statements for procedure here
-	UPDATE dbo.Contact
-	SET FirstName=@FirstName, LastName=@LastName, Email=@Email, Telephone=@Telephone, Mobile=@Mobile, Jmbg=@Jmbg, ResidanceCityId=@ResidanceCityId, ResidanceStreetName=@ResidanceStreetName, ResidanceHouseNumber=@ResidanceHouseNumber, IsObligeeToPay=@IsObligeeToPay, IsGuardian=@IsGuardian
-	WHERE Id=@Id;
+    -- Declare variables to track changes in User table
+    DECLARE @OldFirstName VARCHAR(50), @OldLastName VARCHAR(50), @OldEmail VARCHAR(50);
+
+    -- If UserId is provided, update all related contacts
+    IF @UserId IS NOT NULL
+    BEGIN
+        -- Update every contact related to the UserId
+        UPDATE dbo.Contact
+        SET 
+            FirstName = @FirstName, 
+            LastName = @LastName, 
+            Email = @Email, 
+            Telephone = @Telephone, 
+            Mobile = @Mobile, 
+            Jmbg = @Jmbg, 
+            ResidanceCityId = @ResidanceCityId, 
+            ResidanceStreetName = @ResidanceStreetName, 
+            ResidanceHouseNumber = @ResidanceHouseNumber, 
+            IsObligeeToPay = @IsObligeeToPay, 
+            IsGuardian = @IsGuardian
+        WHERE Id IN (
+            SELECT ContactId FROM dbo.UserContactRelation WHERE UserId = @UserId
+        );
+
+        -- Get old values from the User table
+        SELECT 
+            @OldFirstName = FirstName, 
+            @OldLastName = LastName, 
+            @OldEmail = Email
+        FROM dbo.[User]
+        WHERE Id = @UserId;
+
+        -- Update User table if FirstName, LastName, or Email has changed
+        IF (@OldFirstName != @FirstName OR @OldLastName != @LastName OR @OldEmail != @Email)
+        BEGIN
+            UPDATE dbo.[User]
+            SET 
+                FirstName = @FirstName, 
+                LastName = @LastName, 
+                Email = @Email
+            WHERE Id = @UserId;
+        END
+    END
+    ELSE
+    BEGIN
+        -- Update the specific contact by Id
+        UPDATE dbo.Contact
+        SET 
+            FirstName = @FirstName, 
+            LastName = @LastName, 
+            Email = @Email, 
+            Telephone = @Telephone, 
+            Mobile = @Mobile, 
+            Jmbg = @Jmbg, 
+            ResidanceCityId = @ResidanceCityId, 
+            ResidanceStreetName = @ResidanceStreetName, 
+            ResidanceHouseNumber = @ResidanceHouseNumber, 
+            IsObligeeToPay = @IsObligeeToPay, 
+            IsGuardian = @IsGuardian
+        WHERE Id = @Id;
+    END
+
+    EXEC dbo.logUserActivity 'UPDATE_CONTACT', 'Contact updated', @ActingUserId;
 END

@@ -5,6 +5,7 @@
 -- =============================================
 CREATE PROCEDURE [dbo].[checkNotificationsStatus]
 	-- Add the parameters for the stored procedure here	
+	@UserId UNIQUEIDENTIFIER
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -12,6 +13,5 @@ BEGIN
 	SET NOCOUNT ON;
 
 	select [NotificationNumber]=isnull(t1.NotificationsNumber,0)
-	from (select count(Id) as NotificationsNumber from dbo.[Notification] where [Read]=0) as t1;
-
+	from (select count(Id) as NotificationsNumber from dbo.[Notification] where [Read]=0 and UserId=@UserId) as t1;
 END

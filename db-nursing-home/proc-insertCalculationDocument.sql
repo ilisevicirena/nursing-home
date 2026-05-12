@@ -1,47 +1,42 @@
--- =============================================
--- Author:		Irena Ilisevic
--- Create date: 26.6.2023.
--- Description:	inserts document for calculation
--- =============================================
-CREATE PROCEDURE [dbo].[insertCalculationDocument]
-	-- Add the parameters for the stored procedure here
-	(
-		
-		@PersonId int,
-		@DocumentName varchar(50),
-		@Extension varchar(10),
-		@FileType varchar(50),
-		@SavePath varchar(max),
-		@CalculationId int
-	
-	)
+create PROCEDURE [dbo].[insertCalculationDocument]
+(
+    @PersonId INT,
+    @DocumentName VARCHAR(50),
+    @Extension VARCHAR(10),
+    @FileType VARCHAR(50),
+    @SavePath VARCHAR(MAX),
+    @CalculationId INT,
+    @UserId UNIQUEIDENTIFIER -- Added parameter for UserId as uniqueidentifier
+)
 AS
 BEGIN
-	-- SET NOCOUNT ON added to prevent extra result sets from
-	-- interfering with SELECT statements.
-	SET NOCOUNT ON;
+    SET NOCOUNT ON;
 
-	DECLARE @DocumentId int;
-	DECLARE @CalculationDocumentRelationId int;
+    DECLARE @DocumentId INT;
+    DECLARE @CalculationDocumentRelationId INT;
 
-	DECLARE @DocumentTable TABLE (
-		Id int,
-		Path varchar(max),
-		StorageName varchar(200)
-	);
+    DECLARE @DocumentTable TABLE (
+        Id INT,
+        Path VARCHAR(MAX),
+        StorageName VARCHAR(200)
+    );
 
-	INSERT INTO @DocumentTable
-	EXEC [dbo].[insertDocument] @PersonId, 3, @DocumentName, @Extension, @FileType, @SavePath;
+    -- Insert the document with the UserId
+    INSERT INTO @DocumentTable
+    EXEC [dbo].[insertDocument] @PersonId, 3, @DocumentName, @Extension, @FileType, @SavePath, @UserId;
 
-	SELECT TOP 1 @DocumentId = Id
-	FROM @DocumentTable;
+    -- Retrieve the DocumentId from the inserted document
+    SELECT TOP 1 @DocumentId = Id
+    FROM @DocumentTable;
 
-	INSERT INTO dbo.CalculationDocumentRelation(CalculationId, DocumentId)
-	VALUES (@CalculationId, @DocumentId);
+    -- Insert into CalculationDocumentRelation with the DocumentId
+    INSERT INTO dbo.[CalculationDocumentRelation] ([CalculationId], [DocumentId])
+    VALUES (@CalculationId, @DocumentId);
 
-	SET @CalculationDocumentRelationId = SCOPE_IDENTITY();
+    SET @CalculationDocumentRelationId = SCOPE_IDENTITY();
 
-	SELECT * FROM @DocumentTable;
-	SELECT @CalculationDocumentRelationId AS CalculationDocumentRelationId;
+    -- Return the inserted document details and the relation ID
+    SELECT * FROM @DocumentTable;
+    SELECT @CalculationDocumentRelationId AS CalculationDocumentRelationId;
 
 END

@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { db } = require("../config/framework");
+const { db, authedRequest } = require("../config/framework");
 const { getError } = require("../resources/error-codes");
 
 router.get("/getAllNotifications", async (request, response) => {
@@ -126,13 +126,12 @@ router.get("/getNotificationsSettings", async (request, response) => {
 router.post("/updateNotificationType", async (request, response) => {
   try {
     const pool = await db;
-    const result = await pool
-      .request()
+    const result = await authedRequest(pool, request.user?.userId)
       .input("id", request.body.Id)
       .input("enabled", request.body.Enabled)
       .input("daysReminder", request.body.DaysReminder)
       .query(
-        "EXEC [dbo].[updateNotificationType] @Id=@id, @Enabled=@enabled, @DaysReminder=@daysReminder"
+        "EXEC [dbo].[updateNotificationType] @Id=@id, @Enabled=@enabled, @DaysReminder=@daysReminder, @ActingUserId=@ActingUserId"
       );
     if (result != null) response.json(result);
     else response.status(500);

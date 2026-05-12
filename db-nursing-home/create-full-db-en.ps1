@@ -1,123 +1,174 @@
-# Define your database name and the folder containing SQL scripts
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 
-$databaseName = "ENV5EN_NURSING_HOME"
-$scriptFolderPath = "C:\nursing-home\db-nursing-home"
-$scriptFolderEnPath = "C:\nursing-home\db-nursing-home\en"
-$executeOrderFile = "$scriptFolderPath\en\execute-order.txt"
+$configFile = Join-Path $PSScriptRoot "db.config.ps1"
+if (-not (Test-Path $configFile)) {
+    Write-Host "[ERROR] db.config.ps1 not found. Copy db.config.example.ps1 to db.config.ps1 and fill in your values." -ForegroundColor Red
+    exit 1
+}
+. $configFile
+
+$databaseName             = $DB_NAME_EN
+$scriptFolderPath         = $DB_SCRIPT_FOLDER
+$scriptFolderEnPath       = "$DB_SCRIPT_FOLDER\en"
+$executeOrderFile         = "$scriptFolderPath\en\execute-order.txt"
 $executeOrderEnSpecificFile = "$scriptFolderPath\en\execute-en-specific-order.txt"
+$serverName               = $DB_SERVER
 
-# SQL Server connection details
-$serverName = "LAPTOP-F98M3C9R"
-
-# Build the connection string
-$masterConnectionString = "Server=$serverName;Database=master;Integrated Security=true;"
+$masterConnectionString   = "Server=$serverName;Database=master;Integrated Security=true;"
 $databaseConnectionString = "Server=$serverName;Database=$databaseName;Integrated Security=true;"
 
+$successCount  = 0
+$failCount     = 0
+$notFoundCount = 0
+$startTime     = Get-Date
+
+$masterConnection   = $null
+$databaseConnection = $null
+
+function Invoke-SqlScript {
+    param($Connection, $ScriptPath, $Label)
+    if (-not (Test-Path $ScriptPath)) {
+        Write-Host "  [MISSING] $Label" -ForegroundColor Yellow
+        return "notfound"
+    }
+    $content = Get-Content $ScriptPath -Raw -Encoding UTF8
+    $cmd = $Connection.CreateCommand()
+    $cmd.CommandText = $content
+    $cmd.ExecuteNonQuery() | Out-Null
+    Write-Host "  [OK] $Label" -ForegroundColor Green
+    return "success"
+}
+
 try {
-    # Establish a connection to the master database
     $masterConnection = New-Object System.Data.SqlClient.SqlConnection
     $masterConnection.ConnectionString = $masterConnectionString
     $masterConnection.Open()
 
-    # Create a command to create the new database
-    $createDatabaseQuery = "CREATE DATABASE [$databaseName];"
-    $createDatabaseCommand = $masterConnection.CreateCommand()
-    $createDatabaseCommand.CommandText = $createDatabaseQuery
-    $createDatabaseCommand.ExecuteNonQuery()
-
-    # Close the connection to the master database
+    $cmd = $masterConnection.CreateCommand()
+    $cmd.CommandText = "CREATE DATABASE [$databaseName];"
+    $cmd.ExecuteNonQuery() | Out-Null
     $masterConnection.Close()
 
-    Write-Host "Database '$databaseName' created successfully."
+    Write-Host "Database '$databaseName' created." -ForegroundColor Cyan
 
-    # Establish a connection to the newly created database
     $databaseConnection = New-Object System.Data.SqlClient.SqlConnection
     $databaseConnection.ConnectionString = $databaseConnectionString
     $databaseConnection.Open()
 
-      # Read the execution order from execute-order.txt
-    $executionOrder = Get-Content $executeOrderFile
-	
-	foreach ($scriptName in $executionOrder) {
-    # Trim any leading or trailing whitespace
-    
-    $scriptName = $scriptName.Trim()
+    # --- Shared scripts --------------------------------------------------
+    Write-Host ""
+    Write-Host "Running shared scripts..." -ForegroundColor Cyan
+    Write-Host "------------------------------------------------------------"
 
-    # Build the full path to the script file
-    $scriptFile = Join-Path -Path $scriptFolderPath -ChildPath $scriptName
+    foreach ($scriptName in (Get-Content $executeOrderFile)) {
+        $scriptName = $scriptName.Trim()
+        if ([string]::IsNullOrWhiteSpace($scriptName)) { continue }
 
-    # Check if the script file exists
-    if (Test-Path $scriptFile) {
-        $scriptContent = Get-Content $scriptFile -Raw -Encoding UTF8
-
-        # Create a command and execute the script
-        $executeScriptCommand = $databaseConnection.CreateCommand()
-        $executeScriptCommand.CommandText = $scriptContent
-        $executeScriptCommand.ExecuteNonQuery()
-
-        Write-Host "Script '$scriptName' executed successfully."
-    } else {
-        Write-Host "Script '$scriptName' not found in the script folder."
-    }
-}
-
-    # ------------------------------------- EN SPECIFIC ----------------------------------------------------------------
-
-       # Read the execution order from execute-order.txt
-    $executionOrderEN = Get-Content $executeOrderEnSpecificFile
-	
-	foreach ($scriptNameEn in $executionOrderEN) {
-    # Trim any leading or trailing whitespace
-    
-    $scriptNameEn = $scriptNameEn.Trim()
-
-    # Build the full path to the script file
-    $scriptFileEn = Join-Path -Path $scriptFolderEnPath -ChildPath $scriptNameEn
-
-    # Check if the script file exists
-    if (Test-Path $scriptFileEn) {
-        $scriptContentEn = Get-Content $scriptFileEn -Raw -Encoding UTF8
-
-        # Create a command and execute the script
-        $executeScriptCommand = $databaseConnection.CreateCommand()
-        $executeScriptCommand.CommandText = $scriptContentEn
-        $executeScriptCommand.ExecuteNonQuery()
-
-        Write-Host "Script '$scriptNameEn' executed successfully."
-    } else {
-        Write-Host "Script '$scriptNameEn' not found in the script folder."
+        $scriptFile = Join-Path $scriptFolderPath $scriptName
+        try {
+            switch (Invoke-SqlScript -Connection $databaseConnection -ScriptPath $scriptFile -Label $scriptName) {
+                "success"  { $successCount++ }
+                "notfound" { $notFoundCount++ }
+            }
+        } catch {
+            Write-Host "  [FAIL] $scriptName" -ForegroundColor Red
+            Write-Host "         $($_.Exception.Message)" -ForegroundColor Red
+            $failCount++
+        }
     }
 
+    # --- EN-specific scripts ---------------------------------------------
+    Write-Host ""
+    Write-Host "Running EN-specific scripts..." -ForegroundColor Cyan
+    Write-Host "------------------------------------------------------------"
+
+    foreach ($scriptName in (Get-Content $executeOrderEnSpecificFile)) {
+        $scriptName = $scriptName.Trim()
+        if ([string]::IsNullOrWhiteSpace($scriptName)) { continue }
+
+        $scriptFile = Join-Path $scriptFolderEnPath $scriptName
+        try {
+            switch (Invoke-SqlScript -Connection $databaseConnection -ScriptPath $scriptFile -Label $scriptName) {
+                "success"  { $successCount++ }
+                "notfound" { $notFoundCount++ }
+            }
+        } catch {
+            Write-Host "  [FAIL] $scriptName" -ForegroundColor Red
+            Write-Host "         $($_.Exception.Message)" -ForegroundColor Red
+            $failCount++
+        }
     }
 
-    $scriptInsertNameEn="insert-test-db-data.sql"
-     $scriptInsertNameEn = $scriptInsertNameEn.Trim()
-
-    # Build the full path to the script file
-    $scriptInsertFileEn = Join-Path -Path $scriptFolderPath -ChildPath $scriptInsertNameEn
-
-    # Check if the script file exists
-    if (Test-Path $scriptInsertFileEn) {
-        $scriptInsertContentEn = Get-Content $scriptInsertFileEn -Raw -Encoding UTF8
-
-        # Create a command and execute the script
-        $executeScriptCommand = $databaseConnection.CreateCommand()
-        $executeScriptCommand.CommandText = $scriptInsertContentEn
-        $executeScriptCommand.ExecuteNonQuery()
-
-        Write-Host "Script '$scriptInsertNameEn' executed successfully."
-    } else {
-        Write-Host "Script '$scriptInsertNameEn' not found in the script folder."
+    # --- Seed data (insert-db-data.sql) ---------------------------------
+    if ($INCLUDE_INSERTS) {
+        Write-Host ""
+        Write-Host "Running seed data..." -ForegroundColor Cyan
+        Write-Host "------------------------------------------------------------"
+        $insertFile = Join-Path $scriptFolderPath "insert-db-data.sql"
+        try {
+            switch (Invoke-SqlScript -Connection $databaseConnection -ScriptPath $insertFile -Label "insert-db-data.sql") {
+                "success"  { $successCount++ }
+                "notfound" { $notFoundCount++ }
+            }
+        } catch {
+            Write-Host "  [FAIL] insert-db-data.sql" -ForegroundColor Red
+            Write-Host "         $($_.Exception.Message)" -ForegroundColor Red
+            $failCount++
+        }
     }
 
-    # Close the connection to the new database
+    # --- Bulk fake data (insert-proc-*.sql) ------------------------------
+    if ($INCLUDE_BULK_DATA) {
+        Write-Host ""
+        Write-Host "Running bulk fake data..." -ForegroundColor Cyan
+        Write-Host "------------------------------------------------------------"
+
+        # Tag all bulk-insert activity as admin bulk so logUserActivity prefixes [BULK]
+        $ctxCmd = $databaseConnection.CreateCommand()
+        $ctxCmd.CommandText = "EXEC sp_set_session_context N'UserId', N'71028972-A6F2-410A-AA65-C0C671126523'; EXEC sp_set_session_context N'IsBulk', N'true';"
+        $ctxCmd.ExecuteNonQuery() | Out-Null
+
+        $bulkOrderFile = Join-Path $scriptFolderPath "en\insert-bulk-data-order.txt"
+        foreach ($scriptName in (Get-Content $bulkOrderFile)) {
+            $scriptName = $scriptName.Trim()
+            if ([string]::IsNullOrWhiteSpace($scriptName)) { continue }
+            $scriptFile = Join-Path $scriptFolderPath $scriptName
+            try {
+                switch (Invoke-SqlScript -Connection $databaseConnection -ScriptPath $scriptFile -Label $scriptName) {
+                    "success"  { $successCount++ }
+                    "notfound" { $notFoundCount++ }
+                }
+            } catch {
+                Write-Host "  [FAIL] $scriptName" -ForegroundColor Red
+                Write-Host "         $($_.Exception.Message)" -ForegroundColor Red
+                $failCount++
+            }
+        }
+    }
+
     $databaseConnection.Close()
+
+    $elapsed = (Get-Date) - $startTime
+    Write-Host ""
+    Write-Host "============================================================" -ForegroundColor Cyan
+    Write-Host "  Database : $databaseName"
+    Write-Host "  OK       : $successCount" -ForegroundColor Green
+    if ($notFoundCount -gt 0) { Write-Host "  Missing  : $notFoundCount" -ForegroundColor Yellow }
+    if ($failCount     -gt 0) { Write-Host "  Failed   : $failCount"     -ForegroundColor Red    }
+    Write-Host "  Duration : $([math]::Round($elapsed.TotalSeconds, 1))s"
+    if      ($failCount     -gt 0) { Write-Host "  Status   : COMPLETED WITH ERRORS"   -ForegroundColor Red    }
+    elseif  ($notFoundCount -gt 0) { Write-Host "  Status   : COMPLETED WITH WARNINGS" -ForegroundColor Yellow }
+    else                           { Write-Host "  Status   : SUCCESS"                 -ForegroundColor Green  }
+    Write-Host "============================================================" -ForegroundColor Cyan
+
+    if ($failCount -gt 0) { exit 1 }
 }
 catch {
-    Write-Host "Error: $_.Exception.Message"
+    Write-Host ""
+    Write-Host "[ERROR] $($_.Exception.Message)" -ForegroundColor Red
+    exit 1
 }
 finally {
-    $masterConnection.Dispose()
-    $databaseConnection.Dispose()
+    if ($null -ne $masterConnection)   { $masterConnection.Dispose() }
+    if ($null -ne $databaseConnection) { $databaseConnection.Dispose() }
 }

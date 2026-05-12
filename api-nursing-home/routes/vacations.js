@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { db } = require("../config/framework");
+const { db, authedRequest } = require("../config/framework");
 const { getError } = require("../resources/error-codes");
 const { Vacation } = require("../models/Vacation");
 
@@ -42,8 +42,7 @@ router.post("/add", async (request, response) => {
   try {
     var objectToSave = Object.assign(new Vacation(), request.body);
     const pool = await db;
-    const result = await pool
-      .request()
+    const result = await authedRequest(pool, request.user?.userId)
       .input("emp", objectToSave.EmployeeId)
       .input("year", objectToSave.Year)
       .input("from", objectToSave.FromDate)
@@ -51,7 +50,7 @@ router.post("/add", async (request, response) => {
       .input("taken", objectToSave.DaysTaken)
       .input("total", objectToSave.DaysTotal)
       .query(
-        "EXEC [dbo].[insertVacationForEmployee] @EmployeeId=@emp, @Year=@year, @FromDate=@from, @ToDate=@to, @DaysTotal=@total, @DaysTaken=@taken"
+        "EXEC [dbo].[insertVacationForEmployee] @EmployeeId=@emp, @Year=@year, @FromDate=@from, @ToDate=@to, @DaysTotal=@total, @DaysTaken=@taken, @ActingUserId=@ActingUserId"
       );
     if (result != null) response.json(result.recordset[0]);
     else response.send(getError(170001));
@@ -65,12 +64,11 @@ router.post("/changeVacationStatus", async (request, response) => {
   try {
     var objectToSave = Object.assign(new Vacation(), request.body);
     const pool = await db;
-    const result = await pool
-      .request()
+    const result = await authedRequest(pool, request.user?.userId)
       .input("id", objectToSave.Id)
       .input("status", objectToSave.StatusId)
       .query(
-        "EXEC [dbo].[changeVacationStatus] @VacationId=@id, @StatusId=@status"
+        "EXEC [dbo].[changeVacationStatus] @VacationId=@id, @StatusId=@status, @ActingUserId=@ActingUserId"
       );
     if (result != null) response.json(result.recordset);
     else response.send(getError(170004));

@@ -46,7 +46,8 @@ BEGIN
 		[YearsOfExperiance]=e.YearsOfExperiance,
 		[DaysOfVacation]=e.DaysOfVacation,
 		[SchoolName]=e.SchoolName,
-		[SchoolQualificationName]=e.SchoolQualificationName
+		[SchoolQualificationName]=e.SchoolQualificationName,
+		[UserId]=e.UserId
 		from dbo.Employee as e
 left join dbo.Gender as g on e.GenderId=g.Id
 left join dbo.City as c on c.Id=e.BirthCityId
@@ -94,7 +95,8 @@ left join dbo.EmploymentType as et on e.EmploymentTypeId=et.Id;
 		[YearsOfExperiance]=e.YearsOfExperiance,
 		[DaysOfVacation]=e.DaysOfVacation,
 		[SchoolName]=e.SchoolName,
-		[SchoolQualificationName]=e.SchoolQualificationName
+		[SchoolQualificationName]=e.SchoolQualificationName,
+		[UserId]=e.UserId
 		from dbo.Employee as e
 left join dbo.Gender as g on e.GenderId=g.Id
 left join dbo.City as c on c.Id=e.BirthCityId

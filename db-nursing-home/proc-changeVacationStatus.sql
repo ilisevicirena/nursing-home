@@ -2,7 +2,8 @@ CREATE PROCEDURE [dbo].[changeVacationStatus]
 	-- Add the parameters for the stored procedure here
 	(
 		@VacationId int,
-		@StatusId int
+		@StatusId int,
+		@ActingUserId NCHAR(36) = NULL
 	)
 AS
 BEGIN
@@ -18,5 +19,7 @@ BEGIN
    end
 	
 	update dbo.EmployeeVacationRelation set StatusId=@StatusId where Id=@VacationId;
+
+	EXEC dbo.logUserActivity 'CHANGE_VACATION_STATUS', 'Vacation status changed', @ActingUserId;
 
 END
