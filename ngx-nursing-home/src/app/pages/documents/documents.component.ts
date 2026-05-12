@@ -7,6 +7,7 @@ import { fileDownload, previewFile } from "shared-components";
 import { ToastrService } from "../../services/toastr.service";
 import { DialogService } from "../../shared/dialog/dialog.service";
 import { UploadDocumentComponent } from "./upload-document/upload-document.component";
+import { AuthService, UserRole } from "../../services/auth.service";
 
 @Component({
   selector: "sample-documents",
@@ -29,7 +30,8 @@ export class DocumentsComponent implements OnInit, OnDestroy {
   constructor(
     private _documentsService: DocumentsService,
     private _toastrService: ToastrService,
-    private _dialogService: DialogService
+    private _dialogService: DialogService,
+    private _authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -168,5 +170,9 @@ export class DocumentsComponent implements OnInit, OnDestroy {
           this.getDocumentsForType(this.currentDocumentTypeId);
         }
       });
+  }
+
+  public checkUserHasAdminPermission(): boolean {
+    return this._authService.checkUserHasRole(UserRole.ADMIN);
   }
 }

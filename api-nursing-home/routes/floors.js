@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { db } = require("../config/framework");
+const { db, authedRequest } = require("../config/framework");
 const { getError } = require("../resources/error-codes");
 const { Floor } = require("../models/Floor");
 
@@ -19,10 +19,9 @@ router.post("/add", async (request, response) => {
   try {
     var objectToSave = Object.assign(new Floor(), request.body);
     const pool = await db;
-    const result = await pool
-      .request()
+    const result = await authedRequest(pool, request.user?.userId)
       .input("name", objectToSave.Name)
-      .query("EXEC [dbo].[insertFloor] @Name=@name");
+      .query("EXEC [dbo].[insertFloor] @Name=@name, @ActingUserId=@ActingUserId");
     if (result != null) response.json(result.recordset[0]);
     else response.send(getError(1001));
   } catch (err) {
@@ -35,10 +34,9 @@ router.delete("/delete", async (request, response) => {
   try {
     var objectToSave = Object.assign(new Floor(), request.body);
     const pool = await db;
-    const result = await pool
-      .request()
+    const result = await authedRequest(pool, request.user?.userId)
       .input("id", objectToSave.Id)
-      .query("EXEC [dbo].[deleteFloor] @Id=@id");
+      .query("EXEC [dbo].[deleteFloor] @Id=@id, @ActingUserId=@ActingUserId");
     if (result != null) response.json(result.recordset);
     else response.send(getError(1002));
   } catch (err) {
@@ -51,11 +49,10 @@ router.post("/update", async (request, response) => {
   try {
     var objectToSave = Object.assign(new Floor(), request.body);
     const pool = await db;
-    const result = await pool
-      .request()
+    const result = await authedRequest(pool, request.user?.userId)
       .input("id", objectToSave.Id)
       .input("name", objectToSave.Name)
-      .query("EXEC [dbo].[updateFloor] @Id=@id, @Name=@name");
+      .query("EXEC [dbo].[updateFloor] @Id=@id, @Name=@name, @ActingUserId=@ActingUserId");
     if (result != null) response.json(result.recordset);
     else response.send(getError(1003));
   } catch (err) {

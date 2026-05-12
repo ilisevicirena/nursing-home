@@ -97,6 +97,15 @@ import { FurnitureStatusesComponent } from "./furniture-statuses/furniture-statu
 import { FurnitureComponent } from "./furniture/furniture.component";
 import { ChangeFurnitureStatusComponent } from "./furniture/change-furniture-status/change-furniture-status.component";
 import { FurnitureStatusesPreviewComponent } from "./furniture/furniture-statuses-preview/furniture-statuses-preview.component";
+import { UserComponent } from "./user/user.component";
+import { UsersComponent } from "./users/users.component";
+import { PageNotFoundComponent } from "./page-not-found/page-not-found.component";
+import { ModulesMenuComponent } from "./modules-menu/modules-menu.component";
+import { MyProfileComponent } from "./my-profile/my-profile.component";
+import { UserProfileComponent } from "./my-profile/user-profile/user-profile.component";
+import { AdminProfileComponent } from "./my-profile/admin-profile/admin-profile.component";
+import { EditContactInfoComponent } from "./my-profile/user-profile/edit-contact-info/edit-contact-info.component";
+import { ExistingUserComponent } from './contacts-grid/existing-user/existing-user.component';
 
 @NgModule({
   imports: [
@@ -202,6 +211,15 @@ import { FurnitureStatusesPreviewComponent } from "./furniture/furniture-statuse
     FurnitureComponent,
     ChangeFurnitureStatusComponent,
     FurnitureStatusesPreviewComponent,
+    UserComponent,
+    UsersComponent,
+    PageNotFoundComponent,
+    ModulesMenuComponent,
+    MyProfileComponent,
+    UserProfileComponent,
+    AdminProfileComponent,
+    EditContactInfoComponent,
+    ExistingUserComponent,
   ],
 })
 export class PagesModule {}

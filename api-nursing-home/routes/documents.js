@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { db } = require("../config/framework");
+const { db, authedRequest } = require("../config/framework");
 const { getError } = require("../resources/error-codes");
 const { FILES_FOLDER } = require("../config/config");
 const fs = require("fs");
@@ -35,16 +35,16 @@ router.post("/add", async (request, response) => {
     var objectToSave = Object.assign(new DocumentFile(), request.body);
     const absolutePath = getAbsolutePathToFilesFolder();
     const pool = await db;
-    const result = await pool
-      .request()
+    const result = await authedRequest(pool, request.user?.userId)
       .input("personId", objectToSave.PersonId)
       .input("type", objectToSave.DocumentTypeId)
       .input("name", objectToSave.Name)
       .input("extension", objectToSave.Extension)
       .input("fileType", objectToSave.FileType)
       .input("savePath", absolutePath)
+      .input("userId", objectToSave.UserId)
       .query(
-        "EXEC [dbo].[insertDocument] @Name=@name, @PersonId=@personId, @DocumentTypeId=@type, @Extension=@extension, @FileType=@fileType, @SavePath=@savePath"
+        "EXEC [dbo].[insertDocument] @UserId=@userId, @Name=@name, @PersonId=@personId, @DocumentTypeId=@type, @Extension=@extension, @FileType=@fileType, @SavePath=@savePath, @ActingUserId=@ActingUserId"
       );
     if (result != null) {
       var documentId = result.recordset[0].Id;

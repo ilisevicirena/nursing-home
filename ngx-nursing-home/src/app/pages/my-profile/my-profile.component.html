@@ -1,0 +1,174 @@
+<div class="row m-0 h-100 w-100 overflow-auto">
+  <div class="col-md-10">
+    <div class="basic-data-container">
+      <nb-card class="profile-card">
+        <nb-card-header>
+          <div class="profile-header-status"></div>
+          <div class="title">{{ getString("basicData") }}</div>
+          <div class="actions">
+            <button
+              nbButton
+              size="small"
+              status="primary"
+              ghost
+              shape="round"
+              [nbTooltip]="getString('changePassword')"
+              (click)="changePassword()"
+            >
+              <nb-icon pack="eva" icon="lock-outline"></nb-icon>
+            </button>
+            <button
+              nbButton
+              size="small"
+              shape="round"
+              status="primary"
+              (click)="editUserBasicData()"
+            >
+              <nb-icon pack="eva" icon="edit-2-outline" nbPrefix></nb-icon>
+              {{ getString("edit") }}
+            </button>
+          </div>
+        </nb-card-header>
+        <nb-card-body>
+          <div class="row m-0">
+            <div class="col-md-1">
+              <nb-user
+                [name]="user?.FirstName + ' ' + user?.LastName"
+                onlyPicture
+              ></nb-user>
+            </div>
+            <div class="col-md-11">
+              <div class="row m-0 pb-3">
+                <div class="col-md-12">
+                  <div class="title">
+                    {{ user?.FirstName }} {{ user?.LastName }}
+                  </div>
+                </div>
+              </div>
+              <div class="row m-0">
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <div class="label">
+                      {{ getString("username") }}
+                    </div>
+                    <div class="card-value">
+                      {{ user?.Username }}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <div class="label">
+                      {{ getString("dateRegistered") }}
+                    </div>
+                    <div class="card-value">
+                      {{ user?.DateRegistered | date : "dd.MM.yyyy." }}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <div class="label">
+                      {{ getString("email") }}
+                    </div>
+                    <div class="card-value">
+                      {{ user?.Email }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row m-0">
+            <div class="col-md-3 pt-4">
+              <div class="status-card">
+                <div class="circle">
+                  <nb-icon
+                    pack="eva"
+                    icon="log-in-outline"
+                    status="primary"
+                  ></nb-icon>
+                </div>
+                <div class="status-card-information">
+                  <div class="card-value">
+                    <span *ngIf="firstLogin; else noData"></span>
+                    {{ firstLogin | date : "dd.MM.yyyy." }}
+                  </div>
+                  <div class="label">{{ getString("firstLogin") }}</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3 pt-4">
+              <div class="status-card">
+                <div class="circle">
+                  <nb-icon
+                    pack="eva"
+                    icon="lock-outline"
+                    status="primary"
+                  ></nb-icon>
+                </div>
+                <div class="status-card-information">
+                  <div class="card-value">
+                    <span *ngIf="lastPasswordChange; else noData">{{
+                      lastPasswordChange | date : "dd.MM.yyyy."
+                    }}</span>
+                  </div>
+                  <div class="label">{{ getString("lastPasswordChange") }}</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3 pt-4">
+              <div class="status-card">
+                <div class="circle">
+                  <nb-icon
+                    pack="eva"
+                    icon="edit-2-outline"
+                    status="primary"
+                  ></nb-icon>
+                </div>
+                <div class="status-card-information">
+                  <div class="card-value">
+                    <span *ngIf="lastDataChange; else noData">{{
+                      lastDataChange | date : "dd.MM.yyyy."
+                    }}</span>
+                  </div>
+                  <div class="label">{{ getString("lastDataChange") }}</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3 pt-4">
+              <div class="status-card">
+                <div class="circle">
+                  <nb-icon
+                    pack="eva"
+                    icon="bell-outline"
+                    status="primary"
+                  ></nb-icon>
+                </div>
+                <div class="status-card-information">
+                  <div class="card-value">
+                    {{ unreadNotifications }}
+                  </div>
+                  <div class="label">
+                    {{ getString("unreadNotifications") }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+
+    <sample-admin-profile
+      *ngIf="checkUserHasRole(userRoles.ADMIN)"
+    ></sample-admin-profile>
+
+    <sample-user-profile
+      *ngIf="checkUserHasRole(userRoles.USER)"
+    ></sample-user-profile>
+  </div>
+</div>
+<ng-template #noData>
+  <span>-</span>
+</ng-template>

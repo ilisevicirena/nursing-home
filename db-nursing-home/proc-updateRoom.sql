@@ -13,7 +13,8 @@ CREATE PROCEDURE [dbo].[updateRoom]
 	@Width int=NULL,
 	@Height int=NULL,
 	@Left int=NULL,
-	@Top int=NULL
+	@Top int=NULL,
+    @ActingUserId NCHAR(36) = NULL
 	)
 AS
 BEGIN
@@ -34,5 +35,6 @@ BEGIN
 	WHERE Id = @Id
 
 		exec dbo.writeLog @LogType='UPDATE', @LogEntity='Room', @Key= @Id;
-		
+
+	EXEC dbo.logUserActivity 'UPDATE_ROOM', 'Room updated', @ActingUserId;
 END

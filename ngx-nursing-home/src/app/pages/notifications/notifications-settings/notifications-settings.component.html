@@ -3,14 +3,14 @@
     {{ getString("manageNotifications") }}
   </nb-card-header>
   <nb-card-body>
-    <div class="row m-0 pb-2" *ngFor="let type of types">
+    <div class="row m-0 pb-2 notification-type" *ngFor="let type of types">
       <div class="w-max d-flex align-items-center">
         <nb-toggle
           [(checked)]="type.Enabled"
           (checkedChange)="onEnabledChange(type)"
         ></nb-toggle>
       </div>
-      <div class="w-max d-flex">
+      <div class="w-max d-flex align-items-center">
         <div class="d-flex align-items-center me-2">
           {{ getString("reminder") }}
         </div>

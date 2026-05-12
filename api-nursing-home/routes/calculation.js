@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { db } = require("../config/framework");
+const { db, authedRequest } = require("../config/framework");
 const { getError } = require("../resources/error-codes");
 const {
   CalculationPaid,
@@ -17,13 +17,12 @@ router.post("/calculationPaid", async (request, response) => {
   try {
     var objectToSave = Object.assign(new CalculationPaid(), request.body);
     const pool = await db;
-    const result = await pool
-      .request()
+    const result = await authedRequest(pool, request.user?.userId)
       .input("id", objectToSave.Id)
       .input("price", objectToSave.PaidPrice)
       .input("date", objectToSave.PaidDate)
       .query(
-        "EXEC [dbo].[calculationPaid] @CalculationId=@id, @PaidDate=@date, @PaidPrice=@price"
+        "EXEC [dbo].[calculationPaid] @CalculationId=@id, @PaidDate=@date, @PaidPrice=@price, @ActingUserId=@ActingUserId"
       );
     if (result != null) response.json(result.recordset);
     else response.send(getError(50001));
@@ -56,10 +55,9 @@ router.post("/cancelCalculation", async (request, response) => {
   try {
     var objectToSave = Object.assign(new Calculation(), request.body);
     const pool = await db;
-    const result = await pool
-      .request()
+    const result = await authedRequest(pool, request.user?.userId)
       .input("id", objectToSave.Id)
-      .query("EXEC [dbo].[cancelCalculation] @CalculationId=@id");
+      .query("EXEC [dbo].[cancelCalculation] @CalculationId=@id, @ActingUserId=@ActingUserId");
     if (result != null) response.json(result.recordset);
     else response.send(getError(50003));
   } catch (err) {
@@ -185,8 +183,7 @@ router.post("/add", async (request, response) => {
   try {
     var objectToSave = Object.assign(new Calculation(), request.body);
     const pool = await db;
-    const result = await pool
-      .request()
+    const result = await authedRequest(pool, request.user?.userId)
       .input("month", objectToSave.Month)
       .input("year", objectToSave.Year)
       .input("person", objectToSave.PersonId)
@@ -197,7 +194,7 @@ router.post("/add", async (request, response) => {
       .input("priceUnit", objectToSave.PriceUnitId)
       .input("measure", objectToSave.MeasureUnitId)
       .query(
-        "EXEC [dbo].[insertCalculation] @Month=@month, @Year=@year, @PersonId=@person, @SystemPrice=@systemPrice, @DateFrom=@dateFrom, @DateTo=@dateTo, @PaymentDaysDeadline=@deadline, @PriceUnitId=@priceUnit, @MeasureUnitId=@measure"
+        "EXEC [dbo].[insertCalculation] @Month=@month, @Year=@year, @PersonId=@person, @SystemPrice=@systemPrice, @DateFrom=@dateFrom, @DateTo=@dateTo, @PaymentDaysDeadline=@deadline, @PriceUnitId=@priceUnit, @MeasureUnitId=@measure, @ActingUserId=@ActingUserId"
       );
     if (result != null) {
       var calculationId = result.recordset[0].CalculationId;
@@ -305,8 +302,9 @@ router.post("/insertDocumentForCalculation", async (request, response) => {
       .input("fileType", objectToSave.FileType)
       .input("savePath", absolutePath)
       .input("calculation", objectToSave.CalculationId)
+      .input("userId", objectToSave.UserId)
       .query(
-        "EXEC [dbo].[insertCalculationDocument] @DocumentName=@name, @PersonId=@personId, @Extension=@extension, @FileType=@fileType, @SavePath=@savePath, @CalculationId=@calculation"
+        "EXEC [dbo].[insertCalculationDocument] @UserId=@userId, @DocumentName=@name, @PersonId=@personId, @Extension=@extension, @FileType=@fileType, @SavePath=@savePath, @CalculationId=@calculation"
       );
     if (result != null) {
       var documentId = result.recordset[0].Id;
@@ -373,12 +371,11 @@ router.delete("/deleteDocumentFromCalculation", async (request, response) => {
       var documentId = result.recordset[0].Id;
 
       if (documentId) {
-        const del = await pool
-          .request()
+        const del = await authedRequest(pool, request.user?.userId)
           .input("id", objectToSave.DocumentId)
           .input("calc", objectToSave.CalculationId)
           .query(
-            "EXEC [dbo].[deleteDocumentFromCalculation] @DocumentId=@id, @CalculationId=@calc"
+            "EXEC [dbo].[deleteDocumentFromCalculation] @DocumentId=@id, @CalculationId=@calc, @ActingUserId=@ActingUserId"
           );
         if (del != null) {
           fs.unlink(result.recordset[0].Path, function (err) {

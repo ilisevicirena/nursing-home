@@ -17,7 +17,8 @@ CREATE PROCEDURE [dbo].[insertContact]
 		@ResidanceStreetName varchar(300)=NULL,
 		@ResidanceHouseNumber varchar(50)=NULL,
 		@IsObligeeToPay bit=0,
-		@IsGuardian bit=0
+		@IsGuardian bit=0,
+		@ActingUserId NCHAR(36) = NULL
 	)
 AS
 BEGIN
@@ -30,4 +31,6 @@ BEGIN
 	VALUES (@FirstName, @LastName, @Email, @Telephone, @Mobile, @PersonId, @Jmbg, @ResidanceCityId, @ResidanceStreetName, @ResidanceHouseNumber, @IsObligeeToPay, @IsGuardian)
 
 	SELECT SCOPE_IDENTITY() AS ContactId;
+
+	EXEC dbo.logUserActivity 'INSERT_CONTACT', 'Contact inserted', @ActingUserId;
 END

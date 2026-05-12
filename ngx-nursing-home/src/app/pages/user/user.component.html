@@ -1,0 +1,340 @@
+<nb-card class="basic-tile-card tall user-card">
+  <nb-card-header class="d-flex">
+    <div class="col">
+      {{ getString(isNew ? "newUser" : "user") }}
+    </div>
+    <div class="w-max">
+      <button nbButton ghost shape="round" (click)="close(false)">
+        <nb-icon pack="eva" icon="close-outline"></nb-icon>
+      </button>
+    </div>
+  </nb-card-header>
+  <nb-card-body class="d-flex">
+    <div class="col-md-4 left-panel">
+      <div class="user-picture-container">
+        <nb-user
+          [name]="userShowName"
+          onlyPicture
+          [badgeText]="userBadgeText"
+          [badgeStatus]="userBadgeStatus"
+          [badgePosition]="'top end'"
+        ></nb-user>
+      </div>
+      <div class="user-name">{{ userShowName }}</div>
+      <div class="menu-container">
+        <nb-menu [items]="items" tag="user-profile-menu"></nb-menu>
+      </div>
+    </div>
+    <div class="col-md-8 right-panel">
+      <ng-container [ngSwitch]="selectedTab">
+        <div *ngSwitchCase="'basicInformation'" class="right-panel-tab">
+          <div class="row">
+            <div class="col-md-10 p-0">
+              <div class="form-group">
+                <div class="label">
+                  {{ getString("firstName") }}
+                  <nb-icon
+                    pack="eva"
+                    icon="alert-circle-outline"
+                    status="danger"
+                    size="small"
+                    class="ms-1 required-mark"
+                    [nbTooltip]="getString('required')"
+                  ></nb-icon>
+                </div>
+                <div class="value">
+                  <input
+                    nbInput
+                    autocomplete="off"
+                    fullWidth
+                    [placeholder]="getString('firstName')"
+                    name="firstName"
+                    [(ngModel)]="user.FirstName"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-10 p-0">
+              <div class="form-group">
+                <div class="label">
+                  {{ getString("lastName") }}
+                  <nb-icon
+                    pack="eva"
+                    icon="alert-circle-outline"
+                    status="danger"
+                    size="small"
+                    class="ms-1 required-mark"
+                    [nbTooltip]="getString('required')"
+                  ></nb-icon>
+                </div>
+                <div class="value">
+                  <input
+                    nbInput
+                    fullWidth
+                    autocomplete="off"
+                    [placeholder]="getString('lastName')"
+                    name="lastName"
+                    [(ngModel)]="user.LastName"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-10 p-0">
+              <div class="form-group">
+                <div class="label">
+                  {{ getString("username") }}
+                  <nb-icon
+                    pack="eva"
+                    icon="alert-circle-outline"
+                    status="danger"
+                    size="small"
+                    class="ms-1 required-mark"
+                    [nbTooltip]="getString('required')"
+                  ></nb-icon>
+                </div>
+                <div class="value">
+                  <input
+                    nbInput
+                    fullWidth
+                    [placeholder]="getString('username')"
+                    name="username"
+                    autocomplete="off"
+                    [(ngModel)]="user.Username"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-10 p-0">
+              <div class="form-group">
+                <div class="label">
+                  {{ getString("email") }}
+                </div>
+                <div class="value">
+                  <input
+                    nbInput
+                    fullWidth
+                    [placeholder]="getString('email')"
+                    name="email"
+                    autocomplete="off"
+                    [(ngModel)]="user.Email"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12 d-flex mt-3">
+            <button
+              nbButton
+              shape="round"
+              status="primary"
+              size="small"
+              (click)="saveBasicUser()"
+            >
+              {{ getString("save") }}
+            </button>
+            <button
+              class="ms-2"
+              nbButton
+              shape="round"
+              status="basic"
+              ghost
+              size="small"
+              (click)="cancel()"
+            >
+              {{ getString("cancel") }}
+            </button>
+          </div>
+        </div>
+        <div *ngSwitchCase="'userRights'">
+          <div class="col-md-10">
+            <div class="form-group">
+              <div class="label">
+                {{ getString("userRole") }}
+              </div>
+              <div class="value">
+                <nb-select
+                  fullWidth
+                  name="userRole"
+                  [(selected)]="roleId"
+                  (selectedChange)="roleSelectedChange($event)"
+                >
+                  <nb-option *ngFor="let role of roles" [value]="role.RoleId">{{
+                    role.RoleName
+                  }}</nb-option>
+                </nb-select>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12 d-flex mt-3" *ngIf="user.Id">
+            <button
+              nbButton
+              shape="round"
+              status="primary"
+              size="small"
+              (click)="saveUserRole()"
+            >
+              {{ getString("save") }}
+            </button>
+            <button
+              class="ms-2"
+              nbButton
+              shape="round"
+              status="basic"
+              ghost
+              size="small"
+              (click)="cancelRoleSave()"
+            >
+              {{ getString("cancel") }}
+            </button>
+          </div>
+          <div class="col-md-10 mt-3">
+            <nb-alert accent="info">
+              <div class="row m-0">
+                <div class="col-md-2 d-flex justify-content-center pt-3">
+                  <nb-icon
+                    pack="eva"
+                    icon="info-outline"
+                    status="info"
+                    class="h2"
+                  ></nb-icon>
+                </div>
+                <div class="col-md-10">
+                  {{ roleDescription }}
+                </div>
+              </div>
+            </nb-alert>
+          </div>
+        </div>
+        <div *ngSwitchCase="'statuses'">
+          <div class="col-md-12" *ngIf="user.Id">
+            <div class="form-group">
+              <div class="label">{{ getString("registeredDate") }}</div>
+              <div class="card-value">
+                {{ user.DateRegistered | date : "dd.MM.yyyy. HH:mm" }}
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12 mt-3">
+            <div class="form-group">
+              <div class="label">{{ getString("currentUserStatus") }}</div>
+              <div class="value">
+                <ngx-tag
+                  [color]="userBadgeStatus"
+                  [text]="userBadgeText"
+                ></ngx-tag>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="!isUserVerified && user.Id" class="mt-3">
+            <div
+              class="col-md-12 mb-3"
+              *ngIf="userVerificationToken?.CreationDate"
+            >
+              <div class="form-group">
+                <div class="label">
+                  {{ getString("verificationMailSentAt") }}
+                </div>
+                <div class="card-value">
+                  {{
+                    userVerificationToken?.CreationDate
+                      | date : "dd.MM.yyyy. HH:mm"
+                  }}
+                </div>
+              </div>
+              <div class="form-group mt-3">
+                <div class="label">
+                  {{ getString("verificationMailTokenExpiryDate") }}
+                </div>
+                <div class="card-value">
+                  {{
+                    userVerificationToken?.ExpiryDate
+                      | date : "dd.MM.yyyy. HH:mm"
+                  }}
+                </div>
+              </div>
+            </div>
+            <button
+              *ngIf="user.Email"
+              nbButton
+              shape="round"
+              size="small"
+              ghost
+              (click)="sendVerificationEmail()"
+            >
+              {{ getString("sendVerificationEmail") }}
+              <nb-icon pack="eva" icon="email-outline"></nb-icon>
+            </button>
+          </div>
+          <div class="col-md-12 mt-3" *ngIf="user.Id">
+            <button
+              *ngIf="isUserBlocked"
+              nbButton
+              shape="round"
+              status="warning"
+              ghost
+              size="small"
+              (click)="blockUnblockUser(false)"
+            >
+              {{ getString("unblockUser") }}
+              <nb-icon pack="eva" icon="unlock-outline" nbSuffix></nb-icon>
+            </button>
+            <button
+              *ngIf="!isUserBlocked"
+              nbButton
+              shape="round"
+              status="warning"
+              ghost
+              size="small"
+              (click)="blockUnblockUser(true)"
+            >
+              {{ getString("blockUser") }}
+              <nb-icon pack="eva" icon="lock-outline" nbSuffix></nb-icon>
+            </button>
+          </div>
+          <div class="col-md-12 mt-3" *ngIf="user.Id">
+            <button
+              *ngIf="isUserActive"
+              nbButton
+              shape="round"
+              status="danger"
+              ghost
+              size="small"
+              (click)="activateDeactivateUser(false)"
+            >
+              {{ getString("deactivateUser") }}
+              <nb-icon
+                pack="eva"
+                icon="person-delete-outline"
+                nbSuffix
+              ></nb-icon>
+            </button>
+            <button
+              *ngIf="!isUserActive"
+              nbButton
+              shape="round"
+              status="success"
+              ghost
+              size="small"
+              (click)="activateDeactivateUser(true)"
+            >
+              {{ getString("activateUser") }}
+              <nb-icon pack="eva" icon="person-done-outline" nbSuffix></nb-icon>
+            </button>
+          </div>
+          <div class="col-md-12 mt-3" *ngIf="!user.Email && user.Id">
+            <button nbButton shape="round" size="small" ghost>
+              {{ getString("generateNewPassword") }}
+              <nb-icon nbSuffix pack="eva" icon="shield-outline"></nb-icon>
+            </button>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </nb-card-body>
+</nb-card>

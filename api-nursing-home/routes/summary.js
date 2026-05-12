@@ -29,4 +29,18 @@ router.get("/getDashboardSummary", async (request, response) => {
   }
 });
 
+router.get("/getUserDashboardSummary", async (request, response) => {
+  try {
+    const pool = await db;
+    const result = await pool
+      .request()
+      .input("UserId", request.query.UserId)
+      .execute("getUserDashboardSummary");
+    response.json(result.recordset);
+  } catch (err) {
+    response.status(500);
+    response.send(err.message);
+  }
+});
+
 module.exports = router;

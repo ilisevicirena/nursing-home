@@ -109,7 +109,7 @@
           <nb-icon pack="eva" icon="funnel-outline"></nb-icon>
         </button>
       </div>
-      <div class="w-max">
+      <div class="w-max" *ngIf="checkUserHasPermission()">
         <button nbButton status="primary" shape="round" (click)="newNote()">
           <nb-icon pack="eva" icon="plus-outline"></nb-icon>
         </button>
@@ -165,7 +165,7 @@
                 size="small"
                 *ngFor="let t of selectedNote.Tags"
                 [text]="t.Name"
-                removable
+                [removable]="checkUserHasPermission()"
                 (remove)="onNoteTagRemoved(t)"
                 [style.background-color]="hexToRgbA(t.Color)"
                 [appearance]="'outline'"
@@ -185,6 +185,7 @@
             status="warning"
             (click)="editNote()"
             [nbTooltip]="getString('editData')"
+            *ngIf="checkUserHasPermission()"
           >
             <nb-icon pack="eva" icon="edit-outline"></nb-icon>
           </button>
@@ -195,6 +196,7 @@
             status="danger"
             (click)="deleteNote()"
             [nbTooltip]="getString('deleteData')"
+            *ngIf="checkUserHasPermission()"
           >
             <nb-icon pack="eva" icon="trash-outline"></nb-icon>
           </button>
@@ -218,6 +220,7 @@
             status="primary"
             (click)="openTagsDialog()"
             [nbTooltip]="getString('tagsManagement')"
+            *ngIf="checkUserHasPermission()"
           >
             {{ selectedNote.Tags.length }}
             <nb-icon pack="eva" icon="pricetags-outline"></nb-icon>

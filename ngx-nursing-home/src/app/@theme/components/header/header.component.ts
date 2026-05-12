@@ -1,10 +1,21 @@
-import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
-import { NbPopoverDirective, NbSidebarService } from "@nebular/theme";
+import {
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+  ViewChildren,
+} from "@angular/core";
+import {
+  NbPopoverDirective,
+  NbSidebarService,
+  NbThemeService,
+} from "@nebular/theme";
 import { LayoutService } from "../../../@core/utils";
 import { Subscription } from "rxjs";
 import { getString } from "../../../resources/strings";
 import { Router } from "@angular/router";
 import { NotificationsService } from "../../../services/rest/notifications.service";
+import { AuthService, IUser } from "../../../services/auth.service";
 
 @Component({
   selector: "ngx-header",
@@ -15,20 +26,32 @@ export class HeaderComponent implements OnInit, OnDestroy {
   public getString = getString;
   public hasNotifications: boolean = false;
   public searchTerm: string = "";
+  public user: IUser;
 
   private subs: Subscription[] = [];
 
-  @ViewChild(NbPopoverDirective) popover: NbPopoverDirective;
+  @ViewChildren(NbPopoverDirective) popovers: NbPopoverDirective[];
 
   constructor(
     private sidebarService: NbSidebarService,
     private layoutService: LayoutService,
     private router: Router,
-    private notificationsService: NotificationsService
+    private notificationsService: NotificationsService,
+    private authService: AuthService,
+    private themeService: NbThemeService
   ) {}
 
   ngOnInit() {
     this.checkNotifications();
+    this.user = this.authService.getUser();
+
+    this.themeService.onMediaQueryChange().subscribe((data) => {
+      setTimeout(() => {
+        if (data[1].name == "xs" || data[1].name == "is")
+          this.sidebarService.collapse("menu-sidebar");
+        else this.sidebarService.compact("menu-sidebar");
+      }, 100);
+    });
   }
 
   ngOnDestroy() {
@@ -58,7 +81,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   public onNotificationPaneClose(): void {
-    this.popover.hide();
+    this.popovers.forEach((element) => {
+      element.hide();
+    });
   }
 
   public onNotificationsDestroy(event: boolean) {
@@ -71,5 +96,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.router.navigateByUrl("/pages/advanced-search/" + this.searchTerm);
       this.searchTerm = "";
     }
+  }
+
+  public onUserPaneDestroy() {
+    this.popovers.forEach((element) => {
+      element.hide();
+    });
   }
 }

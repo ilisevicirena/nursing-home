@@ -1,0 +1,17 @@
+
+# API — real environment config (copy from .env.example)
+api-nursing-home/.env
+api-nursing-home/config.env
+
+# Database setup — real local config (copy from db.config.example.ps1)
+db-nursing-home/db.config.ps1
+
+# Claude Code
+.claude/
+
+# API — build artifacts and temp files
+api-nursing-home/build/
+api-nursing-home/temp_data*.fdf
+
+# Archives
+*.zip

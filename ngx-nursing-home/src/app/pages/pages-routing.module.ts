@@ -27,6 +27,11 @@ import { CategoriesComponent } from "./categories/categories.component";
 import { DoctorVisitsComponent } from "./doctor-visits/doctor-visits.component";
 import { FurnitureStatusesComponent } from "./furniture-statuses/furniture-statuses.component";
 import { FurnitureComponent } from "./furniture/furniture.component";
+import { UsersComponent } from "./users/users.component";
+import { PageNotFoundComponent } from "./page-not-found/page-not-found.component";
+import { UserRole } from "../services/auth.service";
+import { MyProfileComponent } from "./my-profile/my-profile.component";
+import { EmployeeVacationsComponent } from "./employee/employee-vacations/employee-vacations.component";
 
 const routes: Routes = [
   {
@@ -38,6 +43,10 @@ const routes: Routes = [
         component: DashboardComponent,
       },
       {
+        path: "page-not-found",
+        component: PageNotFoundComponent,
+      },
+      {
         path: "",
         redirectTo: "dashboard",
         pathMatch: "full",
@@ -45,18 +54,36 @@ const routes: Routes = [
       {
         path: "room-management",
         component: RoomManagementComponent,
+        data: {
+          Roles: [UserRole.ADMIN],
+        },
       },
       {
         path: "persons",
         component: PersonsComponent,
+        data: {
+          Roles: [
+            UserRole.ADMIN,
+            UserRole.NURSE,
+            UserRole.CAREGIVER,
+            UserRole.DOCTOR,
+            UserRole.USER,
+          ],
+        },
       },
       {
         path: "new-person",
         component: NewPersonComponent,
+        data: {
+          Roles: [UserRole.ADMIN],
+        },
       },
       {
         path: "accomodation-management",
         component: AccomodationManagementComponent,
+        data: {
+          Roles: [UserRole.ADMIN],
+        },
       },
       {
         path: "advanced-search/:search",
@@ -73,18 +100,30 @@ const routes: Routes = [
       {
         path: "services",
         component: ServicesComponent,
+        data: {
+          Roles: [UserRole.ADMIN],
+        },
       },
       {
         path: "packages",
         component: PackagesComponent,
+        data: {
+          Roles: [UserRole.ADMIN],
+        },
       },
       {
         path: "discounts",
         component: DiscountsComponent,
+        data: {
+          Roles: [UserRole.ADMIN],
+        },
       },
       {
         path: "services-management",
         component: ServicesManagementComponent,
+        data: {
+          Roles: [UserRole.ADMIN],
+        },
       },
       {
         path: "notifications",
@@ -101,50 +140,110 @@ const routes: Routes = [
       {
         path: "doctor-visit-tour/:id",
         component: DoctorVisitTourComponent,
+        data: {
+          Roles: [UserRole.ADMIN, UserRole.NURSE],
+        },
       },
       {
         path: "calculation",
         component: CalculationComponent,
+        data: {
+          Roles: [UserRole.ADMIN],
+        },
       },
       {
         path: "tags",
         component: TagsComponent,
+        data: {
+          Roles: [UserRole.ADMIN],
+        },
       },
       {
         path: "cities",
         component: CitiesComponent,
+        data: {
+          Roles: [UserRole.ADMIN],
+        },
       },
       {
         path: "municipalities",
         component: MunicipalitiesComponent,
+        data: {
+          Roles: [UserRole.ADMIN],
+        },
       },
       {
         path: "employees",
         component: EmployeesComponent,
+        data: {
+          Roles: [UserRole.ADMIN],
+        },
       },
       {
         path: "new-employee",
         component: NewEmployeeComponent,
+        data: {
+          Roles: [UserRole.ADMIN],
+        },
       },
       {
         path: "employee/:id",
         component: EmployeeComponent,
+        data: {
+          Roles: [UserRole.ADMIN],
+        },
       },
       {
         path: "categories",
         component: CategoriesComponent,
+        data: {
+          Roles: [UserRole.ADMIN],
+        },
       },
       {
         path: "doctor-visits",
         component: DoctorVisitsComponent,
+        data: {
+          Roles: [UserRole.ADMIN, UserRole.NURSE],
+        },
       },
       {
         path: "furniture-statuses",
         component: FurnitureStatusesComponent,
+        data: {
+          Roles: [UserRole.ADMIN],
+        },
       },
       {
         path: "furniture",
         component: FurnitureComponent,
+        data: {
+          Roles: [UserRole.ADMIN],
+        },
+      },
+      {
+        path: "users",
+        component: UsersComponent,
+        data: {
+          Roles: [UserRole.ADMIN],
+        },
+      },
+      {
+        path: "my-profile",
+        component: MyProfileComponent,
+      },
+      {
+        path: "employee-vacations",
+        component: EmployeeVacationsComponent,
+        data: {
+          Roles: [
+            UserRole.ADMIN,
+            UserRole.NURSE,
+            UserRole.CAREGIVER,
+            UserRole.COOK,
+            UserRole.OTHER_STUFF,
+          ],
+        },
       },
     ],
   },

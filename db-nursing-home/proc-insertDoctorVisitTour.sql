@@ -1,7 +1,8 @@
 CREATE PROCEDURE [dbo].[insertDoctorVisitTour]
 	@visitDate DATETIME,
     @doctors VARCHAR(MAX),
-    @nurses VARCHAR(MAX)
+    @nurses VARCHAR(MAX),
+    @ActingUserId NCHAR(36) = NULL
 AS
 BEGIN
 	 -- Insert into DoctorVisitTour table
@@ -24,4 +25,6 @@ BEGIN
 
     -- Return the DoctorVisitTourId
     SELECT @DoctorVisitTourId AS DoctorVisitTourId;
+
+    EXEC dbo.logUserActivity 'INSERT_DOCTOR_VISIT_TOUR', 'Doctor visit tour inserted', @ActingUserId;
 END

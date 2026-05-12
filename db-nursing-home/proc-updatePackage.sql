@@ -12,7 +12,8 @@ CREATE PROCEDURE [dbo].[updatePackage]
 		@DefaultPackagePrice float = NULL,
 		@PackagePriceCalculated bit,
 		@DefaultPackagePriceUnitId int = NULL,
-		@CalculationMeasureUnitId int
+		@CalculationMeasureUnitId int,
+		@ActingUserId NCHAR(36) = NULL
 	)
 AS
 BEGIN
@@ -30,4 +31,6 @@ BEGIN
 	DefaultPackagePriceUnitId=@DefaultPackagePriceUnitId,
 	CalculationMeasureUnitId=@CalculationMeasureUnitId
 	WHERE Id=@Id;
+
+	EXEC dbo.logUserActivity 'UPDATE_PACKAGE', 'Package updated', @ActingUserId;
 END

@@ -38,7 +38,7 @@ const Colors = [
 export const environment = {
   production: true,
   sidebarConfig: SidebarStates.COMPACT,
-  configFile: "assets/config/config.json",
+  configFile: "assets/config/config.prod.json",
   translationFile: "assets/resources/strings-en.json",
   notificationAllType: notificationAllType,
   brand: Brand,

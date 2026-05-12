@@ -11,7 +11,8 @@ CREATE PROCEDURE [dbo].[insertPackage]
 		@DefaultPackagePrice float = NULL,
 		@DefaultPackagePriceUnitId int = NULL,
 		@PackagePriceCalculated bit,
-		@CalculationMeasureUnitId int
+		@CalculationMeasureUnitId int,
+		@ActingUserId NCHAR(36) = NULL
 	)
 AS
 BEGIN
@@ -24,4 +25,6 @@ BEGIN
 	VALUES (@Name, @Description, @DefaultPackagePrice, @DefaultPackagePriceUnitId, @PackagePriceCalculated, @CalculationMeasureUnitId, 1, GETDATE());
 
 	SELECT SCOPE_IDENTITY() AS [PackageId];
+
+	EXEC dbo.logUserActivity 'INSERT_PACKAGE', 'Package inserted', @ActingUserId;
 END

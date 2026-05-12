@@ -3,12 +3,11 @@
 }
 
 ::ng-deep sample-persons {
-  height: 100%;
   overflow: hidden;
 }
 
 .content-container {
-  height: calc(100% - 2.1rem);
+  height: calc(100% - 2.5rem);
 }
 
 #cards {

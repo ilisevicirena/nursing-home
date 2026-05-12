@@ -9,7 +9,8 @@ CREATE PROCEDURE [dbo].[changeStatusPerson]
 	(
 		@Id int,
 		@Status bit, -- 1 for activate, 0 for deactivate
-		@Date datetime = NULL
+		@Date datetime = NULL,
+		@ActingUserId NCHAR(36) = NULL
 	)
 AS
 BEGIN
@@ -40,4 +41,6 @@ BEGIN
     WHERE Id = @Id;
 
     EXEC dbo.writeLog @LogType = 'UPDATE', @LogEntity = 'Person', @Key = @Id;
+
+    EXEC dbo.logUserActivity 'CHANGE_STATUS_PERSON', 'Person status changed', @ActingUserId;
 END

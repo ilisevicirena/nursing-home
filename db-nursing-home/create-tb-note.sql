@@ -5,17 +5,26 @@ CREATE TABLE [dbo].[Note](
 	[LastModified] [datetime] NOT NULL,
 	[Title] [varchar](1000) NOT NULL,
 	[Text] [varchar](max) NOT NULL,
+	[UserId] [char](36) NULL,
  CONSTRAINT [PK_Note] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
- 
+
 
 ALTER TABLE [dbo].[Note]  WITH CHECK ADD  CONSTRAINT [FK_Note_Person] FOREIGN KEY([PersonId])
 REFERENCES [dbo].[Person] ([Id])
- 
+
 
 ALTER TABLE [dbo].[Note] CHECK CONSTRAINT [FK_Note_Person]
- 
+
+
+ALTER TABLE [dbo].[Note]  WITH CHECK ADD  CONSTRAINT [FK_Note_User] FOREIGN KEY([UserId])
+REFERENCES [dbo].[User] ([Id])
+
+
+ALTER TABLE [dbo].[Note] CHECK CONSTRAINT [FK_Note_User]
+
+
 

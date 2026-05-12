@@ -1,0 +1,22 @@
+<nb-card class="h-100">
+  <nb-card-header>
+    {{ getString("users") }}
+  </nb-card-header>
+  <nb-card-body>
+    <div class="h-100">
+      <ngx-grid
+        [columns]="columns"
+        [(data)]="data"
+        gridMode="external"
+        [exportSettings]="exportSettings"
+        [selectionEnabled]="false"
+        (createStarted)="onCreateStarted()"
+        (editStarted)="onEditStarted($event)"
+        [defaultPerPageOption]="20"
+        [deleteEnabled]="false"
+        [editEnabled]="false"
+        (actionBtnClick)="onActionBtnClick($event)"
+      ></ngx-grid>
+    </div>
+  </nb-card-body>
+</nb-card>

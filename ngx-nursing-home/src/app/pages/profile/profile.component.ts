@@ -19,6 +19,7 @@ import { DialogService } from "../../shared/dialog/dialog.service";
 import { RoomsService } from "../../services/rest/rooms.service";
 import { AccommodationPdfRequestService } from "../../services/rest/accommodation-pdf-request.service";
 import { GeneralSettingsService } from "../../services/rest/general-settings.service";
+import { AuthService, UserRole } from "../../services/auth.service";
 
 @Component({
   selector: "sample-profile",
@@ -34,11 +35,13 @@ export class ProfileComponent implements OnInit, OnDestroy {
     private _roomsService: RoomsService,
     private _router: Router,
     private _requestGeneratorService: AccommodationPdfRequestService,
-    private _generalSettingsService: GeneralSettingsService
+    private _generalSettingsService: GeneralSettingsService,
+    private _authService: AuthService
   ) {}
 
   private _subs: Subscription[] = [];
   private _allowDifferentGenders: boolean = false;
+  private _persons: number[] = this._authService.getUserPersons();
 
   public personId: number = 0;
   public getString = getString;
@@ -56,6 +59,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
   public personHistory: any[] = [];
   public roomHistory: any[] = [];
   public gridSelectedItem: [] = [];
+  public years: number = 0;
+  public spentTime: number = 0;
   public roomHistoryColumns: GridColumn[] = [
     new GridColumn().Title(getString("id")).DataField("RoomId").Filter(false),
     new GridColumn()
@@ -89,10 +94,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
     { option: "contacts", string: "contacts", active: false },
     { option: "stayData", string: "stayData", active: false },
     { option: "dormatoryData", string: "dormatoryData", active: false },
-    { option: "services", string: "services", active: false },
     { option: "documents", string: "documents", active: false },
     { option: "notes", string: "notes", active: false },
-    { option: "calculation", string: "personCalculation", active: false },
   ];
 
   public roomsColumns: GridColumn[] = [
@@ -145,6 +148,17 @@ export class ProfileComponent implements OnInit, OnDestroy {
         this.getPersonDetails(this.personId);
       })
     );
+
+    if (this.checkUserHasPermission()) {
+      this.options.push(
+        {
+          option: "services",
+          string: "services",
+          active: false,
+        },
+        { option: "calculation", string: "personCalculation", active: false }
+      );
+    }
   }
 
   ngOnDestroy(): void {
@@ -219,6 +233,11 @@ export class ProfileComponent implements OnInit, OnDestroy {
       this._personsService.getPersonDetailed(personId).subscribe((data) => {
         if (data.length > 0) {
           this.person = getIPersonFromJSON(data[0]);
+          this.years = this.calculateAge(this.person.BirthDate);
+          this.spentTime = this.calculateMonthsFrom(
+            this.person.StartDate,
+            this.person.Active ? new Date() : this.person.EndDate
+          );
           this.newPersonData = getIPersonFromJSON(data[0]);
           this.passedTime = this.calculatePassedTime();
           this.getHistory();
@@ -386,5 +405,68 @@ export class ProfileComponent implements OnInit, OnDestroy {
           );
         })
     );
+  }
+
+  public checkUserHasAdminPermission(): boolean {
+    return this._authService.checkUserHasRole(UserRole.ADMIN);
+  }
+
+  private calculateAge(birthDate: string): number {
+    const birth = new Date(birthDate);
+    const today = new Date();
+    let age = today.getFullYear() - birth.getFullYear();
+
+    // Check if birthday has occurred this year
+    if (
+      today < new Date(today.getFullYear(), birth.getMonth(), birth.getDate())
+    ) {
+      age--;
+    }
+
+    return age;
+  }
+
+  private calculateMonthsFrom(date: string, endDate): number {
+    const startDate = new Date(date);
+    const today = new Date(endDate);
+
+    let months = (today.getFullYear() - startDate.getFullYear()) * 12;
+    months += today.getMonth() - startDate.getMonth();
+
+    // Adjust if the day of the month hasn't occurred yet
+    if (today.getDate() < startDate.getDate()) {
+      months--;
+    }
+
+    return months;
+  }
+
+  public checkUserHasPermission(): boolean {
+    if (this._authService.checkUserHasRole(UserRole.ADMIN)) return true;
+    return this.checkPersonIsUserPerson();
+  }
+
+  public checkPersonIsUserPerson(): boolean {
+    return (
+      this._authService.getUserPersons().find((x) => x == this.personId) != null
+    );
+  }
+
+  public checkUserCanViewPage(): boolean {
+    // admins, nurses, caregivers and doctors can see all persons
+    if (
+      this._authService.checkUserHasRole(UserRole.ADMIN) ||
+      this._authService.checkUserHasRole(UserRole.NURSE) ||
+      this._authService.checkUserHasRole(UserRole.CAREGIVER) ||
+      this._authService.checkUserHasRole(UserRole.DOCTOR)
+    )
+      return true;
+    // user can only see profile of his persons on care
+    else if (
+      this._authService.checkUserHasRole(UserRole.USER) &&
+      this.checkPersonIsUserPerson()
+    )
+      return true;
+    else return false;
   }
 }

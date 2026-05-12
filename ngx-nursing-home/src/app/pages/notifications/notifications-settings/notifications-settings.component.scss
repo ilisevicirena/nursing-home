@@ -1,6 +1,4 @@
-::ng-deep sample-notifications-settings {
-  height: 100%;
-}
+@import "../../../@theme/styles/themes.scss";
 
 nb-card {
   border-radius: 1rem;
@@ -8,5 +6,12 @@ nb-card {
   nb-card-header {
     border: none;
     font-size: 20px;
+  }
+}
+
+@include nb-install-component {
+  .notification-type {
+    border-bottom: 1px solid nb-theme(card-border-color);
+    margin-bottom: 0.5rem !important;
   }
 }

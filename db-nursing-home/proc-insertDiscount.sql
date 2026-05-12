@@ -9,7 +9,8 @@ CREATE PROCEDURE [dbo].[insertDiscount]
 		@Name varchar(50),
 		@Description varchar(2000)=NULL,
 		@Quantity int,
-		@PercentCalculation bit
+		@PercentCalculation bit,
+		@ActingUserId NCHAR(36) = NULL
 	)
 AS
 BEGIN
@@ -22,4 +23,6 @@ BEGIN
 	values (@Name, @Description, @Quantity, @PercentCalculation,1);
 
 	select SCOPE_IDENTITY() as [DiscountId];
+
+	EXEC dbo.logUserActivity 'INSERT_DISCOUNT', 'Discount inserted', @ActingUserId;
 END

@@ -10,7 +10,10 @@
 </div>
 <div class="content-container">
   <nb-card *ngIf="currentView == 'grid'" class="h-100">
-    <nb-card-header class="d-flex align-items-center">
+    <nb-card-header
+      class="d-flex align-items-center"
+      *ngIf="checkUserHasAdminPermission()"
+    >
       {{ unactivePersonsString }}
       <nb-toggle
         status="primary"
@@ -40,6 +43,7 @@
   <div class="cards-container h-100" *ngIf="currentView == 'card'">
     <div class="row mt-0 ms-0 me-0 mb-2">
       <div
+        *ngIf="checkUserHasAdminPermission()"
         class="col-md-9 p-1 d-flex justify-content-start align-items-center card-value"
       >
         {{ unactivePersonsString }}

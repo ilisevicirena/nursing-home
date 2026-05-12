@@ -1,0 +1,50 @@
+<nb-card class="basic-tile-card giant">
+  <nb-card-header class="d-flex">
+    <div class="col">
+      {{ getString("users") }}
+    </div>
+    <div class="w-max">
+      <button nbButton ghost shape="round" (click)="close(false)">
+        <nb-icon pack="eva" icon="close-outline"></nb-icon>
+      </button>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="h-100">
+      <ngx-grid
+        [columns]="columns"
+        [(data)]="users"
+        [selectionEnabled]="true"
+        [defaultPerPageOption]="25"
+        [deleteEnabled]="false"
+        [editEnabled]="false"
+        [exportPdfEnabled]="false"
+        [exportExcelEnabled]="false"
+        [selectionMultiple]="false"
+        [selectRowByClick]="true"
+        [addEnabled]="false"
+      ></ngx-grid>
+    </div>
+  </nb-card-body>
+  <nb-card-footer class="d-flex justify-content-end">
+    <button
+      nbButton
+      size="small"
+      shape="round"
+      ghost
+      class="me-2"
+      (click)="close(false)"
+    >
+      {{ getString("cancel") }}
+    </button>
+    <button
+      nbButton
+      size="small"
+      shape="round"
+      status="primary"
+      (click)="saveClick()"
+    >
+      {{ getString("save") }}
+    </button>
+  </nb-card-footer>
+</nb-card>

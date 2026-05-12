@@ -6,7 +6,8 @@
 CREATE PROCEDURE [dbo].[deleteContact]
 	-- Add the parameters for the stored procedure here
 	(
-		@Id int
+		@Id int,
+		@ActingUserId NCHAR(36) = NULL
 	)
 AS
 BEGIN
@@ -15,4 +16,6 @@ BEGIN
 	SET NOCOUNT ON;
 
 	DELETE FROM dbo.Contact WHERE Id=@Id;
+
+	EXEC dbo.logUserActivity 'DELETE_CONTACT', 'Contact deleted', @ActingUserId;
 END

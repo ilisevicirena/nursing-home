@@ -7,7 +7,8 @@ CREATE PROCEDURE [dbo].[deleteDocumentFromCalculation]
 	-- Add the parameters for the stored procedure here
 	(
 		@DocumentId int,
-		@CalculationId int
+		@CalculationId int,
+		@ActingUserId NCHAR(36) = NULL
 	)
 AS
 BEGIN
@@ -18,5 +19,7 @@ BEGIN
    DELETE FROM dbo.CalculationDocumentRelation WHERE CalculationId=@CalculationId AND DocumentId=@DocumentId;
 
 	DELETE FROM dbo.Document WHERE Id=@DocumentId;
+
+	EXEC dbo.logUserActivity 'DELETE_DOCUMENT_FROM_CALCULATION', 'Document removed from calculation', @ActingUserId;
 
 END

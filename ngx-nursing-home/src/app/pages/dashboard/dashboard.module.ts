@@ -15,8 +15,11 @@ import {
 } from "@nebular/theme";
 import { SharedComponentsModule } from "shared-components";
 import { ThemeModule } from "../../@theme/theme.module";
-import { DashboardComponent } from "./dashboard.component";
 import { NgxEchartsModule } from "ngx-echarts";
+import { DashboardComponent } from "./dashboard.component";
+import { AdminDashboardComponent } from "./admin-dashboard/admin-dashboard.component";
+import { UserDashboardComponent } from "./user-dashboard/user-dashboard.component";
+import { EmployeeDashboardComponent } from './employee-dashboard/employee-dashboard.component';
 
 @NgModule({
   imports: [
@@ -38,7 +41,12 @@ import { NgxEchartsModule } from "ngx-echarts";
     NbTagModule,
     NbAlertModule,
   ],
-  declarations: [DashboardComponent],
+  declarations: [
+    DashboardComponent,
+    AdminDashboardComponent,
+    UserDashboardComponent,
+    EmployeeDashboardComponent,
+  ],
   providers: [],
   exports: [],
 })

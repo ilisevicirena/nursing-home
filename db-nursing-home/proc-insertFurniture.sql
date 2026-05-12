@@ -9,7 +9,8 @@ CREATE PROCEDURE [dbo].[insertFurniture]
 		@Name varchar(150),
 		@Description varchar(2000) = NULL,
 		@InventoryCode varchar(50) = NULL,
-		@RoomId int = NULL	
+		@RoomId int = NULL,
+    @ActingUserId NCHAR(36) = NULL
 	)
 AS
 BEGIN
@@ -25,4 +26,6 @@ BEGIN
 	VALUES (SCOPE_IDENTITY(), 1, GETDATE());
 
 	SELECT SCOPE_IDENTITY() AS [FurnitureId];
+
+	EXEC dbo.logUserActivity 'INSERT_FURNITURE', 'Furniture item inserted', @ActingUserId;
 END

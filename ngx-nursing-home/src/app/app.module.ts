@@ -28,6 +28,7 @@ import { ConfigLoader, ConfigService } from "./services/config.service";
 import { DialogComponent } from "./shared/dialog/dialog/dialog.component";
 import { NgxEchartsModule } from "ngx-echarts";
 import { environment } from "../environments/environment";
+import { AuthService } from "./services/auth.service";
 
 registerLocaleData(hr);
 
@@ -66,7 +67,8 @@ export function translationLoader(translationService: TranslationService) {
   ],
   bootstrap: [AppComponent],
   providers: [
-    { provide: LOCALE_ID, useValue: "en" },
+    AuthService,
+    { provide: LOCALE_ID, useValue: "hr" },
     { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true },
     {
       provide: APP_INITIALIZER,

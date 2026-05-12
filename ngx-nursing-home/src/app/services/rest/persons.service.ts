@@ -2,17 +2,40 @@ import { Injectable } from "@angular/core";
 import { BaseRestApiService, IBaseSaveModel } from "../base-rest-api.service";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
+import { AuthService } from "../auth.service";
 
 @Injectable({
   providedIn: "root",
 })
 export class PersonsService extends BaseRestApiService {
-  constructor(http: HttpClient) {
+  constructor(http: HttpClient, private _authService: AuthService) {
     super(http, "api/persons");
   }
 
   public getData(active: boolean = true): Observable<any> {
-    return this.http.get(this.apiRoute + "?active=" + active);
+    return this.http.get(
+      this.apiRoute +
+        "?active=" +
+        active +
+        "&userId=" +
+        this._authService.getUserId()
+    );
+  }
+
+  public getPersonsForUserDashboard(): Observable<any> {
+    return this.http.get(
+      this.apiRoute +
+        "/getPersonsForUserDashboard?UserId=" +
+        this._authService.getUserId()
+    );
+  }
+
+  public getPersonsForUser(): Observable<any> {
+    return this.http.get(
+      this.apiRoute +
+        "/getPersonsForUser?UserId=" +
+        this._authService.getUserId()
+    );
   }
 
   public getActivePersonsByMonthYear(
@@ -74,7 +97,11 @@ export class PersonsService extends BaseRestApiService {
 
   public searchPersons(searchTerm: string): Observable<any> {
     return this.http.get(
-      this.apiRoute + "/searchPersons?searchTerm=" + searchTerm
+      this.apiRoute +
+        "/searchPersons?searchTerm=" +
+        searchTerm +
+        "&userId=" +
+        this._authService.getUserId()
     );
   }
 

@@ -1,3 +1,15 @@
+<button
+  *ngIf="checkUserHasAdminRole()"
+  nbButton
+  ghost
+  status="primary"
+  shape="round"
+  size="small"
+  id="add-existing-user-btn"
+  (click)="addExistingUser()"
+>
+  {{ getString("addExistingUser") }}
+</button>
 <ngx-grid
   [(data)]="contactsData"
   [columns]="contactsColumns"
@@ -10,7 +22,11 @@
   [pagerEnabled]="true"
   [entriesPerPageEnabled]="true"
   [refreshEnabled]="true"
+  [deleteEnabled]="checkUserHasAdminRole()"
+  [addEnabled]="checkUserHasPermission()"
+  [editEnabled]="checkUserHasPermission()"
   [gridMode]="gridMode"
   [selectionEnabled]="false"
   (createConfirm)="onCreateConfirm($event)"
+  (actionBtnClick)="onActionBtnClick($event)"
 ></ngx-grid>

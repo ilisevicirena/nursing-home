@@ -1,0 +1,116 @@
+<div id="login-container" (keyup.enter)="loginClick()">
+  <div class="row h-100">
+    <div class="col-md-6 d-flex align-items-center justify-content-center">
+      <div class="login-card col-md-7 col-sm-12">
+        <nb-spinner
+          *ngIf="loading"
+          size="giant"
+          status="primary"
+          message=""
+        ></nb-spinner>
+        <div class="d-flex align-items-center mb-2">
+          <img class="logo" src="../../../assets/images/logo.png" />
+          <div class="brand-name ms-2">{{ brandName }}</div>
+        </div>
+        <div class="row mb-3">
+          <div class="title mb-3">{{ getString("login") }}</div>
+        </div>
+        <div class="mt-3">
+          <div class="form-group">
+            <div class="label">
+              {{ getString("loginUsername") }}
+              <nb-icon
+                pack="eva"
+                icon="alert-circle-outline"
+                status="danger"
+                size="small"
+                class="ms-1 required-mark"
+                [nbTooltip]="getString('required')"
+              ></nb-icon>
+            </div>
+            <div class="value">
+              <input
+                nbInput
+                autocomplete="off"
+                shape="round"
+                [placeholder]="getString('loginUsername')"
+                name="username"
+                [(ngModel)]="identifier"
+                [status]="getUserNameStatus()"
+                fullWidth
+              />
+            </div>
+          </div>
+          <div class="form-group mt-3">
+            <div class="label">
+              {{ getString("password") }}
+              <nb-icon
+                pack="eva"
+                icon="alert-circle-outline"
+                status="danger"
+                size="small"
+                class="ms-1 required-mark"
+                [nbTooltip]="getString('required')"
+              ></nb-icon>
+            </div>
+            <div class="value">
+              <nb-form-field>
+                <input
+                  nbInput
+                  shape="round"
+                  [placeholder]="getString('password')"
+                  [type]="getInputType()"
+                  name="password"
+                  [(ngModel)]="password"
+                  [status]="getPasswordStatus()"
+                  fullWidth
+                />
+                <button
+                  type="button"
+                  shape="round"
+                  status="primary"
+                  nbSuffix
+                  nbButton
+                  ghost
+                  (click)="toggleShowPassword()"
+                >
+                  <nb-icon
+                    [icon]="showPassword ? 'eye-outline' : 'eye-off-outline'"
+                    pack="eva"
+                    [attr.aria-label]="
+                      showPassword ? 'hide password' : 'show password'
+                    "
+                  >
+                  </nb-icon>
+                </button>
+              </nb-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="row mt-3">
+          <button
+            class="mt-3"
+            nbButton
+            shape="round"
+            status="primary"
+            (click)="loginClick()"
+          >
+            {{ getString("signIn") }}
+          </button>
+        </div>
+        <div class="row">
+          <button
+            class="mt-3"
+            nbButton
+            ghost
+            shape="round"
+            status="primary"
+            (click)="resetPassword()"
+          >
+            {{ getString("forgotPassword") }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

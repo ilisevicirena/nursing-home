@@ -1,5 +1,5 @@
 <div class="h-100 w-100">
-  <div class="toolbar d-flex mb-3">
+  <div class="toolbar d-flex mb-3" *ngIf="checkUserHasAdminPermission()">
     <div class="col d-flex align-items-center">
       <button
         nbButton
@@ -106,17 +106,20 @@
       </div>
     </div>
   </div>
-  <div class="grid-container">
+  <div
+    class="grid-container"
+    [ngClass]="!checkUserHasAdminPermission() ? 'h-100' : ''"
+  >
     <ngx-grid
       [columns]="columns"
       [(data)]="calculations"
       [addEnabled]="false"
       [editEnabled]="false"
       [deleteEnabled]="false"
-      [selectionEnabled]="true"
-      [selectRowByClick]="true"
-      [selectionMultiple]="true"
-      [selectAllEnabled]="true"
+      [selectionEnabled]="checkUserHasAdminPermission()"
+      [selectRowByClick]="checkUserHasAdminPermission()"
+      [selectionMultiple]="checkUserHasAdminPermission()"
+      [selectAllEnabled]="checkUserHasAdminPermission()"
       (actionBtnClick)="onButtonItemClicked($event)"
       [defaultPerPageOption]="10"
     ></ngx-grid>

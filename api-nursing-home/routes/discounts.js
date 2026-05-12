@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { db } = require("../config/framework");
+const { db, authedRequest } = require("../config/framework");
 const { getError } = require("../resources/error-codes");
 const { Discount } = require("../models/Discount");
 
@@ -19,14 +19,13 @@ router.post("/add", async (request, response) => {
   try {
     var objectToSave = Object.assign(new Discount(), request.body);
     const pool = await db;
-    const result = await pool
-      .request()
+    const result = await authedRequest(pool, request.user?.userId)
       .input("name", objectToSave.Name)
       .input("description", objectToSave.Description)
       .input("qty", objectToSave.Quantity)
       .input("percent", objectToSave.PercentCalculation)
       .query(
-        "EXEC [dbo].[insertDiscount] @Name=@name, @Description=@description, @Quantity=@qty, @PercentCalculation=@percent"
+        "EXEC [dbo].[insertDiscount] @Name=@name, @Description=@description, @Quantity=@qty, @PercentCalculation=@percent, @ActingUserId=@ActingUserId"
       );
     if (result != null) response.json(result.recordset[0]);
     else response.send(getError(4001));

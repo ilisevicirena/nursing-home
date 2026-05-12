@@ -8,7 +8,8 @@ CREATE PROCEDURE [dbo].[updateNote]
 	(
 		@Id int,
 		@Title varchar(1000),
-		@Text varchar(max)
+		@Text varchar(max),
+		@ActingUserId NCHAR(36) = NULL
 	)
 AS
 BEGIN
@@ -23,4 +24,5 @@ BEGIN
 	[LastModified]=CAST(DATEADD(hour, 2, GETDATE()) AS DATE)
 	WHERE Id=@Id;
 
+	EXEC dbo.logUserActivity 'UPDATE_NOTE', 'Note updated', @ActingUserId;
 END

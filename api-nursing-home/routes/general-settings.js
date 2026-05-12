@@ -1,16 +1,15 @@
 const express = require("express");
 const router = express.Router();
-const { db } = require("../config/framework");
+const { db, authedRequest } = require("../config/framework");
 
 router.post("/updateGeneralSetting", async (request, response) => {
   try {
     var objectToSave = request.body;
     const pool = await db;
-    const result = await pool
-      .request()
+    const result = await authedRequest(pool, request.user?.userId)
       .input("tag", objectToSave.Tag)
       .input("value", objectToSave.Value)
-      .query("EXEC [dbo].[updateGeneralSetting] @Tag=@tag, @Value=@value");
+      .query("EXEC [dbo].[updateGeneralSetting] @Tag=@tag, @Value=@value, @ActingUserId=@ActingUserId");
     if (result != null) response.json(result);
     else response.send("GENERAL SETTING ERROR");
   } catch (err) {

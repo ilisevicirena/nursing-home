@@ -6,7 +6,8 @@
 CREATE PROCEDURE [dbo].[deactivateFurnitureStatus] 
 	-- Add the parameters for the stored procedure here
 	(
-		@Id int
+		@Id int,
+    @ActingUserId NCHAR(36) = NULL
 	)
 AS
 BEGIN
@@ -18,4 +19,5 @@ BEGIN
 	SET Active=0
 	WHERE Id=@Id;
 
+	EXEC dbo.logUserActivity 'DEACTIVATE_FURNITURE_STATUS', 'Furniture status type deactivated', @ActingUserId;
 END

@@ -1,0 +1,152 @@
+<nb-card class="profile-card">
+  <nb-card-header>
+    <div class="profile-header-status"></div>
+    <div class="title">{{ getString("contactAndAddressData") }}</div>
+    <div class="actions">
+      <button
+        nbButton
+        size="small"
+        shape="round"
+        status="primary"
+        (click)="editContactAndAddress()"
+      >
+        <nb-icon pack="eva" icon="edit-2-outline" nbPrefix></nb-icon>
+        {{ getString("edit") }}
+      </button>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="row m-0">
+      <div class="col-md-3">
+        <div class="form-group">
+          <div class="label">
+            {{ getString("telephone") }}
+          </div>
+          <div class="card-value">
+            <span *ngIf="contactInfo?.Telephone; else noData">{{
+              contactInfo?.Telephone
+            }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="form-group">
+          <div class="label">
+            {{ getString("mobile") }}
+          </div>
+          <div class="card-value">
+            <span *ngIf="contactInfo?.Mobile; else noData">
+              {{ contactInfo?.Mobile }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row m-0 pt-4">
+      <div class="col-md-12">
+        <div class="form-group">
+          <div class="label">
+            {{ getString("address") }}
+          </div>
+          <div class="card-value">
+            <div
+              *ngIf="
+                contactInfo?.ResidanceCityName ||
+                  contactInfo?.ResidanceStreetName ||
+                  contactInfo?.ResidanceHouseNumber;
+                else noData
+              "
+            >
+              <span *ngIf="contactInfo?.ResidanceStreetName">
+                {{ contactInfo?.ResidanceStreetName }}
+              </span>
+              <span *ngIf="contactInfo?.ResidanceHouseNumber">
+                {{ contactInfo?.ResidanceHouseNumber }},
+              </span>
+              <span *ngIf="contactInfo?.ResidanceCityName">
+                {{ contactInfo?.ResidanceCityName }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>
+
+<nb-card class="profile-card">
+  <nb-card-header>
+    <div class="profile-header-status"></div>
+    <div class="title">{{ getString("myPersons") }}</div>
+    <div class="actions">
+      <nb-form-field style="width: 30%">
+        <nb-icon
+          nbPrefix
+          pack="eva"
+          icon="search-outline"
+          status="primary"
+        ></nb-icon>
+        <input
+          nbInput
+          fullWidth
+          autocomplete="off"
+          shape="round"
+          fieldSize="small"
+          [placeholder]="getString('search')"
+          [(ngModel)]="searchTerm"
+          name="search"
+        />
+      </nb-form-field>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="row m-0">
+      <div class="col-md-3" *ngFor="let p of persons | filter : searchTerm">
+        <div class="status-card d-block" (click)="goToProfile(p.Id)">
+          <div class="row m-0">
+            <div
+              class="col-md-9 ps-0 d-flex justify-content-start align-items-center"
+            >
+              <nb-icon pack="eva" icon="person-outline" class="me-2"></nb-icon>
+              <div class="title" style="font-size: 14px">
+                {{ p.FirstName }} {{ p.LastName }}
+              </div>
+            </div>
+            <div
+              class="col-md-3 ps-0 pe-0 d-flex justify-content-end align-items-center"
+            >
+              <ngx-tag
+                [color]="p.Active ? 'success' : 'danger'"
+                [text]="p.Active ? getString('active') : getString('inactive')"
+                [shape]="'round'"
+              ></ngx-tag>
+            </div>
+          </div>
+          <div class="row m-0 pt-3">
+            <div class="col-md-6 ps-0">
+              <div class="form-group">
+                <div class="label">
+                  {{ getString("jmbg") }}
+                </div>
+                <div class="card-value">{{ p.JMBG }}</div>
+              </div>
+            </div>
+            <div class="col-md-6 pe-0">
+              <div class="form-group">
+                <div class="label">
+                  {{ getString("arrivalDate") }}
+                </div>
+                <div class="card-value">
+                  {{ p.StartDate | date : "dd.MM.yyyy." }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>
+<ng-template #noData>
+  <span>-</span>
+</ng-template>

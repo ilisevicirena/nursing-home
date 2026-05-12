@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { db } = require("../config/framework");
+const { db, authedRequest } = require("../config/framework");
 const { getError } = require("../resources/error-codes");
 const { Person } = require("../models/Person");
 
@@ -10,7 +10,8 @@ router.get("/", async (request, response) => {
     const result = await pool
       .request()
       .input("active", request.query.active)
-      .query("EXEC [dbo].[getPersons] @Active=@active");
+      .input("userId", request.query.userId)
+      .query("EXEC [dbo].[getPersons] @Active=@active, @UserId=@userId");
     response.json(result.recordset);
   } catch (err) {
     response.status(500);
@@ -39,8 +40,7 @@ router.post("/add", async (request, response) => {
   try {
     var objectToSave = Object.assign(new Person(), request.body);
     const pool = await db;
-    const result = await pool
-      .request()
+    const result = await authedRequest(pool, request.user?.userId)
       .input("firstName", objectToSave.FirstName)
       .input("lastName", objectToSave.LastName)
       .input("jmbg", objectToSave.JMBG)
@@ -63,7 +63,7 @@ router.post("/add", async (request, response) => {
       .input("email", objectToSave.Email)
       .input("doc", objectToSave.DoctorName)
       .query(
-        "EXEC [dbo].[insertPerson] @FirstName=@firstName, @LastName=@lastName, @JMBG=@jmbg, @BirthDate=@birthDate, @StartDate=@startDate, @Address=@address, @GenderId=@genderId, @MaidenLastName=@maidenLastName, @FatherFirstName=@fatherFirstName, @MotherFirstName=@motherFirstName, @MotherMaidenLastName=@motherMaidenLastName, @BirthCityId=@birthCityId, @BirthMunicipalityId=@birthMunicipalityId, @BirthCountryId=@birthCountryId, @ResidanceCityId=@residanceCityId, @ResidanceStreetName=@residanceStreetName, @ResidanceHouseNumber=@residanceHouseNumber, @Telephone=@tel, @Mobile=@mob, @Email=@email, @DoctorName=@doc"
+        "EXEC [dbo].[insertPerson] @FirstName=@firstName, @LastName=@lastName, @JMBG=@jmbg, @BirthDate=@birthDate, @StartDate=@startDate, @Address=@address, @GenderId=@genderId, @MaidenLastName=@maidenLastName, @FatherFirstName=@fatherFirstName, @MotherFirstName=@motherFirstName, @MotherMaidenLastName=@motherMaidenLastName, @BirthCityId=@birthCityId, @BirthMunicipalityId=@birthMunicipalityId, @BirthCountryId=@birthCountryId, @ResidanceCityId=@residanceCityId, @ResidanceStreetName=@residanceStreetName, @ResidanceHouseNumber=@residanceHouseNumber, @Telephone=@tel, @Mobile=@mob, @Email=@email, @DoctorName=@doc, @ActingUserId=@ActingUserId"
       );
     if (result != null) response.json(result.recordset[0]);
     else response.send(getError(8001));
@@ -77,10 +77,9 @@ router.delete("/delete", async (request, response) => {
   try {
     var objectToSave = Object.assign(new Person(), request.body);
     const pool = await db;
-    const result = await pool
-      .request()
+    const result = await authedRequest(pool, request.user?.userId)
       .input("id", objectToSave.Id)
-      .query("EXEC [dbo].[deletePerson] @Id=@id");
+      .query("EXEC [dbo].[deletePerson] @Id=@id, @ActingUserId=@ActingUserId");
     if (result != null) response.json(result.recordset);
     else response.send(getError(8002));
   } catch (err) {
@@ -93,8 +92,7 @@ router.post("/updateDetailed", async (request, response) => {
   try {
     var objectToSave = Object.assign(new Person(), request.body);
     const pool = await db;
-    const result = await pool
-      .request()
+    const result = await authedRequest(pool, request.user?.userId)
       .input("id", objectToSave.Id)
       .input("firstName", objectToSave.FirstName)
       .input("lastName", objectToSave.LastName)
@@ -119,7 +117,7 @@ router.post("/updateDetailed", async (request, response) => {
       .input("email", objectToSave.Email)
       .input("doc", objectToSave.DoctorName)
       .query(
-        "EXEC [dbo].[updatePersonDetailed] @Id=@id, @FirstName=@firstName, @LastName=@lastName, @JMBG=@jmbg, @BirthDate=@birthDate, @StartDate=@startDate, @Address=@address, @GenderId=@genderId, @MaidenLastName=@maidenLastName, @FatherFirstName=@fatherFirstName, @MotherFirstName=@motherFirstName, @MotherMaidenLastName=@motherMaidenLastName, @BirthCityId=@birthCityId, @BirthMunicipalityId=@birthMunicipalityId, @BirthCountryId=@birthCountryId, @ResidanceCityId=@residanceCityId, @ResidanceStreetName=@residanceStreetName, @ResidanceHouseNumber=@residanceHouseNumber, @Telephone=@tel, @Mobile=@mob, @Email=@email, @DoctorName=@doc"
+        "EXEC [dbo].[updatePersonDetailed] @Id=@id, @FirstName=@firstName, @LastName=@lastName, @JMBG=@jmbg, @BirthDate=@birthDate, @StartDate=@startDate, @Address=@address, @GenderId=@genderId, @MaidenLastName=@maidenLastName, @FatherFirstName=@fatherFirstName, @MotherFirstName=@motherFirstName, @MotherMaidenLastName=@motherMaidenLastName, @BirthCityId=@birthCityId, @BirthMunicipalityId=@birthMunicipalityId, @BirthCountryId=@birthCountryId, @ResidanceCityId=@residanceCityId, @ResidanceStreetName=@residanceStreetName, @ResidanceHouseNumber=@residanceHouseNumber, @Telephone=@tel, @Mobile=@mob, @Email=@email, @DoctorName=@doc, @ActingUserId=@ActingUserId"
       );
     if (result != null) response.json(result.recordset);
     else response.send(getError(8003));
@@ -133,8 +131,7 @@ router.post("/update", async (request, response) => {
   try {
     var objectToSave = Object.assign(new Person(), request.body);
     const pool = await db;
-    const result = await pool
-      .request()
+    const result = await authedRequest(pool, request.user?.userId)
       .input("id", objectToSave.Id)
       .input("firstName", objectToSave.FirstName)
       .input("lastName", objectToSave.LastName)
@@ -145,7 +142,7 @@ router.post("/update", async (request, response) => {
       .input("address", objectToSave.Address)
       .input("genderId", objectToSave.GenderId)
       .query(
-        "EXEC [dbo].[updatePersonDetailed] @Id=@id, @FirstName=@firstName, @LastName=@lastName, @JMBG=@jmbg, @BirthDate=@birthDate, @StartDate=@startDate, @EndDate=@endDate, @Address=@address, @GenderId=@genderId"
+        "EXEC [dbo].[updatePersonDetailed] @Id=@id, @FirstName=@firstName, @LastName=@lastName, @JMBG=@jmbg, @BirthDate=@birthDate, @StartDate=@startDate, @EndDate=@endDate, @Address=@address, @GenderId=@genderId, @ActingUserId=@ActingUserId"
       );
     if (result != null) response.json(result.recordset);
     else response.send(getError(8003));
@@ -173,13 +170,12 @@ router.post("/changeStatusPerson", async (request, response) => {
   try {
     var objectToSave = Object.assign(new Person(), request.body);
     const pool = await db;
-    const result = await pool
-      .request()
+    const result = await authedRequest(pool, request.user?.userId)
       .input("id", objectToSave.Id)
       .input("status", objectToSave.Active)
       .input("endDate", objectToSave.EndDate)
       .query(
-        "EXEC [dbo].[changeStatusPerson] @Id=@id, @Status=@status, @Date=@endDate"
+        "EXEC [dbo].[changeStatusPerson] @Id=@id, @Status=@status, @Date=@endDate, @ActingUserId=@ActingUserId"
       );
     if (result != null) response.json(result.recordset);
     else response.send(getError(8004));
@@ -193,12 +189,11 @@ router.post("/changeRoomPerson", async (request, response) => {
   try {
     var objectToSave = request.body;
     const pool = await db;
-    const result = await pool
-      .request()
+    const result = await authedRequest(pool, request.user?.userId)
       .input("personId", objectToSave.PersonId)
       .input("roomId", objectToSave.RoomId)
       .query(
-        "EXEC [dbo].[changeRoomPerson] @PersonId=@personId, @RoomId=@roomId"
+        "EXEC [dbo].[changeRoomPerson] @PersonId=@personId, @RoomId=@roomId, @ActingUserId=@ActingUserId"
       );
     if (result != null) response.json(result.recordset);
     else response.send(getError(8005));
@@ -258,7 +253,10 @@ router.get("/searchPersons", async (request, response) => {
     const result = await pool
       .request()
       .input("searchTerm", request.query.searchTerm)
-      .query("EXEC [dbo].[searchPersons] @searchTerm=@searchTerm");
+      .input("userId", request.query.userId)
+      .query(
+        "EXEC [dbo].[searchPersons] @searchTerm=@searchTerm, @UserId=@userId"
+      );
     response.json(result.recordset);
   } catch (err) {
     response.status(500);
@@ -273,6 +271,34 @@ router.get("/getLogForPerson", async (request, response) => {
       .request()
       .input("personId", request.query.PersonId)
       .query("EXEC [dbo].[getLogForPerson] @Id=@personId");
+    response.json(result.recordset);
+  } catch (err) {
+    response.status(500);
+    response.send(err.message);
+  }
+});
+
+router.get("/getPersonsForUserDashboard", async (request, response) => {
+  try {
+    const pool = await db;
+    const result = await pool
+      .request()
+      .input("UserId", request.query.UserId)
+      .execute("getPersonsForUserDashboard");
+    response.json(result.recordset);
+  } catch (err) {
+    response.status(500);
+    response.send(err.message);
+  }
+});
+
+router.get("/getPersonsForUser", async (request, response) => {
+  try {
+    const pool = await db;
+    const result = await pool
+      .request()
+      .input("UserId", request.query.UserId)
+      .execute("getPersonsForUser");
     response.json(result.recordset);
   } catch (err) {
     response.status(500);

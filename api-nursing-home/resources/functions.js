@@ -8,6 +8,7 @@ const {
 const { PDFDocument } = require("pdf-lib");
 const util = require("util");
 const fontkit = require("@pdf-lib/fontkit");
+const crypto = require("crypto");
 
 function getAbsolutePathToFilesFolder() {
   var folderPath = "./" + FILES_FOLDER;
@@ -75,6 +76,14 @@ function bytesToBase64(bytes) {
   return base64String;
 }
 
+function generatePassword(length = 12) {
+  return crypto
+    .randomBytes(length)
+    .toString("base64")
+    .slice(0, length)
+    .replace(/[+/]/g, "A");
+}
+
 module.exports = {
   getAbsolutePathToFilesFolder,
   readInputFile,
@@ -82,4 +91,5 @@ module.exports = {
   getCustomFont,
   fillPdfForm,
   bytesToBase64,
+  generatePassword,
 };

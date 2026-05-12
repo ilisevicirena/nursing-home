@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { db } = require("../config/framework");
+const { db, authedRequest } = require("../config/framework");
 const { getError } = require("../resources/error-codes");
 
 router.get("/", async (request, response) => {
@@ -88,13 +88,12 @@ router.post("/add", async (request, response) => {
   try {
     var objectToSave = request.body;
     const pool = await db;
-    const result = await pool
-      .request()
+    const result = await authedRequest(pool, request.user?.userId)
       .input("date", objectToSave.VisitDate)
       .input("doctors", objectToSave.Doctors)
       .input("nurses", objectToSave.Nurses)
       .query(
-        "EXEC [dbo].[insertDoctorVisitTour] @visitDate=@date, @doctors=@doctors, @nurses=@nurses"
+        "EXEC [dbo].[insertDoctorVisitTour] @visitDate=@date, @doctors=@doctors, @nurses=@nurses, @ActingUserId=@ActingUserId"
       );
     if (result != null) response.json(result.recordset);
     else response.send(getError(90003));
@@ -108,10 +107,9 @@ router.delete("/delete", async (request, response) => {
   try {
     var objectToSave = request.body;
     const pool = await db;
-    const result = await pool
-      .request()
+    const result = await authedRequest(pool, request.user?.userId)
       .input("id", objectToSave.Id)
-      .query("EXEC [dbo].[deleteDoctorVisitTour] @Id=@id");
+      .query("EXEC [dbo].[deleteDoctorVisitTour] @Id=@id, @ActingUserId=@ActingUserId");
     if (result != null) response.send({ error: false });
     else response.send(getError(90004));
   } catch (err) {
@@ -124,12 +122,11 @@ router.post("/completeDoctorVisit", async (request, response) => {
   try {
     var objectToSave = request.body;
     const pool = await db;
-    const result = await pool
-      .request()
+    const result = await authedRequest(pool, request.user?.userId)
       .input("id", objectToSave.Id)
       .input("total", objectToSave.Total)
       .query(
-        "EXEC [dbo].[completeDoctorVisitTour] @Id=@id, @TotalPersons=@total"
+        "EXEC [dbo].[completeDoctorVisitTour] @Id=@id, @TotalPersons=@total, @ActingUserId=@ActingUserId"
       );
     if (result != null) response.send({ error: false });
     else response.send(getError(90005));

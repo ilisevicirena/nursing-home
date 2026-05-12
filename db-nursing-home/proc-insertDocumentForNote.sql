@@ -1,46 +1,47 @@
-CREATE PROCEDURE [dbo].[insertDocumentForNote]
-	-- Add the parameters for the stored procedure here
-	(
-		@PersonId int,
-		@DocumentTypeId int,
-		@DocumentName varchar(50),
-		@Extension varchar(10),
-		@FileType varchar(50),
-		@SavePath varchar(max),
-		@NoteId int
-	)
+create PROCEDURE [dbo].[insertDocumentForNote]
+(
+    @PersonId INT,
+    @DocumentTypeId INT,
+    @DocumentName VARCHAR(50),
+    @Extension VARCHAR(10),
+    @FileType VARCHAR(50),
+    @SavePath VARCHAR(MAX),
+    @NoteId INT,
+    @UserId UNIQUEIDENTIFIER, -- Added parameter for UserId
+    @ActingUserId NCHAR(36) = NULL
+)
 AS
 BEGIN
-	-- SET NOCOUNT ON added to prevent extra result sets from
-	-- interfering with SELECT statements.
-	SET NOCOUNT ON;
+    SET NOCOUNT ON;
 
-	DECLARE @DocumentId int;
-	DECLARE @NoteDocumentRelationId int;
+    DECLARE @DocumentId INT;
+    DECLARE @NoteDocumentRelationId INT;
 
-	-- Declare a table variable to store the result of the insertDocument procedure
-	DECLARE @DocumentTable TABLE (
-		Id int,
-		Path varchar(max),
-		StorageName varchar(200)
-	);
+    -- Declare a table variable to store the result of the insertDocument procedure
+    DECLARE @DocumentTable TABLE (
+        Id INT,
+        Path VARCHAR(MAX),
+        StorageName VARCHAR(200)
+    );
 
-	-- Insert document and get the document ID and path
-	INSERT INTO @DocumentTable
-	EXEC [dbo].[insertDocument] @PersonId, @DocumentTypeId, @DocumentName, @Extension, @FileType, @SavePath;
+    -- Insert document and get the document ID and path
+    INSERT INTO @DocumentTable
+    EXEC [dbo].[insertDocument] @PersonId, @DocumentTypeId, @DocumentName, @Extension, @FileType, @SavePath, @UserId;
 
-	-- Get the document ID from the first row of the result
-	SELECT TOP 1 @DocumentId = Id
-	FROM @DocumentTable;
+    -- Get the document ID from the first row of the result
+    SELECT TOP 1 @DocumentId = Id
+    FROM @DocumentTable;
 
-	-- Insert into noteDocumentRelation
-	INSERT INTO dbo.NoteDocumentRelation (NoteId, DocumentId)
-	VALUES (@NoteId, @DocumentId);
+    -- Insert into NoteDocumentRelation
+    INSERT INTO dbo.NoteDocumentRelation (NoteId, DocumentId)
+    VALUES (@NoteId, @DocumentId);
 
-	-- Get the scope ID of the inserted noteDocumentRelation row
-	SET @NoteDocumentRelationId = SCOPE_IDENTITY();
+    -- Get the scope ID of the inserted NoteDocumentRelation row
+    SET @NoteDocumentRelationId = SCOPE_IDENTITY();
 
-	-- Return the noteDocumentRelation ID
-	SELECT * FROM @DocumentTable;
-	SELECT @NoteDocumentRelationId AS NoteDocumentRelationId;
+    -- Return the inserted document details and NoteDocumentRelationId
+    SELECT * FROM @DocumentTable;
+    SELECT @NoteDocumentRelationId AS NoteDocumentRelationId;
+
+    EXEC dbo.logUserActivity 'INSERT_DOCUMENT_FOR_NOTE', 'Document added to note', @ActingUserId;
 END

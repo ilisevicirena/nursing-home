@@ -152,11 +152,11 @@
             </div>
           </div>
         </div>
-        <div class="group-title mt-3">
+        <div class="group-title mt-3" *ngIf="checkUserHasPermission()">
           {{ getString("stayData") }}
           <div class="line"></div>
         </div>
-        <div class="row form-row">
+        <div class="row form-row" *ngIf="checkUserHasPermission()">
           <div class="col-md-4">
             <div class="form-group">
               <div class="label">{{ getString("startDate") }}</div>
@@ -251,7 +251,7 @@
             </div>
           </div>
         </div>
-        <div class="row form-row">
+        <div class="row form-row" *ngIf="checkUserHasPermission()">
           <div class="col-md-12">
             <div class="label">
               {{ getString("currentStatus") }}
@@ -340,7 +340,7 @@
               </div>
             </div>
           </div>
-          <div class="col-md-1">
+          <div class="col-md-1" *ngIf="checkUserHasPermission()">
             <div class="label">&nbsp;</div>
             <div class="value">
               <button

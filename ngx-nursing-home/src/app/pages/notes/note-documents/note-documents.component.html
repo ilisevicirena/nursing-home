@@ -28,7 +28,7 @@
           [formatDate]="true"
           [useCustomPreview]="true"
           [useCustomDownload]="true"
-          [canDelete]="showUploadBtn"
+          [canDelete]="showUploadBtn && checkUserHasPermission()"
           (fileMenuItemClick)="onFileMenuItemClick($event)"
           [fileData]="{
             id: d.Id,

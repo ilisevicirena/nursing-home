@@ -14,7 +14,8 @@ CREATE PROCEDURE [dbo].[insertCalculation]
 		@DateTo datetime,
 		@PaymentDaysDeadline int=NULL,
 		@PriceUnitId int,
-		@MeasureUnitId int
+		@MeasureUnitId int,
+		@ActingUserId NCHAR(36) = NULL
 	)
 AS
 BEGIN
@@ -30,4 +31,5 @@ BEGIN
 
 	select SCOPE_IDENTITY() as [CalculationId];
 
+	EXEC dbo.logUserActivity 'INSERT_CALCULATION', 'Calculation inserted', @ActingUserId;
 END

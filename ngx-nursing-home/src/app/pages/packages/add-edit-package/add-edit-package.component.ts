@@ -22,7 +22,7 @@ import { GridColumn, GridLookupColumn } from "shared-components";
 import { SelectGridSelectionModel } from "shared-components/lib/models/select-grid.model";
 import {
   CalculationService,
-  ECalculationMeasureUnit,
+  ICalculationMeasureUnit,
 } from "../../../services/calculation.service";
 
 @Component({
@@ -147,6 +147,9 @@ export class AddEditPackageComponent
       this._priceUnitsService.getData().subscribe(
         (data) => {
           this.priceUnits = data;
+          /*
+          if (data.length == 1)
+            this.package.DefaultPackagePriceUnitId = data[0].Id;*/
         },
         (err) => {
           console.error(err);
@@ -160,6 +163,11 @@ export class AddEditPackageComponent
       this._measureUnitService.getCalculationMeasureUnits().subscribe(
         (data) => {
           this.calculationMeasureUnits = data;
+          /*
+          var monthUnit = this.calculationMeasureUnits.find(
+            (x) => x.Code == "month"
+          );
+          if (monthUnit) this.package.CalculationMeasureUnitId = monthUnit.Id;*/
         },
         (err) => {
           console.error(err);
@@ -202,7 +210,7 @@ export class AddEditPackageComponent
     this.packagePrice = this._calculationService.calculatePackagePrice(
       this.package,
       this.packageServices,
-      this.package.MeasureUnitCode as ECalculationMeasureUnit
+      this.package.MeasureUnitCode as ICalculationMeasureUnit
     ).priceRounded;
   }
 

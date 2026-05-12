@@ -725,5 +725,461 @@
   {
     "key": "allowDifferentGenderPersonsInRoomDescription",
     "value": "Ova radnja dopušta ili onemogućuje stavljanje osoba različitog spola u istu sobu. Imajte na umu da će svi podaci koji su prethodno spremljeni ostati isti. Na primjer, ako ste imali osobe različitog spola u istoj prostoriji, a nakon toga ste aktivirali ovo ograničenje, ono neće imati učinka na prethodno stanje pa ćete te osobe morati ručno odvojiti. Ograničenje će stupiti na snagu tek nakon ove radnje."
+  },
+  {
+    "key": "authorizationFailed",
+    "value": "Autorizacija zahtjeva nije prošla."
+  },
+  {
+    "key": "login",
+    "value": "Prijava"
+  },
+  {
+    "key": "loginUsername",
+    "value": "Email ili korisničko ime"
+  },
+  {
+    "key": "password",
+    "value": "Lozinka"
+  },
+  {
+    "key": "signIn",
+    "value": "Prijavi se"
+  },
+  {
+    "key": "forgotPassword",
+    "value": "Zaboravljena lozinka"
+  },
+  {
+    "key": "errInvalidUsernameOrEmail",
+    "value": "Pogrešno korisničko ime ili e-mail!"
+  },
+  {
+    "key": "errUserNotActive",
+    "value": "Korisnik je deaktiviran!"
+  },
+  {
+    "key": "errUserBlocked",
+    "value": "Korisnik je blokiran!"
+  },
+  {
+    "key": "errInvalidPassword",
+    "value": "Pogrešna lozinka!"
+  },
+  {
+    "key": "errUserNotVerified",
+    "value": "E-mail adresa korisnika nije potvrđena!"
+  },
+  {
+    "key": "verified",
+    "value": "Potvrđen"
+  },
+  {
+    "key": "oldPassword",
+    "value": "Stara lozinka"
+  },
+  {
+    "key": "newPassword",
+    "value": "Nova lozinka"
+  },
+  {
+    "key": "retypePassword",
+    "value": "Ponovljena nova lozinka"
+  },
+  {
+    "key": "resetPassword",
+    "value": "Promjeni lozinku"
+  },
+  {
+    "key": "retypedPasswordInvalid",
+    "value": "Nova lozinka i ponovljena lozinka nisu jednake!"
+  },
+  {
+    "key": "forgotPasswordNotice",
+    "value": "Upišite e-mail adresu vašeg računa za resetiranje lozinke. Ako ste se pristupali sustavu pomoću korisničkog imena kontaktirajte sistem administratora za daljnje upute."
+  },
+  {
+    "key": "sendResetPasswordEmail",
+    "value": "Zatraži novu lozinku"
+  },
+  {
+    "key": "resetPasswordRedirectMessage",
+    "value": "Lozinka je uspješno promijenjena. Uskoro ćete biti preusmjereni na prijavu u sustav s novom lozinkom."
+  },
+  {
+    "key": "resetPasswordEmailTemplate",
+    "value": "Poštovani,<br><br>Zatražili ste promjenu lozinke. Rok za promjenu je: #ExpiryDate. <br>Molimo slijedite link kako bi postavili novu lozinku.<br><br><a style='background-color: MediumTurquoise; color: white; padding: 10px 15px; font-weight: bold; text-decoration: none;' href='#SetNewPasswordAppLink'>POSTAVI NOVU LOZINKU</a><br><br>Ukoliko gumb ne radi, molimo zalijepite sljedeći link u vaš pretraživač: #SetNewPasswordAppLink <br><br>S poštovanjem,<br> #EnvironmentBrand."
+  },
+  {
+    "key": "resetPasswordEmailSubject",
+    "value": "Zahtjev za postavljanje lozinke"
+  },
+  {
+    "key": "forgotPasswordRedirectMessage",
+    "value": "Zahtjev za postavljanje lozinke uspješno je poslan. Provjerite svoj e-mail za daljnje upute. Uskoro ćete biti preusmjereni na stranicu za prijavu u sustav."
+  },
+  {
+    "key": "setPasswordRedirectMessage",
+    "value": "Nova lozinka uspješno je postavljena. Uskoro ćete biti preusmjereni na stranicu za prijavu u sustav s novom lozinkom."
+  },
+  {
+    "key": "setPassword",
+    "value": "Postavi lozinku"
+  },
+  {
+    "key": "errUserNotFound",
+    "value": "Korisnik nije pronađen."
+  },
+  {
+    "key": "errInvalidTokenFormat",
+    "value": "Token je u neispravnom formatu."
+  },
+  {
+    "key": "errInvalidToken",
+    "value": "Token je neispravan."
+  },
+  {
+    "key": "errTokenExpired",
+    "value": "Token je istekao. Pošaljite zahtjev za reset lozinke."
+  },
+  {
+    "key": "newUser",
+    "value": "Novi korisnik"
+  },
+  {
+    "key": "user",
+    "value": "Korisnik"
+  },
+  {
+    "key": "username",
+    "value": "Korisničko ime"
+  },
+  {
+    "key": "generateNewPassword",
+    "value": "Generiraj novu lozinku"
+  },
+  {
+    "key": "badgeNew",
+    "value": "Novi"
+  },
+  {
+    "key": "newUserTitle",
+    "value": "Novi korisnik"
+  },
+  {
+    "key": "userRights",
+    "value": "Korisnička prava"
+  },
+  {
+    "key": "userStatuses",
+    "value": "Statusi"
+  },
+  {
+    "key": "verifyUserEmailTemplate",
+    "value": "Poštovani,<br><br> Kako bi ste aktivirali svoj korisnički račun, molimo Vas, potvrdite svoju e-mail adresu. Rok za potvrdu e-mail adrese je: #ExpiryDate. <br>Molimo Vas, slijedite poveznicu za potvrdu adrese.<br><br><a style='background-color: MediumTurquoise; color: white; padding: 10px 15px; font-weight: bold; text-decoration: none;' href='#SetNewPasswordAppLink'>POTVRDI E-MAIL</a><br><br>Ukoliko gumb ne radi, kopirajte sljedeći link u svoj pretraživač: #SetNewPasswordAppLink <br><br>S poštovanjem,<br> #EnvironmentBrand."
+  },
+  {
+    "key": "verifyUserEmailSubject",
+    "value": "Potvrda e-mail adrese"
+  },
+  {
+    "key": "age",
+    "value": "Dob"
+  },
+  {
+    "key": "spentTime",
+    "value": "Na brizi"
+  },
+  {
+    "key": "profileYears",
+    "value": "god"
+  },
+  {
+    "key": "profileMonths",
+    "value": "mjeseci"
+  },
+  {
+    "key": "welcome",
+    "value": "Dobrodošli"
+  },
+  {
+    "key": "arrivalDate",
+    "value": "Datum dolaska"
+  },
+  {
+    "key": "spentTimeMonths",
+    "value": "Provedeni mjeseci"
+  },
+  {
+    "key": "seeFullProfile",
+    "value": "Pogledaj profil"
+  },
+  {
+    "key": "personsCount",
+    "value": "Broj mojih osoba u domu"
+  },
+  {
+    "key": "unpaidCalculations",
+    "value": "Broj neplaćenih računa"
+  },
+  {
+    "key": "forCurrentMonth",
+    "value": "za trenutni mjesec"
+  },
+  {
+    "key": "totalEventsCount",
+    "value": "ukupno događaja"
+  },
+  {
+    "key": "birthdays",
+    "value": "rođendana"
+  },
+  {
+    "key": "goToAllEvents",
+    "value": "Pogledaj sve događaje"
+  },
+  {
+    "key": "personsManagementSubtitle",
+    "value": "Modul za upravljanje osobama u domu. Omogućava akcije poput dodavanja nove osobe, uređivanja i brisanja."
+  },
+  {
+    "key": "employeesManagementSubtitle",
+    "value": "Modul za upravljanje zaposlenicima. Omogućava akcije poput dodavanja novog zaposlenika, uređivanja i brisanja. Nudi upravljanje godišnjim odmorima, radnim mjestima i sl."
+  },
+  {
+    "key": "usersManagementSubtitle",
+    "value": "Modul za upravljanje korisnicima. Omogućava akcije poput dodavanja novog korisnika, uređivanja i brisanja. Nudi mogućnost upravljanja korisničkim ulogama i pravima u sustavu."
+  },
+  {
+    "key": "accomodationManagementSubtitle",
+    "value": "Modul za upravljanje smještajem. Nudi mogućnosti upravljanja razmještajem osoba po sobama, te upravljanje mapom objekta."
+  },
+  {
+    "key": "servicesManagementSubtitle",
+    "value": "Modul za upravljanje uslugama. Omogućava upravljanje uslugama i paketima usluga, kreiranje ponude te upravljanje popustima."
+  },
+  {
+    "key": "calendarSubtitle",
+    "value": "Modul za upravljanje kalendarom, događajima i podsjetnicima."
+  },
+  {
+    "key": "calculationSubtitle",
+    "value": "Modul za obračun. Omogućava kreiranje obračuna za osobe, izdavanje računa te uvid u poslovanje objekta."
+  },
+  {
+    "key": "doctorVisitsSubtitle",
+    "value": "Modul za upravljanje liječničkim posjetama. Omogućava uvid u liječničke posjete te uvid u zdravstveno stanje pacijenata."
+  },
+  {
+    "key": "codebooksSubtitle",
+    "value": "Modul za upravljanje šifarnicima. Nudi mogućnost upravljanja šifarnicima i postavkama sustava."
+  },
+  {
+    "key": "modules",
+    "value": "Moduli"
+  },
+  {
+    "key": "moduleFeatures",
+    "value": "Funkcionalnosti"
+  },
+  {
+    "key": "goToFeature",
+    "value": "Idi na funkcionalnost"
+  },
+  {
+    "key": "usersManagement",
+    "value": "Upravljanje korisnicima"
+  },
+  {
+    "key": "codebooks",
+    "value": "Šifarnici"
+  },
+  {
+    "key": "dateRegistered",
+    "value": "Datum registracije"
+  },
+  {
+    "key": "firstLogin",
+    "value": "Prva prijava"
+  },
+  {
+    "key": "lastPasswordChange",
+    "value": "Zadnja promjena lozinke"
+  },
+  {
+    "key": "lastDataChange",
+    "value": "Zadnje uređivanje profila"
+  },
+  {
+    "key": "unreadNotifications",
+    "value": "Nepročitane obavijesti"
+  },
+  {
+    "key": "contactAndAddressData",
+    "value": "Kontakt & Adresa"
+  },
+  {
+    "key": "myPersons",
+    "value": "Moje osobe u domu"
+  },
+  {
+    "key": "editContactAndAdress",
+    "value": "Uredi kontakt i adresu"
+  },
+  {
+    "key": "contactManagement",
+    "value": "Upravljanje kontaktima"
+  },
+  {
+    "key": "generateUser",
+    "value": "Upravljanje korisnikom"
+  },
+  {
+    "key": "users",
+    "value": "Korisnici"
+  },
+  {
+    "key": "allModules",
+    "value": "Svi moduli"
+  },
+  {
+    "key": "blockUser",
+    "value": "Blokiraj"
+  },
+  {
+    "key": "activateUser",
+    "value": "Aktiviraj"
+  },
+  {
+    "key": "deactivateUser",
+    "value": "Deaktiviraj"
+  },
+  {
+    "key": "wantToBlockUser",
+    "value": "Želiš li blokirati korisnika?"
+  },
+  {
+    "key": "unblockUser",
+    "value": "Deblokiraj"
+  },
+  {
+    "key": "wantToActivateUser",
+    "value": "Želiš li aktivirati korisnika?"
+  },
+  {
+    "key": "wantToDeactivateUser",
+    "value": "Želiš li deaktivirati korisnika?"
+  },
+  {
+    "key": "wantToUnblockUser",
+    "value": "Želiš li deblokirati korisnika?"
+  },
+  {
+    "key": "deleteUser",
+    "value": "Obriši korisnika"
+  },
+  {
+    "key": "wantToDeleteUser",
+    "value": "Želiš li trajno obrisati ovog korisnika? Ova radnja se ne može poništiti."
+  },
+  {
+    "key": "role",
+    "value": "Uloga"
+  },
+  {
+    "key": "userActiveState",
+    "value": "Aktivan"
+  },
+  {
+    "key": "userBlockedState",
+    "value": "Blokiran"
+  },
+  {
+    "key": "userVerifiedState",
+    "value": "Potvrđen"
+  },
+  {
+    "key": "userInactive",
+    "value": "Deaktiviran"
+  },
+  {
+    "key": "userRole",
+    "value": "Korisnička uloga"
+  },
+  {
+    "key": "registeredDate",
+    "value": "Datum registracije"
+  },
+  {
+    "key": "currentUserStatus",
+    "value": "Trenutni status"
+  },
+  {
+    "key": "sendVerificationEmail",
+    "value": "Pošalji e-mail za potvrdu"
+  },
+  {
+    "key": "userActive",
+    "value": "Aktivan"
+  },
+  {
+    "key": "userBlocked",
+    "value": "Blokiran"
+  },
+  {
+    "key": "emailSent",
+    "value": "E-mail uspješno poslan."
+  },
+  {
+    "key": "verificationMailSentAt",
+    "value": "E-mail za potvrdu zadnje poslan"
+  },
+  {
+    "key": "verificationMailTokenExpiryDate",
+    "value": "Istek e-maila za potvrdu računa"
+  },
+  {
+    "key": "userNotVerified",
+    "value": "Nije potvrđen"
+  },
+  {
+    "key": "logout",
+    "value": "Odjava"
+  },
+  {
+    "key": "userProfile",
+    "value": "Profil"
+  },
+  {
+    "key": "changePassword",
+    "value": "Promjena lozinke"
+  },
+  {
+    "key": "edit",
+    "value": "Uredi"
+  },
+  {
+    "key": "openSidebar",
+    "value": "Otvori izbornik"
+  },
+  {
+    "key": "closeSidebar",
+    "value": "Zatvori izbornik"
+  },
+  {
+    "key": "error",
+    "value": "Greška"
+  },
+  {
+    "key": "furniture",
+    "value": "Namještaj"
+  },
+  {
+    "key": "logoutAndRedirectShortly",
+    "value": "Uskoro ćete biti odjavljeni."
+  },
+  {
+    "key": "roomHistory",
+    "value": "Historija sobe"
   }
 ]

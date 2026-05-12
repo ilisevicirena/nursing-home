@@ -1,18 +1,20 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { NbIconLibraries } from "@nebular/theme";
 import { HttpClient } from "@angular/common/http";
 import { initializeStrings } from "./resources/strings";
 import { environment } from "../environments/environment";
+import { IdleService } from "./services/idle.service";
 
 @Component({
   selector: "ngx-app",
   template:
     '<nb-layout><nb-layout-column class="p-0"><router-outlet></router-outlet></nb-layout-column></nb-layout>',
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   constructor(
     private _iconLibraries: NbIconLibraries,
-    private _http: HttpClient
+    private _http: HttpClient,
+    private _idleService: IdleService
   ) {
     this._iconLibraries.registerFontPack("fas", {
       packClass: "fas",
@@ -31,5 +33,9 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     initializeStrings(this._http, environment.translationFile).subscribe();
+  }
+
+  ngOnDestroy(): void {
+    this._idleService.ngOnDestroy();
   }
 }

@@ -689,5 +689,469 @@
   {
     "key": "allowDifferentGenderPersonsInRoomDescription",
     "value": "This action allows or disables placing people of different genders in the same room. Note that any data previously saved will remain the same. For example, if you had people of different genders in the same room, and then activated this restriction, it will have no effect on the previous state, so you will have to manually separate those people. The restriction will take effect only after this action."
+  },
+  {
+    "key": "authorizationFailed",
+    "value": "Request authorization failed."
+  },
+  {
+    "key": "login",
+    "value": "Sign in"
+  },
+  {
+    "key": "loginUsername",
+    "value": "Email or username"
+  },
+  {
+    "key": "password",
+    "value": "Password"
+  },
+  {
+    "key": "signIn",
+    "value": "Sign in"
+  },
+  {
+    "key": "forgotPassword",
+    "value": "Forgot password"
+  },
+  {
+    "key": "errInvalidUsernameOrEmail",
+    "value": "Invalid username or e-mail!"
+  },
+  {
+    "key": "errUserNotActive",
+    "value": "User not active!"
+  },
+  {
+    "key": "errUserBlocked",
+    "value": "User is blocked!"
+  },
+  {
+    "key": "errInvalidPassword",
+    "value": "Invalid password!"
+  },
+  {
+    "key": "errUserNotVerified",
+    "value": "User not verified!"
+  },
+  {
+    "key": "verified",
+    "value": "Verified"
+  },
+  {
+    "key": "userProfile",
+    "value": "Profile"
+  },
+  {
+    "key": "changePassword",
+    "value": "Password change"
+  },
+  {
+    "key": "logout",
+    "value": "Sign out"
+  },
+  {
+    "key": "oldPassword",
+    "value": "Old password"
+  },
+  {
+    "key": "newPassword",
+    "value": "New password"
+  },
+  {
+    "key": "retypePassword",
+    "value": "Re-type new password"
+  },
+  {
+    "key": "resetPassword",
+    "value": "Change password"
+  },
+  {
+    "key": "retypedPasswordInvalid",
+    "value": "New password and re-typed passwor are not the same"
+  },
+  {
+    "key": "forgotPasswordNotice",
+    "value": "Enter your account email address to reset your password. If you accessed the system using a username, contact the system administrator for further instructions."
+  },
+  {
+    "key": "sendResetPasswordEmail",
+    "value": "Request new password"
+  },
+  {
+    "key": "resetPasswordRedirectMessage",
+    "value": "Password successfully reset. Soon you will be redirected to login with new password."
+  },
+  {
+    "key": "resetPasswordEmailTemplate",
+    "value": "Dear Sir/Madam,<br><br>You have requested to reset your password. The deadline for password reset is: #ExpiryDate. <br>Please follow the link to set a new password.<br><br><a style='background-color: MediumTurquoise; color: white; padding: 10px 15px; font-weight: bold; text-decoration: none;' href='#SetNewPasswordAppLink'>SET NEW PASSWORD</a><br><br>If button doesn't work, please paste this link into your browser: #SetNewPasswordAppLink <br><br>Sincerely,<br> #EnvironmentBrand."
+  },
+  {
+    "key": "resetPasswordEmailSubject",
+    "value": "Password reset request"
+  },
+  {
+    "key": "forgotPasswordRedirectMessage",
+    "value": "Reset password request successfully submitted. Check your email for further instructions. Soon you will be redirected to login page."
+  },
+  {
+    "key": "setPasswordRedirectMessage",
+    "value": "Password successfully set. Soon you will be redirected to login with new password."
+  },
+  {
+    "key": "setPassword",
+    "value": "Set password"
+  },
+  {
+    "key": "errUserNotFound",
+    "value": "User not found."
+  },
+  {
+    "key": "errInvalidTokenFormat",
+    "value": "Token is invalid."
+  },
+  {
+    "key": "errInvalidToken",
+    "value": "Token is invalid."
+  },
+  {
+    "key": "errTokenExpired",
+    "value": "Token has expired. Request new password."
+  },
+  {
+    "key": "newUser",
+    "value": "New user"
+  },
+  {
+    "key": "user",
+    "value": "User"
+  },
+  {
+    "key": "username",
+    "value": "Username"
+  },
+  {
+    "key": "generateNewPassword",
+    "value": "Generate new password"
+  },
+  {
+    "key": "badgeNew",
+    "value": "New"
+  },
+  {
+    "key": "newUserTitle",
+    "value": "New User"
+  },
+  {
+    "key": "userRights",
+    "value": "User rights"
+  },
+  {
+    "key": "userStatuses",
+    "value": "Statuses"
+  },
+  {
+    "key": "verifyUserEmailTemplate",
+    "value": "Dear Sir/Madam,<br><br> To activate your user account, please, verify your e-mail address. The deadline for verification is: #ExpiryDate. <br>Please follow the link to verify.<br><br><a style='background-color: MediumTurquoise; color: white; padding: 10px 15px; font-weight: bold; text-decoration: none;' href='#SetNewPasswordAppLink'>VERIFY E-MAIL</a><br><br>If button doesn't work, please paste this link into your browser: #SetNewPasswordAppLink <br><br>Sincerely,<br> #EnvironmentBrand."
+  },
+  {
+    "key": "verifyUserEmailSubject",
+    "value": "Verify e-mail address"
+  },
+  {
+    "key": "age",
+    "value": "Age"
+  },
+  {
+    "key": "spentTime",
+    "value": "On care"
+  },
+  {
+    "key": "profileYears",
+    "value": "yrs"
+  },
+  {
+    "key": "profileMonths",
+    "value": "months"
+  },
+  {
+    "key": "welcome",
+    "value": "Welcome"
+  },
+  {
+    "key": "arrivalDate",
+    "value": "Arrival date"
+  },
+  {
+    "key": "spentTimeMonths",
+    "value": "Months on care"
+  },
+  {
+    "key": "seeFullProfile",
+    "value": "See full profile"
+  },
+  {
+    "key": "personsCount",
+    "value": "Number of my persons on care"
+  },
+  {
+    "key": "unpaidCalculations",
+    "value": "Number of not paid invoices"
+  },
+  {
+    "key": "forCurrentMonth",
+    "value": "for current month"
+  },
+  {
+    "key": "totalEventsCount",
+    "value": "total events"
+  },
+  {
+    "key": "birthdays",
+    "value": "birthdays"
+  },
+  {
+    "key": "goToAllEvents",
+    "value": "See all events"
+  },
+  {
+    "key": "personsManagementSubtitle",
+    "value": "Persons on care management module. Provides features like adding new person, deleting and editing data."
+  },
+  {
+    "key": "employeesManagementSubtitle",
+    "value": "Facility employees management module. Provides features like adding new employee, deleting and editing data. Managing employee vacations, work places and ect."
+  },
+  {
+    "key": "usersManagementSubtitle",
+    "value": "Users management module. Provides features like adding new user, deleting and editing data. Managing user rights and roles."
+  },
+  {
+    "key": "accomodationManagementSubtitle",
+    "value": "Accomodation management module. Provides features for managing facility floor maps and placing persons in rooms."
+  },
+  {
+    "key": "servicesManagementSubtitle",
+    "value": "Services and packages management module. Provides features for adding, deleting and editing services and packages data, managing user offers and discounts."
+  },
+  {
+    "key": "calendarSubtitle",
+    "value": "Calendar, events and reminders management module."
+  },
+  {
+    "key": "calculationSubtitle",
+    "value": "Calculation management module. Provides features for creating calculation and invoices for persons on care and provides insight information about facility income."
+  },
+  {
+    "key": "doctorVisitsSubtitle",
+    "value": "Doctor visits management module. Provides features for entering doctor visit details and offers insight information about person health conditions."
+  },
+  {
+    "key": "codebooksSubtitle",
+    "value": "Codebooks management module. Provides features for editing codebooks data and settings."
+  },
+  {
+    "key": "modules",
+    "value": "Modules"
+  },
+  {
+    "key": "moduleFeatures",
+    "value": "Features"
+  },
+  {
+    "key": "goToFeature",
+    "value": "Go to feature"
+  },
+  {
+    "key": "usersManagement",
+    "value": "Users management"
+  },
+  {
+    "key": "codebooks",
+    "value": "Codebooks"
+  },
+  {
+    "key": "dateRegistered",
+    "value": "Registration date"
+  },
+  {
+    "key": "firstLogin",
+    "value": "First login"
+  },
+  {
+    "key": "lastPasswordChange",
+    "value": "Last password change"
+  },
+  {
+    "key": "lastDataChange",
+    "value": "Last profile update"
+  },
+  {
+    "key": "unreadNotifications",
+    "value": "Unread notifications"
+  },
+  {
+    "key": "contactAndAddressData",
+    "value": "Contact & Address data"
+  },
+  {
+    "key": "myPersons",
+    "value": "My persons on care"
+  },
+  {
+    "key": "editContactAndAdress",
+    "value": "Edit contact and address"
+  },
+  {
+    "key": "contactManagement",
+    "value": "Contacts management"
+  },
+  {
+    "key": "generateUser",
+    "value": "Manage user"
+  },
+  {
+    "key": "users",
+    "value": "Users"
+  },
+  {
+    "key": "allModules",
+    "value": "All modules"
+  },
+  {
+    "key": "blockUser",
+    "value": "Block"
+  },
+  {
+    "key": "activateUser",
+    "value": "Activate"
+  },
+  {
+    "key": "deactivateUser",
+    "value": "Deactivate"
+  },
+  {
+    "key": "wantToBlockUser",
+    "value": "Do you want to block user?"
+  },
+  {
+    "key": "unblockUser",
+    "value": "Unblock"
+  },
+  {
+    "key": "wantToActivateUser",
+    "value": "Do you want to activate user?"
+  },
+  {
+    "key": "wantToDeactivateUser",
+    "value": "Do you want to deactivate user?"
+  },
+  {
+    "key": "wantToUnblockUser",
+    "value": "Do you want to unblock user?"
+  },
+  {
+    "key": "deleteUser",
+    "value": "Delete user"
+  },
+  {
+    "key": "wantToDeleteUser",
+    "value": "Do you want to permanently delete this user? This action cannot be undone."
+  },
+  {
+    "key": "role",
+    "value": "Role"
+  },
+  {
+    "key": "userActiveState",
+    "value": "Active"
+  },
+  {
+    "key": "userBlockedState",
+    "value": "Blocked"
+  },
+  {
+    "key": "userVerifiedState",
+    "value": "Verified"
+  },
+  {
+    "key": "userInactive",
+    "value": "Deactivated"
+  },
+  {
+    "key": "userRole",
+    "value": "User role"
+  },
+  {
+    "key": "registeredDate",
+    "value": "Registration date"
+  },
+  {
+    "key": "currentUserStatus",
+    "value": "Current status"
+  },
+  {
+    "key": "sendVerificationEmail",
+    "value": "Send verification e-mail"
+  },
+  {
+    "key": "allModules",
+    "value": "All modules"
+  },
+  {
+    "key": "userActive",
+    "value": "Active"
+  },
+  {
+    "key": "userBlocked",
+    "value": "Blocked"
+  },
+  {
+    "key": "emailSent",
+    "value": "E-mail successfully sent"
+  },
+  {
+    "key": "verificationMailSentAt",
+    "value": "Verification e-mail sent at"
+  },
+  {
+    "key": "verificationMailTokenExpiryDate",
+    "value": "Verification token expiration date"
+  },
+  {
+    "key": "userNotVerified",
+    "value": "Not verified"
+  },
+  {
+    "key": "openSidebar",
+    "value": "Open sidebar"
+  },
+  {
+    "key": "closeSidebar",
+    "value": "Close sidebar"
+  },
+  {
+    "key": "edit",
+    "value": "Edit"
+  },
+  {
+    "key": "smTableOrdNumber",
+    "value": "No."
+  },
+  {
+    "key": "error",
+    "value": "Error"
+  },
+  {
+    "key": "furniture",
+    "value": "Furniture"
+  },
+  {
+    "key": "logoutAndRedirectShortly",
+    "value": "You will be logged out shortly."
+  },
+  {
+    "key": "roomHistory",
+    "value": "Room history"
   }
 ]

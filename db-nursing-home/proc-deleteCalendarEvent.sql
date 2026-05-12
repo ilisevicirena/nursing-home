@@ -6,7 +6,8 @@
 CREATE PROCEDURE [dbo].[deleteCalendarEvent]
 	-- Add the parameters for the stored procedure here
 	(
-		@Id int
+		@Id int,
+		@ActingUserId NCHAR(36) = NULL
 	)
 AS
 BEGIN
@@ -17,4 +18,5 @@ BEGIN
    delete from dbo.CalendarEvent
    where Id=@Id;
 
+	EXEC dbo.logUserActivity 'DELETE_CALENDAR_EVENT', 'Calendar event deleted', @ActingUserId;
 END

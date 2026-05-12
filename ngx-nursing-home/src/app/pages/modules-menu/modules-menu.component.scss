@@ -1,0 +1,116 @@
+@import "../../@theme/styles/themes";
+
+nb-card {
+  height: 500px;
+  width: 800px;
+  border-radius: 1rem;
+  padding: 1rem;
+  margin: 0;
+
+  nb-card-body:first-child {
+    padding: 0;
+  }
+}
+
+.content-container {
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-flow: column;
+
+  .toolbar-container {
+    display: flex;
+    margin-bottom: 1rem;
+
+    .title {
+      font-weight: 700;
+      padding-left: 0.5rem;
+    }
+  }
+
+  .menu-container {
+    display: flex;
+    height: calc(100% - 3rem);
+  }
+}
+
+.modules-container {
+  display: flex;
+  flex-flow: column;
+  gap: 0.5rem;
+  overflow: auto;
+  margin: 0 1rem 0 0;
+}
+
+.pages-container {
+  display: flex;
+  flex-flow: column;
+  gap: 0.5rem;
+  overflow: auto;
+
+  .page-button {
+    padding: 1rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    display: flex;
+
+    .page-title {
+      width: 95%;
+    }
+  }
+
+  .page-button:hover {
+    cursor: pointer;
+  }
+}
+
+@include nb-install-component() {
+  .fast-button {
+    background-color: nb-theme(tag-outline-basic-background-color);
+    padding: 1rem;
+    border-radius: 0.5rem;
+    position: relative;
+    display: flex;
+    width: 100%;
+
+    .col {
+      margin: 0 1rem;
+    }
+
+    .icon {
+      width: max-content;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .icon-container {
+        padding: 0.5rem;
+      }
+    }
+
+    .go-icon {
+      display: none;
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: max-content;
+    }
+  }
+
+  .fast-button:hover {
+    cursor: pointer;
+    background-color: nb-theme(button-filled-basic-background-color);
+
+    .go-icon {
+      display: block;
+    }
+  }
+
+  .fast-button.selected {
+    background-color: nb-theme(button-filled-basic-background-color);
+
+    .go-icon {
+      display: block;
+    }
+  }
+}

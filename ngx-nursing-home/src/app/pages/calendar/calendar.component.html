@@ -2,7 +2,7 @@
   <ngx-schedule
     [(events)]="events"
     (yearSelectionChanged)="onYearSelectionChange($event)"
-    [showAddNewBtn]="true"
+    [showAddNewBtn]="checkUserHasPermission()"
     (addNewClicked)="onAddNewClick()"
     (todayClicked)="onTodayClicked()"
     (monthSelectionChanged)="onMonthSelectionChange($event)"

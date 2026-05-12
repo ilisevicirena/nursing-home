@@ -1,0 +1,88 @@
+@import "../../@theme/styles/themes";
+
+@include nb-install-component() {
+  .status-card {
+    border-radius: 1rem;
+    background-color: nb-theme(color-basic-default);
+    padding: 1rem;
+    display: flex;
+    gap: 1rem;
+    height: 100%;
+    width: 100%;
+
+    .circle {
+      background-color: nb-theme(color-primary-transparent-200);
+      padding: 1rem;
+      border-radius: 50%;
+    }
+
+    .status-card-information {
+      display: flex;
+      flex-flow: column;
+      height: 100%;
+      justify-content: center;
+      gap: 0.25rem;
+
+      .card-value {
+        font-size: 18px;
+      }
+
+      .label {
+        font-weight: 500;
+      }
+    }
+  }
+
+  .profile-card {
+    border-radius: 1rem;
+
+    .form-group .label {
+      margin-bottom: 0;
+    }
+
+    .title {
+      font-weight: 700;
+      width: max-content;
+    }
+
+    nb-card-body .title {
+      font-size: 22px;
+    }
+
+    nb-card-header {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      border: none;
+
+      .actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 0.5rem;
+        flex: 1 0 0%;
+        align-items: center;
+      }
+    }
+
+    ::ng-deep .user-picture.initials {
+      background-color: nb-theme(color-primary-transparent-200);
+      color: nb-theme(color-primary-500);
+      font-weight: 600;
+      height: 80px;
+      width: 80px;
+      font-size: 30px;
+    }
+
+    ::ng-deep nb-user .info-container .user-name {
+      color: nb-theme(color-primary-500);
+      font-weight: 600;
+    }
+  }
+
+  .profile-header-status {
+    background-color: nb-theme(color-primary-500);
+    width: 5px;
+    height: 1.5rem;
+    border-radius: 1rem;
+  }
+}

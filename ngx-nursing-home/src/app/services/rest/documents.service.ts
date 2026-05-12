@@ -54,4 +54,5 @@ export interface IDocument extends IBaseSaveModel {
   Extension?: string;
   FileType?: string;
   Base64?: string;
+  UserId?: string;
 }

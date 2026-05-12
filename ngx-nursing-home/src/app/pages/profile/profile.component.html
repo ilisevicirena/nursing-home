@@ -1,29 +1,55 @@
-<div class="row m-0 h-100">
+<sample-page-not-found *ngIf="!checkUserCanViewPage()"></sample-page-not-found>
+<div class="row m-0 h-100" *ngIf="checkUserCanViewPage()">
   <div class="col-md-2 p-0 sidepanel" *ngIf="showSidepanel">
     <div class="col-md-12 ps-0 pb-2 pe-2" style="flex: 0 1 auto">
-      <nb-card class="grey-card h-100 p-0 mb-0">
-        <nb-card-body>
-          <nb-badge
-            [text]="person.Active ? getString('active') : getString('unactive')"
-            [status]="person.Active ? 'success' : 'danger'"
-            position="top right"
-          ></nb-badge>
-          <div class="person-icon d-flex justify-content-center mt-3">
-            <nb-icon
-              pack="eva"
-              icon="person-outline"
-              status="primary"
-              class="profile-icon"
-            ></nb-icon>
-          </div>
-          <div class="person-name d-flex justify-content-center">
-            {{ person.FirstName }} {{ person.LastName }}
-          </div>
-          <div class="person-jmbg d-flex justify-content-center">
-            {{ person.JMBG }}
-          </div>
-        </nb-card-body>
-      </nb-card>
+      <div class="profile-top-container">
+        <div class="person-icon d-flex justify-content-center">
+          <nb-icon
+            pack="eva"
+            icon="person-outline"
+            status="primary"
+            class="profile-icon"
+          ></nb-icon>
+        </div>
+        <nb-card class="grey-card h-100 p-0 mb-0">
+          <nb-card-body>
+            <div class="person-name d-flex justify-content-center">
+              {{ person.FirstName }} {{ person.LastName }}
+            </div>
+            <div class="person-jmbg d-flex justify-content-center">
+              {{ person.JMBG }}
+            </div>
+            <div class="person-info-container">
+              <div>
+                <div class="card-label">{{ getString("age") }}</div>
+                <div class="card-value">
+                  {{ years }}<span>{{ getString("profileYears") }}</span>
+                </div>
+              </div>
+              <div>
+                <div class="card-label">{{ getString("spentTime") }}</div>
+                <div class="card-value">
+                  {{ spentTime }}<span>{{ getString("profileMonths") }}</span>
+                </div>
+              </div>
+              <div>
+                <div class="card-label">{{ getString("status") }}</div>
+                <div class="card-value">
+                  <nb-badge
+                    [text]="
+                      person.Active
+                        ? getString('active')
+                        : getString('unactive')
+                    "
+                    [status]="person.Active ? 'success' : 'danger'"
+                    position="bottom left"
+                  ></nb-badge>
+                </div>
+              </div>
+            </div>
+          </nb-card-body>
+        </nb-card>
+      </div>
     </div>
     <div class="col-md-12 ps-0 pe-2 overflow-auto" style="flex: 1 1 auto">
       <div class="grey-card overflow-auto h-100">
@@ -81,7 +107,7 @@
               {{ getString("basicData") }}
               <div class="line"></div>
             </div>
-            <div class="history-btn">
+            <div class="history-btn" *ngIf="checkUserHasAdminPermission()">
               <button
                 nbButton
                 ghost
@@ -160,7 +186,10 @@
 
           <div *ngSwitchCase="'stayData'" class="h-100">
             <div class="mt-2 h-100">
-              <div class="pb-2 h-40" *ngIf="alertIsOpen">
+              <div
+                class="pb-2 h-40"
+                *ngIf="alertIsOpen && checkUserHasAdminPermission()"
+              >
                 <nb-alert
                   accent="primary"
                   closable
@@ -285,7 +314,9 @@
                             #endDateInput22
                             name="endDate"
                             [(ngModel)]="person.EndDate"
-                            [disabled]="!person.Active"
+                            [disabled]="
+                              !person.Active || !checkUserHasAdminPermission()
+                            "
                             [nbDatepicker]="endDateDatepicker22"
                           />
                           <nb-datepicker #endDateDatepicker22></nb-datepicker>
@@ -355,7 +386,7 @@
                           "
                         ></nb-tag>
                         <button
-                          *ngIf="person.Active"
+                          *ngIf="person.Active && checkUserHasAdminPermission()"
                           nbButton
                           status="danger"
                           shape="round"
@@ -417,11 +448,11 @@
                   </div>
                 </div>
               </div>
-              <div class="group-title">
+              <div class="group-title" *ngIf="checkUserHasAdminPermission()">
                 {{ getString("editData") }}
                 <div class="line"></div>
               </div>
-              <div class="row m-0">
+              <div class="row m-0" *ngIf="checkUserHasAdminPermission()">
                 <div class="col-md-4">
                   <div class="form-group">
                     <div class="label">{{ getString("floor") }}</div>
@@ -483,7 +514,7 @@
                   </button>
                 </div>
               </div>
-              <div class="row m-0 mt-2">
+              <div class="row m-0 mt-2" *ngIf="checkUserHasAdminPermission()">
                 <button
                   nbButton
                   ghost

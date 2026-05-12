@@ -26,6 +26,8 @@ import { DialogService } from "../../../shared/dialog/dialog.service";
 import { ToastrService } from "../../../services/toastr.service";
 import { NewVacationComponent } from "../new-vacation/new-vacation.component";
 import { ChangeVacationStatusComponent } from "../change-vacation-status/change-vacation-status.component";
+import { EmployeesService } from "../../../services/rest/employees.service";
+import { AuthService } from "../../../services/auth.service";
 
 @Component({
   selector: "sample-employee-vacations",
@@ -38,6 +40,7 @@ export class EmployeeVacationsComponent implements OnInit, OnDestroy {
   public getString = getString;
   public data: any[] = [];
   public summary: any;
+  public isEmployeeView: boolean = false;
   public exportSettings: IGridExportDocumentSettings = {
     title: getString("vacation"),
     showOrdinalNumbers: true,
@@ -91,12 +94,27 @@ export class EmployeeVacationsComponent implements OnInit, OnDestroy {
 
   constructor(
     private _vacationsService: VacationsService,
+    private _employeesService: EmployeesService,
     private _dialogService: DialogService,
-    private _toastrService: ToastrService
+    private _toastrService: ToastrService,
+    private _authService: AuthService
   ) {}
 
   ngOnInit(): void {
-    this.getData();
+    if (this.employeeId) this.getData();
+    else {
+      this._subs.push(
+        this._employeesService
+          .getUserEmployeeId(this._authService.getUserId())
+          .subscribe((data) => {
+            if (data[0]?.EmployeeId) {
+              this.employeeId = data[0].EmployeeId;
+              this.getData();
+              this.isEmployeeView = true;
+            }
+          })
+      );
+    }
   }
 
   ngOnDestroy(): void {
@@ -122,15 +140,20 @@ export class EmployeeVacationsComponent implements OnInit, OnDestroy {
                   .Shape("round")
                   .Icon("close-square-outline")
                   .Status("warning")
-                  .Tooltip(getString("cancelVacation")),
-                new GridButtonType()
-                  .Id("changeStatus")
-                  .Shape("round")
-                  .Icon("flip-2-outline")
-                  .Ghost(true)
-                  .Status("basic")
-                  .Tooltip(getString("changeStatus"))
+                  .Tooltip(getString("cancelVacation"))
               );
+
+              if (!this.isEmployeeView) {
+                x.Buttons.push(
+                  new GridButtonType()
+                    .Id("changeStatus")
+                    .Shape("round")
+                    .Icon("flip-2-outline")
+                    .Ghost(true)
+                    .Status("basic")
+                    .Tooltip(getString("changeStatus"))
+                );
+              }
             }
             return x;
           });

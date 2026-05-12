@@ -5,17 +5,16 @@
 -- =============================================
 CREATE PROCEDURE [dbo].[markAllNotificationsAsRead]
 	-- Add the parameters for the stored procedure here
-	
+	@UserId uniqueidentifier
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
-    -- Insert statements for procedure here
-	update dbo.[Notification]
+   update dbo.[Notification]
 	set [Read]=1,
 	[ReadDate]=GETDATE()
-	where [Read]=0;
+	where [Read]=0 and UserId=@UserId;
 
 END

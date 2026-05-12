@@ -5,19 +5,21 @@
 -- =============================================
 CREATE PROCEDURE [dbo].[getNotificationTypes]
 	-- Add the parameters for the stored procedure here
-
+	@UserId UNIQUEIDENTIFIER
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
-    -- Insert statements for procedure here
-	SELECT 
-	[Id]=[Id],
-	[Code]=[Code],
-	[Name]=[Name],
-	[StringKey]=[StringKey]
-	from dbo.NotificationType where [Enabled]=1;
+    SELECT 
+	[Id]=unts.[NotificationTypeId],
+	[Code]=nt.[Code],
+	[Name]=nt.[Name],
+	[StringKey]=nt.[StringKey]
+	from 
+	dbo.UserNotificationTypeSettings as unts
+	left join dbo.NotificationType as nt on unts.NotificationTypeId=nt.Id	
+	where unts.[Enabled]=1 and unts.UserId=@UserId;
 
 END

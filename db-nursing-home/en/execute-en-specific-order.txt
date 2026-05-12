@@ -1,3 +1,4 @@
+insert-tb-role.sql
 insert-tb-accommodationType.sql
 insert-tb-calculationStatus.sql
 insert-tb-documentType.sql

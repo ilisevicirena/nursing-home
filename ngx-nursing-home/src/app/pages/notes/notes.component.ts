@@ -9,6 +9,7 @@ import { NoteTagsComponent } from "./note-tags/note-tags.component";
 import { NoteDocumentsComponent } from "./note-documents/note-documents.component";
 import { hexToRgbA } from "../../resources/functions";
 import { NoteExportComponent } from "./note-export/note-export.component";
+import { AuthService, UserRole } from "../../services/auth.service";
 
 @Component({
   selector: "sample-notes",
@@ -39,7 +40,8 @@ export class NotesComponent implements OnInit, OnDestroy {
     private _tagsService: TagsService,
     private _notesService: NotesService,
     private _dialogService: DialogService,
-    private _toastrService: ToastrService
+    private _toastrService: ToastrService,
+    private _authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -148,6 +150,7 @@ export class NotesComponent implements OnInit, OnDestroy {
       LastModified: new Date(),
       PersonLastName: this.personLastName,
       PersonId: this.personId,
+      UserId: this._authService.getUserId(),
       Documents: [],
       Tags: [],
     };
@@ -245,5 +248,10 @@ export class NotesComponent implements OnInit, OnDestroy {
     else {
       if (this.selectedNote) this.noteExport.downloadAsPDF([this.selectedNote]);
     }
+  }
+
+  public checkUserHasPermission(): boolean {
+    var isUser = this._authService.checkUserHasRole(UserRole.USER);
+    return !isUser;
   }
 }

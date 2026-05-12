@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { db } = require("../config/framework");
+const { db, authedRequest } = require("../config/framework");
 const { getError } = require("../resources/error-codes");
 const { Room } = require("../models/Room");
 
@@ -22,8 +22,7 @@ router.post("/add", async (request, response) => {
   try {
     var objectToSave = Object.assign(new Room(), request.body);
     const pool = await db;
-    const result = await pool
-      .request()
+    const result = await authedRequest(pool, request.user?.userId)
       .input("name", objectToSave.Name)
       .input("capacity", objectToSave.Capacity)
       .input("floorId", objectToSave.FloorId)
@@ -32,7 +31,7 @@ router.post("/add", async (request, response) => {
       .input("top", objectToSave.Top)
       .input("left", objectToSave.Left)
       .query(
-        "EXEC [dbo].[insertRoom] @Name=@name, @Capacity=@capacity, @FloorId=@floorId, @Width=@width, @Height=@height, @Top=@top, @Left=@left"
+        "EXEC [dbo].[insertRoom] @Name=@name, @Capacity=@capacity, @FloorId=@floorId, @Width=@width, @Height=@height, @Top=@top, @Left=@left, @ActingUserId=@ActingUserId"
       );
     if (result != null) response.json(result.recordset[0]);
     else response.send(getError(2001));
@@ -46,10 +45,9 @@ router.delete("/delete", async (request, response) => {
   try {
     var objectToSave = Object.assign(new Room(), request.body);
     const pool = await db;
-    const result = await pool
-      .request()
+    const result = await authedRequest(pool, request.user?.userId)
       .input("id", objectToSave.Id)
-      .query("EXEC [dbo].[deleteRoom] @Id=@id");
+      .query("EXEC [dbo].[deleteRoom] @Id=@id, @ActingUserId=@ActingUserId");
     if (result != null) response.json(result.recordset);
     else response.send(getError(2002));
   } catch (err) {
@@ -62,8 +60,7 @@ router.post("/update", async (request, response) => {
   try {
     var objectToSave = Object.assign(new Room(), request.body);
     const pool = await db;
-    const result = await pool
-      .request()
+    const result = await authedRequest(pool, request.user?.userId)
       .input("id", objectToSave.Id)
       .input("name", objectToSave.Name)
       .input("capacity", objectToSave.Capacity)
@@ -73,7 +70,7 @@ router.post("/update", async (request, response) => {
       .input("top", objectToSave.Top)
       .input("left", objectToSave.Left)
       .query(
-        "EXEC [dbo].[updateRoom] @Id=@id, @Name=@name, @Capacity=@capacity, @FloorId=@floorId, @Width=@width, @Height=@height, @Top=@top, @Left=@left"
+        "EXEC [dbo].[updateRoom] @Id=@id, @Name=@name, @Capacity=@capacity, @FloorId=@floorId, @Width=@width, @Height=@height, @Top=@top, @Left=@left, @ActingUserId=@ActingUserId"
       );
     if (result != null) response.json(result.recordset);
     else response.send(getError(2003));

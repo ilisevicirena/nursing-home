@@ -21,6 +21,7 @@ import { RealPriceModalComponent } from "../../calculation/real-price-modal/real
 import { PaidCalculationModalComponent } from "../../calculation/paid-calculation-modal/paid-calculation-modal.component";
 import { CalculationDocumentsComponent } from "../../calculation/calculation-documents/calculation-documents.component";
 import { StartCalculationComponent } from "../../calculation/start-calculation/start-calculation.component";
+import { AuthService, UserRole } from "../../../services/auth.service";
 
 @Component({
   selector: "sample-person-calculation",
@@ -97,7 +98,8 @@ export class PersonCalculationComponent implements OnInit, OnDestroy {
   constructor(
     private _calculationService: CalculationApiService,
     private _dialogService: DialogService,
-    private _toastrService: ToastrService
+    private _toastrService: ToastrService,
+    private _authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -114,44 +116,46 @@ export class PersonCalculationComponent implements OnInit, OnDestroy {
             x.Range = { start: x.DateFrom, end: x.DateTo };
             x.Buttons = [];
 
-            switch (x.StatusId) {
-              case 1:
-                x.Buttons.push(
-                  new GridButtonType()
-                    .Type(GRID_BUTTON_TYPE.OTHER)
-                    .Id("cancel")
-                    .Ghost(true)
-                    .Shape("round")
-                    .Icon("close-square-outline")
-                    .Status("warning")
-                    .Tooltip(getString("cancelCalculation"))
-                );
-                break;
-              case 2:
-                x.Buttons.push(
-                  new GridButtonType()
-                    .Id("realPrice")
-                    .Shape("round")
-                    .Icon("checkmark-square-2-outline")
-                    .Ghost(true)
-                    .Status("primary")
-                    .Tooltip(getString("enterRealPrice")),
-                  new GridButtonType()
-                    .Id("paidPrice")
-                    .Shape("round")
-                    .Icon("checkmark-square-outline")
-                    .Ghost(true)
-                    .Status("primary")
-                    .Tooltip(getString("enterPaidPrice")),
-                  new GridButtonType()
-                    .Id("cancel")
-                    .Shape("round")
-                    .Icon("close-square-outline")
-                    .Ghost(true)
-                    .Status("warning")
-                    .Tooltip(getString("cancelCalculation"))
-                );
-                break;
+            if (this.checkUserHasAdminPermission()) {
+              switch (x.StatusId) {
+                case 1:
+                  x.Buttons.push(
+                    new GridButtonType()
+                      .Type(GRID_BUTTON_TYPE.OTHER)
+                      .Id("cancel")
+                      .Ghost(true)
+                      .Shape("round")
+                      .Icon("close-square-outline")
+                      .Status("warning")
+                      .Tooltip(getString("cancelCalculation"))
+                  );
+                  break;
+                case 2:
+                  x.Buttons.push(
+                    new GridButtonType()
+                      .Id("realPrice")
+                      .Shape("round")
+                      .Icon("checkmark-square-2-outline")
+                      .Ghost(true)
+                      .Status("primary")
+                      .Tooltip(getString("enterRealPrice")),
+                    new GridButtonType()
+                      .Id("paidPrice")
+                      .Shape("round")
+                      .Icon("checkmark-square-outline")
+                      .Ghost(true)
+                      .Status("primary")
+                      .Tooltip(getString("enterPaidPrice")),
+                    new GridButtonType()
+                      .Id("cancel")
+                      .Shape("round")
+                      .Icon("close-square-outline")
+                      .Ghost(true)
+                      .Status("warning")
+                      .Tooltip(getString("cancelCalculation"))
+                  );
+                  break;
+              }
             }
 
             x.Buttons.push(
@@ -425,5 +429,9 @@ export class PersonCalculationComponent implements OnInit, OnDestroy {
       );
     } else
       this._toastrService.showToast("warning", getString("nothingSelected"));
+  }
+
+  public checkUserHasAdminPermission(): boolean {
+    return this._authService.checkUserHasRole(UserRole.ADMIN);
   }
 }

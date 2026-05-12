@@ -14,7 +14,8 @@ CREATE PROCEDURE [dbo].[updatePerson]
 		@StartDate datetime = NULL,
 		@EndDate datetime=NULL,
 		@Address varchar(200)=NULL,
-		@GenderId int = NULL
+		@GenderId int = NULL,
+		@ActingUserId NCHAR(36) = NULL
 	)
 AS
 BEGIN
@@ -53,4 +54,6 @@ BEGIN
 		@PersonId = @Id,
 		@Recurring = 1,
 		@Reminder=0;
+
+	EXEC dbo.logUserActivity 'UPDATE_PERSON', 'Person updated', @ActingUserId;
 END

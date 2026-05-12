@@ -1,0 +1,68 @@
+<nb-card class="user-info-pane">
+  <nb-card-body>
+    <div class="basic-user-container">
+      <nb-user
+        [name]="user?.FirstName + ' ' + user?.LastName"
+        onlyPicture
+      ></nb-user>
+      <div class="position-relative">
+        <ngx-tag
+          class="user-status-tag"
+          [text]="getString('verified')"
+          color="success"
+        ></ngx-tag>
+        <div class="user-name">
+          <span> {{ user?.FirstName }} {{ user?.LastName }} </span>
+        </div>
+        <div class="user-name-subtitle">@{{ user?.Username }}</div>
+      </div>
+    </div>
+    <div class="user-info-container">
+      <div class="user-info-item">
+        <nb-icon pack="eva" icon="email-outline" status="basic"></nb-icon>
+        <span>{{ user?.Email }}</span>
+      </div>
+      <div class="user-info-item">
+        <nb-icon pack="eva" icon="calendar-outline" status="basic"></nb-icon>
+        <span>{{ user?.DateRegistered | date : "dd.MM.yyyy." }}</span>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="user-actions-container">
+      <button
+        nbButton
+        shape="round"
+        size="small"
+        status="primary"
+        (click)="logout()"
+      >
+        {{ getString("logout") }}
+        <nb-icon pack="eva" icon="log-out-outline" nbSuffix></nb-icon>
+      </button>
+      <div class="d-flex align-items-center justify-content-end col">
+        <button
+          size="small"
+          nbButton
+          ghost
+          shape="round"
+          status="primary"
+          [nbTooltip]="getString('userProfile')"
+          (click)="goToProfile()"
+        >
+          <nb-icon pack="eva" icon="external-link-outline"></nb-icon>
+        </button>
+        <button
+          size="small"
+          nbButton
+          ghost
+          shape="round"
+          status="primary"
+          [nbTooltip]="getString('changePassword')"
+          (click)="changePassword()"
+        >
+          <nb-icon pack="eva" icon="lock-outline"></nb-icon>
+        </button>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>

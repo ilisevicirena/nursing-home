@@ -49,7 +49,10 @@ export async function getBase64ImageFromUrl(imageUrl) {
   });
 }
 
-export function hexToRgbA(hex: string | undefined): string {
+export function hexToRgbA(
+  hex: string | undefined,
+  t: number | undefined = undefined
+): string {
   var c: any;
   if (hex) {
     if (/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)) {
@@ -59,11 +62,21 @@ export function hexToRgbA(hex: string | undefined): string {
       }
       c = "0x" + c.join("");
 
-      return (
-        "rgba(" +
-        [(c >> 16) & 255, (c >> 8) & 255, c & 255].join(",") +
-        ",0.08)"
-      );
+      if (t) {
+        return (
+          "rgba(" +
+          [(c >> 16) & 255, (c >> 8) & 255, c & 255].join(",") +
+          "," +
+          t.toString() +
+          ")"
+        );
+      } else {
+        return (
+          "rgba(" +
+          [(c >> 16) & 255, (c >> 8) & 255, c & 255].join(",") +
+          ",0.08)"
+        );
+      }
     }
 
     return "";
@@ -87,3 +100,9 @@ export function sortFloats(direction: any, a: any, b: any): number {
   if (a > b) return direction;
   return 0;
 }
+
+export function getDeepFromObject(
+  object: {},
+  name: string,
+  defaultValue?: any
+): any {}

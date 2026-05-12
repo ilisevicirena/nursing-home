@@ -6,7 +6,8 @@
 CREATE PROCEDURE [dbo].[deletePerson]
 	-- Add the parameters for the stored procedure here
 	(
-		@Id int
+		@Id int,
+		@ActingUserId NCHAR(36) = NULL
 	)
 AS
 BEGIN
@@ -17,4 +18,6 @@ BEGIN
 	DELETE FROM dbo.Person WHERE Id = @Id;
 
 	exec dbo.writeLog @LogType='DELETE', @LogEntity='Person', @Key= @Id;
+
+	EXEC dbo.logUserActivity 'DELETE_PERSON', 'Person deleted', @ActingUserId;
 END

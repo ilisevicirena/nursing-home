@@ -13,7 +13,8 @@ CREATE PROCEDURE [dbo].[updateCalendarEvent]
 		@Description varchar(max),
 		@Recurring bit,
 		@Id int,
-		@Reminder bit
+		@Reminder bit,
+		@ActingUserId NCHAR(36) = NULL
 	)
 AS
 BEGIN
@@ -34,4 +35,5 @@ BEGIN
 	Reminder=@Reminder
 	where Id=@Id;
 
+	EXEC dbo.logUserActivity 'UPDATE_CALENDAR_EVENT', 'Calendar event updated', @ActingUserId;
 END

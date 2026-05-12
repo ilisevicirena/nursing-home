@@ -27,8 +27,10 @@ BEGIN
 	[ResidanceStreetName]=ResidanceStreetName,
 	[ResidanceHouseNumber]=ResidanceHouseNumber,
 	[IsObligeeToPay]=IsObligeeToPay,
-	[IsGuardian] = IsGuardian
+	[IsGuardian] = IsGuardian,
+	[UserId] = ucr.UserId
 	FROM dbo.Contact as cont
 	left join dbo.City as c on c.Id=cont.ResidanceCityId
+	left join dbo.UserContactRelation as ucr on cont.Id=ucr.ContactId
 	WHERE PersonId=@PersonId;
 END

@@ -1,9 +1,5 @@
 @import "../../@theme/styles/themes.scss";
 
-::ng-deep sample-documents {
-  height: 100%;
-}
-
 @include nb-install-component {
   .documents-tabset {
     height: 99%;

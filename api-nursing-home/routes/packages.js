@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { db } = require("../config/framework");
+const { db, authedRequest } = require("../config/framework");
 const { getError } = require("../resources/error-codes");
 const { Package } = require("../models/Package");
 
@@ -19,8 +19,7 @@ router.post("/add", async (request, response) => {
   try {
     var objectToSave = Object.assign(new Package(), request.body);
     const pool = await db;
-    const result = await pool
-      .request()
+    const result = await authedRequest(pool, request.user?.userId)
       .input("name", objectToSave.Name)
       .input("description", objectToSave.Description)
       .input("priceCalculated", objectToSave.PackagePriceCalculated)
@@ -28,7 +27,7 @@ router.post("/add", async (request, response) => {
       .input("price", objectToSave.DefaultPackagePrice)
       .input("measure", objectToSave.CalculationMeasureUnitId)
       .query(
-        "EXEC [dbo].[insertPackage] @Name=@name, @Description=@description, @PackagePriceCalculated=@priceCalculated, @DefaultPackagePriceUnitId=@default, @DefaultPackagePrice=@price, @CalculationMeasureUnitId=@measure"
+        "EXEC [dbo].[insertPackage] @Name=@name, @Description=@description, @PackagePriceCalculated=@priceCalculated, @DefaultPackagePriceUnitId=@default, @DefaultPackagePrice=@price, @CalculationMeasureUnitId=@measure, @ActingUserId=@ActingUserId"
       );
     if (result != null) {
       var packageId = result.recordset[0].PackageId;
@@ -67,8 +66,7 @@ router.post("/update", async (request, response) => {
     );
     var servicesToAdd = objectToSave.Services.filter((x) => x.IsNew == true);
 
-    const result = await pool
-      .request()
+    const result = await authedRequest(pool, request.user?.userId)
       .input("id", objectToSave.Id)
       .input("name", objectToSave.Name)
       .input("description", objectToSave.Description)
@@ -77,7 +75,7 @@ router.post("/update", async (request, response) => {
       .input("price", objectToSave.DefaultPackagePrice)
       .input("measure", objectToSave.CalculationMeasureUnitId)
       .query(
-        "EXEC [dbo].[updatePackage] @Id=@id, @Name=@name, @Description=@description, @PackagePriceCalculated=@priceCalculated, @DefaultPackagePriceUnitId=@default, @DefaultPackagePrice=@price, @CalculationMeasureUnitId=@measure"
+        "EXEC [dbo].[updatePackage] @Id=@id, @Name=@name, @Description=@description, @PackagePriceCalculated=@priceCalculated, @DefaultPackagePriceUnitId=@default, @DefaultPackagePrice=@price, @CalculationMeasureUnitId=@measure, @ActingUserId=@ActingUserId"
       );
 
     if (result != null) {
@@ -118,10 +116,9 @@ router.delete("/delete", async (request, response) => {
   try {
     var objectToSave = Object.assign(new Package(), request.body);
     const pool = await db;
-    const result = await pool
-      .request()
+    const result = await authedRequest(pool, request.user?.userId)
       .input("id", objectToSave.Id)
-      .query("EXEC [dbo].[deactivatePackage] @Id=@id");
+      .query("EXEC [dbo].[deactivatePackage] @Id=@id, @ActingUserId=@ActingUserId");
     if (result != null) response.json(result.recordset);
     else response.send(getError(7003));
   } catch (err) {

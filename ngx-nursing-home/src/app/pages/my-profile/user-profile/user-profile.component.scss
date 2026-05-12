@@ -1,0 +1,9 @@
+@import "../../../@theme/styles/themes";
+@import "../my-profile.component.scss";
+
+@include nb-install-component() {
+  .status-card:hover {
+    cursor: pointer;
+    background-color: nb-theme(color-basic-400);
+  }
+}

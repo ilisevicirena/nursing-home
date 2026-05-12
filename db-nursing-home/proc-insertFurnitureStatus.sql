@@ -8,7 +8,8 @@ CREATE PROCEDURE [dbo].[insertFurnitureStatus]
 	(
 		@Name varchar(50),
 		@Color varchar(10) = NULL,
-		@Icon varchar(50) = NULL
+		@Icon varchar(50) = NULL,
+    @ActingUserId NCHAR(36) = NULL
 	)
 AS
 BEGIN
@@ -20,4 +21,6 @@ BEGIN
 	INSERT INTO dbo.FurnitureStatus ([Name], Color, Icon, Active) VALUES (@Name, @Color, @Icon, 1);
 
 	SELECT SCOPE_IDENTITY() AS [FurnitureStatusId];
+
+	EXEC dbo.logUserActivity 'INSERT_FURNITURE_STATUS', 'Furniture status type inserted', @ActingUserId;
 END

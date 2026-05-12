@@ -8,7 +8,8 @@ CREATE PROCEDURE [dbo].[updateNotificationType]
 (
 	@Id int,
 	@Enabled bit,
-	@DaysReminder int
+	@DaysReminder int,
+	@ActingUserId NCHAR(36) = NULL
 )
 AS
 BEGIN
@@ -17,10 +18,12 @@ BEGIN
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
-	update dbo.NotificationType
+	update dbo.UserNotificationTypeSettings
 	set 
 	[Enabled]=@Enabled,
 	[DaysReminder]=@DaysReminder
 	where Id=@Id;
+
+	EXEC dbo.logUserActivity 'UPDATE_NOTIFICATION_TYPE', 'Notification type updated', @ActingUserId;
 
 END

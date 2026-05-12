@@ -7,7 +7,8 @@ CREATE PROCEDURE [dbo].[updateFloor]
 	-- Add the parameters for the stored procedure here
 	(
 		@Name VARCHAR(50),
-		@Id INT
+		@Id INT,
+    @ActingUserId NCHAR(36) = NULL
 	)
 AS
 BEGIN
@@ -20,4 +21,6 @@ BEGIN
 	SET
 		Name = @Name	
 	WHERE Id = @Id
+
+	EXEC dbo.logUserActivity 'UPDATE_FLOOR', 'Floor updated', @ActingUserId;
 END

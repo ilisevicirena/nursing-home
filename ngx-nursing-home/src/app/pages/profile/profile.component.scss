@@ -1,16 +1,7 @@
 @import "../../@theme/styles/themes.scss";
 
-::ng-deep sample-profile {
-  height: 100%;
-}
-
-.person-icon nb-icon {
-  height: 5rem;
-  font-size: 4rem;
-}
-
 .person-name {
-  font-weight: 600;
+  font-weight: 700;
   font-size: 20px;
 }
 
@@ -28,13 +19,80 @@
   height: 100%;
 }
 
+.profile-top-container {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  position: relative;
+}
+
+.grey-card nb-list {
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  nb-list-item button {
+    width: 100%;
+    white-space: normal;
+    text-align: start;
+    display: flex;
+    justify-content: flex-start;
+  }
+}
+
+.person-info-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 0.5rem;
+}
+
 @include nb-install-component {
+  .profile-top-container .grey-card {
+    margin-top: 1.5rem;
+    width: 100%;
+
+    .card-label {
+      color: nb-theme(color-primary-500);
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .card-value {
+      font-size: 18px;
+      font-weight: 600;
+      position: relative;
+      height: 50%;
+
+      span {
+        font-size: 10px;
+        margin-left: 0.25rem;
+      }
+    }
+
+    nb-card-body {
+      padding: 3rem 0.5rem 1rem 0.5rem;
+    }
+  }
+
+  .person-icon {
+    position: absolute;
+    z-index: 200;
+    width: 4rem;
+    background-color: nb-theme(card-background-color);
+    border-radius: 50%;
+    box-shadow: nb-theme(sidebar-shadow);
+
+    nb-icon {
+      height: 4rem;
+      font-size: 3rem;
+    }
+  }
+
   .person-jmbg {
     font-weight: 600;
-    font-size: 16px;
+    font-size: 14px;
     color: nb-theme(color-basic-600);
-    margin-top: 0.5rem;
-    margin-bottom: 2rem;
+    margin-top: 0.25rem;
+    margin-bottom: 1rem;
   }
 
   .dotted-line {

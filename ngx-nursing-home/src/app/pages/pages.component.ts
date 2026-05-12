@@ -1,10 +1,16 @@
 import { Component } from "@angular/core";
 
-import { MENU_ITEMS } from "./pages-menu";
+import {
+  ADMIN_MENU_ITEMS,
+  MENU_ITEMS,
+  NURSE_MENU_ITEMS,
+  USER_MENU_ITEMS,
+} from "./pages-menu";
 import { NbMenuService } from "@nebular/theme";
 import { DialogService } from "../shared/dialog/dialog.service";
 import { Subscription } from "rxjs";
 import { filter, map } from "rxjs/operators";
+import { AuthService, UserRole } from "../services/auth.service";
 
 @Component({
   selector: "ngx-pages",
@@ -17,13 +23,14 @@ import { filter, map } from "rxjs/operators";
   `,
 })
 export class PagesComponent {
-  menu = MENU_ITEMS;
+  menu = [];
 
   private _subs: Subscription[] = [];
 
   constructor(
     private menuService: NbMenuService,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    private authService: AuthService
   ) {
     this._subs.push(
       this.menuService
@@ -35,8 +42,20 @@ export class PagesComponent {
           map(({ item }) => item)
         )
         .subscribe((item: any) => {
-          if (item.click) item.click(this.dialogService);
+          if (item.component) {
+            this.dialogService.open(item.component, {
+              autoFocus: false,
+            });
+          }
         })
     );
+
+    if (this.authService.checkUserHasRole(UserRole.USER))
+      this.menu = USER_MENU_ITEMS;
+    else if (this.authService.checkUserHasRole(UserRole.ADMIN))
+      this.menu = ADMIN_MENU_ITEMS;
+    else if (this.authService.checkUserHasRole(UserRole.NURSE))
+      this.menu = NURSE_MENU_ITEMS;
+    else this.menu = MENU_ITEMS;
   }
 }

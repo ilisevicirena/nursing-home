@@ -1,0 +1,120 @@
+@import "../../../styles/themes";
+@import "bootstrap/scss/mixins/breakpoints";
+@import "@nebular/theme/styles/global/breakpoints";
+
+.user-info-pane {
+  width: 325px;
+  margin: 0;
+  border-radius: 0.7rem;
+  border: none;
+
+  nb-card-body {
+    padding: 1rem;
+  }
+}
+
+@include nb-install-component() {
+  ::ng-deep .user-picture.initials {
+    background-color: nb-theme(color-primary-transparent-200);
+    color: nb-theme(color-primary-500);
+    font-weight: 600;
+    height: 60px;
+    width: 60px;
+    font-size: 25px;
+  }
+
+  ::ng-deep nb-user .info-container .user-name {
+    color: nb-theme(color-primary-500);
+    font-weight: 600;
+  }
+
+  .user-info-pane {
+    .user-name {
+      font-size: 20px;
+      font-weight: 800;
+      line-height: 30px;
+      margin-top: 1.5rem;
+      display: flex;
+      flex-flow: column;
+      gap: 15px;
+      align-items: flex-end;
+    }
+
+    .user-name-subtitle {
+      color: nb-theme(color-basic-600);
+      font-size: 14px;
+      width: 100%;
+    }
+
+    .divider {
+      background-color: nb-theme(color-basic-400);
+      height: 3px;
+      width: 100%;
+      border-radius: 1rem;
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .user-info-container {
+      width: 100%;
+      display: flex;
+      flex-flow: column;
+      gap: 0.5rem;
+      margin-top: 1rem;
+
+      .user-info-item {
+        font-size: 14px;
+        font-weight: 600;
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+
+        nb-icon {
+          font-size: 20px;
+        }
+      }
+    }
+
+    .user-actions-container {
+      width: 100%;
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .basic-user-container {
+      display: flex;
+      align-items: flex-end;
+    }
+
+    .user-status-tag {
+      position: absolute;
+      top: 0px;
+      right: -50px;
+
+      ::ng-deep .ngx-tag {
+        padding: 0.25rem 0.5rem;
+        font-size: 12px;
+      }
+    }
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  .user-info-pane {
+    width: 280px;
+
+    nb-card-body {
+      overflow: hidden;
+    }
+  }
+}
+
+@include media-breakpoint-down(is) {
+  .user-info-pane {
+    width: 280px;
+
+    nb-card-body {
+      overflow: hidden;
+    }
+  }
+}

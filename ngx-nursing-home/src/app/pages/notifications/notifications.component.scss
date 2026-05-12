@@ -1,11 +1,22 @@
 @import "../../@theme/styles/themes.scss";
-
-::ng-deep sample-notifications {
-  height: 100%;
-}
+@import "bootstrap/scss/mixins/breakpoints";
+@import "@nebular/theme/styles/global/breakpoints";
 
 .read-chx {
   line-height: 0 !important;
+}
+
+.left-panel {
+  padding-top: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+#filters-toggle-btn {
+  display: none;
+  position: absolute;
+  top: 1rem;
+  left: 0.5rem;
+  z-index: 200;
 }
 
 @include nb-install-component {
@@ -22,5 +33,66 @@
   .notifications-container {
     height: calc(100% - 3.5rem);
     overflow: auto;
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  #filters-toggle-btn {
+    display: block;
+  }
+
+  .left-panel {
+    position: absolute;
+    z-index: 100;
+    background-color: nb-theme(background-basic-color-3);
+    padding: 4rem 1rem 1rem 1rem;
+    display: none;
+  }
+
+  .left-panel.active {
+    display: block;
+  }
+
+  .right-panel.active {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  .right-panel {
+    nb-card-body {
+      padding-top: 4rem !important;
+      overflow: hidden;
+    }
+  }
+}
+
+@include media-breakpoint-down(is) {
+  #filters-toggle-btn {
+    display: block;
+  }
+
+  .left-panel {
+    position: absolute;
+    z-index: 100;
+    background-color: nb-theme(background-basic-color-3);
+    padding: 1rem;
+    padding: 4rem 1rem 1rem 1rem;
+    display: none;
+  }
+
+  .right-panel {
+    nb-card-body {
+      padding-top: 4rem !important;
+      overflow: hidden;
+    }
+  }
+
+  .left-panel.active {
+    display: block;
+  }
+
+  .right-panel.active {
+    opacity: 0.5;
+    pointer-events: none;
   }
 }

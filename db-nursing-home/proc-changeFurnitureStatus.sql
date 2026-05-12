@@ -3,7 +3,8 @@ CREATE PROCEDURE [dbo].[changeFurnitureStatus]
 	(
 	@Id INT,
 	@StatusId INT,
-	@StatusDate datetime
+	@StatusDate datetime,
+    @ActingUserId NCHAR(36) = NULL
 	)
 AS
 BEGIN
@@ -15,4 +16,6 @@ BEGIN
 	values (@Id, @StatusId, @StatusDate);
 
 	select SCOPE_IDENTITY() as FurnitureFurnitureStatusRelationId;
+
+	EXEC dbo.logUserActivity 'CHANGE_FURNITURE_STATUS', 'Furniture status changed', @ActingUserId;
 END

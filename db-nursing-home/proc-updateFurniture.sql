@@ -10,7 +10,8 @@ CREATE PROCEDURE [dbo].[updateFurniture]
 		@Name varchar(150),
 		@Description varchar(2000) = NULL,
 		@InventoryCode varchar(50) = NULL,
-		@RoomId int = NULL	
+		@RoomId int = NULL,
+    @ActingUserId NCHAR(36) = NULL
 	)
 AS
 BEGIN
@@ -26,4 +27,6 @@ BEGIN
 	[InventoryCode]=@InventoryCode,
 	[RoomId]=@RoomId
 	WHERE Id=@Id;
+
+	EXEC dbo.logUserActivity 'UPDATE_FURNITURE', 'Furniture item updated', @ActingUserId;
 END

@@ -11,7 +11,8 @@ CREATE PROCEDURE [dbo].[insertService]
 		@MeasureUnitId int,
 		@CostPerUnit float,
 		@DefaultNumberOfUnits int = NULL,
-		@PriceUnitId int = NULL
+		@PriceUnitId int = NULL,
+		@ActingUserId NCHAR(36) = NULL
 	)
 AS
 BEGIN
@@ -24,4 +25,6 @@ BEGIN
 	VALUES (@Name, @Description, @MeasureUnitId, @CostPerUnit, @DefaultNumberOfUnits, @PriceUnitId, 1);
 
 	SELECT SCOPE_IDENTITY() AS [ServiceId];
+
+	EXEC dbo.logUserActivity 'INSERT_SERVICE', 'Service inserted', @ActingUserId;
 END

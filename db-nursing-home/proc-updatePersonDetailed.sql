@@ -28,7 +28,8 @@ CREATE PROCEDURE [dbo].[updatePersonDetailed]
 		@Telephone varchar(50)= NULL,
 		@Mobile varchar(50)= NULL,
 		@Email varchar(50)= NULL,
-		@DoctorName varchar(200)= NULL
+		@DoctorName varchar(200)= NULL,
+		@ActingUserId NCHAR(36) = NULL
 	)
 AS
 BEGIN
@@ -81,4 +82,6 @@ BEGIN
 		@PersonId = @Id,
 		@Recurring = 1,
 		@Reminder=0;
+
+	EXEC dbo.logUserActivity 'UPDATE_PERSON_DETAILED', 'Person details updated', @ActingUserId;
 END

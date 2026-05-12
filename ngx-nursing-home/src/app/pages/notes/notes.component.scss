@@ -1,9 +1,5 @@
 @import "../../@theme/styles/themes.scss";
 
-::ng-deep sample-notes {
-  height: 100%;
-}
-
 @include nb-install-component {
   .notes-container {
     height: calc(100% - 90px);

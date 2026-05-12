@@ -1,9 +1,5 @@
 @import "../../@theme/styles/themes.scss";
 
-::ng-deep sample-doctor-visit-tour {
-  height: 100%;
-}
-
 .note-container {
   overflow: hidden;
   height: calc(100% - 48px);

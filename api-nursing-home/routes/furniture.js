@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { db } = require("../config/framework");
+const { db, authedRequest } = require("../config/framework");
 const { Furniture, FurnitureStatusChange } = require("../models/Furniture");
 
 router.get("/", async (request, response) => {
@@ -31,14 +31,13 @@ router.post("/add", async (request, response) => {
   try {
     var objectToSave = Object.assign(new Furniture(), request.body);
     const pool = await db;
-    const result = await pool
-      .request()
+    const result = await authedRequest(pool, request.user?.userId)
       .input("name", objectToSave.Name)
       .input("description", objectToSave.Description)
       .input("inventoryCode", objectToSave.InventoryCode)
       .input("roomId", objectToSave.RoomId)
       .query(
-        "EXEC [dbo].[insertFurniture] @Name=@name, @Description=@description, @InventoryCode=@inventoryCode, @RoomId=@roomId"
+        "EXEC [dbo].[insertFurniture] @Name=@name, @Description=@description, @InventoryCode=@inventoryCode, @RoomId=@roomId, @ActingUserId=@ActingUserId"
       );
     if (result != null) response.json(result.recordset[0]);
     else response.send(getError(190001));
@@ -52,15 +51,14 @@ router.post("/update", async (request, response) => {
   try {
     var objectToSave = Object.assign(new Furniture(), request.body);
     const pool = await db;
-    const result = await pool
-      .request()
+    const result = await authedRequest(pool, request.user?.userId)
       .input("id", objectToSave.Id)
       .input("name", objectToSave.Name)
       .input("description", objectToSave.Description)
       .input("inventoryCode", objectToSave.InventoryCode)
       .input("roomId", objectToSave.RoomId)
       .query(
-        "EXEC [dbo].[updateFurniture] @Id=@id, @Name=@name, @Description=@description, @InventoryCode=@inventoryCode, @RoomId=@roomId"
+        "EXEC [dbo].[updateFurniture] @Id=@id, @Name=@name, @Description=@description, @InventoryCode=@inventoryCode, @RoomId=@roomId, @ActingUserId=@ActingUserId"
       );
     if (result != null) response.json(result.recordset);
     else response.send(getError(190002));
@@ -74,10 +72,9 @@ router.delete("/delete", async (request, response) => {
   try {
     var objectToSave = request.body;
     const pool = await db;
-    const result = await pool
-      .request()
+    const result = await authedRequest(pool, request.user?.userId)
       .input("id", objectToSave.Id)
-      .query("EXEC [dbo].[deleteFurniture] @Id=@id");
+      .query("EXEC [dbo].[deleteFurniture] @Id=@id, @ActingUserId=@ActingUserId");
     if (result != null) response.json(result.recordset);
     else response.send(getError(190003));
   } catch (err) {
@@ -90,13 +87,12 @@ router.post("/changeFurnitureStatus", async (request, response) => {
   try {
     var objectToSave = Object.assign(new FurnitureStatusChange(), request.body);
     const pool = await db;
-    const result = await pool
-      .request()
+    const result = await authedRequest(pool, request.user?.userId)
       .input("id", objectToSave.Id)
       .input("statusId", objectToSave.StatusId)
       .input("date", objectToSave.Date)
       .query(
-        "EXEC [dbo].[changeFurnitureStatus] @Id=@id, @StatusId=@statusId, @StatusDate=@date"
+        "EXEC [dbo].[changeFurnitureStatus] @Id=@id, @StatusId=@statusId, @StatusDate=@date, @ActingUserId=@ActingUserId"
       );
     if (result != null) response.json(result.recordset);
     else response.send(getError(190004));

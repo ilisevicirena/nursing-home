@@ -26,7 +26,8 @@ CREATE PROCEDURE [dbo].[insertEmployee]
 		@SchoolQualificationName nvarchar(150)=NULL,
 		@BirthCityId int = NULL,
 		@BirthMunicipalityId int= NULL,
-		@BirthCountryId int= NULL
+		@BirthCountryId int= NULL,
+		@ActingUserId NCHAR(36) = NULL
 	)
 AS
 BEGIN
@@ -64,4 +65,6 @@ BEGIN
 		@Recurring = 1,
 		@EventTypeId=1,
 		@Reminder=0;
+
+	EXEC dbo.logUserActivity 'INSERT_EMPLOYEE', 'Employee inserted', @ActingUserId;
 END

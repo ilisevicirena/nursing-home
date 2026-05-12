@@ -51,13 +51,14 @@ router.post("/generateRequest", async (request, response) => {
       const res = await pool
         .request()
         .input("personId", person.Id)
+        .input("userId", request.body.userId)
         .input("type", 2)
         .input("name", outputFileName)
         .input("extension", "pdf")
         .input("fileType", "data:application/pdf;base64")
         .input("savePath", absolutePath)
         .query(
-          "EXEC [dbo].[insertDocument] @Name=@name, @PersonId=@personId, @DocumentTypeId=@type, @Extension=@extension, @FileType=@fileType, @SavePath=@savePath"
+          "EXEC [dbo].[insertDocument] @UserId=@userId, @Name=@name, @PersonId=@personId, @DocumentTypeId=@type, @Extension=@extension, @FileType=@fileType, @SavePath=@savePath"
         );
       if (res != null) {
         var documentId = res.recordset[0].Id;

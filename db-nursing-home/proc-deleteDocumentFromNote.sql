@@ -7,7 +7,8 @@ CREATE PROCEDURE [dbo].[deleteDocumentFromNote]
 	-- Add the parameters for the stored procedure here
 	(
 		@NoteId int,
-		@DocumentId int
+		@DocumentId int,
+		@ActingUserId NCHAR(36) = NULL
 	)
 AS
 BEGIN
@@ -18,4 +19,6 @@ BEGIN
 	DELETE FROM dbo.NoteDocumentRelation WHERE NoteId=@NoteId AND DocumentId=@DocumentId;
 
 	DELETE FROM dbo.Document WHERE Id=@DocumentId;
+
+	EXEC dbo.logUserActivity 'DELETE_DOCUMENT_FROM_NOTE', 'Document removed from note', @ActingUserId;
 END

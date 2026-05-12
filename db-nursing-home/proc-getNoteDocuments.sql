@@ -1,36 +1,43 @@
--- =============================================
--- Author:		Irena Ilisevic
--- Create date: 2.6.2023.
--- Description:	get documents for note
--- =============================================
-CREATE PROCEDURE [dbo].[getNoteDocuments]
-	-- Add the parameters for the stored procedure here
-	(
-		@NoteId int
-	)
+create PROCEDURE [dbo].[getNoteDocuments]
+(
+    @NoteId INT
+)
 AS
 BEGIN
-	-- SET NOCOUNT ON added to prevent extra result sets from
-	-- interfering with SELECT statements.
-	SET NOCOUNT ON;
+    SET NOCOUNT ON;
 
-    -- Insert statements for procedure here
-	SELECT 
-	[NoteId]=n.Id,
-	[Id]=ndr.DocumentId,
-	[Name]=d.[Name],
-	[DocumentTypeId]=d.DocumentTypeId,
-	[DocumentTypeName]=dt.[Name],
-	[Path]=d.[Path],
-	[StorageName]=d.StorageName,
-	[CreationDate]=d.CreationDate,
-	[Extension]=d.Extension,
-	[FileType]=d.FileType
-
-	FROM dbo.NoteDocumentRelation as ndr 
-	left join dbo.Note as n on n.Id=ndr.NoteId
-	left join dbo.Document as d on ndr.DocumentId=d.Id
-	left join dbo.DocumentType as dt on d.DocumentTypeId=dt.Id
-	where ndr.NoteId=@NoteId;
+    SELECT 
+        [NoteId] = n.[Id],
+        [Id] = ndr.[DocumentId],
+        [Name] = d.[Name],
+        [DocumentTypeId] = d.[DocumentTypeId],
+        [DocumentTypeName] = dt.[Name],
+        [Path] = d.[Path],
+        [StorageName] = d.[StorageName],
+        [CreationDate] = d.[CreationDate],
+        [Extension] = d.[Extension],
+        [FileType] = d.[FileType],
+        [PersonFirstName] = CASE 
+                                WHEN d.[UserId] IS NOT NULL THEN u.[FirstName] 
+                                ELSE p.[FirstName] 
+                            END,
+        [PersonLastName] = CASE 
+                               WHEN d.[UserId] IS NOT NULL THEN u.[LastName] 
+                               ELSE p.[LastName] 
+                           END
+    FROM 
+        dbo.[NoteDocumentRelation] AS ndr
+    LEFT JOIN 
+        dbo.[Note] AS n ON n.[Id] = ndr.[NoteId]
+    LEFT JOIN 
+        dbo.[Document] AS d ON ndr.[DocumentId] = d.[Id]
+    LEFT JOIN 
+        dbo.[DocumentType] AS dt ON d.[DocumentTypeId] = dt.[Id]
+    LEFT JOIN 
+        dbo.[Person] AS p ON d.[PersonId] = p.[Id]
+    LEFT JOIN 
+        dbo.[User] AS u ON d.[UserId] = u.[Id]
+    WHERE 
+        ndr.[NoteId] = @NoteId;
 
 END

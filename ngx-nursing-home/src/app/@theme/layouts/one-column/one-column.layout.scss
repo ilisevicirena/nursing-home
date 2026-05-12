@@ -1,13 +1,127 @@
-@import '../../styles/themes';
-@import 'bootstrap/scss/mixins/breakpoints';
-@import '@nebular/theme/styles/global/breakpoints';
+@import "../../styles/themes";
+@import "bootstrap/scss/mixins/breakpoints";
+@import "@nebular/theme/styles/global/breakpoints";
 
 @include nb-install-component() {
-  .menu-sidebar ::ng-deep .scrollable {
-    padding-top: nb-theme(layout-padding-top);
-  }
-}
+  ::ng-deep nb-layout-column.nb-layout-column {
+    height: calc(100vh - nb-theme(header-height));
+    overflow: auto;
 
-::ng-deep nb-layout .layout .layout-container .content .columns nb-layout-column {
-  padding: 1.5rem;
+    > * {
+      height: 100%;
+      width: 100%;
+      overflow: auto;
+    }
+  }
+
+  .menu-sidebar ::ng-deep .scrollable {
+    position: relative;
+    overflow: visible;
+  }
+
+  .menu-sidebar.collapsed ::ng-deep .scrollable {
+    position: relative;
+    overflow: hidden;
+  }
+
+  nb-sidebar.compacted ::ng-deep nb-menu .menu-item a.active::before {
+    content: "";
+    position: absolute;
+    left: 0px;
+    width: 0.25rem;
+    height: 60%;
+    background-color: nb-theme(color-primary-500);
+    border-bottom-right-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+  }
+
+  nb-sidebar.compacted img {
+    margin-left: 3px;
+  }
+
+  .menu-sidebar ::ng-deep nb-menu {
+    height: 75%;
+    overflow: auto;
+
+    .menu-items.expanded li {
+      border-left: 1px solid nb-theme(color-basic-default);
+
+      a.active {
+        border: none;
+        background-color: nb-theme(color-basic-default);
+        border-radius: 0.5rem;
+        color: inherit;
+        margin-left: 0.5rem;
+      }
+
+      a.active::after {
+        content: "";
+        background: transparent;
+      }
+    }
+  }
+
+  .menu-sidebar ::ng-deep nb-menu .menu-item {
+    a nb-icon:not(.menu-icon) {
+      background-color: nb-theme(color-basic-default);
+      border-radius: 50%;
+    }
+
+    border: none;
+
+    a.active {
+      position: relative;
+    }
+
+    a.active::after {
+      content: "";
+      position: absolute;
+      left: 0px;
+      width: 0.25rem;
+      height: 70%;
+      background-color: nb-theme(color-primary-500);
+      border-bottom-right-radius: 0.5rem;
+      border-top-right-radius: 0.5rem;
+    }
+  }
+
+  .dots-container {
+    display: flex;
+    gap: 0.15rem;
+    margin-left: -0.5rem;
+    margin-bottom: 0.5rem;
+
+    .dot {
+      background-color: nb-theme(color-primary-500);
+      height: 5px;
+      width: 5px;
+      border-radius: 50%;
+    }
+  }
+
+  #menu-sidebar-toggle-btn {
+    position: absolute;
+    right: -15px;
+    top: 2rem;
+    background-color: nb-theme(card-background-color);
+    box-shadow: nb-theme(sidebar-shadow);
+  }
+
+  #menu-sidebar-toggle-btn:hover {
+    background-color: nb-theme(color-primary-500);
+
+    nb-icon {
+      color: nb-theme(card-background-color);
+    }
+  }
+
+  .divider {
+    margin-left: -0.5rem;
+    margin-right: -0.5rem;
+    background-color: nb-theme(card-divider-color);
+    height: 3px;
+    border-radius: 1rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
 }

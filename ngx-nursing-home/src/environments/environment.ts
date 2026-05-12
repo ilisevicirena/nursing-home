@@ -39,7 +39,7 @@ export const environment = {
   production: false,
   sidebarConfig: SidebarStates.COMPACT,
   configFile: "assets/config/config.json",
-  translationFile: "assets/resources/strings-en.json",
+  translationFile: "assets/resources/strings-hr.json",
   notificationAllType: notificationAllType,
   brand: Brand,
   colors: Colors,
