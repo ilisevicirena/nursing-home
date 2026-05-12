@@ -158,3 +158,26 @@ INSERT [dbo].[PersonServiceRelation] ([PersonId], [ServiceId], [StartDate], [End
 VALUES (3, 6, CAST(N'2024-09-26T11:45:29.620' AS DateTime), NULL, 1, 5)
 INSERT [dbo].[PersonServiceRelation] ([PersonId], [ServiceId], [StartDate], [EndDate], [Active], [Quantity])
 VALUES (3, 3, CAST(N'2024-09-26T11:45:29.620' AS DateTime), NULL, 1, 3)
+
+-- insert default notification settings for all users and all notification types
+INSERT INTO [dbo].[UserNotificationTypeSettings]
+(
+    [NotificationTypeId],
+    [UserId],
+    [Enabled],
+    [DaysReminder]
+)
+SELECT 
+    nt.Id,
+    u.Id,
+    nt.Enabled,
+    nt.DaysReminder
+FROM [dbo].[User] u
+CROSS JOIN [dbo].[NotificationType] nt
+WHERE NOT EXISTS
+(
+    SELECT 1
+    FROM [dbo].[UserNotificationTypeSettings] unts
+    WHERE unts.UserId = u.Id
+      AND unts.NotificationTypeId = nt.Id
+)

@@ -99,6 +99,11 @@ router.use("/furniture-statuses", furnitureStatuses);
 router.use("/furniture", furniture);
 router.use("/general-settings", generalSettings);
 router.use("/users", users);
+router.use("/person-allergens", personAllergens);
+router.use("/person-medications", personMedications);
+router.use("/person-functional-status", personFunctionalStatus);
+router.use("/person-dietary-restrictions", personDietaryRestrictions);
+router.use("/person-insurance", personInsurance);
 router.use("/my-profile", myProfile);
 
 // Start the server
