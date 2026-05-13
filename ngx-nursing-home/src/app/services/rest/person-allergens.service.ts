@@ -18,7 +18,8 @@ export class PersonAllergensService extends BaseRestApiService {
 
 export interface IPersonAllergen extends IBaseSaveModel {
   PersonId: number;
-  AllergenId: number;
+  AllergenId?: number;
+  AllergenName?: string;
   ReactionDescription?: string;
-  Severity: string;
+  Severity?: string;
 }

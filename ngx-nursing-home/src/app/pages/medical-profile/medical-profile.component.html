@@ -1,0 +1,36 @@
+<nb-tabset class="documents-tabset" (changeTab)="onTabChange($event)">
+  <nb-tab
+    *ngFor="let type of medicalSections; let indexOfelement = index"
+    [tabTitle]="getString(type.string)"
+    class="h-100 m-0 p-0 overflow-hidden"
+    [tabId]="type.option"
+    [active]="type.active"
+  >
+    <nb-card class="h-100 tab-card">
+      <nb-card-body>
+        <ng-container [ngSwitch]="type.option">
+          <div *ngSwitchCase="'allergies'">
+            <!-- Allergies content -->
+            <p>Allergies content goes here...</p>
+          </div>
+          <div *ngSwitchCase="'medications'">
+            <!-- Medications content -->
+            <p>Medications content goes here...</p>
+          </div>
+          <div *ngSwitchCase="'functionalStatus'">
+            <!-- Functional Status content -->
+            <p>Functional Status content goes here...</p>
+          </div>
+          <div *ngSwitchCase="'dietary'">
+            <!-- Dietary Restrictions content -->
+            <p>Dietary Restrictions content goes here...</p>
+          </div>
+          <div *ngSwitchCase="'insurance'">
+            <!-- Insurance content -->
+            <p>Insurance content goes here...</p>
+          </div>
+        </ng-container>
+      </nb-card-body>
+    </nb-card>
+  </nb-tab>
+</nb-tabset>

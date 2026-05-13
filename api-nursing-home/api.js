@@ -15,7 +15,7 @@ app.use(
     limit: "50mb",
     extended: true,
     parameterLimit: 50000,
-  })
+  }),
 );
 
 // Require route handlers
@@ -56,6 +56,11 @@ const furniture = require("./routes/furniture");
 const generalSettings = require("./routes/general-settings");
 const users = require("./routes/users");
 const myProfile = require("./routes/my-profile");
+const personAllergens = require("./routes/person-allergens");
+const personMedications = require("./routes/person-medications");
+const personFunctionalStatus = require("./routes/person-functional-status");
+const personDietaryRestrictions = require("./routes/person-dietary-restrictions");
+const personInsurance = require("./routes/person-insurance");
 
 // Register the authentication route without global middleware
 app.use("/authentication", authentication);
