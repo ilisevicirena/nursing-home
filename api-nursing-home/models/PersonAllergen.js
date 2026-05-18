@@ -2,19 +2,21 @@ class PersonAllergen {
   constructor(
     id,
     personId,
-    allergenId,
     allergenName,
     reactionDescription,
-    severity,
+    severityId,
+    startDate,
+    endDate,
     creationDate,
     modifiedDate,
   ) {
     this.Id = id;
     this.PersonId = personId;
-    this.AllergenId = allergenId;
     this.AllergenName = allergenName;
     this.ReactionDescription = reactionDescription;
-    this.Severity = severity;
+    this.SeverityId = severityId;
+    this.StartDate = startDate;
+    this.EndDate = endDate;
     this.CreationDate = creationDate;
     this.ModifiedDate = modifiedDate;
   }

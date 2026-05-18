@@ -5,22 +5,37 @@
 -- =============================================
 CREATE PROCEDURE [dbo].[updatePersonAllergen]
 (
-    @Id INT = NULL,
-    @AllergenId INT = NULL,
-    @AllergenName VARCHAR(100) = NULL,
+    @Id INT,
+    @AllergenName VARCHAR(100),
+    @SeverityId INT,
     @ReactionDescription VARCHAR(300) = NULL,
-    @Severity VARCHAR(50),
+    @StartDate DATETIME = NULL,
+    @EndDate DATETIME = NULL,
     @ActingUserId NCHAR(36) = NULL
 )
 AS
 BEGIN
     SET NOCOUNT ON;
 
+    -- Validate required fields
+    IF @AllergenName IS NULL OR LEN(LTRIM(RTRIM(@AllergenName))) = 0
+    BEGIN
+        RAISERROR('AllergenName is required', 16, 1);
+        RETURN;
+    END;
+
+    IF @SeverityId IS NULL
+    BEGIN
+        RAISERROR('SeverityId is required', 16, 1);
+        RETURN;
+    END;
+
     UPDATE dbo.PersonAllergen
-    SET AllergenId = @AllergenId,
-        AllergenName = @AllergenName,
+    SET AllergenName = @AllergenName,
+        SeverityId = @SeverityId,
         ReactionDescription = @ReactionDescription,
-        Severity = @Severity,
+        StartDate = ISNULL(@StartDate, StartDate),
+        EndDate = @EndDate,
         ModifiedDate = GETDATE()
     WHERE Id = @Id;
 

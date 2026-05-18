@@ -1,10 +1,11 @@
 CREATE TABLE [dbo].[PersonAllergen](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[PersonId] [int] NOT NULL,
-	[AllergenId] [int] NULL,
-	[AllergenName] [varchar](100) NULL,
+	[AllergenName] [varchar](100) NOT NULL,
 	[ReactionDescription] [varchar](300) NULL,
-	[Severity] [varchar](50) NOT NULL,
+	[SeverityId] [int] NOT NULL,
+	[StartDate] [datetime] NULL,
+	[EndDate] [datetime] NULL,
 	[CreationDate] [datetime] NOT NULL,
 	[ModifiedDate] [datetime] NULL,
  CONSTRAINT [PK_PersonAllergen] PRIMARY KEY CLUSTERED 
@@ -18,7 +19,7 @@ REFERENCES [dbo].[Person] ([Id])
 
 ALTER TABLE [dbo].[PersonAllergen] CHECK CONSTRAINT [FK_PersonAllergen_Person]
 
-ALTER TABLE [dbo].[PersonAllergen]  WITH CHECK ADD  CONSTRAINT [FK_PersonAllergen_Allergen] FOREIGN KEY([AllergenId])
-REFERENCES [dbo].[Allergen] ([Id])
+ALTER TABLE [dbo].[PersonAllergen]  WITH CHECK ADD  CONSTRAINT [FK_PersonAllergen_AllergenSeverity] FOREIGN KEY([SeverityId])
+REFERENCES [dbo].[AllergenSeverity] ([Id])
 
-ALTER TABLE [dbo].[PersonAllergen] CHECK CONSTRAINT [FK_PersonAllergen_Allergen]
+ALTER TABLE [dbo].[PersonAllergen] CHECK CONSTRAINT [FK_PersonAllergen_AllergenSeverity]

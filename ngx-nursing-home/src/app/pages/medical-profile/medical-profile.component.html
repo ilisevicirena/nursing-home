@@ -10,8 +10,24 @@
       <nb-card-body>
         <ng-container [ngSwitch]="type.option">
           <div *ngSwitchCase="'allergies'">
-            <!-- Allergies content -->
-            <p>Allergies content goes here...</p>
+            <div class="mb-2">
+              <button
+                nbButton
+                shape="round"
+                appearance="outline"
+                status="primary"
+                size="small"
+                (click)="openAllergyDialog()"
+                *ngIf="checkUserCanEditMedical()"
+              >
+                <nb-icon icon="plus-outline"></nb-icon>
+                {{ getString("add") }}
+              </button>
+            </div>
+            <div *ngIf="medicalAllergies.length > 0; else nodata">
+              <!-- Allergies content -->
+              <p>Allergies content goes here...</p>
+            </div>
           </div>
           <div *ngSwitchCase="'medications'">
             <!-- Medications content -->
@@ -34,3 +50,6 @@
     </nb-card>
   </nb-tab>
 </nb-tabset>
+<ng-template #nodata>
+  <sample-no-data [title]="getString('noData')"></sample-no-data>
+</ng-template>

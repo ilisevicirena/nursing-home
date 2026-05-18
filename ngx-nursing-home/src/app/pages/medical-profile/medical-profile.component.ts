@@ -31,6 +31,7 @@ import { AuthService, UserRole } from "../../services/auth.service";
 import { DialogService } from "../../shared/dialog/dialog.service";
 import { ToastrService } from "../../services/toastr.service";
 import { NbTabComponent } from "@nebular/theme/components/tabset/tabset.component";
+import { AddEditAllergenComponent } from "./add-edit-allergen/add-edit-allergen.component";
 
 @Component({
   selector: "sample-medical-profile",
@@ -65,6 +66,7 @@ export class MedicalProfileComponent implements OnInit, OnDestroy {
 
   public getString = getString;
   public medicalAllergies: IPersonAllergen[] = [];
+  public allergenSeverities: any[] = [];
   public medications: IPersonMedication[] = [];
   public functionalStatusHistory: IPersonFunctionalStatus[] = [];
   public dietaryRestrictions: IPersonDietaryRestriction[] = [];
@@ -86,6 +88,12 @@ export class MedicalProfileComponent implements OnInit, OnDestroy {
   ];
 
   private getAllergens(): void {
+    this._subs.push(
+      this._personAllergensService.getAllergenSeverities().subscribe((data) => {
+        this.allergenSeverities = data;
+      }),
+    );
+
     this._subs.push(
       this._personAllergensService
         .getDataForPerson(this.personId)
@@ -184,15 +192,10 @@ export class MedicalProfileComponent implements OnInit, OnDestroy {
   public getSeverityStatus(severity: string): string {
     if (!severity) return "basic";
     const lower = severity.toLowerCase();
-    if (
-      lower.includes("teška") ||
-      lower.includes("severe") ||
-      lower.includes("high")
-    )
-      return "danger";
-    if (lower.includes("umjeren") || lower.includes("moderate"))
-      return "warning";
-    return "info";
+    if (lower === "danger") return "danger";
+    if (lower === "warning") return "warning";
+    if (lower === "success") return "success";
+    return "basic";
   }
 
   public checkUserCanEditMedical(): boolean {
@@ -205,19 +208,19 @@ export class MedicalProfileComponent implements OnInit, OnDestroy {
 
   //------------------------------------------ ALLERGENS CRUD --------------------------------------------------
 
-  public openAllergyDialog(
-    ref: TemplateRef<any>,
-    item?: IPersonAllergen,
-  ): void {
-    this.allergenForm = item
-      ? { ...item }
-      : {
-          PersonId: this.personId,
-          AllergenName: "",
-          Severity: "",
-          ReactionDescription: "",
-        };
-    this._dialogService.open(ref, { autoFocus: false });
+  public openAllergyDialog(item?: IPersonAllergen): void {
+    const dialogRef = this._dialogService.open(AddEditAllergenComponent, {
+      autoFocus: false,
+      context: {
+        item: item ? { ...item } : undefined,
+        personId: this.personId,
+      },
+    });
+    dialogRef.onClose.subscribe((result: boolean) => {
+      if (result) {
+        this.getPersonMedicalData();
+      }
+    });
   }
 
   public saveAllergy(dialogRef: any): void {

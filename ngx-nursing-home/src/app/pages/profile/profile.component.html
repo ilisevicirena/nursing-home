@@ -98,7 +98,11 @@
     <div class="dotted-line" *ngIf="activeView == 'dormatoryData'"></div>
     <nb-card
       class="h-100 m-0"
-      [ngClass]="activeView == 'documents' ? 'bg-color-transparent' : ''"
+      [ngClass]="
+        activeView == 'documents' || activeView == 'medical'
+          ? 'bg-color-transparent'
+          : ''
+      "
     >
       <nb-card-body class="overflow-hidden h-100">
         <ng-container [ngSwitch]="activeView">

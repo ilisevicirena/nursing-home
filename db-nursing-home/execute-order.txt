@@ -15,6 +15,7 @@ create-tb-gender.sql
 create-tb-person.sql
 create-tb-contact.sql
 create-tb-allergen.sql
+create-tb-allergenSeverity.sql
 create-tb-personAllergen.sql
 create-tb-personMedication.sql
 create-tb-personFunctionalStatus.sql
@@ -104,6 +105,7 @@ insert-tb-pageLink.sql
 insert-tb-vacationStatus.sql
 insert-tb-calendarEventType.sql
 insert-tb-calculationStatus.sql
+insert-tb-allergenSeverity.sql
 insert-tb-furnitureStatus.sql
 insert-tb-generalSettings.sql
 proc-logUserActivity.sql
@@ -204,6 +206,7 @@ proc-getCities.sql
 proc-getPackages.sql
 proc-getPerson.sql
 proc-getPersonDetailed.sql
+proc-getAllergenSeverities.sql
 proc-getPersonAllergens.sql
 proc-getPersonMedications.sql
 proc-getPersonFunctionalStatus.sql

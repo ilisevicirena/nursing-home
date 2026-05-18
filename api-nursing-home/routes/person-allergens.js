@@ -18,18 +18,32 @@ router.get("/", async (request, response) => {
   }
 });
 
+router.get("/severities/all", async (request, response) => {
+  try {
+    const pool = await db;
+    const result = await pool
+      .request()
+      .query("EXEC [dbo].[getAllergenSeverities]");
+    response.json(result.recordset);
+  } catch (err) {
+    response.status(500);
+    response.send(err.message);
+  }
+});
+
 router.post("/add", async (request, response) => {
   try {
     var objectToSave = Object.assign(new PersonAllergen(), request.body);
     const pool = await db;
     const result = await authedRequest(pool, request.user?.userId)
       .input("personId", objectToSave.PersonId)
-      .input("allergenId", objectToSave.AllergenId)
       .input("allergenName", objectToSave.AllergenName)
+      .input("severityId", objectToSave.SeverityId)
       .input("reactionDescription", objectToSave.ReactionDescription)
-      .input("severity", objectToSave.Severity)
+      .input("startDate", objectToSave.StartDate)
+      .input("endDate", objectToSave.EndDate)
       .query(
-        "EXEC [dbo].[insertPersonAllergen] @PersonId=@personId, @AllergenId=@allergenId, @AllergenName=@allergenName, @ReactionDescription=@reactionDescription, @Severity=@severity, @ActingUserId=@ActingUserId",
+        "EXEC [dbo].[insertPersonAllergen] @PersonId=@personId, @AllergenName=@allergenName, @SeverityId=@severityId, @ReactionDescription=@reactionDescription, @StartDate=@startDate, @EndDate=@endDate, @ActingUserId=@ActingUserId",
       );
     if (result != null) {
       response.json(result.recordset[0]);
@@ -46,12 +60,13 @@ router.post("/update", async (request, response) => {
     const pool = await db;
     const result = await authedRequest(pool, request.user?.userId)
       .input("id", objectToSave.Id)
-      .input("allergenId", objectToSave.AllergenId)
       .input("allergenName", objectToSave.AllergenName)
+      .input("severityId", objectToSave.SeverityId)
       .input("reactionDescription", objectToSave.ReactionDescription)
-      .input("severity", objectToSave.Severity)
+      .input("startDate", objectToSave.StartDate)
+      .input("endDate", objectToSave.EndDate)
       .query(
-        "EXEC [dbo].[updatePersonAllergen] @Id=@id, @AllergenId=@allergenId, @AllergenName=@allergenName, @ReactionDescription=@reactionDescription, @Severity=@severity, @ActingUserId=@ActingUserId",
+        "EXEC [dbo].[updatePersonAllergen] @Id=@id, @AllergenName=@allergenName, @SeverityId=@severityId, @ReactionDescription=@reactionDescription, @StartDate=@startDate, @EndDate=@endDate, @ActingUserId=@ActingUserId",
       );
     if (result != null) {
       response.json(result.recordset[0]);

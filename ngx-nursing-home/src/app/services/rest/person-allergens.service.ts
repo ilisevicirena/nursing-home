@@ -14,12 +14,28 @@ export class PersonAllergensService extends BaseRestApiService {
   public getDataForPerson(personId: number): Observable<any> {
     return this.http.get(this.apiRoute + "?PersonId=" + personId);
   }
+
+  public getAllergenSeverities(): Observable<IAllergenSeverity[]> {
+    return this.http.get<IAllergenSeverity[]>(this.apiRoute + "/severities/all");
+  }
 }
 
 export interface IPersonAllergen extends IBaseSaveModel {
   PersonId: number;
-  AllergenId?: number;
-  AllergenName?: string;
+  AllergenName: string;
   ReactionDescription?: string;
-  Severity?: string;
+  SeverityId?: number;
+  SeverityName?: string;
+  SeverityStringKey?: string;
+  SeverityColor?: string;
+  StartDate?: Date;
+  EndDate?: Date;
+  IsActive?: boolean;
+}
+
+export interface IAllergenSeverity {
+  Id: number;
+  Name: string;
+  StringKey: string;
+  Color: string;
 }
