@@ -280,6 +280,7 @@ proc-deletePersonFunctionalStatus.sql
 proc-updatePersonDietaryRestriction.sql
 proc-deletePersonDietaryRestriction.sql
 proc-updatePersonInsuranceData.sql
+proc-deletePersonInsuranceData.sql
 proc-updateRoom.sql
 proc-updateService.sql
 proc-updateServiceForPackage.sql

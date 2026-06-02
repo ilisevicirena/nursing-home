@@ -434,8 +434,85 @@
             </div>
           </div>
           <div *ngSwitchCase="'insurance'">
-            <!-- Insurance content -->
-            <p>Insurance content goes here...</p>
+            <div class="mb-2">
+              <button
+                nbButton
+                shape="round"
+                appearance="outline"
+                status="primary"
+                size="small"
+                (click)="openInsuranceDialog()"
+                *ngIf="checkUserCanEditMedical()"
+              >
+                <nb-icon icon="plus-outline"></nb-icon>
+                {{ getString("add") }}
+              </button>
+            </div>
+            <div *ngIf="insuranceRecords.length > 0; else nodata" class="row m-0">
+              <div
+                class="col-md-6 col-xl-4 mb-3 ps-0"
+                *ngFor="let ins of insuranceRecords"
+              >
+                <nb-card class="insurance-card h-100 m-0">
+                  <nb-card-header class="d-flex align-items-center gap-2 flex-wrap">
+                    <nb-icon pack="eva" icon="shield-outline" class="ins-card-icon"></nb-icon>
+                    <span class="ins-company-name col">{{ ins.InsuranceCompany || getString("insuranceData") }}</span>
+                    <nb-tag
+                      *ngIf="ins.Status"
+                      [text]="getInsuranceStatusLabel(ins.Status)"
+                      [status]="getInsuranceStatusColor(ins.Status)"
+                      appearance="filled"
+                      size="tiny"
+                    ></nb-tag>
+                  </nb-card-header>
+                  <nb-card-body class="d-flex flex-column gap-2">
+                    <div class="d-flex gap-3 flex-wrap">
+                      <div *ngIf="ins.PolicyNumber" class="info-row">
+                        <span class="info-label">{{ getString("policyNumber") }}:</span>
+                        <span class="info-value">{{ ins.PolicyNumber }}</span>
+                      </div>
+                      <div *ngIf="ins.GroupNumber" class="info-row">
+                        <span class="info-label">{{ getString("groupNumber") }}:</span>
+                        <span class="info-value">{{ ins.GroupNumber }}</span>
+                      </div>
+                    </div>
+                    <div *ngIf="ins.CoverageType" class="info-row">
+                      <span class="info-label">{{ getString("coverageType") }}:</span>
+                      <span class="info-value">{{ ins.CoverageType }}</span>
+                    </div>
+                    <div class="d-flex gap-3 flex-wrap">
+                      <div *ngIf="ins.CoverageStartDate" class="info-row">
+                        <span class="info-label">{{ getString("coverageStartDate") }}:</span>
+                        <span class="info-value">{{ ins.CoverageStartDate | date : "dd.MM.yyyy." }}</span>
+                      </div>
+                      <div *ngIf="ins.CoverageEndDate" class="info-row">
+                        <span class="info-label">{{ getString("coverageEndDate") }}:</span>
+                        <span class="info-value">{{ ins.CoverageEndDate | date : "dd.MM.yyyy." }}</span>
+                      </div>
+                    </div>
+                  </nb-card-body>
+                  <nb-card-footer
+                    *ngIf="checkUserCanEditMedical()"
+                    class="d-flex justify-content-end gap-2 p-2"
+                  >
+                    <button
+                      nbButton ghost shape="round" size="small" status="primary"
+                      [nbTooltip]="getString('edit')"
+                      (click)="openInsuranceDialog(ins)"
+                    >
+                      <nb-icon pack="eva" icon="edit-2-outline"></nb-icon>
+                    </button>
+                    <button
+                      nbButton ghost shape="round" size="small" status="danger"
+                      [nbTooltip]="getString('delete')"
+                      (click)="deleteInsurance(ins)"
+                    >
+                      <nb-icon pack="eva" icon="trash-2-outline"></nb-icon>
+                    </button>
+                  </nb-card-footer>
+                </nb-card>
+              </div>
+            </div>
           </div>
         </ng-container>
       </nb-card-body>

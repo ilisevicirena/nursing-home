@@ -217,6 +217,51 @@
     }
   }
 
+  .insurance-card {
+    border-radius: 0.5rem;
+
+    nb-card-header {
+      padding: 0.75rem 1rem;
+      font-size: 0.9rem;
+    }
+
+    nb-card-body {
+      padding: 0.75rem 1rem;
+      font-size: 0.85rem;
+      min-height: 60px;
+    }
+
+    nb-card-footer {
+      border-top: 1px solid nb-theme(card-divider-color);
+    }
+
+    .ins-card-icon {
+      font-size: 1rem;
+      color: nb-theme(color-primary-500);
+    }
+
+    .ins-company-name {
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .info-row {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .info-label {
+      font-size: 0.75rem;
+      color: nb-theme(text-hint-color);
+    }
+
+    .info-value {
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+  }
+
   .dietary-card {
     border-radius: 0.5rem;
 

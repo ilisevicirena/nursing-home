@@ -111,6 +111,7 @@ import { AddEditAllergenComponent } from './medical-profile/add-edit-allergen/ad
 import { AddEditMedicationComponent } from './medical-profile/add-edit-medication/add-edit-medication.component';
 import { AddEditFunctionalStatusComponent } from './medical-profile/add-edit-functional-status/add-edit-functional-status.component';
 import { AddEditDietaryRestrictionComponent } from './medical-profile/add-edit-dietary-restriction/add-edit-dietary-restriction.component';
+import { AddEditInsuranceComponent } from './medical-profile/add-edit-insurance/add-edit-insurance.component';
 
 @NgModule({
   imports: [
@@ -230,6 +231,7 @@ import { AddEditDietaryRestrictionComponent } from './medical-profile/add-edit-d
     AddEditMedicationComponent,
     AddEditFunctionalStatusComponent,
     AddEditDietaryRestrictionComponent,
+    AddEditInsuranceComponent,
   ],
 })
 export class PagesModule {}

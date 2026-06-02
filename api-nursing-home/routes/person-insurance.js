@@ -60,7 +60,7 @@ router.post("/update", async (request, response) => {
         "EXEC [dbo].[updatePersonInsuranceData] @Id=@id, @InsuranceCompany=@insuranceCompany, @PolicyNumber=@policyNumber, @GroupNumber=@groupNumber, @CoverageStartDate=@coverageStartDate, @CoverageEndDate=@coverageEndDate, @CoverageType=@coverageType, @Status=@status, @ActingUserId=@ActingUserId",
       );
     if (result != null) {
-      response.json(result.recordset[0]);
+      response.json({});
     } else response.send(getError(9052));
   } catch (err) {
     response.status(500);
@@ -78,7 +78,7 @@ router.delete("/delete", async (request, response) => {
         "EXEC [dbo].[deletePersonInsuranceData] @Id=@id, @ActingUserId=@ActingUserId",
       );
     if (result != null) {
-      response.json(result.recordset);
+      response.json({});
     } else response.send(getError(9053));
   } catch (err) {
     response.status(500);

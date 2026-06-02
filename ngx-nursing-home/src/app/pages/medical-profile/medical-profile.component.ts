@@ -3,7 +3,6 @@ import {
   Input,
   OnDestroy,
   OnInit,
-  TemplateRef,
 } from "@angular/core";
 import {
   PersonAllergensService,
@@ -35,6 +34,7 @@ import { AddEditAllergenComponent } from "./add-edit-allergen/add-edit-allergen.
 import { AddEditMedicationComponent } from "./add-edit-medication/add-edit-medication.component";
 import { AddEditFunctionalStatusComponent } from "./add-edit-functional-status/add-edit-functional-status.component";
 import { AddEditDietaryRestrictionComponent } from "./add-edit-dietary-restriction/add-edit-dietary-restriction.component";
+import { AddEditInsuranceComponent } from "./add-edit-insurance/add-edit-insurance.component";
 
 @Component({
   selector: "sample-medical-profile",
@@ -77,7 +77,6 @@ export class MedicalProfileComponent implements OnInit, OnDestroy {
   public allergenForm: any = {};
   public medicationForm: any = {};
   public functionalStatusForm: any = {};
-  public insuranceForm: any = {};
   public activeMedicalView: string = "allergies";
   public medicationView: 'cards' | 'schedule' = 'cards';
 
@@ -474,36 +473,35 @@ export class MedicalProfileComponent implements OnInit, OnDestroy {
 
   //------------------------------------------ INSURANCE CRUD --------------------------------------------------
 
-  public openInsuranceDialog(
-    ref: TemplateRef<any>,
-    item?: IPersonInsuranceData,
-  ): void {
-    this.insuranceForm = item
-      ? { ...item }
-      : { PersonId: this.personId, Status: "Aktivno" };
-    this._dialogService.open(ref, { autoFocus: false });
+  public openInsuranceDialog(item?: IPersonInsuranceData): void {
+    const dialogRef = this._dialogService.open(AddEditInsuranceComponent, {
+      autoFocus: false,
+      context: {
+        item: item ? { ...item } : undefined,
+        personId: this.personId,
+      },
+    });
+    dialogRef.onClose.subscribe((result: boolean) => {
+      if (result) this.getPersonMedicalData();
+    });
   }
 
-  public saveInsurance(dialogRef: any): void {
-    this.insuranceForm.PersonId = this.personId;
-    const obs = this.insuranceForm.Id
-      ? this._personInsuranceService.update(this.insuranceForm)
-      : this._personInsuranceService.add(this.insuranceForm);
-    this._subs.push(
-      obs.subscribe(
-        () => {
-          this._toastrService.showToast(
-            "success",
-            getString("saveSuccess"),
-            "",
-          );
-          this.getPersonMedicalData();
-          dialogRef.close();
-        },
-        () =>
-          this._toastrService.showToast("danger", getString("saveError"), ""),
-      ),
-    );
+  public getInsuranceStatusLabel(status: string): string {
+    const map: Record<string, string> = {
+      active: getString("insuranceStatusActive"),
+      expired: getString("insuranceStatusExpired"),
+      pending: getString("insuranceStatusPending"),
+    };
+    return map[status] ?? status;
+  }
+
+  public getInsuranceStatusColor(status: string): string {
+    const map: Record<string, string> = {
+      active: "success",
+      expired: "danger",
+      pending: "warning",
+    };
+    return map[status] ?? "basic";
   }
 
   public async deleteInsurance(item: IPersonInsuranceData): Promise<void> {
