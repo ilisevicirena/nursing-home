@@ -23,6 +23,11 @@ export interface IPersonFunctionalStatus extends IBaseSaveModel {
   FallRisk?: string;
   VisualStatus?: string;
   HearingStatus?: string;
+  MobilityHighRisk?: boolean;
+  CognitiveHighRisk?: boolean;
+  FallHighRisk?: boolean;
+  VisualHighRisk?: boolean;
+  HearingHighRisk?: boolean;
   AssessmentDate?: Date;
   NotesDescription?: string;
 }

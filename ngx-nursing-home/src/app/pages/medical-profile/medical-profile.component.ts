@@ -33,6 +33,7 @@ import { ToastrService } from "../../services/toastr.service";
 import { NbTabComponent } from "@nebular/theme/components/tabset/tabset.component";
 import { AddEditAllergenComponent } from "./add-edit-allergen/add-edit-allergen.component";
 import { AddEditMedicationComponent } from "./add-edit-medication/add-edit-medication.component";
+import { AddEditFunctionalStatusComponent } from "./add-edit-functional-status/add-edit-functional-status.component";
 
 @Component({
   selector: "sample-medical-profile",
@@ -358,36 +359,72 @@ export class MedicalProfileComponent implements OnInit, OnDestroy {
 
   //------------------------------------------ FUNCTIONAL STATUS CRUD --------------------------------------------------
 
-  public openFunctionalStatusDialog(
-    ref: TemplateRef<any>,
-    item?: IPersonFunctionalStatus,
-  ): void {
-    this.functionalStatusForm = item
-      ? { ...item }
-      : { PersonId: this.personId, AssessmentDate: new Date() };
-    this._dialogService.open(ref, { autoFocus: false });
+  public openFunctionalStatusDialog(item?: IPersonFunctionalStatus): void {
+    const dialogRef = this._dialogService.open(AddEditFunctionalStatusComponent, {
+      autoFocus: false,
+      context: {
+        item: item ? { ...item } : undefined,
+        personId: this.personId,
+      },
+    });
+    dialogRef.onClose.subscribe((result: boolean) => {
+      if (result) this.getPersonMedicalData();
+    });
   }
 
-  public saveFunctionalStatus(dialogRef: any): void {
-    this.functionalStatusForm.PersonId = this.personId;
-    const obs = this.functionalStatusForm.Id
-      ? this._personFunctionalStatusService.update(this.functionalStatusForm)
-      : this._personFunctionalStatusService.add(this.functionalStatusForm);
-    this._subs.push(
-      obs.subscribe(
-        () => {
-          this._toastrService.showToast(
-            "success",
-            getString("saveSuccess"),
-            "",
-          );
-          this.getPersonMedicalData();
-          dialogRef.close();
-        },
-        () =>
-          this._toastrService.showToast("danger", getString("saveError"), ""),
-      ),
-    );
+  public getMobilityStatus(value: string): string {
+    const map: Record<string, string> = {
+      independent: "success", assistive_device: "info",
+      requires_assistance: "warning", non_ambulatory: "danger",
+    };
+    return map[value] ?? "basic";
+  }
+
+  public getCognitiveStatus(value: string): string {
+    const map: Record<string, string> = {
+      intact: "success", mild_impairment: "info",
+      moderate_impairment: "warning", severe_impairment: "danger", dementia: "danger",
+    };
+    return map[value] ?? "basic";
+  }
+
+  public getFallRiskStatus(value: string): string {
+    const map: Record<string, string> = { low: "success", moderate: "warning", high: "danger" };
+    return map[value] ?? "basic";
+  }
+
+  public getSensoryStatus(value: string): string {
+    const map: Record<string, string> = {
+      normal: "success", corrected: "info", mild_loss: "info",
+      impaired: "warning", moderate_loss: "warning",
+      severe_loss: "danger", blind: "danger", deaf: "danger",
+    };
+    return map[value] ?? "basic";
+  }
+
+  public getFunctionalStatusLabel(field: string, value: string): string {
+    const maps: Record<string, Record<string, string>> = {
+      mobility: {
+        independent: "mobilityIndependent", assistive_device: "mobilityAssistiveDevice",
+        requires_assistance: "mobilityRequiresAssistance", non_ambulatory: "mobilityNonAmbulatory",
+      },
+      cognitive: {
+        intact: "cognitiveIntact", mild_impairment: "cognitiveMildImpairment",
+        moderate_impairment: "cognitiveModerateImpairment", severe_impairment: "cognitiveSevereImpairment",
+        dementia: "cognitiveDementia",
+      },
+      fallRisk: { low: "fallRiskLow", moderate: "fallRiskModerate", high: "fallRiskHigh" },
+      visual: {
+        normal: "visualNormal", corrected: "visualCorrected",
+        impaired: "visualImpaired", blind: "visualBlind",
+      },
+      hearing: {
+        normal: "hearingNormal", mild_loss: "hearingMildLoss",
+        moderate_loss: "hearingModerateLoss", severe_loss: "hearingSevereLoss", deaf: "hearingDeaf",
+      },
+    };
+    const key = maps[field]?.[value];
+    return key ? getString(key) : value;
   }
 
   public async deleteFunctionalStatus(

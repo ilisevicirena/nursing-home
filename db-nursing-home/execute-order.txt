@@ -19,6 +19,7 @@ create-tb-allergenSeverity.sql
 create-tb-personAllergen.sql
 create-tb-personMedication.sql
 create-tb-personFunctionalStatus.sql
+create-tb-functionalStatusOption.sql
 create-tb-dietaryType.sql
 create-tb-personDietaryRestriction.sql
 create-tb-personInsuranceData.sql
@@ -106,6 +107,7 @@ insert-tb-vacationStatus.sql
 insert-tb-calendarEventType.sql
 insert-tb-calculationStatus.sql
 insert-tb-allergenSeverity.sql
+insert-tb-functionalStatusOption.sql
 insert-tb-furnitureStatus.sql
 insert-tb-generalSettings.sql
 proc-logUserActivity.sql
@@ -273,6 +275,7 @@ proc-deletePersonAllergen.sql
 proc-updatePersonMedication.sql
 proc-deletePersonMedication.sql
 proc-updatePersonFunctionalStatus.sql
+proc-deletePersonFunctionalStatus.sql
 proc-updatePersonDietaryRestriction.sql
 proc-updatePersonInsuranceData.sql
 proc-updateRoom.sql

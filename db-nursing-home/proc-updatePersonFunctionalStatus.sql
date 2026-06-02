@@ -20,14 +20,14 @@ BEGIN
     SET NOCOUNT ON;
 
     UPDATE dbo.PersonFunctionalStatus
-    SET MobilityStatus = @MobilityStatus,
-        CognitiveStatus = @CognitiveStatus,
-        FallRisk = @FallRisk,
-        VisualStatus = @VisualStatus,
-        HearingStatus = @HearingStatus,
-        AssessmentDate = @AssessmentDate,
+    SET MobilityStatus   = @MobilityStatus,
+        CognitiveStatus  = @CognitiveStatus,
+        FallRisk         = @FallRisk,
+        VisualStatus     = @VisualStatus,
+        HearingStatus    = @HearingStatus,
+        AssessmentDate   = @AssessmentDate,
         NotesDescription = @NotesDescription,
-        ModifiedDate = GETDATE()
+        ModifiedDate     = GETDATE()
     WHERE Id = @Id;
 
     EXEC dbo.logUserActivity 'UPDATE_PERSON_FUNCTIONAL_STATUS', 'Person functional status updated', @ActingUserId;

@@ -259,8 +259,106 @@
             </ng-container>
           </div>
           <div *ngSwitchCase="'functionalStatus'">
-            <!-- Functional Status content -->
-            <p>Functional Status content goes here...</p>
+            <div class="mb-2">
+              <button
+                nbButton
+                shape="round"
+                appearance="outline"
+                status="primary"
+                size="small"
+                (click)="openFunctionalStatusDialog()"
+                *ngIf="checkUserCanEditMedical()"
+              >
+                <nb-icon icon="plus-outline"></nb-icon>
+                {{ getString("add") }}
+              </button>
+            </div>
+
+            <div *ngIf="functionalStatusHistory.length > 0; else nodata" class="row m-0">
+              <div
+                class="col-md-6 col-xl-4 mb-3 ps-0"
+                *ngFor="let fs of functionalStatusHistory; let i = index"
+              >
+                <nb-card class="fs-card h-100 m-0">
+                  <nb-card-header class="d-flex align-items-center gap-2">
+                    <nb-icon pack="eva" icon="clipboard-outline" class="fs-card-icon"></nb-icon>
+                    <span class="fs-date col">{{ fs.AssessmentDate | date : "dd.MM.yyyy." }}</span>
+                    <nb-tag
+                      *ngIf="i === 0"
+                      [text]="getString('latestAssessment')"
+                      status="primary"
+                      appearance="filled"
+                      size="tiny"
+                    ></nb-tag>
+                  </nb-card-header>
+
+                  <nb-card-body class="d-flex flex-column gap-2">
+                    <div class="fs-status-grid">
+                      <div class="fs-status-item" *ngIf="fs.MobilityStatus">
+                        <span class="fs-status-label">{{ getString("mobilityStatus") }}</span>
+                        <div class="fs-status-value-row">
+                          <span class="fs-status-value">{{ getFunctionalStatusLabel('mobility', fs.MobilityStatus) }}</span>
+                          <span *ngIf="fs.MobilityStatus === 'non_ambulatory'" class="risk-dot"></span>
+                        </div>
+                      </div>
+                      <div class="fs-status-item" *ngIf="fs.FallRisk">
+                        <span class="fs-status-label">{{ getString("fallRisk") }}</span>
+                        <div class="fs-status-value-row">
+                          <span class="fs-status-value">{{ getFunctionalStatusLabel('fallRisk', fs.FallRisk) }}</span>
+                          <span *ngIf="fs.FallRisk === 'high'" class="risk-dot"></span>
+                        </div>
+                      </div>
+                      <div class="fs-status-item" *ngIf="fs.CognitiveStatus">
+                        <span class="fs-status-label">{{ getString("cognitiveStatus") }}</span>
+                        <div class="fs-status-value-row">
+                          <span class="fs-status-value">{{ getFunctionalStatusLabel('cognitive', fs.CognitiveStatus) }}</span>
+                          <span *ngIf="fs.CognitiveStatus === 'severe_impairment' || fs.CognitiveStatus === 'dementia'" class="risk-dot"></span>
+                        </div>
+                      </div>
+                      <div class="fs-status-item" *ngIf="fs.VisualStatus">
+                        <span class="fs-status-label">{{ getString("visualStatus") }}</span>
+                        <div class="fs-status-value-row">
+                          <span class="fs-status-value">{{ getFunctionalStatusLabel('visual', fs.VisualStatus) }}</span>
+                          <span *ngIf="fs.VisualStatus === 'blind'" class="risk-dot"></span>
+                        </div>
+                      </div>
+                      <div class="fs-status-item" *ngIf="fs.HearingStatus">
+                        <span class="fs-status-label">{{ getString("hearingStatus") }}</span>
+                        <div class="fs-status-value-row">
+                          <span class="fs-status-value">{{ getFunctionalStatusLabel('hearing', fs.HearingStatus) }}</span>
+                          <span *ngIf="fs.HearingStatus === 'severe_loss' || fs.HearingStatus === 'deaf'" class="risk-dot"></span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div *ngIf="fs.NotesDescription" class="med-notes-alert">
+                      <nb-icon pack="eva" icon="alert-triangle-outline"></nb-icon>
+                      <span>{{ fs.NotesDescription }}</span>
+                    </div>
+                  </nb-card-body>
+
+                  <nb-card-footer
+                    *ngIf="checkUserCanEditMedical()"
+                    class="d-flex justify-content-end gap-2 p-2"
+                  >
+                    <button
+                      nbButton ghost shape="round" size="small" status="primary"
+                      [nbTooltip]="getString('edit')"
+                      (click)="openFunctionalStatusDialog(fs)"
+                    >
+                      <nb-icon pack="eva" icon="edit-2-outline"></nb-icon>
+                    </button>
+                    <button
+                      nbButton ghost shape="round" size="small" status="danger"
+                      [nbTooltip]="getString('delete')"
+                      (click)="deleteFunctionalStatus(fs)"
+                    >
+                      <nb-icon pack="eva" icon="trash-2-outline"></nb-icon>
+                    </button>
+                  </nb-card-footer>
+                </nb-card>
+              </div>
+            </div>
           </div>
           <div *ngSwitchCase="'dietary'">
             <!-- Dietary Restrictions content -->

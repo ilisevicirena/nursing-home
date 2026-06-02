@@ -19,8 +19,14 @@ AS
 BEGIN
     SET NOCOUNT ON;
 
-    INSERT INTO dbo.PersonFunctionalStatus (PersonId, MobilityStatus, CognitiveStatus, FallRisk, VisualStatus, HearingStatus, AssessmentDate, NotesDescription, CreationDate)
-    VALUES (@PersonId, @MobilityStatus, @CognitiveStatus, @FallRisk, @VisualStatus, @HearingStatus, @AssessmentDate, @NotesDescription, GETDATE());
+    INSERT INTO dbo.PersonFunctionalStatus (
+        PersonId, MobilityStatus, CognitiveStatus, FallRisk, VisualStatus, HearingStatus,
+        AssessmentDate, NotesDescription, CreationDate
+    )
+    VALUES (
+        @PersonId, @MobilityStatus, @CognitiveStatus, @FallRisk, @VisualStatus, @HearingStatus,
+        @AssessmentDate, @NotesDescription, GETDATE()
+    );
 
     SELECT SCOPE_IDENTITY() AS PersonFunctionalStatusId;
 
