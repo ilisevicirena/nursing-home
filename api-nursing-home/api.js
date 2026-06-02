@@ -2,6 +2,8 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = require("./swagger");
 const { authenticateToken } = require("./routes/token"); // Import functions from token.js
 const { sendTestEmail } = require("./routes/email");
 
@@ -61,6 +63,9 @@ const personMedications = require("./routes/person-medications");
 const personFunctionalStatus = require("./routes/person-functional-status");
 const personDietaryRestrictions = require("./routes/person-dietary-restrictions");
 const personInsurance = require("./routes/person-insurance");
+
+// Swagger UI
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Register the authentication route without global middleware
 app.use("/authentication", authentication);
