@@ -23,8 +23,10 @@ export class PersonDietaryRestrictionsService extends BaseRestApiService {
 export interface IPersonDietaryRestriction extends IBaseSaveModel {
   PersonId: number;
   DietaryTypeId: number;
+  DietaryTypeName?: string;
   Restrictions?: string;
   Notes?: string;
   StartDate?: Date;
   EndDate?: Date;
+  IsActive?: boolean;
 }

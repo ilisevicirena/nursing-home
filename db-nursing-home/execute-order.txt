@@ -108,6 +108,7 @@ insert-tb-calendarEventType.sql
 insert-tb-calculationStatus.sql
 insert-tb-allergenSeverity.sql
 insert-tb-functionalStatusOption.sql
+insert-tb-dietaryType.sql
 insert-tb-furnitureStatus.sql
 insert-tb-generalSettings.sql
 proc-logUserActivity.sql
@@ -277,6 +278,7 @@ proc-deletePersonMedication.sql
 proc-updatePersonFunctionalStatus.sql
 proc-deletePersonFunctionalStatus.sql
 proc-updatePersonDietaryRestriction.sql
+proc-deletePersonDietaryRestriction.sql
 proc-updatePersonInsuranceData.sql
 proc-updateRoom.sql
 proc-updateService.sql

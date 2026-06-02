@@ -73,7 +73,7 @@ router.post("/update", async (request, response) => {
         "EXEC [dbo].[updatePersonDietaryRestriction] @Id=@id, @Restrictions=@restrictions, @Notes=@notes, @EndDate=@endDate, @ActingUserId=@ActingUserId",
       );
     if (result != null) {
-      response.json(result.recordset[0]);
+      response.json({});
     } else response.send(getError(9042));
   } catch (err) {
     response.status(500);
@@ -94,7 +94,7 @@ router.delete("/delete", async (request, response) => {
         "EXEC [dbo].[deletePersonDietaryRestriction] @Id=@id, @ActingUserId=@ActingUserId",
       );
     if (result != null) {
-      response.json(result.recordset);
+      response.json({});
     } else response.send(getError(9043));
   } catch (err) {
     response.status(500);

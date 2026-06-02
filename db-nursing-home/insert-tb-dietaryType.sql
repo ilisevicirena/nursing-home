@@ -1,0 +1,16 @@
+INSERT INTO [dbo].[DietaryType] (Name, Description) VALUES
+('Dijabetička dijeta',      'Prehrana prilagođena za kontrolu razine šećera u krvi'),
+('Bezglutenska dijeta',     'Bez pšenice, ječma, raži i proizvoda koji sadrže gluten'),
+('Dijeta bez laktoze',      'Bez mlijeka i mliječnih proizvoda koji sadrže laktozu'),
+('Niskosolna dijeta',       'Ograničen unos natrija, do 2g Na dnevno'),
+('Niskokalorijskarijeta',   'Smanjeni kalorijski unos za regulaciju tjelesne težine'),
+('Niskomasna dijeta',       'Ograničen unos masti, prikladna za srčane bolesti'),
+('Vegetarijanska prehrana', 'Bez mesa i ribe, uključuje mlijeko i jaja'),
+('Veganska prehrana',       'Bez svih životinjskih proizvoda'),
+('Kašasta prehrana',        'Pasirana ili mekana hrana za osobe s poteškoćama gutanja'),
+('Mekana prehrana',         'Lako žvakljiva hrana za osobe s dentalnim poteškoćama'),
+('Ograničenje tekućine',    'Kontrolirani unos tekućine prema uputama liječnika'),
+('Halal prehrana',          'Hrana pripremljena prema islamskim prehrambenim propisima'),
+('Košer prehrana',          'Hrana pripremljena prema židovskim prehrambenim propisima'),
+('Visokoproteinska dijeta', 'Povećani unos proteina za oporavak ili sprečavanje gubitka mišića'),
+('Dijeta bogata vlaknima',  'Povećani unos prehrambenih vlakana za regulaciju probave');

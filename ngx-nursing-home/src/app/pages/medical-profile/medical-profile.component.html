@@ -361,8 +361,77 @@
             </div>
           </div>
           <div *ngSwitchCase="'dietary'">
-            <!-- Dietary Restrictions content -->
-            <p>Dietary Restrictions content goes here...</p>
+            <div class="mb-2">
+              <button
+                nbButton
+                shape="round"
+                appearance="outline"
+                status="primary"
+                size="small"
+                (click)="openDietaryDialog()"
+                *ngIf="checkUserCanEditMedical()"
+              >
+                <nb-icon icon="plus-outline"></nb-icon>
+                {{ getString("add") }}
+              </button>
+            </div>
+            <div *ngIf="dietaryRestrictions.length > 0; else nodata" class="row m-0">
+              <div
+                class="col-md-6 col-xl-4 mb-3 ps-0"
+                *ngFor="let dr of dietaryRestrictions"
+              >
+                <nb-card class="dietary-card h-100 m-0">
+                  <nb-card-header class="d-flex align-items-center gap-2">
+                    <span class="dietary-name col">{{ dr.DietaryTypeName }}</span>
+                    <nb-tag
+                      [text]="dr.IsActive ? getString('active') : getString('unactive')"
+                      [status]="dr.IsActive ? 'success' : 'basic'"
+                      appearance="outline"
+                      size="tiny"
+                    ></nb-tag>
+                  </nb-card-header>
+                  <nb-card-body class="d-flex flex-column gap-2">
+                    <div class="d-flex gap-3 flex-wrap">
+                      <div *ngIf="dr.StartDate" class="info-row">
+                        <span class="info-label">{{ getString("dietaryStartDate") }}:</span>
+                        <span class="info-value">{{ dr.StartDate | date : "dd.MM.yyyy." }}</span>
+                      </div>
+                      <div *ngIf="dr.EndDate" class="info-row">
+                        <span class="info-label">{{ getString("dietaryEndDate") }}:</span>
+                        <span class="info-value">{{ dr.EndDate | date : "dd.MM.yyyy." }}</span>
+                      </div>
+                    </div>
+                    <div *ngIf="dr.Restrictions" class="info-row">
+                      <span class="info-label">{{ getString("restrictions") }}:</span>
+                      <span class="info-value">{{ dr.Restrictions }}</span>
+                    </div>
+                    <div *ngIf="dr.Notes" class="med-notes-alert">
+                      <nb-icon pack="eva" icon="alert-triangle-outline"></nb-icon>
+                      <span>{{ dr.Notes }}</span>
+                    </div>
+                  </nb-card-body>
+                  <nb-card-footer
+                    *ngIf="checkUserCanEditMedical()"
+                    class="d-flex justify-content-end gap-2 p-2"
+                  >
+                    <button
+                      nbButton ghost shape="round" size="small" status="primary"
+                      [nbTooltip]="getString('edit')"
+                      (click)="openDietaryDialog(dr)"
+                    >
+                      <nb-icon pack="eva" icon="edit-2-outline"></nb-icon>
+                    </button>
+                    <button
+                      nbButton ghost shape="round" size="small" status="danger"
+                      [nbTooltip]="getString('delete')"
+                      (click)="deleteDietary(dr)"
+                    >
+                      <nb-icon pack="eva" icon="trash-2-outline"></nb-icon>
+                    </button>
+                  </nb-card-footer>
+                </nb-card>
+              </div>
+            </div>
           </div>
           <div *ngSwitchCase="'insurance'">
             <!-- Insurance content -->

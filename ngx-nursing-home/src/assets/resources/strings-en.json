@@ -1250,5 +1250,14 @@
   { "key": "viewCards", "value": "Cards" },
   { "key": "viewSchedule", "value": "Schedule" },
   { "key": "noMedsInSlot", "value": "No medications" },
-  { "key": "dailyMedSchedule", "value": "Daily medication schedule" }
+  { "key": "dailyMedSchedule", "value": "Daily medication schedule" },
+  { "key": "dietaryType", "value": "Diet type" },
+  { "key": "restrictions", "value": "Restrictions" },
+  { "key": "restrictionsPlaceholder", "value": "Specific dietary restrictions, allergens, preferences..." },
+  { "key": "dietaryNotes", "value": "Notes" },
+  { "key": "dietaryNotesPlaceholder", "value": "Additional notes for meal preparation..." },
+  { "key": "dietaryStartDate", "value": "Start date" },
+  { "key": "dietaryEndDate", "value": "End date" },
+  { "key": "addDietaryRestriction", "value": "Add dietary restriction" },
+  { "key": "editDietaryRestriction", "value": "Edit dietary restriction" }
 ]

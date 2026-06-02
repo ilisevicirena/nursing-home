@@ -12,15 +12,19 @@ BEGIN
     SET NOCOUNT ON;
 
     SELECT
-        [Id] = dr.Id,
-        [PersonId] = dr.PersonId,
-        [DietaryTypeId] = dr.DietaryTypeId,
-        [Restrictions] = dr.Restrictions,
-        [Notes] = dr.Notes,
-        [StartDate] = dr.StartDate,
-        [EndDate] = dr.EndDate,
-        [CreationDate] = dr.CreationDate,
-        [ModifiedDate] = dr.ModifiedDate
+        [Id]              = dr.Id,
+        [PersonId]        = dr.PersonId,
+        [DietaryTypeId]   = dr.DietaryTypeId,
+        [DietaryTypeName] = dt.Name,
+        [Restrictions]    = dr.Restrictions,
+        [Notes]           = dr.Notes,
+        [StartDate]       = dr.StartDate,
+        [EndDate]         = dr.EndDate,
+        [IsActive]        = CASE WHEN dr.EndDate IS NULL OR dr.EndDate >= GETDATE() THEN 1 ELSE 0 END,
+        [CreationDate]    = dr.CreationDate,
+        [ModifiedDate]    = dr.ModifiedDate
     FROM dbo.PersonDietaryRestriction AS dr
-    WHERE dr.PersonId = @PersonId;
+    LEFT JOIN dbo.DietaryType AS dt ON dt.Id = dr.DietaryTypeId
+    WHERE dr.PersonId = @PersonId
+    ORDER BY dr.StartDate DESC;
 END

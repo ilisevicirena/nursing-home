@@ -34,6 +34,7 @@ import { NbTabComponent } from "@nebular/theme/components/tabset/tabset.componen
 import { AddEditAllergenComponent } from "./add-edit-allergen/add-edit-allergen.component";
 import { AddEditMedicationComponent } from "./add-edit-medication/add-edit-medication.component";
 import { AddEditFunctionalStatusComponent } from "./add-edit-functional-status/add-edit-functional-status.component";
+import { AddEditDietaryRestrictionComponent } from "./add-edit-dietary-restriction/add-edit-dietary-restriction.component";
 
 @Component({
   selector: "sample-medical-profile",
@@ -73,11 +74,9 @@ export class MedicalProfileComponent implements OnInit, OnDestroy {
   public functionalStatusHistory: IPersonFunctionalStatus[] = [];
   public dietaryRestrictions: IPersonDietaryRestriction[] = [];
   public insuranceRecords: IPersonInsuranceData[] = [];
-  public dietaryTypes: any[] = [];
   public allergenForm: any = {};
   public medicationForm: any = {};
   public functionalStatusForm: any = {};
-  public dietaryForm: any = {};
   public insuranceForm: any = {};
   public activeMedicalView: string = "allergies";
   public medicationView: 'cards' | 'schedule' = 'cards';
@@ -127,14 +126,6 @@ export class MedicalProfileComponent implements OnInit, OnDestroy {
   }
 
   private getDietaryRestrictions(): void {
-    this._subs.push(
-      this._personDietaryRestrictionsService
-        .getDietaryTypes()
-        .subscribe((data) => {
-          this.dietaryTypes = data;
-        }),
-    );
-
     this._subs.push(
       this._personDietaryRestrictionsService
         .getDataForPerson(this.personId)
@@ -188,11 +179,6 @@ export class MedicalProfileComponent implements OnInit, OnDestroy {
     section.active = true;
     this.activeMedicalView = section.option;
     this.getPersonMedicalData();
-  }
-
-  public getDietaryTypeName(id: number): string {
-    const found = this.dietaryTypes.find((t) => t.Id === id);
-    return found ? found.Name : getString("dietaryRestrictions");
   }
 
   public getSeverityStatus(severity: string): string {
@@ -452,36 +438,17 @@ export class MedicalProfileComponent implements OnInit, OnDestroy {
 
   //------------------------------------------ DIETARY CRUD --------------------------------------------------
 
-  public openDietaryDialog(
-    ref: TemplateRef<any>,
-    item?: IPersonDietaryRestriction,
-  ): void {
-    this.dietaryForm = item
-      ? { ...item }
-      : { PersonId: this.personId, DietaryTypeId: null };
-    this._dialogService.open(ref, { autoFocus: false });
-  }
-
-  public saveDietary(dialogRef: any): void {
-    this.dietaryForm.PersonId = this.personId;
-    const obs = this.dietaryForm.Id
-      ? this._personDietaryRestrictionsService.update(this.dietaryForm)
-      : this._personDietaryRestrictionsService.add(this.dietaryForm);
-    this._subs.push(
-      obs.subscribe(
-        () => {
-          this._toastrService.showToast(
-            "success",
-            getString("saveSuccess"),
-            "",
-          );
-          this.getPersonMedicalData();
-          dialogRef.close();
-        },
-        () =>
-          this._toastrService.showToast("danger", getString("saveError"), ""),
-      ),
-    );
+  public openDietaryDialog(item?: IPersonDietaryRestriction): void {
+    const dialogRef = this._dialogService.open(AddEditDietaryRestrictionComponent, {
+      autoFocus: false,
+      context: {
+        item: item ? { ...item } : undefined,
+        personId: this.personId,
+      },
+    });
+    dialogRef.onClose.subscribe((result: boolean) => {
+      if (result) this.getPersonMedicalData();
+    });
   }
 
   public async deleteDietary(item: IPersonDietaryRestriction): Promise<void> {

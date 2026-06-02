@@ -1,0 +1,156 @@
+<nb-card class="basic-tile-card dietary-dialog overflow-hidden">
+  <nb-card-header class="d-flex">
+    <div class="col">
+      {{ item?.Id ? getString("editDietaryRestriction") : getString("addDietaryRestriction") }}
+    </div>
+    <div class="w-max">
+      <button nbButton ghost shape="round" (click)="close(false)">
+        <nb-icon pack="eva" icon="close-outline"></nb-icon>
+      </button>
+    </div>
+  </nb-card-header>
+
+  <nb-card-body class="overflow-auto">
+    <form class="form" #dietaryForm="ngForm">
+
+      <!-- Diet Type -->
+      <div class="row mb-3">
+        <div class="col-md-12">
+          <div class="form-group">
+            <div class="label">
+              {{ getString("dietaryType") }}
+              <nb-icon
+                pack="eva"
+                icon="alert-circle-outline"
+                status="danger"
+                size="small"
+                class="ms-1 required-mark"
+                [nbTooltip]="getString('required')"
+              ></nb-icon>
+            </div>
+            <div class="value">
+              <nb-select
+                fullWidth
+                [placeholder]="getString('select')"
+                name="dietaryTypeId"
+                [(ngModel)]="item.DietaryTypeId"
+                required
+                #dietaryTypeCtrl="ngModel"
+                [status]="dietaryTypeCtrl.dirty ? (dietaryTypeCtrl.invalid ? 'danger' : 'success') : 'basic'"
+                [disabled]="!!item.Id"
+              >
+                <nb-option *ngFor="let t of dietaryTypes" [value]="t.Id">
+                  {{ t.Name }}
+                </nb-option>
+              </nb-select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Start / End Date -->
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <div class="form-group">
+            <div class="label">{{ getString("dietaryStartDate") }}</div>
+            <div class="value">
+              <nb-form-field>
+                <input
+                  nbInput
+                  fullWidth
+                  #startInput
+                  [placeholder]="getString('dietaryStartDate')"
+                  name="startDate"
+                  [(ngModel)]="item.StartDate"
+                  [nbDatepicker]="startPicker"
+                  [disabled]="!!item.Id"
+                />
+                <nb-datepicker #startPicker></nb-datepicker>
+                <button nbButton nbSuffix ghost (click)="startInput.focus()">
+                  <nb-icon pack="eva" icon="calendar-outline" status="primary"></nb-icon>
+                </button>
+              </nb-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <div class="label">{{ getString("dietaryEndDate") }}</div>
+            <div class="value">
+              <nb-form-field>
+                <input
+                  nbInput
+                  fullWidth
+                  #endInput
+                  [placeholder]="getString('dietaryEndDate')"
+                  name="endDate"
+                  [(ngModel)]="item.EndDate"
+                  [nbDatepicker]="endPicker"
+                />
+                <nb-datepicker #endPicker></nb-datepicker>
+                <button nbButton nbSuffix ghost (click)="endInput.focus()">
+                  <nb-icon pack="eva" icon="calendar-outline" status="primary"></nb-icon>
+                </button>
+              </nb-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Restrictions -->
+      <div class="row mb-3">
+        <div class="col-md-12">
+          <div class="form-group">
+            <div class="label">{{ getString("restrictions") }}</div>
+            <div class="value">
+              <textarea
+                nbInput
+                fullWidth
+                [placeholder]="getString('restrictionsPlaceholder')"
+                name="restrictions"
+                [(ngModel)]="item.Restrictions"
+                rows="3"
+              ></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Notes -->
+      <div class="row mb-1">
+        <div class="col-md-12">
+          <div class="form-group">
+            <div class="label">{{ getString("dietaryNotes") }}</div>
+            <div class="value">
+              <textarea
+                nbInput
+                fullWidth
+                [placeholder]="getString('dietaryNotesPlaceholder')"
+                name="notes"
+                [(ngModel)]="item.Notes"
+                rows="2"
+              ></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </form>
+  </nb-card-body>
+
+  <nb-card-footer class="d-flex justify-content-end">
+    <button nbButton ghost shape="round" size="small" class="me-2" (click)="close(false)">
+      {{ getString("cancel") }}
+    </button>
+    <button
+      nbButton
+      status="primary"
+      shape="round"
+      size="small"
+      (click)="save()"
+      [disabled]="dietaryForm.invalid"
+    >
+      {{ getString("save") }}
+    </button>
+  </nb-card-footer>
+</nb-card>
