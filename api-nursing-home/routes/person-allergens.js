@@ -69,7 +69,7 @@ router.post("/update", async (request, response) => {
         "EXEC [dbo].[updatePersonAllergen] @Id=@id, @AllergenName=@allergenName, @SeverityId=@severityId, @ReactionDescription=@reactionDescription, @StartDate=@startDate, @EndDate=@endDate, @ActingUserId=@ActingUserId",
       );
     if (result != null) {
-      response.json(result.recordset[0]);
+      response.json({});
     } else response.send(getError(9012));
   } catch (err) {
     response.status(500);

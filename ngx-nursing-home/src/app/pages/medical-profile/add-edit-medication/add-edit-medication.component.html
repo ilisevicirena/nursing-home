@@ -1,0 +1,345 @@
+<nb-card class="basic-tile-card medication-dialog overflow-hidden">
+  <nb-card-header class="d-flex">
+    <div class="col">
+      {{ item?.Id ? getString("editMedication") : getString("addMedication") }}
+    </div>
+    <div class="w-max">
+      <button nbButton ghost shape="round" (click)="close(false)">
+        <nb-icon pack="eva" icon="close-outline"></nb-icon>
+      </button>
+    </div>
+  </nb-card-header>
+
+  <nb-card-body class="overflow-auto">
+    <form class="form" #medicationForm="ngForm">
+
+      <!-- Medication Name -->
+      <div class="row mb-3">
+        <div class="col-md-12">
+          <div class="form-group">
+            <div class="label">
+              {{ getString("medicationName") }}
+              <nb-icon
+                pack="eva"
+                icon="alert-circle-outline"
+                status="danger"
+                size="small"
+                class="ms-1 required-mark"
+                [nbTooltip]="getString('required')"
+              ></nb-icon>
+            </div>
+            <div class="value d-flex gap-2">
+              <input
+                nbInput
+                fullWidth
+                [placeholder]="getString('medicationName')"
+                name="medicationName"
+                [(ngModel)]="item.MedicationName"
+                required
+                #medName="ngModel"
+                [status]="medName.dirty ? (medName.invalid ? 'danger' : 'success') : 'basic'"
+              />
+              <button
+                nbButton
+                ghost
+                shape="round"
+                size="small"
+                status="primary"
+                type="button"
+                class="search-toggle-btn flex-shrink-0"
+                [nbTooltip]="getString('rxnormSearch')"
+                (click)="toggleSearch()"
+              >
+                <nb-icon pack="eva" icon="search-outline"></nb-icon>
+              </button>
+            </div>
+
+            <!-- RxNorm Search Panel -->
+            <div *ngIf="showSearch" class="rx-search-panel mt-2">
+              <div class="rx-search-header">
+                <nb-icon pack="eva" icon="search-outline"></nb-icon>
+                <span>{{ getString("rxnormSearch") }}</span>
+              </div>
+              <input
+                nbInput
+                fullWidth
+                [placeholder]="getString('searchMedication')"
+                name="rxSearch"
+                [(ngModel)]="searchTerm"
+                (ngModelChange)="onSearchTermChange($event)"
+              />
+              <div *ngIf="searching" class="rx-hint mt-1">
+                <nb-icon pack="eva" icon="loader-outline" status="primary"></nb-icon>
+              </div>
+              <div class="rx-results">
+                <div
+                  *ngFor="let r of rxNormResults"
+                  class="rx-result-item"
+                  (click)="selectDrug(r)"
+                >
+                  <span class="rx-name">{{ r.name }}</span>
+                  <nb-tag
+                    *ngIf="r.tty"
+                    [text]="r.tty"
+                    size="tiny"
+                    appearance="outline"
+                    status="basic"
+                  ></nb-tag>
+                </div>
+                <div
+                  *ngIf="!searching && searchTerm.length >= 3 && rxNormResults.length === 0"
+                  class="rx-no-results"
+                >
+                  {{ getString("noData") }}
+                </div>
+                <div *ngIf="searchTerm.length > 0 && searchTerm.length < 3" class="rx-hint">
+                  {{ getString("rxnormHint") }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Route + Frequency -->
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <div class="form-group">
+            <div class="label">{{ getString("medicationRoute") }}</div>
+            <div class="value">
+              <nb-select
+                fullWidth
+                [placeholder]="getString('select')"
+                name="route"
+                [(ngModel)]="item.Route"
+              >
+                <nb-option *ngFor="let r of routeOptions" [value]="r.value">
+                  {{ getString(r.key) }}
+                </nb-option>
+              </nb-select>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <div class="label">{{ getString("medicationFrequency") }}</div>
+            <div class="value">
+              <nb-select
+                fullWidth
+                [placeholder]="getString('select')"
+                name="frequency"
+                [(ngModel)]="item.Frequency"
+              >
+                <nb-option *ngFor="let f of frequencyOptions" [value]="f.value">
+                  {{ getString(f.key) }}
+                </nb-option>
+              </nb-select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dosage -->
+      <div class="row mb-3">
+        <div class="col-md-12">
+          <div class="form-group">
+            <div class="label">{{ getString("medicationDosage") }}</div>
+            <div class="value">
+              <input
+                nbInput
+                fullWidth
+                [placeholder]="getString('medicationDosagePlaceholder')"
+                name="dosage"
+                [(ngModel)]="item.Dosage"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Daily Schedule -->
+      <div class="schedule-section mb-3">
+        <div class="schedule-title">
+          <nb-icon pack="eva" icon="clock-outline"></nb-icon>
+          {{ getString("medicationSchedule") }}
+        </div>
+        <div class="schedule-grid">
+          <div class="schedule-slot">
+            <div class="schedule-icon morning">
+              <nb-icon pack="eva" icon="sun-outline"></nb-icon>
+            </div>
+            <div class="schedule-label">{{ getString("medicationMorning") }}</div>
+            <input
+              nbInput
+              fullWidth
+              [placeholder]="getString('dosePlaceholder')"
+              name="morningDose"
+              [(ngModel)]="item.MorningDose"
+            />
+          </div>
+          <div class="schedule-slot">
+            <div class="schedule-icon noon">
+              <nb-icon pack="eva" icon="sun-outline"></nb-icon>
+            </div>
+            <div class="schedule-label">{{ getString("medicationNoon") }}</div>
+            <input
+              nbInput
+              fullWidth
+              [placeholder]="getString('dosePlaceholder')"
+              name="noonDose"
+              [(ngModel)]="item.NoonDose"
+            />
+          </div>
+          <div class="schedule-slot">
+            <div class="schedule-icon evening">
+              <nb-icon pack="eva" icon="sun-outline"></nb-icon>
+            </div>
+            <div class="schedule-label">{{ getString("medicationEvening") }}</div>
+            <input
+              nbInput
+              fullWidth
+              [placeholder]="getString('dosePlaceholder')"
+              name="eveningDose"
+              [(ngModel)]="item.EveningDose"
+            />
+          </div>
+          <div class="schedule-slot">
+            <div class="schedule-icon night">
+              <nb-icon pack="eva" icon="moon-outline"></nb-icon>
+            </div>
+            <div class="schedule-label">{{ getString("medicationNight") }}</div>
+            <input
+              nbInput
+              fullWidth
+              [placeholder]="getString('dosePlaceholder')"
+              name="nightDose"
+              [(ngModel)]="item.NightDose"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Start + End Date -->
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <div class="form-group">
+            <div class="label">{{ getString("medicationStartDate") }}</div>
+            <div class="value">
+              <nb-form-field>
+                <input
+                  nbInput
+                  fullWidth
+                  #startInput
+                  [placeholder]="getString('medicationStartDate')"
+                  name="startDate"
+                  [(ngModel)]="item.StartDate"
+                  [nbDatepicker]="startPicker"
+                />
+                <nb-datepicker #startPicker></nb-datepicker>
+                <button nbButton nbSuffix ghost (click)="startInput.focus()">
+                  <nb-icon pack="eva" icon="calendar-outline" status="primary"></nb-icon>
+                </button>
+              </nb-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <div class="label">{{ getString("medicationEndDate") }}</div>
+            <div class="value">
+              <nb-form-field>
+                <input
+                  nbInput
+                  fullWidth
+                  #endInput
+                  [placeholder]="getString('medicationEndDate')"
+                  name="endDate"
+                  [(ngModel)]="item.EndDate"
+                  [nbDatepicker]="endPicker"
+                  (ngModelChange)="onEndDateChange($event)"
+                />
+                <nb-datepicker #endPicker></nb-datepicker>
+                <button nbButton nbSuffix ghost (click)="endInput.focus()">
+                  <nb-icon pack="eva" icon="calendar-outline" status="primary"></nb-icon>
+                </button>
+              </nb-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Indication -->
+      <div class="row mb-3">
+        <div class="col-md-12">
+          <div class="form-group">
+            <div class="label">{{ getString("medicationIndication") }}</div>
+            <div class="value">
+              <textarea
+                nbInput
+                fullWidth
+                [placeholder]="getString('medicationIndicationPlaceholder')"
+                name="indication"
+                [(ngModel)]="item.Indication"
+                rows="2"
+              ></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Prescriber Name -->
+      <div class="row mb-3">
+        <div class="col-md-12">
+          <div class="form-group">
+            <div class="label">{{ getString("medicationPrescriber") }}</div>
+            <div class="value">
+              <input
+                nbInput
+                fullWidth
+                [placeholder]="getString('medicationPrescriber')"
+                name="prescriberName"
+                [(ngModel)]="item.PrescriberName"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Notes -->
+      <div class="row mb-1">
+        <div class="col-md-12">
+          <div class="form-group">
+            <div class="label">{{ getString("medicationNotes") }}</div>
+            <div class="value">
+              <textarea
+                nbInput
+                fullWidth
+                [placeholder]="getString('medicationNotesPlaceholder')"
+                name="notes"
+                [(ngModel)]="item.Notes"
+                rows="2"
+              ></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </form>
+  </nb-card-body>
+
+  <nb-card-footer class="d-flex justify-content-end">
+    <button nbButton ghost shape="round" size="small" class="me-2" (click)="close(false)">
+      {{ getString("cancel") }}
+    </button>
+    <button
+      nbButton
+      status="primary"
+      shape="round"
+      size="small"
+      (click)="save()"
+      [disabled]="medicationForm.invalid"
+    >
+      {{ getString("save") }}
+    </button>
+  </nb-card-footer>
+</nb-card>

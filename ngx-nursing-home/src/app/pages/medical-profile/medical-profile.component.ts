@@ -32,6 +32,7 @@ import { DialogService } from "../../shared/dialog/dialog.service";
 import { ToastrService } from "../../services/toastr.service";
 import { NbTabComponent } from "@nebular/theme/components/tabset/tabset.component";
 import { AddEditAllergenComponent } from "./add-edit-allergen/add-edit-allergen.component";
+import { AddEditMedicationComponent } from "./add-edit-medication/add-edit-medication.component";
 
 @Component({
   selector: "sample-medical-profile",
@@ -78,6 +79,7 @@ export class MedicalProfileComponent implements OnInit, OnDestroy {
   public dietaryForm: any = {};
   public insuranceForm: any = {};
   public activeMedicalView: string = "allergies";
+  public medicationView: 'cards' | 'schedule' = 'cards';
 
   public medicalSections: any[] = [
     { option: "allergies", string: "allergies", active: false },
@@ -172,7 +174,10 @@ export class MedicalProfileComponent implements OnInit, OnDestroy {
   }
 
   public onTabChange(tab: NbTabComponent): void {
-    console.log(tab);
+    if (tab.tabId && tab.tabId !== this.activeMedicalView) {
+      this.activeMedicalView = tab.tabId;
+      this.getPersonMedicalData();
+    }
   }
 
   public toggleMedicalView(section: any): void {
@@ -266,36 +271,70 @@ export class MedicalProfileComponent implements OnInit, OnDestroy {
 
   //------------------------------------------ MEDICATIONS CRUD --------------------------------------------------
 
-  public openMedicationDialog(
-    ref: TemplateRef<any>,
-    item?: IPersonMedication,
-  ): void {
-    this.medicationForm = item
-      ? { ...item }
-      : { PersonId: this.personId, MedicationName: "", Status: "Aktivno" };
-    this._dialogService.open(ref, { autoFocus: false });
+  public openMedicationDialog(item?: IPersonMedication): void {
+    const dialogRef = this._dialogService.open(AddEditMedicationComponent, {
+      autoFocus: false,
+      context: {
+        item: item ? { ...item } : undefined,
+        personId: this.personId,
+      },
+    });
+    dialogRef.onClose.subscribe((result: boolean) => {
+      if (result) {
+        this.getPersonMedicalData();
+      }
+    });
   }
 
-  public saveMedication(dialogRef: any): void {
-    this.medicationForm.PersonId = this.personId;
-    const obs = this.medicationForm.Id
-      ? this._personMedicationsService.update(this.medicationForm)
-      : this._personMedicationsService.add(this.medicationForm);
-    this._subs.push(
-      obs.subscribe(
-        () => {
-          this._toastrService.showToast(
-            "success",
-            getString("saveSuccess"),
-            "",
-          );
-          this.getPersonMedicalData();
-          dialogRef.close();
-        },
-        () =>
-          this._toastrService.showToast("danger", getString("saveError"), ""),
-      ),
-    );
+  public getMedsForTimeSlot(slot: string): IPersonMedication[] {
+    switch (slot) {
+      case 'morning': return this.medications.filter(m => m.MorningDose);
+      case 'noon':    return this.medications.filter(m => m.NoonDose);
+      case 'evening': return this.medications.filter(m => m.EveningDose);
+      case 'night':   return this.medications.filter(m => m.NightDose);
+      default:        return [];
+    }
+  }
+
+  public getSlotDose(med: IPersonMedication, slot: string): string {
+    switch (slot) {
+      case 'morning': return med.MorningDose ?? '';
+      case 'noon':    return med.NoonDose ?? '';
+      case 'evening': return med.EveningDose ?? '';
+      case 'night':   return med.NightDose ?? '';
+      default:        return '';
+    }
+  }
+
+  public getRouteLabel(value: string): string {
+    const routeMap: Record<string, string> = {
+      oral: "medicationRouteOral",
+      iv: "medicationRouteIV",
+      im: "medicationRouteIM",
+      sc: "medicationRouteSC",
+      topical: "medicationRouteTopical",
+      sublingual: "medicationRouteSublingual",
+      inhaled: "medicationRouteInhaled",
+      transdermal: "medicationRouteTransdermal",
+      rectal: "medicationRouteRectal",
+      nasal: "medicationRouteNasal",
+    };
+    return routeMap[value] ? getString(routeMap[value]) : value;
+  }
+
+  public getFrequencyLabel(value: string): string {
+    const freqMap: Record<string, string> = {
+      once_daily: "medicationFreqOnce",
+      twice_daily: "medicationFreqTwice",
+      three_times_daily: "medicationFreqThrice",
+      four_times_daily: "medicationFreqFour",
+      every_6h: "medicationFreqEvery6h",
+      every_8h: "medicationFreqEvery8h",
+      every_12h: "medicationFreqEvery12h",
+      weekly: "medicationFreqWeekly",
+      as_needed: "medicationFreqAsNeeded",
+    };
+    return freqMap[value] ? getString(freqMap[value]) : value;
   }
 
   public async deleteMedication(item: IPersonMedication): Promise<void> {

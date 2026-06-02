@@ -32,5 +32,12 @@ BEGIN
     FROM dbo.PersonAllergen AS pa
     INNER JOIN dbo.AllergenSeverity AS asev ON pa.SeverityId = asev.Id
     WHERE pa.PersonId = @PersonId
-    ORDER BY pa.CreationDate DESC;
+    ORDER BY
+        IsActive DESC,
+        CASE asev.Color
+            WHEN 'danger'  THEN 1
+            WHEN 'warning' THEN 2
+            WHEN 'success' THEN 3
+            ELSE 4
+        END ASC;
 END

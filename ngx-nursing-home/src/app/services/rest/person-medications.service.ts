@@ -11,8 +11,8 @@ export class PersonMedicationsService extends BaseRestApiService {
     super(http, "api/person-medications");
   }
 
-  public getDataForPerson(personId: number): Observable<any> {
-    return this.http.get(this.apiRoute + "?PersonId=" + personId);
+  public getDataForPerson(personId: number): Observable<IPersonMedication[]> {
+    return this.http.get<IPersonMedication[]>(this.apiRoute + "?PersonId=" + personId);
   }
 }
 
@@ -28,4 +28,10 @@ export interface IPersonMedication extends IBaseSaveModel {
   Notes?: string;
   Status: string;
   PrescriberName?: string;
+  MorningDose?: string;
+  NoonDose?: string;
+  EveningDose?: string;
+  NightDose?: string;
+  RxCui?: string;
+  IsActive?: boolean;
 }

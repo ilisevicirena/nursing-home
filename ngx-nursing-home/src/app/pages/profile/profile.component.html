@@ -47,6 +47,15 @@
                 </div>
               </div>
             </div>
+            <div *ngIf="highSeverityAllergens.length > 0" class="allergen-alert mt-2">
+              <div class="allergen-alert-header">
+                <nb-icon pack="eva" icon="alert-triangle-outline"></nb-icon>
+                <span>{{ getString("highSeverityAllergenAlert") }}</span>
+              </div>
+              <ul class="allergen-alert-list">
+                <li *ngFor="let a of highSeverityAllergens">{{ a.AllergenName }}</li>
+              </ul>
+            </div>
           </nb-card-body>
         </nb-card>
       </div>
@@ -580,7 +589,7 @@
           <!-- ==================== MEDICAL PROFILE ==================== -->
           <div *ngSwitchCase="'medical'" class="h-100">
             <sample-medical-profile
-              [personId]="person.Id"
+              [personId]="personId"
             ></sample-medical-profile>
           </div>
 

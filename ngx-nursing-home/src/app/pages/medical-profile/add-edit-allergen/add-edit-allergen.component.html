@@ -161,6 +161,14 @@
           <div class="form-group">
             <div class="label">
               {{ getString("reactionDescription") }}
+              <nb-icon
+                pack="eva"
+                icon="alert-circle-outline"
+                status="danger"
+                size="small"
+                class="ms-1 required-mark"
+                [nbTooltip]="getString('required')"
+              ></nb-icon>
             </div>
             <div class="value">
               <textarea
@@ -170,6 +178,15 @@
                 name="reactionDescription"
                 [(ngModel)]="item.ReactionDescription"
                 rows="3"
+                required
+                #reactionDescription="ngModel"
+                [status]="
+                  reactionDescription.dirty
+                    ? reactionDescription.invalid
+                      ? 'danger'
+                      : 'success'
+                    : 'basic'
+                "
               ></textarea>
             </div>
           </div>

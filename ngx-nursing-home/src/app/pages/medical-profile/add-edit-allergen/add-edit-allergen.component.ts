@@ -44,9 +44,14 @@ export class AddEditAllergenComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     const context = this._dialogConfig?.context ?? {};
-    this.personId = context.personId ?? context.item?.PersonId ?? 0;
-    if (context.item) {
-      this.item = { ...context.item };
+    const existingItem = context.item ?? (this.item?.Id ? this.item : null);
+    this.personId = context.personId ?? existingItem?.PersonId ?? this.personId;
+    if (existingItem) {
+      this.item = {
+        ...existingItem,
+        StartDate: existingItem.StartDate ? new Date(existingItem.StartDate) : undefined,
+        EndDate: existingItem.EndDate ? new Date(existingItem.EndDate) : undefined,
+      };
     } else {
       this.item = {
         Id: 0,
@@ -76,7 +81,7 @@ export class AddEditAllergenComponent implements OnInit, OnDestroy {
     if (!this.item) return;
     this.item.PersonId = this.personId;
 
-    if (!this.item.AllergenName?.trim() || !this.item.SeverityId) {
+    if (!this.item.AllergenName?.trim() || !this.item.SeverityId || !this.item.ReactionDescription?.trim()) {
       this._toastrService.showToast(
         "danger",
         getString("saveError"),

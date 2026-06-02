@@ -11,6 +11,11 @@ CREATE TABLE [dbo].[PersonMedication](
 	[Notes] [varchar](max) NULL,
 	[Status] [varchar](50) NOT NULL,
 	[PrescriberName] [varchar](100) NULL,
+	[MorningDose] [nvarchar](100) NULL,
+	[NoonDose] [nvarchar](100) NULL,
+	[EveningDose] [nvarchar](100) NULL,
+	[NightDose] [nvarchar](100) NULL,
+	[RxCui] [nvarchar](20) NULL,
 	[CreationDate] [datetime] NOT NULL,
 	[ModifiedDate] [datetime] NULL,
  CONSTRAINT [PK_PersonMedication] PRIMARY KEY CLUSTERED 

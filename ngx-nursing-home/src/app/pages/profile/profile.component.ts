@@ -20,6 +20,7 @@ import { AccommodationPdfRequestService } from "../../services/rest/accommodatio
 import { GeneralSettingsService } from "../../services/rest/general-settings.service";
 import { ToastrService } from "../../services/toastr.service";
 import { AuthService, UserRole } from "../../services/auth.service";
+import { PersonAllergensService } from "../../services/rest/person-allergens.service";
 
 @Component({
   selector: "sample-profile",
@@ -37,6 +38,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     private _requestGeneratorService: AccommodationPdfRequestService,
     private _generalSettingsService: GeneralSettingsService,
     private _authService: AuthService,
+    private _personAllergensService: PersonAllergensService,
   ) {}
 
   private _subs: Subscription[] = [];
@@ -60,6 +62,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   public gridSelectedItem: [] = [];
   public years: number = 0;
   public spentTime: number = 0;
+  public highSeverityAllergens: any[] = [];
 
   public roomHistoryColumns: GridColumn[] = [
     new GridColumn().Title(getString("id")).DataField("RoomId").Filter(false),
@@ -145,7 +148,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.loading = true;
     this._subs.push(
       this._activatedRoute.paramMap.subscribe((params) => {
-        this.personId = params.get("id") as any;
+        this.personId = Number(params.get("id"));
         this.getPersonDetails(this.personId);
       }),
     );
@@ -242,9 +245,18 @@ export class ProfileComponent implements OnInit, OnDestroy {
           this.newPersonData = getIPersonFromJSON(data[0]);
           this.passedTime = this.calculatePassedTime();
           this.getHistory();
+          this.loadHighSeverityAllergens(personId);
         }
 
         this.loading = false;
+      }),
+    );
+  }
+
+  private loadHighSeverityAllergens(personId: number): void {
+    this._subs.push(
+      this._personAllergensService.getDataForPerson(personId).subscribe((data: any[]) => {
+        this.highSeverityAllergens = data.filter(a => a.IsActive && a.SeverityColor === 'danger');
       }),
     );
   }

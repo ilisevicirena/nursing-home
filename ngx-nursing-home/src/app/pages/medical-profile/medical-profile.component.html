@@ -24,14 +24,239 @@
                 {{ getString("add") }}
               </button>
             </div>
-            <div *ngIf="medicalAllergies.length > 0; else nodata">
-              <!-- Allergies content -->
-              <p>Allergies content goes here...</p>
+            <div *ngIf="medicalAllergies.length > 0; else nodata" class="row m-0">
+              <div
+                class="col-md-6 col-xl-4 mb-3 ps-0"
+                *ngFor="let allergen of medicalAllergies"
+              >
+                <nb-card class="allergen-card h-100 m-0">
+                  <nb-card-header class="d-flex align-items-center gap-2">
+                    <span class="allergen-name col">{{ allergen.AllergenName }}</span>
+                    <nb-tag
+                      [text]="allergen.IsActive ? getString('active') : getString('unactive')"
+                      [status]="allergen.IsActive ? 'success' : 'basic'"
+                      appearance="outline"
+                      size="tiny"
+                    ></nb-tag>
+                    <nb-tag
+                      *ngIf="allergen.SeverityStringKey || allergen.SeverityName"
+                      [text]="allergen.SeverityStringKey ? getString(allergen.SeverityStringKey) : allergen.SeverityName"
+                      [status]="getSeverityStatus(allergen.SeverityColor)"
+                      appearance="filled"
+                      size="tiny"
+                    ></nb-tag>
+                  </nb-card-header>
+                  <nb-card-body class="d-flex flex-column gap-2">
+                    <div *ngIf="allergen.ReactionDescription" class="info-row">
+                      <span class="info-label">{{ getString("reactionDescription") }}:</span>
+                      <span class="info-value">{{ allergen.ReactionDescription }}</span>
+                    </div>
+                    <div class="d-flex gap-3 flex-wrap">
+                      <div *ngIf="allergen.StartDate" class="info-row">
+                        <span class="info-label">{{ getString("allergenStartDate") }}:</span>
+                        <span class="info-value">{{ allergen.StartDate | date : "dd.MM.yyyy." }}</span>
+                      </div>
+                      <div *ngIf="allergen.EndDate" class="info-row">
+                        <span class="info-label">{{ getString("allergenEndDate") }}:</span>
+                        <span class="info-value">{{ allergen.EndDate | date : "dd.MM.yyyy." }}</span>
+                      </div>
+                    </div>
+                  </nb-card-body>
+                  <nb-card-footer
+                    *ngIf="checkUserCanEditMedical()"
+                    class="d-flex justify-content-end gap-2 p-2"
+                  >
+                    <button
+                      nbButton
+                      ghost
+                      shape="round"
+                      size="small"
+                      status="primary"
+                      [nbTooltip]="getString('edit')"
+                      (click)="openAllergyDialog(allergen)"
+                    >
+                      <nb-icon pack="eva" icon="edit-2-outline"></nb-icon>
+                    </button>
+                    <button
+                      nbButton
+                      ghost
+                      shape="round"
+                      size="small"
+                      status="danger"
+                      [nbTooltip]="getString('delete')"
+                      (click)="deleteAllergy(allergen)"
+                    >
+                      <nb-icon pack="eva" icon="trash-2-outline"></nb-icon>
+                    </button>
+                  </nb-card-footer>
+                </nb-card>
+              </div>
             </div>
           </div>
           <div *ngSwitchCase="'medications'">
-            <!-- Medications content -->
-            <p>Medications content goes here...</p>
+            <!-- Toolbar -->
+            <div class="mb-3 d-flex align-items-center justify-content-between">
+              <button
+                nbButton
+                shape="round"
+                appearance="outline"
+                status="primary"
+                size="small"
+                (click)="openMedicationDialog()"
+                *ngIf="checkUserCanEditMedical()"
+              >
+                <nb-icon icon="plus-outline"></nb-icon>
+                {{ getString("add") }}
+              </button>
+              <div class="view-toggle">
+                <button
+                  nbButton
+                  ghost
+                  size="small"
+                  shape="round"
+                  [status]="medicationView === 'cards' ? 'primary' : 'basic'"
+                  [nbTooltip]="getString('viewCards')"
+                  (click)="medicationView = 'cards'"
+                >
+                  <nb-icon pack="eva" icon="grid-outline"></nb-icon>
+                </button>
+                <button
+                  nbButton
+                  ghost
+                  size="small"
+                  shape="round"
+                  [status]="medicationView === 'schedule' ? 'primary' : 'basic'"
+                  [nbTooltip]="getString('viewSchedule')"
+                  (click)="medicationView = 'schedule'"
+                >
+                  <nb-icon pack="eva" icon="calendar-outline"></nb-icon>
+                </button>
+              </div>
+            </div>
+
+            <!-- Cards view -->
+            <ng-container *ngIf="medicationView === 'cards'">
+              <div *ngIf="medications.length > 0; else nodata" class="row m-0">
+                <div
+                  class="col-md-6 col-xl-4 mb-3 ps-0"
+                  *ngFor="let med of medications"
+                >
+                  <nb-card class="medication-card h-100 m-0">
+                    <nb-card-header class="d-flex align-items-center gap-2 flex-wrap">
+                      <span class="medication-name col">{{ med.MedicationName }}</span>
+                      <nb-tag
+                        [text]="med.IsActive ? getString('active') : getString('unactive')"
+                        [status]="med.IsActive ? 'success' : 'basic'"
+                        appearance="outline"
+                        size="tiny"
+                      ></nb-tag>
+                      <nb-tag
+                        *ngIf="med.Route"
+                        [text]="getRouteLabel(med.Route)"
+                        status="primary"
+                        appearance="outline"
+                        size="tiny"
+                      ></nb-tag>
+                    </nb-card-header>
+
+                    <nb-card-body class="d-flex flex-column gap-2">
+                      <div class="d-flex gap-3 flex-wrap">
+                        <div *ngIf="med.Dosage" class="info-row">
+                          <span class="info-label">{{ getString("medicationDosage") }}:</span>
+                          <span class="info-value">{{ med.Dosage }}</span>
+                        </div>
+                        <div *ngIf="med.Frequency" class="info-row">
+                          <span class="info-label">{{ getString("medicationFrequency") }}:</span>
+                          <span class="info-value">{{ getFrequencyLabel(med.Frequency) }}</span>
+                        </div>
+                      </div>
+                      <div class="d-flex gap-3 flex-wrap">
+                        <div *ngIf="med.StartDate" class="info-row">
+                          <span class="info-label">{{ getString("medicationStartDate") }}:</span>
+                          <span class="info-value">{{ med.StartDate | date : "dd.MM.yyyy." }}</span>
+                        </div>
+                        <div *ngIf="med.EndDate" class="info-row">
+                          <span class="info-label">{{ getString("medicationEndDate") }}:</span>
+                          <span class="info-value">{{ med.EndDate | date : "dd.MM.yyyy." }}</span>
+                        </div>
+                      </div>
+                      <div *ngIf="med.Notes" class="med-notes-alert">
+                        <nb-icon pack="eva" icon="alert-triangle-outline"></nb-icon>
+                        <span>{{ med.Notes }}</span>
+                      </div>
+                    </nb-card-body>
+
+                    <nb-card-footer
+                      *ngIf="checkUserCanEditMedical()"
+                      class="d-flex justify-content-end gap-2 p-2"
+                    >
+                      <button
+                        nbButton
+                        ghost
+                        shape="round"
+                        size="small"
+                        status="primary"
+                        [nbTooltip]="getString('edit')"
+                        (click)="openMedicationDialog(med)"
+                      >
+                        <nb-icon pack="eva" icon="edit-2-outline"></nb-icon>
+                      </button>
+                      <button
+                        nbButton
+                        ghost
+                        shape="round"
+                        size="small"
+                        status="danger"
+                        [nbTooltip]="getString('delete')"
+                        (click)="deleteMedication(med)"
+                      >
+                        <nb-icon pack="eva" icon="trash-2-outline"></nb-icon>
+                      </button>
+                    </nb-card-footer>
+                  </nb-card>
+                </div>
+              </div>
+            </ng-container>
+
+            <!-- Schedule view -->
+            <ng-container *ngIf="medicationView === 'schedule'">
+              <ng-container *ngIf="medications.length > 0; else nodata">
+                <div class="daily-schedule-header mb-2">
+                  <nb-icon pack="eva" icon="clock-outline"></nb-icon>
+                  {{ getString("dailyMedSchedule") }}
+                </div>
+                <div class="daily-schedule-grid">
+                  <div *ngFor="let slot of [
+                    { key: 'morning', label: 'medicationMorning', icon: 'sun-outline' },
+                    { key: 'noon',    label: 'medicationNoon',    icon: 'sun-outline' },
+                    { key: 'evening', label: 'medicationEvening', icon: 'sun-outline' },
+                    { key: 'night',   label: 'medicationNight',   icon: 'moon-outline' }
+                  ]" class="schedule-col" [class]="slot.key">
+                    <div class="schedule-col-header">
+                      <div class="slot-icon" [class]="slot.key">
+                        <nb-icon pack="eva" [icon]="slot.icon"></nb-icon>
+                      </div>
+                      <span>{{ getString(slot.label) }}</span>
+                    </div>
+                    <div class="schedule-col-body">
+                      <ng-container *ngIf="getMedsForTimeSlot(slot.key) as slotMeds">
+                        <div
+                          *ngFor="let med of slotMeds"
+                          class="schedule-med-item"
+                          [class.inactive]="!med.IsActive"
+                        >
+                          <span class="sched-med-name">{{ med.MedicationName }}</span>
+                          <span class="sched-med-dose">{{ getSlotDose(med, slot.key) }}</span>
+                        </div>
+                        <div *ngIf="slotMeds.length === 0" class="sched-empty">
+                          {{ getString("noMedsInSlot") }}
+                        </div>
+                      </ng-container>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+            </ng-container>
           </div>
           <div *ngSwitchCase="'functionalStatus'">
             <!-- Functional Status content -->

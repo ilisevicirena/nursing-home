@@ -108,6 +108,7 @@ import { EditContactInfoComponent } from "./my-profile/user-profile/edit-contact
 import { ExistingUserComponent } from './contacts-grid/existing-user/existing-user.component';
 import { MedicalProfileComponent } from './medical-profile/medical-profile.component';
 import { AddEditAllergenComponent } from './medical-profile/add-edit-allergen/add-edit-allergen.component';
+import { AddEditMedicationComponent } from './medical-profile/add-edit-medication/add-edit-medication.component';
 
 @NgModule({
   imports: [
@@ -224,6 +225,7 @@ import { AddEditAllergenComponent } from './medical-profile/add-edit-allergen/ad
     ExistingUserComponent,
     MedicalProfileComponent,
     AddEditAllergenComponent,
+    AddEditMedicationComponent,
   ],
 })
 export class PagesModule {}

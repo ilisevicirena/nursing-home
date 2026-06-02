@@ -12,6 +12,11 @@ class PersonMedication {
     notes,
     status,
     prescriberName,
+    morningDose,
+    noonDose,
+    eveningDose,
+    nightDose,
+    rxCui,
     creationDate,
     modifiedDate,
   ) {
@@ -27,6 +32,11 @@ class PersonMedication {
     this.Notes = notes;
     this.Status = status;
     this.PrescriberName = prescriberName;
+    this.MorningDose = morningDose;
+    this.NoonDose = noonDose;
+    this.EveningDose = eveningDose;
+    this.NightDose = nightDose;
+    this.RxCui = rxCui;
     this.CreationDate = creationDate;
     this.ModifiedDate = modifiedDate;
   }

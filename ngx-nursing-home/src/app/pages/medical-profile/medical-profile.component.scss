@@ -54,6 +54,285 @@
     }
   }
 
+  .allergen-card {
+    border-radius: 0.5rem;
+
+    nb-card-header {
+      padding: 0.75rem 1rem;
+      font-size: 0.9rem;
+    }
+
+    nb-card-body {
+      padding: 0.75rem 1rem;
+      font-size: 0.85rem;
+      min-height: 80px;
+    }
+
+    nb-card-footer {
+      border-top: 1px solid nb-theme(card-divider-color);
+    }
+
+    .allergen-name {
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .info-row {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .info-label {
+      font-size: 0.75rem;
+      color: nb-theme(text-hint-color);
+    }
+
+    .info-value {
+      font-size: 0.85rem;
+    }
+
+  }
+
+  .medication-card {
+    border-radius: 0.5rem;
+
+    nb-card-header {
+      padding: 0.75rem 1rem;
+      font-size: 0.9rem;
+    }
+
+    nb-card-body {
+      padding: 0.75rem 1rem;
+      font-size: 0.85rem;
+    }
+
+    nb-card-footer {
+      border-top: 1px solid nb-theme(card-divider-color);
+    }
+
+    .medication-name {
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .info-row {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+
+      &.notes-row {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        nb-icon { margin-top: 2px; font-size: 0.85rem; color: nb-theme(text-hint-color); }
+      }
+    }
+
+    .info-label {
+      font-size: 0.75rem;
+      color: nb-theme(text-hint-color);
+    }
+
+    .info-value {
+      font-size: 0.85rem;
+    }
+
+    .med-notes-alert {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.4rem;
+      padding: 0.4rem 0.6rem;
+      border-radius: 0.35rem;
+      background-color: rgba(255, 170, 0, 0.12);
+      border-left: 3px solid #ffaa00;
+      font-size: 12px;
+      line-height: 1.4;
+
+      nb-icon {
+        font-size: 0.95rem;
+        color: #ffaa00;
+        flex-shrink: 0;
+        margin-top: 1px;
+      }
+    }
+
+    .schedule-bar {
+      border-radius: 0.4rem;
+      padding: 0.5rem 0.6rem;
+      background-color: nb-theme(background-basic-color-2);
+      border: 1px solid nb-theme(background-basic-color-3);
+
+      .schedule-bar-title {
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+        font-size: 0.7rem;
+        font-weight: 700;
+        color: nb-theme(color-primary-600);
+        margin-bottom: 0.4rem;
+
+        nb-icon { font-size: 0.85rem; }
+      }
+
+      .schedule-slots {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0.25rem;
+        text-align: center;
+      }
+
+      .schedule-slot {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2px;
+
+        &.empty {
+          opacity: 0.35;
+        }
+      }
+
+      .slot-icon {
+        width: 1.6rem;
+        height: 1.6rem;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        nb-icon { font-size: 0.9rem; }
+
+        &.morning { background: rgba(255,152,0,0.15); nb-icon { color: #ff9800; } }
+        &.noon    { background: rgba(230,184,0,0.15); nb-icon { color: #e6b800; } }
+        &.evening { background: rgba(255,87,34,0.15); nb-icon { color: #ff5722; } }
+        &.night   { background: rgba(63,81,181,0.15); nb-icon { color: #3f51b5; } }
+      }
+
+      .slot-time {
+        font-size: 0.62rem;
+        font-weight: 600;
+        color: nb-theme(text-hint-color);
+      }
+
+      .slot-dose {
+        font-size: 0.75rem;
+        font-weight: 700;
+      }
+    }
+  }
+
+  .view-toggle {
+    display: flex;
+    gap: 0.25rem;
+  }
+
+  .daily-schedule-header {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 13px;
+    font-weight: 700;
+    color: nb-theme(color-primary-600);
+
+    nb-icon { font-size: 1rem; }
+  }
+
+  .daily-schedule-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+
+    @media (max-width: 768px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .schedule-col {
+    border-radius: 0.5rem;
+    border: 1px solid nb-theme(background-basic-color-3);
+    overflow: hidden;
+
+    .schedule-col-header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 0.75rem;
+      font-size: 12px;
+      font-weight: 700;
+      background-color: nb-theme(background-basic-color-2);
+      border-bottom: 1px solid nb-theme(background-basic-color-3);
+    }
+
+    .schedule-col-body {
+      padding: 0.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      min-height: 60px;
+    }
+
+    &.morning .schedule-col-header { border-top: 3px solid #ff9800; }
+    &.noon    .schedule-col-header { border-top: 3px solid #e6b800; }
+    &.evening .schedule-col-header { border-top: 3px solid #ff5722; }
+    &.night   .schedule-col-header { border-top: 3px solid #3f51b5; }
+  }
+
+  .slot-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    nb-icon { font-size: 0.8rem; }
+
+    &.morning { background: rgba(255,152,0,0.15); nb-icon { color: #ff9800; } }
+    &.noon    { background: rgba(230,184,0,0.15); nb-icon { color: #e6b800; } }
+    &.evening { background: rgba(255,87,34,0.15); nb-icon { color: #ff5722; } }
+    &.night   { background: rgba(63,81,181,0.15); nb-icon { color: #3f51b5; } }
+  }
+
+  .schedule-med-item {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.4rem;
+    padding: 0.35rem 0.5rem;
+    border-radius: 0.3rem;
+    background-color: nb-theme(background-basic-color-2);
+    border: 1px solid nb-theme(background-basic-color-3);
+
+    &.inactive {
+      opacity: 0.45;
+    }
+
+    .sched-med-name {
+      font-size: 12px;
+      font-weight: 600;
+      flex: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .sched-med-dose {
+      font-size: 11px;
+      font-weight: 700;
+      color: nb-theme(color-primary-600);
+      white-space: nowrap;
+    }
+  }
+
+  .sched-empty {
+    font-size: 11px;
+    color: nb-theme(text-hint-color);
+    text-align: center;
+    padding: 0.5rem 0;
+  }
+
   ::ng-deep .tab:after {
     content: " ";
     position: absolute;

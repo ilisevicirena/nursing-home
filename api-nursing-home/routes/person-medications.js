@@ -34,8 +34,13 @@ router.post("/add", async (request, response) => {
       .input("notes", objectToSave.Notes)
       .input("status", objectToSave.Status)
       .input("prescriberName", objectToSave.PrescriberName)
+      .input("morningDose", objectToSave.MorningDose)
+      .input("noonDose", objectToSave.NoonDose)
+      .input("eveningDose", objectToSave.EveningDose)
+      .input("nightDose", objectToSave.NightDose)
+      .input("rxCui", objectToSave.RxCui)
       .query(
-        "EXEC [dbo].[insertPersonMedication] @PersonId=@personId, @MedicationName=@medicationName, @Dosage=@dosage, @Frequency=@frequency, @Route=@route, @StartDate=@startDate, @EndDate=@endDate, @Indication=@indication, @Notes=@notes, @Status=@status, @PrescriberName=@prescriberName, @ActingUserId=@ActingUserId",
+        "EXEC [dbo].[insertPersonMedication] @PersonId=@personId, @MedicationName=@medicationName, @Dosage=@dosage, @Frequency=@frequency, @Route=@route, @StartDate=@startDate, @EndDate=@endDate, @Indication=@indication, @Notes=@notes, @Status=@status, @PrescriberName=@prescriberName, @MorningDose=@morningDose, @NoonDose=@noonDose, @EveningDose=@eveningDose, @NightDose=@nightDose, @RxCui=@rxCui, @ActingUserId=@ActingUserId",
       );
     if (result != null) {
       response.json(result.recordset[0]);
@@ -62,11 +67,16 @@ router.post("/update", async (request, response) => {
       .input("notes", objectToSave.Notes)
       .input("status", objectToSave.Status)
       .input("prescriberName", objectToSave.PrescriberName)
+      .input("morningDose", objectToSave.MorningDose)
+      .input("noonDose", objectToSave.NoonDose)
+      .input("eveningDose", objectToSave.EveningDose)
+      .input("nightDose", objectToSave.NightDose)
+      .input("rxCui", objectToSave.RxCui)
       .query(
-        "EXEC [dbo].[updatePersonMedication] @Id=@id, @MedicationName=@medicationName, @Dosage=@dosage, @Frequency=@frequency, @Route=@route, @StartDate=@startDate, @EndDate=@endDate, @Indication=@indication, @Notes=@notes, @Status=@status, @PrescriberName=@prescriberName, @ActingUserId=@ActingUserId",
+        "EXEC [dbo].[updatePersonMedication] @Id=@id, @MedicationName=@medicationName, @Dosage=@dosage, @Frequency=@frequency, @Route=@route, @StartDate=@startDate, @EndDate=@endDate, @Indication=@indication, @Notes=@notes, @Status=@status, @PrescriberName=@prescriberName, @MorningDose=@morningDose, @NoonDose=@noonDose, @EveningDose=@eveningDose, @NightDose=@nightDose, @RxCui=@rxCui, @ActingUserId=@ActingUserId",
       );
     if (result != null) {
-      response.json(result.recordset[0]);
+      response.json({});
     } else response.send(getError(9022));
   } catch (err) {
     response.status(500);

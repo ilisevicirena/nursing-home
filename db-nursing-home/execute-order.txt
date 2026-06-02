@@ -269,7 +269,9 @@ proc-updatePackage.sql
 proc-updatePerson.sql
 proc-updatePersonDetailed.sql
 proc-updatePersonAllergen.sql
+proc-deletePersonAllergen.sql
 proc-updatePersonMedication.sql
+proc-deletePersonMedication.sql
 proc-updatePersonFunctionalStatus.sql
 proc-updatePersonDietaryRestriction.sql
 proc-updatePersonInsuranceData.sql
