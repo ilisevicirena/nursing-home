@@ -17,6 +17,8 @@
   flex-flow: column;
   overflow: hidden;
   height: 100%;
+  position: relative;
+  z-index: 1;
 }
 
 .profile-top-container {

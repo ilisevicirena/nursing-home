@@ -36,11 +36,7 @@
                 <div class="card-label">{{ getString("status") }}</div>
                 <div class="card-value">
                   <nb-badge
-                    [text]="
-                      person.Active
-                        ? getString('active')
-                        : getString('unactive')
-                    "
+                    [text]="person.Active ? getString('active') : getString('unactive')"
                     [status]="person.Active ? 'success' : 'danger'"
                     position="bottom left"
                   ></nb-badge>
@@ -68,10 +64,7 @@
             class="ps-2 pe-2 pt-2 pb-2"
           >
             <button
-              nbButton
-              shape="round"
-              ghost
-              size="small"
+              nbButton shape="round" ghost size="small"
               (click)="toggleView(option)"
               [status]="option.active ? 'primary' : 'basic'"
             >
@@ -82,7 +75,7 @@
       </div>
     </div>
   </div>
-  <div class="col p-0 h-100" style="position: relative; width: 0">
+  <div class="col p-0 h-100" style="position: relative; width: 0; z-index: 2">
     <button
       nbButton
       status="basic"
@@ -92,9 +85,7 @@
     >
       <nb-icon
         pack="eva"
-        [icon]="
-          showSidepanel ? 'chevron-left-outline' : 'chevron-right-outline'
-        "
+        [icon]="showSidepanel ? 'chevron-left-outline' : 'chevron-right-outline'"
         status="primary"
       ></nb-icon>
     </button>

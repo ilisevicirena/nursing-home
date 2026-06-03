@@ -30,6 +30,37 @@
 
   @include nb-overrides();
 
+  .info-row {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .value-row {
+    position: relative;
+  }
+
+  // Warning alert strip for medication / assessment notes
+  .med-notes-alert {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.4rem;
+    padding: 0.4rem 0.6rem;
+    border-radius: 0.35rem;
+    background-color: nb-theme(color-warning-transparent-100);
+    border-left: 3px solid nb-theme(color-warning-500);
+    font-size: 12px;
+    line-height: 1.4;
+
+    nb-icon {
+      font-size: 0.95rem;
+      color: nb-theme(color-warning-500);
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+  }
+  // ────────────────────────────────────────────────────────────────────────────
+
   .card-font8-icon {
     font-size: 1.5rem;
     margin-right: 1rem;
@@ -160,10 +191,36 @@
   .border-basic {
     border-top: 1px solid nb-theme(color-basic-500);
   }
+
+  ngx-tags-autocomplete .tags-autocomplete nb-tag.size-small {
+    font-size: nb-theme(tag-tiny-text-font-size) !important;
+    font-weight: nb-theme(tag-tiny-text-font-weight) !important;
+    line-height: nb-theme(tag-tiny-text-line-height) !important;
+    padding: nb-theme(tag-tiny-padding) !important;
+  }
+
+  ngx-tags-autocomplete .tags-autocomplete nb-accordion-item-header {
+    padding: nb-theme(input-medium-padding) !important;
+  }
+
+  ngx-tags-autocomplete .tags-autocomplete nb-accordion-item-header .header-tags {
+   height: 1.4rem !important;
+   padding-left: 2px !important;
+  }
+
+  ngx-tags-autocomplete .tags-autocomplete nb-accordion-item-body .item-body {
+    padding: nb-theme(input-medium-padding) !important;
+  }
+
+  ngx-tags-autocomplete .tags-autocomplete nb-tag-list.size-medium .nb-tag-list-tags-wrapper nb-tag,
+  ngx-tags-autocomplete .tags-autocomplete nb-tag-list.size-medium .nb-tag-list-tags-wrapper .nb-tag-input {
+    margin: nb-theme(tag-list-small-tag-offset) !important;
+  }
 }
 
 .row {
   margin: 0;
+  --bs-gutter-x: 0.75rem;
 }
 
 nb-tag.appearance-filled.status-basic.selected {
@@ -245,10 +302,11 @@ nb-tag.appearance-outline.status-warning.selected {
 
 .card-value {
   font-weight: 600;
+  font-size: 0.85rem;
 }
 
 .form-group .label {
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.35rem;
 }
 
 nb-select.appearance-outline.status-basic .select-button.placeholder {
@@ -303,14 +361,16 @@ nb-tag {
   }
 
   nb-card-header {
-    padding: 1rem;
-    padding-bottom: 0.5rem;
+    padding: 0.5rem 0.75rem;
 
     .col {
-      font-size: 20px;
+      font-size: 1.25rem;
+      display: flex;
+      flex-flow: column;
+      justify-content: center;
 
       .label {
-        font-size: 16px;
+        font-size: 0.85rem;
         padding: 0;
         font-weight: 600;
       }
@@ -408,3 +468,4 @@ nb-stepper.vertical {
 nb-card.h-100 {
   margin: 0;
 }
+

@@ -70,7 +70,7 @@ $nb-themes: nb-register-theme(
     color-danger-800: #93153e,
     color-danger-900: #7a0d39,
     header-height: 3.5rem,
-    layout-padding: 1rem,
+    layout-padding: 0.75rem,
     calendar-width: 16.5rem,
     calendar-navigation-padding: 0.25rem,
     calendar-navigation-title-text-font-size: 0.85rem,
@@ -91,6 +91,38 @@ $nb-themes: nb-register-theme(
     color-primary-transparent-400: rgba(51, 185, 191, 0.32),
     color-primary-transparent-500: rgba(51, 185, 191, 0.4),
     color-primary-transparent-600: rgba(51, 185, 191, 0.48),
+
+    color-warning-transparent-100: rgba(255, 163, 43, 0.12),
+    card-padding: 0.75rem,    
+    text-label-font-weight: 500,
+
+    input-medium-text-font-size: 0.85rem,
+    input-medium-padding: 0.35rem 0.75rem,
+    input-medium-text-line-height: 1.35rem,
+    input-medium-placeholder-text-font-size: 0.85rem,
+    input-medium-placeholder-text-line-height: 1.35rem,
+
+    form-field-addon-medium-height: 2.1rem,
+    form-field-addon-medium-width: 2.1rem,
+    form-field-addon-medium-icon-size: 1rem,
+    form-field-addon-medium-font-size: 0.85rem,
+    form-field-addon-medium-line-height: 1rem,
+
+    select-medium-text-font-size: 0.85rem,
+    select-medium-padding: 0.35rem 0.75rem,
+    select-medium-text-line-height: 1.35rem,
+    select-medium-placeholder-text-font-size: 0.85rem,
+    select-medium-placeholder-text-line-height: 1.35rem,
+
+    tag-input-medium-text-font-size: 0.85rem,
+    tag-input-medium-text-line-height: 1.35rem,
+    tag-input-medium-padding: 0.35rem 0,
+    tag-medium-text-font-size: 0.85rem,
+    tag-medium-text-line-height: 1.35rem,
+
+    option-medium-text-font-size: 0.85rem,
+    option-medium-text-line-height: 1.35rem,
+    option-medium-padding: 0.35rem 0.75rem,
   ),
   default,
   default
@@ -212,6 +244,9 @@ $nb-themes: nb-register-theme(
     color-danger-700: #b72244,
     color-danger-800: #93153e,
     color-danger-900: #7a0d39,
+
+    color-warning-transparent-100: rgba(255, 163, 43, 0.12),
+    card-padding: 0.75rem 1rem,
   ),
   dark,
   dark

@@ -80,6 +80,10 @@ export class MedicalProfileComponent implements OnInit, OnDestroy {
   public activeMedicalView: string = "allergies";
   public medicationView: 'cards' | 'schedule' = 'cards';
 
+  public medicationViewChange(values: string[]): void {
+    if (values.length > 0) this.medicationView = values[0] as 'cards' | 'schedule';
+  }
+
   public medicalSections: any[] = [
     { option: "allergies", string: "allergies", active: false },
     { option: "medications", string: "medications", active: false },

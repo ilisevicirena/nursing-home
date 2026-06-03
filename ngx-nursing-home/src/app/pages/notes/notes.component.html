@@ -159,7 +159,7 @@
             {{ selectedNote.Title }}
           </div>
           <div class="content" [innerHTML]="selectedNote.Text"></div>
-          <div class="tags mt-3">
+          <div class="tags mt-2">
             <nb-tag-list *ngIf="selectedNote.Tags.length > 0">
               <nb-tag
                 size="small"

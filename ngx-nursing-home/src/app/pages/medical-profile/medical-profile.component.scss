@@ -1,4 +1,5 @@
 @import "../../@theme/styles/themes.scss";
+@import "../../@theme/styles/medical-profile-vars";
 
 @include nb-install-component {
   .documents-tabset {
@@ -54,273 +55,13 @@
     }
   }
 
-  .allergen-card {
-    border-radius: 0.5rem;
-
-    nb-card-header {
-      padding: 0.75rem 1rem;
-      font-size: 0.9rem;
-    }
-
-    nb-card-body {
-      padding: 0.75rem 1rem;
-      font-size: 0.85rem;
-      min-height: 80px;
-    }
-
-    nb-card-footer {
-      border-top: 1px solid nb-theme(card-divider-color);
-    }
-
-    .allergen-name {
-      font-weight: 600;
-      font-size: 0.95rem;
-    }
-
-    .info-row {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-
-    .info-label {
-      font-size: 0.75rem;
-      color: nb-theme(text-hint-color);
-    }
-
-    .info-value {
-      font-size: 0.85rem;
-      font-weight: 600;
-    }
-
-  }
-
-  .medication-card {
-    border-radius: 0.5rem;
-
-    nb-card-header {
-      padding: 0.75rem 1rem;
-      font-size: 0.9rem;
-    }
-
-    nb-card-body {
-      padding: 0.75rem 1rem;
-      font-size: 0.85rem;
-    }
-
-    nb-card-footer {
-      border-top: 1px solid nb-theme(card-divider-color);
-    }
-
-    .medication-name {
-      font-weight: 600;
-      font-size: 0.95rem;
-    }
-
-    .info-row {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-
-    .info-label {
-      font-size: 0.75rem;
-      color: nb-theme(text-hint-color);
-    }
-
-    .info-value {
-      font-size: 0.85rem;
-      font-weight: 600;
-    }
-
-    .schedule-bar {
-      border-radius: 0.4rem;
-      padding: 0.5rem 0.6rem;
-      background-color: nb-theme(background-basic-color-2);
-      border: 1px solid nb-theme(background-basic-color-3);
-
-      .schedule-bar-title {
-        display: flex;
-        align-items: center;
-        gap: 0.25rem;
-        font-size: 0.7rem;
-        font-weight: 700;
-        color: nb-theme(color-primary-600);
-        margin-bottom: 0.4rem;
-
-        nb-icon { font-size: 0.85rem; }
-      }
-
-      .schedule-slots {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 0.25rem;
-        text-align: center;
-      }
-
-      .schedule-slot {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 2px;
-
-        &.empty {
-          opacity: 0.35;
-        }
-      }
-
-      .slot-icon {
-        width: 1.6rem;
-        height: 1.6rem;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        nb-icon { font-size: 0.9rem; }
-
-        &.morning { background: rgba(255,152,0,0.15); nb-icon { color: #ff9800; } }
-        &.noon    { background: rgba(230,184,0,0.15); nb-icon { color: #e6b800; } }
-        &.evening { background: rgba(255,87,34,0.15); nb-icon { color: #ff5722; } }
-        &.night   { background: rgba(63,81,181,0.15); nb-icon { color: #3f51b5; } }
-      }
-
-      .slot-time {
-        font-size: 0.62rem;
-        font-weight: 600;
-        color: nb-theme(text-hint-color);
-      }
-
-      .slot-dose {
-        font-size: 0.75rem;
-        font-weight: 700;
-      }
-    }
-  }
-
-  .med-notes-alert {
-    display: flex;
-    align-items: flex-start;
-    gap: 0.4rem;
-    padding: 0.4rem 0.6rem;
-    border-radius: 0.35rem;
-    background-color: rgba(255, 170, 0, 0.12);
-    border-left: 3px solid #ffaa00;
-    font-size: 12px;
-    line-height: 1.4;
-
-    nb-icon {
-      font-size: 0.95rem;
-      color: #ffaa00;
-      flex-shrink: 0;
-      margin-top: 1px;
-    }
-  }
-
-  .insurance-card {
-    border-radius: 0.5rem;
-
-    nb-card-header {
-      padding: 0.75rem 1rem;
-      font-size: 0.9rem;
-    }
-
-    nb-card-body {
-      padding: 0.75rem 1rem;
-      font-size: 0.85rem;
-      min-height: 60px;
-    }
-
-    nb-card-footer {
-      border-top: 1px solid nb-theme(card-divider-color);
-    }
-
-    .ins-card-icon {
-      font-size: 1rem;
-      color: nb-theme(color-primary-500);
-    }
-
-    .ins-company-name {
-      font-weight: 600;
-      font-size: 0.95rem;
-    }
-
-    .info-row {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-
-    .info-label {
-      font-size: 0.75rem;
-      color: nb-theme(text-hint-color);
-    }
-
-    .info-value {
-      font-size: 0.85rem;
-      font-weight: 600;
-    }
-  }
-
-  .dietary-card {
-    border-radius: 0.5rem;
-
-    nb-card-header {
-      padding: 0.75rem 1rem;
-      font-size: 0.9rem;
-    }
-
-    nb-card-body {
-      padding: 0.75rem 1rem;
-      font-size: 0.85rem;
-      min-height: 60px;
-    }
-
-    nb-card-footer {
-      border-top: 1px solid nb-theme(card-divider-color);
-    }
-
-    .dietary-name {
-      font-weight: 600;
-      font-size: 0.95rem;
-    }
-
-    .info-row {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-
-    .info-label {
-      font-size: 0.75rem;
-      color: nb-theme(text-hint-color);
-    }
-
-    .info-value {
-      font-size: 0.85rem;
-      font-weight: 600;
-    }
-  }
+  // ── Functional status card ──────────────────────────────────────────────────
+  // All base styles come from the global .profile-card rule.
+  // Only fs-specific overrides live here.
 
   .fs-card {
-    border-radius: 0.5rem;
-
     nb-card-header {
-      padding: 0.65rem 1rem;
-      font-size: 0.9rem;
-    }
-
-    nb-card-body {
-      padding: 0.75rem 1rem;
-    }
-
-    nb-card-footer {
-      border-top: 1px solid nb-theme(card-divider-color);
-    }
-
-    .fs-card-icon {
-      font-size: 1rem;
-      color: nb-theme(color-primary-500);
+      padding: 0.65rem 1rem; // slightly tighter than the profile-card default
     }
 
     .fs-date {
@@ -332,18 +73,6 @@
       display: flex;
       flex-direction: column;
       gap: 0.4rem;
-    }
-
-    .fs-status-item {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-      position: relative;
-    }
-
-    .fs-status-label {
-      font-size: 0.75rem;
-      color: nb-theme(text-hint-color);
     }
 
     .fs-status-value-row {
@@ -359,17 +88,80 @@
       background-color: nb-theme(color-danger-500);
       flex-shrink: 0;
     }
-
-    .fs-status-value {
-      font-size: 0.85rem;
-      font-weight: 600;
-    }
   }
+
+  // ── Medication view toggle ──────────────────────────────────────────────────
 
   .view-toggle {
     display: flex;
     gap: 0.25rem;
   }
+
+  // ── Daily medication schedule (compact slot bar inside cards) ───────────────
+
+  .schedule-bar {
+    border-radius: 0.4rem;
+    padding: 0.5rem 0.6rem;
+    background-color: nb-theme(background-basic-color-2);
+    border: 1px solid nb-theme(background-basic-color-3);
+
+    .schedule-bar-title {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: nb-theme(color-primary-600);
+      margin-bottom: 0.4rem;
+
+      nb-icon { font-size: 0.85rem; }
+    }
+
+    .schedule-slots {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.25rem;
+      text-align: center;
+    }
+
+    .schedule-slot {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+
+      &.empty { opacity: 0.35; }
+    }
+
+    .slot-icon {
+      width: 1.6rem;
+      height: 1.6rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      nb-icon { font-size: 0.9rem; }
+
+      &.morning { background: rgba($schedule-morning, 0.15); nb-icon { color: $schedule-morning; } }
+      &.noon    { background: rgba($schedule-noon,    0.15); nb-icon { color: $schedule-noon;    } }
+      &.evening { background: rgba($schedule-evening, 0.15); nb-icon { color: $schedule-evening; } }
+      &.night   { background: rgba($schedule-night,   0.15); nb-icon { color: $schedule-night;   } }
+    }
+
+    .slot-time {
+      font-size: 0.62rem;
+      font-weight: 600;
+      color: nb-theme(text-hint-color);
+    }
+
+    .slot-dose {
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+  }
+
+  // ── Daily medication schedule (full column view) ────────────────────────────
 
   .daily-schedule-header {
     display: flex;
@@ -416,10 +208,10 @@
       min-height: 60px;
     }
 
-    &.morning .schedule-col-header { border-top: 3px solid #ff9800; }
-    &.noon    .schedule-col-header { border-top: 3px solid #e6b800; }
-    &.evening .schedule-col-header { border-top: 3px solid #ff5722; }
-    &.night   .schedule-col-header { border-top: 3px solid #3f51b5; }
+    &.morning .schedule-col-header { border-top: 3px solid $schedule-morning; }
+    &.noon    .schedule-col-header { border-top: 3px solid $schedule-noon;    }
+    &.evening .schedule-col-header { border-top: 3px solid $schedule-evening; }
+    &.night   .schedule-col-header { border-top: 3px solid $schedule-night;   }
   }
 
   .slot-icon {
@@ -433,10 +225,10 @@
 
     nb-icon { font-size: 0.8rem; }
 
-    &.morning { background: rgba(255,152,0,0.15); nb-icon { color: #ff9800; } }
-    &.noon    { background: rgba(230,184,0,0.15); nb-icon { color: #e6b800; } }
-    &.evening { background: rgba(255,87,34,0.15); nb-icon { color: #ff5722; } }
-    &.night   { background: rgba(63,81,181,0.15); nb-icon { color: #3f51b5; } }
+    &.morning { background: rgba($schedule-morning, 0.15); nb-icon { color: $schedule-morning; } }
+    &.noon    { background: rgba($schedule-noon,    0.15); nb-icon { color: $schedule-noon;    } }
+    &.evening { background: rgba($schedule-evening, 0.15); nb-icon { color: $schedule-evening; } }
+    &.night   { background: rgba($schedule-night,   0.15); nb-icon { color: $schedule-night;   } }
   }
 
   .schedule-med-item {
@@ -449,9 +241,7 @@
     background-color: nb-theme(background-basic-color-2);
     border: 1px solid nb-theme(background-basic-color-3);
 
-    &.inactive {
-      opacity: 0.45;
-    }
+    &.inactive { opacity: 0.45; }
 
     .sched-med-name {
       font-size: 12px;
