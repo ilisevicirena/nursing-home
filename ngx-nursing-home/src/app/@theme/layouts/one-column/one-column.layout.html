@@ -4,23 +4,11 @@
   </nb-layout-header>
 
   <nb-sidebar class="menu-sidebar" tag="menu-sidebar" responsive>
-    <div class="dots-container">
-      <div class="dot"></div>
-      <div class="dot"></div>
-      <div class="dot"></div>
+    <div class="sidebar-brand">
+      <img src="../../../../assets/images/logo.png" class="sidebar-logo" />
+      <span class="sidebar-brand-name" *ngIf="showItems">Nursing app</span>
     </div>
-    <div
-      class="d-flex align-items-center"
-      style="margin-left: -0.5rem; gap: 0.5rem"
-    >
-      <img
-        style="height: 35px; width: 30px"
-        src="../../../../assets/images/logo.png"
-      />
-      <div style="font-size: 20px; font-weight: 800" *ngIf="showItems">
-        Nursing app
-      </div>
-    </div>
+
     <button
       nbButton
       id="menu-sidebar-toggle-btn"
@@ -28,47 +16,28 @@
       size="small"
       ghost
       status="primary"
-      [nbTooltip]="showItems? getString('closeSidebar') : getString('openSidebar')"
+      [nbTooltip]="showItems ? getString('closeSidebar') : getString('openSidebar')"
       (click)="toggleSidebar()"
     >
-      <nb-icon
-        pack="eva"
-        [icon]="showItems ? 'chevron-left-outline' : 'chevron-right-outline'"
-      ></nb-icon>
+      <nb-icon pack="eva" [icon]="showItems ? 'chevron-left-outline' : 'chevron-right-outline'"></nb-icon>
     </button>
-    <div class="mt-2" style="margin-left: -0.5rem; margin-right: -0.5rem">
-      <button
-        *ngIf="!showItems"
-        nbButton
-        shape="round"
-        size="small"
-        status="basic"
-        (click)="toggleSidebar()"
-      >
+
+    <div class="sidebar-search">
+      <button *ngIf="!showItems" nbButton shape="round" size="small" status="basic" (click)="toggleSidebar()">
         <nb-icon pack="eva" icon="search-outline" status="primary"></nb-icon>
       </button>
       <nb-form-field *ngIf="showItems">
-        <nb-icon
-          nbPrefix
-          pack="eva"
-          icon="search-outline"
-          status="primary"
-        ></nb-icon>
+        <nb-icon nbPrefix pack="eva" icon="search-outline" status="primary"></nb-icon>
         <input
-          nbInput
-          fullWidth
+          nbInput fullWidth shape="round" autocomplete="off" fieldSize="small"
           [placeholder]="getString('search')"
-          shape="round"
-          autocomplete="off"
-          fieldSize="small"
-          name="search"
           name="search"
           [(ngModel)]="searchTerm"
           (keypress)="onSerachKeyPress($event)"
         />
       </nb-form-field>
     </div>
-    <div class="divider"></div>
+
     <ng-content select="nb-menu"></ng-content>
   </nb-sidebar>
 
