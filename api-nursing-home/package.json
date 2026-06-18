@@ -18,7 +18,7 @@
     "fill-pdf": "^1.1.0",
     "fs": "^0.0.1-security",
     "jsonwebtoken": "^9.0.2",
-    "nodemailer": "^6.9.14",
+    "nodemailer": "^9.0.1",
     "pdf-lib": "^1.17.1",
     "pdffiller": "^0.0.11",
     "pdftk": "^0.0.0-rc.0"
