@@ -24,6 +24,7 @@ import { CommonModule, registerLocaleData } from "@angular/common";
 import { SharedComponentsModule, TranslationService } from "shared-components";
 import hr from "@angular/common/locales/hr";
 import { InterceptorService } from "./services/interceptor.service";
+import { DemoInterceptor } from "./@core/demo/demo.interceptor";
 import { ConfigLoader, ConfigService } from "./services/config.service";
 import { DialogComponent } from "./shared/dialog/dialog/dialog.component";
 import { NgxEchartsModule } from "ngx-echarts";
@@ -69,6 +70,9 @@ export function translationLoader(translationService: TranslationService) {
   providers: [
     AuthService,
     { provide: LOCALE_ID, useValue: "hr" },
+    // Demo Mode: registered FIRST so it can short-circuit API calls with seeded data.
+    // No-op when environment.demo is false (normal/production builds).
+    { provide: HTTP_INTERCEPTORS, useClass: DemoInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true },
     {
       provide: APP_INITIALIZER,

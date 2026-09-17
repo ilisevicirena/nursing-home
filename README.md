@@ -230,4 +230,4 @@ in whole or in part, without prior written permission. See [LICENSE](LICENSE).
 ## 👤 Contact
 
 **Irena Ilišević** — Full-stack developer
-📧 irena.ilisevic@it4.ltd · [GitHub](https://github.com/ilisevicirena)
+📧 irenailisevic@gmail.com · [GitHub](https://github.com/ilisevicirena)

@@ -1,3 +1,5 @@
+// DEMO MODE environment — used by `ng build/serve -c demo`.
+// Same as production, but turns on the in-memory mock backend (no API/DB required).
 export enum SidebarStates {
   COLLAPSED = "collapsed",
   EXPANDED = "expanded",
@@ -12,13 +14,13 @@ const notificationAllType = {
 };
 
 const Brand = {
-  Name: "Ngx nursing home",
-  Address: "Adresa 123",
-  City: "Donja Mahala",
-  PostalCode: "76 274",
-  Email: "sample@nursinghome.com",
-  Telephone: "031 741 255",
-  Mobile: "+387 63 255 255",
+  Name: "Dom za stare i nemoćne osobe (DEMO)",
+  Address: "Ulica primjera 1",
+  City: "Zagreb",
+  PostalCode: "10000",
+  Email: "demo@demo.local",
+  Telephone: "01 555 0000",
+  Mobile: "+385 91 555 0000",
 };
 
 const Colors = [
@@ -26,7 +28,7 @@ const Colors = [
   "#e8eb34",
   "warning",
   "danger",
-  "primary",
+  "#34bdeb",
   "info",
   "#7b32a8",
   "#a83273",
@@ -36,11 +38,11 @@ const Colors = [
 ];
 
 export const environment = {
-  production: false,
-  demo: false,
+  production: true,
+  demo: true,
   sidebarConfig: SidebarStates.COMPACT,
-  configFile: "assets/config/config.json",
-  translationFile: "assets/resources/strings-hr.json",
+  configFile: "assets/config/config.demo.json",
+  translationFile: "assets/resources/strings-en.json",
   notificationAllType: notificationAllType,
   brand: Brand,
   colors: Colors,
