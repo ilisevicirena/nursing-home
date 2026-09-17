@@ -1,0 +1,219 @@
+<nb-card class="basic-tile-card skinny overflow-hidden">
+  <nb-card-header class="d-flex">
+    <div class="col">
+      {{ item?.Id ? getString("editAllergen") : getString("addAllergen") }}
+    </div>
+    <div class="w-max">
+      <button nbButton ghost shape="round" (click)="close(false)">
+        <nb-icon pack="eva" icon="close-outline"></nb-icon>
+      </button>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <form class="form" #allergenForm="ngForm">
+      <div class="row mb-2">
+        <div class="col-md-12">
+          <div class="form-group">
+            <div class="label">
+              {{ getString("allergenName") }}
+              <nb-icon
+                pack="eva"
+                icon="alert-circle-outline"
+                status="danger"
+                size="small"
+                class="ms-1 required-mark"
+                [nbTooltip]="getString('required')"
+              ></nb-icon>
+            </div>
+            <div class="value">
+              <input
+                nbInput
+                fullWidth
+                [placeholder]="getString('allergenName')"
+                name="allergenName"
+                [(ngModel)]="item.AllergenName"
+                required
+                #allergenName="ngModel"
+                [status]="
+                  allergenName.dirty
+                    ? allergenName.invalid
+                      ? 'danger'
+                      : 'success'
+                    : 'basic'
+                "
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mb-2">
+        <div class="col-md-12">
+          <div class="form-group">
+            <div class="label">
+              {{ getString("allergenSeverity") }}
+              <nb-icon
+                pack="eva"
+                icon="alert-circle-outline"
+                status="danger"
+                size="small"
+                class="ms-1 required-mark"
+                [nbTooltip]="getString('required')"
+              ></nb-icon>
+            </div>
+            <div class="value">
+              <nb-select
+                fullWidth
+                [placeholder]="getString('select')"
+                name="severity"
+                [(ngModel)]="item.SeverityId"
+                required
+                #severity="ngModel"
+                [status]="
+                  severity.dirty
+                    ? severity.invalid
+                      ? 'danger'
+                      : 'success'
+                    : 'basic'
+                "
+              >
+                <nb-option
+                  *ngFor="let s of allergenSeverities"
+                  [value]="s.Id"
+                >
+                  {{ s.StringKey ? getString(s.StringKey) : s.Name }}
+                </nb-option>
+              </nb-select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mb-2">
+        <div class="col-md-6">
+          <div class="form-group">
+            <div class="label">{{ getString("allergenStartDate") }}</div>
+            <div class="value">
+              <nb-form-field>
+                <input
+                  nbInput
+                  #startDateInput
+                  [placeholder]="getString('allergenStartDate')"
+                  fullWidth
+                  name="startDate"
+                  [(ngModel)]="item.StartDate"
+                  [nbDatepicker]="startDateDatepicker"
+                />
+                <nb-datepicker #startDateDatepicker></nb-datepicker>
+                <button
+                  nbButton
+                  nbSuffix
+                  ghost
+                  (click)="startDateInput.focus()"
+                >
+                  <nb-icon
+                    pack="eva"
+                    icon="calendar-outline"
+                    status="primary"
+                  ></nb-icon>
+                </button>
+              </nb-form-field>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <div class="label">{{ getString("allergenEndDate") }}</div>
+            <div class="value">
+              <nb-form-field>
+                <input
+                  nbInput
+                  #endDateInput
+                  [placeholder]="getString('allergenEndDate')"
+                  fullWidth
+                  name="endDate"
+                  [(ngModel)]="item.EndDate"
+                  [nbDatepicker]="endDateDatepicker"
+                  (ngModelChange)="onEndDateChange($event)"
+                />
+                <nb-datepicker #endDateDatepicker></nb-datepicker>
+                <button
+                  nbButton
+                  nbSuffix
+                  ghost
+                  (click)="endDateInput.focus()"
+                >
+                  <nb-icon
+                    pack="eva"
+                    icon="calendar-outline"
+                    status="primary"
+                  ></nb-icon>
+                </button>
+              </nb-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mb-2">
+        <div class="col-md-12">
+          <div class="form-group">
+            <div class="label">
+              {{ getString("reactionDescription") }}
+              <nb-icon
+                pack="eva"
+                icon="alert-circle-outline"
+                status="danger"
+                size="small"
+                class="ms-1 required-mark"
+                [nbTooltip]="getString('required')"
+              ></nb-icon>
+            </div>
+            <div class="value">
+              <textarea
+                nbInput
+                fullWidth
+                [placeholder]="getString('reactionDescription')"
+                name="reactionDescription"
+                [(ngModel)]="item.ReactionDescription"
+                rows="3"
+                required
+                #reactionDescription="ngModel"
+                [status]="
+                  reactionDescription.dirty
+                    ? reactionDescription.invalid
+                      ? 'danger'
+                      : 'success'
+                    : 'basic'
+                "
+              ></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </nb-card-body>
+  <nb-card-footer class="d-flex justify-content-end">
+    <button
+      nbButton
+      ghost
+      shape="round"
+      size="small"
+      class="me-2"
+      (click)="close(false)"
+    >
+      {{ getString("cancel") }}
+    </button>
+    <button
+      nbButton
+      status="primary"
+      shape="round"
+      size="small"
+      (click)="save()"
+      [disabled]="allergenForm.invalid"
+    >
+      {{ getString("save") }}
+    </button>
+  </nb-card-footer>
+</nb-card>

@@ -3,125 +3,181 @@
 @import "@nebular/theme/styles/global/breakpoints";
 
 @include nb-install-component() {
+
+  // ── Layout ────────────────────────────────────────────────────────
   ::ng-deep nb-layout-column.nb-layout-column {
     height: calc(100vh - nb-theme(header-height));
     overflow: auto;
+    > * { height: 100%; width: 100%; overflow: auto; }
+  }
 
-    > * {
-      height: 100%;
-      width: 100%;
-      overflow: auto;
+  .menu-sidebar ::ng-deep .scrollable { position: relative; overflow: visible; }
+  .menu-sidebar.collapsed ::ng-deep .scrollable { position: relative; overflow: hidden; }
+
+  // ── Brand ─────────────────────────────────────────────────────────
+  .sidebar-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-left: -0.25rem;
+    padding-bottom: 0.85rem;
+    margin-bottom: 0.6rem;
+    border-bottom: 1px solid nb-theme(divider-color);
+
+    .sidebar-logo { height: 28px; width: auto; flex-shrink: 0; }
+
+    .sidebar-brand-name {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: nb-theme(text-basic-color);
+      white-space: nowrap;
+      letter-spacing: -0.01em;
     }
   }
 
-  .menu-sidebar ::ng-deep .scrollable {
-    position: relative;
-    overflow: visible;
-  }
+  // ── Search ────────────────────────────────────────────────────────
+  .sidebar-search { margin: 0 -0.5rem 0.5rem; }
 
-  .menu-sidebar.collapsed ::ng-deep .scrollable {
-    position: relative;
-    overflow: hidden;
-  }
-
-  nb-sidebar.compacted ::ng-deep nb-menu .menu-item a.active::before {
-    content: "";
+  // ── Collapse toggle ───────────────────────────────────────────────
+  #menu-sidebar-toggle-btn {
     position: absolute;
-    left: 0px;
-    width: 0.25rem;
-    height: 60%;
-    background-color: nb-theme(color-primary-500);
-    border-bottom-right-radius: 0.5rem;
-    border-top-right-radius: 0.5rem;
+    right: -15px;
+    top: 1.6rem;
+    background-color: nb-theme(card-background-color);
+    box-shadow: nb-theme(sidebar-shadow);
+    transition: background-color 0.15s ease;
+
+    &:hover {
+      background-color: nb-theme(color-primary-500);
+      nb-icon { color: white; }
+    }
   }
 
-  nb-sidebar.compacted img {
-    margin-left: 3px;
-  }
-
+  // ── Menu ──────────────────────────────────────────────────────────
   .menu-sidebar ::ng-deep nb-menu {
     height: 75%;
     overflow: auto;
 
-    .menu-items.expanded li {
-      border-left: 1px solid nb-theme(color-basic-default);
+    .menu-item {
+      border: none;
 
-      a.active {
-        border: none;
-        background-color: nb-theme(color-basic-default);
-        border-radius: 0.5rem;
-        color: inherit;
-        margin-left: 0.5rem;
+      // ─ Top-level item ─────────────────────────────────────────────
+      > a {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        border-radius: 0.45rem;
+        margin: 2px 0.35rem;
+        padding: 0.5rem 0.65rem;
+        color: nb-theme(text-basic-color);
+        transition: background-color 0.13s ease;
+        overflow: hidden;
+
+        // Kill Nebular's default left-border active indicator
+        &::after { display: none; }
+
+        // Label
+        .menu-title {
+          font-size: 0.84rem;
+          font-weight: 500;
+          line-height: 1.2;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          flex: 1;
+          min-width: 0;
+        }
+
+        // Main icon – visible, properly sized
+        nb-icon:not(.menu-icon) {
+          font-size: 1.1rem;
+          flex-shrink: 0;
+          width: 1.25rem;
+          text-align: center;
+          color: nb-theme(text-hint-color);
+          transition: color 0.13s ease;
+        }
+
+        // Expand arrow
+        nb-icon.menu-icon {
+          font-size: 0.78rem;
+          flex-shrink: 0;
+          color: nb-theme(text-hint-color);
+        }
+
+        &:hover:not(.active) {
+          background-color: nb-theme(color-basic-200);
+          nb-icon:not(.menu-icon) { color: nb-theme(color-primary-500); }
+        }
+
+        &.active {
+          background-color: nb-theme(color-primary-transparent-200);
+          box-shadow: inset 3px 0 0 nb-theme(color-primary-500);
+
+          .menu-title {
+            color: nb-theme(color-primary-600);
+            font-weight: 600;
+          }
+
+          nb-icon:not(.menu-icon) { color: nb-theme(color-primary-500); }
+        }
       }
 
-      a.active::after {
-        content: "";
-        background: transparent;
+      // ─ Expanded children ──────────────────────────────────────────
+      .menu-items.expanded {
+        margin: 2px 0.35rem 4px 2.2rem;
+
+        li {
+          border-left: none;
+
+          a {
+            display: flex;
+            align-items: center;
+            border-radius: 0.35rem;
+            margin: 1px 0;
+            padding: 0.35rem 0.65rem;
+            color: nb-theme(text-hint-color);
+            transition: background-color 0.13s ease, color 0.13s ease;
+            overflow: hidden;
+
+            &::after, &::before { display: none; }
+
+            .menu-title {
+              font-size: 0.81rem;
+              font-weight: 400;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              flex: 1;
+              min-width: 0;
+            }
+
+            &:hover:not(.active) {
+              background-color: nb-theme(color-basic-200);
+              color: nb-theme(text-basic-color);
+            }
+
+            &.active {
+              background-color: nb-theme(color-primary-transparent-100);
+              color: nb-theme(color-primary-600);
+              .menu-title { font-weight: 600; }
+              &::after { display: none; }
+            }
+          }
+        }
       }
     }
   }
 
-  .menu-sidebar ::ng-deep nb-menu .menu-item {
-    a nb-icon:not(.menu-icon) {
-      background-color: nb-theme(color-basic-default);
-      border-radius: 50%;
-    }
+  // ── Compacted (icon-only) mode ────────────────────────────────────
+  nb-sidebar.compacted ::ng-deep nb-menu .menu-item > a {
+    &::after { display: none !important; }
 
-    border: none;
-
-    a.active {
-      position: relative;
-    }
-
-    a.active::after {
-      content: "";
-      position: absolute;
-      left: 0px;
-      width: 0.25rem;
-      height: 70%;
-      background-color: nb-theme(color-primary-500);
-      border-bottom-right-radius: 0.5rem;
-      border-top-right-radius: 0.5rem;
+    &.active {
+      background-color: nb-theme(color-primary-transparent-200);
+      box-shadow: inset 3px 0 0 nb-theme(color-primary-500);
     }
   }
 
-  .dots-container {
-    display: flex;
-    gap: 0.15rem;
-    margin-left: -0.5rem;
-    margin-bottom: 0.5rem;
-
-    .dot {
-      background-color: nb-theme(color-primary-500);
-      height: 5px;
-      width: 5px;
-      border-radius: 50%;
-    }
-  }
-
-  #menu-sidebar-toggle-btn {
-    position: absolute;
-    right: -15px;
-    top: 2rem;
-    background-color: nb-theme(card-background-color);
-    box-shadow: nb-theme(sidebar-shadow);
-  }
-
-  #menu-sidebar-toggle-btn:hover {
-    background-color: nb-theme(color-primary-500);
-
-    nb-icon {
-      color: nb-theme(card-background-color);
-    }
-  }
-
-  .divider {
-    margin-left: -0.5rem;
-    margin-right: -0.5rem;
-    background-color: nb-theme(card-divider-color);
-    height: 3px;
-    border-radius: 1rem;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-  }
+  nb-sidebar.compacted img { margin-left: 3px; }
 }

@@ -1,0 +1,187 @@
+<nb-card class="basic-tile-card fs-dialog overflow-hidden">
+  <nb-card-header class="d-flex">
+    <div class="col">
+      {{ item?.Id ? getString("editFunctionalStatus") : getString("addFunctionalStatus") }}
+    </div>
+    <div class="w-max">
+      <button nbButton ghost shape="round" (click)="close(false)">
+        <nb-icon pack="eva" icon="close-outline"></nb-icon>
+      </button>
+    </div>
+  </nb-card-header>
+
+  <nb-card-body class="overflow-auto">
+    <form class="form" #fsForm="ngForm">
+
+      <!-- Assessment Date -->
+      <div class="row mb-2">
+        <div class="col-md-12">
+          <div class="form-group">
+            <div class="label">
+              {{ getString("assessmentDate") }}
+              <nb-icon
+                pack="eva"
+                icon="alert-circle-outline"
+                status="danger"
+                size="small"
+                class="ms-1 required-mark"
+                [nbTooltip]="getString('required')"
+              ></nb-icon>
+            </div>
+            <div class="value">
+              <nb-form-field>
+                <input
+                  nbInput
+                  fullWidth
+                  #assInput
+                  [placeholder]="getString('assessmentDate')"
+                  name="assessmentDate"
+                  [(ngModel)]="item.AssessmentDate"
+                  [nbDatepicker]="assessmentPicker"
+                  required
+                />
+                <nb-datepicker #assessmentPicker></nb-datepicker>
+                <button nbButton nbSuffix ghost (click)="assInput.focus()">
+                  <nb-icon pack="eva" icon="calendar-outline" status="primary"></nb-icon>
+                </button>
+              </nb-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobility + Fall Risk -->
+      <div class="row mb-2">
+        <div class="col-md-6">
+          <div class="form-group">
+            <div class="label">{{ getString("mobilityStatus") }}</div>
+            <div class="value">
+              <nb-select
+                fullWidth
+                [placeholder]="getString('select')"
+                name="mobilityStatus"
+                [(ngModel)]="item.MobilityStatus"
+              >
+                <nb-option *ngFor="let o of mobilityOptions" [value]="o.value">
+                  {{ getString(o.key) }}
+                </nb-option>
+              </nb-select>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <div class="label">{{ getString("fallRisk") }}</div>
+            <div class="value">
+              <nb-select
+                fullWidth
+                [placeholder]="getString('select')"
+                name="fallRisk"
+                [(ngModel)]="item.FallRisk"
+              >
+                <nb-option *ngFor="let o of fallRiskOptions" [value]="o.value">
+                  {{ getString(o.key) }}
+                </nb-option>
+              </nb-select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cognitive Status -->
+      <div class="row mb-2">
+        <div class="col-md-12">
+          <div class="form-group">
+            <div class="label">{{ getString("cognitiveStatus") }}</div>
+            <div class="value">
+              <nb-select
+                fullWidth
+                [placeholder]="getString('select')"
+                name="cognitiveStatus"
+                [(ngModel)]="item.CognitiveStatus"
+              >
+                <nb-option *ngFor="let o of cognitiveOptions" [value]="o.value">
+                  {{ getString(o.key) }}
+                </nb-option>
+              </nb-select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Visual + Hearing -->
+      <div class="row mb-2">
+        <div class="col-md-6">
+          <div class="form-group">
+            <div class="label">{{ getString("visualStatus") }}</div>
+            <div class="value">
+              <nb-select
+                fullWidth
+                [placeholder]="getString('select')"
+                name="visualStatus"
+                [(ngModel)]="item.VisualStatus"
+              >
+                <nb-option *ngFor="let o of visualOptions" [value]="o.value">
+                  {{ getString(o.key) }}
+                </nb-option>
+              </nb-select>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <div class="label">{{ getString("hearingStatus") }}</div>
+            <div class="value">
+              <nb-select
+                fullWidth
+                [placeholder]="getString('select')"
+                name="hearingStatus"
+                [(ngModel)]="item.HearingStatus"
+              >
+                <nb-option *ngFor="let o of hearingOptions" [value]="o.value">
+                  {{ getString(o.key) }}
+                </nb-option>
+              </nb-select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Notes -->
+      <div class="row mb-1">
+        <div class="col-md-12">
+          <div class="form-group">
+            <div class="label">{{ getString("notesDescription") }}</div>
+            <div class="value">
+              <textarea
+                nbInput
+                fullWidth
+                [placeholder]="getString('notesDescriptionPlaceholder')"
+                name="notesDescription"
+                [(ngModel)]="item.NotesDescription"
+                rows="3"
+              ></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </form>
+  </nb-card-body>
+
+  <nb-card-footer class="d-flex justify-content-end">
+    <button nbButton ghost shape="round" size="small" class="me-2" (click)="close(false)">
+      {{ getString("cancel") }}
+    </button>
+    <button
+      nbButton
+      status="primary"
+      shape="round"
+      size="small"
+      (click)="save()"
+      [disabled]="fsForm.invalid"
+    >
+      {{ getString("save") }}
+    </button>
+  </nb-card-footer>
+</nb-card>

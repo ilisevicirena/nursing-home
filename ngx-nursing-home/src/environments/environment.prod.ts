@@ -12,11 +12,11 @@ const notificationAllType = {
 };
 
 const Brand = {
-  Name: "Dom za stare i nemoćne osobe ILIŠEVIĆ",
-  Address: "Bana Jelačića BB",
+  Name: "Ngx nursing home",
+  Address: "Adresa 123",
   City: "Donja Mahala",
   PostalCode: "76 274",
-  Email: "dom.ilisevic@gmail.com",
+  Email: "sample@nursinghome.com",
   Telephone: "031 741 255",
   Mobile: "+387 63 255 255",
 };

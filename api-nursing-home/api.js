@@ -2,6 +2,8 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = require("./swagger");
 const { authenticateToken } = require("./routes/token"); // Import functions from token.js
 const { sendTestEmail } = require("./routes/email");
 
@@ -15,7 +17,7 @@ app.use(
     limit: "50mb",
     extended: true,
     parameterLimit: 50000,
-  })
+  }),
 );
 
 // Require route handlers
@@ -56,6 +58,14 @@ const furniture = require("./routes/furniture");
 const generalSettings = require("./routes/general-settings");
 const users = require("./routes/users");
 const myProfile = require("./routes/my-profile");
+const personAllergens = require("./routes/person-allergens");
+const personMedications = require("./routes/person-medications");
+const personFunctionalStatus = require("./routes/person-functional-status");
+const personDietaryRestrictions = require("./routes/person-dietary-restrictions");
+const personInsurance = require("./routes/person-insurance");
+
+// Swagger UI
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Register the authentication route without global middleware
 app.use("/authentication", authentication);
@@ -99,6 +109,11 @@ router.use("/furniture-statuses", furnitureStatuses);
 router.use("/furniture", furniture);
 router.use("/general-settings", generalSettings);
 router.use("/users", users);
+router.use("/person-allergens", personAllergens);
+router.use("/person-medications", personMedications);
+router.use("/person-functional-status", personFunctionalStatus);
+router.use("/person-dietary-restrictions", personDietaryRestrictions);
+router.use("/person-insurance", personInsurance);
 router.use("/my-profile", myProfile);
 
 // Start the server

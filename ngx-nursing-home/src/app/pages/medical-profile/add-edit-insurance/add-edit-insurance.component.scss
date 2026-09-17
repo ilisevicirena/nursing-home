@@ -1,0 +1,12 @@
+@import "../../../@theme/styles/themes.scss";
+
+@include nb-install-component {
+  .insurance-dialog {
+    width: 560px;
+    max-width: 95vw;
+
+    nb-card-body {
+      max-height: 75vh;
+    }
+  }
+}

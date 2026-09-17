@@ -1,0 +1,124 @@
+@import "../../../@theme/styles/themes.scss";
+
+.medication-dialog {
+  width: 640px;
+  max-width: 95vw;
+
+  nb-card-body {
+    max-height: 75vh;
+  }
+}
+
+.search-toggle-btn {
+  font-size: 11px;
+}
+
+.schedule-icon {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  nb-icon { font-size: 1.1rem; }
+
+  &.morning { background-color: rgba(255, 152, 0, 0.15); nb-icon { color: #ff9800; } }
+  &.noon    { background-color: rgba(230, 184, 0, 0.15); nb-icon { color: #e6b800; } }
+  &.evening { background-color: rgba(255, 87, 34, 0.15); nb-icon { color: #ff5722; } }
+  &.night   { background-color: rgba(63, 81, 181, 0.15); nb-icon { color: #3f51b5; } }
+}
+
+@include nb-install-component {
+  .rx-search-panel {
+    border: 1px solid nb-theme(color-primary-300);
+    border-radius: 0.5rem;
+    padding: 0.75rem;
+    background-color: nb-theme(background-basic-color-2);
+
+    .rx-search-header {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 12px;
+      font-weight: 700;
+      color: nb-theme(color-primary-600);
+      margin-bottom: 0.5rem;
+    }
+
+    .rx-results {
+      max-height: 200px;
+      overflow-y: auto;
+      margin-top: 0.4rem;
+    }
+
+    .rx-result-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.4rem 0.5rem;
+      cursor: pointer;
+      border-radius: 0.25rem;
+      font-size: 13px;
+      gap: 0.5rem;
+      transition: background-color 0.15s;
+
+      &:hover {
+        background-color: nb-theme(color-primary-100);
+        color: nb-theme(color-primary-700);
+      }
+
+      .rx-name {
+        flex: 1;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+
+    .rx-no-results,
+    .rx-hint {
+      font-size: 12px;
+      text-align: center;
+      padding: 0.5rem 0;
+      color: nb-theme(text-hint-color);
+    }
+  }
+
+  .schedule-section {
+    border-radius: 0.5rem;
+    padding: 0.75rem;
+    background-color: nb-theme(background-basic-color-2);
+    border: 1px solid nb-theme(background-basic-color-3);
+
+    .schedule-title {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 13px;
+      font-weight: 700;
+      color: nb-theme(color-primary-600);
+      margin-bottom: 0.75rem;
+    }
+
+    .schedule-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.75rem;
+    }
+
+    .schedule-slot {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .schedule-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-align: center;
+      color: nb-theme(text-hint-color);
+    }
+  }
+}

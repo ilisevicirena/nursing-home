@@ -1,0 +1,166 @@
+<nb-card class="basic-tile-card insurance-dialog overflow-hidden">
+  <nb-card-header class="d-flex">
+    <div class="col">
+      {{ item?.Id ? getString("editInsurance") : getString("addInsurance") }}
+    </div>
+    <div class="w-max">
+      <button nbButton ghost shape="round" (click)="close(false)">
+        <nb-icon pack="eva" icon="close-outline"></nb-icon>
+      </button>
+    </div>
+  </nb-card-header>
+
+  <nb-card-body class="overflow-auto">
+    <form class="form" #insuranceForm="ngForm">
+
+      <!-- Insurance Company + Status -->
+      <div class="row mb-2">
+        <div class="col-md-8">
+          <div class="form-group">
+            <div class="label">{{ getString("insuranceCompany") }}</div>
+            <div class="value">
+              <input
+                nbInput
+                fullWidth
+                [placeholder]="getString('insuranceCompany')"
+                name="insuranceCompany"
+                [(ngModel)]="item.InsuranceCompany"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <div class="label">{{ getString("insuranceStatus") }}</div>
+            <div class="value">
+              <nb-select
+                fullWidth
+                [placeholder]="getString('select')"
+                name="status"
+                [(ngModel)]="item.Status"
+              >
+                <nb-option *ngFor="let o of statusOptions" [value]="o.value">
+                  {{ getString(o.key) }}
+                </nb-option>
+              </nb-select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Policy Number + Group Number -->
+      <div class="row mb-2">
+        <div class="col-md-6">
+          <div class="form-group">
+            <div class="label">{{ getString("policyNumber") }}</div>
+            <div class="value">
+              <input
+                nbInput
+                fullWidth
+                [placeholder]="getString('policyNumber')"
+                name="policyNumber"
+                [(ngModel)]="item.PolicyNumber"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <div class="label">{{ getString("groupNumber") }}</div>
+            <div class="value">
+              <input
+                nbInput
+                fullWidth
+                [placeholder]="getString('groupNumber')"
+                name="groupNumber"
+                [(ngModel)]="item.GroupNumber"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Coverage Type -->
+      <div class="row mb-2">
+        <div class="col-md-12">
+          <div class="form-group">
+            <div class="label">{{ getString("coverageType") }}</div>
+            <div class="value">
+              <input
+                nbInput
+                fullWidth
+                [placeholder]="getString('coverageType')"
+                name="coverageType"
+                [(ngModel)]="item.CoverageType"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Coverage Start / End Date -->
+      <div class="row mb-1">
+        <div class="col-md-6">
+          <div class="form-group">
+            <div class="label">{{ getString("coverageStartDate") }}</div>
+            <div class="value">
+              <nb-form-field>
+                <input
+                  nbInput
+                  fullWidth
+                  #startInput
+                  [placeholder]="getString('coverageStartDate')"
+                  name="coverageStartDate"
+                  [(ngModel)]="item.CoverageStartDate"
+                  [nbDatepicker]="startPicker"
+                />
+                <nb-datepicker #startPicker></nb-datepicker>
+                <button nbButton nbSuffix ghost (click)="startInput.focus()">
+                  <nb-icon pack="eva" icon="calendar-outline" status="primary"></nb-icon>
+                </button>
+              </nb-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <div class="label">{{ getString("coverageEndDate") }}</div>
+            <div class="value">
+              <nb-form-field>
+                <input
+                  nbInput
+                  fullWidth
+                  #endInput
+                  [placeholder]="getString('coverageEndDate')"
+                  name="coverageEndDate"
+                  [(ngModel)]="item.CoverageEndDate"
+                  [nbDatepicker]="endPicker"
+                />
+                <nb-datepicker #endPicker></nb-datepicker>
+                <button nbButton nbSuffix ghost (click)="endInput.focus()">
+                  <nb-icon pack="eva" icon="calendar-outline" status="primary"></nb-icon>
+                </button>
+              </nb-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </form>
+  </nb-card-body>
+
+  <nb-card-footer class="d-flex justify-content-end">
+    <button nbButton ghost shape="round" size="small" class="me-2" (click)="close(false)">
+      {{ getString("cancel") }}
+    </button>
+    <button
+      nbButton
+      status="primary"
+      shape="round"
+      size="small"
+      (click)="save()"
+    >
+      {{ getString("save") }}
+    </button>
+  </nb-card-footer>
+</nb-card>

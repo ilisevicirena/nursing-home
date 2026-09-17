@@ -106,6 +106,12 @@ import { UserProfileComponent } from "./my-profile/user-profile/user-profile.com
 import { AdminProfileComponent } from "./my-profile/admin-profile/admin-profile.component";
 import { EditContactInfoComponent } from "./my-profile/user-profile/edit-contact-info/edit-contact-info.component";
 import { ExistingUserComponent } from './contacts-grid/existing-user/existing-user.component';
+import { MedicalProfileComponent } from './medical-profile/medical-profile.component';
+import { AddEditAllergenComponent } from './medical-profile/add-edit-allergen/add-edit-allergen.component';
+import { AddEditMedicationComponent } from './medical-profile/add-edit-medication/add-edit-medication.component';
+import { AddEditFunctionalStatusComponent } from './medical-profile/add-edit-functional-status/add-edit-functional-status.component';
+import { AddEditDietaryRestrictionComponent } from './medical-profile/add-edit-dietary-restriction/add-edit-dietary-restriction.component';
+import { AddEditInsuranceComponent } from './medical-profile/add-edit-insurance/add-edit-insurance.component';
 
 @NgModule({
   imports: [
@@ -220,6 +226,12 @@ import { ExistingUserComponent } from './contacts-grid/existing-user/existing-us
     AdminProfileComponent,
     EditContactInfoComponent,
     ExistingUserComponent,
+    MedicalProfileComponent,
+    AddEditAllergenComponent,
+    AddEditMedicationComponent,
+    AddEditFunctionalStatusComponent,
+    AddEditDietaryRestrictionComponent,
+    AddEditInsuranceComponent,
   ],
 })
 export class PagesModule {}

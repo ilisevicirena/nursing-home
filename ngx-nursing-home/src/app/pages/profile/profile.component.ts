@@ -7,7 +7,6 @@ import {
 } from "../../services/rest/persons.service";
 import { getString } from "../../resources/strings";
 import { NgForm } from "@angular/forms";
-import { ToastrService } from "../../services/toastr.service";
 import {
   GridCheckboxColumn,
   GridColumn,
@@ -19,7 +18,9 @@ import { DialogService } from "../../shared/dialog/dialog.service";
 import { RoomsService } from "../../services/rest/rooms.service";
 import { AccommodationPdfRequestService } from "../../services/rest/accommodation-pdf-request.service";
 import { GeneralSettingsService } from "../../services/rest/general-settings.service";
+import { ToastrService } from "../../services/toastr.service";
 import { AuthService, UserRole } from "../../services/auth.service";
+import { PersonAllergensService } from "../../services/rest/person-allergens.service";
 
 @Component({
   selector: "sample-profile",
@@ -36,12 +37,12 @@ export class ProfileComponent implements OnInit, OnDestroy {
     private _router: Router,
     private _requestGeneratorService: AccommodationPdfRequestService,
     private _generalSettingsService: GeneralSettingsService,
-    private _authService: AuthService
+    private _authService: AuthService,
+    private _personAllergensService: PersonAllergensService,
   ) {}
 
   private _subs: Subscription[] = [];
   private _allowDifferentGenders: boolean = false;
-  private _persons: number[] = this._authService.getUserPersons();
 
   public personId: number = 0;
   public getString = getString;
@@ -61,6 +62,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
   public gridSelectedItem: [] = [];
   public years: number = 0;
   public spentTime: number = 0;
+  public highSeverityAllergens: any[] = [];
+
   public roomHistoryColumns: GridColumn[] = [
     new GridColumn().Title(getString("id")).DataField("RoomId").Filter(false),
     new GridColumn()
@@ -92,6 +95,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     { option: "basicData", string: "basicData", active: true },
     { option: "categories", string: "categories", active: false },
     { option: "contacts", string: "contacts", active: false },
+    { option: "medical", string: "medicalProfile", active: false },
     { option: "stayData", string: "stayData", active: false },
     { option: "dormatoryData", string: "dormatoryData", active: false },
     { option: "documents", string: "documents", active: false },
@@ -144,9 +148,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.loading = true;
     this._subs.push(
       this._activatedRoute.paramMap.subscribe((params) => {
-        this.personId = params.get("id") as any;
+        this.personId = Number(params.get("id"));
         this.getPersonDetails(this.personId);
-      })
+      }),
     );
 
     if (this.checkUserHasPermission()) {
@@ -156,7 +160,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
           string: "services",
           active: false,
         },
-        { option: "calculation", string: "personCalculation", active: false }
+        { option: "calculation", string: "personCalculation", active: false },
       );
     }
   }
@@ -196,8 +200,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
         },
         (err) => {
           console.error(err);
-        }
-      )
+        },
+      ),
     );
   }
 
@@ -210,20 +214,20 @@ export class ProfileComponent implements OnInit, OnDestroy {
           this._toastrService.showToast(
             "success",
             getString("saveSuccess"),
-            ""
+            "",
           );
         },
         (err) => {
           console.error(err);
           this._toastrService.showToast("danger", getString("saveError"), "");
-        }
-      )
+        },
+      ),
     );
   }
 
   public cancelEditBasicData(form: NgForm): void {
     this.newPersonData = getIPersonFromJSON(
-      JSON.parse(JSON.stringify(this.person))
+      JSON.parse(JSON.stringify(this.person)),
     );
     form.form.markAsPristine();
   }
@@ -236,15 +240,24 @@ export class ProfileComponent implements OnInit, OnDestroy {
           this.years = this.calculateAge(this.person.BirthDate);
           this.spentTime = this.calculateMonthsFrom(
             this.person.StartDate,
-            this.person.Active ? new Date() : this.person.EndDate
+            this.person.Active ? new Date() : this.person.EndDate,
           );
           this.newPersonData = getIPersonFromJSON(data[0]);
           this.passedTime = this.calculatePassedTime();
           this.getHistory();
+          this.loadHighSeverityAllergens(personId);
         }
 
         this.loading = false;
-      })
+      }),
+    );
+  }
+
+  private loadHighSeverityAllergens(personId: number): void {
+    this._subs.push(
+      this._personAllergensService.getDataForPerson(personId).subscribe((data: any[]) => {
+        this.highSeverityAllergens = data.filter(a => a.IsActive && a.SeverityColor === 'danger');
+      }),
     );
   }
 
@@ -256,7 +269,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
       endDate = this.person.EndDate.toLocaleDateString();
     const rezDialog = await this._dialogService.openYesNoDialog(
       getString("areYouSure"),
-      getString("questionDeactivatePerson") + endDate
+      getString("questionDeactivatePerson") + endDate,
     );
 
     if (rezDialog) {
@@ -268,7 +281,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
               this._toastrService.showToast(
                 "success",
                 getString("saveSuccess"),
-                ""
+                "",
               );
               this.getPersonDetails(this.personId);
             },
@@ -276,11 +289,11 @@ export class ProfileComponent implements OnInit, OnDestroy {
               this._toastrService.showToast(
                 "danger",
                 getString("saveError"),
-                ""
+                "",
               );
               console.error(err);
-            }
-          )
+            },
+          ),
       );
     }
   }
@@ -308,7 +321,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
     days = Math.floor(
       (today.getTime() - new Date(yy + years, mm + months - 1, dd).getTime()) /
-        (24 * 60 * 60 * 1000)
+        (24 * 60 * 60 * 1000),
     );
 
     return { years: years, months: months, days: days };
@@ -320,7 +333,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this._subs.push(
       this._roomsService.getAvaliableRooms().subscribe((data) => {
         this.rooms = data;
-      })
+      }),
     );
   }
 
@@ -328,7 +341,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this._subs.push(
       this._roomsService.getData().subscribe((data) => {
         this.allRooms = data;
-      })
+      }),
     );
   }
 
@@ -340,7 +353,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
           if (data) {
             this._allowDifferentGenders = parseInt(data.Value) == 1;
           }
-        })
+        }),
     );
   }
 
@@ -365,14 +378,14 @@ export class ProfileComponent implements OnInit, OnDestroy {
           this._toastrService.showToast(
             "success",
             getString("saveSuccess"),
-            ""
+            "",
           );
           this.gridSelectedItem = [];
           this.selectedRoom = { FloorName: "", IsValid: true };
           this.getPersonDetails(this.personId);
           this.getAvaliableRooms();
           this.getRoomHistory();
-        })
+        }),
     );
   }
 
@@ -384,7 +397,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this._subs.push(
       this._personsService.getRoomHistory(this.personId).subscribe((data) => {
         this.roomHistory = data;
-      })
+      }),
     );
   }
 
@@ -401,9 +414,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
             "info",
             "",
             getString("requestGenerated"),
-            "info-outline"
+            "info-outline",
           );
-        })
+        }),
     );
   }
 
@@ -416,7 +429,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
     const today = new Date();
     let age = today.getFullYear() - birth.getFullYear();
 
-    // Check if birthday has occurred this year
     if (
       today < new Date(today.getFullYear(), birth.getMonth(), birth.getDate())
     ) {
@@ -426,14 +438,13 @@ export class ProfileComponent implements OnInit, OnDestroy {
     return age;
   }
 
-  private calculateMonthsFrom(date: string, endDate): number {
+  private calculateMonthsFrom(date: string, endDate: any): number {
     const startDate = new Date(date);
     const today = new Date(endDate);
 
     let months = (today.getFullYear() - startDate.getFullYear()) * 12;
     months += today.getMonth() - startDate.getMonth();
 
-    // Adjust if the day of the month hasn't occurred yet
     if (today.getDate() < startDate.getDate()) {
       months--;
     }
@@ -448,12 +459,12 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   public checkPersonIsUserPerson(): boolean {
     return (
-      this._authService.getUserPersons().find((x) => x == this.personId) != null
+      this._authService.getUserPersons()?.find((x) => x == this.personId) !=
+      null
     );
   }
 
   public checkUserCanViewPage(): boolean {
-    // admins, nurses, caregivers and doctors can see all persons
     if (
       this._authService.checkUserHasRole(UserRole.ADMIN) ||
       this._authService.checkUserHasRole(UserRole.NURSE) ||
@@ -461,7 +472,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
       this._authService.checkUserHasRole(UserRole.DOCTOR)
     )
       return true;
-    // user can only see profile of his persons on care
     else if (
       this._authService.checkUserHasRole(UserRole.USER) &&
       this.checkPersonIsUserPerson()

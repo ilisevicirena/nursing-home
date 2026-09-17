@@ -23,7 +23,7 @@ var errors = [
   new CodeMessage(2003, "Error while updating room in database."),
   new CodeMessage(
     2004,
-    "Error while fetching avaliable rooms from database. Invalid number of datasets."
+    "Error while fetching avaliable rooms from database. Invalid number of datasets.",
   ),
 
   // contact error codes starting with 3000
@@ -41,32 +41,32 @@ var errors = [
   new CodeMessage(5003, "Error while inserting new document in database."),
   new CodeMessage(
     5004,
-    "Error while fetching documents for person from database."
+    "Error while fetching documents for person from database.",
   ),
   new CodeMessage(
     5005,
-    "Error while fetching documents for person by document type from database."
+    "Error while fetching documents for person by document type from database.",
   ),
   new CodeMessage(5006, "Error while fetching document types from database."),
   new CodeMessage(
     5007,
-    "Error while fetching document types for person from database."
+    "Error while fetching document types for person from database.",
   ),
   new CodeMessage(5008, "Error while deleting document from storage folder."),
   new CodeMessage(5009, "Error while deleting document in database."),
   new CodeMessage(
     5010,
-    "Error while fetching document for delete in database."
+    "Error while fetching document for delete in database.",
   ),
 
   // notification error codes starting with 6000
   new CodeMessage(
     6001,
-    "Error while marking notification as read in database."
+    "Error while marking notification as read in database.",
   ),
   new CodeMessage(
     6002,
-    "Error while marking ass notifications as read in database."
+    "Error while marking ass notifications as read in database.",
   ),
 
   // packages error codes starting with 7000
@@ -82,13 +82,83 @@ var errors = [
   new CodeMessage(8005, "Error while changeing person room in database."),
   new CodeMessage(
     8006,
-    "Error while deactivating room for person in database."
+    "Error while deactivating room for person in database.",
   ),
 
   // services management error codes starting with 9000
   new CodeMessage(
     9001,
-    "Error while fetching packages and services for person from database. Fetching resulted with invalid number of datasets"
+    "Error while fetching packages and services for person from database. Fetching resulted with invalid number of datasets",
+  ),
+
+  // allergen error codes starting with 9010
+  new CodeMessage(
+    9011,
+    "Error while inserting new allergen for person into database.",
+  ),
+  new CodeMessage(
+    9012,
+    "Error while updating allergen for person in database.",
+  ),
+  new CodeMessage(
+    9013,
+    "Error while deleting allergen for person from database.",
+  ),
+
+  // medication error codes starting with 9020
+  new CodeMessage(
+    9021,
+    "Error while inserting new medication for person into database.",
+  ),
+  new CodeMessage(
+    9022,
+    "Error while updating medication for person in database.",
+  ),
+  new CodeMessage(
+    9023,
+    "Error while deleting medication for person from database.",
+  ),
+
+  // functional status error codes starting with 9030
+  new CodeMessage(
+    9031,
+    "Error while inserting new functional status for person into database.",
+  ),
+  new CodeMessage(
+    9032,
+    "Error while updating functional status for person in database.",
+  ),
+  new CodeMessage(
+    9033,
+    "Error while deleting functional status for person from database.",
+  ),
+
+  // dietary restriction error codes starting with 9040
+  new CodeMessage(
+    9041,
+    "Error while inserting new dietary restriction for person into database.",
+  ),
+  new CodeMessage(
+    9042,
+    "Error while updating dietary restriction for person in database.",
+  ),
+  new CodeMessage(
+    9043,
+    "Error while deleting dietary restriction for person from database.",
+  ),
+
+  // insurance data error codes starting with 9050
+  new CodeMessage(
+    9051,
+    "Error while inserting new insurance data for person into database.",
+  ),
+  new CodeMessage(
+    9052,
+    "Error while updating insurance data for person in database.",
+  ),
+  new CodeMessage(
+    9053,
+    "Error while deleting insurance data for person from database.",
   ),
 
   // services error codes starting with 10000
@@ -99,19 +169,19 @@ var errors = [
   // note error codes starting with 20000
   new CodeMessage(
     20001,
-    "Error while fetching notes for person from database. Fetching resulted with invalid number of datasets."
+    "Error while fetching notes for person from database. Fetching resulted with invalid number of datasets.",
   ),
   new CodeMessage(
     20002,
-    "Error while while inserting new tag for note into database."
+    "Error while while inserting new tag for note into database.",
   ),
   new CodeMessage(
     20003,
-    "Error while deleting document from note in database."
+    "Error while deleting document from note in database.",
   ),
   new CodeMessage(
     20004,
-    "Error while inserting document for note into database."
+    "Error while inserting document for note into database.",
   ),
   new CodeMessage(20005, "Error while inserting new note into database."),
   new CodeMessage(20006, "Error while updateing note in database."),
@@ -129,36 +199,36 @@ var errors = [
   // calculation error codes starting with 50000
   new CodeMessage(
     50001,
-    "Error while marking calculation as paid in database."
+    "Error while marking calculation as paid in database.",
   ),
   new CodeMessage(
     50002,
-    "Error while insertnig calculation real price in database."
+    "Error while insertnig calculation real price in database.",
   ),
   new CodeMessage(50003, "Error while cancelling calculation in database."),
   new CodeMessage(
     50004,
-    "Error while fetching calculation details from database. Invalid number of datasets."
+    "Error while fetching calculation details from database. Invalid number of datasets.",
   ),
   new CodeMessage(
     50005,
-    "Error while inserting new calculation into database."
+    "Error while inserting new calculation into database.",
   ),
   new CodeMessage(
     50006,
-    "Error while fetching calculation summary from database. Invalid number of datasets."
+    "Error while fetching calculation summary from database. Invalid number of datasets.",
   ),
 
   // summary error codes starting with 60000
   new CodeMessage(
     60001,
-    "Error while fetching dashboard summary from database. Invalid number of datasets."
+    "Error while fetching dashboard summary from database. Invalid number of datasets.",
   ),
 
   // accomodation pdf request error codes starting with 70000
   new CodeMessage(
     70001,
-    "Error while fetching dashboard summary from database. Invalid number of datasets."
+    "Error while fetching dashboard summary from database. Invalid number of datasets.",
   ),
 
   // cities error codes starting with 80000
@@ -169,25 +239,25 @@ var errors = [
   // doctor visits error codes starting with 90000
   new CodeMessage(
     90001,
-    "Error while fetching doctors and nurses from database. Invalid number of datasets."
+    "Error while fetching doctors and nurses from database. Invalid number of datasets.",
   ),
   new CodeMessage(
     90002,
-    "Error while fetching doctor visit summary from database. Invalid number of datasets."
+    "Error while fetching doctor visit summary from database. Invalid number of datasets.",
   ),
   new CodeMessage(
     90003,
-    "Error while iserting new doctor visit into database."
+    "Error while iserting new doctor visit into database.",
   ),
   new CodeMessage(90004, "Error while deleting doctor visit from database."),
   new CodeMessage(90005, "Error while completing doctor visit in database."),
   new CodeMessage(
     90006,
-    "Error while fetching doctors visit tour details from database. Invalid number of datasets."
+    "Error while fetching doctors visit tour details from database. Invalid number of datasets.",
   ),
   new CodeMessage(
     90007,
-    "Error while inserting doctor visit for person in database."
+    "Error while inserting doctor visit for person in database.",
   ),
 
   // employees error codes starting with 100000
@@ -196,39 +266,39 @@ var errors = [
   new CodeMessage(100003, "Error while updating employee in database."),
   new CodeMessage(
     100004,
-    "Error while changing status of employee in database."
+    "Error while changing status of employee in database.",
   ),
 
   // employment types codes starting with 110000
   new CodeMessage(
     110001,
-    "Error while iserting new employment type into database."
+    "Error while iserting new employment type into database.",
   ),
   new CodeMessage(
     110002,
-    "Error while deleting employment type from database."
+    "Error while deleting employment type from database.",
   ),
   new CodeMessage(110003, "Error while updating employment type in database."),
 
   // health conditions codes starting with 120000
   new CodeMessage(
     120001,
-    "Error while iserting new health condition into database."
+    "Error while iserting new health condition into database.",
   ),
   new CodeMessage(
     120002,
-    "Error while deleting health condition from database."
+    "Error while deleting health condition from database.",
   ),
   new CodeMessage(120003, "Error while updating health condition in database."),
   new CodeMessage(
     120004,
-    "Error while inserting health condition for person in database."
+    "Error while inserting health condition for person in database.",
   ),
 
   // job positions error codes starting with 130000
   new CodeMessage(
     130001,
-    "Error while iserting new job position into database."
+    "Error while iserting new job position into database.",
   ),
   new CodeMessage(130002, "Error while deleting job position from database."),
   new CodeMessage(130003, "Error while updating job position in database."),
@@ -236,7 +306,7 @@ var errors = [
   // municipalities error codes starting with 140000
   new CodeMessage(
     140001,
-    "Error while iserting new municipality into database."
+    "Error while iserting new municipality into database.",
   ),
   new CodeMessage(140002, "Error while deleting municipality from database."),
   new CodeMessage(140003, "Error while updating municipality in database."),
@@ -244,18 +314,18 @@ var errors = [
   // person categories codes starting with 150000
   new CodeMessage(
     150001,
-    "Error while iserting new person category for person into database."
+    "Error while iserting new person category for person into database.",
   ),
   new CodeMessage(
     150002,
-    "Error while deleting person category from database."
+    "Error while deleting person category from database.",
   ),
   new CodeMessage(150003, "Error while updating person category in database."),
 
   // qualifications error codes starting with 160000
   new CodeMessage(
     160001,
-    "Error while iserting qualification position into database."
+    "Error while iserting qualification position into database.",
   ),
   new CodeMessage(160002, "Error while deleting qualification from database."),
   new CodeMessage(160003, "Error while updating qualification in database."),
@@ -269,12 +339,12 @@ var errors = [
   // furniture statuses error codes starting with 180000
   new CodeMessage(
     180001,
-    "Error while inserting new furniture status into database."
+    "Error while inserting new furniture status into database.",
   ),
   new CodeMessage(180002, "Error while updating furniture status in database."),
   new CodeMessage(
     180003,
-    "Error while deleting furniture status from database."
+    "Error while deleting furniture status from database.",
   ),
 
   // furniture error codes starting with 190000
@@ -285,7 +355,7 @@ var errors = [
   new CodeMessage(190005, "Error while deleting furniture status in database."),
   new CodeMessage(
     190006,
-    "Error while removing furniture from room in database."
+    "Error while removing furniture from room in database.",
   ),
 ];
 
