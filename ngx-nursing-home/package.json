@@ -1,7 +1,8 @@
 {
   "name": "ngx-nursing-home",
   "version": "1.0.0",
-  "license": "MIT",
+  "license": "UNLICENSED",
+  "private": true,
   "repository": {
     "type": "git",
     "url": ""

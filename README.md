@@ -1,0 +1,233 @@
+<!-- Screenshots referenced below live in docs/screenshots/. See docs/screenshots/README.md for the shot-list. -->
+
+<h1 align="center">🏡 Nursing Home Management System</h1>
+
+<p align="center">
+  A full-stack management platform for residential care homes — residents, medical records,
+  billing, scheduling and facility management in one system.
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Angular-15-DD0031?logo=angular&logoColor=white" alt="Angular 15">
+  <img src="https://img.shields.io/badge/Node.js-Express-339933?logo=node.js&logoColor=white" alt="Node/Express">
+  <img src="https://img.shields.io/badge/SQL_Server-2019+-CC2927?logo=microsoftsqlserver&logoColor=white" alt="SQL Server">
+  <img src="https://img.shields.io/badge/Auth-JWT-000000?logo=jsonwebtokens&logoColor=white" alt="JWT">
+  <img src="https://img.shields.io/badge/API_docs-Swagger-85EA2D?logo=swagger&logoColor=black" alt="Swagger">
+  <img src="https://img.shields.io/badge/license-All%20Rights%20Reserved-red" alt="License">
+</p>
+
+<p align="center">
+  <a href="#-live-demo"><b>Live Demo</b></a> ·
+  <a href="#-screenshots">Screenshots</a> ·
+  <a href="#-features">Features</a> ·
+  <a href="#-architecture">Architecture</a> ·
+  <a href="#-tech-stack">Tech Stack</a> ·
+  <a href="#-getting-started">Getting Started</a>
+</p>
+
+---
+
+## 📖 Overview
+
+**Nursing Home** is a production-style web application that digitises the day-to-day operations of a
+residential care facility. It brings together the things a care home actually runs on — resident
+records and medical profiles, medication and allergy tracking, doctor-visit tours, billing with
+discounts and packages, a shared calendar, and room/furniture management — behind a single
+role-secured interface.
+
+It is built as three cleanly separated tiers (Angular SPA · Node/Express REST API · SQL Server),
+plus a reusable in-house Angular component library.
+
+> **Author:** Irena Ilišević · Full-stack developer
+> Designed, built and maintained solo — frontend, backend, data model and reusable component library.
+
+---
+
+## 🚀 Live Demo
+
+> **[▶ Open the live demo](#)** &nbsp;·&nbsp; *(link goes here once deployed)*
+
+The public demo runs in **Demo Mode**: a self-contained build of the Angular frontend that serves
+realistic seeded data from an in-memory store — **no backend or database required**. It is always-on,
+loads instantly, and lets you click through the whole UI. No real personal data is used.
+
+<p align="center">
+  <!-- Replace with an animated GIF of a click-through (see docs/screenshots/README.md) -->
+  <img src="docs/screenshots/demo.gif" alt="Application walkthrough" width="820">
+</p>
+
+**Demo credentials:** any email / password (Demo Mode accepts all logins).
+
+---
+
+## 📸 Screenshots
+
+<p align="center">
+  <img src="docs/screenshots/dashboard.png" alt="Dashboard" width="820"><br>
+  <em>Dashboard — occupancy, key metrics and quick actions</em>
+</p>
+
+<table>
+  <tr>
+    <td width="50%"><img src="docs/screenshots/residents.png" alt="Residents"><br><em>Resident directory &amp; profiles</em></td>
+    <td width="50%"><img src="docs/screenshots/medical-profile.png" alt="Medical profile"><br><em>Medical profile — medications &amp; allergies</em></td>
+  </tr>
+  <tr>
+    <td width="50%"><img src="docs/screenshots/calculation.png" alt="Billing"><br><em>Billing — calculations, discounts &amp; packages</em></td>
+    <td width="50%"><img src="docs/screenshots/calendar.png" alt="Calendar"><br><em>Calendar &amp; doctor-visit scheduling</em></td>
+  </tr>
+</table>
+
+---
+
+## ✨ Features
+
+### 🧑‍🦳 Residents & medical care
+- Resident directory with full personal & contact records
+- Medical profile per resident — diagnoses, functional status, insurance
+- **Medication management** with dosing schedules
+- **Allergy tracking** with allergen catalogue and severity levels
+- Dietary requirements & accommodation types
+- Care notes and audit trail
+
+### 🩺 Clinical scheduling
+- **Doctor-visit tours** — plan rounds, assign employees and residents
+- Shared **calendar** with typed events
+- Visit history per resident
+
+### 💶 Billing & documents
+- **Calculations** (invoices) with line items, statuses and history
+- Discounts, service packages and package relations
+- **PDF generation** — printable invoices and filled document templates
+- Document repository
+
+### 🏢 Facility & staff
+- **Room & accommodation management**, furniture inventory and statuses
+- Employee directory and profiles with role-based access
+- Cities / municipalities / contacts master data
+
+### 🔐 Platform
+- **JWT authentication** with bcrypt-hashed passwords and password-reset by email
+- **Swagger / OpenAPI** documentation for every endpoint
+- Advanced search, notifications and configurable dashboards
+- Structured logging (entity/type/log tables)
+- Internationalisation-ready (`@angular/localize`)
+
+---
+
+## 🏗 Architecture
+
+```mermaid
+flowchart LR
+    U[User / Browser] -->|HTTPS| FE
+
+    subgraph FE[ngx-nursing-home · Angular 15 SPA]
+      NB[Nebular / ngx-admin UI]
+      DI[Demo Interceptor · optional]
+      LIB[ngx-libs shared-components]
+    end
+
+    FE -->|REST · JWT| API
+
+    subgraph API[api-nursing-home · Node + Express]
+      AUTH[JWT auth · bcrypt]
+      ROUTES[Route controllers]
+      PDF[PDF generation · pdf-lib / pdftk]
+      MAIL[Email · nodemailer]
+      SWG[Swagger UI]
+    end
+
+    API -->|mssql| DB[(SQL Server · ~50 tables)]
+```
+
+**Repository layout**
+
+```
+nursing-home/
+├─ ngx-nursing-home/   # Angular 15 frontend (Nebular UI, ~40 feature modules)
+├─ api-nursing-home/   # Node/Express REST API (JWT, Swagger, PDF, email)
+├─ db-nursing-home/    # SQL Server schema + seed scripts + build tooling
+└─ docs/               # Screenshots, diagrams, docs
+```
+
+The reusable UI library lives in a separate repository, [`ngx-libs`](https://github.com/ilisevicirena),
+and is consumed by the frontend as a package.
+
+---
+
+## 🛠 Tech Stack
+
+| Layer | Technologies |
+|---|---|
+| **Frontend** | Angular 15, TypeScript, Nebular / ngx-admin, RxJS, Bootstrap 5, SCSS |
+| **Data viz** | ECharts, Chart.js, Leaflet maps |
+| **Documents** | jsPDF, html-to-pdfmake, html2canvas |
+| **Backend** | Node.js, Express, JWT, bcryptjs, Swagger (OpenAPI) |
+| **Documents (server)** | pdf-lib, pdftk, fill-pdf, nodemailer |
+| **Database** | Microsoft SQL Server (`mssql`), ~50 relational tables |
+| **Tooling** | Angular CLI, ESLint, Stylelint, Compodoc, PowerShell/Python DB build scripts |
+
+---
+
+## ⚡ Getting Started
+
+### Prerequisites
+- Node.js 18+ and npm
+- SQL Server (local, Docker, or Azure SQL)
+
+### 1. Database
+```powershell
+cd db-nursing-home
+cp db.config.example.ps1 db.config.ps1   # set your server/credentials
+./create-full-db-en.ps1                   # creates schema + seed data
+```
+
+### 2. API
+```bash
+cd api-nursing-home
+cp .env.example .env                      # set DB connection, JWT secret, SMTP
+npm install
+npm start                                 # http://localhost:3000  ·  /api-docs for Swagger
+```
+
+### 3. Frontend
+```bash
+cd ngx-nursing-home
+npm install
+npm start                                 # http://localhost:4200
+```
+
+### Demo Mode (no backend/DB)
+```bash
+cd ngx-nursing-home
+npm run start:demo                         # serves the app with seeded in-memory data
+```
+Demo Mode is toggled by a build flag and an HTTP interceptor (`src/app/@core/demo/`), so it is fully
+isolated from the real application code.
+
+---
+
+## 🗺 Roadmap / Ideas
+
+- [ ] One-command local run via `docker-compose` (frontend + API + SQL Server)
+- [ ] Deploy always-on Demo Mode build to free static hosting
+- [ ] GitHub Actions CI (build · lint · test)
+- [ ] Unit/e2e test coverage badge
+- [ ] Upgrade Angular 15 → latest LTS
+
+---
+
+## 📜 License & Usage
+
+**© 2026 Irena Ilišević. All rights reserved.**
+
+This repository is published **as a portfolio showcase**. You may view it to evaluate the author's
+work. You may **not** copy, reuse, redistribute, or create derivative works from any part of it,
+in whole or in part, without prior written permission. See [LICENSE](LICENSE).
+
+---
+
+## 👤 Contact
+
+**Irena Ilišević** — Full-stack developer
+📧 irena.ilisevic@it4.ltd · [GitHub](https://github.com/ilisevicirena)
