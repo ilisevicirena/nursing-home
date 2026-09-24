@@ -1,5 +1,5 @@
 import { Component, Input, ViewChild } from '@angular/core';
-import * as pdfMake from 'pdfmake/build/pdfMake';
+import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import htmlToPdfmake from 'html-to-pdfmake';
 import { PDF_PAGE_CONF } from '../../../resources/defaults';
