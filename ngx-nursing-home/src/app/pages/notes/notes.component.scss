@@ -1,6 +1,12 @@
 @import "../../@theme/styles/themes.scss";
 
 @include nb-install-component {
+  ::ng-deep .user-picture.initials {
+    background-color: nb-theme(color-primary-transparent-200);
+    color: nb-theme(color-primary-500);
+    font-weight: 600;
+  }
+
   .notes-container {
     height: calc(100% - 90px);
     overflow: auto;

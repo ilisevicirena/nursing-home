@@ -44,6 +44,23 @@
 }
 
 @include nb-install-component {
+  .header-icon {
+    font-size: 1.8rem;
+    color: nb-theme(color-primary-500);
+  }
+
+  .visit-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: nb-theme(text-basic-color);
+    line-height: 1.2;
+  }
+
+  .visit-subtitle {
+    font-size: 0.75rem;
+    color: nb-theme(text-hint-color);
+  }
+
   .echart {
     width: 250px;
     height: 275px;
@@ -61,7 +78,7 @@
   }
 
   nb-accordion-item-header {
-    border: 1px solid nb-theme(color-basic-400);
+    border: 1px solid nb-theme(border-basic-color-3);
   }
 
   .col-md-6.fw-600 {
@@ -74,7 +91,7 @@
     font-size: 20px;
     font-weight: 600;
     margin-bottom: 1rem;
-    color: nb-theme(color-basic-600);
+    color: nb-theme(text-basic-color);
   }
 
   .grey-card.profile {
@@ -82,7 +99,7 @@
       height: 50px;
       width: 50px;
       border-radius: 50%;
-      background-color: nb-theme(color-basic-400);
+      background-color: nb-theme(background-basic-color-4);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -123,7 +140,7 @@
     }
 
     .tab.active {
-      border-right-color: nb-theme(color-basic-400);
+      border-right-color: nb-theme(color-primary-transparent-500);
       i {
         color: nb-theme(color-primary-500);
       }

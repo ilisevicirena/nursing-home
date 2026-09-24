@@ -11,7 +11,7 @@
       />
     </a>
   </div>
-  <div class="search-container col">
+  <div class="search-container col" *ngIf="canSearchPersons">
     <div class="d-flex justify-content-center align-items-center">
       <nb-form-field style="width: 30%">
         <nb-icon
@@ -34,7 +34,21 @@
       </nb-form-field>
     </div>
   </div>
-  <div class="w-max d-flex justify-content-end">
+  <div class="w-max d-flex justify-content-end align-items-center ms-auto">
+    <button
+      nbButton
+      ghost
+      shape="round"
+      class="me-2"
+      [nbTooltip]="currentTheme === 'dark' ? 'Light mode' : 'Dark mode'"
+      (click)="toggleTheme()"
+    >
+      <nb-icon
+        pack="eva"
+        [icon]="currentTheme === 'dark' ? 'sun-outline' : 'moon-outline'"
+        class="m-0"
+      ></nb-icon>
+    </button>
     <button
       nbButton
       ghost

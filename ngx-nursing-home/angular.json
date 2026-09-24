@@ -95,7 +95,7 @@
               "budgets": [
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "6kb"
+                  "maximumWarning": "8kb"
                 }
               ],
               "optimization": true,
@@ -116,7 +116,7 @@
               "budgets": [
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "6kb"
+                  "maximumWarning": "8kb"
                 }
               ],
               "optimization": true,

@@ -1,0 +1,152 @@
+<nb-card class="audit-card">
+  <nb-card-header>
+    <div class="d-flex flex-wrap align-items-center gap-2">
+      <div class="me-auto d-flex align-items-center gap-2">
+        <nb-icon pack="eva" icon="shield-outline" class="header-icon"></nb-icon>
+        <div>
+          <div class="audit-title">Audit Log</div>
+          <div class="audit-subtitle">Who changed what, and when</div>
+        </div>
+      </div>
+      <button nbButton ghost size="small" shape="round" status="basic" (click)="clearFilters()">
+        <nb-icon pack="eva" icon="close-outline"></nb-icon> Clear
+      </button>
+    </div>
+  </nb-card-header>
+
+  <nb-card-body [nbSpinner]="loading" nbSpinnerStatus="primary">
+    <!-- tab toggle -->
+    <div class="tab-toggle">
+      <button [class.active]="tab === 'changes'" (click)="setTab('changes')">
+        <nb-icon pack="eva" icon="edit-outline"></nb-icon> Entity changes
+      </button>
+      <button [class.active]="tab === 'activity'" (click)="setTab('activity')">
+        <nb-icon pack="eva" icon="person-done-outline"></nb-icon> User activity
+      </button>
+    </div>
+
+    <!-- filter bar -->
+    <div class="filter-bar">
+      <nb-select *ngIf="tab === 'changes'" placeholder="Entity" size="small"
+        [(selected)]="entityFilter" (selectedChange)="onFilterChange()">
+        <nb-option *ngFor="let e of entities" [value]="e.value">{{ e.label }}</nb-option>
+      </nb-select>
+
+      <nb-select *ngIf="tab === 'changes'" placeholder="Action" size="small"
+        [(selected)]="actionFilter" (selectedChange)="onFilterChange()">
+        <nb-option *ngFor="let a of actions" [value]="a.value">{{ a.label }}</nb-option>
+      </nb-select>
+
+      <input nbInput fieldSize="small" placeholder="From" [nbDatepicker]="dpFrom"
+        [(ngModel)]="dateFrom" (ngModelChange)="onFilterChange()" class="date-input" />
+      <nb-datepicker #dpFrom></nb-datepicker>
+
+      <input nbInput fieldSize="small" placeholder="To" [nbDatepicker]="dpTo"
+        [(ngModel)]="dateTo" (ngModelChange)="onFilterChange()" class="date-input" />
+      <nb-datepicker #dpTo></nb-datepicker>
+
+      <nb-form-field class="search-field">
+        <nb-icon nbPrefix pack="eva" icon="search-outline"></nb-icon>
+        <input nbInput fieldSize="small" fullWidth shape="round"
+          [placeholder]="tab === 'changes' ? 'Search record or user' : 'Search activity or user'"
+          [(ngModel)]="searchTerm" (keyup.enter)="onFilterChange()" />
+      </nb-form-field>
+      <button nbButton size="small" shape="round" status="primary" (click)="load()">
+        <nb-icon pack="eva" icon="funnel-outline"></nb-icon> Apply
+      </button>
+    </div>
+
+    <!-- summary strip (entity changes only) -->
+    <div class="summary-strip" *ngIf="tab === 'changes'">
+      <span class="chip total">{{ entries.length }} entries</span>
+      <span class="chip success"><nb-icon pack="eva" icon="plus-circle-outline"></nb-icon> {{ countBy('INSERT') }} created</span>
+      <span class="chip info"><nb-icon pack="eva" icon="edit-2-outline"></nb-icon> {{ countBy('UPDATE') }} updated</span>
+      <span class="chip danger"><nb-icon pack="eva" icon="trash-2-outline"></nb-icon> {{ countBy('DELETE') }} deleted</span>
+    </div>
+
+    <!-- ENTITY CHANGES table -->
+    <div class="table-wrap" *ngIf="tab === 'changes' && entries.length > 0">
+      <table class="audit-table">
+        <thead>
+          <tr>
+            <th class="when-col">When</th>
+            <th>Entity</th>
+            <th>Action</th>
+            <th>Record</th>
+            <th>By</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let e of pagedEntries">
+            <td class="when-col">
+              <div class="when-date">{{ e.CreationDate | date : "dd.MM.yyyy." }}</div>
+              <div class="when-time">{{ e.CreationDate | date : "HH:mm" }}</div>
+            </td>
+            <td>
+              <span class="entity-cell">
+                <nb-icon pack="eva" [icon]="entityIcon(e.Entity)"></nb-icon>
+                {{ entityLabel(e.Entity) }}
+              </span>
+            </td>
+            <td>
+              <nb-badge class="action-badge" [text]="actionLabel(e.ActionCode)" [status]="actionStatus(e.ActionCode)"></nb-badge>
+            </td>
+            <td>
+              <span class="record-label">{{ e.RecordLabel || "—" }}</span>
+              <span class="record-key">#{{ e.KeyId }}</span>
+            </td>
+            <td>
+              <span class="user-cell" *ngIf="e.UserName; else noUser">
+                <nb-icon pack="eva" icon="person-outline"></nb-icon> {{ e.UserName }}
+              </span>
+              <ng-template #noUser><span class="record-key">system</span></ng-template>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- USER ACTIVITY table -->
+    <div class="table-wrap" *ngIf="tab === 'activity' && activityEntries.length > 0">
+      <table class="audit-table">
+        <thead>
+          <tr>
+            <th class="when-col">When</th>
+            <th>User</th>
+            <th>Activity</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let a of pagedEntries">
+            <td class="when-col">
+              <div class="when-date">{{ a.Timestamp | date : "dd.MM.yyyy." }}</div>
+              <div class="when-time">{{ a.Timestamp | date : "HH:mm" }}</div>
+            </td>
+            <td>
+              <span class="user-cell">
+                <nb-icon pack="eva" icon="person-outline"></nb-icon> {{ a.UserName || "—" }}
+              </span>
+            </td>
+            <td><span class="activity-type">{{ a.ActivityType }}</span></td>
+            <td class="desc-cell">{{ a.Description }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <sample-no-data *ngIf="list.length === 0"></sample-no-data>
+
+    <!-- pager -->
+    <div class="pager" *ngIf="list.length > 0">
+      <span class="pager-info">{{ rangeStart }}–{{ rangeEnd }} of {{ list.length }}</span>
+      <button nbButton ghost size="small" shape="round" [disabled]="page === 0" (click)="prevPage()">
+        <nb-icon pack="eva" icon="chevron-left-outline"></nb-icon>
+      </button>
+      <span class="pager-page">{{ page + 1 }} / {{ totalPages }}</span>
+      <button nbButton ghost size="small" shape="round" [disabled]="page >= totalPages - 1" (click)="nextPage()">
+        <nb-icon pack="eva" icon="chevron-right-outline"></nb-icon>
+      </button>
+    </div>
+  </nb-card-body>
+</nb-card>

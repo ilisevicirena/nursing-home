@@ -17,7 +17,7 @@ BEGIN
 
 	DELETE FROM dbo.Person WHERE Id = @Id;
 
-	exec dbo.writeLog @LogType='DELETE', @LogEntity='Person', @Key= @Id;
+	exec dbo.writeLog @LogType='DELETE', @LogEntity='Person', @Key= @Id, @UserId=@ActingUserId;
 
 	EXEC dbo.logUserActivity 'DELETE_PERSON', 'Person deleted', @ActingUserId;
 END

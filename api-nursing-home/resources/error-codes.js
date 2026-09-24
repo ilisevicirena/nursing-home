@@ -357,6 +357,23 @@ var errors = [
     190006,
     "Error while removing furniture from room in database.",
   ),
+
+  // person assessment (care plan) error codes starting with 200000
+  new CodeMessage(
+    200001,
+    "Error while inserting new person assessment into database.",
+  ),
+  new CodeMessage(200002, "Error while updating person assessment in database."),
+  new CodeMessage(
+    200003,
+    "Error while deleting person assessment from database.",
+  ),
+
+  // medication administration error codes starting with 210000
+  new CodeMessage(
+    210001,
+    "Error while recording medication administration in database.",
+  ),
 ];
 
 module.exports = {

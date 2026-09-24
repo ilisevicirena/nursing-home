@@ -1,0 +1,200 @@
+<nb-card class="basic-tile-card skinny">
+  <nb-card-header class="d-flex">
+    <div class="col">
+      {{ item.Id ? "Edit assessment" : "New assessment" }}
+    </div>
+    <div class="w-max">
+      <button nbButton ghost shape="round" (click)="close(false)">
+        <nb-icon pack="eva" icon="close-outline"></nb-icon>
+      </button>
+    </div>
+  </nb-card-header>
+  <nb-card-body class="pt-0">
+    <div class="row m-0 mt-3">
+      <div class="col-md-12 p-0">
+        <div class="form-group">
+          <div class="label">
+            Assessment date
+            <nb-icon
+              pack="eva"
+              icon="alert-circle-outline"
+              status="danger"
+              size="small"
+              class="ms-1 required-mark"
+              [nbTooltip]="getString('required')"
+            ></nb-icon>
+          </div>
+          <div class="value">
+            <nb-form-field>
+              <input
+                nbInput
+                fullWidth
+                autocomplete="off"
+                placeholder="Date"
+                [nbDatepicker]="dp"
+                [(ngModel)]="item.AssessmentDate"
+              />
+              <nb-datepicker #dp></nb-datepicker>
+              <button nbButton nbSuffix ghost>
+                <nb-icon
+                  pack="eva"
+                  icon="calendar-outline"
+                  status="primary"
+                ></nb-icon>
+              </button>
+            </nb-form-field>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row m-0 mt-3">
+      <div class="col-md-6 ps-0">
+        <div class="form-group">
+          <div class="label">
+            Braden score (6–23)
+            <nb-icon
+              pack="eva"
+              icon="alert-circle-outline"
+              status="danger"
+              size="small"
+              class="ms-1 required-mark"
+              [nbTooltip]="getString('required')"
+            ></nb-icon>
+          </div>
+          <div class="value">
+            <input
+              nbInput
+              fullWidth
+              type="number"
+              min="6"
+              max="23"
+              [(ngModel)]="item.BradenScore"
+            />
+          </div>
+          <div class="hint">Lower = higher pressure-injury risk</div>
+        </div>
+      </div>
+
+      <div class="col-md-6 pe-0">
+        <div class="form-group">
+          <div class="label">
+            Fall risk (0–100)
+            <nb-icon
+              pack="eva"
+              icon="alert-circle-outline"
+              status="danger"
+              size="small"
+              class="ms-1 required-mark"
+              [nbTooltip]="getString('required')"
+            ></nb-icon>
+          </div>
+          <div class="value">
+            <input
+              nbInput
+              fullWidth
+              type="number"
+              min="0"
+              max="100"
+              [(ngModel)]="item.FallRiskScore"
+            />
+          </div>
+          <div class="hint">Higher = higher fall risk</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row m-0 mt-3">
+      <div class="col-md-6 ps-0">
+        <div class="form-group">
+          <div class="label">
+            Mobility (0–100)
+            <nb-icon
+              pack="eva"
+              icon="alert-circle-outline"
+              status="danger"
+              size="small"
+              class="ms-1 required-mark"
+              [nbTooltip]="getString('required')"
+            ></nb-icon>
+          </div>
+          <div class="value">
+            <input
+              nbInput
+              fullWidth
+              type="number"
+              min="0"
+              max="100"
+              [(ngModel)]="item.MobilityScore"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 pe-0">
+        <div class="form-group">
+          <div class="label">
+            Nutrition (0–100)
+            <nb-icon
+              pack="eva"
+              icon="alert-circle-outline"
+              status="danger"
+              size="small"
+              class="ms-1 required-mark"
+              [nbTooltip]="getString('required')"
+            ></nb-icon>
+          </div>
+          <div class="value">
+            <input
+              nbInput
+              fullWidth
+              type="number"
+              min="0"
+              max="100"
+              [(ngModel)]="item.NutritionScore"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row m-0 mt-3">
+      <div class="col-md-12 p-0">
+        <div class="form-group">
+          <div class="label">Notes</div>
+          <div class="value">
+            <textarea
+              nbInput
+              fullWidth
+              rows="3"
+              placeholder="Assessment notes"
+              [(ngModel)]="item.Notes"
+            ></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nb-card-body>
+  <nb-card-footer class="d-flex justify-content-end">
+    <button
+      nbButton
+      ghost
+      status="basic"
+      size="small"
+      shape="round"
+      class="me-2"
+      (click)="close(false)"
+    >
+      {{ getString("cancel") }}
+    </button>
+    <button
+      nbButton
+      status="primary"
+      size="small"
+      shape="round"
+      (click)="save()"
+    >
+      {{ getString("save") }}
+    </button>
+  </nb-card-footer>
+</nb-card>

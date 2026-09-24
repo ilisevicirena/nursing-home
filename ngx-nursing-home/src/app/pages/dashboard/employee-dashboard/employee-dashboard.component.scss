@@ -91,7 +91,7 @@
       margin-left: 0.5rem;
       padding: 0;
       border-radius: 1rem;
-      background-color: nb-theme(color-basic-400);
+      background-color: nb-theme(background-basic-color-4);
     }
 
     .circle {
@@ -140,18 +140,20 @@
   .first-box {
     display: flex;
     flex-flow: column;
-    overflow: auto;
+    overflow: hidden;
     height: 100%;
     gap: 0.5rem;
 
     .first-row {
-      flex: 0 1 17.5rem;
-      max-height: 17.5rem;
+      flex: 0 0 17.5rem;
     }
 
-    .second-row {
-      flex: 1 1 17rem;
-      max-height: 17rem;
+    .persons-container {
+      flex: 1 1 auto;
+      min-height: 0;
+      overflow-y: auto;
+      overflow-x: hidden;
+      align-content: flex-start;
     }
   }
 

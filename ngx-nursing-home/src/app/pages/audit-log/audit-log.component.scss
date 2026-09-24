@@ -1,0 +1,201 @@
+@import "../../@theme/styles/themes";
+
+@include nb-install-component() {
+  .audit-card {
+    height: 100%;
+    margin: 0;
+  }
+
+  .header-icon {
+    font-size: 1.8rem;
+    color: nb-theme(color-primary-500);
+  }
+  .audit-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: nb-theme(text-basic-color);
+    line-height: 1.2;
+  }
+  .audit-subtitle {
+    font-size: 0.75rem;
+    color: nb-theme(text-hint-color);
+  }
+
+  .tab-toggle {
+    display: inline-flex;
+    gap: 0.25rem;
+    background-color: nb-theme(background-basic-color-2);
+    border-radius: 0.5rem;
+    padding: 0.2rem;
+    margin-bottom: 0.75rem;
+
+    button {
+      border: none;
+      background: transparent;
+      border-radius: 0.4rem;
+      padding: 0.3rem 0.85rem;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: nb-theme(text-hint-color);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      nb-icon {
+        font-size: 1rem;
+      }
+      &.active {
+        background-color: nb-theme(background-basic-color-1);
+        color: nb-theme(color-primary-600);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+      }
+    }
+  }
+
+  .filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+
+    .date-input {
+      max-width: 8.5rem;
+    }
+    .search-field {
+      flex: 1;
+      min-width: 10rem;
+    }
+  }
+
+  .summary-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.2rem 0.6rem;
+      border-radius: 1rem;
+      background-color: nb-theme(background-basic-color-2);
+      color: nb-theme(text-hint-color);
+
+      nb-icon {
+        font-size: 0.9rem;
+      }
+      &.total {
+        color: nb-theme(text-basic-color);
+      }
+      &.success {
+        color: nb-theme(color-success-600);
+      }
+      &.info {
+        color: nb-theme(color-info-600);
+      }
+      &.danger {
+        color: nb-theme(color-danger-600);
+      }
+    }
+  }
+
+  .table-wrap {
+    overflow-x: auto;
+  }
+  .audit-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+
+    th,
+    td {
+      border-bottom: 1px solid nb-theme(divider-color);
+      padding: 0.5rem 0.65rem;
+      text-align: left;
+      vertical-align: middle;
+    }
+    thead th {
+      background-color: nb-theme(background-basic-color-2);
+      color: nb-theme(text-hint-color);
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      white-space: nowrap;
+    }
+
+    .when-col {
+      white-space: nowrap;
+    }
+    .when-date {
+      font-weight: 600;
+    }
+    .when-time {
+      font-size: 0.72rem;
+      color: nb-theme(text-hint-color);
+    }
+
+    .entity-cell {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      nb-icon {
+        font-size: 1rem;
+        color: nb-theme(text-hint-color);
+      }
+    }
+
+    .action-badge {
+      position: static;
+    }
+
+    .record-label {
+      font-weight: 600;
+    }
+    .record-key {
+      margin-left: 0.4rem;
+      font-size: 0.72rem;
+      color: nb-theme(text-hint-color);
+    }
+
+    .user-cell {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      nb-icon {
+        font-size: 0.95rem;
+        color: nb-theme(text-hint-color);
+      }
+    }
+    .activity-type {
+      font-family: monospace;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: nb-theme(color-primary-600);
+    }
+    .desc-cell {
+      color: nb-theme(text-hint-color);
+      max-width: 26rem;
+    }
+  }
+
+  .pager {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+    font-size: 0.8rem;
+    color: nb-theme(text-hint-color);
+
+    .pager-page {
+      min-width: 3.5rem;
+      text-align: center;
+      font-weight: 600;
+      color: nb-theme(text-basic-color);
+    }
+  }
+}

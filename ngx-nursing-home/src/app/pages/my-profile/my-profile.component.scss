@@ -3,7 +3,7 @@
 @include nb-install-component() {
   .status-card {
     border-radius: 1rem;
-    background-color: nb-theme(color-basic-default);
+    background-color: nb-theme(background-basic-color-2);
     padding: 1rem;
     display: flex;
     gap: 1rem;

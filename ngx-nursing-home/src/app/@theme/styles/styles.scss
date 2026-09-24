@@ -76,7 +76,7 @@
   .grey-card {
     border-radius: 0.5rem;
     padding: 1rem;
-    background-color: nb-theme(color-basic-200);
+    background-color: nb-theme(background-basic-color-2);
   }
 
   .semi-primary-card {
@@ -348,6 +348,22 @@ nb-tag {
 
 .card-round {
   border-radius: 1rem;
+}
+
+// reusable page/card header (icon + title + subtitle), matching the clinical pages
+.page-header-icon {
+  font-size: 1.8rem;
+  color: nb-theme(color-primary-500);
+}
+.page-header-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: nb-theme(text-basic-color);
+  line-height: 1.2;
+}
+.page-header-subtitle {
+  font-size: 0.75rem;
+  color: nb-theme(text-hint-color);
 }
 
 .basic-tile-card {

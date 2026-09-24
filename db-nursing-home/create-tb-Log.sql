@@ -3,6 +3,7 @@ CREATE TABLE [dbo].[Log](
 	[LogTypeId] [int] NOT NULL,
 	[LogEntityId] [int] NOT NULL,
 	[KeyId] [int] NOT NULL,
+	[UserId] [char](36) NULL,
 	[CreationDate] [datetime] NOT NULL,
  CONSTRAINT [PK_Log] PRIMARY KEY CLUSTERED 
 (

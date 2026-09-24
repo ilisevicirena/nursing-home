@@ -149,7 +149,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this._subs.push(
       this._activatedRoute.paramMap.subscribe((params) => {
         this.personId = Number(params.get("id"));
-        this.getPersonDetails(this.personId);
+        if (this.checkUserCanViewPage()) this.getPersonDetails(this.personId);
       }),
     );
 

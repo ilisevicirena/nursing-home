@@ -34,7 +34,7 @@ BEGIN
 		LeftPosition=@Left
 	WHERE Id = @Id
 
-		exec dbo.writeLog @LogType='UPDATE', @LogEntity='Room', @Key= @Id;
+		exec dbo.writeLog @LogType='UPDATE', @LogEntity='Room', @Key= @Id, @UserId=@ActingUserId;
 
 	EXEC dbo.logUserActivity 'UPDATE_ROOM', 'Room updated', @ActingUserId;
 END

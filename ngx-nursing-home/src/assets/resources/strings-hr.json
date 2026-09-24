@@ -75,6 +75,7 @@
   { "key": "medicalProfile", "value": "Medicinski profil" },
   { "key": "allergies", "value": "Alergije" },
   { "key": "medications", "value": "Lijekovi" },
+  { "key": "medicalProfile", "value": "Medicinski profil" },
   { "key": "functionalStatus", "value": "Funkcionalni status" },
   { "key": "dietaryRestrictions", "value": "Dijetalna ograničenja" },
   { "key": "insuranceData", "value": "Osiguranje" },
@@ -90,6 +91,7 @@
   { "key": "mobile", "value": "Mobitel" },
   { "key": "noContacts", "value": "Nema spremljenih kontakata!" },
   { "key": "addPerson", "value": "Unos nove osobe" },
+  { "key": "addExistingUser", "value": "Dodaj postojećeg korisnika" },
   { "key": "basicPersonData", "value": "Osnovni podaci o osobi" },
   {
     "key": "basicPersonStepText",
@@ -158,6 +160,10 @@
   { "key": "alreadyAdded", "value": "Stavka je već dodana!" },
   { "key": "servicesManagement", "value": "Upravljanje uslugama" },
   { "key": "servicesSingle", "value": "Pojedinačne usluge" },
+  { "key": "servicesSubtitle", "value": "Upravljanje pojedinačnim uslugama i cijenama" },
+  { "key": "packagesSubtitle", "value": "Upravljanje paketima skrbi i njihovim uslugama" },
+  { "key": "discountsSubtitle", "value": "Upravljanje popustima na ponude" },
+  { "key": "offerSimulationSubtitle", "value": "Izrada i pregled ponude iz paketa i usluga" },
   { "key": "serviceSingle", "value": "Pojedinačna usluga" },
   { "key": "packages", "value": "Paketi usluga" },
   { "key": "discounts", "value": "Popusti" },
@@ -408,6 +414,10 @@
     "key": "activePersonsChartTitle",
     "value": "Broj aktivnih osoba u mjesecu"
   },
+  { "key": "ageDistribution", "value": "Dobna raspodjela" },
+  { "key": "occupancyByFloor", "value": "Popunjenost po katu" },
+  { "key": "residentsByHealthCondition", "value": "Korisnici po zdravstvenom stanju" },
+  { "key": "residents", "value": "Korisnici" },
   { "key": "oldestPerson", "value": "Najstarija osoba" },
   { "key": "longestPerson", "value": "Najduži boravak" },
   { "key": "longestPersonYears", "value": "godina" },
@@ -496,6 +506,8 @@
     "value": "Neiskorišteni dani godišnjeg odmora"
   },
   { "key": "vacation", "value": "Godišnji odmor" },
+  { "key": "myData", "value": "Moji podaci" },
+  { "key": "myDataSubtitle", "value": "Vaši osobni podaci zaposlenika" },
   { "key": "employeeLeave", "value": "Odlazak i deaktivacija" },
   {
     "key": "activeEmployeeDetails",

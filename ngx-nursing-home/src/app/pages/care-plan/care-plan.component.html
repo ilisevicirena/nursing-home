@@ -1,0 +1,108 @@
+<nb-card class="care-card">
+  <nb-card-header>
+    <div class="d-flex flex-wrap align-items-center gap-2">
+      <div class="me-auto d-flex align-items-center gap-2">
+        <nb-icon pack="eva" icon="clipboard-outline" class="header-icon"></nb-icon>
+        <div>
+          <div class="care-title">Care Plan &amp; Assessments</div>
+          <div class="care-subtitle">Periodic risk assessments with history &amp; trends</div>
+        </div>
+      </div>
+
+      <nb-select
+        placeholder="Resident"
+        size="small"
+        [selected]="selectedPersonId"
+        (selectedChange)="onResidentChange($event)"
+      >
+        <nb-option *ngFor="let p of residents" [value]="p.Id">
+          {{ p.FirstName }} {{ p.LastName }}
+        </nb-option>
+      </nb-select>
+
+      <button *ngIf="canEdit()" nbButton status="primary" size="small" shape="round" (click)="openDialog()">
+        <nb-icon pack="eva" icon="plus-outline"></nb-icon> New assessment
+      </button>
+    </div>
+  </nb-card-header>
+
+  <nb-card-body [nbSpinner]="loading" nbSpinnerStatus="primary">
+    <ng-container *ngIf="assessments.length > 0; else nodata">
+      <!-- latest scores -->
+      <div class="score-row d-flex flex-wrap gap-3 mb-3" *ngIf="latest as l">
+        <div class="score-tile">
+          <div class="score-name">Braden</div>
+          <div class="score-value">{{ l.BradenScore }}</div>
+          <nb-badge [text]="bradenBand(l.BradenScore).label" [status]="bradenBand(l.BradenScore).status"></nb-badge>
+        </div>
+        <div class="score-tile">
+          <div class="score-name">Fall risk</div>
+          <div class="score-value">{{ l.FallRiskScore }}</div>
+          <nb-badge [text]="fallBand(l.FallRiskScore).label" [status]="fallBand(l.FallRiskScore).status"></nb-badge>
+        </div>
+        <div class="score-tile">
+          <div class="score-name">Mobility</div>
+          <div class="score-value">{{ l.MobilityScore }}</div>
+          <nb-badge [text]="scoreBand(l.MobilityScore).label" [status]="scoreBand(l.MobilityScore).status"></nb-badge>
+        </div>
+        <div class="score-tile">
+          <div class="score-name">Nutrition</div>
+          <div class="score-value">{{ l.NutritionScore }}</div>
+          <nb-badge [text]="scoreBand(l.NutritionScore).label" [status]="scoreBand(l.NutritionScore).status"></nb-badge>
+        </div>
+      </div>
+
+      <!-- trend chart -->
+      <div class="chart-wrap mb-3">
+        <div class="section-title">Score trends</div>
+        <div echarts [options]="chartOptions" class="trend-chart"></div>
+      </div>
+
+      <!-- history table -->
+      <div class="section-title">Assessment history</div>
+      <div class="table-wrap">
+        <table class="assessment-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Braden</th>
+              <th>Fall risk</th>
+              <th>Mobility</th>
+              <th>Nutrition</th>
+              <th>Notes</th>
+              <th *ngIf="canEdit()"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let a of assessments.slice().reverse()">
+              <td class="nowrap">{{ a.AssessmentDate | date : "dd.MM.yyyy." }}</td>
+              <td>
+                <span class="score">{{ a.BradenScore }}</span>
+                <nb-badge [text]="bradenBand(a.BradenScore).label" [status]="bradenBand(a.BradenScore).status"></nb-badge>
+              </td>
+              <td>
+                <span class="score">{{ a.FallRiskScore }}</span>
+                <nb-badge [text]="fallBand(a.FallRiskScore).label" [status]="fallBand(a.FallRiskScore).status"></nb-badge>
+              </td>
+              <td><span class="score">{{ a.MobilityScore }}</span></td>
+              <td><span class="score">{{ a.NutritionScore }}</span></td>
+              <td class="notes">{{ a.Notes }}</td>
+              <td *ngIf="canEdit()" class="nowrap text-end">
+                <button nbButton ghost size="tiny" shape="round" status="primary" (click)="openDialog(a)">
+                  <nb-icon pack="eva" icon="edit-outline"></nb-icon>
+                </button>
+                <button nbButton ghost size="tiny" shape="round" status="danger" (click)="delete(a)">
+                  <nb-icon pack="eva" icon="trash-2-outline"></nb-icon>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </ng-container>
+
+    <ng-template #nodata>
+      <sample-no-data></sample-no-data>
+    </ng-template>
+  </nb-card-body>
+</nb-card>

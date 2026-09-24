@@ -78,7 +78,7 @@ export class MedicalProfileComponent implements OnInit, OnDestroy {
   public medicationForm: any = {};
   public functionalStatusForm: any = {};
   public activeMedicalView: string = "allergies";
-  public medicationView: 'cards' | 'schedule' = 'cards';
+  public medicationView: 'cards' | 'schedule' = 'schedule';
 
   public medicationViewChange(values: string[]): void {
     if (values.length > 0) this.medicationView = values[0] as 'cards' | 'schedule';

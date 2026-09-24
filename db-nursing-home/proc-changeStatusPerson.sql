@@ -40,7 +40,7 @@ BEGIN
         EndDate = @EndDate
     WHERE Id = @Id;
 
-    EXEC dbo.writeLog @LogType = 'UPDATE', @LogEntity = 'Person', @Key = @Id;
+    EXEC dbo.writeLog @LogType = 'UPDATE', @LogEntity = 'Person', @Key = @Id, @UserId = @ActingUserId;
 
     EXEC dbo.logUserActivity 'CHANGE_STATUS_PERSON', 'Person status changed', @ActingUserId;
 END

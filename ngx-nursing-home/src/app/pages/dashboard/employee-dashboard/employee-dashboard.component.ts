@@ -6,6 +6,7 @@ import { getString } from "../../../resources/strings";
 import { AuthService } from "../../../services/auth.service";
 import { SummaryService } from "../../../services/rest/summary.service";
 import { PersonsService } from "../../../services/rest/persons.service";
+import { NbThemeService } from "@nebular/theme";
 
 @Component({
   selector: "sample-employee-dashboard",
@@ -27,12 +28,14 @@ export class EmployeeDashboardComponent implements OnInit, OnDestroy {
   public personWithLongestLastVisit: any;
 
   private _subs: Subscription[] = [];
+  private _isDark = false;
 
   constructor(
     private _summaryService: SummaryService,
     private _router: Router,
     private _authService: AuthService,
-    private _personsService: PersonsService
+    private _personsService: PersonsService,
+    private _themeService: NbThemeService
   ) {}
 
   ngOnDestroy() {
@@ -42,6 +45,13 @@ export class EmployeeDashboardComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this._isDark = localStorage.getItem("app-theme") === "dark";
+    this._subs.push(
+      this._themeService.onThemeChange().subscribe((t) => {
+        this._isDark = t.name === "dark";
+        if (this.summary?.ActivePersons) this.setUpEcharts();
+      })
+    );
     this.getSummary();
     this.getPersons();
     this.getUserSummary();
@@ -159,12 +169,18 @@ export class EmployeeDashboardComponent implements OnInit, OnDestroy {
   }
 
   private setUpEcharts(): void {
+    const textColor = this._isDark ? "#e8eef0" : "#222b45";
     this.genderPieOptions = {
       legend: {
         top: "bottom",
+        textStyle: { color: textColor },
       },
       tooltip: {
         trigger: "item",
+        confine: true,
+        backgroundColor: this._isDark ? "#1b272d" : "#ffffff",
+        borderColor: this._isDark ? "#32444d" : "#e4e9f2",
+        textStyle: { color: textColor },
         formatter: "{a} <br/>{b} : {c} ({d}%)",
       },
       color: ["#33B9BF", "#10526E"],
@@ -172,8 +188,8 @@ export class EmployeeDashboardComponent implements OnInit, OnDestroy {
         {
           name: getString("genderChartTitle"),
           type: "pie",
-          radius: [50, 100],
-          center: ["50%", "50%"],
+          radius: ["40%", "65%"],
+          center: ["50%", "43%"],
           roseType: "area",
           itemStyle: {
             borderRadius: 8,

@@ -1,0 +1,9 @@
+@import "../../../@theme/styles/themes";
+
+@include nb-install-component() {
+  .hint {
+    font-size: 0.68rem;
+    color: nb-theme(text-hint-color);
+    margin-top: 0.15rem;
+  }
+}

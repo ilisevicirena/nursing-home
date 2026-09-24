@@ -1,0 +1,121 @@
+<nb-card class="mar-card">
+  <nb-card-header>
+    <div class="d-flex flex-wrap align-items-center gap-2">
+      <div class="me-auto d-flex align-items-center gap-2">
+        <nb-icon pack="eva" icon="pantone-outline" class="header-icon"></nb-icon>
+        <div>
+          <div class="mar-title">Medication Administration Record</div>
+          <div class="mar-subtitle">Daily medication schedule &amp; administration check-off</div>
+        </div>
+      </div>
+
+      <nb-select
+        placeholder="Resident"
+        size="small"
+        [selected]="selectedPersonId"
+        (selectedChange)="onResidentChange($event)"
+      >
+        <nb-option *ngFor="let p of residents" [value]="p.Id">
+          {{ p.FirstName }} {{ p.LastName }}
+        </nb-option>
+      </nb-select>
+
+      <div class="date-nav d-flex align-items-center gap-1">
+        <button nbButton ghost size="small" shape="round" (click)="prevDay()">
+          <nb-icon pack="eva" icon="chevron-left-outline"></nb-icon>
+        </button>
+        <span class="date-label">{{ dateLabel() }}</span>
+        <button nbButton ghost size="small" shape="round" (click)="nextDay()">
+          <nb-icon pack="eva" icon="chevron-right-outline"></nb-icon>
+        </button>
+        <button nbButton ghost size="small" shape="round" status="primary" (click)="today()">Today</button>
+      </div>
+
+      <button nbButton status="primary" size="small" shape="round" (click)="print()">
+        <nb-icon pack="eva" icon="printer-outline"></nb-icon> Print sheet
+      </button>
+    </div>
+  </nb-card-header>
+
+  <nb-card-body [nbSpinner]="loading" nbSpinnerStatus="primary">
+    <!-- summary -->
+    <div class="mar-summary d-flex flex-wrap gap-3 mb-3">
+      <div class="stat">
+        <div class="stat-value text-success">{{ counts().given }}</div>
+        <div class="stat-label">Given</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value text-danger">{{ counts().missed }}</div>
+        <div class="stat-label">Missed</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">{{ counts().pending }}</div>
+        <div class="stat-label">Pending</div>
+      </div>
+      <div class="stat adherence">
+        <div class="stat-value text-primary">{{ adherence() }}%</div>
+        <div class="stat-label">Adherence</div>
+      </div>
+    </div>
+
+    <!-- schedule table -->
+    <div class="table-wrap" *ngIf="rows.length > 0; else nodata">
+      <table class="mar-table">
+        <thead>
+          <tr>
+            <th class="med-col">Medication</th>
+            <th *ngFor="let s of slots" class="slot-col">
+              <nb-icon pack="eva" [icon]="s.icon"></nb-icon>
+              <span>{{ s.label }}</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of rows">
+            <td class="med-col">
+              <div class="med-name">{{ row.MedicationName }}</div>
+              <div class="med-dose">{{ row.Dosage }} · {{ row.Route }}</div>
+            </td>
+            <td *ngFor="let s of slots" class="slot-cell">
+              <ng-container *ngIf="slotFor(row, s.key) as slot">
+                <div *ngIf="slot.scheduled; else notScheduled" class="slot-content">
+                  <div class="slot-time">{{ slot.time }} · {{ slot.dose }}</div>
+                  <div class="slot-actions">
+                    <button
+                      class="dose-btn given"
+                      [class.active]="slot.status === 'given'"
+                      [nbTooltip]="'Mark as given'"
+                      (click)="setStatus(row, slot, 'given')"
+                    >
+                      <nb-icon pack="eva" icon="checkmark-outline"></nb-icon>
+                    </button>
+                    <button
+                      class="dose-btn missed"
+                      [class.active]="slot.status === 'missed'"
+                      [nbTooltip]="'Mark as missed'"
+                      (click)="setStatus(row, slot, 'missed')"
+                    >
+                      <nb-icon pack="eva" icon="close-outline"></nb-icon>
+                    </button>
+                  </div>
+                  <nb-badge
+                    class="slot-status"
+                    [text]="slot.status"
+                    [status]="statusColor(slot.status)"
+                  ></nb-badge>
+                </div>
+                <ng-template #notScheduled>
+                  <span class="not-scheduled">—</span>
+                </ng-template>
+              </ng-container>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <ng-template #nodata>
+      <sample-no-data></sample-no-data>
+    </ng-template>
+  </nb-card-body>
+</nb-card>

@@ -16,48 +16,31 @@
     <div class="col p-0 h-100">
       <nb-card class="h-100">
         <nb-card-header>
-          <div class="row">
-            <div class="col p-0 d-flex align-items-center">
-              <div class="row">
-                <div class="widow-header-template w-100">
-                  <div class="d-flex title-container-person">
-                    <nb-icon
-                      pack="eva"
-                      icon="calendar-outline"
-                      status="basic"
-                    ></nb-icon>
-                    <div class="window-title-person fw-600">
-                      {{ tour?.Date | date : "dd.MM.yyyy." }}
-                    </div>
-                  </div>
-                  <div class="d-flex title-container-person-details">
-                    <div class="window-title-person">
-                      {{ getString("doctorVisitShort") }}
-                    </div>
-                    <div class="title-id">#{{ id }}</div>
-                  </div>
-                  <div class="d-flex mt-2">
-                    <ngx-tag
-                      color="success"
-                      [text]="getString('completed')"
-                      [appearance]="'filled'"
-                      shape="round"
-                      [isEvaIcon]="true"
-                      icon="checkmark-circle-outline"
-                    ></ngx-tag>
-                  </div>
-                </div>
+          <div class="d-flex flex-wrap align-items-center gap-2">
+            <nb-icon
+              pack="eva"
+              icon="calendar-outline"
+              class="header-icon"
+            ></nb-icon>
+            <div class="me-auto">
+              <div class="visit-title">
+                {{ getString("doctorVisitShort") }} #{{ id }}
+              </div>
+              <div class="visit-subtitle">
+                {{ tour?.Date | date : "dd.MM.yyyy." }}
               </div>
             </div>
-            <div class="col p-0 d-flex justify-content-end">
-              <button nbButton ghost shape="round" style="height: max-content">
-                <nb-icon
-                  pack="eva"
-                  icon="close-outline"
-                  (click)="close(false)"
-                ></nb-icon>
-              </button>
-            </div>
+            <ngx-tag
+              color="success"
+              [text]="getString('completed')"
+              [appearance]="'filled'"
+              shape="round"
+              [isEvaIcon]="true"
+              icon="checkmark-circle-outline"
+            ></ngx-tag>
+            <button nbButton ghost shape="round" (click)="close(false)">
+              <nb-icon pack="eva" icon="close-outline"></nb-icon>
+            </button>
           </div>
         </nb-card-header>
         <nb-card-body [ngClass]="selectedTab == 3 ? 'p-0' : ''">
@@ -125,6 +108,7 @@
                   </div>
                   <div class="w-100 d-flex justify-content-center">
                     <button
+                      *ngIf="isAdmin"
                       nbButton
                       ghost
                       shape="round"
@@ -167,6 +151,7 @@
                   </div>
                   <div class="w-100 d-flex justify-content-center">
                     <button
+                      *ngIf="isAdmin"
                       nbButton
                       ghost
                       shape="round"
@@ -362,6 +347,7 @@
                             class="col-md-4 p-0 d-flex justify-content-end align-items-center"
                           >
                             <button
+                              *ngIf="isAdmin"
                               nbButton
                               ghost
                               shape="round"

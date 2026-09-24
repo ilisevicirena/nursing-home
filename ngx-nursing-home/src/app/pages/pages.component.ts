@@ -54,7 +54,11 @@ export class PagesComponent {
       this.menu = USER_MENU_ITEMS;
     else if (this.authService.checkUserHasRole(UserRole.ADMIN))
       this.menu = ADMIN_MENU_ITEMS;
-    else if (this.authService.checkUserHasRole(UserRole.NURSE))
+    else if (
+      this.authService.checkUserHasRole(UserRole.NURSE) ||
+      this.authService.checkUserHasRole(UserRole.DOCTOR) ||
+      this.authService.checkUserHasRole(UserRole.CAREGIVER)
+    )
       this.menu = NURSE_MENU_ITEMS;
     else this.menu = MENU_ITEMS;
   }

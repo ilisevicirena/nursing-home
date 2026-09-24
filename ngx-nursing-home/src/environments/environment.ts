@@ -41,6 +41,7 @@ export const environment = {
   sidebarConfig: SidebarStates.COMPACT,
   configFile: "assets/config/config.json",
   translationFile: "assets/resources/strings-hr.json",
+  locale: "hr",
   notificationAllType: notificationAllType,
   brand: Brand,
   colors: Colors,

@@ -222,6 +222,15 @@ router.post("/deactivateRoomPerson", async (request, response) => {
 router.get("/personDetails", async (request, response) => {
   try {
     const pool = await db;
+    const access = await pool
+      .request()
+      .input("UserId", request.user.userId)
+      .input("PersonId", request.query.id)
+      .execute("canUserViewPerson");
+    if (!access.recordset[0] || !access.recordset[0].CanView) {
+      response.status(403).send("Forbidden");
+      return;
+    }
     const result = await pool
       .request()
       .input("id", request.query.id)
@@ -236,6 +245,15 @@ router.get("/personDetails", async (request, response) => {
 router.get("/personDetailed", async (request, response) => {
   try {
     const pool = await db;
+    const access = await pool
+      .request()
+      .input("UserId", request.user.userId)
+      .input("PersonId", request.query.id)
+      .execute("canUserViewPerson");
+    if (!access.recordset[0] || !access.recordset[0].CanView) {
+      response.status(403).send("Forbidden");
+      return;
+    }
     const result = await pool
       .request()
       .input("id", request.query.id)

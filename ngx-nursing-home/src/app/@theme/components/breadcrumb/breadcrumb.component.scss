@@ -1,0 +1,149 @@
+@import '../../styles/themes';
+
+@include nb-install-component() {
+  .ngx-breadcrumb {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.1rem;
+    // No top padding: the column's top padding already provides the gap to the
+    // header. Bottom padding matches the layout side spacing (gap to content).
+    // Negative left margin cancels the first crumb's inner padding so the
+    // breadcrumb text lines up flush with the page content's left edge.
+    padding: 0 0 nb-theme(layout-padding);
+    margin-left: -0.4rem;
+    font-size: 0.85rem;
+    line-height: 1.2;
+
+    .crumb {
+      display: inline-flex;
+      align-items: center;
+      color: nb-theme(text-hint-color);
+      text-decoration: none;
+      padding: 0.15rem 0.4rem;
+      border-radius: 0.25rem;
+      transition: color 0.15s ease, background-color 0.15s ease;
+
+      &:hover {
+        color: nb-theme(text-primary-color);
+        background-color: nb-theme(background-basic-color-2);
+      }
+
+      &.active {
+        color: nb-theme(text-basic-color);
+        font-weight: 600;
+      }
+
+      nb-icon {
+        font-size: 1.05rem;
+      }
+    }
+
+    // non-navigable page crumb (ancestor the current role can't open)
+    .crumb-static {
+      cursor: default;
+
+      &:hover {
+        color: nb-theme(text-hint-color);
+        background-color: transparent;
+      }
+    }
+
+    .crumb-home nb-icon {
+      color: nb-theme(text-primary-color);
+    }
+
+    .separator {
+      color: nb-theme(text-hint-color);
+      font-size: 0.9rem;
+    }
+
+    // module crumb: not a link, but reveals its pages on hover/focus
+    .crumb-module {
+      position: relative;
+
+      &.has-menu {
+        cursor: default;
+      }
+
+      .caret {
+        font-size: 0.95rem;
+        margin-left: 0.1rem;
+        transition: transform 0.15s ease;
+      }
+
+      &:hover,
+      &:focus-within {
+        color: nb-theme(text-primary-color);
+        background-color: nb-theme(background-basic-color-2);
+
+        .caret {
+          transform: rotate(-180deg);
+        }
+
+        .crumb-menu {
+          opacity: 1;
+          visibility: visible;
+          transform: translateY(0);
+          pointer-events: auto;
+        }
+      }
+    }
+
+    .crumb-menu {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      z-index: 1000;
+      margin-top: 0.25rem;
+      min-width: 12rem;
+
+      // invisible bridge over the gap between the module label and the menu,
+      // so moving the mouse down onto the menu doesn't drop :hover and hide it
+      &::before {
+        content: "";
+        position: absolute;
+        top: -0.35rem;
+        left: 0;
+        right: 0;
+        height: 0.35rem;
+      }
+      padding: 0.35rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.1rem;
+      background-color: nb-theme(background-basic-color-1);
+      border: 1px solid nb-theme(border-basic-color-3);
+      border-radius: 0.35rem;
+      box-shadow: 0 0.5rem 1.25rem rgba(0, 0, 0, 0.18);
+      // hidden until hover/focus, with a small reveal animation
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-0.25rem);
+      pointer-events: none;
+      transition: opacity 0.15s ease, transform 0.15s ease, visibility 0.15s ease;
+
+      .crumb-menu-item {
+        display: block;
+        padding: 0.4rem 0.6rem;
+        border-radius: 0.25rem;
+        color: nb-theme(text-basic-color);
+        text-decoration: none;
+        white-space: nowrap;
+        font-weight: 400;
+        transition: color 0.15s ease, background-color 0.15s ease;
+
+        &:hover {
+          background-color: nb-theme(background-basic-color-2);
+          color: nb-theme(text-primary-color);
+        }
+
+        &.active {
+          color: nb-theme(text-primary-color);
+          font-weight: 600;
+          background-color: nb-theme(color-primary-transparent-100);
+        }
+      }
+    }
+  }
+}

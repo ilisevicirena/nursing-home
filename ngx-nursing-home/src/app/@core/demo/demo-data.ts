@@ -51,12 +51,12 @@ export const FLOORS = [
 
 // Width/Height/Top/Left drive the room-management layout canvas
 export const ROOMS = [
-  { Id: 1, Name: "P-01", FloorId: 1, FloorName: "Ground floor", Capacity: 2, RoomGenderId: 2, Width: 120, Height: 100, Top: 20, Left: 20 },
-  { Id: 2, Name: "P-02", FloorId: 1, FloorName: "Ground floor", Capacity: 2, RoomGenderId: null, Width: 120, Height: 100, Top: 20, Left: 160 },
-  { Id: 3, Name: "1-01", FloorId: 2, FloorName: "1st floor", Capacity: 3, RoomGenderId: 1, Width: 150, Height: 120, Top: 20, Left: 20 },
-  { Id: 4, Name: "1-02", FloorId: 2, FloorName: "1st floor", Capacity: 2, RoomGenderId: 2, Width: 120, Height: 100, Top: 20, Left: 190 },
-  { Id: 5, Name: "2-01", FloorId: 3, FloorName: "2nd floor", Capacity: 1, RoomGenderId: 1, Width: 100, Height: 90, Top: 20, Left: 20 },
-  { Id: 6, Name: "2-02", FloorId: 3, FloorName: "2nd floor", Capacity: 2, RoomGenderId: null, Width: 120, Height: 100, Top: 20, Left: 140 },
+  { Id: 1, Name: "P-01", FloorId: 1, FloorName: "Ground floor", Capacity: 2, RoomGenderId: 2, Width: 220, Height: 190, Top: 20, Left: 20 },
+  { Id: 2, Name: "P-02", FloorId: 1, FloorName: "Ground floor", Capacity: 2, RoomGenderId: null, Width: 220, Height: 190, Top: 20, Left: 260 },
+  { Id: 3, Name: "1-01", FloorId: 2, FloorName: "1st floor", Capacity: 3, RoomGenderId: 1, Width: 240, Height: 230, Top: 20, Left: 20 },
+  { Id: 4, Name: "1-02", FloorId: 2, FloorName: "1st floor", Capacity: 2, RoomGenderId: 2, Width: 220, Height: 190, Top: 20, Left: 280 },
+  { Id: 5, Name: "2-01", FloorId: 3, FloorName: "2nd floor", Capacity: 1, RoomGenderId: 1, Width: 200, Height: 150, Top: 20, Left: 20 },
+  { Id: 6, Name: "2-02", FloorId: 3, FloorName: "2nd floor", Capacity: 2, RoomGenderId: null, Width: 220, Height: 190, Top: 20, Left: 240 },
 ];
 
 // db: Single/Double/Triple room + Day care (capacity 1/2/3/null)
@@ -153,12 +153,12 @@ export const DOCUMENT_TYPES = [
 ];
 
 export const ROLES = [
-  { Id: 1, Name: "Administrator" },
-  { Id: 2, Name: "Moderator" },
-  { Id: 3, Name: "User" },
-  { Id: 4, Name: "Nurse" },
-  { Id: 5, Name: "Caregiver" },
-  { Id: 8, Name: "Doctor" },
+  { RoleId: 1, RoleName: "Administrator", Description: "Full access to all modules, users and settings." },
+  { RoleId: 2, RoleName: "Moderator", Description: "Manage content and residents; limited settings access." },
+  { RoleId: 3, RoleName: "User", Description: "Basic access to assigned residents and daily tasks." },
+  { RoleId: 4, RoleName: "Nurse", Description: "Clinical care, medications and assessments." },
+  { RoleId: 5, RoleName: "Caregiver", Description: "Daily resident care and activity logging." },
+  { RoleId: 8, RoleName: "Doctor", Description: "Medical examinations, diagnoses and visit records." },
 ];
 
 // db VacationStatus (Name, Color, Icon)
@@ -336,24 +336,50 @@ const NOTE_TEXTS = [
 
 export function notesFor(personId: number) {
   const count = (personId % 3) + 1;
+  const p = PERSONS.find((x) => x.Id === personId);
   const out = [];
   for (let i = 0; i < count; i++) {
     const n = NOTE_TEXTS[(personId + i) % NOTE_TEXTS.length];
+    const date = "2025-0" + ((i % 8) + 1) + "-12";
     out.push({
-      Id: personId * 70 + i, PersonId: personId, Title: n.t, Text: n.x,
-      CreationDate: "2025-0" + ((i % 8) + 1) + "-12", IsFavorite: i === 0, Tags: i === 0 ? [TAGS[3]] : [],
+      Id: personId * 70 + i, PersonId: personId,
+      PersonFirstName: p ? p.FirstName : "", PersonLastName: p ? p.LastName : "",
+      Title: n.t, Text: n.x,
+      CreationDate: date, LastModified: date,
+      IsFavorite: i === 0, Tags: i === 0 ? [TAGS[3]] : [],
     });
   }
   return out;
 }
 
+// medical notes written by the doctor during a visit (doctor-visit details tab)
+const MEDICAL_VISIT_NOTES = [
+  { t: "Routine examination", x: "Blood pressure 130/85 mmHg, pulse regular. Patient stable, no acute complaints. Continue current therapy.", tags: [TAGS[0]] },
+  { t: "Follow-up assessment", x: "Reviewed mobility and joint status. Recommended continued physiotherapy twice weekly. Vitals within normal range.", tags: [TAGS[3]] },
+  { t: "Medication review", x: "Adjusted antihypertensive dosage. Blood glucose to be monitored daily for one week; reassess at next visit.", tags: [TAGS[0]] },
+  { t: "Wound care", x: "Pressure area on the sacrum healing well. Dressing changed, no signs of infection. Reassess in 7 days.", tags: [TAGS[4]] },
+];
+
+export function visitNoteFor(personId: number) {
+  const p = PERSONS.find((x) => x.Id === personId);
+  const n = MEDICAL_VISIT_NOTES[personId % MEDICAL_VISIT_NOTES.length];
+  return {
+    Id: 900000 + personId, PersonId: personId,
+    PersonFirstName: p ? p.FirstName : "", PersonLastName: p ? p.LastName : "",
+    Title: n.t, Text: n.x, Tags: n.tags, Documents: [],
+    CreationDate: isoOn(4, 9), LastModified: isoOn(4, 9),
+  };
+}
+
 // documents per person — each references a real (fictional) PDF for preview
 export function documentsFor(personId: number) {
   const base = personId * 80;
+  const p = PERSONS.find((x) => x.Id === personId);
+  const author = { PersonFirstName: p ? p.FirstName : "", PersonLastName: p ? p.LastName : "" };
   return [
-    { Id: base + 1, PersonId: personId, Name: "Medical report", DocumentTypeId: 1, Extension: "pdf", FileType: "application/pdf", CreationDate: "2024-11-02" },
-    { Id: base + 2, PersonId: personId, Name: "ID card", DocumentTypeId: 2, Extension: "pdf", FileType: "application/pdf", CreationDate: "2022-03-15" },
-    { Id: base + 3, PersonId: personId, Name: "Accommodation contract", DocumentTypeId: 3, Extension: "pdf", FileType: "application/pdf", CreationDate: "2022-03-15" },
+    { Id: base + 1, PersonId: personId, ...author, Name: "Medical report", DocumentTypeId: 1, Extension: "pdf", FileType: "application/pdf", CreationDate: "2024-11-02" },
+    { Id: base + 2, PersonId: personId, ...author, Name: "ID card", DocumentTypeId: 2, Extension: "pdf", FileType: "application/pdf", CreationDate: "2022-03-15" },
+    { Id: base + 3, PersonId: personId, ...author, Name: "Accommodation contract", DocumentTypeId: 3, Extension: "pdf", FileType: "application/pdf", CreationDate: "2022-03-15" },
   ];
 }
 
@@ -365,6 +391,190 @@ export function documentContent(documentId: number) {
   return { document: { Id: documentId, Name: name, Extension: "pdf", FileType: "application/pdf" }, content: pdf };
 }
 
+// ---- Medication Administration Record (MAR): daily per-slot schedule + status ----
+export function marScheduleFor(personId: number, dateStr?: string) {
+  const meds = medicationsFor(personId);
+  const todayStr = isoDate(now());
+  const rel = !dateStr ? 0 : dateStr < todayStr ? -1 : dateStr > todayStr ? 1 : 0; // -1 past / 0 today / 1 future
+  const slotDefs = [
+    { key: "morning", time: "08:00", flag: "MorningDose" },
+    { key: "noon", time: "12:00", flag: "NoonDose" },
+    { key: "evening", time: "18:00", flag: "EveningDose" },
+    { key: "night", time: "22:00", flag: "NightDose" },
+  ];
+  return meds.map((med, mi) => ({
+    Id: med.Id,
+    MedicationName: med.MedicationName,
+    Dosage: med.Dosage,
+    Route: med.Route,
+    slots: slotDefs.map((sd, si) => {
+      const scheduled = String((med as any)[sd.flag] || "0") !== "0";
+      let status: "given" | "missed" | "pending" = "pending";
+      if (scheduled) {
+        if (rel < 0) status = (mi + si) % 5 === 0 ? "missed" : "given";
+        else if (rel === 0) status = si <= 1 ? ((mi + si) % 6 === 0 ? "missed" : "given") : "pending";
+        else status = "pending";
+      }
+      return { slot: sd.key, scheduled, dose: med.Dosage, time: sd.time, status };
+    }),
+  }));
+}
+
+// ---- Care plan: periodic assessments (Braden / fall risk / mobility / nutrition) ----
+const ASSESSMENT_NOTES = [
+  "Initial assessment on admission.",
+  "Stable; continue current care plan.",
+  "Improved mobility after physiotherapy.",
+  "Nutrition plan adjusted with dietitian.",
+  "Reduced fall risk; fewer assistive needs.",
+  "Overall improvement; review in one month.",
+];
+
+export function assessmentsFor(personId: number) {
+  const out = [];
+  const base = now();
+  const off = personId % 5;
+  for (let i = 5; i >= 0; i--) {
+    const d = new Date(base.getFullYear(), base.getMonth() - i, 15);
+    const t = 5 - i; // progression 0..5
+    out.push({
+      Id: 900 + personId * 10 + t,
+      PersonId: personId,
+      AssessmentDate: isoDate(d),
+      BradenScore: Math.min(23, 13 + t + (off % 2)),
+      FallRiskScore: Math.max(15, 55 - t * 5 - off),
+      MobilityScore: Math.min(95, 45 + t * 5 + off * 2),
+      NutritionScore: Math.min(95, 50 + t * 4 + off),
+      Notes: ASSESSMENT_NOTES[t % ASSESSMENT_NOTES.length],
+      AssessorName: t % 2 === 0 ? "Petra Šimić" : "dr. Marko Jurić",
+    });
+  }
+  return out;
+}
+
+// ---- Audit log (Log / LogEntity / LogType) — entity-change history ----
+export function auditLogEntries(query: Record<string, string> = {}) {
+  const pretty: Record<string, string> = {
+    INSERT: "Kreiranje",
+    UPDATE: "Promjena",
+    DELETE: "Brisanje",
+  };
+  const pools = [
+    { entity: "Person", items: PERSONS.map((p) => ({ id: p.Id, label: p.FirstName + " " + p.LastName })) },
+    { entity: "Room", items: ROOMS.map((r) => ({ id: r.Id, label: r.Name })) },
+    { entity: "Floor", items: FLOORS.map((f) => ({ id: f.Id, label: f.Name })) },
+    { entity: "Contact", items: PERSONS.slice(0, 6).map((p) => ({ id: p.Id * 60 + 1, label: "Petar " + p.LastName })) },
+  ];
+  const seq = ["INSERT", "UPDATE", "UPDATE", "DELETE", "UPDATE", "INSERT"];
+  const base = now();
+  let id = 5000;
+  let c = 0;
+  const all: any[] = [];
+  pools.forEach((pool) => {
+    pool.items.forEach((item, i) => {
+      const n = (i % 2) + 1;
+      for (let k = 0; k < n; k++) {
+        const action = seq[c % seq.length];
+        const u = USERS[c % USERS.length];
+        const d = new Date(
+          base.getFullYear(), base.getMonth(), base.getDate() - (c % 30),
+          8 + (c % 10), (c * 7) % 60, 0
+        );
+        all.push({
+          Id: id++,
+          CreationDate: d.toISOString(),
+          Entity: pool.entity,
+          EntityKey: "Id",
+          ActionCode: action,
+          ActionPretty: pretty[action],
+          KeyId: item.id,
+          RecordLabel: item.label,
+          UserId: u.Id,
+          UserName: u.FirstName + " " + u.LastName,
+        });
+        c++;
+      }
+    });
+  });
+
+  let rows = all;
+  if (query["Entity"]) rows = rows.filter((r) => r.Entity === query["Entity"]);
+  if (query["Action"]) rows = rows.filter((r) => r.ActionCode === query["Action"]);
+  if (query["DateFrom"]) {
+    const from = new Date(query["DateFrom"] + "T00:00:00").getTime();
+    rows = rows.filter((r) => new Date(r.CreationDate).getTime() >= from);
+  }
+  if (query["DateTo"]) {
+    const to = new Date(query["DateTo"] + "T23:59:59").getTime();
+    rows = rows.filter((r) => new Date(r.CreationDate).getTime() <= to);
+  }
+  if (query["Search"]) {
+    const s = query["Search"].toLowerCase();
+    rows = rows.filter(
+      (r) => (r.RecordLabel || "").toLowerCase().includes(s) || String(r.KeyId).includes(s)
+    );
+  }
+  return rows.sort(
+    (a, b) => new Date(b.CreationDate).getTime() - new Date(a.CreationDate).getTime()
+  );
+}
+
+// ---- User activity feed (UserActivity table) — who did what, when ----
+export function userActivityEntries(query: Record<string, string> = {}) {
+  const acts = [
+    { type: "INSERT_PERSON", desc: "Person inserted" },
+    { type: "UPDATE_PERSON_DETAILED", desc: "Person details updated" },
+    { type: "CHANGE_STATUS_PERSON", desc: "Person status changed" },
+    { type: "INSERT_ROOM", desc: "Room inserted" },
+    { type: "UPDATE_ROOM", desc: "Room updated" },
+    { type: "CHANGE_ROOM_PERSON", desc: "Resident moved to another room" },
+    { type: "INSERT_PERSON_ASSESSMENT", desc: "Person assessment inserted" },
+    { type: "RECORD_MEDICATION_ADMINISTRATION", desc: "Medication administration recorded" },
+    { type: "INSERT_CALCULATION", desc: "Calculation created" },
+    { type: "LOGIN", desc: "User signed in" },
+  ];
+  const base = now();
+  let id = 8000;
+  const all: any[] = [];
+  for (let i = 0; i < 40; i++) {
+    const u = USERS[i % USERS.length];
+    const a = acts[i % acts.length];
+    const d = new Date(
+      base.getFullYear(), base.getMonth(), base.getDate() - (i % 20),
+      8 + (i % 11), (i * 11) % 60, 0
+    );
+    all.push({
+      Id: id++,
+      Timestamp: d.toISOString(),
+      UserId: u.Id,
+      UserName: u.FirstName + " " + u.LastName,
+      ActivityType: a.type,
+      Description: a.desc,
+    });
+  }
+  let rows = all;
+  if (query["DateFrom"]) {
+    const f = new Date(query["DateFrom"] + "T00:00:00").getTime();
+    rows = rows.filter((r) => new Date(r.Timestamp).getTime() >= f);
+  }
+  if (query["DateTo"]) {
+    const t = new Date(query["DateTo"] + "T23:59:59").getTime();
+    rows = rows.filter((r) => new Date(r.Timestamp).getTime() <= t);
+  }
+  if (query["Search"]) {
+    const s = query["Search"].toLowerCase();
+    rows = rows.filter(
+      (r) =>
+        r.ActivityType.toLowerCase().includes(s) ||
+        (r.Description || "").toLowerCase().includes(s) ||
+        r.UserName.toLowerCase().includes(s)
+    );
+  }
+  return rows.sort(
+    (a, b) => new Date(b.Timestamp).getTime() - new Date(a.Timestamp).getTime()
+  );
+}
+
 // =====================================================================================
 // EMPLOYEES + vacations
 // =====================================================================================
@@ -374,7 +584,7 @@ function emp(Id: number, FirstName: string, LastName: string, jmbg: string, birt
     JobPositionId: jobId, JobPositionName: JOB_POSITIONS.find((j) => j.Id === jobId)?.Name,
     EmploymentTypeId: empTypeId, EmploymentTypeName: EMPLOYMENT_TYPES.find((e) => e.Id === empTypeId)?.Name,
     Email: FirstName.toLowerCase() + "." + LastName.toLowerCase().replace(/[^a-z]/g, "") + "@demo.local",
-    Mobile: "091 200 00" + Id, Active: active,
+    Mobile: "091 200 00" + Id, Active: active, DaysOfVacation: 25,
   };
 }
 
@@ -390,36 +600,60 @@ export const EMPLOYEES = [
 
 export function vacationsFor(employeeId: number) {
   const yr = now().getFullYear();
+  const row = (n: number, year: number, from: string, to: string, taken: number, statusId: number) => {
+    const s = VACATION_STATUSES.find((x) => x.Id === statusId);
+    return {
+      Id: employeeId * 100 + n, EmployeeId: employeeId, Year: year,
+      FromDate: from, ToDate: to, DaysTaken: taken, DaysTotal: 25,
+      StatusId: statusId, StatusName: s?.Name, StatusColor: s?.Color, StatusIcon: s?.Icon,
+    };
+  };
   return [
-    { Id: employeeId * 100 + 1, EmployeeId: employeeId, Year: yr, FromDate: yr + "-07-01", ToDate: yr + "-07-14", DaysTaken: 10, DaysTotal: 25, StatusId: 4 },
-    { Id: employeeId * 100 + 2, EmployeeId: employeeId, Year: yr, FromDate: yr + "-12-27", ToDate: yr + "-12-31", DaysTaken: 3, DaysTotal: 25, StatusId: 2 },
-    { Id: employeeId * 100 + 3, EmployeeId: employeeId, Year: yr - 1, FromDate: (yr - 1) + "-08-05", ToDate: (yr - 1) + "-08-20", DaysTaken: 12, DaysTotal: 25, StatusId: 4 },
+    row(1, yr, yr + "-07-01", yr + "-07-14", 10, 4),
+    row(2, yr, yr + "-12-27", yr + "-12-31", 3, 2),
+    row(3, yr - 1, (yr - 1) + "-08-05", (yr - 1) + "-08-20", 12, 4),
   ];
+}
+
+export function vacationSummaryFor(employeeId: number) {
+  const yr = now().getFullYear();
+  const rows = vacationsFor(employeeId).filter((v) => v.Year === yr);
+  const total = 25;
+  const taken = rows.filter((v) => v.StatusId === 4).reduce((s, v) => s + v.DaysTaken, 0);
+  const inProgress = rows.filter((v) => v.StatusId === 2).reduce((s, v) => s + v.DaysTaken, 0);
+  return {
+    TotalDays: total,
+    TotalDaysTaken: taken,
+    InProgressDays: inProgress,
+    RemainingDays: total - taken,
+    AvailableDaysForReservation: total - taken - inProgress,
+  };
 }
 
 // =====================================================================================
 // SERVICES / PACKAGES / DISCOUNTS
 // =====================================================================================
 export const SERVICES = [
-  { Id: 1, Name: "Basic care", Description: "Daily resident care", CostPerUnit: 350, DefaultNumberOfUnits: 1, MeasureUnitId: 1, MeasureUnitName: "Day", MeasureUnitTag: "day", PriceUnitId: 2, PriceUnitName: "Daily", PriceUnitTag: "day", Quantity: 1, Price: 350 },
-  { Id: 2, Name: "Accommodation", Description: "Room accommodation", CostPerUnit: 300, DefaultNumberOfUnits: 1, MeasureUnitId: 1, MeasureUnitName: "Day", MeasureUnitTag: "day", PriceUnitId: 2, PriceUnitName: "Daily", PriceUnitTag: "day", Quantity: 1, Price: 300 },
-  { Id: 3, Name: "Physiotherapy", Description: "Individual therapy", CostPerUnit: 120, DefaultNumberOfUnits: 4, MeasureUnitId: 4, MeasureUnitName: "Piece", MeasureUnitTag: "pcs", PriceUnitId: 3, PriceUnitName: "Per piece", PriceUnitTag: "pcs", Quantity: 4, Price: 480 },
-  { Id: 4, Name: "Medical services", Description: "Physician supervision", CostPerUnit: 200, DefaultNumberOfUnits: 1, MeasureUnitId: 4, MeasureUnitName: "Piece", MeasureUnitTag: "pcs", PriceUnitId: 1, PriceUnitName: "Monthly", PriceUnitTag: "mo", Quantity: 1, Price: 200 },
-  { Id: 5, Name: "Meals", Description: "Three meals per day", CostPerUnit: 150, DefaultNumberOfUnits: 1, MeasureUnitId: 1, MeasureUnitName: "Day", MeasureUnitTag: "day", PriceUnitId: 2, PriceUnitName: "Daily", PriceUnitTag: "day", Quantity: 1, Price: 150 },
+  { Id: 1, Name: "Basic care", Description: "Monthly resident care", CostPerUnit: 350, DefaultNumberOfUnits: 1, MeasureUnitId: 2, MeasureUnitName: "Month", MeasureUnitTag: "mo", MeasureUnitCode: "month", PriceUnitId: 1, PriceUnitName: "Monthly", PriceUnitTag: "mo", Quantity: 1, Price: 350 },
+  { Id: 2, Name: "Accommodation", Description: "Room accommodation", CostPerUnit: 300, DefaultNumberOfUnits: 1, MeasureUnitId: 2, MeasureUnitName: "Month", MeasureUnitTag: "mo", MeasureUnitCode: "month", PriceUnitId: 1, PriceUnitName: "Monthly", PriceUnitTag: "mo", Quantity: 1, Price: 300 },
+  { Id: 3, Name: "Physiotherapy", Description: "Individual therapy", CostPerUnit: 120, DefaultNumberOfUnits: 4, MeasureUnitId: 4, MeasureUnitName: "Piece", MeasureUnitTag: "pcs", MeasureUnitCode: "unit", PriceUnitId: 3, PriceUnitName: "Per piece", PriceUnitTag: "pcs", Quantity: 4, Price: 480 },
+  { Id: 4, Name: "Medical services", Description: "Physician supervision", CostPerUnit: 200, DefaultNumberOfUnits: 1, MeasureUnitId: 4, MeasureUnitName: "Piece", MeasureUnitTag: "pcs", MeasureUnitCode: "unit", PriceUnitId: 1, PriceUnitName: "Monthly", PriceUnitTag: "mo", Quantity: 1, Price: 200 },
+  { Id: 5, Name: "Meals", Description: "Three meals per day", CostPerUnit: 150, DefaultNumberOfUnits: 1, MeasureUnitId: 2, MeasureUnitName: "Month", MeasureUnitTag: "mo", MeasureUnitCode: "month", PriceUnitId: 1, PriceUnitName: "Monthly", PriceUnitTag: "mo", Quantity: 1, Price: 150 },
 ];
 
 export const PACKAGES = [
-  { Id: 1, Name: "Basic care package", Description: "Accommodation + basic care + meals", DefaultPackagePrice: 650, DefaultPackagePriceUnitId: 1, CalculationMeasureUnitId: "1", PackagePriceCalculated: true, PriceUnitName: "Monthly", PriceUnitTag: "mo", MeasureUnitTag: "mo", Price: 650, PriceRounded: "650.00" },
-  { Id: 2, Name: "Extended care package", Description: "Basic + physiotherapy + medical supervision", DefaultPackagePrice: 850, DefaultPackagePriceUnitId: 1, CalculationMeasureUnitId: "1", PackagePriceCalculated: true, PriceUnitName: "Monthly", PriceUnitTag: "mo", MeasureUnitTag: "mo", Price: 850, PriceRounded: "850.00" },
-  { Id: 3, Name: "Premium care package", Description: "Single room + full care", DefaultPackagePrice: 1100, DefaultPackagePriceUnitId: 1, CalculationMeasureUnitId: "1", PackagePriceCalculated: true, PriceUnitName: "Monthly", PriceUnitTag: "mo", MeasureUnitTag: "mo", Price: 1100, PriceRounded: "1,100.00" },
+  { Id: 1, Name: "Basic care package", Description: "Accommodation + basic care + meals", DefaultPackagePrice: 650, DefaultPackagePriceUnitId: 1, CalculationMeasureUnitId: "1", PackagePriceCalculated: true, PriceUnitName: "Monthly", PriceUnitTag: "mo", MeasureUnitName: "Month", MeasureUnitTag: "mo", MeasureUnitCode: "month", OfferMeasureUnit: "month", Price: 650, PriceRounded: "650.00" },
+  { Id: 2, Name: "Extended care package", Description: "Basic + physiotherapy + medical supervision", DefaultPackagePrice: 850, DefaultPackagePriceUnitId: 1, CalculationMeasureUnitId: "1", PackagePriceCalculated: true, PriceUnitName: "Monthly", PriceUnitTag: "mo", MeasureUnitName: "Month", MeasureUnitTag: "mo", MeasureUnitCode: "month", OfferMeasureUnit: "month", Price: 850, PriceRounded: "850.00" },
+  { Id: 3, Name: "Premium care package", Description: "Single room + full care", DefaultPackagePrice: 1100, DefaultPackagePriceUnitId: 1, CalculationMeasureUnitId: "1", PackagePriceCalculated: true, PriceUnitName: "Monthly", PriceUnitTag: "mo", MeasureUnitName: "Month", MeasureUnitTag: "mo", MeasureUnitCode: "month", OfferMeasureUnit: "month", Price: 1100, PriceRounded: "1,100.00" },
 ];
 
 export function servicesForPackage(packageId: number) {
   const map: Record<number, number[]> = { 1: [1, 2, 5], 2: [1, 2, 5, 3, 4], 3: [1, 2, 5, 3, 4] };
   const ids = map[packageId] || [1, 2];
   return SERVICES.filter((s) => ids.includes(s.Id)).map((s) => ({
-    ServiceName: s.Name, Name: s.Name, Quantity: s.Quantity, CostPerUnit: s.CostPerUnit,
-    MeasureUnitId: s.MeasureUnitId, MeasureUnitTag: s.MeasureUnitTag, DefaultNumberOfUnits: s.DefaultNumberOfUnits,
+    Id: s.Id, ServiceName: s.Name, Name: s.Name, Quantity: s.Quantity, CostPerUnit: s.CostPerUnit, Price: s.Price,
+    MeasureUnitId: s.MeasureUnitId, MeasureUnitTag: s.MeasureUnitTag, MeasureUnitCode: s.MeasureUnitCode,
+    MeasureUnitName: s.MeasureUnitName, DefaultNumberOfUnits: s.DefaultNumberOfUnits,
   }));
 }
 
@@ -440,6 +674,17 @@ export const USERS = [
   { Id: "u5", FirstName: "Ivana", LastName: "Perić", Username: "iperic", Email: "ivana.peric@demo.local", RoleId: 3, Active: false, Blocked: true, Verified: true },
 ];
 
+export function userDataFor(id: string) {
+  const u = USERS.find((x) => x.Id === id) || USERS[0];
+  const role = ROLES.find((r) => r.RoleId === u.RoleId);
+  return {
+    User: { ...u, DateRegistered: "2022-01-01" },
+    Roles: role ? [{ RoleId: role.RoleId, RoleName: role.RoleName, RoleDescription: role.Description }] : [],
+    Permissions: [],
+    Persons: [],
+  };
+}
+
 // =====================================================================================
 // FURNITURE
 // =====================================================================================
@@ -451,13 +696,31 @@ export const FURNITURE = [
   { Id: 5, Name: "Nightstand", InventoryCode: "INV-0005", RoomId: 5, FloorId: 3, LatestStatusId: 2, LatestStatusDate: "2025-09-05", CreationDate: "2019-09-30", Description: "Damaged drawer" },
 ];
 
+export function furnitureStatusHistory(furnitureId: number) {
+  const f = FURNITURE.find((x) => x.Id === furnitureId);
+  const latest = f ? f.LatestStatusId : 1;
+  const mk = (n: number, statusId: number, start: string, end: string | null) => {
+    const s = FURNITURE_STATUSES.find((x) => x.Id === statusId);
+    return {
+      RowId: furnitureId * 100 + n, FurnitureId: furnitureId, FurnitureStatusId: statusId,
+      StatusName: s?.Name, StatusColor: s?.Color, StatusIcon: s?.Icon,
+      StartDate: start, EndDate: end,
+    };
+  };
+  return [
+    mk(1, 1, f ? f.CreationDate : "2021-01-05", "2023-06-10"),
+    mk(2, 3, "2023-06-10", "2023-07-01"),
+    mk(3, latest, "2023-07-01", null),
+  ];
+}
+
 // =====================================================================================
 // DOCTOR VISITS
 // =====================================================================================
 export const DOCTOR_VISITS = [
-  { DoctorVisitId: 1, Id: 1, Date: isoOn(4, 9), Doctors: "dr. Ana Kovač", Nurses: "Petra Šimić", Persons: "Marija Horvat, Ivan Kovačević" },
-  { DoctorVisitId: 2, Id: 2, Date: isoOn(11, 10), Doctors: "dr. Marko Jurić", Nurses: "Petra Šimić", Persons: "Ana Babić, Kata Novak, Stjepan Vuković" },
-  { DoctorVisitId: 3, Id: 3, Date: isoOn(18, 9), Doctors: "dr. Ana Kovač", Nurses: "Tomislav Barić", Persons: "Josip Marić" },
+  { DoctorVisitId: 1, Id: 1, Date: isoOn(4, 9), Completed: true, Doctors: "dr. Marko Jurić, dr. Ana Kovač", Nurses: "Petra Šimić", NumberOfDoctors: 2, NumberOfNurses: 1, Persons: 3 },
+  { DoctorVisitId: 2, Id: 2, Date: isoOn(11, 10), Completed: true, Doctors: "dr. Marko Jurić, dr. Ana Kovač", Nurses: "Petra Šimić", NumberOfDoctors: 2, NumberOfNurses: 1, Persons: 3 },
+  { DoctorVisitId: 3, Id: 3, Date: isoOn(18, 9), Completed: false, Doctors: "dr. Marko Jurić, dr. Ana Kovač", Nurses: "Petra Šimić", NumberOfDoctors: 2, NumberOfNurses: 1, Persons: 3 },
 ];
 
 // =====================================================================================
@@ -489,7 +752,10 @@ export const CALCULATIONS = PERSONS.map((p, i) => {
     SystemPrice: sys, RealPrice: sys, PaidPrice: paid ? sys : 0,
     DatePaid: paid ? currentYear() + "-" + mm + "-05" : null,
     TotalAmount: sys, RealAmount: sys, Paid: paid,
-    StatusId: statusId, StatusName: CALCULATION_STATUSES.find((s) => s.Id === statusId)?.Name,
+    Documents: statusId === 1 ? 2 : statusId === 2 ? 1 : 0,
+    StatusId: statusId,
+    StatusName: CALCULATION_STATUSES.find((s) => s.Id === statusId)?.Name,
+    StatusColor: CALCULATION_STATUSES.find((s) => s.Id === statusId)?.Color,
   };
 });
 
@@ -499,30 +765,51 @@ export function calculationsForPerson(personId: number) {
     const d = new Date(now().getFullYear(), now().getMonth() - mo, 1);
     const mm = String(d.getMonth() + 1).padStart(2, "0");
     const statusId = mo === 0 ? 2 : 1;
+    const status = CALCULATION_STATUSES.find((s) => s.Id === statusId);
     out.push({
       Id: 500 + personId * 10 + mo, PersonId: personId, Month: d.getMonth() + 1, Year: d.getFullYear(),
+      DateFrom: d.getFullYear() + "-" + mm + "-01", DateTo: d.getFullYear() + "-" + mm + "-30",
       Range: "01." + mm + ". - 30." + mm + ".", CalculationDate: d.getFullYear() + "-" + mm + "-01",
-      StatusId: statusId, SystemPrice: 650, RealPrice: 650, PaidPrice: statusId === 1 ? 650 : 0,
+      StatusId: statusId, StatusName: status?.Name, StatusColor: status?.Color,
+      SystemPrice: 650, RealPrice: 650, PaidPrice: statusId === 1 ? 650 : 0,
       DatePaid: statusId === 1 ? d.getFullYear() + "-" + mm + "-05" : null,
-      StatusName: CALCULATION_STATUSES.find((s) => s.Id === statusId)?.Name,
+      Documents: statusId === 1 ? 2 : 1,
     });
   }
   return out;
+}
+
+export function calculationsSummaryForPerson(personId: number) {
+  const rows = calculationsForPerson(personId);
+  return {
+    TotalCalculatedPrice: rows.reduce((s, c) => s + c.SystemPrice, 0),
+    TotalRealPrice: rows.reduce((s, c) => s + c.RealPrice, 0),
+    TotalPaidPrice: rows.reduce((s, c) => s + c.PaidPrice, 0),
+  };
 }
 
 // =====================================================================================
 // ACCOMMODATION BOARD — { Persons, Floors, Rooms } (accomodation-management page)
 // =====================================================================================
 export function accommodationBoard() {
+  const typeName = (cap: number) =>
+    cap === 1 ? "Single room" : cap === 2 ? "Double room" : cap >= 3 ? "Triple room" : "Day care";
   return {
     Persons: PERSONS.map((p) => ({
       Id: p.Id, PersonId: p.Id, FirstName: p.FirstName, LastName: p.LastName,
       RoomId: p.RoomId, GenderId: p.GenderId, GenderName: p.GenderName,
+      HealthConditionName: p.HealthConditionName,
     })),
     Floors: FLOORS.map((f) => ({ Id: f.Id, Name: f.Name })),
-    Rooms: ROOMS.map((r) => ({
-      Id: r.Id, Name: r.Name, FloorId: r.FloorId, Capacity: r.Capacity, RoomGenderId: r.RoomGenderId,
-    })),
+    Rooms: ROOMS.map((r) => {
+      const taken = PERSONS.filter((p) => p.RoomId === r.Id).length;
+      return {
+        Id: r.Id, Name: r.Name, FloorId: r.FloorId, Capacity: r.Capacity,
+        TakenSpace: taken, FreeSpace: r.Capacity - taken,
+        RoomGenderId: r.RoomGenderId, AccommodationTypeName: typeName(r.Capacity),
+        Width: r.Width, Height: r.Height, Top: r.Top, Left: r.Left,
+      };
+    }),
   };
 }
 
@@ -544,47 +831,159 @@ export function dashboardSummary() {
 
   const byJob: Record<string, number> = {};
   EMPLOYEES.forEach((e) => { byJob[e.JobPositionName] = (byJob[e.JobPositionName] || 0) + 1; });
-  const employeesByJobPosition = Object.keys(byJob).map((k) => ({ JobPositionName: k, NumberOfEmployees: byJob[k] }));
+  const employeesByJobPosition = Object.keys(byJob).map((k) => ({
+    JobPositionName: k,
+    NumberOfEmployees: byJob[k],
+    JobPositionIcon: JOB_POSITIONS.find((j) => j.Name === k)?.Icon || "fas fa-user",
+  }));
 
   const oldest = [...PERSONS].sort((a, b) => new Date(a.BirthDate).getTime() - new Date(b.BirthDate).getTime())[0];
   const longest = [...PERSONS].sort((a, b) => new Date(a.StartDate).getTime() - new Date(b.StartDate).getTime())[0];
 
+  const nowYear = base.getFullYear();
+  const ageBuckets = [
+    { Label: "< 80", Count: 0 },
+    { Label: "80-84", Count: 0 },
+    { Label: "85-89", Count: 0 },
+    { Label: "90+", Count: 0 },
+  ];
+  PERSONS.forEach((p) => {
+    const age = nowYear - new Date(p.BirthDate).getFullYear();
+    if (age < 80) ageBuckets[0].Count++;
+    else if (age < 85) ageBuckets[1].Count++;
+    else if (age < 90) ageBuckets[2].Count++;
+    else ageBuckets[3].Count++;
+  });
+
+  const occupancyByFloor = FLOORS.map((f) => {
+    const floorRooms = ROOMS.filter((r) => r.FloorId === f.Id);
+    return {
+      FloorName: f.Name,
+      Occupied: PERSONS.filter((p) => p.FloorId === f.Id).length,
+      Capacity: floorRooms.reduce((s, r) => s + (r.Capacity || 0), 0),
+    };
+  });
+
+  const byCond: Record<string, number> = {};
+  PERSONS.forEach((p) => {
+    const n = p.HealthConditionName || "Other";
+    byCond[n] = (byCond[n] || 0) + 1;
+  });
+  const residentsByCondition = Object.keys(byCond).map((k) => ({ Name: k, Count: byCond[k] }));
+
   return {
     Summary: [{ TakenSpace: PERSONS.length, Capacity: capacity, MalePersons: males, FemalePersons: females }],
     LongestPerson: [{ FirstName: longest.FirstName, LastName: longest.LastName, StartDate: longest.StartDate }],
-    OldestPerson: [{ FirstName: oldest.FirstName, LastName: oldest.LastName, BirthDate: oldest.BirthDate }],
+    OldestPerson: [{ FirstName: oldest.FirstName, LastName: oldest.LastName, BirthDate: oldest.BirthDate, Years: nowYear - new Date(oldest.BirthDate).getFullYear() }],
     ActivePersons: activePersons,
     EmployeesByGender: [{ FemaleEmployees: 4, MaleEmployees: 3 }],
-    AllTimeEmployees: [{ Count: EMPLOYEES.length }],
+    AllTimeEmployees: [{ Count: EMPLOYEES.length, CurrentEmployees: EMPLOYEES.filter((e) => e.Active).length }],
     Employees: EMPLOYEES,
-    PersonWithLongestLastVisit: [{ FirstName: PERSONS[2].FirstName, LastName: PERSONS[2].LastName }],
+    PersonWithLongestLastVisit: [{
+      FirstName: PERSONS[2].FirstName,
+      LastName: PERSONS[2].LastName,
+      MonthsSinceLastVisit: 4,
+      DaysSinceLastVisit: 12,
+      VisitStatus: "danger",
+    }],
     EmployeesByJobPosition: employeesByJobPosition,
+    AgeDistribution: ageBuckets,
+    OccupancyByFloor: occupancyByFloor,
+    ResidentsByCondition: residentsByCondition,
     Events: EVENTS,
   };
 }
 
+// true when the logged-in demo account is the plain "User" role (RoleId 3) —
+// that role only sees its own residents in care, not the whole facility.
+export function demoIsUserRole(): boolean {
+  try {
+    const r = JSON.parse(localStorage.getItem("userRights") || "{}");
+    return (r.Roles || []).some((x: any) => x.RoleId === 3);
+  } catch {
+    return false;
+  }
+}
+
+// the residents assigned to the "User" role (his people in care)
+export function personsInCare() {
+  return PERSONS.slice(0, 2);
+}
+
 export function userDashboardSummary() {
-  return [{ UnpaidCalculations: CALCULATIONS.filter((c) => !c.Paid).length, Persons: PERSONS.length }];
+  const count = demoIsUserRole() ? personsInCare().length : PERSONS.length;
+  return [{ UnpaidCalculations: CALCULATIONS.filter((c) => !c.Paid).length, Persons: count }];
 }
 
 export function calculationSummary() {
   const totalSys = CALCULATIONS.reduce((s, c) => s + c.SystemPrice, 0);
+  const totalReal = CALCULATIONS.reduce((s, c) => s + c.RealPrice, 0);
   const totalPaid = CALCULATIONS.reduce((s, c) => s + c.PaidPrice, 0);
-  return { Summary: { SystemPrice: totalSys, RealPrice: totalSys, PaidPrice: totalPaid, Count: CALCULATIONS.length } };
+  return {
+    Summary: {
+      TotalCalculatedPrice: totalSys,
+      TotalCalculatedPriceDiff: "4",
+      TotalRealPrice: totalReal,
+      TotalRealPriceDiff: "3",
+      TotalPaidPrice: totalPaid,
+      TotalPaidPriceDiff: "6",
+      Persons: PERSONS.length,
+      CalculatedForPersons: PERSONS.length,
+      NumberOfPaidCalculations: CALCULATIONS.filter((c) => c.StatusId === 1).length,
+      NumberOfNotPaidCalculations: CALCULATIONS.filter((c) => c.StatusId === 2).length,
+      NumberOfCancelledCalculations: CALCULATIONS.filter((c) => c.StatusId === 3).length,
+    },
+  };
+}
+
+// =====================================================================================
+// NOTIFICATIONS
+// =====================================================================================
+export const NOTIFICATION_TYPES = [
+  { Id: 1, Name: "Events", Code: "events", StringKey: "events", Enabled: true, DaysReminder: 2 },
+  { Id: 2, Name: "Reminders", Code: "reminders", StringKey: "reminders", Enabled: true, DaysReminder: 2 },
+  { Id: 3, Name: "Other", Code: "other", StringKey: "other", Enabled: true, DaysReminder: 2 },
+];
+
+export function notifications() {
+  const base = now();
+  const at = (daysAgo: number, h: number, m: number) =>
+    new Date(base.getFullYear(), base.getMonth(), base.getDate() - daysAgo, h, m).toISOString();
+  return [
+    { Id: 1, Text: "Birthday reminder: Kata Novak has a birthday in 2 days.", CreationDate: at(0, 8, 15), Read: false, NotificationTypeId: 2, TypeCode: "reminders", TypeStringKey: "reminders", LinkId: 5, GoToLink: "/pages/profile/5" },
+    { Id: 2, Text: "New event scheduled: Physiotherapy — group mobility exercise.", CreationDate: at(0, 7, 40), Read: false, NotificationTypeId: 1, TypeCode: "events", TypeStringKey: "events", LinkId: 0, GoToLink: "/pages/calendar" },
+    { Id: 3, Text: "Ana Babić has not had a doctor visit in 4 months.", CreationDate: at(1, 16, 5), Read: false, NotificationTypeId: 3, TypeCode: "other", TypeStringKey: "other", LinkId: 3, GoToLink: "/pages/profile/3" },
+    { Id: 4, Text: "Medication delivery due for Ivan Kovačević.", CreationDate: at(1, 9, 0), Read: true, NotificationTypeId: 2, TypeCode: "reminders", TypeStringKey: "reminders", LinkId: 2, GoToLink: "/pages/profile/2" },
+    { Id: 5, Text: "Upcoming event: Doctor's round — resident rounds.", CreationDate: at(2, 11, 30), Read: true, NotificationTypeId: 1, TypeCode: "events", TypeStringKey: "events", LinkId: 0, GoToLink: "/pages/calendar" },
+    { Id: 6, Text: "Stay anniversary: Marija Horvat — 3 years in care.", CreationDate: at(3, 10, 10), Read: true, NotificationTypeId: 2, TypeCode: "reminders", TypeStringKey: "reminders", LinkId: 1, GoToLink: "/pages/profile/1" },
+    { Id: 7, Text: "Monthly occupancy report is ready to review.", CreationDate: at(4, 14, 0), Read: true, NotificationTypeId: 3, TypeCode: "other", TypeStringKey: "other", LinkId: 0, GoToLink: "/pages/dashboard" },
+  ];
 }
 
 // =====================================================================================
 // AUTH
 // =====================================================================================
+// demo login accounts — username selects the role (password can be anything).
+// RoleId: 1 admin, 2 moderator, 3 user, 4 nurse, 5 caregiver, 8 doctor
+export const DEMO_ACCOUNTS: Record<string, { RoleId: number; FirstName: string; LastName: string }> = {
+  admin: { RoleId: 1, FirstName: "Demo", LastName: "Administrator" },
+  moderator: { RoleId: 2, FirstName: "Demo", LastName: "Moderator" },
+  user: { RoleId: 3, FirstName: "Demo", LastName: "User" },
+  nurse: { RoleId: 4, FirstName: "Demo", LastName: "Nurse" },
+  caregiver: { RoleId: 5, FirstName: "Demo", LastName: "Caregiver" },
+  doctor: { RoleId: 8, FirstName: "Demo", LastName: "Doctor" },
+};
+
 export function demoLoginResponse(identifier: string) {
-  // ADMIN only (RoleId 1): single (admin) dashboard renders and ADMIN unlocks every route.
+  const key = (identifier || "admin").toLowerCase().trim();
+  const acc = DEMO_ACCOUNTS[key] || DEMO_ACCOUNTS["admin"];
   return {
     Authenticated: true,
-    Token: "demo-jwt-token." + btoa(identifier || "demo") + ".signature",
-    User: { Id: "demo-user-1", FirstName: "Demo", LastName: "User", Username: identifier || "demo", Email: "demo@demo.local", DateRegistered: "2022-01-01" },
-    Roles: [{ RoleId: 1 }],
+    Token: "demo-jwt-token." + btoa(key) + ".signature",
+    User: { Id: "demo-" + acc.RoleId, FirstName: acc.FirstName, LastName: acc.LastName, Username: key, Email: key + "@demo.local", DateRegistered: "2022-01-01" },
+    Roles: [{ RoleId: acc.RoleId }],
     Permissions: [{ Code: "*", Name: "All permissions" }],
-    Persons: [],
+    Persons: acc.RoleId === 3 ? personsInCare().map((p) => p.Id) : [],
   };
 }
 
@@ -611,13 +1010,25 @@ export function getMock(
     case path.startsWith("person-dietary-restrictions"): return hit(dietaryFor(pid()));
     case path.startsWith("person-insurance"): return hit(insuranceFor(pid()));
 
+    // ---- clinical: MAR + care plan ----
+    case path.startsWith("medication-administration"): return hit(marScheduleFor(pid(), query["Date"]));
+    case path.includes("care-plan/assessments"):
+    case path.startsWith("care-plan"): return hit(assessmentsFor(pid()));
+    case path.includes("audit-log/user-activity"): return hit(userActivityEntries(query));
+    case path.startsWith("audit-log"): return hit(auditLogEntries(query));
+
     // ---- dashboard ----
     case path.includes("summary/getDashboardSummary"): return hit(dashboardSummary());
     case path.includes("summary/getUserDashboardSummary"): return hit(userDashboardSummary());
 
     // ---- persons ----
     case path.includes("persons/getPersonsForUserDashboard"):
-    case path.includes("persons/getPersonsForUser"): return hit(PERSONS.slice(0, 5));
+    case path.includes("persons/getPersonsForUser"):
+      return hit((demoIsUserRole() ? personsInCare() : PERSONS.slice(0, 5)).map((p) => {
+        const s = new Date(p.StartDate);
+        const n = now();
+        return { ...p, SpentTime: (n.getFullYear() - s.getFullYear()) * 12 + (n.getMonth() - s.getMonth()) };
+      }));
     case path.includes("persons/personDetailed"):
     case path.includes("persons/personDetails"):
       return hit([PERSONS.find((p) => p.Id === Number(query["id"])) || PERSONS[0]]);
@@ -638,9 +1049,13 @@ export function getMock(
     // ---- calculations ----
     case path.includes("calculation/getCalculationStatuses"): return hit(CALCULATION_STATUSES);
     case path.includes("calculation/calculationSummary"): return hit(calculationSummary());
-    case path.includes("calculation/getCalculationsSummaryForPerson"): return hit(calculationSummary());
+    case path.includes("calculation/getCalculationsSummaryForPerson"): return hit(calculationsSummaryForPerson(pid()));
     case path.includes("calculation/getCalculationsForPerson"): return hit(calculationsForPerson(pid()));
-    case path.includes("calculation/calculationDocuments"): return hit([]);
+    case path.includes("calculation/calculationDocuments"):
+      return hit([
+        { Id: 1, Name: "Invoice", Extension: "pdf", FileType: "application/pdf", CreationDate: isoOn(5, 9) },
+        { Id: 3, Name: "Offer", Extension: "pdf", FileType: "application/pdf", CreationDate: isoOn(1, 9) },
+      ]);
     case path.startsWith("calculation"): return hit(CALCULATIONS);
 
     // ---- calendar ----
@@ -661,16 +1076,50 @@ export function getMock(
     // ---- notes / contacts (per person) ----
     case path.includes("notes/getNoteTags"): return hit([TAGS[0], TAGS[3]]);
     case path.includes("notes/getNoteDocuments"): return hit([]);
-    case path.includes("notes/getNoteDetails"): return hit(notesFor(pid()).slice(0, 1));
-    case path.startsWith("notes"): return hit(notesFor(pid()));
+    case path.includes("notes/getNoteDetails"): {
+      const nid = Number(query["NoteId"]) || 0;
+      if (nid >= 900000) return hit(visitNoteFor(nid - 900000));
+      const personId = Math.floor(nid / 70) || 1;
+      const note = notesFor(personId)[0];
+      return hit(note ? { ...note, Documents: [] } : {});
+    }
+    case path.startsWith("notes"): {
+      const ns = notesFor(pid());
+      const tags: any[] = [];
+      ns.forEach((n) => (n.Tags || []).forEach((t) => tags.push({ ...t, NoteId: n.Id })));
+      return hit({ Notes: ns, Tags: tags, Documents: [] });
+    }
     case path.startsWith("contacts"): return hit(contactsFor(pid()));
 
     // ---- doctor visits ----
     case path.includes("doctor-visits/getDoctorsAndNurses"):
-      return hit([{ Id: 1, Name: "dr. Ana Kovač", Type: "Doctor" }, { Id: 2, Name: "Petra Šimić", Type: "Nurse" }]);
-    case path.includes("doctor-visits/getPersons"): return hit(PERSONS.slice(0, 3));
-    case path.includes("doctor-visits/getSummary"): return hit([{ Total: 3, Completed: 1 }]);
-    case path.includes("doctor-visits/getVisitTourDetails"): return hit([DOCTOR_VISITS[0]]);
+      return hit({
+        doctors: EMPLOYEES.filter((e) => e.JobPositionId === 5).map((e) => ({
+          EmployeeId: e.Id, FirstName: e.FirstName, LastName: e.LastName, JobPositionName: e.JobPositionName, JMBG: e.JMBG, Icon: "fas fa-user-md",
+        })),
+        nurses: EMPLOYEES.filter((e) => e.JobPositionId === 2).map((e) => ({
+          EmployeeId: e.Id, FirstName: e.FirstName, LastName: e.LastName, JobPositionName: e.JobPositionName, JMBG: e.JMBG, Icon: "fas fa-user-nurse",
+        })),
+      });
+    case path.includes("doctor-visits/getPersons"):
+      return hit(PERSONS.slice(0, 3).map((p) => ({
+        Id: p.Id, FirstName: p.FirstName, LastName: p.LastName, JMBG: p.JMBG, Active: true, NoteId: 900000 + p.Id,
+      })));
+    case path.includes("doctor-visits/getSummary"):
+      return hit({
+        TimePassed: { MonthsDifference: 1, DaysDifference: 13 },
+        Visited: { TotalPersons: PERSONS.length, VisitedPersons: 3 },
+        DoctorStats: [
+          { DoctorId: 3, FirstName: "Marko", LastName: "Jurić", NumberOfCompletedVisits: 8 },
+          { DoctorId: 5, FirstName: "Ana", LastName: "Kovač", NumberOfCompletedVisits: 12 },
+        ],
+      });
+    case path.includes("doctor-visits/getVisitTourDetails"):
+      return hit({
+        Tour: [DOCTOR_VISITS[0]],
+        Doctors: EMPLOYEES.filter((e) => e.JobPositionId === 5).map((e) => ({ FirstName: e.FirstName, LastName: e.LastName, JobPositionName: e.JobPositionName })),
+        Nurses: EMPLOYEES.filter((e) => e.JobPositionId === 2).map((e) => ({ FirstName: e.FirstName, LastName: e.LastName, JobPositionName: e.JobPositionName })),
+      });
     case path.startsWith("doctor-visits"): return hit(DOCTOR_VISITS);
 
     // ---- employees / vacations ----
@@ -679,7 +1128,8 @@ export function getMock(
       return hit([EMPLOYEES.find((e) => e.Id === Number(query["id"])) || EMPLOYEES[0]]);
     case path.includes("employees/getUserEmployeeId"): return hit([{ EmployeeId: 1 }]);
     case path.startsWith("employees"): return hit(EMPLOYEES);
-    case path.includes("vacations/getRemainingVacationDays"): return hit([{ Remaining: 12, Total: 25 }]);
+    case path.includes("vacations/getRemainingVacationDays"):
+      return hit(vacationSummaryFor(Number(query["id"] || query["EmployeeId"] || query["employeeId"]) || 1));
     case path.includes("vacations/getVacationsForPerson"):
     case path.startsWith("vacations"): return hit(vacationsFor(Number(query["id"]) || 1));
 
@@ -694,17 +1144,27 @@ export function getMock(
     // ---- users ----
     case path.includes("users/getRoles"): return hit(ROLES);
     case path.includes("users/roles"): return hit([{ RoleId: 1, Name: "Administrator" }]);
-    case path.includes("users/getUserData"): return hit([USERS[0]]);
+    case path.includes("users/getUserData"): return hit(userDataFor(query["id"] || query["Id"] || "u1"));
     case path.startsWith("users"): return hit(USERS);
 
     // ---- furniture ----
+    case path.includes("furniture/getFurnitureCountByStatus"):
+      return hit(FURNITURE_STATUSES.map((s) => ({ ...s, Furniture: FURNITURE.filter((f) => f.LatestStatusId === s.Id).length })));
+    case path.includes("furniture/getFurnitureStatuses"):
+      return hit(furnitureStatusHistory(Number(query["FurnitureId"]) || 1));
     case path.startsWith("furniture-statuses"): return hit(FURNITURE_STATUSES);
-    case path.startsWith("furniture"): return hit(FURNITURE);
+    case path.startsWith("furniture"):
+      return hit(FURNITURE.map((f) => {
+        const s = FURNITURE_STATUSES.find((x) => x.Id === f.LatestStatusId);
+        const r = ROOMS.find((x) => x.Id === f.RoomId);
+        return { ...f, LatestStatusName: s?.Name, StatusColor: s?.Color, StatusIcon: s?.Icon, RoomName: r?.Name, FloorName: r?.FloorName };
+      }));
 
     // ---- rooms (accommodation board must come before generic rooms) ----
     case path.includes("rooms/getAccomodationManagementRooms"): return hit(accommodationBoard());
-    case path.includes("rooms/getAvaliableRooms"):
     case path.includes("rooms/getRoomsForFloor"):
+      return hit(ROOMS.filter((r) => r.FloorId === Number(query["FloorId"] || query["floorId"] || query["id"])));
+    case path.includes("rooms/getAvaliableRooms"):
     case path.startsWith("rooms"): return hit(ROOMS);
 
     // ---- simple lookups ----
@@ -724,6 +1184,12 @@ export function getMock(
     case path.startsWith("employment-types"): return hit(EMPLOYMENT_TYPES);
     case path.startsWith("job-positions"): return hit(JOB_POSITIONS);
     case path.startsWith("qualifications"): return hit(QUALIFICATIONS);
+    case path.includes("notifications/notificationTypes"): return hit(NOTIFICATION_TYPES.map((t) => ({ ...t })));
+    case path.includes("notifications/getNotificationsSettings"): return hit(NOTIFICATION_TYPES.map((t) => ({ ...t })));
+    case path.includes("notifications/getLatestNotifications"): return hit(notifications());
+    case path.includes("notifications/getAllNotifications"): return hit(notifications());
+    case path.includes("notifications/checkNotificationsStatus"):
+      return hit([{ NotificationNumber: notifications().filter((n) => !n.Read).length }]);
     case path.startsWith("notifications"): return hit([]);
     case path.startsWith("general-settings"): return hit({ Value: "1", KmPrice: 0.5, Currency: "EUR" });
     case path.startsWith("my-profile"):
@@ -740,6 +1206,9 @@ export function getMock(
 function now() { return new Date(); }
 function currentMonth() { return now().getMonth() + 1; }
 function currentYear() { return now().getFullYear(); }
+function isoDate(d: Date) {
+  return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+}
 function isoOn(day: number, hour: number) {
   return new Date(now().getFullYear(), now().getMonth(), day, hour, 0, 0).toISOString();
 }

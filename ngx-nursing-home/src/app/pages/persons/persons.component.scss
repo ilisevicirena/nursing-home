@@ -13,4 +13,11 @@
 #cards {
   height: calc(100% - 5rem);
   overflow: auto;
+  // the card grid is a flex row; without this, wrapped rows stretch to fill the
+  // container height, leaving large uneven gaps between rows.
+  align-content: flex-start;
+}
+
+#cards .person-card {
+  height: 100%;
 }

@@ -19,6 +19,8 @@ export class ModulesMenuComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    // reset any stale selection left on the shared MENU_ITEMS from a previous open
+    this.menuItems.forEach((x) => (x.selected = false));
     this.selectedModule = this.menuItems[0];
     this.menuItems[0].selected = true;
   }

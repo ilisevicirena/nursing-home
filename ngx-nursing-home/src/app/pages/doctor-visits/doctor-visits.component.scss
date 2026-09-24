@@ -1,0 +1,20 @@
+@import "../../@theme/styles/themes.scss";
+
+@include nb-install-component {
+  .header-icon {
+    font-size: 1.8rem;
+    color: nb-theme(color-primary-500);
+  }
+
+  .header-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: nb-theme(text-basic-color);
+    line-height: 1.2;
+  }
+
+  .header-subtitle {
+    font-size: 0.75rem;
+    color: nb-theme(text-hint-color);
+  }
+}

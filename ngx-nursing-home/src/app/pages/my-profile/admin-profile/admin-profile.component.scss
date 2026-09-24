@@ -4,6 +4,6 @@
 @include nb-install-component() {
   .status-card:hover {
     cursor: pointer;
-    background-color: nb-theme(color-basic-400);
+    background-color: nb-theme(background-basic-color-4);
   }
 }

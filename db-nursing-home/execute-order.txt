@@ -23,6 +23,8 @@ create-tb-functionalStatusOption.sql
 create-tb-dietaryType.sql
 create-tb-personDietaryRestriction.sql
 create-tb-personInsuranceData.sql
+create-tb-personAssessment.sql
+create-tb-medicationAdministration.sql
 create-tb-userContactRelation.sql
 create-tb-personRoomRelation.sql
 create-tb-measureUnit.sql
@@ -125,6 +127,7 @@ proc-getContactInfoForUser.sql
 proc-getMyProfileBasicData.sql
 proc-getPersonsForUser.sql
 proc-getPersonsForUserDashboard.sql
+proc-canUserViewPerson.sql
 proc-getRoles.sql
 proc-getUserDashboardEvents.sql
 proc-getUserDashboardSummary.sql
@@ -349,3 +352,11 @@ proc-removeFurnitureFromRoom.sql
 proc-getActivePersonsByMonthYear.sql
 proc-getGeneralSetting.sql
 proc-updateGeneralSetting.sql
+proc-getPersonAssessments.sql
+proc-insertPersonAssessment.sql
+proc-updatePersonAssessment.sql
+proc-deletePersonAssessment.sql
+proc-getMedicationAdministration.sql
+proc-recordMedicationAdministration.sql
+proc-getAuditLog.sql
+proc-getUserActivity.sql

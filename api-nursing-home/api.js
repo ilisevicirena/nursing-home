@@ -63,6 +63,9 @@ const personMedications = require("./routes/person-medications");
 const personFunctionalStatus = require("./routes/person-functional-status");
 const personDietaryRestrictions = require("./routes/person-dietary-restrictions");
 const personInsurance = require("./routes/person-insurance");
+const carePlan = require("./routes/care-plan");
+const medicationAdministration = require("./routes/medication-administration");
+const auditLog = require("./routes/audit-log");
 
 // Swagger UI
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
@@ -114,6 +117,9 @@ router.use("/person-medications", personMedications);
 router.use("/person-functional-status", personFunctionalStatus);
 router.use("/person-dietary-restrictions", personDietaryRestrictions);
 router.use("/person-insurance", personInsurance);
+router.use("/care-plan", carePlan);
+router.use("/medication-administration", medicationAdministration);
+router.use("/audit-log", auditLog);
 router.use("/my-profile", myProfile);
 
 // Start the server

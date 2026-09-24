@@ -9,6 +9,7 @@ import { hexToRgbA } from "../../../resources/functions";
 import { DialogService } from "../../../shared/dialog/dialog.service";
 import { NoteDocumentsComponent } from "../../notes/note-documents/note-documents.component";
 import { NoteExportComponent } from "../../notes/note-export/note-export.component";
+import { AuthService, UserRole } from "../../../services/auth.service";
 
 @Component({
   selector: "sample-doctor-visit-details",
@@ -57,8 +58,14 @@ export class DoctorVisitDetailsComponent implements OnInit, OnDestroy {
     private _doctorVisitsService: DoctorVisitsService,
     private _router: Router,
     private _notesService: NotesService,
-    private _dialogService: DialogService
+    private _dialogService: DialogService,
+    private _authService: AuthService
   ) {}
+
+  // only admins may open employee profiles
+  public get isAdmin(): boolean {
+    return this._authService.checkUserHasRole(UserRole.ADMIN);
+  }
 
   ngOnInit(): void {
     this.getDoctorsAndNurses();

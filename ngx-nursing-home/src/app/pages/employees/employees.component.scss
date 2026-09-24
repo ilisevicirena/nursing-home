@@ -13,4 +13,11 @@
 #cards {
   height: calc(100% - 5rem);
   overflow: auto;
+  // flex rows stretch wrapped lines to fill the container height, making the cards
+  // far taller than their content; keep them at content height.
+  align-content: flex-start;
+}
+
+#cards .person-card {
+  height: 100%;
 }

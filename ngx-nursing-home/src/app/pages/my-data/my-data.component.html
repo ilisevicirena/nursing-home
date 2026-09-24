@@ -1,0 +1,18 @@
+<nb-card class="h-100 m-0">
+  <nb-card-header>
+    <div class="d-flex align-items-center gap-2">
+      <nb-icon pack="eva" icon="person-outline" class="page-header-icon"></nb-icon>
+      <div>
+        <div class="page-header-title">{{ getString("myData") }}</div>
+        <div class="page-header-subtitle">{{ getString("myDataSubtitle") }}</div>
+      </div>
+    </div>
+  </nb-card-header>
+  <nb-card-body class="overflow-auto">
+    <sample-employee-basic-data
+      *ngIf="employeeData"
+      [(employeeData)]="employeeData"
+      [formModeAddNew]="false"
+    ></sample-employee-basic-data>
+  </nb-card-body>
+</nb-card>

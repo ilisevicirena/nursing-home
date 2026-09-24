@@ -25,7 +25,7 @@
   </nb-card-header>
   <nb-card-body>
     <div class="row m-0">
-      <div class="col-md-3" *ngFor="let p of persons | filter : searchTerm">
+      <div class="col-md-3 mb-3" *ngFor="let p of persons | filter : searchTerm">
         <div class="status-card d-block" (click)="goToProfile(p.Id)">
           <div class="row m-0">
             <div

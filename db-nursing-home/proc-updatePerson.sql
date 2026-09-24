@@ -38,7 +38,7 @@ BEGIN
 		GenderId=@GenderId
 	WHERE Id = @Id
 
-	exec dbo.writeLog @LogType='UPDATE', @LogEntity='Person', @Key= @Id;
+	exec dbo.writeLog @LogType='UPDATE', @LogEntity='Person', @Key= @Id, @UserId=@ActingUserId;
 	exec dbo.removeAllEventsForPerson @PersonId=@Id, @EventTypeId=1;
 
 	DECLARE @Title varchar(200) = 'Rođendan: ' + @FirstName + ' ' + @LastName;

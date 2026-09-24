@@ -3,7 +3,8 @@
 .summary-container {
   padding-left: 0;
   height: 100%;
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
   display: flex;
   flex-flow: column;
 
@@ -54,7 +55,7 @@
       margin-left: 0.5rem;
       padding: 0;
       border-radius: 1rem;
-      background-color: nb-theme(color-basic-400);
+      background-color: nb-theme(background-basic-color-4);
     }
 
     .circle {
@@ -113,8 +114,13 @@
     }
 
     .second-row {
-      flex: 1 1 17rem;
-      max-height: 17rem;
+      flex: 0 1 14rem;
+      max-height: 14rem;
+    }
+
+    .third-row {
+      flex: 1 1 auto;
+      min-height: 18rem;
     }
   }
 
@@ -126,12 +132,12 @@
   .title {
     font-weight: 600;
     font-size: 16px;
+    padding-bottom: 0.5rem;
   }
 
   .male-female-chart {
     .title {
-      text-align: center;
-      padding-bottom: 1rem;
+      padding-bottom: 0.5rem;
     }
 
     .col {
@@ -262,14 +268,22 @@
     }
   }
 
+  .no-scroll-card ::ng-deep nb-card-body {
+    overflow: hidden;
+  }
+
   .events-card {
+    ::ng-deep nb-card-body {
+      overflow: hidden;
+    }
+
     nb-tag.semi-tag {
       position: absolute;
       border-left: none;
       border-top-left-radius: 0;
       border-bottom-left-radius: 0;
       left: -10px;
-      top: -5px;
+      top: 8px;
     }
 
     .title {
@@ -313,10 +327,22 @@
   }
 }
 
-.echart-dash {
-  height: 100% !important;
-}
+.chart-card {
+  ::ng-deep nb-card-body {
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem;
+    overflow: hidden;
+  }
 
-::ng-deep .echart-dash div {
-  top: -20px !important;
+  .title {
+    flex: 0 0 auto;
+  }
+
+  ::ng-deep .echart-dash {
+    flex: 1 1 auto;
+    min-height: 0;
+    width: 100%;
+    height: auto !important;
+  }
 }

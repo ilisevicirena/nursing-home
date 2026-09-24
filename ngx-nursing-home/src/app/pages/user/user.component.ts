@@ -80,7 +80,11 @@ export class UserComponent implements OnInit, OnDestroy {
       this.userShowName = getString("newUserTitle");
       if (this.user.Email && !this.user.Username)
         this.user.Username = this.user.Email.split("@")[0];
-    } else this.getUserData();
+    } else {
+      this.userShowName =
+        (this.user?.FirstName || "") + " " + (this.user?.LastName || "");
+      this.getUserData();
+    }
 
     this.getRoles();
   }

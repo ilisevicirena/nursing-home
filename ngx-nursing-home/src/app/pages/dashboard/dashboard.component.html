@@ -5,5 +5,9 @@
   *ngIf="checkUserHasRole(userRoles.ADMIN)"
 ></sample-admin-dashboard>
 <sample-employee-dashboard
-  *ngIf="checkUserHasRole(userRoles.NURSE)"
+  *ngIf="
+    checkUserHasRole(userRoles.NURSE) ||
+    checkUserHasRole(userRoles.DOCTOR) ||
+    checkUserHasRole(userRoles.CAREGIVER)
+  "
 ></sample-employee-dashboard>

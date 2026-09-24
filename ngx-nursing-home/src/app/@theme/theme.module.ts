@@ -24,10 +24,12 @@ import {
 import { NbEvaIconsModule } from "@nebular/eva-icons";
 import { NbSecurityModule } from "@nebular/security";
 
+import { RouterModule } from "@angular/router";
 import {
   FooterComponent,
   HeaderComponent,
   SearchInputComponent,
+  BreadcrumbComponent,
 } from "./components";
 import {
   OneColumnLayoutComponent,
@@ -67,10 +69,12 @@ const NB_MODULES = [
   FormsModule,
   NbUserModule,
   SharedComponentsModule,
+  RouterModule,
 ];
 const COMPONENTS = [
   HeaderComponent,
   FooterComponent,
+  BreadcrumbComponent,
   SearchInputComponent,
   OneColumnLayoutComponent,
   ThreeColumnsLayoutComponent,

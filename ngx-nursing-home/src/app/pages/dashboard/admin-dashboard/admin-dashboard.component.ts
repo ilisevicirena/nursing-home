@@ -4,6 +4,7 @@ import { hexToRgbA } from "../../../resources/functions";
 import { Subscription } from "rxjs";
 import { SummaryService } from "../../../services/rest/summary.service";
 import { Router } from "@angular/router";
+import { NbThemeService } from "@nebular/theme";
 @Component({
   selector: "sample-admin-dashboard",
   templateUrl: "./admin-dashboard.component.html",
@@ -27,13 +28,20 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
   public employeesByJobPosition: any[] = [];
   public currentEmployee: any;
   public personWithLongestLastVisit: any;
+  public ageDistribution: any[] = [];
+  public occupancyByFloor: any[] = [];
+  public residentsByCondition: any[] = [];
+  public ageDistributionBarOptions: any;
+  public residentsByConditionPieOptions: any;
 
   private _currentEmployeeIndex: number = 0;
   private _subs: Subscription[] = [];
+  private _isDark: boolean = false;
 
   constructor(
     private _summaryService: SummaryService,
-    private _router: Router
+    private _router: Router,
+    private _themeService: NbThemeService
   ) {}
 
   ngOnDestroy() {
@@ -43,6 +51,13 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this._isDark = localStorage.getItem("app-theme") === "dark";
+    this._subs.push(
+      this._themeService.onThemeChange().subscribe((theme) => {
+        this._isDark = theme.name === "dark";
+        this.rebuildCharts();
+      })
+    );
     this.getSummary();
   }
 
@@ -67,7 +82,6 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
 
           if (data.ActivePersons.length > 0) {
             this.summary.ActivePersons = data.ActivePersons;
-            this.setUpEcharts();
           }
 
           if (data.EmployeesByGender.length > 0)
@@ -87,6 +101,17 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
 
           if (data.EmployeesByJobPosition.length > 0)
             this.employeesByJobPosition = data.EmployeesByJobPosition;
+
+          if (data.AgeDistribution?.length > 0)
+            this.ageDistribution = data.AgeDistribution;
+
+          if (data.OccupancyByFloor?.length > 0)
+            this.occupancyByFloor = data.OccupancyByFloor;
+
+          if (data.ResidentsByCondition?.length > 0)
+            this.residentsByCondition = data.ResidentsByCondition;
+
+          this.rebuildCharts();
 
           this.events = data.Events;
 
@@ -135,22 +160,51 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
     return { years: years, months: months, days: days };
   }
 
+  private rebuildCharts(): void {
+    if (this.summary?.ActivePersons) this.setUpEcharts();
+    if (this.ageDistribution?.length) this.setUpAgeChart();
+    if (this.residentsByCondition?.length) this.setUpConditionChart();
+  }
+
+  private get chartTextColor(): string {
+    return this._isDark ? "#e8eef0" : "#222b45";
+  }
+
+  private get chartAxisColor(): string {
+    return this._isDark ? "#8a9aa1" : "#8f9bb3";
+  }
+
+  private get chartSplitColor(): string {
+    return this._isDark ? "#2a3b43" : "#edf1f7";
+  }
+
+  private themedTooltip(extra: any = {}): any {
+    return {
+      confine: true,
+      backgroundColor: this._isDark ? "#1b272d" : "#ffffff",
+      borderColor: this._isDark ? "#32444d" : "#e4e9f2",
+      textStyle: { color: this.chartTextColor },
+      ...extra,
+    };
+  }
+
   private setUpEcharts(): void {
     this.genderPieOptions = {
       legend: {
         top: "bottom",
+        textStyle: { color: this.chartTextColor },
       },
-      tooltip: {
+      tooltip: this.themedTooltip({
         trigger: "item",
         formatter: "{a} <br/>{b} : {c} ({d}%)",
-      },
+      }),
       color: ["#33B9BF", "#10526E"],
       series: [
         {
           name: getString("genderChartTitle"),
           type: "pie",
-          radius: [50, 100],
-          center: ["50%", "50%"],
+          radius: ["40%", "65%"],
+          center: ["50%", "43%"],
           roseType: "area",
           itemStyle: {
             borderRadius: 8,
@@ -167,12 +221,12 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
     };
 
     this.activePersonsBarOptions = {
-      tooltip: {
+      tooltip: this.themedTooltip({
         trigger: "axis",
         axisPointer: {
           type: "shadow",
         },
-      },
+      }),
       grid: {
         left: "3%",
         right: "4%",
@@ -185,9 +239,13 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
         axisTick: {
           alignWithLabel: true,
         },
+        axisLabel: { color: this.chartAxisColor },
+        axisLine: { lineStyle: { color: this.chartAxisColor } },
       },
       yAxis: {
         type: "value",
+        axisLabel: { color: this.chartAxisColor },
+        splitLine: { lineStyle: { color: this.chartSplitColor } },
       },
       series: [
         {
@@ -204,6 +262,66 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
           }),
           barWidth: "60%",
           type: "bar",
+        },
+      ],
+    };
+  }
+
+  private setUpAgeChart(): void {
+    this.ageDistributionBarOptions = {
+      tooltip: this.themedTooltip({
+        trigger: "axis",
+        axisPointer: { type: "shadow" },
+      }),
+      grid: { left: "3%", right: "4%", bottom: "3%", top: "10%", containLabel: true },
+      xAxis: {
+        type: "category",
+        data: this.ageDistribution.map((x) => x.Label),
+        axisTick: { alignWithLabel: true },
+        axisLabel: { color: this.chartAxisColor },
+        axisLine: { lineStyle: { color: this.chartAxisColor } },
+      },
+      yAxis: {
+        type: "value",
+        minInterval: 1,
+        axisLabel: { color: this.chartAxisColor },
+        splitLine: { lineStyle: { color: this.chartSplitColor } },
+      },
+      series: [
+        {
+          name: getString("residents"),
+          data: this.ageDistribution.map((x) => x.Count),
+          barWidth: "55%",
+          type: "bar",
+          itemStyle: { color: "#33B9BF", borderRadius: [4, 4, 0, 0] },
+        },
+      ],
+    };
+  }
+
+  private setUpConditionChart(): void {
+    this.residentsByConditionPieOptions = {
+      legend: {
+        top: "bottom",
+        textStyle: { color: this.chartTextColor },
+      },
+      tooltip: this.themedTooltip({
+        trigger: "item",
+        formatter: "{b} : {c} ({d}%)",
+      }),
+      color: ["#33B9BF", "#2594A4", "#10526E", "#61D8D3", "#197189"],
+      series: [
+        {
+          name: getString("healthCondition"),
+          type: "pie",
+          radius: ["38%", "62%"],
+          center: ["50%", "43%"],
+          itemStyle: { borderRadius: 6 },
+          label: { show: false },
+          data: this.residentsByCondition.map((x) => ({
+            value: x.Count,
+            name: x.Name,
+          })),
         },
       ],
     };

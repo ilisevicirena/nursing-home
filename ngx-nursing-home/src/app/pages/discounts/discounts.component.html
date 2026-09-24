@@ -1,6 +1,12 @@
 <nb-card class="h-100">
   <nb-card-header>
-    {{ getString("discounts") }}
+    <div class="d-flex align-items-center gap-2">
+      <nb-icon pack="eva" icon="pricetags-outline" class="page-header-icon"></nb-icon>
+      <div>
+        <div class="page-header-title">{{ getString("discounts") }}</div>
+        <div class="page-header-subtitle">{{ getString("discountsSubtitle") }}</div>
+      </div>
+    </div>
   </nb-card-header>
   <nb-card-body>
     <div class="h-100">

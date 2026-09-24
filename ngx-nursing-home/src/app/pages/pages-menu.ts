@@ -10,11 +10,6 @@ export const USER_MENU_ITEMS: any[] = [
     link: "/pages/dashboard",
   },
   {
-    title: getString("persons"),
-    link: "/pages/persons",
-    icon: "people-outline",
-  },
-  {
     title: getString("calendar"),
     icon: "calendar-outline",
     link: "/pages/calendar",
@@ -60,6 +55,24 @@ export const ADMIN_MENU_ITEMS: any[] = [
     ],
   },
   {
+    title: getString("accomodationManagement"),
+    icon: "pantone-outline",
+    children: [
+      {
+        title: getString("roomManagement"),
+        link: "/pages/room-management",
+      },
+      {
+        title: getString("accomodationManagementRoom"),
+        link: "/pages/accomodation-management",
+      },
+      {
+        title: getString("furnitureManagement"),
+        link: "/pages/furniture",
+      },
+    ],
+  },
+  {
     title: getString("calendar"),
     icon: "calendar-outline",
     link: "/pages/calendar",
@@ -73,6 +86,20 @@ export const ADMIN_MENU_ITEMS: any[] = [
     title: getString("doctorVisits"),
     icon: "activity-outline",
     link: "/pages/doctor-visits",
+  },
+  {
+    title: "Clinical care",
+    icon: "heart-outline",
+    children: [
+      {
+        title: "Medication administration",
+        link: "/pages/medication-administration",
+      },
+      {
+        title: "Care plans & assessments",
+        link: "/pages/care-plan",
+      },
+    ],
   },
   {
     title: getString("allModules"),
@@ -103,6 +130,11 @@ export const NURSE_MENU_ITEMS: any[] = [
     ],
   },
   {
+    title: getString("accomodationManagementRoom"),
+    icon: "pantone-outline",
+    link: "/pages/accomodation-management",
+  },
+  {
     title: getString("calendar"),
     icon: "calendar-outline",
     link: "/pages/calendar",
@@ -119,9 +151,28 @@ export const NURSE_MENU_ITEMS: any[] = [
     component: StartDoctorVisitTourComponent,
   },
   {
+    title: "Clinical care",
+    icon: "heart-outline",
+    children: [
+      {
+        title: "Medication administration",
+        link: "/pages/medication-administration",
+      },
+      {
+        title: "Care plans & assessments",
+        link: "/pages/care-plan",
+      },
+    ],
+  },
+  {
     title: getString("vacation"),
     icon: "smiling-face-outline",
     link: "/pages/employee-vacations",
+  },
+  {
+    title: getString("myData"),
+    icon: "person-outline",
+    link: "/pages/my-data",
   },
 ];
 
@@ -171,6 +222,10 @@ export const MENU_ITEMS: any[] = [
       {
         title: getString("users"),
         link: "/pages/users",
+      },
+      {
+        title: "Audit log",
+        link: "/pages/audit-log",
       },
     ],
   },
@@ -254,6 +309,22 @@ export const MENU_ITEMS: any[] = [
       {
         title: getString("startDoctorVisit"),
         component: StartDoctorVisitTourComponent,
+      },
+    ],
+  },
+  {
+    title: "Clinical care",
+    icon: "heart-outline",
+    color: "#e0407b",
+    subtitle: "Medication records & resident assessments",
+    children: [
+      {
+        title: "Medication administration",
+        link: "/pages/medication-administration",
+      },
+      {
+        title: "Care plans & assessments",
+        link: "/pages/care-plan",
       },
     ],
   },

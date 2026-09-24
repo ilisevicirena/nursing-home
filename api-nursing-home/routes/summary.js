@@ -9,7 +9,7 @@ router.get("/getDashboardSummary", async (request, response) => {
     const result = await pool
       .request()
       .query("EXEC [dbo].[getDashboardSummary]");
-    if (result.recordsets.length == 10)
+    if (result.recordsets.length == 13)
       response.json({
         Summary: result.recordsets[0],
         Events: result.recordsets[1],
@@ -21,6 +21,9 @@ router.get("/getDashboardSummary", async (request, response) => {
         Employees: result.recordsets[7],
         EmployeesByJobPosition: result.recordsets[8],
         PersonWithLongestLastVisit: result.recordsets[9],
+        AgeDistribution: result.recordsets[10],
+        OccupancyByFloor: result.recordsets[11],
+        ResidentsByCondition: result.recordsets[12],
       });
     else response.send(getError(60001));
   } catch (err) {

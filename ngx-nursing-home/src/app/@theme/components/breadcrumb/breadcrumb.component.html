@@ -1,0 +1,48 @@
+<nav class="ngx-breadcrumb" aria-label="breadcrumb">
+  <a class="crumb crumb-home" [routerLink]="homeUrl" [class.active]="isHome">
+    <nb-icon pack="eva" icon="home-outline"></nb-icon>
+  </a>
+
+  <ng-container *ngFor="let crumb of crumbs">
+    <nb-icon class="separator" pack="eva" icon="chevron-right-outline"></nb-icon>
+
+    <!-- module crumb: not navigable; hover/focus reveals the module's pages -->
+    <span
+      *ngIf="crumb.isModule; else pageCrumb"
+      class="crumb crumb-module"
+      [class.has-menu]="crumb.children?.length"
+      tabindex="0"
+    >
+      <span class="crumb-label">{{ crumb.label }}</span>
+      <nb-icon
+        *ngIf="crumb.children?.length"
+        class="caret"
+        pack="eva"
+        icon="chevron-down-outline"
+      ></nb-icon>
+
+      <div class="crumb-menu" *ngIf="crumb.children?.length">
+        <a
+          *ngFor="let child of crumb.children"
+          class="crumb-menu-item"
+          [class.active]="child.active"
+          [routerLink]="child.url"
+          >{{ child.label }}</a
+        >
+      </div>
+    </span>
+
+    <ng-template #pageCrumb>
+      <a
+        *ngIf="!crumb.isLast && crumb.url"
+        class="crumb"
+        [routerLink]="crumb.url"
+        >{{ crumb.label }}</a
+      >
+      <span *ngIf="crumb.isLast" class="crumb active">{{ crumb.label }}</span>
+      <span *ngIf="!crumb.isLast && !crumb.url" class="crumb crumb-static">{{
+        crumb.label
+      }}</span>
+    </ng-template>
+  </ng-container>
+</nav>

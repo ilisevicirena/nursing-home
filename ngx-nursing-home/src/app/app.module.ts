@@ -23,6 +23,7 @@ import {
 import { CommonModule, registerLocaleData } from "@angular/common";
 import { SharedComponentsModule, TranslationService } from "shared-components";
 import hr from "@angular/common/locales/hr";
+import en from "@angular/common/locales/en";
 import { InterceptorService } from "./services/interceptor.service";
 import { DemoInterceptor } from "./@core/demo/demo.interceptor";
 import { ConfigLoader, ConfigService } from "./services/config.service";
@@ -32,6 +33,7 @@ import { environment } from "../environments/environment";
 import { AuthService } from "./services/auth.service";
 
 registerLocaleData(hr);
+registerLocaleData(en);
 
 // load translation for shared-components from app file
 export function translationLoader(translationService: TranslationService) {
@@ -69,7 +71,7 @@ export function translationLoader(translationService: TranslationService) {
   bootstrap: [AppComponent],
   providers: [
     AuthService,
-    { provide: LOCALE_ID, useValue: "hr" },
+    { provide: LOCALE_ID, useValue: environment.locale },
     // Demo Mode: registered FIRST so it can short-circuit API calls with seeded data.
     // No-op when environment.demo is false (normal/production builds).
     { provide: HTTP_INTERCEPTORS, useClass: DemoInterceptor, multi: true },

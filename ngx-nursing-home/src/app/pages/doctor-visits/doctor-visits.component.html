@@ -1,6 +1,12 @@
 <nb-card class="h-100 m-0">
   <nb-card-header>
-    {{ getString("doctorVisits") }}
+    <div class="d-flex align-items-center gap-2">
+      <nb-icon pack="eva" icon="activity-outline" class="header-icon"></nb-icon>
+      <div>
+        <div class="header-title">{{ getString("doctorVisits") }}</div>
+        <div class="header-subtitle">{{ getString("doctorVisitsSubtitle") }}</div>
+      </div>
+    </div>
   </nb-card-header>
   <nb-card-body>
     <div class="h-100">

@@ -32,7 +32,18 @@ import { PageNotFoundComponent } from "./page-not-found/page-not-found.component
 import { UserRole } from "../services/auth.service";
 import { MyProfileComponent } from "./my-profile/my-profile.component";
 import { EmployeeVacationsComponent } from "./employee/employee-vacations/employee-vacations.component";
+import { MedicationAdministrationComponent } from "./medication-administration/medication-administration.component";
+import { CarePlanComponent } from "./care-plan/care-plan.component";
+import { AuditLogComponent } from "./audit-log/audit-log.component";
+import { MyDataComponent } from "./my-data/my-data.component";
 
+// Breadcrumb metadata carried in route `data` (read by BreadcrumbComponent):
+//   breadcrumb : label for this page (translation key, or a literal phrase with spaces)
+//   module     : module/group this page belongs to -> renders "home > module > page",
+//                the module crumb is non-navigable and reveals its pages on hover.
+//                Value is a translation key (matches a MENU_ITEMS group title) or a literal.
+//   parent     : base path of a logical parent PAGE for drill-downs (e.g. profile -> persons)
+//                -> renders "home > persons > profile". Takes precedence over `module`.
 const routes: Routes = [
   {
     path: "",
@@ -41,6 +52,7 @@ const routes: Routes = [
       {
         path: "dashboard",
         component: DashboardComponent,
+        data: { breadcrumb: "dashboard" },
       },
       {
         path: "page-not-found",
@@ -56,6 +68,8 @@ const routes: Routes = [
         component: RoomManagementComponent,
         data: {
           Roles: [UserRole.ADMIN],
+          breadcrumb: "roomManagement",
+          module: "accomodationManagement",
         },
       },
       {
@@ -67,8 +81,9 @@ const routes: Routes = [
             UserRole.NURSE,
             UserRole.CAREGIVER,
             UserRole.DOCTOR,
-            UserRole.USER,
           ],
+          breadcrumb: "persons",
+          module: "personsManagement",
         },
       },
       {
@@ -76,32 +91,54 @@ const routes: Routes = [
         component: NewPersonComponent,
         data: {
           Roles: [UserRole.ADMIN],
+          breadcrumb: "addPerson",
+          module: "personsManagement",
         },
       },
       {
         path: "accomodation-management",
         component: AccomodationManagementComponent,
         data: {
-          Roles: [UserRole.ADMIN],
+          Roles: [
+            UserRole.ADMIN,
+            UserRole.NURSE,
+            UserRole.DOCTOR,
+            UserRole.CAREGIVER,
+          ],
+          breadcrumb: "accomodationManagementRoom",
+          module: "accomodationManagement",
         },
       },
       {
         path: "advanced-search/:search",
         component: AdvancedSearchComponent,
+        data: {
+          Roles: [UserRole.ADMIN, UserRole.NURSE, UserRole.CAREGIVER, UserRole.DOCTOR],
+          breadcrumb: "searchPersons",
+          module: "personsManagement",
+        },
       },
       {
         path: "advanced-search",
         component: AdvancedSearchComponent,
+        data: {
+          Roles: [UserRole.ADMIN, UserRole.NURSE, UserRole.CAREGIVER, UserRole.DOCTOR],
+          breadcrumb: "searchPersons",
+          module: "personsManagement",
+        },
       },
       {
         path: "profile/:id",
         component: ProfileComponent,
+        data: { breadcrumb: "profile", parent: "persons" },
       },
       {
         path: "services",
         component: ServicesComponent,
         data: {
           Roles: [UserRole.ADMIN],
+          breadcrumb: "servicesSingle",
+          module: "servicesManagement",
         },
       },
       {
@@ -109,6 +146,8 @@ const routes: Routes = [
         component: PackagesComponent,
         data: {
           Roles: [UserRole.ADMIN],
+          breadcrumb: "packages",
+          module: "servicesManagement",
         },
       },
       {
@@ -116,6 +155,8 @@ const routes: Routes = [
         component: DiscountsComponent,
         data: {
           Roles: [UserRole.ADMIN],
+          breadcrumb: "discounts",
+          module: "servicesManagement",
         },
       },
       {
@@ -123,25 +164,32 @@ const routes: Routes = [
         component: ServicesManagementComponent,
         data: {
           Roles: [UserRole.ADMIN],
+          breadcrumb: "servicesManagementSingle",
+          module: "servicesManagement",
         },
       },
       {
         path: "notifications",
         component: NotificationsComponent,
+        data: { breadcrumb: "notifications" },
       },
       {
         path: "notifications-settings",
         component: NotificationsSettingsComponent,
+        data: { breadcrumb: "notificationsSettings", parent: "notifications" },
       },
       {
         path: "calendar",
         component: CalendarComponent,
+        data: { breadcrumb: "calendar" },
       },
       {
         path: "doctor-visit-tour/:id",
         component: DoctorVisitTourComponent,
         data: {
           Roles: [UserRole.ADMIN, UserRole.NURSE],
+          breadcrumb: "doctorVisitTour",
+          parent: "doctor-visits",
         },
       },
       {
@@ -149,6 +197,7 @@ const routes: Routes = [
         component: CalculationComponent,
         data: {
           Roles: [UserRole.ADMIN],
+          breadcrumb: "calculationPage",
         },
       },
       {
@@ -156,6 +205,8 @@ const routes: Routes = [
         component: TagsComponent,
         data: {
           Roles: [UserRole.ADMIN],
+          breadcrumb: "tagsManagement",
+          module: "codebooks",
         },
       },
       {
@@ -163,6 +214,8 @@ const routes: Routes = [
         component: CitiesComponent,
         data: {
           Roles: [UserRole.ADMIN],
+          breadcrumb: "cities",
+          module: "codebooks",
         },
       },
       {
@@ -170,6 +223,8 @@ const routes: Routes = [
         component: MunicipalitiesComponent,
         data: {
           Roles: [UserRole.ADMIN],
+          breadcrumb: "municipalities",
+          module: "codebooks",
         },
       },
       {
@@ -177,6 +232,8 @@ const routes: Routes = [
         component: EmployeesComponent,
         data: {
           Roles: [UserRole.ADMIN],
+          breadcrumb: "employees",
+          module: "employeesManagement",
         },
       },
       {
@@ -184,6 +241,8 @@ const routes: Routes = [
         component: NewEmployeeComponent,
         data: {
           Roles: [UserRole.ADMIN],
+          breadcrumb: "addEmployee",
+          module: "employeesManagement",
         },
       },
       {
@@ -191,6 +250,8 @@ const routes: Routes = [
         component: EmployeeComponent,
         data: {
           Roles: [UserRole.ADMIN],
+          breadcrumb: "employee",
+          parent: "employees",
         },
       },
       {
@@ -198,6 +259,8 @@ const routes: Routes = [
         component: CategoriesComponent,
         data: {
           Roles: [UserRole.ADMIN],
+          breadcrumb: "categories",
+          module: "codebooks",
         },
       },
       {
@@ -205,6 +268,7 @@ const routes: Routes = [
         component: DoctorVisitsComponent,
         data: {
           Roles: [UserRole.ADMIN, UserRole.NURSE],
+          breadcrumb: "doctorVisits",
         },
       },
       {
@@ -212,6 +276,8 @@ const routes: Routes = [
         component: FurnitureStatusesComponent,
         data: {
           Roles: [UserRole.ADMIN],
+          breadcrumb: "furnitureStatuses",
+          module: "codebooks",
         },
       },
       {
@@ -219,6 +285,8 @@ const routes: Routes = [
         component: FurnitureComponent,
         data: {
           Roles: [UserRole.ADMIN],
+          breadcrumb: "furnitureManagement",
+          module: "accomodationManagement",
         },
       },
       {
@@ -226,11 +294,73 @@ const routes: Routes = [
         component: UsersComponent,
         data: {
           Roles: [UserRole.ADMIN],
+          breadcrumb: "users",
+          module: "usersManagement",
         },
       },
       {
         path: "my-profile",
         component: MyProfileComponent,
+        data: { breadcrumb: "myProfile" },
+      },
+      {
+        path: "my-data",
+        component: MyDataComponent,
+        data: {
+          Roles: [
+            UserRole.NURSE,
+            UserRole.DOCTOR,
+            UserRole.CAREGIVER,
+            UserRole.COOK,
+            UserRole.OTHER_STUFF,
+          ],
+          breadcrumb: "myData",
+        },
+      },
+      {
+        path: "medication-administration/:id",
+        component: MedicationAdministrationComponent,
+        data: {
+          Roles: [UserRole.ADMIN, UserRole.NURSE, UserRole.DOCTOR],
+          breadcrumb: "Medication administration",
+          module: "Clinical care",
+        },
+      },
+      {
+        path: "medication-administration",
+        component: MedicationAdministrationComponent,
+        data: {
+          Roles: [UserRole.ADMIN, UserRole.NURSE, UserRole.DOCTOR],
+          breadcrumb: "Medication administration",
+          module: "Clinical care",
+        },
+      },
+      {
+        path: "care-plan/:id",
+        component: CarePlanComponent,
+        data: {
+          Roles: [UserRole.ADMIN, UserRole.NURSE, UserRole.DOCTOR],
+          breadcrumb: "Care plans & assessments",
+          module: "Clinical care",
+        },
+      },
+      {
+        path: "care-plan",
+        component: CarePlanComponent,
+        data: {
+          Roles: [UserRole.ADMIN, UserRole.NURSE, UserRole.DOCTOR],
+          breadcrumb: "Care plans & assessments",
+          module: "Clinical care",
+        },
+      },
+      {
+        path: "audit-log",
+        component: AuditLogComponent,
+        data: {
+          Roles: [UserRole.ADMIN],
+          breadcrumb: "Audit log",
+          module: "usersManagement",
+        },
       },
       {
         path: "employee-vacations",
@@ -243,6 +373,7 @@ const routes: Routes = [
             UserRole.COOK,
             UserRole.OTHER_STUFF,
           ],
+          breadcrumb: "vacation",
         },
       },
     ],

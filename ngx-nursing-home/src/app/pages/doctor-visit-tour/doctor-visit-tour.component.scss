@@ -7,7 +7,7 @@
 
 @include nb-install-component {
   .person-card {
-    background-color: nb-theme(color-basic-300);
+    background-color: nb-theme(background-basic-color-3);
   }
 
   .person-card:hover {

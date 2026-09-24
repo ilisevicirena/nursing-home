@@ -5,18 +5,18 @@
     .discount-card {
       border-radius: 0.5rem;
       border: 1px solid nb-theme(color-basic-500);
-      background-color: nb-theme(color-basic-200);
+      background-color: nb-theme(background-basic-color-2);
       padding: 0.5rem;
 
       .name {
         font-weight: 600;
         font-size: 16px;
-        color: nb-theme(color-basic-600);
+        color: nb-theme(text-basic-color);
       }
 
       .name-subtitle {
         font-size: 12px;
-        color: nb-theme(color-basic-700);
+        color: nb-theme(text-hint-color);
         font-weight: 600;
       }
     }

@@ -1,0 +1,171 @@
+@import "../../@theme/styles/themes";
+
+@include nb-install-component() {
+  .mar-card {
+    height: 100%;
+    margin: 0;
+  }
+
+  .header-icon {
+    font-size: 1.8rem;
+    color: nb-theme(color-primary-500);
+  }
+
+  .mar-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: nb-theme(text-basic-color);
+    line-height: 1.2;
+  }
+  .mar-subtitle {
+    font-size: 0.75rem;
+    color: nb-theme(text-hint-color);
+  }
+
+  .date-nav .date-label {
+    font-size: 0.82rem;
+    font-weight: 600;
+    min-width: 12rem;
+    text-align: center;
+    color: nb-theme(text-basic-color);
+  }
+
+  // summary stats
+  .mar-summary .stat {
+    background-color: nb-theme(background-basic-color-2);
+    border-radius: 0.5rem;
+    padding: 0.5rem 1.1rem;
+    min-width: 6rem;
+    text-align: center;
+
+    .stat-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      line-height: 1.1;
+    }
+    .stat-label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      color: nb-theme(text-hint-color);
+    }
+    &.adherence {
+      margin-left: auto;
+    }
+  }
+
+  // schedule table
+  .table-wrap {
+    overflow-x: auto;
+  }
+  .mar-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 0.85rem;
+
+    th,
+    td {
+      border-bottom: 1px solid nb-theme(divider-color);
+      padding: 0.5rem 0.65rem;
+      vertical-align: middle;
+    }
+
+    thead th {
+      position: sticky;
+      top: 0;
+      background-color: nb-theme(background-basic-color-2);
+      color: nb-theme(text-hint-color);
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      text-align: center;
+      white-space: nowrap;
+
+      nb-icon {
+        vertical-align: middle;
+        margin-right: 0.25rem;
+        color: nb-theme(color-primary-500);
+      }
+      &.med-col {
+        text-align: left;
+      }
+    }
+
+    .med-col {
+      text-align: left;
+      min-width: 12rem;
+    }
+    .med-name {
+      font-weight: 600;
+      color: nb-theme(text-basic-color);
+    }
+    .med-dose {
+      font-size: 0.74rem;
+      color: nb-theme(text-hint-color);
+    }
+
+    .slot-cell {
+      text-align: center;
+    }
+    .slot-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.25rem;
+    }
+    .slot-time {
+      font-size: 0.68rem;
+      color: nb-theme(text-hint-color);
+    }
+    .slot-actions {
+      display: flex;
+      gap: 0.35rem;
+    }
+    .not-scheduled {
+      color: nb-theme(text-disabled-color);
+    }
+  }
+
+  // dose toggle buttons
+  .dose-btn {
+    width: 1.9rem;
+    height: 1.9rem;
+    border-radius: 50%;
+    border: 1.5px solid nb-theme(divider-color);
+    background: transparent;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.13s ease;
+
+    nb-icon {
+      font-size: 1rem;
+      color: nb-theme(text-hint-color);
+    }
+
+    &.given:hover,
+    &.given.active {
+      border-color: nb-theme(color-success-500);
+      background-color: nb-theme(color-success-500);
+      nb-icon {
+        color: #fff;
+      }
+    }
+    &.missed:hover,
+    &.missed.active {
+      border-color: nb-theme(color-danger-500);
+      background-color: nb-theme(color-danger-500);
+      nb-icon {
+        color: #fff;
+      }
+    }
+  }
+
+  .slot-status {
+    position: static;
+    text-transform: capitalize;
+    font-size: 0.62rem;
+  }
+}

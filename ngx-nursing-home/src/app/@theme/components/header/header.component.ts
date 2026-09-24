@@ -15,7 +15,7 @@ import { Subscription } from "rxjs";
 import { getString } from "../../../resources/strings";
 import { Router } from "@angular/router";
 import { NotificationsService } from "../../../services/rest/notifications.service";
-import { AuthService, IUser } from "../../../services/auth.service";
+import { AuthService, IUser, UserRole } from "../../../services/auth.service";
 
 @Component({
   selector: "ngx-header",
@@ -27,6 +27,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
   public hasNotifications: boolean = false;
   public searchTerm: string = "";
   public user: IUser;
+  public currentTheme: string = "default";
+
+  // the plain "User" role only sees its own residents — no global person search
+  public get canSearchPersons(): boolean {
+    return !this.authService.checkUserHasRole(UserRole.USER);
+  }
 
   private subs: Subscription[] = [];
 
@@ -45,6 +51,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.checkNotifications();
     this.user = this.authService.getUser();
 
+    // restore the saved theme (default | dark)
+    this.currentTheme = localStorage.getItem("app-theme") || "default";
+    this.themeService.changeTheme(this.currentTheme);
+
     this.themeService.onMediaQueryChange().subscribe((data) => {
       setTimeout(() => {
         if (data[1].name == "xs" || data[1].name == "is")
@@ -58,6 +68,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.subs.forEach((element) => {
       element.unsubscribe();
     });
+  }
+
+  public toggleTheme(): void {
+    this.currentTheme = this.currentTheme === "dark" ? "default" : "dark";
+    this.themeService.changeTheme(this.currentTheme);
+    localStorage.setItem("app-theme", this.currentTheme);
   }
 
   public toggleSidebar(): boolean {

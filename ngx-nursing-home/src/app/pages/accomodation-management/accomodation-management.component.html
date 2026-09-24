@@ -2,137 +2,257 @@
   *ngIf="mainSource.length == 0"
   [title]="getString('noData')"
 ></sample-no-data>
-<div class="row h-100" *ngIf="mainSource.length > 0">
-  <div class="col-md-3 p-0 h-100" *ngIf="showSidepanel">
-    <nb-card class="h-100">
-      <nb-card-header> {{ getString("peopleWithoutRoom") }} </nb-card-header>
-      <nb-card-body
-        id="no-room"
-        cdkDropList
-        [cdkDropListData]="noRoomPersons"
-        (cdkDropListDropped)="drop($event)"
-        [cdkDropListConnectedTo]="getConnectedTo()"
-      >
-        <div class="row m-0" *ngFor="let person of noRoomPersons">
-          <ngx-tag
-            cdkDrag
-            [cdkDragData]="person"
-            [icon]="person.GenderId == 2 ? 'fas fa-female' : 'fas fa-male'"
-            [text]="person.FirstName + ' ' + person.LastName"
-            shape="round"
-            class="mb-2"
-          ></ngx-tag>
-        </div>
-      </nb-card-body>
-      <nb-card-footer>
-        <div class="form-group">
-          <div class="label d-flex align-items-center">
-            {{ getString("allowDifferentGenderPersonsInRoom") }}
-            <nb-toggle
-              class="ms-2"
-              name="allowDifferenGenders"
-              [(checked)]="allowDifferentGenders"
-              (checkedChange)="allowDifferenGendersChange()"
-            ></nb-toggle>
-            <button
-              nbButton
-              ghost
-              status="info"
-              class="ms-2"
-              size="small"
-              shape="round"
-              [nbPopover]="statusInformationPopover"
-              nbPopoverTrigger="click"
-              nbPopoverPlacement="top"
-            >
-              <nb-icon pack="eva" icon="info-outline"></nb-icon>
-            </button>
-          </div>
-        </div>
-      </nb-card-footer>
-    </nb-card>
+
+<div class="occupancy-wrap h-100 d-flex flex-column" *ngIf="mainSource.length > 0">
+  <!-- ============================ KPI BAR ============================ -->
+  <div class="kpi-bar">
+    <div class="kpi occupancy">
+      <div class="kpi-ring" [class.high]="occupancyPct >= 90" [class.mid]="occupancyPct >= 70 && occupancyPct < 90">
+        {{ occupancyPct }}%
+      </div>
+      <div class="kpi-label">Occupancy</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-value">{{ occupiedBeds }}<span class="of">/{{ totalBeds }}</span></div>
+      <div class="kpi-label">Beds occupied</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-value text-success">{{ freeBeds }}</div>
+      <div class="kpi-label">Free beds</div>
+    </div>
+    <div class="kpi" *ngIf="canEdit">
+      <div class="kpi-value" [class.text-warning]="noRoomPersons.length > 0">{{ noRoomPersons.length }}</div>
+      <div class="kpi-label">Unassigned</div>
+    </div>
+
+    <div class="floor-chips">
+      <div class="floor-chip" *ngFor="let floor of mainSource">
+        <span class="fc-name">{{ floor?.Name }}</span>
+        <span class="fc-stat" [class.text-danger]="floorStats(floor).pct >= 90">
+          {{ floorStats(floor).occ }}/{{ floorStats(floor).cap }}
+        </span>
+      </div>
+    </div>
+
+    <div class="ms-auto d-flex align-items-center gap-2">
+      <nb-button-group size="small" (valueChange)="onViewChange($event)">
+        <button nbButtonToggle value="plan" [pressed]="viewMode === 'plan'">
+          <nb-icon pack="eva" icon="grid-outline"></nb-icon>
+        </button>
+        <button nbButtonToggle value="list" [pressed]="viewMode === 'list'">
+          <nb-icon pack="eva" icon="list-outline"></nb-icon>
+        </button>
+      </nb-button-group>
+    </div>
   </div>
-  <div class="col pe-0 pb-0 h-100 floors" style="position: relative">
-    <button
-      nbButton
-      status="basic"
-      shape="round"
-      class="toggle-btn"
-      (click)="toggleSidepanel()"
-    >
-      <nb-icon
-        pack="eva"
-        [icon]="
-          showSidepanel ? 'chevron-left-outline' : 'chevron-right-outline'
-        "
-        status="primary"
-      ></nb-icon>
-    </button>
-    <div class="h-100 overflow-auto">
-      <div
-        class="row"
-        style="height: calc(100% - 1rem)"
-        *ngFor="let floor of mainSource"
-      >
-        <nb-card class="m-0 h-100 pb-2">
+
+  <!-- selected-person banner (click-to-assign mode) -->
+  <div class="assign-banner" *ngIf="selectedPerson">
+    <nb-icon pack="eva" icon="move-outline"></nb-icon>
+    Assigning <b>{{ selectedPerson.FirstName }} {{ selectedPerson.LastName }}</b> —
+    click a highlighted room, or
+    <button nbButton ghost size="tiny" shape="round" status="basic" (click)="assignSelectedToNoRoom()">unassign</button>
+    <button nbButton ghost size="tiny" shape="round" status="basic" (click)="clearSelection()">cancel</button>
+  </div>
+
+  <!-- ============================ BODY ============================ -->
+  <div class="row flex-grow-1 board-body">
+    <!-- sidepanel: unassigned residents (edit mode only) -->
+    <div class="col-md-3 p-0 h-100" *ngIf="showSidepanel && canEdit">
+      <nb-card class="h-100 m-0">
+        <nb-card-header>
+          {{ getString("peopleWithoutRoom") }}
+          <nb-badge [text]="noRoomPersons.length" status="warning" *ngIf="noRoomPersons.length"></nb-badge>
+        </nb-card-header>
+        <div class="sidepanel-search">
+          <nb-form-field>
+            <nb-icon nbPrefix pack="eva" icon="search-outline"></nb-icon>
+            <input nbInput fullWidth fieldSize="small" shape="round"
+              placeholder="Search residents" [(ngModel)]="searchTerm" />
+          </nb-form-field>
+        </div>
+        <nb-card-body
+          id="no-room"
+          cdkDropList
+          [cdkDropListData]="noRoomPersons"
+          (cdkDropListDropped)="drop($event)"
+          [cdkDropListConnectedTo]="getConnectedTo()"
+        >
+          <div class="row m-0" *ngFor="let person of filteredNoRoom">
+            <ngx-tag
+              cdkDrag
+              [cdkDragData]="person"
+              (cdkDragStarted)="dragStarted(person)"
+              (cdkDragEnded)="dragEnded()"
+              (click)="selectPerson(person, $event)"
+              [class.selected]="isSelected(person)"
+              [icon]="person.GenderId == 2 ? 'fas fa-female' : 'fas fa-male'"
+              [text]="person.FirstName + ' ' + person.LastName"
+              shape="round"
+              class="mb-2 person-chip"
+            ></ngx-tag>
+          </div>
+          <div class="empty-hint" *ngIf="filteredNoRoom.length === 0">
+            {{ noRoomPersons.length === 0 ? "Everyone is assigned to a room." : "No matching residents." }}
+          </div>
+        </nb-card-body>
+        <nb-card-footer>
+          <div class="form-group">
+            <div class="label d-flex align-items-center">
+              {{ getString("allowDifferentGenderPersonsInRoom") }}
+              <nb-toggle class="ms-2" name="allowDifferenGenders"
+                [(checked)]="allowDifferentGenders"
+                (checkedChange)="allowDifferenGendersChange()"></nb-toggle>
+              <button nbButton ghost status="info" class="ms-2" size="small" shape="round"
+                [nbPopover]="statusInformationPopover" nbPopoverTrigger="click" nbPopoverPlacement="top">
+                <nb-icon pack="eva" icon="info-outline"></nb-icon>
+              </button>
+            </div>
+          </div>
+        </nb-card-footer>
+      </nb-card>
+    </div>
+
+    <!-- floors -->
+    <div class="col pe-0 pb-0 h-100 floors" style="position: relative">
+      <button nbButton status="basic" shape="round" class="toggle-btn" *ngIf="canEdit" (click)="toggleSidepanel()">
+        <nb-icon pack="eva" [icon]="showSidepanel ? 'chevron-left-outline' : 'chevron-right-outline'" status="primary"></nb-icon>
+      </button>
+
+      <!-- legend -->
+      <div class="legend">
+        <span class="lg empty">Free</span>
+        <span class="lg partial">Partly full</span>
+        <span class="lg full">Full</span>
+      </div>
+
+      <!-- ---------------- PLAN VIEW ---------------- -->
+      <div class="h-100 overflow-auto" *ngIf="viewMode === 'plan'">
+        <div class="row" style="height: calc(100% - 1rem)" *ngFor="let floor of mainSource">
+          <nb-card class="m-0 h-100 pb-2">
+            <nb-card-header>{{ floor?.Name }}</nb-card-header>
+            <nb-card-body>
+              <div class="ground-plan-container">
+                <div class="room" *ngFor="let r of floor?.Rooms"
+                  [style.height]="r.Height + 'px'"
+                  [style.width]="r.Width + 'px'"
+                  [style.top]="r.Top + 'px'"
+                  [style.left]="r.Left + 'px'">
+                  <div class="room-inside" [ngClass]="'state-' + roomState(r)"
+                    [class.valid-target]="highlightPerson && canAccept(r, highlightPerson)"
+                    [class.invalid-target]="highlightPerson && !canAccept(r, highlightPerson) && highlightPerson.RoomId !== r.Id"
+                    [class.selectable]="selectedPerson"
+                    cdkDropList
+                    [cdkDropListDisabled]="!canEdit"
+                    [cdkDropListEnterPredicate]="checkCanDropInList"
+                    [id]="'drop-room-' + r.Id"
+                    [cdkDropListConnectedTo]="getConnectedTo()"
+                    [cdkDropListData]="[r]"
+                    (cdkDropListDropped)="drop($event)"
+                    (click)="canEdit && selectedPerson && assignSelectedToRoom(r)">
+                    <div class="room-top">
+                      <span class="room-name">{{ r.Name }}</span>
+                      <span class="room-badges">
+                        <i class="gender-badge" [ngClass]="genderIcon(r)"
+                          [nbTooltip]="genderLabel(r) + ' room'"></i>
+                        <button class="room-info" [nbPopover]="roomDetail" nbPopoverTrigger="click"
+                          nbPopoverPlacement="top" (click)="$event.stopPropagation()">
+                          <nb-icon pack="eva" icon="info-outline"></nb-icon>
+                        </button>
+                      </span>
+                    </div>
+
+                    <div class="room-persons">
+                      <ngx-tag *ngFor="let person of r.People"
+                        cdkDrag shape="round"
+                        [cdkDragDisabled]="!canEdit"
+                        [cdkDragData]="person"
+                        (cdkDragStarted)="dragStarted(person)"
+                        (cdkDragEnded)="dragEnded()"
+                        (click)="canEdit && selectPerson(person, $event)"
+                        [class.selected]="isSelected(person)"
+                        class="person-chip"
+                        [icon]="person.GenderId == 2 ? 'fas fa-female' : 'fas fa-male'"
+                        [text]="person.FirstName + ' ' + person.LastName"></ngx-tag>
+                    </div>
+
+                    <div class="room-bottom">
+                      <div class="bed-dots">
+                        <span class="bed" *ngFor="let filled of bedArray(r)" [class.filled]="filled"></span>
+                      </div>
+                      <div class="room-capacity" [ngClass]="'text-' + roomStatus(r)">
+                        <nb-icon pack="eva" icon="people-outline" [status]="roomStatus(r)"></nb-icon>
+                        {{ r.TakenSpace }}/{{ r.Capacity }}
+                      </div>
+                    </div>
+                  </div>
+
+                  <ng-template #roomDetail>
+                    <nb-card class="m-0 card-no-border room-detail-card">
+                      <nb-card-body>
+                        <div class="rd-title">{{ r.Name }}</div>
+                        <div class="rd-line">{{ r.AccommodationTypeName || (genderLabel(r) + " room") }} · {{ genderLabel(r) }}</div>
+                        <div class="rd-line">Occupancy: <b>{{ r.TakenSpace }}/{{ r.Capacity }}</b> ({{ roomState(r) }})</div>
+                        <div class="rd-occupants" *ngIf="r.People.length">
+                          <div *ngFor="let p of r.People">• {{ p.FirstName }} {{ p.LastName }}
+                            <span class="rd-cond" *ngIf="p.HealthConditionName">— {{ p.HealthConditionName }}</span>
+                          </div>
+                        </div>
+                        <div class="rd-empty" *ngIf="!r.People.length">No residents assigned.</div>
+                      </nb-card-body>
+                    </nb-card>
+                  </ng-template>
+                </div>
+              </div>
+            </nb-card-body>
+          </nb-card>
+        </div>
+      </div>
+
+      <!-- ---------------- LIST VIEW ---------------- -->
+      <div class="h-100 overflow-auto list-view" *ngIf="viewMode === 'list'">
+        <nb-card class="m-0 mb-2" *ngFor="let floor of mainSource">
           <nb-card-header>
             {{ floor?.Name }}
+            <span class="floor-occ">{{ floorStats(floor).occ }}/{{ floorStats(floor).cap }} beds</span>
           </nb-card-header>
           <nb-card-body>
-            <div class="ground-plan-container">
-              <div
-                class="room"
-                *ngFor="let r of floor?.Rooms"
-                [style.height]="r.Height + 'px'"
-                [style.width]="r.Width + 'px'"
-                [style.top]="r.Top + 'px'"
-                [style.left]="r.Left + 'px'"
-              >
-                <div
-                  class="room-inside"
-                  cdkDropList
-                  [cdkDropListEnterPredicate]="checkCanDropInList"
-                  [id]="'drop-room-' + r.Id"
-                  [cdkDropListConnectedTo]="getConnectedTo()"
-                  [cdkDropListData]="[r]"
-                  (cdkDropListDropped)="drop($event)"
-                >
-                  <div class="room-name">{{ r.Name }}</div>
-                  <div class="room-persons">
-                    <ngx-tag
-                      *ngFor="let person of r.People"
-                      cdkDrag
-                      shape="round"
-                      [cdkDragData]="person"
-                      [icon]="
-                        person.GenderId == 2 ? 'fas fa-female' : 'fas fa-male'
-                      "
-                      [text]="person.FirstName + ' ' + person.LastName"
-                    ></ngx-tag>
-                  </div>
-                  <div
-                    class="room-capacity"
-                    [ngClass]="
-                      r.Capacity == 0
-                        ? ''
-                        : r.Capacity == r.TakenSpace
-                        ? 'text-danger'
-                        : 'text-success'
-                    "
-                  >
-                    <nb-icon
-                      pack="eva"
-                      icon="people-outline"
-                      [status]="
-                        r.Capacity == 0
-                          ? 'primary'
-                          : r.Capacity == r.TakenSpace
-                          ? 'danger'
-                          : 'success'
-                      "
-                    ></nb-icon>
-                    {{ r.TakenSpace }}/{{ r.Capacity }}
-                  </div>
+            <div class="room-list">
+              <div class="room-row" *ngFor="let r of floor?.Rooms"
+                [ngClass]="'state-' + roomState(r)"
+                [class.valid-target]="highlightPerson && canAccept(r, highlightPerson)"
+                [class.invalid-target]="highlightPerson && !canAccept(r, highlightPerson) && highlightPerson.RoomId !== r.Id"
+                [class.selectable]="selectedPerson"
+                cdkDropList
+                [cdkDropListDisabled]="!canEdit"
+                [cdkDropListEnterPredicate]="checkCanDropInList"
+                [id]="'drop-room-' + r.Id"
+                [cdkDropListConnectedTo]="getConnectedTo()"
+                [cdkDropListData]="[r]"
+                (cdkDropListDropped)="drop($event)"
+                (click)="canEdit && selectedPerson && assignSelectedToRoom(r)">
+                <div class="rr-head">
+                  <span class="rr-name">{{ r.Name }}</span>
+                  <i class="gender-badge" [ngClass]="genderIcon(r)" [nbTooltip]="genderLabel(r) + ' room'"></i>
+                  <span class="rr-type">{{ r.AccommodationTypeName }}</span>
+                  <span class="bed-dots ms-auto">
+                    <span class="bed" *ngFor="let filled of bedArray(r)" [class.filled]="filled"></span>
+                  </span>
+                  <span class="room-capacity ms-2" [ngClass]="'text-' + roomStatus(r)">{{ r.TakenSpace }}/{{ r.Capacity }}</span>
+                </div>
+                <div class="rr-people">
+                  <ngx-tag *ngFor="let person of r.People"
+                    cdkDrag shape="round"
+                    [cdkDragDisabled]="!canEdit"
+                    [cdkDragData]="person"
+                    (cdkDragStarted)="dragStarted(person)"
+                    (cdkDragEnded)="dragEnded()"
+                    (click)="canEdit && selectPerson(person, $event)"
+                    [class.selected]="isSelected(person)"
+                    class="person-chip"
+                    [icon]="person.GenderId == 2 ? 'fas fa-female' : 'fas fa-male'"
+                    [text]="person.FirstName + ' ' + person.LastName"></ngx-tag>
+                  <span class="rr-empty" *ngIf="!r.People.length">empty</span>
                 </div>
               </div>
             </div>
@@ -148,17 +268,10 @@
     <nb-card-body>
       <div class="row m-0">
         <div class="col-md-1">
-          <nb-icon
-            pack="eva"
-            icon="info-outline"
-            status="info"
-            class="info-icon-status"
-          ></nb-icon>
+          <nb-icon pack="eva" icon="info-outline" status="info" class="info-icon-status"></nb-icon>
         </div>
         <div class="col-md-11">
-          <div class="line-divider p-2">
-            {{ getString("caution") }}
-          </div>
+          <div class="line-divider p-2">{{ getString("caution") }}</div>
           <div class="p-2" style="width: 300px">
             {{ getString("allowDifferentGenderPersonsInRoomDescription") }}
           </div>

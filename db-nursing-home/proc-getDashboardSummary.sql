@@ -176,4 +176,43 @@ ORDER BY
         LastVisit lv ON p.Id = lv.PersonId
     ORDER BY
         DATEDIFF(DAY, lv.LastVisitDate, GETDATE()) DESC;
+
+	-- age distribution of active residents
+	;WITH Buckets AS (
+		SELECT '< 80' AS Label, 1 AS SortOrder
+		UNION ALL SELECT '80-84', 2
+		UNION ALL SELECT '85-89', 3
+		UNION ALL SELECT '90+', 4
+	)
+	SELECT b.Label, COUNT(p.Id) AS [Count]
+	FROM Buckets b
+	LEFT JOIN dbo.Person p ON p.Active = 1 AND
+		CASE
+			WHEN DATEDIFF(YEAR, p.BirthDate, GETDATE()) < 80 THEN '< 80'
+			WHEN DATEDIFF(YEAR, p.BirthDate, GETDATE()) < 85 THEN '80-84'
+			WHEN DATEDIFF(YEAR, p.BirthDate, GETDATE()) < 90 THEN '85-89'
+			ELSE '90+'
+		END = b.Label
+	GROUP BY b.Label, b.SortOrder
+	ORDER BY b.SortOrder;
+
+	-- occupancy by floor
+	SELECT
+		f.[Name] AS FloorName,
+		(SELECT COUNT(prr.PersonId)
+		 FROM dbo.PersonRoomRelation prr
+		 LEFT JOIN dbo.Room r2 ON prr.RoomId = r2.Id
+		 WHERE prr.Active = 1 AND r2.FloorId = f.Id) AS Occupied,
+		(SELECT ISNULL(SUM(r.Capacity), 0) FROM dbo.Room r WHERE r.FloorId = f.Id) AS Capacity
+	FROM dbo.Floor f
+	ORDER BY f.Id;
+
+	-- residents by health condition
+	SELECT hc.[Name] AS [Name], COUNT(p.Id) AS [Count]
+	FROM dbo.HealthCondition hc
+	LEFT JOIN dbo.PersonHealthConditionRelation phc ON phc.HealthConditionId = hc.Id
+	LEFT JOIN dbo.Person p ON p.Id = phc.PersonId AND p.Active = 1
+	GROUP BY hc.[Name]
+	HAVING COUNT(p.Id) > 0
+	ORDER BY COUNT(p.Id) DESC;
 END

@@ -1,0 +1,107 @@
+@import "../../@theme/styles/themes";
+
+@include nb-install-component() {
+  .care-card {
+    height: 100%;
+    margin: 0;
+  }
+
+  .header-icon {
+    font-size: 1.8rem;
+    color: nb-theme(color-primary-500);
+  }
+  .care-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: nb-theme(text-basic-color);
+    line-height: 1.2;
+  }
+  .care-subtitle {
+    font-size: 0.75rem;
+    color: nb-theme(text-hint-color);
+  }
+
+  .section-title {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: nb-theme(text-hint-color);
+    margin-bottom: 0.5rem;
+  }
+
+  // latest score tiles
+  .score-tile {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background-color: nb-theme(background-basic-color-2);
+    border-radius: 0.6rem;
+    padding: 0.75rem 1rem;
+    min-width: 9rem;
+
+    .score-name {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      color: nb-theme(text-hint-color);
+    }
+    .score-value {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: nb-theme(text-basic-color);
+      line-height: 1.1;
+    }
+    nb-badge {
+      position: static;
+      margin-top: 0.35rem;
+      font-size: 0.62rem;
+    }
+  }
+
+  .trend-chart {
+    height: 320px;
+    width: 100%;
+  }
+
+  // history table
+  .table-wrap {
+    overflow-x: auto;
+  }
+  .assessment-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+
+    th,
+    td {
+      border-bottom: 1px solid nb-theme(divider-color);
+      padding: 0.5rem 0.65rem;
+      vertical-align: middle;
+      text-align: left;
+    }
+    thead th {
+      background-color: nb-theme(background-basic-color-2);
+      color: nb-theme(text-hint-color);
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      white-space: nowrap;
+    }
+    .score {
+      font-weight: 700;
+      margin-right: 0.4rem;
+    }
+    .notes {
+      color: nb-theme(text-hint-color);
+      max-width: 18rem;
+    }
+    .nowrap {
+      white-space: nowrap;
+    }
+    nb-badge {
+      position: static;
+      font-size: 0.62rem;
+    }
+  }
+}

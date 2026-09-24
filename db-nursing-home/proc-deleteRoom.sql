@@ -15,7 +15,7 @@ BEGIN
 
 	DELETE FROM dbo.Room WHERE Id = @Id;
 
-	exec dbo.writeLog @LogType='DELETE', @LogEntity='Room', @Key= @Id;
+	exec dbo.writeLog @LogType='DELETE', @LogEntity='Room', @Key= @Id, @UserId=@ActingUserId;
 
 	EXEC dbo.logUserActivity 'DELETE_ROOM', 'Room deleted', @ActingUserId;
 END

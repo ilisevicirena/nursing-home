@@ -28,7 +28,7 @@ BEGIN
 	DECLARE @NewIdent Int
 SET @NewIdent = SCOPE_IDENTITY();
 
-exec dbo.writeLog @LogType='INSERT', @LogEntity='Room', @Key= @NewIdent;
+exec dbo.writeLog @LogType='INSERT', @LogEntity='Room', @Key= @NewIdent, @UserId=@ActingUserId;
 
 	SELECT SCOPE_IDENTITY() AS RoomId
 

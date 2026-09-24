@@ -7,8 +7,23 @@
   // ── Layout ────────────────────────────────────────────────────────
   ::ng-deep nb-layout-column.nb-layout-column {
     height: calc(100vh - nb-theme(header-height));
-    overflow: auto;
-    > * { height: 100%; width: 100%; overflow: auto; }
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    // Nebular defaults the column's TOP padding to layout-padding-top (2.25rem),
+    // which is much larger than the side/bottom padding (layout-padding, 0.75rem).
+    // Match the top to the sides so spacing is even on all edges.
+    padding-top: nb-theme(layout-padding);
+
+    // breadcrumb takes its natural height; the routed content fills the rest and
+    // scrolls internally, so the page itself never gets a scrollbar.
+    ngx-breadcrumb { flex: 0 0 auto; width: 100%; }
+    > *:not(ngx-breadcrumb):not(router-outlet) {
+      flex: 1 1 auto;
+      min-height: 0;
+      width: 100%;
+      overflow: auto;
+    }
   }
 
   .menu-sidebar ::ng-deep .scrollable { position: relative; overflow: visible; }
@@ -106,7 +121,7 @@
         }
 
         &:hover:not(.active) {
-          background-color: nb-theme(color-basic-200);
+          background-color: nb-theme(background-basic-color-2);
           nb-icon:not(.menu-icon) { color: nb-theme(color-primary-500); }
         }
 
@@ -153,7 +168,7 @@
             }
 
             &:hover:not(.active) {
-              background-color: nb-theme(color-basic-200);
+              background-color: nb-theme(background-basic-color-2);
               color: nb-theme(text-basic-color);
             }
 

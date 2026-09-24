@@ -13,8 +13,10 @@
     <div class="row m-0">
       <button
         nbButton
+        ghost
         [status]="showAll ? 'primary' : 'basic'"
-        class="w-100 justify-content-start"
+        [class.active-filter]="showAll"
+        class="w-100 justify-content-start nav-btn"
         (click)="filterChange('all')"
       >
         <nb-icon pack="eva" icon="inbox-outline"></nb-icon>
@@ -29,8 +31,10 @@
       <div class="row m-0 p-0" *ngFor="let nt of notificationTypes">
         <button
           nbButton
-          class="w-100 justify-content-start"
+          ghost
+          class="w-100 justify-content-start nav-btn"
           [status]="nt.Selected ? 'primary' : 'basic'"
+          [class.active-filter]="nt.Selected"
           (click)="filterChange(nt)"
         >
           {{ getString(nt.StringKey) }}

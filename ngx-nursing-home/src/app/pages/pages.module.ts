@@ -85,6 +85,7 @@ import { CitiesComponent } from "./cities/cities.component";
 import { EmployeesComponent } from "./employees/employees.component";
 import { NewEmployeeComponent } from "./new-employee/new-employee.component";
 import { EmployeeBasicDataComponent } from "./employee-basic-data/employee-basic-data.component";
+import { MyDataComponent } from "./my-data/my-data.component";
 import { EmployeeComponent } from "./employee/employee.component";
 import { EmployeeVacationsComponent } from "./employee/employee-vacations/employee-vacations.component";
 import { NewVacationComponent } from "./employee/new-vacation/new-vacation.component";
@@ -112,6 +113,10 @@ import { AddEditMedicationComponent } from './medical-profile/add-edit-medicatio
 import { AddEditFunctionalStatusComponent } from './medical-profile/add-edit-functional-status/add-edit-functional-status.component';
 import { AddEditDietaryRestrictionComponent } from './medical-profile/add-edit-dietary-restriction/add-edit-dietary-restriction.component';
 import { AddEditInsuranceComponent } from './medical-profile/add-edit-insurance/add-edit-insurance.component';
+import { MedicationAdministrationComponent } from './medication-administration/medication-administration.component';
+import { CarePlanComponent } from './care-plan/care-plan.component';
+import { AddEditAssessmentComponent } from './care-plan/add-edit-assessment/add-edit-assessment.component';
+import { AuditLogComponent } from './audit-log/audit-log.component';
 
 @NgModule({
   imports: [
@@ -205,6 +210,7 @@ import { AddEditInsuranceComponent } from './medical-profile/add-edit-insurance/
     EmployeesComponent,
     NewEmployeeComponent,
     EmployeeBasicDataComponent,
+    MyDataComponent,
     EmployeeComponent,
     EmployeeVacationsComponent,
     NewVacationComponent,
@@ -232,6 +238,10 @@ import { AddEditInsuranceComponent } from './medical-profile/add-edit-insurance/
     AddEditFunctionalStatusComponent,
     AddEditDietaryRestrictionComponent,
     AddEditInsuranceComponent,
+    MedicationAdministrationComponent,
+    CarePlanComponent,
+    AddEditAssessmentComponent,
+    AuditLogComponent,
   ],
 })
 export class PagesModule {}
