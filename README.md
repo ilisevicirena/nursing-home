@@ -63,12 +63,9 @@ automatically to GitHub Pages via GitHub Actions on every push.
 | `nurse` · `doctor` · `caregiver` | Clinical / care staff | Staff dashboard, residents and clinical care |
 | `user` | Family / guardian | Read-only view limited to their own residents in care |
 
-<!-- Screenshots/GIF: capture from the live demo and drop into docs/screenshots/, then
-     uncomment the block below.
 <p align="center">
   <img src="docs/screenshots/demo.gif" alt="Application walkthrough" width="820">
 </p>
--->
 
 > 💡 Tip: try the same screens as `admin` vs `user` to see role-based access in action.
 
@@ -76,10 +73,6 @@ automatically to GitHub Pages via GitHub Actions on every push.
 
 ## 📸 Screenshots
 
-> Best seen in the **[live demo](https://ilisevicirena.github.io/nursing-home/)**. To add static shots,
-> capture them from the demo into `docs/screenshots/` and uncomment the block below.
-
-<!--
 <p align="center">
   <img src="docs/screenshots/dashboard.png" alt="Dashboard" width="820"><br>
   <em>Dashboard — occupancy, key metrics and quick actions</em>
@@ -95,7 +88,6 @@ automatically to GitHub Pages via GitHub Actions on every push.
     <td width="50%"><img src="docs/screenshots/calendar.png" alt="Calendar"><br><em>Calendar &amp; doctor-visit scheduling</em></td>
   </tr>
 </table>
--->
 
 ---
 
