@@ -1,0 +1,18 @@
+import { Component } from '@angular/core';
+import * as i0 from "@angular/core";
+import * as i1 from "@angular/forms";
+import * as i2 from "ngx-colors";
+export class ColorPickerComponent {
+    constructor() {
+        this.color = '#2889e9';
+    }
+    ngOnInit() { }
+    ngOnDestroy() { }
+}
+ColorPickerComponent.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "15.2.10", ngImport: i0, type: ColorPickerComponent, deps: [], target: i0.ɵɵFactoryTarget.Component });
+ColorPickerComponent.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "15.2.10", type: ColorPickerComponent, selector: "ngx-color-picker", ngImport: i0, template: "<ngx-colors\r\n  class=\"ngx-color-picker\"\r\n  ngx-colors-trigger\r\n  [(ngModel)]=\"color\"\r\n></ngx-colors>\r\n", styles: [""], dependencies: [{ kind: "directive", type: i1.NgControlStatus, selector: "[formControlName],[ngModel],[formControl]" }, { kind: "directive", type: i1.NgModel, selector: "[ngModel]:not([formControlName]):not([formControl])", inputs: ["name", "disabled", "ngModel", "ngModelOptions"], outputs: ["ngModelChange"], exportAs: ["ngModel"] }, { kind: "component", type: i2.NgxColorsComponent, selector: "ngx-colors" }, { kind: "directive", type: i2.NgxColorsTriggerDirective, selector: "[ngx-colors-trigger]", inputs: ["colorsAnimation", "palette", "format", "formats", "position", "hideTextInput", "hideColorPicker", "attachTo", "overlayClassName", "colorPickerControls", "acceptLabel", "cancelLabel"], outputs: ["change", "input", "slider", "close", "open"] }] });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "15.2.10", ngImport: i0, type: ColorPickerComponent, decorators: [{
+            type: Component,
+            args: [{ selector: 'ngx-color-picker', template: "<ngx-colors\r\n  class=\"ngx-color-picker\"\r\n  ngx-colors-trigger\r\n  [(ngModel)]=\"color\"\r\n></ngx-colors>\r\n" }]
+        }], ctorParameters: function () { return []; } });
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiY29sb3ItcGlja2VyLmNvbXBvbmVudC5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uLy4uL3Byb2plY3RzL3NoYXJlZC1jb21wb25lbnRzL3NyYy9saWIvY29sb3ItcGlja2VyL2NvbG9yLXBpY2tlci5jb21wb25lbnQudHMiLCIuLi8uLi8uLi8uLi8uLi9wcm9qZWN0cy9zaGFyZWQtY29tcG9uZW50cy9zcmMvbGliL2NvbG9yLXBpY2tlci9jb2xvci1waWNrZXIuY29tcG9uZW50Lmh0bWwiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsT0FBTyxFQUFFLFNBQVMsRUFBcUIsTUFBTSxlQUFlLENBQUM7Ozs7QUFPN0QsTUFBTSxPQUFPLG9CQUFvQjtJQUMvQjtRQUVBLFVBQUssR0FBVyxTQUFTLENBQUM7SUFGWCxDQUFDO0lBR2hCLFFBQVEsS0FBVSxDQUFDO0lBRW5CLFdBQVcsS0FBVSxDQUFDOztrSEFOWCxvQkFBb0I7c0dBQXBCLG9CQUFvQix3RENQakMsc0hBS0E7NEZERWEsb0JBQW9CO2tCQUxoQyxTQUFTOytCQUNFLGtCQUFrQiIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IENvbXBvbmVudCwgT25EZXN0cm95LCBPbkluaXQgfSBmcm9tICdAYW5ndWxhci9jb3JlJztcclxuXHJcbkBDb21wb25lbnQoe1xyXG4gIHNlbGVjdG9yOiAnbmd4LWNvbG9yLXBpY2tlcicsXHJcbiAgdGVtcGxhdGVVcmw6ICcuL2NvbG9yLXBpY2tlci5jb21wb25lbnQuaHRtbCcsXHJcbiAgc3R5bGVVcmxzOiBbJy4vY29sb3ItcGlja2VyLmNvbXBvbmVudC5zY3NzJ10sXHJcbn0pXHJcbmV4cG9ydCBjbGFzcyBDb2xvclBpY2tlckNvbXBvbmVudCBpbXBsZW1lbnRzIE9uSW5pdCwgT25EZXN0cm95IHtcclxuICBjb25zdHJ1Y3RvcigpIHt9XHJcblxyXG4gIGNvbG9yOiBzdHJpbmcgPSAnIzI4ODllOSc7XHJcbiAgbmdPbkluaXQoKTogdm9pZCB7fVxyXG5cclxuICBuZ09uRGVzdHJveSgpOiB2b2lkIHt9XHJcbn1cclxuIiwiPG5neC1jb2xvcnNcclxuICBjbGFzcz1cIm5neC1jb2xvci1waWNrZXJcIlxyXG4gIG5neC1jb2xvcnMtdHJpZ2dlclxyXG4gIFsobmdNb2RlbCldPVwiY29sb3JcIlxyXG4+PC9uZ3gtY29sb3JzPlxyXG4iXX0=

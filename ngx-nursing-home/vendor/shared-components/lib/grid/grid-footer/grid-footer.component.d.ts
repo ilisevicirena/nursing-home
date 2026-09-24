@@ -1,0 +1,36 @@
+import { EventEmitter, OnInit } from '@angular/core';
+import * as i0 from "@angular/core";
+export declare class GridFooterComponent implements OnInit {
+    constructor();
+    ngOnInit(): void;
+    entriesPerPageOptions: number[];
+    visible: boolean;
+    set page(value: number);
+    get page(): number;
+    refreshEnabled: boolean;
+    refreshTooltip: string;
+    exportPdfEnabled: boolean;
+    exportPdfTooltip: string;
+    exportExcelEnabled: boolean;
+    exportExcelTooltip: string;
+    entriesPerPageEnabled: boolean;
+    entriesPerPageTooltip: string;
+    set defaultPerPageOption(value: number);
+    get defaultPerPageOption(): number;
+    private _page;
+    private _defaultPerPageOption;
+    defaultPerPageOptionChange: EventEmitter<number>;
+    pageChanged: EventEmitter<any>;
+    resetFiltersClicked: EventEmitter<any>;
+    exportPdfClicked: EventEmitter<any>;
+    exportExcelClicked: EventEmitter<any>;
+    selectionPerPageChanged: EventEmitter<number>;
+    pageChange: EventEmitter<number>;
+    onPageChanged(): void;
+    onClickResetFilters(): void;
+    exportPdfBtnClick(): void;
+    exportExcelBtnClick(): void;
+    onSelectedChangePagerPerPage(page: number): void;
+    static ɵfac: i0.ɵɵFactoryDeclaration<GridFooterComponent, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<GridFooterComponent, "ngx-grid-footer", never, { "entriesPerPageOptions": "entriesPerPageOptions"; "visible": "visible"; "page": "page"; "refreshEnabled": "refreshEnabled"; "refreshTooltip": "refreshTooltip"; "exportPdfEnabled": "exportPdfEnabled"; "exportPdfTooltip": "exportPdfTooltip"; "exportExcelEnabled": "exportExcelEnabled"; "exportExcelTooltip": "exportExcelTooltip"; "entriesPerPageEnabled": "entriesPerPageEnabled"; "entriesPerPageTooltip": "entriesPerPageTooltip"; "defaultPerPageOption": "defaultPerPageOption"; }, { "defaultPerPageOptionChange": "defaultPerPageOptionChange"; "pageChanged": "pageChanged"; "resetFiltersClicked": "resetFiltersClicked"; "exportPdfClicked": "exportPdfClicked"; "exportExcelClicked": "exportExcelClicked"; "selectionPerPageChanged": "selectionPerPageChanged"; "pageChange": "pageChange"; }, never, never, false, never>;
+}

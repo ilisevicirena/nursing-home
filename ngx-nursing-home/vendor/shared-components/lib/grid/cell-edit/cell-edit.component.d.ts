@@ -1,0 +1,32 @@
+import { EventEmitter, OnDestroy, OnInit } from '@angular/core';
+import { GridColumn } from '../../models/grid-column.model';
+import { GRID_BUTTON_TYPE, GRID_DATE_PICKER, GRID_DATA_TYPE } from '../../resources/mode-enums';
+import { HttpClient } from '@angular/common/http';
+import { GridButtonType } from '../../models/grid-button-type.model';
+import { TranslationService } from '../../resources/translation.service';
+import * as i0 from "@angular/core";
+export declare class CellEditComponent implements OnInit, OnDestroy {
+    private http;
+    private translationService;
+    constructor(http: HttpClient, translationService: TranslationService);
+    ngOnInit(): void;
+    ngOnDestroy(): void;
+    isNew: boolean;
+    column: GridColumn;
+    set cellValue(value: any);
+    get cellValue(): any;
+    cellValueChange: EventEmitter<any>;
+    cellButtonClick: EventEmitter<GridButtonType>;
+    private _subs;
+    private _cellValue;
+    types: typeof GRID_DATA_TYPE;
+    datePickerTypes: typeof GRID_DATE_PICKER;
+    selectFilterDataSource: any[];
+    btnTypes: typeof GRID_BUTTON_TYPE;
+    private getDataSourceFromServer;
+    private setUpDatePickerValues;
+    onButtonClick(btn: GridButtonType): void;
+    private translateEditorDefaultOptions;
+    static ɵfac: i0.ɵɵFactoryDeclaration<CellEditComponent, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<CellEditComponent, "ngx-cell-edit", never, { "isNew": "isNew"; "column": "column"; "cellValue": "cellValue"; }, { "cellValueChange": "cellValueChange"; "cellButtonClick": "cellButtonClick"; }, never, never, false, never>;
+}

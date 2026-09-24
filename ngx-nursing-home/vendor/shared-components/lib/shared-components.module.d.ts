@@ -1,0 +1,36 @@
+import * as i0 from "@angular/core";
+import * as i1 from "./shared-components.component";
+import * as i2 from "./test-view/test-view.component";
+import * as i3 from "./filepicker/filepicker.component";
+import * as i4 from "./file-card/file-card.component";
+import * as i5 from "./progressbar-spinner/progressbar-spinner.component";
+import * as i6 from "./tags-autocomplete/tags-autocomplete.component";
+import * as i7 from "./select-grid/select-grid.component";
+import * as i8 from "./schedule/schedule.component";
+import * as i9 from "./resources/resize-directive/resize-directive";
+import * as i10 from "./grid/grid.component";
+import * as i11 from "./grid/cell-display/cell-display.component";
+import * as i12 from "./grid/column-filter/column-filter.component";
+import * as i13 from "./grid/cell-edit/cell-edit.component";
+import * as i14 from "./grid/popup/popup.component";
+import * as i15 from "./grid/export/grid-pdf-export/grid-pdf-export.component";
+import * as i16 from "./grid/export/grid-excel-export/grid-excel-export.component";
+import * as i17 from "./grid/delete-popup/delete-popup.component";
+import * as i18 from "./color-picker/color-picker.component";
+import * as i19 from "./tag/tag.component";
+import * as i20 from "./text-editor/text-editor.component";
+import * as i21 from "./select-grid/select-grid-popover/select-grid-popover.component";
+import * as i22 from "./grid/grid-footer/grid-footer.component";
+import * as i23 from "./grid/grid-toolbar/grid-toolbar.component";
+import * as i24 from "@nebular/theme";
+import * as i25 from "@angular/common";
+import * as i26 from "@angular/forms";
+import * as i27 from "@nebular/date-fns";
+import * as i28 from "ngx-pagination";
+import * as i29 from "ngx-colors";
+import * as i30 from "ngx-summernote";
+export declare class SharedComponentsModule {
+    static ɵfac: i0.ɵɵFactoryDeclaration<SharedComponentsModule, never>;
+    static ɵmod: i0.ɵɵNgModuleDeclaration<SharedComponentsModule, [typeof i1.SharedComponentsComponent, typeof i2.TestViewComponent, typeof i3.FilepickerComponent, typeof i3.BytePipe, typeof i4.FileCardComponent, typeof i5.ProgressbarSpinnerComponent, typeof i6.TagsAutocompleteComponent, typeof i7.SelectGridComponent, typeof i8.ScheduleComponent, typeof i9.ResizedDirective, typeof i10.GridComponent, typeof i11.CellDisplayComponent, typeof i12.ColumnFilterComponent, typeof i13.CellEditComponent, typeof i14.PopupComponent, typeof i15.GridPdfExportComponent, typeof i16.GridExcelExportComponent, typeof i17.DeletePopupComponent, typeof i18.ColorPickerComponent, typeof i19.TagComponent, typeof i20.TextEditorComponent, typeof i21.SelectGridPopoverComponent, typeof i22.GridFooterComponent, typeof i23.GridToolbarComponent], [typeof i24.NbTagModule, typeof i24.NbButtonModule, typeof i24.NbLayoutModule, typeof i24.NbThemeModule, typeof i24.NbIconModule, typeof i24.NbTooltipModule, typeof i25.CommonModule, typeof i24.NbCheckboxModule, typeof i26.FormsModule, typeof i26.ReactiveFormsModule, typeof i24.NbSpinnerModule, typeof i24.NbSelectModule, typeof i24.NbProgressBarModule, typeof i24.NbActionsModule, typeof i24.NbToggleModule, typeof i24.NbDatepickerModule, typeof i24.NbInputModule, typeof i24.NbFormFieldModule, typeof i27.NbDateFnsDateModule, typeof i24.NbTimepickerModule, typeof i24.NbUserModule, typeof i24.NbWindowModule, typeof i24.NbDialogModule, typeof i24.NbCardModule, typeof i24.NbContextMenuModule, typeof i24.NbPopoverModule, typeof i24.NbAutocompleteModule, typeof i24.NbAccordionModule, typeof i24.NbAlertModule, typeof i28.NgxPaginationModule, typeof i24.NbButtonGroupModule, typeof i29.NgxColorsModule, typeof i30.NgxSummernoteModule], [typeof i1.SharedComponentsComponent, typeof i2.TestViewComponent, typeof i3.FilepickerComponent, typeof i4.FileCardComponent, typeof i5.ProgressbarSpinnerComponent, typeof i6.TagsAutocompleteComponent, typeof i7.SelectGridComponent, typeof i8.ScheduleComponent, typeof i9.ResizedDirective, typeof i10.GridComponent, typeof i18.ColorPickerComponent, typeof i19.TagComponent, typeof i20.TextEditorComponent]>;
+    static ɵinj: i0.ɵɵInjectorDeclaration<SharedComponentsModule>;
+}
