@@ -13,7 +13,7 @@ import * as i2 from '@nebular/date-fns';
 import { NbDateFnsDateModule } from '@nebular/date-fns';
 import { filter, map } from 'rxjs/operators';
 import { of } from 'rxjs';
-import * as pdfMake from 'pdfmake/build/pdfMake';
+import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import htmlToPdfmake from 'html-to-pdfmake';
 import * as XLSX from 'xlsx';
