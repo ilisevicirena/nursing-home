@@ -84,12 +84,13 @@
     .basic-user-container {
       display: flex;
       align-items: flex-end;
+      position: relative;
     }
 
     .user-status-tag {
       position: absolute;
       top: 0px;
-      right: -50px;
+      right: 0;
 
       ::ng-deep .ngx-tag {
         padding: 0.25rem 0.5rem;

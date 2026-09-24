@@ -1,4 +1,5 @@
 [
+  { "key": "demoActionNotSupported", "value": "Ovo je demo verzija samo za pregled — dodavanje, uređivanje i brisanje ne spremaju se jer nije povezana baza." },
   { "key": "dashboard", "value": "Početna" },
   { "key": "roomManagement", "value": "Upravljanje sobama" },
   { "key": "floors", "value": "Katevi" },
