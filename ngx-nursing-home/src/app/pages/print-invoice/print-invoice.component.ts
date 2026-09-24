@@ -9,7 +9,7 @@ import {
   ViewChildren,
 } from "@angular/core";
 declare var require: any;
-import * as pdfMake from "pdfmake/build/pdfMake";
+import * as pdfMake from "pdfmake/build/pdfmake";
 import * as pdfFonts from "pdfmake/build/vfs_fonts";
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 const htmlToPdfmake = require("html-to-pdfmake");
