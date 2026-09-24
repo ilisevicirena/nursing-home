@@ -1,8 +1,9 @@
 # Screenshots — shot list
 
 Drop the images below into this folder using **exactly these file names** so the root
-`README.md` picks them up automatically. Aim for a 1280–1440px wide browser window,
-light theme, and seeded demo data (no real names).
+`README.md` picks them up automatically. Aim for a 1280–1440px wide browser window and
+seeded demo data (no real names). The app now defaults to **dark theme** (which looks
+striking for a portfolio) — use it, or toggle to light; just keep it consistent across shots.
 
 | File name | What to capture | Notes |
 |---|---|---|
