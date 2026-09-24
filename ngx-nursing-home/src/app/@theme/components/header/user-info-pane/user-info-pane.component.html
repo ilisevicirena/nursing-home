@@ -1,16 +1,16 @@
 <nb-card class="user-info-pane">
   <nb-card-body>
     <div class="basic-user-container">
+      <ngx-tag
+        class="user-status-tag"
+        [text]="getString('verified')"
+        color="success"
+      ></ngx-tag>
       <nb-user
         [name]="user?.FirstName + ' ' + user?.LastName"
         onlyPicture
       ></nb-user>
       <div class="position-relative">
-        <ngx-tag
-          class="user-status-tag"
-          [text]="getString('verified')"
-          color="success"
-        ></ngx-tag>
         <div class="user-name">
           <span> {{ user?.FirstName }} {{ user?.LastName }} </span>
         </div>

@@ -14,6 +14,9 @@
   <img src="https://img.shields.io/badge/Auth-JWT-000000?logo=jsonwebtokens&logoColor=white" alt="JWT">
   <img src="https://img.shields.io/badge/API_docs-Swagger-85EA2D?logo=swagger&logoColor=black" alt="Swagger">
   <img src="https://img.shields.io/badge/license-All%20Rights%20Reserved-red" alt="License">
+  <br>
+  <a href="https://ilisevicirena.github.io/nursing-home/"><img src="https://img.shields.io/badge/%E2%96%B6%20Live%20Demo-online-2ea44f" alt="Live Demo"></a>
+  <a href="https://github.com/ilisevicirena/nursing-home/actions/workflows/deploy-pages.yml"><img src="https://github.com/ilisevicirena/nursing-home/actions/workflows/deploy-pages.yml/badge.svg" alt="Deploy status"></a>
 </p>
 
 <p align="center">
@@ -45,23 +48,38 @@ plus a reusable in-house Angular component library.
 
 ## 🚀 Live Demo
 
-> **[▶ Open the live demo](#)** &nbsp;·&nbsp; *(link goes here once deployed)*
+> ### ▶ **[ilisevicirena.github.io/nursing-home](https://ilisevicirena.github.io/nursing-home/)**
 
 The public demo runs in **Demo Mode**: a self-contained build of the Angular frontend that serves
 realistic seeded data from an in-memory store — **no backend or database required**. It is always-on,
-loads instantly, and lets you click through the whole UI. No real personal data is used.
+loads instantly, and lets you click through the whole UI. No real personal data is used. It deploys
+automatically to GitHub Pages via GitHub Actions on every push.
 
+**Sign in** with any of the demo roles below — the **password can be anything** (Demo Mode accepts all logins):
+
+| Sign-in name | Role | What you'll see |
+|---|---|---|
+| `admin` | Administrator | Full access — all modules, users and settings |
+| `nurse` · `doctor` · `caregiver` | Clinical / care staff | Staff dashboard, residents and clinical care |
+| `user` | Family / guardian | Read-only view limited to their own residents in care |
+
+<!-- Screenshots/GIF: capture from the live demo and drop into docs/screenshots/, then
+     uncomment the block below.
 <p align="center">
-  <!-- Replace with an animated GIF of a click-through (see docs/screenshots/README.md) -->
   <img src="docs/screenshots/demo.gif" alt="Application walkthrough" width="820">
 </p>
+-->
 
-**Demo credentials:** any email / password (Demo Mode accepts all logins).
+> 💡 Tip: try the same screens as `admin` vs `user` to see role-based access in action.
 
 ---
 
 ## 📸 Screenshots
 
+> Best seen in the **[live demo](https://ilisevicirena.github.io/nursing-home/)**. To add static shots,
+> capture them from the demo into `docs/screenshots/` and uncomment the block below.
+
+<!--
 <p align="center">
   <img src="docs/screenshots/dashboard.png" alt="Dashboard" width="820"><br>
   <em>Dashboard — occupancy, key metrics and quick actions</em>
@@ -77,6 +95,7 @@ loads instantly, and lets you click through the whole UI. No real personal data 
     <td width="50%"><img src="docs/screenshots/calendar.png" alt="Calendar"><br><em>Calendar &amp; doctor-visit scheduling</em></td>
   </tr>
 </table>
+-->
 
 ---
 
@@ -209,9 +228,9 @@ isolated from the real application code.
 
 ## 🗺 Roadmap / Ideas
 
+- [x] Deploy always-on Demo Mode build to free static hosting — **GitHub Pages**
+- [x] GitHub Actions CI — auto-build & deploy the demo on every push to `main`
 - [ ] One-command local run via `docker-compose` (frontend + API + SQL Server)
-- [ ] Deploy always-on Demo Mode build to free static hosting
-- [ ] GitHub Actions CI (build · lint · test)
 - [ ] Unit/e2e test coverage badge
 - [ ] Upgrade Angular 15 → latest LTS
 

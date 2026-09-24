@@ -18,16 +18,21 @@ import {
   HttpRequest,
   HttpResponse,
 } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { Observable, of } from "rxjs";
+import { Injectable, Injector } from "@angular/core";
+import { EMPTY, Observable, of } from "rxjs";
 import { delay } from "rxjs/operators";
 import { environment } from "../../../environments/environment";
 import { ConfigService } from "../../services/config.service";
+import { ToastrService } from "../../services/toastr.service";
+import { getString } from "../../resources/strings";
 import { getMock } from "./demo-data";
 
 @Injectable()
 export class DemoInterceptor implements HttpInterceptor {
-  constructor(private _configService: ConfigService) {}
+  constructor(
+    private _configService: ConfigService,
+    private _injector: Injector
+  ) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (!(environment as any).demo) {
@@ -52,6 +57,15 @@ export class DemoInterceptor implements HttpInterceptor {
     let path = rawUrl;
     if (apiBase && path.startsWith(apiBase)) path = path.substring(apiBase.length);
     path = path.replace(/^\/+/, "").replace(/^api\//, "");
+
+    // Demo is view-only: block writes (any non-GET except auth) and show a friendly notice
+    // instead of hitting the mock (which otherwise surfaces as a generic error).
+    if (req.method.toUpperCase() !== "GET" && !path.startsWith("authentication/")) {
+      this._injector
+        .get(ToastrService)
+        .showToastPreventDuplicates("info", getString("demoActionNotSupported"), "");
+      return EMPTY;
+    }
 
     const query = this.parseQuery(req.url);
     const result = getMock(req.method, path, query, req.body);

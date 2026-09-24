@@ -39,6 +39,8 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    if (!localStorage.getItem("app-theme"))
+      localStorage.setItem("app-theme", "dark");
     initializeStrings(this._http, environment.translationFile).subscribe();
 
     // auth pages (login, password change, ...) always render light; everywhere

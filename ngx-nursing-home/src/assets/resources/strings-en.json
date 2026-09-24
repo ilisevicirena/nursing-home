@@ -1,4 +1,5 @@
 [
+  { "key": "demoActionNotSupported", "value": "This is a view-only demo — adding, editing and deleting aren't saved because no backend is connected." },
   { "key": "dashboard", "value": "Dashboard" },
   { "key": "roomManagement", "value": "Room management" },
   { "key": "floors", "value": "Floors" },
