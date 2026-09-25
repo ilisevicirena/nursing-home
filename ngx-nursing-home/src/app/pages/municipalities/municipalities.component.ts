@@ -12,9 +12,10 @@ import {
 } from "shared-components";
 
 @Component({
-  selector: "sample-municipalities",
-  templateUrl: "./municipalities.component.html",
-  styleUrls: ["./municipalities.component.scss"],
+    selector: "sample-municipalities",
+    templateUrl: "./municipalities.component.html",
+    styleUrls: ["./municipalities.component.scss"],
+    standalone: false
 })
 export class MunicipalitiesComponent implements OnInit, OnDestroy {
   private _subs: Subscription[] = [];

@@ -23,9 +23,10 @@ import { AuthService, UserRole } from "../../services/auth.service";
 import { PersonAllergensService } from "../../services/rest/person-allergens.service";
 
 @Component({
-  selector: "sample-profile",
-  templateUrl: "./profile.component.html",
-  styleUrls: ["./profile.component.scss"],
+    selector: "sample-profile",
+    templateUrl: "./profile.component.html",
+    styleUrls: ["./profile.component.scss"],
+    standalone: false
 })
 export class ProfileComponent implements OnInit, OnDestroy {
   constructor(

@@ -11,9 +11,10 @@ import { getString } from "../../../resources/strings";
 import { ToastrService } from "../../../services/toastr.service";
 
 @Component({
-  selector: "sample-add-edit-medication",
-  templateUrl: "./add-edit-medication.component.html",
-  styleUrls: ["./add-edit-medication.component.scss"],
+    selector: "sample-add-edit-medication",
+    templateUrl: "./add-edit-medication.component.html",
+    styleUrls: ["./add-edit-medication.component.scss"],
+    standalone: false
 })
 export class AddEditMedicationComponent implements OnInit, OnDestroy {
   private _subs: Subscription[] = [];

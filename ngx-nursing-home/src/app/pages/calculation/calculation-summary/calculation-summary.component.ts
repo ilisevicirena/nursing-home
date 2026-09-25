@@ -5,9 +5,10 @@ import { Subscription } from "rxjs";
 import { getString } from "../../../resources/strings";
 
 @Component({
-  selector: "sample-calculation-summary",
-  templateUrl: "./calculation-summary.component.html",
-  styleUrls: ["./calculation-summary.component.scss"],
+    selector: "sample-calculation-summary",
+    templateUrl: "./calculation-summary.component.html",
+    styleUrls: ["./calculation-summary.component.scss"],
+    standalone: false
 })
 export class CalculationSummaryComponent implements OnInit, OnDestroy {
   private _subs: Subscription[] = [];

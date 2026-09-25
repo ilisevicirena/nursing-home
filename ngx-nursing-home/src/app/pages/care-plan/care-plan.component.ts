@@ -11,9 +11,10 @@ import { AddEditAssessmentComponent } from "./add-edit-assessment/add-edit-asses
 import { NbThemeService } from "@nebular/theme";
 
 @Component({
-  selector: "sample-care-plan",
-  templateUrl: "./care-plan.component.html",
-  styleUrls: ["./care-plan.component.scss"],
+    selector: "sample-care-plan",
+    templateUrl: "./care-plan.component.html",
+    styleUrls: ["./care-plan.component.scss"],
+    standalone: false
 })
 export class CarePlanComponent implements OnInit, OnDestroy {
   public getString = getString;

@@ -8,9 +8,10 @@ import { environment } from "../../../../environments/environment";
 import { ToastrService } from "../../../services/toastr.service";
 
 @Component({
-  selector: "sample-add-edit-event",
-  templateUrl: "./add-edit-event.component.html",
-  styleUrls: ["./add-edit-event.component.scss"],
+    selector: "sample-add-edit-event",
+    templateUrl: "./add-edit-event.component.html",
+    styleUrls: ["./add-edit-event.component.scss"],
+    standalone: false
 })
 export class AddEditEventComponent implements OnInit, OnDestroy {
   private _subs: Subscription[] = [];

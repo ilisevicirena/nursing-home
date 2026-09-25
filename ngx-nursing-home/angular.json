@@ -80,6 +80,7 @@
               "raf",
               "html-to-pdfmake",
               "pdfmake/build/pdfMake",
+              "pdfmake/build/pdfmake",
               "pdfmake/build/vfs_fonts",
               "rgbcolor"
             ],
@@ -139,21 +140,21 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "ngx-nursing-home:build"
+            "buildTarget": "ngx-nursing-home:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "ngx-nursing-home:build:production"
+              "buildTarget": "ngx-nursing-home:build:production"
             },
             "demo": {
-              "browserTarget": "ngx-nursing-home:build:demo"
+              "buildTarget": "ngx-nursing-home:build:demo"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ngx-nursing-home:build"
+            "buildTarget": "ngx-nursing-home:build"
           }
         },
         "test": {

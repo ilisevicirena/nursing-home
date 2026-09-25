@@ -1,7 +1,7 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { APP_INITIALIZER, LOCALE_ID, NgModule } from "@angular/core";
-import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 import { CoreModule } from "./@core/core.module";
 import { ThemeModule } from "./@theme/theme.module";
 import { AppComponent } from "./app.component";
@@ -41,53 +41,47 @@ export function translationLoader(translationService: TranslationService) {
     translationService.loadTranslations(environment.translationFile).then();
 }
 
-@NgModule({
-  declarations: [AppComponent, DialogComponent],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
-    AppRoutingModule,
-    NbSidebarModule.forRoot(),
-    NbMenuModule.forRoot(),
-    NbDatepickerModule.forRoot(),
-    NbDialogModule.forRoot(),
-    NbWindowModule.forRoot(),
-    NbToastrModule.forRoot(),
-    CoreModule.forRoot(),
-    ThemeModule.forRoot(),
-    SharedComponentsModule,
-    CommonModule,
-    NbLayoutModule,
-    NbCardModule,
-    NbDialogModule,
-    NbIconModule,
-    NbButtonModule,
-    NbAlertModule,
-    NgxEchartsModule.forRoot({
-      echarts: () => import("echarts"),
-    }),
-  ],
-  bootstrap: [AppComponent],
-  providers: [
-    AuthService,
-    { provide: LOCALE_ID, useValue: environment.locale },
-    // Demo Mode: registered FIRST so it can short-circuit API calls with seeded data.
-    // No-op when environment.demo is false (normal/production builds).
-    { provide: HTTP_INTERCEPTORS, useClass: DemoInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true },
-    {
-      provide: APP_INITIALIZER,
-      useFactory: ConfigLoader,
-      deps: [ConfigService],
-      multi: true,
-    },
-    {
-      provide: APP_INITIALIZER,
-      useFactory: translationLoader,
-      deps: [TranslationService],
-      multi: true,
-    },
-  ],
-})
+@NgModule({ declarations: [AppComponent, DialogComponent],
+    bootstrap: [AppComponent], imports: [BrowserModule,
+        BrowserAnimationsModule,
+        AppRoutingModule,
+        NbSidebarModule.forRoot(),
+        NbMenuModule.forRoot(),
+        NbDatepickerModule.forRoot(),
+        NbDialogModule.forRoot(),
+        NbWindowModule.forRoot(),
+        NbToastrModule.forRoot(),
+        CoreModule.forRoot(),
+        ThemeModule.forRoot(),
+        SharedComponentsModule,
+        CommonModule,
+        NbLayoutModule,
+        NbCardModule,
+        NbDialogModule,
+        NbIconModule,
+        NbButtonModule,
+        NbAlertModule,
+        NgxEchartsModule.forRoot({
+            echarts: () => import("echarts"),
+        })], providers: [
+        AuthService,
+        { provide: LOCALE_ID, useValue: environment.locale },
+        // Demo Mode: registered FIRST so it can short-circuit API calls with seeded data.
+        // No-op when environment.demo is false (normal/production builds).
+        { provide: HTTP_INTERCEPTORS, useClass: DemoInterceptor, multi: true },
+        { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true },
+        {
+            provide: APP_INITIALIZER,
+            useFactory: ConfigLoader,
+            deps: [ConfigService],
+            multi: true,
+        },
+        {
+            provide: APP_INITIALIZER,
+            useFactory: translationLoader,
+            deps: [TranslationService],
+            multi: true,
+        },
+        provideHttpClient(withInterceptorsFromDi()),
+    ] })
 export class AppModule {}

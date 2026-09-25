@@ -37,9 +37,10 @@ import { AddEditDietaryRestrictionComponent } from "./add-edit-dietary-restricti
 import { AddEditInsuranceComponent } from "./add-edit-insurance/add-edit-insurance.component";
 
 @Component({
-  selector: "sample-medical-profile",
-  templateUrl: "./medical-profile.component.html",
-  styleUrls: ["./medical-profile.component.scss"],
+    selector: "sample-medical-profile",
+    templateUrl: "./medical-profile.component.html",
+    styleUrls: ["./medical-profile.component.scss"],
+    standalone: false
 })
 export class MedicalProfileComponent implements OnInit, OnDestroy {
   @Input() personId: number = 0;

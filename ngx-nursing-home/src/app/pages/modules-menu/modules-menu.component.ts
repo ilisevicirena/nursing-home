@@ -7,9 +7,10 @@ import { Router } from "@angular/router";
 import { DialogService } from "../../shared/dialog/dialog.service";
 
 @Component({
-  selector: "sample-modules-menu",
-  templateUrl: "./modules-menu.component.html",
-  styleUrls: ["./modules-menu.component.scss"],
+    selector: "sample-modules-menu",
+    templateUrl: "./modules-menu.component.html",
+    styleUrls: ["./modules-menu.component.scss"],
+    standalone: false
 })
 export class ModulesMenuComponent implements OnInit, OnDestroy {
   constructor(

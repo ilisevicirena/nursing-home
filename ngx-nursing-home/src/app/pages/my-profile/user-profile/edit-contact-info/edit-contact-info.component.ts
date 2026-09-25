@@ -7,9 +7,10 @@ import { ContactsService } from "../../../../services/rest/contacts.service";
 import { ToastrService } from "../../../../services/toastr.service";
 
 @Component({
-  selector: "sample-edit-contact-info",
-  templateUrl: "./edit-contact-info.component.html",
-  styleUrls: ["./edit-contact-info.component.scss"],
+    selector: "sample-edit-contact-info",
+    templateUrl: "./edit-contact-info.component.html",
+    styleUrls: ["./edit-contact-info.component.scss"],
+    standalone: false
 })
 export class EditContactInfoComponent implements OnInit, OnDestroy {
   constructor(

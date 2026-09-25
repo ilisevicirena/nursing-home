@@ -10,9 +10,10 @@ import { ToastrService } from "../../../services/toastr.service";
 import { AuthService } from "../../../services/auth.service";
 
 @Component({
-  selector: "sample-upload-document",
-  templateUrl: "./upload-document.component.html",
-  styleUrls: ["./upload-document.component.scss"],
+    selector: "sample-upload-document",
+    templateUrl: "./upload-document.component.html",
+    styleUrls: ["./upload-document.component.scss"],
+    standalone: false
 })
 export class UploadDocumentComponent implements OnInit, OnDestroy {
   private _subs: Subscription[] = [];

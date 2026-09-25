@@ -6,9 +6,10 @@ import {
 } from "../../services/rest/audit-log.service";
 
 @Component({
-  selector: "sample-audit-log",
-  templateUrl: "./audit-log.component.html",
-  styleUrls: ["./audit-log.component.scss"],
+    selector: "sample-audit-log",
+    templateUrl: "./audit-log.component.html",
+    styleUrls: ["./audit-log.component.scss"],
+    standalone: false
 })
 export class AuditLogComponent implements OnInit, OnDestroy {
   public entries: any[] = [];

@@ -23,9 +23,10 @@ import { GendersService } from "../../services/rest/genders.service";
 import { Router } from "@angular/router";
 import { AuthService, UserRole } from "../../services/auth.service";
 @Component({
-  selector: "sample-person-popup-window",
-  templateUrl: "./person-popup-window.component.html",
-  styleUrls: ["./person-popup-window.component.scss"],
+    selector: "sample-person-popup-window",
+    templateUrl: "./person-popup-window.component.html",
+    styleUrls: ["./person-popup-window.component.scss"],
+    standalone: false
 })
 export class PersonPopupWindowComponent
   implements OnInit, AfterViewInit, OnDestroy

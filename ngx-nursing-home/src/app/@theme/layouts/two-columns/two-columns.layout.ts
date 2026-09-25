@@ -3,9 +3,9 @@ import { NbSidebarService } from '@nebular/theme';
 import { environment, SidebarStates } from '../../../../environments/environment';
 
 @Component({
-  selector: 'ngx-two-columns-layout',
-  styleUrls: ['./two-columns.layout.scss'],
-  template: `
+    selector: 'ngx-two-columns-layout',
+    styleUrls: ['./two-columns.layout.scss'],
+    template: `
     <nb-layout windowMode>
       <nb-layout-header fixed>
         <ngx-header></ngx-header>
@@ -28,6 +28,7 @@ import { environment, SidebarStates } from '../../../../environments/environment
 
     </nb-layout>
   `,
+    standalone: false
 })
 export class TwoColumnsLayoutComponent {
   constructor(private sidebarService: NbSidebarService) { }

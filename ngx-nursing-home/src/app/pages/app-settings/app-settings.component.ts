@@ -6,8 +6,9 @@ import { AppSettingsService } from "../../services/app-settings.service";
 import { ToastrService } from "../../services/toastr.service";
 
 @Component({
-  selector: "sample-app-settings",
-  templateUrl: "./app-settings.component.html",
+    selector: "sample-app-settings",
+    templateUrl: "./app-settings.component.html",
+    standalone: false
 })
 export class AppSettingsComponent implements OnInit {
   public getString = getString;

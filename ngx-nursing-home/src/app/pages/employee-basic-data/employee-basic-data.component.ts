@@ -19,9 +19,10 @@ import { JobPositionsService } from "../../services/rest/job-positions.service";
 import { EmploymentTypesService } from "../../services/rest/employment-types.service";
 
 @Component({
-  selector: "sample-employee-basic-data",
-  templateUrl: "./employee-basic-data.component.html",
-  styleUrls: ["./employee-basic-data.component.scss"],
+    selector: "sample-employee-basic-data",
+    templateUrl: "./employee-basic-data.component.html",
+    styleUrls: ["./employee-basic-data.component.scss"],
+    standalone: false
 })
 export class EmployeeBasicDataComponent implements OnInit, OnDestroy {
   constructor(

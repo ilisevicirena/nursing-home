@@ -9,9 +9,10 @@ import { AddEditEventComponent } from "./add-edit-event/add-edit-event.component
 import { AuthService, UserRole } from "../../services/auth.service";
 
 @Component({
-  selector: "sample-calendar",
-  templateUrl: "./calendar.component.html",
-  styleUrls: ["./calendar.component.scss"],
+    selector: "sample-calendar",
+    templateUrl: "./calendar.component.html",
+    styleUrls: ["./calendar.component.scss"],
+    standalone: false
 })
 export class CalendarComponent implements OnInit, OnDestroy {
   public getString = getString;

@@ -11,9 +11,10 @@ import { fileDownload, makeId, previewFile } from "shared-components";
 import { AuthService, UserRole } from "../../../services/auth.service";
 
 @Component({
-  selector: "sample-note-documents",
-  templateUrl: "./note-documents.component.html",
-  styleUrls: ["./note-documents.component.scss"],
+    selector: "sample-note-documents",
+    templateUrl: "./note-documents.component.html",
+    styleUrls: ["./note-documents.component.scss"],
+    standalone: false
 })
 export class NoteDocumentsComponent implements OnInit, OnDestroy {
   public getString = getString;

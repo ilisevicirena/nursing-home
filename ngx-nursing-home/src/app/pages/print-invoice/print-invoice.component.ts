@@ -19,9 +19,10 @@ import { ToastrService } from "../../services/toastr.service";
 import { getBase64ImageFromUrl } from "../../resources/functions";
 
 @Component({
-  selector: "sample-print-invoice",
-  templateUrl: "./print-invoice.component.html",
-  styleUrls: ["./print-invoice.component.scss"],
+    selector: "sample-print-invoice",
+    templateUrl: "./print-invoice.component.html",
+    styleUrls: ["./print-invoice.component.scss"],
+    standalone: false
 })
 export class PrintInvoiceComponent implements OnInit, AfterViewInit {
   constructor(private _toastrService: ToastrService) {}

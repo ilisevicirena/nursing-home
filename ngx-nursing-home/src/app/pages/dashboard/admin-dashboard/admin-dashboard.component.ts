@@ -6,9 +6,10 @@ import { SummaryService } from "../../../services/rest/summary.service";
 import { Router } from "@angular/router";
 import { NbThemeService } from "@nebular/theme";
 @Component({
-  selector: "sample-admin-dashboard",
-  templateUrl: "./admin-dashboard.component.html",
-  styleUrls: ["./admin-dashboard.component.scss"],
+    selector: "sample-admin-dashboard",
+    templateUrl: "./admin-dashboard.component.html",
+    styleUrls: ["./admin-dashboard.component.scss"],
+    standalone: false
 })
 export class AdminDashboardComponent implements OnInit, OnDestroy {
   public getString = getString;

@@ -17,9 +17,10 @@ import { getString } from "../../resources/strings";
 import { MeasureUnitsService } from "../../services/rest/measure-units.service";
 
 @Component({
-  selector: "sample-packages",
-  templateUrl: "./packages.component.html",
-  styleUrls: ["./packages.component.scss"],
+    selector: "sample-packages",
+    templateUrl: "./packages.component.html",
+    styleUrls: ["./packages.component.scss"],
+    standalone: false
 })
 export class PackagesComponent implements OnInit, OnDestroy {
   private _subs: Subscription[] = [];

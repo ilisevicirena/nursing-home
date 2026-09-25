@@ -11,13 +11,7 @@
  * Requests for local assets (config.json, translations) go through HttpBackend and never reach
  * interceptors, so they are unaffected.
  */
-import {
-  HttpEvent,
-  HttpHandler,
-  HttpInterceptor,
-  HttpRequest,
-  HttpResponse,
-} from "@angular/common/http";
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from "@angular/common/http";
 import { Injectable, Injector } from "@angular/core";
 import { EMPTY, Observable, of } from "rxjs";
 import { delay } from "rxjs/operators";

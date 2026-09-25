@@ -4,9 +4,10 @@ import { takeWhile } from "rxjs/operators";
 import { Location } from "@angular/common";
 
 @Component({
-  selector: "sample-auth",
-  templateUrl: "./auth.component.html",
-  styleUrls: ["./auth.component.scss"],
+    selector: "sample-auth",
+    templateUrl: "./auth.component.html",
+    styleUrls: ["./auth.component.scss"],
+    standalone: false
 })
 export class AuthComponent implements OnDestroy {
   private alive = true;

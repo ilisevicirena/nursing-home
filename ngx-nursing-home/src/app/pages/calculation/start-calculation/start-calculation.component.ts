@@ -23,9 +23,10 @@ import { getMonthNames, getYearsInRange } from "../../../resources/functions";
 import { environment } from "../../../../environments/environment";
 
 @Component({
-  selector: "sample-start-calculation",
-  templateUrl: "./start-calculation.component.html",
-  styleUrls: ["./start-calculation.component.scss"],
+    selector: "sample-start-calculation",
+    templateUrl: "./start-calculation.component.html",
+    styleUrls: ["./start-calculation.component.scss"],
+    standalone: false
 })
 export class StartCalculationComponent implements OnInit, OnDestroy {
   private _subs: Subscription[] = [];

@@ -9,9 +9,10 @@ import { Subscription } from "rxjs";
 import { NgForm } from "@angular/forms";
 
 @Component({
-  selector: "sample-new-employee",
-  templateUrl: "./new-employee.component.html",
-  styleUrls: ["./new-employee.component.scss"],
+    selector: "sample-new-employee",
+    templateUrl: "./new-employee.component.html",
+    styleUrls: ["./new-employee.component.scss"],
+    standalone: false
 })
 export class NewEmployeeComponent implements OnInit, OnDestroy {
   constructor(

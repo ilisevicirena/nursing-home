@@ -12,9 +12,10 @@ import { NoteExportComponent } from "../../notes/note-export/note-export.compone
 import { AuthService, UserRole } from "../../../services/auth.service";
 
 @Component({
-  selector: "sample-doctor-visit-details",
-  templateUrl: "./doctor-visit-details.component.html",
-  styleUrls: ["./doctor-visit-details.component.scss"],
+    selector: "sample-doctor-visit-details",
+    templateUrl: "./doctor-visit-details.component.html",
+    styleUrls: ["./doctor-visit-details.component.scss"],
+    standalone: false
 })
 export class DoctorVisitDetailsComponent implements OnInit, OnDestroy {
   private _subs: Subscription[] = [];

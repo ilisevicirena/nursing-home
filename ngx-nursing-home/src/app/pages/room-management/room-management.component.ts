@@ -17,9 +17,10 @@ import { Subscription } from "rxjs";
 import { ToastrService } from "../../services/toastr.service";
 
 @Component({
-  selector: "sample-room-management",
-  templateUrl: "./room-management.component.html",
-  styleUrls: ["./room-management.component.scss"],
+    selector: "sample-room-management",
+    templateUrl: "./room-management.component.html",
+    styleUrls: ["./room-management.component.scss"],
+    standalone: false
 })
 export class RoomManagementComponent implements OnInit, OnDestroy {
   public floorsTitle: string = getString("floors");

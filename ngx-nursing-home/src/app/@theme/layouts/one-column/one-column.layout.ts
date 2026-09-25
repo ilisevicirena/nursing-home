@@ -14,9 +14,10 @@ import { Router } from "@angular/router";
 import { timeStamp } from "console";
 
 @Component({
-  selector: "ngx-one-column-layout",
-  styleUrls: ["./one-column.layout.scss"],
-  templateUrl: "./one-column.layout.html",
+    selector: "ngx-one-column-layout",
+    styleUrls: ["./one-column.layout.scss"],
+    templateUrl: "./one-column.layout.html",
+    standalone: false
 })
 export class OneColumnLayoutComponent implements OnInit {
   constructor(

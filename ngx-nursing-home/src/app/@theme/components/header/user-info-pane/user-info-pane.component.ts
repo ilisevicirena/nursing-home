@@ -10,9 +10,10 @@ import { getString } from "../../../../resources/strings";
 import { Router } from "@angular/router";
 
 @Component({
-  selector: "sample-user-info-pane",
-  templateUrl: "./user-info-pane.component.html",
-  styleUrls: ["./user-info-pane.component.scss"],
+    selector: "sample-user-info-pane",
+    templateUrl: "./user-info-pane.component.html",
+    styleUrls: ["./user-info-pane.component.scss"],
+    standalone: false
 })
 export class UserInfoPaneComponent implements OnInit, OnDestroy {
   constructor(private _authService: AuthService, private _router: Router) {}

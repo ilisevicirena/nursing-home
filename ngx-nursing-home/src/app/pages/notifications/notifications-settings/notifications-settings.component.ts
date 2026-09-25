@@ -5,9 +5,10 @@ import { NotificationsService } from "../../../services/rest/notifications.servi
 import { ToastrService } from "../../../services/toastr.service";
 
 @Component({
-  selector: "sample-notifications-settings",
-  templateUrl: "./notifications-settings.component.html",
-  styleUrls: ["./notifications-settings.component.scss"],
+    selector: "sample-notifications-settings",
+    templateUrl: "./notifications-settings.component.html",
+    styleUrls: ["./notifications-settings.component.scss"],
+    standalone: false
 })
 export class NotificationsSettingsComponent implements OnInit, OnDestroy {
   public getString = getString;

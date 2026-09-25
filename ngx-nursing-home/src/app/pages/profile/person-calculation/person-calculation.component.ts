@@ -24,9 +24,10 @@ import { StartCalculationComponent } from "../../calculation/start-calculation/s
 import { AuthService, UserRole } from "../../../services/auth.service";
 
 @Component({
-  selector: "sample-person-calculation",
-  templateUrl: "./person-calculation.component.html",
-  styleUrls: ["./person-calculation.component.scss"],
+    selector: "sample-person-calculation",
+    templateUrl: "./person-calculation.component.html",
+    styleUrls: ["./person-calculation.component.scss"],
+    standalone: false
 })
 export class PersonCalculationComponent implements OnInit, OnDestroy {
   private _subs: Subscription[] = [];

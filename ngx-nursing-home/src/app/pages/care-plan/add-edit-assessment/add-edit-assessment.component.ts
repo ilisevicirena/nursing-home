@@ -6,9 +6,10 @@ import { ToastrService } from "../../../services/toastr.service";
 import { getString } from "../../../resources/strings";
 
 @Component({
-  selector: "sample-add-edit-assessment",
-  templateUrl: "./add-edit-assessment.component.html",
-  styleUrls: ["./add-edit-assessment.component.scss"],
+    selector: "sample-add-edit-assessment",
+    templateUrl: "./add-edit-assessment.component.html",
+    styleUrls: ["./add-edit-assessment.component.scss"],
+    standalone: false
 })
 export class AddEditAssessmentComponent implements OnInit, OnDestroy {
   private _subs: Subscription[] = [];

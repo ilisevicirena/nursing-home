@@ -14,9 +14,10 @@ import { environment } from "../../../environments/environment";
 import { DialogService } from "../../shared/dialog/dialog.service";
 
 @Component({
-  selector: "sample-user",
-  templateUrl: "./user.component.html",
-  styleUrls: ["./user.component.scss"],
+    selector: "sample-user",
+    templateUrl: "./user.component.html",
+    styleUrls: ["./user.component.scss"],
+    standalone: false
 })
 export class UserComponent implements OnInit, OnDestroy {
   constructor(

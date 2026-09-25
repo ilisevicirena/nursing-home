@@ -6,9 +6,10 @@ import { getString } from "../../resources/strings";
 import { Subscription } from "rxjs";
 
 @Component({
-  selector: "sample-reset-password",
-  templateUrl: "./reset-password.component.html",
-  styleUrls: ["./reset-password.component.scss"],
+    selector: "sample-reset-password",
+    templateUrl: "./reset-password.component.html",
+    styleUrls: ["./reset-password.component.scss"],
+    standalone: false
 })
 export class ResetPasswordComponent implements OnInit, OnDestroy {
   constructor(private _authService: AuthService, private _router: Router) {}

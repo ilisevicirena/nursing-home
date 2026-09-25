@@ -6,9 +6,10 @@ import { getString } from "../../resources/strings";
 import { Subscription } from "rxjs";
 
 @Component({
-  selector: "sample-set-password",
-  templateUrl: "./set-password.component.html",
-  styleUrls: ["./set-password.component.scss"],
+    selector: "sample-set-password",
+    templateUrl: "./set-password.component.html",
+    styleUrls: ["./set-password.component.scss"],
+    standalone: false
 })
 export class SetPasswordComponent implements OnInit, OnDestroy {
   constructor(

@@ -15,9 +15,10 @@ import { fileDownload } from "shared-components";
 const htmlToPdfmake = require("html-to-pdfmake");
 
 @Component({
-  selector: "sample-note-export",
-  templateUrl: "./note-export.component.html",
-  styleUrls: ["./note-export.component.scss"],
+    selector: "sample-note-export",
+    templateUrl: "./note-export.component.html",
+    styleUrls: ["./note-export.component.scss"],
+    standalone: false
 })
 export class NoteExportComponent implements OnInit, OnDestroy {
   public notes: any[] = [];

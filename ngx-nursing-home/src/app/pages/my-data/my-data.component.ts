@@ -5,9 +5,10 @@ import { EmployeesService } from "../../services/rest/employees.service";
 import { AuthService } from "../../services/auth.service";
 
 @Component({
-  selector: "sample-my-data",
-  templateUrl: "./my-data.component.html",
-  styleUrls: ["./my-data.component.scss"],
+    selector: "sample-my-data",
+    templateUrl: "./my-data.component.html",
+    styleUrls: ["./my-data.component.scss"],
+    standalone: false
 })
 export class MyDataComponent implements OnInit, OnDestroy {
   public getString = getString;

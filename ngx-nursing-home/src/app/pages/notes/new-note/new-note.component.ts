@@ -15,9 +15,10 @@ import { NoteDocumentsComponent } from "../note-documents/note-documents.compone
 import { hexToRgbA } from "../../../resources/functions";
 
 @Component({
-  selector: "sample-new-note",
-  templateUrl: "./new-note.component.html",
-  styleUrls: ["./new-note.component.scss"],
+    selector: "sample-new-note",
+    templateUrl: "./new-note.component.html",
+    styleUrls: ["./new-note.component.scss"],
+    standalone: false
 })
 export class NewNoteComponent implements OnInit, OnDestroy {
   constructor(

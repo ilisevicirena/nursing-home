@@ -11,9 +11,10 @@ import { getString } from "../../resources/strings";
 import { VacationsService } from "../../services/rest/vacations.service";
 
 @Component({
-  selector: "sample-employee",
-  templateUrl: "./employee.component.html",
-  styleUrls: ["./employee.component.scss"],
+    selector: "sample-employee",
+    templateUrl: "./employee.component.html",
+    styleUrls: ["./employee.component.scss"],
+    standalone: false
 })
 export class EmployeeComponent implements OnInit, OnDestroy {
   constructor(

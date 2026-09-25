@@ -6,9 +6,10 @@ import { Router } from "@angular/router";
 import { ToastrService } from "../../services/toastr.service";
 
 @Component({
-  selector: "sample-notifications",
-  templateUrl: "./notifications.component.html",
-  styleUrls: ["./notifications.component.scss"],
+    selector: "sample-notifications",
+    templateUrl: "./notifications.component.html",
+    styleUrls: ["./notifications.component.scss"],
+    standalone: false
 })
 export class NotificationsComponent implements OnInit, OnDestroy {
   public getString = getString;

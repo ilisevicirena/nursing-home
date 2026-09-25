@@ -9,9 +9,10 @@ import { UserComponent } from "../user/user.component";
 import { ToastrService } from "../../services/toastr.service";
 
 @Component({
-  selector: "sample-my-profile",
-  templateUrl: "./my-profile.component.html",
-  styleUrls: ["./my-profile.component.scss"],
+    selector: "sample-my-profile",
+    templateUrl: "./my-profile.component.html",
+    styleUrls: ["./my-profile.component.scss"],
+    standalone: false
 })
 export class MyProfileComponent implements OnInit, OnDestroy {
   public user: IUser;

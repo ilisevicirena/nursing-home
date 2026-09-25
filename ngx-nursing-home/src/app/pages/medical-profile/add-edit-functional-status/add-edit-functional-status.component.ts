@@ -9,9 +9,10 @@ import { getString } from "../../../resources/strings";
 import { ToastrService } from "../../../services/toastr.service";
 
 @Component({
-  selector: "sample-add-edit-functional-status",
-  templateUrl: "./add-edit-functional-status.component.html",
-  styleUrls: ["./add-edit-functional-status.component.scss"],
+    selector: "sample-add-edit-functional-status",
+    templateUrl: "./add-edit-functional-status.component.html",
+    styleUrls: ["./add-edit-functional-status.component.scss"],
+    standalone: false
 })
 export class AddEditFunctionalStatusComponent implements OnInit, OnDestroy {
   private _subs: Subscription[] = [];

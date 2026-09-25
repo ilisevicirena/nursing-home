@@ -8,9 +8,10 @@ import { ToastrService } from "../../services/toastr.service";
 import { DoctorVisitsService } from "../../services/rest/doctor-visits.service";
 
 @Component({
-  selector: "sample-start-doctor-visit-tour",
-  templateUrl: "./start-doctor-visit-tour.component.html",
-  styleUrls: ["./start-doctor-visit-tour.component.scss"],
+    selector: "sample-start-doctor-visit-tour",
+    templateUrl: "./start-doctor-visit-tour.component.html",
+    styleUrls: ["./start-doctor-visit-tour.component.scss"],
+    standalone: false
 })
 export class StartDoctorVisitTourComponent implements OnInit, OnDestroy {
   public getString = getString;

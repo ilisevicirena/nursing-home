@@ -1,7 +1,10 @@
 import { Pipe, PipeTransform } from "@angular/core";
 import { AppSettingsService } from "../../services/app-settings.service";
 
-@Pipe({ name: "appCurrency", pure: false })
+@Pipe({
+    name: "appCurrency", pure: false,
+    standalone: false
+})
 export class AppCurrencyPipe implements PipeTransform {
   constructor(private _settings: AppSettingsService) {}
 

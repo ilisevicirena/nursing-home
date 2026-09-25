@@ -18,9 +18,10 @@ import { ToastrService } from "../../services/toastr.service";
 import { UserComponent } from "../user/user.component";
 
 @Component({
-  selector: "sample-users",
-  templateUrl: "./users.component.html",
-  styleUrls: ["./users.component.scss"],
+    selector: "sample-users",
+    templateUrl: "./users.component.html",
+    styleUrls: ["./users.component.scss"],
+    standalone: false
 })
 export class UsersComponent implements OnInit, OnDestroy {
   constructor(
