@@ -78,14 +78,23 @@ automatically to GitHub Pages via GitHub Actions on every push.
   <em>Dashboard — occupancy, key metrics and quick actions</em>
 </p>
 
+<p align="center">
+  <img src="docs/screenshots/medical-profile.png" alt="Medical profile" width="820"><br>
+  <em>Medical profile — medications, allergies &amp; clinical data</em>
+</p>
+
 <table>
   <tr>
     <td width="50%"><img src="docs/screenshots/residents.png" alt="Residents"><br><em>Resident directory &amp; profiles</em></td>
-    <td width="50%"><img src="docs/screenshots/medical-profile.png" alt="Medical profile"><br><em>Medical profile — medications &amp; allergies</em></td>
+    <td width="50%"><img src="docs/screenshots/calculation.png" alt="Billing"><br><em>Billing — calculations, discounts &amp; packages</em></td>
   </tr>
   <tr>
-    <td width="50%"><img src="docs/screenshots/calculation.png" alt="Billing"><br><em>Billing — calculations, discounts &amp; packages</em></td>
     <td width="50%"><img src="docs/screenshots/calendar.png" alt="Calendar"><br><em>Calendar &amp; doctor-visit scheduling</em></td>
+    <td width="50%"><img src="docs/screenshots/room-arrangement.png" alt="Room arrangement"><br><em>Room arrangement — drag-and-drop occupancy board</em></td>
+  </tr>
+  <tr>
+    <td width="50%"><img src="docs/screenshots/medication-administration.png" alt="Medication administration"><br><em>Medication Administration Record (MAR)</em></td>
+    <td width="50%"><img src="docs/screenshots/employee-profile.png" alt="Employee profile"><br><em>Employee profile — role, contact &amp; details</em></td>
   </tr>
 </table>
 
@@ -215,16 +224,6 @@ npm run start:demo                         # serves the app with seeded in-memor
 ```
 Demo Mode is toggled by a build flag and an HTTP interceptor (`src/app/@core/demo/`), so it is fully
 isolated from the real application code.
-
----
-
-## 🗺 Roadmap / Ideas
-
-- [x] Deploy always-on Demo Mode build to free static hosting — **GitHub Pages**
-- [x] GitHub Actions CI — auto-build & deploy the demo on every push to `main`
-- [ ] One-command local run via `docker-compose` (frontend + API + SQL Server)
-- [ ] Unit/e2e test coverage badge
-- [ ] Upgrade Angular 15 → latest LTS
 
 ---
 

@@ -13,6 +13,9 @@ striking for a portfolio) — use it, or toggle to light; just keep it consisten
 | `medical-profile.png` | A resident's medical profile — medications + allergies | Shows clinical depth. |
 | `calculation.png` | A billing calculation / invoice with line items | Shows the billing engine. |
 | `calendar.png` | The calendar with a few events / a doctor-visit tour | Shows scheduling. |
+| `room-arrangement.png` | The accommodation / occupancy board with rooms and assigned residents | Drag-and-drop board — a standout feature. |
+| `medication-administration.png` | The MAR page — a resident's daily medication schedule | Clinical feature; log in as `admin` or `nurse`. |
+| `employee-profile.png` | An employee's profile — role, contact and details | Log in as `admin`. |
 
 ## How to record the GIF (free tools)
 
