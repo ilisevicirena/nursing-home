@@ -132,7 +132,7 @@
           <div class="fw-600 mb-1">{{ getString("calculatedSum") }}</div>
           <div class="fw-600 h6 m-0">
             {{ summary?.TotalCalculatedPrice }}
-            <span *ngIf="!summary?.TotalCalculatedPrice">0</span> KM
+            <span *ngIf="!summary?.TotalCalculatedPrice">0</span> {{ "" | appCurrency }}
           </div>
           <div
             class="indicator"
@@ -179,7 +179,7 @@
           <div class="fw-600 mb-1">{{ getString("calculatedSumReal") }}</div>
           <div class="fw-600 h6 m-0">
             {{ summary?.TotalRealPrice
-            }}<span *ngIf="!summary?.TotalRealPrice">0</span> KM
+            }}<span *ngIf="!summary?.TotalRealPrice">0</span> {{ "" | appCurrency }}
           </div>
           <div
             class="indicator"
@@ -226,7 +226,7 @@
           <div class="fw-600 mb-1">{{ getString("calculatedSumPaid") }}</div>
           <div class="fw-600 h6 m-0">
             {{ summary?.TotalPaidPrice }}
-            <span *ngIf="!summary?.TotalPaidPrice">0</span> KM
+            <span *ngIf="!summary?.TotalPaidPrice">0</span> {{ "" | appCurrency }}
           </div>
           <div
             class="indicator"

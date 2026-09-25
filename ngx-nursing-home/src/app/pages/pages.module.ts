@@ -87,6 +87,7 @@ import { EmployeesComponent } from "./employees/employees.component";
 import { NewEmployeeComponent } from "./new-employee/new-employee.component";
 import { EmployeeBasicDataComponent } from "./employee-basic-data/employee-basic-data.component";
 import { MyDataComponent } from "./my-data/my-data.component";
+import { AppSettingsComponent } from "./app-settings/app-settings.component";
 import { EmployeeComponent } from "./employee/employee.component";
 import { EmployeeVacationsComponent } from "./employee/employee-vacations/employee-vacations.component";
 import { NewVacationComponent } from "./employee/new-vacation/new-vacation.component";
@@ -214,6 +215,7 @@ import { AuditLogComponent } from './audit-log/audit-log.component';
     NewEmployeeComponent,
     EmployeeBasicDataComponent,
     MyDataComponent,
+    AppSettingsComponent,
     EmployeeComponent,
     EmployeeVacationsComponent,
     NewVacationComponent,

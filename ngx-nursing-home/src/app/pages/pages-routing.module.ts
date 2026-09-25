@@ -36,6 +36,7 @@ import { MedicationAdministrationComponent } from "./medication-administration/m
 import { CarePlanComponent } from "./care-plan/care-plan.component";
 import { AuditLogComponent } from "./audit-log/audit-log.component";
 import { MyDataComponent } from "./my-data/my-data.component";
+import { AppSettingsComponent } from "./app-settings/app-settings.component";
 
 // Breadcrumb metadata carried in route `data` (read by BreadcrumbComponent):
 //   breadcrumb : label for this page (translation key, or a literal phrase with spaces)
@@ -315,6 +316,14 @@ const routes: Routes = [
             UserRole.OTHER_STUFF,
           ],
           breadcrumb: "myData",
+        },
+      },
+      {
+        path: "app-settings",
+        component: AppSettingsComponent,
+        data: {
+          Roles: [UserRole.ADMIN],
+          breadcrumb: "appSettings",
         },
       },
       {

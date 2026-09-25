@@ -7,6 +7,7 @@ import { filter } from "rxjs/operators";
 import { initializeStrings } from "./resources/strings";
 import { environment } from "../environments/environment";
 import { IdleService } from "./services/idle.service";
+import { AppSettingsService } from "./services/app-settings.service";
 
 @Component({
   selector: "ngx-app",
@@ -21,7 +22,8 @@ export class AppComponent implements OnInit, OnDestroy {
     private _http: HttpClient,
     private _idleService: IdleService,
     private _router: Router,
-    private _themeService: NbThemeService
+    private _themeService: NbThemeService,
+    private _appSettings: AppSettingsService
   ) {
     this._iconLibraries.registerFontPack("fas", {
       packClass: "fas",
@@ -42,6 +44,14 @@ export class AppComponent implements OnInit, OnDestroy {
     if (!localStorage.getItem("app-theme"))
       localStorage.setItem("app-theme", "dark");
     initializeStrings(this._http, environment.translationFile).subscribe();
+
+    this._appSettings.load().then(() => {
+      if (this._appSettings.language) {
+        const file = `assets/resources/strings-${this._appSettings.language}.json`;
+        if (file !== environment.translationFile)
+          initializeStrings(this._http, file).subscribe();
+      }
+    });
 
     // auth pages (login, password change, ...) always render light; everywhere
     // else uses the user's saved theme

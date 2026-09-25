@@ -44,6 +44,8 @@ import { NotificationsPaneComponent } from "./components/header/notifications-pa
 import { FormsModule } from "@angular/forms";
 import { UserInfoPaneComponent } from "./components/header/user-info-pane/user-info-pane.component";
 import { SharedComponentsModule } from "shared-components";
+import { DisableAutocompleteDirective } from "./directives/disable-autocomplete.directive";
+import { AppCurrencyPipe } from "./pipes/app-currency.pipe";
 
 const NB_MODULES = [
   NbLayoutModule,
@@ -83,11 +85,18 @@ const COMPONENTS = [
 
 @NgModule({
   imports: [CommonModule, ...NB_MODULES],
-  exports: [CommonModule, ...COMPONENTS],
+  exports: [
+    CommonModule,
+    ...COMPONENTS,
+    DisableAutocompleteDirective,
+    AppCurrencyPipe,
+  ],
   declarations: [
     ...COMPONENTS,
     NotificationsPaneComponent,
     UserInfoPaneComponent,
+    DisableAutocompleteDirective,
+    AppCurrencyPipe,
   ],
 })
 export class ThemeModule {

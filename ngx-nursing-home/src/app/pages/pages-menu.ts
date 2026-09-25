@@ -230,6 +230,12 @@ export const MENU_ITEMS: any[] = [
     ],
   },
   {
+    title: getString("appSettings"),
+    icon: "settings-2-outline",
+    color: "#8B8B8B",
+    link: "/pages/app-settings",
+  },
+  {
     title: getString("accomodationManagement"),
     icon: "pantone-outline",
     color: "#FF444E",

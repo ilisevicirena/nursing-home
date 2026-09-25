@@ -1,4 +1,8 @@
 [
+  { "key": "appSettings", "value": "Application settings" },
+  { "key": "appSettingsDescription", "value": "Choose the currency and language applied to all users." },
+  { "key": "currency", "value": "Currency" },
+  { "key": "language", "value": "Language" },
   { "key": "demoActionNotSupported", "value": "This is a view-only demo — adding, editing and deleting aren't saved because no backend is connected." },
   { "key": "dashboard", "value": "Dashboard" },
   { "key": "roomManagement", "value": "Room management" },
@@ -1246,6 +1250,7 @@
   { "key": "cognitiveModerateImpairment", "value": "Moderate impairment" },
   { "key": "cognitiveSevereImpairment", "value": "Severe impairment" },
   { "key": "cognitiveDementia", "value": "Dementia" },
+  { "key": "fallRisk", "value": "Fall risk" },
   { "key": "fallRiskLow", "value": "Low risk" },
   { "key": "fallRiskModerate", "value": "Moderate risk" },
   { "key": "fallRiskHigh", "value": "High risk" },

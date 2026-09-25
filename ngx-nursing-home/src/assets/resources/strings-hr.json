@@ -1,4 +1,8 @@
 [
+  { "key": "appSettings", "value": "Postavke aplikacije" },
+  { "key": "appSettingsDescription", "value": "Odaberite valutu i jezik koji se primjenjuju na sve korisnike." },
+  { "key": "currency", "value": "Valuta" },
+  { "key": "language", "value": "Jezik" },
   { "key": "demoActionNotSupported", "value": "Ovo je demo verzija samo za pregled — dodavanje, uređivanje i brisanje ne spremaju se jer nije povezana baza." },
   { "key": "dashboard", "value": "Početna" },
   { "key": "roomManagement", "value": "Upravljanje sobama" },

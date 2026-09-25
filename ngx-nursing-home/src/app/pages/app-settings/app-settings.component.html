@@ -1,0 +1,46 @@
+<div class="row m-0 p-3">
+  <nb-card class="col-md-6 p-0">
+    <nb-card-header>{{ getString("appSettings") }}</nb-card-header>
+    <nb-card-body>
+      <p class="text-hint mb-3">{{ getString("appSettingsDescription") }}</p>
+
+      <div class="form-group mb-3">
+        <div class="label mb-1">{{ getString("currency") }}</div>
+        <nb-select
+          fullWidth
+          [placeholder]="getString('select')"
+          [(selected)]="currency"
+        >
+          <nb-option *ngFor="let pu of priceUnits" [value]="pu.Tag">
+            {{ pu.Name }} ({{ pu.Tag }})
+          </nb-option>
+        </nb-select>
+      </div>
+
+      <div class="form-group mb-2">
+        <div class="label mb-1">{{ getString("language") }}</div>
+        <nb-select
+          fullWidth
+          [placeholder]="getString('select')"
+          [(selected)]="language"
+        >
+          <nb-option *ngFor="let l of languages" [value]="l.code">
+            {{ l.label }}
+          </nb-option>
+        </nb-select>
+      </div>
+    </nb-card-body>
+    <nb-card-footer class="d-flex justify-content-end">
+      <button
+        nbButton
+        status="primary"
+        shape="round"
+        size="small"
+        [disabled]="saving || !currency || !language"
+        (click)="save()"
+      >
+        {{ getString("save") }}
+      </button>
+    </nb-card-footer>
+  </nb-card>
+</div>

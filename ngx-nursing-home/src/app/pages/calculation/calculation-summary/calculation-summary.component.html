@@ -48,7 +48,7 @@
             class="price w-100 d-flex justify-content-center align-items-center"
           >
             {{ summary?.TotalCalculatedPrice }}
-            <span *ngIf="!summary?.TotalCalculatedPrice">0 </span> KM
+            <span *ngIf="!summary?.TotalCalculatedPrice">0 </span> {{ "" | appCurrency }}
           </div>
           <div
             class="label w-100 d-flex justify-content-center align-items-center"
@@ -93,7 +93,7 @@
             class="price w-100 d-flex justify-content-center align-items-center"
           >
             {{ summary?.TotalRealPrice }}
-            <span *ngIf="!summary?.TotalRealPrice">0 </span> KM
+            <span *ngIf="!summary?.TotalRealPrice">0 </span> {{ "" | appCurrency }}
           </div>
           <div
             class="label w-100 d-flex justify-content-center align-items-center"
@@ -138,7 +138,7 @@
             class="price w-100 d-flex justify-content-center align-items-center"
           >
             {{ summary?.TotalPaidPrice }}
-            <span *ngIf="!summary?.TotalPaidPrice">0 </span> KM
+            <span *ngIf="!summary?.TotalPaidPrice">0 </span> {{ "" | appCurrency }}
           </div>
           <div
             class="label w-100 d-flex justify-content-center align-items-center"
@@ -219,7 +219,7 @@
       <div class="row m-0 p-0">
         <div class="col-4 p-0">
           <div class="row dotted-border subtitle">
-            {{ summary?.TotalCalculatedPrice }} KM
+            {{ summary?.TotalCalculatedPrice  | appCurrency }}
             <div class="circle"></div>
           </div>
         </div>
@@ -227,7 +227,7 @@
           <div class="row m-0 p-2 text">
             <div class="row">
               {{ getString("calculatedSum") }}:
-              {{ summary?.TotalCalculatedPrice }} KM
+              {{ summary?.TotalCalculatedPrice  | appCurrency }}
             </div>
             <div class="row">
               {{ summary?.TotalCalculatedPriceDiff }}
@@ -249,7 +249,7 @@
         <div class="col-4 p-0">
           <div class="row dotted-border subtitle">
             {{ summary?.TotalRealPrice }}
-            <span class="w-max" *ngIf="!summary?.TotalRealPrice">0 </span> KM
+            <span class="w-max" *ngIf="!summary?.TotalRealPrice">0 </span> {{ "" | appCurrency }}
             <div class="circle"></div>
           </div>
         </div>
@@ -258,7 +258,7 @@
             <div class="row">
               {{ getString("calculatedSumReal") }}:
               {{ summary?.TotalRealPrice }}
-              <span class="w-max" *ngIf="!summary?.TotalRealPrice">0 </span> KM
+              <span class="w-max" *ngIf="!summary?.TotalRealPrice">0 </span> {{ "" | appCurrency }}
             </div>
             <div class="row">
               {{ summary?.TotalRealPriceDiff }}
@@ -280,7 +280,7 @@
         <div class="col-4 p-0">
           <div class="row dotted-border subtitle">
             {{ summary?.TotalPaidPrice }}
-            <span class="w-max" *ngIf="!summary?.TotalPaidPrice">0 </span> KM
+            <span class="w-max" *ngIf="!summary?.TotalPaidPrice">0 </span> {{ "" | appCurrency }}
             <div class="circle"></div>
           </div>
         </div>
@@ -289,7 +289,7 @@
             <div class="row">
               {{ getString("calculatedSumPaid") }}:
               {{ summary?.TotalPaidPrice }}
-              <span class="w-max" *ngIf="!summary?.TotalPaidPrice">0 </span> KM
+              <span class="w-max" *ngIf="!summary?.TotalPaidPrice">0 </span> {{ "" | appCurrency }}
             </div>
             <div class="row">
               {{ summary?.TotalPaidPriceDiff }}

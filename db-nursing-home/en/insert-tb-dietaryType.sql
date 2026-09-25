@@ -1,0 +1,16 @@
+INSERT INTO [dbo].[DietaryType] (Name, Description) VALUES
+(N'Diabetic diet',        N'Diet adjusted to control blood sugar levels'),
+(N'Gluten-free diet',     N'No wheat, barley, rye or gluten-containing products'),
+(N'Lactose-free diet',    N'No milk or dairy products containing lactose'),
+(N'Low-sodium diet',      N'Restricted sodium intake, up to 2g of sodium per day'),
+(N'Low-calorie diet',     N'Reduced calorie intake to manage body weight'),
+(N'Low-fat diet',         N'Restricted fat intake, suitable for heart conditions'),
+(N'Vegetarian diet',      N'No meat or fish, includes dairy and eggs'),
+(N'Vegan diet',           N'No animal products of any kind'),
+(N'Pureed diet',          N'Pureed or soft food for people with swallowing difficulties'),
+(N'Soft diet',            N'Easy-to-chew food for people with dental difficulties'),
+(N'Fluid restriction',    N'Controlled fluid intake per physician instructions'),
+(N'Halal diet',           N'Food prepared according to Islamic dietary rules'),
+(N'Kosher diet',          N'Food prepared according to Jewish dietary rules'),
+(N'High-protein diet',    N'Increased protein intake for recovery or preventing muscle loss'),
+(N'High-fiber diet',      N'Increased dietary fiber intake to aid digestion');
