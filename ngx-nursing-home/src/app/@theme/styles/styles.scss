@@ -429,9 +429,11 @@ nb-dialog-container {
   justify-content: center;
 }
 
-// Nebular 17 dropped the windows-container right-alignment; restore it so the person detail window docks right
-nb-windows-container {
-  justify-content: flex-end;
+// Nebular 17: the shared window overlay no longer docks right on its own; push the
+// person detail pane to the right (margin-auto works for both flex and block wrappers)
+.cdk-overlay-pane:has(nb-window.person-popup-window) {
+  margin-left: auto !important;
+  margin-right: 0 !important;
 }
 
 @media only screen and (min-height: 600px) and (max-height: 1000px) {
