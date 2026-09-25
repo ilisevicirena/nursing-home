@@ -64,7 +64,7 @@
               class="price w-100 d-flex justify-content-center align-items-center"
             >
               {{ summary?.TotalCalculatedPrice }}
-              <span *ngIf="!summary?.TotalCalculatedPrice">0 </span> KM
+              <span *ngIf="!summary?.TotalCalculatedPrice">0 </span> {{ "" | appCurrency }}
             </div>
             <div
               class="label w-100 d-flex justify-content-center align-items-center"
@@ -79,7 +79,7 @@
               class="price w-100 d-flex justify-content-center align-items-center"
             >
               {{ summary?.TotalRealPrice }}
-              <span *ngIf="!summary?.TotalRealPrice">0 </span> KM
+              <span *ngIf="!summary?.TotalRealPrice">0 </span> {{ "" | appCurrency }}
             </div>
             <div
               class="label w-100 d-flex justify-content-center align-items-center"
@@ -94,7 +94,7 @@
               class="price w-100 d-flex justify-content-center align-items-center"
             >
               {{ summary?.TotalPaidPrice }}
-              <span *ngIf="!summary?.TotalPaidPrice">0 </span> KM
+              <span *ngIf="!summary?.TotalPaidPrice">0 </span> {{ "" | appCurrency }}
             </div>
             <div
               class="label w-100 d-flex justify-content-center align-items-center"

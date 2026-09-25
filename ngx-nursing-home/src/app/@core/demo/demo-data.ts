@@ -102,9 +102,11 @@ export const MEASURE_UNITS = [
 ];
 
 export const PRICE_UNITS = [
-  { Id: 1, Name: "Monthly", Tag: "mo" },
-  { Id: 2, Name: "Daily", Tag: "day" },
-  { Id: 3, Name: "Per piece", Tag: "pcs" },
+  { Id: 1, Name: "Convertible Mark", Tag: "KM" },
+  { Id: 2, Name: "Euro", Tag: "€" },
+  { Id: 3, Name: "US Dollar", Tag: "$" },
+  { Id: 4, Name: "British Pound", Tag: "£" },
+  { Id: 5, Name: "Croatian Kuna", Tag: "kn" },
 ];
 
 // db JobPosition (5 items, with FontAwesome icons)
@@ -1191,6 +1193,10 @@ export function getMock(
     case path.includes("notifications/checkNotificationsStatus"):
       return hit([{ NotificationNumber: notifications().filter((n) => !n.Read).length }]);
     case path.startsWith("notifications"): return hit([]);
+    case path.includes("general-settings/getGeneralSetting") && query["Name"] === "currency":
+      return hit([{ Tag: "currency", Value: "KM" }]);
+    case path.includes("general-settings/getGeneralSetting") && query["Name"] === "language":
+      return hit([{ Tag: "language", Value: "en" }]);
     case path.startsWith("general-settings"): return hit({ Value: "1", KmPrice: 0.5, Currency: "EUR" });
     case path.startsWith("my-profile"):
       return hit([{ Id: "demo-user-1", FirstName: "Demo", LastName: "User", Email: "demo@demo.local", Username: "demo" }]);
