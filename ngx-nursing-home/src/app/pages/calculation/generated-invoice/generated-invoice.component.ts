@@ -11,7 +11,7 @@ import * as pdfFonts from "pdfmake/build/vfs_fonts";
 import { environment } from "../../../../environments/environment";
 import { getString } from "../../../resources/strings";
 import { getBase64ImageFromUrl } from "../../../resources/functions";
-(pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
+(pdfMake as any).vfs = (pdfFonts as any).vfs || pdfFonts;
 const htmlToPdfmake = require("html-to-pdfmake");
 
 @Component({

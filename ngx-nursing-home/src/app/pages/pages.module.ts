@@ -29,6 +29,7 @@ import {
   NbProgressBarModule,
 } from "@nebular/theme";
 import { Ng2SearchPipeModule } from "ng2-search-filter";
+import { FilterPipe } from '../shared/pipes/filter.pipe';
 import { ThemeModule } from "../@theme/theme.module";
 import { PagesComponent } from "./pages.component";
 import { DashboardModule } from "./dashboard/dashboard.module";
@@ -149,7 +150,8 @@ import { AuditLogComponent } from './audit-log/audit-log.component';
     NbButtonGroupModule,
     NbFormFieldModule,
     NbPopoverModule,
-    Ng2SearchPipeModule,
+    // replaced third-party search pipe with local FilterPipe for Ivy compatibility
+    // Ng2SearchPipeModule,
     NbStepperModule,
     DragDropModule,
     NbBadgeModule,
@@ -163,6 +165,7 @@ import { AuditLogComponent } from './audit-log/audit-log.component';
     }),
   ],
   declarations: [
+    FilterPipe,
     PagesComponent,
     RoomManagementComponent,
     PersonsComponent,

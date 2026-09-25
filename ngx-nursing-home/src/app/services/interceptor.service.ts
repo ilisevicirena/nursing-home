@@ -55,6 +55,19 @@ export class InterceptorService implements HttpInterceptor {
           url: `${this._apiBaseUrl}/${req.url}`,
         })
       : req;
+    const apiBase = this._configService.isConfigured()
+      ? this._configService.getAppConfig().ApiServiceUrl
+      : this._apiBaseUrl;
+
+    const authReq = req.clone({
+      headers: req.headers
+        .set("Authorization", "Bearer " + this._authService.getToken())
+        .set("Request-Date", new Date().toISOString()),
+      url:
+        req.url.substring(0, 3) === "api"
+          ? `${apiBase}/${req.url}`
+          : req.url,
+    });
 
     return next.handle(authReq).pipe(
       tap(
