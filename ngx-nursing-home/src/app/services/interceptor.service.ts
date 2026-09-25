@@ -44,13 +44,17 @@ export class InterceptorService implements HttpInterceptor {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<any> {
+    const apiBase = this._configService.isConfigured()
+      ? this._configService.getAppConfig().ApiServiceUrl
+      : this._apiBaseUrl;
+
     const authReq = req.clone({
       headers: req.headers
         .set("Authorization", "Bearer " + this._authService.getToken())
         .set("Request-Date", new Date().toISOString()),
       url:
         req.url.substring(0, 3) === "api"
-          ? `${this._apiBaseUrl}/${req.url}`
+          ? `${apiBase}/${req.url}`
           : req.url,
     });
 
