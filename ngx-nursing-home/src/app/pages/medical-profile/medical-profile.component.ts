@@ -29,7 +29,7 @@ import { Subscription } from "rxjs/internal/Subscription";
 import { AuthService, UserRole } from "../../services/auth.service";
 import { DialogService } from "../../shared/dialog/dialog.service";
 import { ToastrService } from "../../services/toastr.service";
-import { NbTabComponent } from "@nebular/theme/components/tabset/tabset.component";
+import { NbTabComponent } from "@nebular/theme";
 import { AddEditAllergenComponent } from "./add-edit-allergen/add-edit-allergen.component";
 import { AddEditMedicationComponent } from "./add-edit-medication/add-edit-medication.component";
 import { AddEditFunctionalStatusComponent } from "./add-edit-functional-status/add-edit-functional-status.component";

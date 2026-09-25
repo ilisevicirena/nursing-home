@@ -429,6 +429,11 @@ nb-dialog-container {
   justify-content: center;
 }
 
+// Nebular 17 dropped the windows-container right-alignment; restore it so the person detail window docks right
+nb-windows-container {
+  justify-content: flex-end;
+}
+
 @media only screen and (min-height: 600px) and (max-height: 1000px) {
   .basic-tile-card.giant {
     height: 600px;
