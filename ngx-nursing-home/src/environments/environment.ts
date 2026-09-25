@@ -40,7 +40,7 @@ export const environment = {
   demo: false,
   sidebarConfig: SidebarStates.COMPACT,
   configFile: "assets/config/config.json",
-  translationFile: "assets/resources/strings-hr.json",
+  translationFile: "assets/resources/strings-en.json",
   locale: "hr",
   notificationAllType: notificationAllType,
   brand: Brand,
