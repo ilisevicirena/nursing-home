@@ -17,9 +17,10 @@ import {
 import { ToastrService } from "../../../services/toastr.service";
 
 @Component({
-  selector: "sample-add-edit-discount",
-  templateUrl: "./add-edit-discount.component.html",
-  styleUrls: ["./add-edit-discount.component.scss"],
+    selector: "sample-add-edit-discount",
+    templateUrl: "./add-edit-discount.component.html",
+    styleUrls: ["./add-edit-discount.component.scss"],
+    standalone: false
 })
 export class AddEditDiscountComponent
   implements OnInit, OnDestroy, AfterViewInit

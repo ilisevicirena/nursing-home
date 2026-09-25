@@ -9,9 +9,10 @@ import { ToastrService } from "../../services/toastr.service";
 import { AuthService, UserRole } from "../../services/auth.service";
 
 @Component({
-  selector: "sample-accomodation-management",
-  templateUrl: "./accomodation-management.component.html",
-  styleUrls: ["./accomodation-management.component.scss"],
+    selector: "sample-accomodation-management",
+    templateUrl: "./accomodation-management.component.html",
+    styleUrls: ["./accomodation-management.component.scss"],
+    standalone: false
 })
 export class AccomodationManagementComponent implements OnInit, OnDestroy {
   constructor(

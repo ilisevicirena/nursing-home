@@ -26,9 +26,10 @@ import {
 } from "../../../services/calculation.service";
 
 @Component({
-  selector: "sample-add-edit-package",
-  templateUrl: "./add-edit-package.component.html",
-  styleUrls: ["./add-edit-package.component.scss"],
+    selector: "sample-add-edit-package",
+    templateUrl: "./add-edit-package.component.html",
+    styleUrls: ["./add-edit-package.component.scss"],
+    standalone: false
 })
 export class AddEditPackageComponent
   implements OnInit, OnDestroy, AfterViewInit

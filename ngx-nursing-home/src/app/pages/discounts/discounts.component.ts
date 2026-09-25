@@ -14,9 +14,10 @@ import { DialogService } from "../../shared/dialog/dialog.service";
 import { ToastrService } from "../../services/toastr.service";
 
 @Component({
-  selector: "sample-discounts",
-  templateUrl: "./discounts.component.html",
-  styleUrls: ["./discounts.component.scss"],
+    selector: "sample-discounts",
+    templateUrl: "./discounts.component.html",
+    styleUrls: ["./discounts.component.scss"],
+    standalone: false
 })
 export class DiscountsComponent implements OnInit, OnDestroy {
   private _subs: Subscription[] = [];

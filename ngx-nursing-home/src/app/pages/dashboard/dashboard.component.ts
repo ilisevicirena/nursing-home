@@ -7,9 +7,10 @@ import { Router } from "@angular/router";
 import { AuthService, UserRole } from "../../services/auth.service";
 
 @Component({
-  selector: "ngx-dashboard",
-  styleUrls: ["./dashboard.component.scss"],
-  templateUrl: "./dashboard.component.html",
+    selector: "ngx-dashboard",
+    styleUrls: ["./dashboard.component.scss"],
+    templateUrl: "./dashboard.component.html",
+    standalone: false
 })
 export class DashboardComponent implements OnDestroy, OnInit {
   private _subs: Subscription[] = [];

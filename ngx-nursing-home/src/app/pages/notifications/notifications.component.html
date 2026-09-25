@@ -130,7 +130,7 @@
               <button nbButtonToggle [(pressed)]="showAllActive" [value]="1">
                 {{ getString("all") }}
               </button>
-              <button nbButtonToggle [(pressed)]="!showAllActive" [value]="2">
+              <button nbButtonToggle [pressed]="!showAllActive" (pressedChange)="showAllActive = $event" [value]="2">
                 {{ getString("unread") }}
               </button>
             </nb-button-group>

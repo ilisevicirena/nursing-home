@@ -1,9 +1,10 @@
 import { Component, Input, OnInit } from "@angular/core";
 
 @Component({
-  selector: "sample-no-data",
-  templateUrl: "./no-data.component.html",
-  styleUrls: ["./no-data.component.scss"],
+    selector: "sample-no-data",
+    templateUrl: "./no-data.component.html",
+    styleUrls: ["./no-data.component.scss"],
+    standalone: false
 })
 export class NoDataComponent implements OnInit {
   constructor() {}

@@ -16,9 +16,10 @@ import { AddEditServiceComponent } from "./add-edit-service/add-edit-service.com
 import { NbWindowService, NbWindowState } from "@nebular/theme";
 
 @Component({
-  selector: "sample-services",
-  templateUrl: "./services.component.html",
-  styleUrls: ["./services.component.scss"],
+    selector: "sample-services",
+    templateUrl: "./services.component.html",
+    styleUrls: ["./services.component.scss"],
+    standalone: false
 })
 export class ServicesComponent implements OnInit, OnDestroy {
   public servicesData: any[] = [];

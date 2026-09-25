@@ -6,9 +6,10 @@ import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'sample-notifications-pane',
-  templateUrl: './notifications-pane.component.html',
-  styleUrls: ['./notifications-pane.component.scss']
+    selector: 'sample-notifications-pane',
+    templateUrl: './notifications-pane.component.html',
+    styleUrls: ['./notifications-pane.component.scss'],
+    standalone: false
 })
 export class NotificationsPaneComponent implements OnInit, OnDestroy {
 

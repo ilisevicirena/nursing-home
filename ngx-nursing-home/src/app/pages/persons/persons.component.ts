@@ -24,9 +24,10 @@ import { GendersService } from "../../services/rest/genders.service";
 import { AuthService, UserRole } from "../../services/auth.service";
 
 @Component({
-  selector: "sample-persons",
-  templateUrl: "./persons.component.html",
-  styleUrls: ["./persons.component.scss"],
+    selector: "sample-persons",
+    templateUrl: "./persons.component.html",
+    styleUrls: ["./persons.component.scss"],
+    standalone: false
 })
 export class PersonsComponent implements OnInit, OnDestroy {
   public getString = getString;

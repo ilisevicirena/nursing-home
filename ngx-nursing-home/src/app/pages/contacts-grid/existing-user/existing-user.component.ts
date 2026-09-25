@@ -13,9 +13,10 @@ import { NbDialogRef } from "@nebular/theme";
 import { MyProfileService } from "../../../services/rest/my-profile.service";
 
 @Component({
-  selector: "sample-existing-user",
-  templateUrl: "./existing-user.component.html",
-  styleUrls: ["./existing-user.component.scss"],
+    selector: "sample-existing-user",
+    templateUrl: "./existing-user.component.html",
+    styleUrls: ["./existing-user.component.scss"],
+    standalone: false
 })
 export class ExistingUserComponent implements OnInit, OnDestroy {
   constructor(

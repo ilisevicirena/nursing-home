@@ -27,9 +27,10 @@ import { ChangeFurnitureStatusComponent } from "./change-furniture-status/change
 import { FurnitureStatusesPreviewComponent } from "./furniture-statuses-preview/furniture-statuses-preview.component";
 
 @Component({
-  selector: "sample-furniture",
-  templateUrl: "./furniture.component.html",
-  styleUrls: ["./furniture.component.scss"],
+    selector: "sample-furniture",
+    templateUrl: "./furniture.component.html",
+    styleUrls: ["./furniture.component.scss"],
+    standalone: false
 })
 export class FurnitureComponent implements OnInit, OnDestroy {
   private _subs: Subscription[] = [];

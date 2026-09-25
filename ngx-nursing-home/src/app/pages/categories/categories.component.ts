@@ -6,9 +6,10 @@ import { GridColumn, fileDownload } from "shared-components";
 import { ToastrService } from "../../services/toastr.service";
 
 @Component({
-  selector: "sample-categories",
-  templateUrl: "./categories.component.html",
-  styleUrls: ["./categories.component.scss"],
+    selector: "sample-categories",
+    templateUrl: "./categories.component.html",
+    styleUrls: ["./categories.component.scss"],
+    standalone: false
 })
 export class CategoriesComponent implements OnInit, OnDestroy {
   public getString = getString;

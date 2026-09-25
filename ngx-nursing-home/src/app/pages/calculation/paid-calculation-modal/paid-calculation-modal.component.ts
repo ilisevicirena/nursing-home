@@ -7,9 +7,10 @@ import { CalculationApiService } from "../../../services/rest/calculation-api.se
 import { ToastrService } from "../../../services/toastr.service";
 
 @Component({
-  selector: "sample-paid-calculation-modal",
-  templateUrl: "./paid-calculation-modal.component.html",
-  styleUrls: ["./paid-calculation-modal.component.scss"],
+    selector: "sample-paid-calculation-modal",
+    templateUrl: "./paid-calculation-modal.component.html",
+    styleUrls: ["./paid-calculation-modal.component.scss"],
+    standalone: false
 })
 export class PaidCalculationModalComponent implements OnInit, OnDestroy {
   private _subs: Subscription[] = [];

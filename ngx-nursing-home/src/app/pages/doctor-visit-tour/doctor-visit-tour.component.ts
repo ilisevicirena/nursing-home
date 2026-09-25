@@ -9,9 +9,10 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { DoctorVisitsService } from "../../services/rest/doctor-visits.service";
 
 @Component({
-  selector: "sample-doctor-visit-tour",
-  templateUrl: "./doctor-visit-tour.component.html",
-  styleUrls: ["./doctor-visit-tour.component.scss"],
+    selector: "sample-doctor-visit-tour",
+    templateUrl: "./doctor-visit-tour.component.html",
+    styleUrls: ["./doctor-visit-tour.component.scss"],
+    standalone: false
 })
 export class DoctorVisitTourComponent implements OnInit, OnDestroy {
   public getString = getString;

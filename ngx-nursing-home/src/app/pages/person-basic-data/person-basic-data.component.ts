@@ -16,9 +16,10 @@ import { MunicipalitiesService } from "../../services/rest/municipalities.servic
 import { AutocompleteSelectionModel } from "shared-components";
 
 @Component({
-  selector: "sample-person-basic-data",
-  templateUrl: "./person-basic-data.component.html",
-  styleUrls: ["./person-basic-data.component.scss"],
+    selector: "sample-person-basic-data",
+    templateUrl: "./person-basic-data.component.html",
+    styleUrls: ["./person-basic-data.component.scss"],
+    standalone: false
 })
 export class PersonBasicDataComponent implements OnInit, OnDestroy {
   constructor(

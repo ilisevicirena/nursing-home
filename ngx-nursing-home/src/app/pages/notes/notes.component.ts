@@ -12,9 +12,10 @@ import { NoteExportComponent } from "./note-export/note-export.component";
 import { AuthService, UserRole } from "../../services/auth.service";
 
 @Component({
-  selector: "sample-notes",
-  templateUrl: "./notes.component.html",
-  styleUrls: ["./notes.component.scss"],
+    selector: "sample-notes",
+    templateUrl: "./notes.component.html",
+    styleUrls: ["./notes.component.scss"],
+    standalone: false
 })
 export class NotesComponent implements OnInit, OnDestroy {
   @Input() personId: number = 0;

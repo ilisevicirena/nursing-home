@@ -6,9 +6,10 @@ import { StartCalculationComponent } from "../calculation/start-calculation/star
 import { StartDoctorVisitTourComponent } from "../start-doctor-visit-tour/start-doctor-visit-tour.component";
 
 @Component({
-  selector: "sample-fast-actions",
-  templateUrl: "./fast-actions.component.html",
-  styleUrls: ["./fast-actions.component.scss"],
+    selector: "sample-fast-actions",
+    templateUrl: "./fast-actions.component.html",
+    styleUrls: ["./fast-actions.component.scss"],
+    standalone: false
 })
 export class FastActionsComponent implements OnInit {
   constructor(

@@ -11,9 +11,10 @@ import { AuthService, UserRole } from "../../services/auth.service";
 import { environment } from "../../../environments/environment";
 
 @Component({
-  selector: "sample-medication-administration",
-  templateUrl: "./medication-administration.component.html",
-  styleUrls: ["./medication-administration.component.scss"],
+    selector: "sample-medication-administration",
+    templateUrl: "./medication-administration.component.html",
+    styleUrls: ["./medication-administration.component.scss"],
+    standalone: false
 })
 export class MedicationAdministrationComponent implements OnInit, OnDestroy {
   public residents: any[] = [];

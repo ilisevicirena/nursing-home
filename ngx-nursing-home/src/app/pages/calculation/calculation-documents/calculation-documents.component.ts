@@ -11,9 +11,10 @@ import { UploadDocumentComponent } from "../../documents/upload-document/upload-
 import { AuthService, UserRole } from "../../../services/auth.service";
 
 @Component({
-  selector: "sample-calculation-documents",
-  templateUrl: "./calculation-documents.component.html",
-  styleUrls: ["./calculation-documents.component.scss"],
+    selector: "sample-calculation-documents",
+    templateUrl: "./calculation-documents.component.html",
+    styleUrls: ["./calculation-documents.component.scss"],
+    standalone: false
 })
 export class CalculationDocumentsComponent implements OnInit, OnDestroy {
   private _subs: Subscription[] = [];

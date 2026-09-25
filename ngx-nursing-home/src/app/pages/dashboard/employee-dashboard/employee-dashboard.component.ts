@@ -9,9 +9,10 @@ import { PersonsService } from "../../../services/rest/persons.service";
 import { NbThemeService } from "@nebular/theme";
 
 @Component({
-  selector: "sample-employee-dashboard",
-  templateUrl: "./employee-dashboard.component.html",
-  styleUrls: ["./employee-dashboard.component.scss"],
+    selector: "sample-employee-dashboard",
+    templateUrl: "./employee-dashboard.component.html",
+    styleUrls: ["./employee-dashboard.component.scss"],
+    standalone: false
 })
 export class EmployeeDashboardComponent implements OnInit, OnDestroy {
   public getString = getString;

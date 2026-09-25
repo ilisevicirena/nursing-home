@@ -23,9 +23,10 @@ import { ToastrService } from "../../services/toastr.service";
 import { AuthService, UserRole } from "../../services/auth.service";
 
 @Component({
-  selector: "sample-services-management",
-  templateUrl: "./services-management.component.html",
-  styleUrls: ["./services-management.component.scss"],
+    selector: "sample-services-management",
+    templateUrl: "./services-management.component.html",
+    styleUrls: ["./services-management.component.scss"],
+    standalone: false
 })
 export class ServicesManagementComponent implements OnInit, OnDestroy {
   @Input() personId: number = 0;

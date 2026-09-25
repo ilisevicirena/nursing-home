@@ -7,9 +7,10 @@ import { TagsService } from "../../../services/rest/tags.service";
 import { hexToRgbA } from "../../../resources/functions";
 
 @Component({
-  selector: "sample-note-tags",
-  templateUrl: "./note-tags.component.html",
-  styleUrls: ["./note-tags.component.scss"],
+    selector: "sample-note-tags",
+    templateUrl: "./note-tags.component.html",
+    styleUrls: ["./note-tags.component.scss"],
+    standalone: false
 })
 export class NoteTagsComponent implements OnInit, OnDestroy {
   public getString = getString;

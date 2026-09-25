@@ -19,9 +19,10 @@ import {
 import { FurnitureStatusesService } from "../../../services/rest/furniture-statuses.service";
 
 @Component({
-  selector: "sample-furniture-statuses-preview",
-  templateUrl: "./furniture-statuses-preview.component.html",
-  styleUrls: ["./furniture-statuses-preview.component.scss"],
+    selector: "sample-furniture-statuses-preview",
+    templateUrl: "./furniture-statuses-preview.component.html",
+    styleUrls: ["./furniture-statuses-preview.component.scss"],
+    standalone: false
 })
 export class FurnitureStatusesPreviewComponent implements OnInit, OnDestroy {
   public getString = getString;

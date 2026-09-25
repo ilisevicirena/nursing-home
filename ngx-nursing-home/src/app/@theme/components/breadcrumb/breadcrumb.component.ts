@@ -25,9 +25,10 @@ interface Crumb {
 }
 
 @Component({
-  selector: "ngx-breadcrumb",
-  templateUrl: "./breadcrumb.component.html",
-  styleUrls: ["./breadcrumb.component.scss"],
+    selector: "ngx-breadcrumb",
+    templateUrl: "./breadcrumb.component.html",
+    styleUrls: ["./breadcrumb.component.scss"],
+    standalone: false
 })
 export class BreadcrumbComponent implements OnInit, OnDestroy {
   public crumbs: Crumb[] = [];

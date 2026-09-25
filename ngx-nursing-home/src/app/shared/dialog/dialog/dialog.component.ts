@@ -4,9 +4,10 @@ import { DialogService } from "../dialog.service";
 import { getString } from "../../../resources/strings";
 
 @Component({
-  selector: "sample-dialog",
-  templateUrl: "./dialog.component.html",
-  styleUrls: ["./dialog.component.scss"],
+    selector: "sample-dialog",
+    templateUrl: "./dialog.component.html",
+    styleUrls: ["./dialog.component.scss"],
+    standalone: false
 })
 export class DialogComponent implements OnInit {
   constructor(

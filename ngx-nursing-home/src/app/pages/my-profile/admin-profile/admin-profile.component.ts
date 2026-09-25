@@ -5,9 +5,10 @@ import { getString } from "../../../resources/strings";
 import { PersonsService } from "../../../services/rest/persons.service";
 
 @Component({
-  selector: "sample-admin-profile",
-  templateUrl: "./admin-profile.component.html",
-  styleUrls: ["./admin-profile.component.scss"],
+    selector: "sample-admin-profile",
+    templateUrl: "./admin-profile.component.html",
+    styleUrls: ["./admin-profile.component.scss"],
+    standalone: false
 })
 export class AdminProfileComponent implements OnInit, OnDestroy {
   constructor(

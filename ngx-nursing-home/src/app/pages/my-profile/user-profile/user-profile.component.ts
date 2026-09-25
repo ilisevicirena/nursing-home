@@ -8,9 +8,10 @@ import { DialogService } from "../../../shared/dialog/dialog.service";
 import { EditContactInfoComponent } from "./edit-contact-info/edit-contact-info.component";
 
 @Component({
-  selector: "sample-user-profile",
-  templateUrl: "./user-profile.component.html",
-  styleUrls: ["./user-profile.component.scss"],
+    selector: "sample-user-profile",
+    templateUrl: "./user-profile.component.html",
+    styleUrls: ["./user-profile.component.scss"],
+    standalone: false
 })
 export class UserProfileComponent implements OnInit, OnDestroy {
   constructor(

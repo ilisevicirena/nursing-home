@@ -9,9 +9,10 @@ import { getString } from "../../../resources/strings";
 import { ToastrService } from "../../../services/toastr.service";
 
 @Component({
-  selector: "sample-add-edit-dietary-restriction",
-  templateUrl: "./add-edit-dietary-restriction.component.html",
-  styleUrls: ["./add-edit-dietary-restriction.component.scss"],
+    selector: "sample-add-edit-dietary-restriction",
+    templateUrl: "./add-edit-dietary-restriction.component.html",
+    styleUrls: ["./add-edit-dietary-restriction.component.scss"],
+    standalone: false
 })
 export class AddEditDietaryRestrictionComponent implements OnInit, OnDestroy {
   private _subs: Subscription[] = [];

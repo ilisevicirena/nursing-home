@@ -15,9 +15,10 @@ import { getBase64ImageFromUrl } from "../../../resources/functions";
 const htmlToPdfmake = require("html-to-pdfmake");
 
 @Component({
-  selector: "sample-generated-invoice",
-  templateUrl: "./generated-invoice.component.html",
-  styleUrls: ["./generated-invoice.component.scss"],
+    selector: "sample-generated-invoice",
+    templateUrl: "./generated-invoice.component.html",
+    styleUrls: ["./generated-invoice.component.scss"],
+    standalone: false
 })
 export class GeneratedInvoiceComponent implements OnInit, AfterViewInit {
   constructor() {}

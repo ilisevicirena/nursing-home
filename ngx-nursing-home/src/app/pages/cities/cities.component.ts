@@ -13,9 +13,10 @@ import { CountriesService } from "../../services/rest/countries.service";
 import { MunicipalitiesService } from "../../services/rest/municipalities.service";
 
 @Component({
-  selector: "sample-cities",
-  templateUrl: "./cities.component.html",
-  styleUrls: ["./cities.component.scss"],
+    selector: "sample-cities",
+    templateUrl: "./cities.component.html",
+    styleUrls: ["./cities.component.scss"],
+    standalone: false
 })
 export class CitiesComponent implements OnInit, OnDestroy {
   public getString = getString;

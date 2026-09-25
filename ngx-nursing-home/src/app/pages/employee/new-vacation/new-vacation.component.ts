@@ -9,9 +9,10 @@ import {
 import { ToastrService } from "../../../services/toastr.service";
 
 @Component({
-  selector: "sample-new-vacation",
-  templateUrl: "./new-vacation.component.html",
-  styleUrls: ["./new-vacation.component.scss"],
+    selector: "sample-new-vacation",
+    templateUrl: "./new-vacation.component.html",
+    styleUrls: ["./new-vacation.component.scss"],
+    standalone: false
 })
 export class NewVacationComponent implements OnInit, OnDestroy {
   private _subs: Subscription[] = [];

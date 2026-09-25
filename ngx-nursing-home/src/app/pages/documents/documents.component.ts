@@ -10,9 +10,10 @@ import { UploadDocumentComponent } from "./upload-document/upload-document.compo
 import { AuthService, UserRole } from "../../services/auth.service";
 
 @Component({
-  selector: "sample-documents",
-  templateUrl: "./documents.component.html",
-  styleUrls: ["./documents.component.scss"],
+    selector: "sample-documents",
+    templateUrl: "./documents.component.html",
+    styleUrls: ["./documents.component.scss"],
+    standalone: false
 })
 export class DocumentsComponent implements OnInit, OnDestroy {
   @Input() personId: number = 0;

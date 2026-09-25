@@ -6,9 +6,10 @@ import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
 
 @Component({
-  selector: "sample-login",
-  templateUrl: "./login.component.html",
-  styleUrls: ["./login.component.scss"],
+    selector: "sample-login",
+    templateUrl: "./login.component.html",
+    styleUrls: ["./login.component.scss"],
+    standalone: false
 })
 export class LoginComponent implements OnInit, OnDestroy {
   constructor(private _authService: AuthService, private _router: Router) {}

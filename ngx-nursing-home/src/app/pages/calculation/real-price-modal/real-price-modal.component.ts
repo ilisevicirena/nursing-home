@@ -7,9 +7,10 @@ import { ToastrService } from "../../../services/toastr.service";
 import { CalculationService } from "../../../services/calculation.service";
 
 @Component({
-  selector: "sample-real-price-modal",
-  templateUrl: "./real-price-modal.component.html",
-  styleUrls: ["./real-price-modal.component.scss"],
+    selector: "sample-real-price-modal",
+    templateUrl: "./real-price-modal.component.html",
+    styleUrls: ["./real-price-modal.component.scss"],
+    standalone: false
 })
 export class RealPriceModalComponent implements OnInit, OnDestroy {
   private _subs: Subscription[] = [];

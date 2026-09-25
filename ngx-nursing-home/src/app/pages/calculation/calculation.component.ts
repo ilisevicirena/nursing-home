@@ -35,9 +35,10 @@ import { CalculationDocumentsComponent } from "./calculation-documents/calculati
 
 declare const echarts: any;
 @Component({
-  selector: "sample-calculation",
-  templateUrl: "./calculation.component.html",
-  styleUrls: ["./calculation.component.scss"],
+    selector: "sample-calculation",
+    templateUrl: "./calculation.component.html",
+    styleUrls: ["./calculation.component.scss"],
+    standalone: false
 })
 export class CalculationComponent implements OnInit, OnDestroy {
   private _subs: Subscription[] = [];

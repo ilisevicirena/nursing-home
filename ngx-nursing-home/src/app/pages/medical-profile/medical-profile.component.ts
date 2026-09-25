@@ -29,7 +29,7 @@ import { Subscription } from "rxjs/internal/Subscription";
 import { AuthService, UserRole } from "../../services/auth.service";
 import { DialogService } from "../../shared/dialog/dialog.service";
 import { ToastrService } from "../../services/toastr.service";
-import { NbTabComponent } from "@nebular/theme/components/tabset/tabset.component";
+import { NbTabComponent } from "@nebular/theme";
 import { AddEditAllergenComponent } from "./add-edit-allergen/add-edit-allergen.component";
 import { AddEditMedicationComponent } from "./add-edit-medication/add-edit-medication.component";
 import { AddEditFunctionalStatusComponent } from "./add-edit-functional-status/add-edit-functional-status.component";
@@ -37,9 +37,10 @@ import { AddEditDietaryRestrictionComponent } from "./add-edit-dietary-restricti
 import { AddEditInsuranceComponent } from "./add-edit-insurance/add-edit-insurance.component";
 
 @Component({
-  selector: "sample-medical-profile",
-  templateUrl: "./medical-profile.component.html",
-  styleUrls: ["./medical-profile.component.scss"],
+    selector: "sample-medical-profile",
+    templateUrl: "./medical-profile.component.html",
+    styleUrls: ["./medical-profile.component.scss"],
+    standalone: false
 })
 export class MedicalProfileComponent implements OnInit, OnDestroy {
   @Input() personId: number = 0;

@@ -26,9 +26,10 @@ import { AuthService, UserRole } from "../../services/auth.service";
 import { ExistingUserComponent } from "./existing-user/existing-user.component";
 
 @Component({
-  selector: "sample-contacts-grid",
-  templateUrl: "./contacts-grid.component.html",
-  styleUrls: ["./contacts-grid.component.scss"],
+    selector: "sample-contacts-grid",
+    templateUrl: "./contacts-grid.component.html",
+    styleUrls: ["./contacts-grid.component.scss"],
+    standalone: false
 })
 export class ContactsGridComponent implements OnInit, OnDestroy {
   constructor(

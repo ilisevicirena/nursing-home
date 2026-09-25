@@ -8,9 +8,10 @@ import { EventsService } from "../../../services/rest/events.service";
 import { Router } from "@angular/router";
 
 @Component({
-  selector: "sample-user-dashboard",
-  templateUrl: "./user-dashboard.component.html",
-  styleUrls: ["./user-dashboard.component.scss"],
+    selector: "sample-user-dashboard",
+    templateUrl: "./user-dashboard.component.html",
+    styleUrls: ["./user-dashboard.component.scss"],
+    standalone: false
 })
 export class UserDashboardComponent implements OnInit, OnDestroy {
   private _subs: Subscription[] = [];

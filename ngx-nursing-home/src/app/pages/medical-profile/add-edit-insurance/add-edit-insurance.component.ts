@@ -9,9 +9,10 @@ import { getString } from "../../../resources/strings";
 import { ToastrService } from "../../../services/toastr.service";
 
 @Component({
-  selector: "sample-add-edit-insurance",
-  templateUrl: "./add-edit-insurance.component.html",
-  styleUrls: ["./add-edit-insurance.component.scss"],
+    selector: "sample-add-edit-insurance",
+    templateUrl: "./add-edit-insurance.component.html",
+    styleUrls: ["./add-edit-insurance.component.scss"],
+    standalone: false
 })
 export class AddEditInsuranceComponent implements OnInit, OnDestroy {
   private _subs: Subscription[] = [];

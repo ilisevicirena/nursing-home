@@ -7,9 +7,10 @@ import { AccommodationTypesService } from "../../services/rest/accommodation-typ
 import { ToastrService } from "../../services/toastr.service";
 
 @Component({
-  selector: "sample-categories-chooser",
-  templateUrl: "./categories-chooser.component.html",
-  styleUrls: ["./categories-chooser.component.scss"],
+    selector: "sample-categories-chooser",
+    templateUrl: "./categories-chooser.component.html",
+    styleUrls: ["./categories-chooser.component.scss"],
+    standalone: false
 })
 export class CategoriesChooserComponent implements OnInit, OnDestroy {
   public getString = getString;

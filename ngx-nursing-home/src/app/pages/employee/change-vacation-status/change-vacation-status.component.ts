@@ -6,9 +6,10 @@ import { VacationsService } from "../../../services/rest/vacations.service";
 import { ToastrService } from "../../../services/toastr.service";
 
 @Component({
-  selector: "sample-change-vacation-status",
-  templateUrl: "./change-vacation-status.component.html",
-  styleUrls: ["./change-vacation-status.component.scss"],
+    selector: "sample-change-vacation-status",
+    templateUrl: "./change-vacation-status.component.html",
+    styleUrls: ["./change-vacation-status.component.scss"],
+    standalone: false
 })
 export class ChangeVacationStatusComponent implements OnInit, OnDestroy {
   private _subs: Subscription[] = [];

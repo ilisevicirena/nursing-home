@@ -11,9 +11,10 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { Subscription } from "rxjs";
 
 @Component({
-  selector: "sample-advanced-search",
-  templateUrl: "./advanced-search.component.html",
-  styleUrls: ["./advanced-search.component.scss"],
+    selector: "sample-advanced-search",
+    templateUrl: "./advanced-search.component.html",
+    styleUrls: ["./advanced-search.component.scss"],
+    standalone: false
 })
 export class AdvancedSearchComponent implements OnInit, OnDestroy {
   private _subs: Subscription[] = [];

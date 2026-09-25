@@ -29,9 +29,10 @@ import { DialogService } from "../../shared/dialog/dialog.service";
 import { UserComponent } from "../user/user.component";
 
 @Component({
-  selector: "sample-employees",
-  templateUrl: "./employees.component.html",
-  styleUrls: ["./employees.component.scss"],
+    selector: "sample-employees",
+    templateUrl: "./employees.component.html",
+    styleUrls: ["./employees.component.scss"],
+    standalone: false
 })
 export class EmployeesComponent implements OnInit, OnDestroy {
   public getString = getString;

@@ -7,9 +7,10 @@ import { FurnitureService } from "../../../services/rest/furniture.service";
 import { ToastrService } from "../../../services/toastr.service";
 
 @Component({
-  selector: "sample-change-furniture-status",
-  templateUrl: "./change-furniture-status.component.html",
-  styleUrls: ["./change-furniture-status.component.scss"],
+    selector: "sample-change-furniture-status",
+    templateUrl: "./change-furniture-status.component.html",
+    styleUrls: ["./change-furniture-status.component.scss"],
+    standalone: false
 })
 export class ChangeFurnitureStatusComponent implements OnInit, OnDestroy {
   public getString = getString;

@@ -30,9 +30,10 @@ import { EmployeesService } from "../../../services/rest/employees.service";
 import { AuthService } from "../../../services/auth.service";
 
 @Component({
-  selector: "sample-employee-vacations",
-  templateUrl: "./employee-vacations.component.html",
-  styleUrls: ["./employee-vacations.component.scss"],
+    selector: "sample-employee-vacations",
+    templateUrl: "./employee-vacations.component.html",
+    styleUrls: ["./employee-vacations.component.scss"],
+    standalone: false
 })
 export class EmployeeVacationsComponent implements OnInit, OnDestroy {
   private _subs: Subscription[] = [];

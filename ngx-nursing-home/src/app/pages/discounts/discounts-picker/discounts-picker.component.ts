@@ -5,9 +5,10 @@ import { Subscription } from "rxjs";
 import { NbDialogRef } from "@nebular/theme";
 
 @Component({
-  selector: "sample-discounts-picker",
-  templateUrl: "./discounts-picker.component.html",
-  styleUrls: ["./discounts-picker.component.scss"],
+    selector: "sample-discounts-picker",
+    templateUrl: "./discounts-picker.component.html",
+    styleUrls: ["./discounts-picker.component.scss"],
+    standalone: false
 })
 export class DiscountsPickerComponent implements OnInit, OnDestroy {
   public getString = getString;

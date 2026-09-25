@@ -10,9 +10,10 @@ import {
 } from "shared-components";
 
 @Component({
-  selector: "sample-furniture-statuses",
-  templateUrl: "./furniture-statuses.component.html",
-  styleUrls: ["./furniture-statuses.component.scss"],
+    selector: "sample-furniture-statuses",
+    templateUrl: "./furniture-statuses.component.html",
+    styleUrls: ["./furniture-statuses.component.scss"],
+    standalone: false
 })
 export class FurnitureStatusesComponent implements OnInit, OnDestroy {
   constructor(

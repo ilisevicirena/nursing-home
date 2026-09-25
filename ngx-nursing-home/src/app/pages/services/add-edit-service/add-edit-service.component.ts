@@ -20,9 +20,10 @@ import { ToastrService } from "../../../services/toastr.service";
 import { CalculationService } from "../../../services/calculation.service";
 
 @Component({
-  selector: "sample-add-edit-service",
-  templateUrl: "./add-edit-service.component.html",
-  styleUrls: ["./add-edit-service.component.scss"],
+    selector: "sample-add-edit-service",
+    templateUrl: "./add-edit-service.component.html",
+    styleUrls: ["./add-edit-service.component.scss"],
+    standalone: false
 })
 export class AddEditServiceComponent
   implements OnInit, OnDestroy, AfterViewInit

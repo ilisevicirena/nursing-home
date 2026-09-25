@@ -11,9 +11,10 @@ import {
 import { ToastrService } from "../../services/toastr.service";
 
 @Component({
-  selector: "sample-tags",
-  templateUrl: "./tags.component.html",
-  styleUrls: ["./tags.component.scss"],
+    selector: "sample-tags",
+    templateUrl: "./tags.component.html",
+    styleUrls: ["./tags.component.scss"],
+    standalone: false
 })
 export class TagsComponent implements OnInit, OnDestroy {
   constructor(

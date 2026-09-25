@@ -10,9 +10,9 @@ import { IdleService } from "./services/idle.service";
 import { AppSettingsService } from "./services/app-settings.service";
 
 @Component({
-  selector: "ngx-app",
-  template:
-    '<nb-layout><nb-layout-column class="p-0"><router-outlet></router-outlet></nb-layout-column></nb-layout>',
+    selector: "ngx-app",
+    template: '<nb-layout><nb-layout-column class="p-0"><router-outlet></router-outlet></nb-layout-column></nb-layout>',
+    standalone: false
 })
 export class AppComponent implements OnInit, OnDestroy {
   private _routerSub: Subscription;

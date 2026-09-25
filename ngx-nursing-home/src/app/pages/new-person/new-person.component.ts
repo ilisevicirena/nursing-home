@@ -14,9 +14,10 @@ import { AccommodationPdfRequestService } from "../../services/rest/accommodatio
 import { GeneralSettingsService } from "../../services/rest/general-settings.service";
 
 @Component({
-  selector: "sample-new-person",
-  templateUrl: "./new-person.component.html",
-  styleUrls: ["./new-person.component.scss"],
+    selector: "sample-new-person",
+    templateUrl: "./new-person.component.html",
+    styleUrls: ["./new-person.component.scss"],
+    standalone: false
 })
 export class NewPersonComponent implements OnInit, OnDestroy {
   constructor(

@@ -11,9 +11,10 @@ import { DialogService } from "../../shared/dialog/dialog.service";
 import { DoctorVisitDetailsComponent } from "./doctor-visit-details/doctor-visit-details.component";
 
 @Component({
-  selector: "sample-doctor-visits",
-  templateUrl: "./doctor-visits.component.html",
-  styleUrls: ["./doctor-visits.component.scss"],
+    selector: "sample-doctor-visits",
+    templateUrl: "./doctor-visits.component.html",
+    styleUrls: ["./doctor-visits.component.scss"],
+    standalone: false
 })
 export class DoctorVisitsComponent implements OnInit, OnDestroy {
   private _subs: Subscription[] = [];

@@ -3,9 +3,9 @@ import { NbSidebarService } from '@nebular/theme';
 import { environment, SidebarStates } from '../../../../environments/environment';
 
 @Component({
-  selector: 'ngx-three-columns-layout',
-  styleUrls: ['./three-columns.layout.scss'],
-  template: `
+    selector: 'ngx-three-columns-layout',
+    styleUrls: ['./three-columns.layout.scss'],
+    template: `
     <nb-layout windowMode>
       <nb-layout-header fixed>
         <ngx-header></ngx-header>
@@ -30,6 +30,7 @@ import { environment, SidebarStates } from '../../../../environments/environment
       </nb-layout-footer>
     </nb-layout>
   `,
+    standalone: false
 })
 export class ThreeColumnsLayoutComponent {
   constructor(private sidebarService: NbSidebarService) { }
