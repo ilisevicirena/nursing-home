@@ -17,7 +17,17 @@
       <div class="row mb-2">
         <div class="col-md-8">
           <div class="form-group">
-            <div class="label">{{ getString("insuranceCompany") }}</div>
+            <div class="label">
+              {{ getString("insuranceCompany") }}
+              <nb-icon
+                pack="eva"
+                icon="alert-circle-outline"
+                status="danger"
+                size="small"
+                class="ms-1 required-mark"
+                [nbTooltip]="getString('required')"
+              ></nb-icon>
+            </div>
             <div class="value">
               <input
                 nbInput
@@ -25,6 +35,9 @@
                 [placeholder]="getString('insuranceCompany')"
                 name="insuranceCompany"
                 [(ngModel)]="item.InsuranceCompany"
+                required
+                #insuranceCompanyCtrl="ngModel"
+                [status]="insuranceCompanyCtrl.dirty ? (insuranceCompanyCtrl.invalid ? 'danger' : 'success') : 'basic'"
               />
             </div>
           </div>
@@ -52,7 +65,17 @@
       <div class="row mb-2">
         <div class="col-md-6">
           <div class="form-group">
-            <div class="label">{{ getString("policyNumber") }}</div>
+            <div class="label">
+              {{ getString("policyNumber") }}
+              <nb-icon
+                pack="eva"
+                icon="alert-circle-outline"
+                status="danger"
+                size="small"
+                class="ms-1 required-mark"
+                [nbTooltip]="getString('required')"
+              ></nb-icon>
+            </div>
             <div class="value">
               <input
                 nbInput
@@ -60,6 +83,9 @@
                 [placeholder]="getString('policyNumber')"
                 name="policyNumber"
                 [(ngModel)]="item.PolicyNumber"
+                required
+                #policyNumberCtrl="ngModel"
+                [status]="policyNumberCtrl.dirty ? (policyNumberCtrl.invalid ? 'danger' : 'success') : 'basic'"
               />
             </div>
           </div>
@@ -159,6 +185,7 @@
       shape="round"
       size="small"
       (click)="save()"
+      [disabled]="insuranceForm.invalid"
     >
       {{ getString("save") }}
     </button>

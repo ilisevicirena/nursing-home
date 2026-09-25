@@ -95,7 +95,6 @@ insert-tb-pageLink.sql
 insert-tb-calendarEventType.sql
 insert-tb-allergenSeverity.sql
 insert-tb-functionalStatusOption.sql
-insert-tb-dietaryType.sql
 insert-tb-generalSettings.sql
 proc-logUserActivity.sql
 proc-activateDeactivateUser.sql

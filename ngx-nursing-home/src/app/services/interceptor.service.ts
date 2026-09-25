@@ -44,21 +44,23 @@ export class InterceptorService implements HttpInterceptor {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<any> {
-    const authReq = req.clone({
-      headers: req.headers
-        .set("Authorization", "Bearer " + this._authService.getToken())
-        .set("Request-Date", new Date().toISOString()),
-      url:
-        req.url.substring(0, 3) === "api"
-          ? `${this._apiBaseUrl}/${req.url}`
-          : req.url,
-    });
+    // external calls (e.g. RxNorm) pass through untouched — no auth header/rewrite/error handling
+    const isAppApi = req.url.substring(0, 3) === "api";
 
-    // send cloned request with header to the next handler.
+    const authReq = isAppApi
+      ? req.clone({
+          headers: req.headers
+            .set("Authorization", "Bearer " + this._authService.getToken())
+            .set("Request-Date", new Date().toISOString()),
+          url: `${this._apiBaseUrl}/${req.url}`,
+        })
+      : req;
+
     return next.handle(authReq).pipe(
       tap(
         (event) => {},
         (error) => {
+          if (!isAppApi) return;
           console.error(error);
 
           if (error.url.indexOf("/auth/") === -1) {

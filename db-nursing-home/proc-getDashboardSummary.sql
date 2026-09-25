@@ -164,18 +164,21 @@ ORDER BY
         p.Id AS PersonId,
         p.FirstName,
         p.LastName,
-        COALESCE(DATEDIFF(MONTH, lv.LastVisitDate, GETDATE()), DATEDIFF(MONTH, p.StartDate, GETDATE())) AS MonthsSinceLastVisit,
-        COALESCE(DATEDIFF(DAY, lv.LastVisitDate, GETDATE()), DATEDIFF(DAY, p.StartDate, GETDATE())) / 30 AS DaysSinceLastVisit,
-        CASE
-            WHEN DATEDIFF(MONTH, lv.LastVisitDate, GETDATE()) > 0 THEN 'danger'
-            ELSE 'success'
-        END AS VisitStatus
+        m.FullMonths AS MonthsSinceLastVisit,
+        DATEDIFF(DAY, DATEADD(MONTH, m.FullMonths, s.SinceDate), GETDATE()) AS DaysSinceLastVisit,
+        CASE WHEN m.FullMonths > 0 THEN 'danger' ELSE 'success' END AS VisitStatus
     FROM
         dbo.Person AS p
     LEFT JOIN
         LastVisit lv ON p.Id = lv.PersonId
+    CROSS APPLY (VALUES (COALESCE(lv.LastVisitDate, p.StartDate))) AS s(SinceDate)
+    CROSS APPLY (VALUES (
+        DATEDIFF(MONTH, s.SinceDate, GETDATE())
+        - CASE WHEN DATEADD(MONTH, DATEDIFF(MONTH, s.SinceDate, GETDATE()), s.SinceDate) > GETDATE()
+               THEN 1 ELSE 0 END
+    )) AS m(FullMonths)
     ORDER BY
-        DATEDIFF(DAY, lv.LastVisitDate, GETDATE()) DESC;
+        DATEDIFF(DAY, s.SinceDate, GETDATE()) DESC;
 
 	-- age distribution of active residents
 	;WITH Buckets AS (

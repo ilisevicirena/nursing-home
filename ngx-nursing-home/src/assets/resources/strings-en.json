@@ -1246,6 +1246,7 @@
   { "key": "cognitiveModerateImpairment", "value": "Moderate impairment" },
   { "key": "cognitiveSevereImpairment", "value": "Severe impairment" },
   { "key": "cognitiveDementia", "value": "Dementia" },
+  { "key": "fallRisk", "value": "Fall risk" },
   { "key": "fallRiskLow", "value": "Low risk" },
   { "key": "fallRiskModerate", "value": "Moderate risk" },
   { "key": "fallRiskHigh", "value": "High risk" },
