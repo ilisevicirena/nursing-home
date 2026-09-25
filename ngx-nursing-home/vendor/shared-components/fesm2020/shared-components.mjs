@@ -3047,7 +3047,17 @@ class GridExport {
     }
 }
 
-pdfMake.vfs = pdfFonts.pdfMake.vfs;
+try {
+    const pfAny = pdfFonts;
+    const pmAny = pdfMake;
+    const __vfs = (pfAny && pfAny.pdfMake && pfAny.pdfMake.vfs) || (pfAny && pfAny.vfs) || pfAny;
+    if (pmAny && __vfs) {
+        pmAny.vfs = __vfs;
+    }
+}
+catch (e) {
+    // ignore - vfs may be attached at runtime by the app
+}
 class GridPdfExportComponent {
     // ----------------------------------------------------- OUTPUTS -----------------------------------------------------------------
     // ----------------------------------------------------- COMPONENT CONSTRUCTION --------------------------------------------------
