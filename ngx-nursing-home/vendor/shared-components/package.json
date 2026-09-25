@@ -1,6 +1,6 @@
 {
   "name": "shared-components",
-  "version": "0.0.0-watch+1726210457249",
+  "version": "3.0.0",
   "peerDependencies": {
     "@angular/cdk": "^15.2.9",
     "@angular/common": "^15.2.9",

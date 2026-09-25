@@ -11,7 +11,7 @@ import * as pdfFonts from "pdfmake/build/vfs_fonts";
 import { ToastrService } from "../../../services/toastr.service";
 import { getString } from "../../../resources/strings";
 import { fileDownload } from "shared-components";
-(pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
+(pdfMake as any).vfs = (pdfFonts as any).vfs || pdfFonts;
 const htmlToPdfmake = require("html-to-pdfmake");
 
 @Component({
