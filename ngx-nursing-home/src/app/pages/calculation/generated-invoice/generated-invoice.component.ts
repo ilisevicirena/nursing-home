@@ -6,8 +6,8 @@ import {
   ViewChild,
 } from "@angular/core";
 declare var require: any;
-import * as pdfMake from "pdfmake/build/pdfmake";
-import * as pdfFonts from "pdfmake/build/vfs_fonts";
+const pdfMake: any = require("pdfmake/build/pdfmake");
+const pdfFonts: any = require("pdfmake/build/vfs_fonts");
 import { environment } from "../../../../environments/environment";
 import { getString } from "../../../resources/strings";
 import { getBase64ImageFromUrl } from "../../../resources/functions";
