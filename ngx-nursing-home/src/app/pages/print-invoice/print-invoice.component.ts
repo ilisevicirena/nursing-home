@@ -9,8 +9,8 @@ import {
   ViewChildren,
 } from "@angular/core";
 declare var require: any;
-import * as pdfMake from "pdfmake/build/pdfmake";
-import * as pdfFonts from "pdfmake/build/vfs_fonts";
+const pdfMake: any = require("pdfmake/build/pdfmake");
+const pdfFonts: any = require("pdfmake/build/vfs_fonts");
 (pdfMake as any).vfs = (pdfFonts as any).vfs || pdfFonts;
 const htmlToPdfmake = require("html-to-pdfmake");
 import { getString } from "../../resources/strings";
